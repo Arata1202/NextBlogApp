@@ -1,3 +1,5 @@
+'use client';
+
 import { Tag } from '@/libs/microcms';
 import TagList from '@/components/TagList';
 import SearchField from '@/components/SearchField';

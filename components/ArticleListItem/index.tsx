@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
@@ -43,8 +45,9 @@ export default function ArticleListItem({ article }: Props) {
         )}
         <dl className={styles.content}>
           <dt className={styles.title}>{article.title}</dt>
+          <dt className={styles.description}>{article.description}</dt>
           <dd>
-            <TagList tags={article.tags} hasLink={false} />
+            <TagList tags={article.tags} hasLink={true} />
           </dd>
           <dd className={styles.date}>
             <PublishedDate date={article.publishedAt || article.createdAt} />
