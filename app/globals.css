@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Briem+Hand:wght@900&family=Sedan+SC&family=Sora:wght@100..800&display=swap');
+
+.ArticleList_main__4t9K_ {
+  margin-top: 20px !important;
+}
+
+figure img {
+  margin: auto;
+}
+
+h2 {
+  background-color: #f3f3f3;
+  padding: 15px 15px 15px 15px;
+}
+h3 {
+  border: 1px solid lightgray;
+  padding: 5px 15px 5px 15px;
+}
+a u {
+  color: royalblue;
+}
+
 :root {
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono',
     'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono',
@@ -28,6 +50,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  font-family: 'Sora', sans-serif !important;
 }
 
 body {

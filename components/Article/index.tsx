@@ -7,9 +7,12 @@ import styles from './index.module.css';
 import TagList from '../TagList';
 import Profile from '../Profile';
 import SearchField from '../SearchField';
+import ArticleListItem from '../ArticleListItem';
+import Image from 'next/image';
 
 type Props = {
   data: Article;
+  articles?: Article[];
 };
 
 export default function Article({ data }: Props) {
@@ -71,7 +74,7 @@ export default function Article({ data }: Props) {
         <div className="lg:col-span-2">
           <div className="py-8 lg:pe-8">
             <div className="space-y-5 lg:space-y-8">
-              <a
+              {/* <a
                 className="inline-flex items-center gap-x-1.5 text-sm text-gray-600 decoration-2 hover:underline"
                 href="#"
               >
@@ -88,14 +91,15 @@ export default function Article({ data }: Props) {
                   <path d="m15 18-6-6 6-6" />
                 </svg>
                 戻る
-              </a>
+              </a> */}
 
-              <h2 className="text-3xl font-bold lg:text-5xl">{data.title}</h2>
+              <h1 className="text-3xl font-bold lg:text-4xl">{data.title}</h1>
 
-              <div className="flex items-center gap-x-5">
-                <TagList tags={data.tags} />
+              <div className="flex justify-end gap-x-5">
+                {/* <TagList tags={data.tags} /> */}
                 <PublishedDate date={data.publishedAt || data.createdAt} />
               </div>
+              <p className="text-center border p-3">記事内に広告が含まれています。</p>
 
               <div
                 className={styles.content}
@@ -109,18 +113,29 @@ export default function Article({ data }: Props) {
 
         {/* Sidebar Area */}
         <div className="lg:col-span-1 lg:w-full lg:h-full">
-          <div className="sticky top-0 start-0 py-8 lg:ps-8">
+          <div className="sticky top-0 start-0 lg:ps-8 py-8">
+            <div className="rounded-2xl bg-white px-8 border py-5">
+              <h1 className={`${styles.profile} text-2xl text-center font-semibold mb-5`}>検索</h1>
+              <SearchField />
+            </div>
             {/* Profile Media */}
-            <div className="rounded-2xl bg-white px-8 py-10">
-              <img
+            <div className="rounded-2xl bg-white px-8 border py-5 mt-5">
+              <h1 className={`${styles.profile} text-2xl text-center font-semibold pb-5`}>
+                この記事を書いた人
+              </h1>
+              <Image
                 className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
                 src="/images/blog/face.jpg"
                 alt=""
+                width={100}
+                height={100}
               />
-              <h3 className="mt-6 text-2xl text-center font-semibold leading-7 tracking-tight text-gray-800">
-                リアル大学生｜あお
-              </h3>
-              <p className="text-lg leading-6 text-gray-800 mt-5">
+              <h1 className="mt-6 text-2xl text-center font-semibold leading-7 tracking-tight text-gray-800">
+                <a href="" className="hover:text-blue-500">
+                  リアル大学生｜あお
+                </a>
+              </h1>
+              <div className="text-lg leading-6 text-gray-800 mt-5">
                 <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
                   <li>20歳</li>
                   <li>千葉県在住</li>
@@ -129,13 +144,16 @@ export default function Article({ data }: Props) {
                   <li>Webエンジニアインターンに参加（主にLaravelやVue.js）</li>
                   <li>プログラミングは大学生から開始。独学でPHPやJavaScriptなどを習得</li>
                 </ul>
-              </p>
+              </div>
               <ul role="list" className="mt-6 flex justify-center gap-x-6">
                 <li>
-                  <a href="/" className="text-gray-400 hover:text-gray-300">
+                  <a
+                    href="https://twitter.com/Aokumoblog"
+                    className="text-gray-400 hover:text-blue-500"
+                  >
                     <span className="sr-only">X</span>
                     <svg
-                      className="h-5 w-5"
+                      className="h-8 w-8"
                       aria-hidden="true"
                       fill="currentColor"
                       viewBox="0 0 20 20"
@@ -145,23 +163,67 @@ export default function Article({ data }: Props) {
                   </a>
                 </li>
                 <li>
-                  <a href="/" className="text-gray-400 hover:text-gray-300">
-                    <span className="sr-only">LinkedIn</span>
+                  <a
+                    href="https://www.instagram.com/ao_realstudent/?hl=ja"
+                    className="text-gray-400 hover:text-blue-500"
+                  >
+                    <span className="sr-only">Instagram</span>
                     <svg
-                      className="h-5 w-5"
+                      className="h-8 w-8"
                       aria-hidden="true"
                       fill="currentColor"
-                      viewBox="0 0 20 20"
+                      viewBox="0 0 24 24"
                     >
                       <path
                         fillRule="evenodd"
-                        d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z"
+                        d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
                         clipRule="evenodd"
                       />
                     </svg>
                   </a>
                 </li>
               </ul>
+            </div>
+            <div className="rounded-2xl bg-white px-8 border py-5 mt-5">
+              <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>カテゴリー</h1>
+              <nav className="grid gap-4 mt-5 md:mt-5" aria-label="Tabs" role="tablist">
+                <a
+                  href="/tags/university"
+                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 rounded-xl border"
+                  id="tabs-with-card-item-1"
+                  data-hs-tab="#tabs-with-card-1"
+                  aria-controls="tabs-with-card-1"
+                  role="tab"
+                >
+                  <span className="flex">
+                    <span className="grow">
+                      <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">
+                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
+                          <li>大学生活</li>
+                        </ul>
+                      </span>
+                    </span>
+                  </span>
+                </a>
+                <a
+                  href="/tags/programming"
+                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 rounded-xl border"
+                  id="tabs-with-card-item-1"
+                  data-hs-tab="#tabs-with-card-1"
+                  aria-controls="tabs-with-card-1"
+                  role="tab"
+                >
+                  <span className="flex">
+                    <span className="grow">
+                      <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">
+                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
+                          <li>プログラミング</li>
+                        </ul>
+                      </span>
+                    </span>
+                  </span>
+                </a>
+              </nav>
             </div>
 
             {/* More sidebar content */}

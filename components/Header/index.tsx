@@ -9,8 +9,8 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { HomeIcon, UserIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
 
 const headerNavigation = [
-  { name: 'ホーム', href: '#', icon: HomeIcon },
-  { name: 'プロフィール', href: '#', icon: UserIcon },
+  { name: 'ホーム', href: '/', icon: HomeIcon },
+  { name: 'プロフィール', href: '/articles/profile', icon: UserIcon },
   { name: 'お問い合わせ', href: '#', icon: EnvelopeIcon },
 ];
 

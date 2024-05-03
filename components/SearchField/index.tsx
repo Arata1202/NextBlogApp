@@ -30,6 +30,7 @@ export default function SearchField() {
       onCompositionStart={startComposition}
       onCompositionEnd={endComposition}
       defaultValue={defaultQuery}
+      style={{ width: '100%', borderRadius: '0' }}
     />
   );
 }
