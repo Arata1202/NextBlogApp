@@ -35,6 +35,7 @@ export default async function RootLayout({ children }: Props) {
         {/* <Nav tags={tags.contents} /> */}
         <main className={styles.main}>{children}</main>
         <Footer />
+        <script src="./node_modules/preline/dist/preline.js"></script>
       </body>
     </html>
   );
