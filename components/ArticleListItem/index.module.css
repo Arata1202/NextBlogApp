@@ -4,12 +4,17 @@
 
 .link {
   display: flex;
-  gap: 40px;
+  gap: 100px;
 }
 
 .image {
-  width: 100%;
+  width: 130%;
   height: auto;
+  max-width: 130%;
+}
+
+.content {
+  max-width: 450px;
 }
 
 .title {

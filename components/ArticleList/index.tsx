@@ -6,6 +6,7 @@ import styles from './index.module.css';
 import SearchField from '../SearchField';
 import Image from 'next/image';
 import TagList from '../TagList';
+import Link from 'next/link';
 
 type Props = {
   articles?: Article[];
@@ -36,28 +37,28 @@ export default function ArticleList({ articles }: Props) {
         </div>
 
         {/* Sidebar Area */}
-        <div className="lg:col-span-1 lg:w-full lg:h-full pt-7">
-          <div className="sidebar sticky top-0 start-0 lg:ps-8">
-            <div className="bg-white px-8 border border-gray-300 py-5">
+        <div className="lg:col-span-1 lg:w-full lg:h-full">
+          <div className="sidebar sticky top-0 start-0 lg:ps-8 py-7">
+            <div className="bg-white pt-8 px-4 border border-gray-300 py-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold mb-5`}>検索</h1>
               <SearchField />
             </div>
             {/* Profile Media */}
-            <div className="bg-white px-8 border border-gray-300 py-5 mt-5">
+            <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold pb-5`}>
                 ブログ運営者
               </h1>
               <Image
                 className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
-                src="/images/blog/face.jpg"
+                src="/images/blog/face.webp"
                 alt=""
                 width={100}
                 height={100}
               />
               <h1 className="mt-6 text-2xl text-center font-semibold leading-7 tracking-tight text-gray-800">
-                <a href="" className="hover:text-blue-500">
+                <Link href="/fixed/profile" className="hover:text-blue-500">
                   リアル大学生｜あお
-                </a>
+                </Link>
               </h1>
               <div className="text-lg leading-6 text-gray-800 mt-5">
                 <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
@@ -108,12 +109,12 @@ export default function ArticleList({ articles }: Props) {
                 </li>
               </ul>
             </div>
-            <div className="bg-white px-8 border border-gray-300 py-5 mt-5">
+            <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>カテゴリー</h1>
               <nav className="grid gap-4 mt-5 md:mt-5" aria-label="Tabs" role="tablist">
                 <a
                   href="/tags/university"
-                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 border-gray-300 border"
+                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
                   id="tabs-with-card-item-1"
                   data-hs-tab="#tabs-with-card-1"
                   aria-controls="tabs-with-card-1"
@@ -131,7 +132,7 @@ export default function ArticleList({ articles }: Props) {
                 </a>
                 <a
                   href="/tags/programming"
-                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 border-gray-300 border"
+                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border-gray-300 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
                   id="tabs-with-card-item-1"
                   data-hs-tab="#tabs-with-card-1"
                   aria-controls="tabs-with-card-1"
@@ -150,6 +151,57 @@ export default function ArticleList({ articles }: Props) {
               </nav>
             </div>
 
+            <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
+              <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>人気の投稿</h1>
+              <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
+                <a className="" href="/articles/profile">
+                  <Image
+                    src="/images/test/2.webp"
+                    alt=""
+                    className="ArticleListItem_image"
+                    width="1600"
+                    height="900"
+                  />
+                  <dl>
+                    <dt className="ArticleListItem_title font-bold">
+                      【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説
+                    </dt>
+                  </dl>
+                </a>
+              </ol>
+              <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
+                <a className="" href="/articles/profile">
+                  <Image
+                    src="/images/test/3.webp"
+                    alt=""
+                    className="ArticleListItem_image"
+                    width="1600"
+                    height="900"
+                  />
+                  <dl>
+                    <dt className="ArticleListItem_title">
+                      【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】
+                    </dt>
+                  </dl>
+                </a>
+              </ol>
+              <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
+                <a className="" href="/articles/profile">
+                  <Image
+                    src="/images/test/8.webp"
+                    alt=""
+                    className="ArticleListItem_image"
+                    width="1600"
+                    height="900"
+                  />
+                  <dl>
+                    <dt className="ArticleListItem_title">
+                      【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】
+                    </dt>
+                  </dl>
+                </a>
+              </ol>
+            </div>
             {/* More sidebar content */}
           </div>
         </div>

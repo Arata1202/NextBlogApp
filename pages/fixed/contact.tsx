@@ -305,7 +305,7 @@ const ContactPage: React.FC = () => {
                   </h1>
                   <Image
                     className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
-                    src="/images/blog/face.jpg"
+                    src="/images/blog/face.webp"
                     alt=""
                     width={100}
                     height={100}

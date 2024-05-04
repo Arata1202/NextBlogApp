@@ -55,7 +55,7 @@ export default function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <a href="/" className="underLogo">
-              <Image width={165} height={30} src="/images/blog/title.jpg" alt="ブログタイトル" />
+              <Image width={165} height={30} src="/images/blog/title.webp" alt="ブログタイトル" />
             </a>
             <div className="flex space-x-6 underLogo">
               {footerNavigation.social.map((item) => (

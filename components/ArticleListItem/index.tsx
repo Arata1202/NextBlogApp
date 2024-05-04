@@ -16,7 +16,7 @@ export default function ArticleListItem({ article }: Props) {
     <li className={styles.list}>
       <Link
         href={`/articles/${article.id}`}
-        className={`${styles.link} p-5 border border-gray-300 hover:border-blue-500`}
+        className={`${styles.link} p-5 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1`}
       >
         {article.thumbnail ? (
           <picture>
@@ -29,7 +29,7 @@ export default function ArticleListItem({ article }: Props) {
               type="image/webp"
               srcSet={`${article.thumbnail?.url}?fm=webp&fit=crop&w=240&h=126 1x, ${article.thumbnail?.url}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`}
             />
-            <img
+            <Image
               src={article.thumbnail?.url || `/noimage.png`}
               alt=""
               className={styles.image}
