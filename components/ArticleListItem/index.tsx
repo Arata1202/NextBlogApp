@@ -14,7 +14,10 @@ type Props = {
 export default function ArticleListItem({ article }: Props) {
   return (
     <li className={styles.list}>
-      <Link href={`/articles/${article.id}`} className={`${styles.link} p-5`}>
+      <Link
+        href={`/articles/${article.id}`}
+        className={`${styles.link} p-5 border border-gray-300 rounded-2xl`}
+      >
         {article.thumbnail ? (
           <picture>
             <source
@@ -45,7 +48,7 @@ export default function ArticleListItem({ article }: Props) {
         )}
         <dl className={styles.content}>
           <dt className={styles.title}>{article.title}</dt>
-          <dt className={styles.description}>{article.description}</dt>
+          {/* <dt className={styles.description}>{article.description}</dt> */}
           <dd>
             <TagList tags={article.tags} hasLink={true} />
           </dd>

@@ -18,26 +18,29 @@ export default function ArticleList({ articles }: Props) {
     return <p>記事がありません。</p>;
   }
   return (
-    <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto mt-20">
+    <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto mt-20">
       <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
         {/* Main Content Area */}
-        <ul className={`${styles.main} lg:col-span-2`}>
-          {articles.map((article) => (
-            <ArticleListItem key={article.id} article={article} />
-          ))}
-        </ul>
+        <div className="lg:col-span-2">
+          <h1 className="text-3xl font-bold pt-7 lg:pl-7">最新記事</h1>
+          <ul className={`${styles.main}`}>
+            {articles.map((article) => (
+              <ArticleListItem key={article.id} article={article} />
+            ))}
+          </ul>
+        </div>
 
         {/* Sidebar Area */}
-        <div className="lg:col-span-1 lg:w-full lg:h-full">
-          <div className="sticky top-0 start-0 lg:ps-8 py-8">
-            <div className="rounded-2xl bg-white px-8 border py-5">
+        <div className="lg:col-span-1 lg:w-full lg:h-full pt-7">
+          <div className="sidebar sticky top-0 start-0 lg:ps-8">
+            <div className="rounded-2xl bg-white px-8 border border-gray-300 py-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold mb-5`}>検索</h1>
               <SearchField />
             </div>
             {/* Profile Media */}
-            <div className="rounded-2xl bg-white px-8 border py-5 mt-5">
+            <div className="rounded-2xl bg-white px-8 border border-gray-300 py-5 mt-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold pb-5`}>
-                この記事を書いた人
+                ブログ運営者
               </h1>
               <Image
                 className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
@@ -65,7 +68,7 @@ export default function ArticleList({ articles }: Props) {
                 <li>
                   <a
                     href="https://twitter.com/Aokumoblog"
-                    className="text-gray-400 hover:text-gray-300"
+                    className="text-gray-400 hover:text-blue-500"
                   >
                     <span className="sr-only">X</span>
                     <svg
@@ -81,7 +84,7 @@ export default function ArticleList({ articles }: Props) {
                 <li>
                   <a
                     href="https://www.instagram.com/ao_realstudent/?hl=ja"
-                    className="text-gray-400 hover:text-gray-300"
+                    className="text-gray-400 hover:text-blue-500"
                   >
                     <span className="sr-only">Instagram</span>
                     <svg
@@ -100,7 +103,7 @@ export default function ArticleList({ articles }: Props) {
                 </li>
               </ul>
             </div>
-            <div className="rounded-2xl bg-white px-8 border py-5 mt-5">
+            <div className="rounded-2xl bg-white px-8 border border-gray-300 py-5 mt-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>カテゴリー</h1>
               <nav className="grid gap-4 mt-5 md:mt-5" aria-label="Tabs" role="tablist">
                 <a

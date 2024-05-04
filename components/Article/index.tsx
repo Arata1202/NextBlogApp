@@ -68,7 +68,7 @@ export default function Article({ data }: Props) {
     //   />
     //   <Profile writer={data.writer} />
     // </main>
-    <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto mt-20">
+    <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto mt-20">
       <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
         {/* Main Content Area */}
         <div className="lg:col-span-2">
@@ -93,13 +93,13 @@ export default function Article({ data }: Props) {
                 戻る
               </a> */}
 
-              <h1 className="text-3xl font-bold lg:text-4xl">{data.title}</h1>
+              <h1 className="text-3xl font-bold lg:text-3xl">{data.title}</h1>
 
-              <div className="flex justify-end gap-x-5">
+              <div className="includeBanner flex justify-end gap-x-5">
                 {/* <TagList tags={data.tags} /> */}
                 <PublishedDate date={data.publishedAt || data.createdAt} />
               </div>
-              <p className="text-center border p-3">記事内に広告が含まれています。</p>
+              <p className="includeBanner text-center border p-3">記事内に広告が含まれています。</p>
 
               <div
                 className={styles.content}
@@ -113,7 +113,7 @@ export default function Article({ data }: Props) {
 
         {/* Sidebar Area */}
         <div className="lg:col-span-1 lg:w-full lg:h-full">
-          <div className="sticky top-0 start-0 lg:ps-8 py-8">
+          <div className="sidebar sticky top-0 start-0 lg:ps-8 py-8">
             <div className="rounded-2xl bg-white px-8 border py-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold mb-5`}>検索</h1>
               <SearchField />
