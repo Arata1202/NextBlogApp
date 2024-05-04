@@ -7,7 +7,7 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {}
 
 const footerNavigation = {
   solutions: [
-    { name: 'プロフィール', href: '/articles/profile' },
+    { name: 'プロフィール', href: '/fixed/profile' },
     { name: 'サイトマップ', href: '/articles/sitemap' },
   ],
   category: [
@@ -18,7 +18,7 @@ const footerNavigation = {
     { name: 'プライバシーポリシー', href: '/articles/privacy' },
     // { name: '免責事項', href: '#' },
   ],
-  legal: [{ name: 'お問い合わせ', href: '#' }],
+  legal: [{ name: 'お問い合わせ', href: '/fixed/contact' }],
   social: [
     {
       name: 'Instagram',
@@ -54,8 +54,10 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
-            <Image width={165} height={30} src="/images/blog/title.jpg" alt="ブログタイトル" />
-            <div className="flex space-x-6">
+            <a href="/" className="underLogo">
+              <Image width={165} height={30} src="/images/blog/title.jpg" alt="ブログタイトル" />
+            </a>
+            <div className="flex space-x-6 underLogo">
               {footerNavigation.social.map((item) => (
                 <a key={item.name} href={item.href} className="text-gray-400 hover:text-blue-500">
                   <span className="sr-only">{item.name}</span>
@@ -66,7 +68,7 @@ export default function Footer() {
           </div>
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
+              <div className="footerMenu">
                 <h1 className="text-sm font-semibold leading-6 text-gray-900">リアル大学生</h1>
                 <ul role="list" className="mt-6 space-y-4">
                   {footerNavigation.solutions.map((item) => (
@@ -81,7 +83,7 @@ export default function Footer() {
                   ))}
                 </ul>
               </div>
-              <div className="mt-10 md:mt-0">
+              <div className="mt-10 md:mt-0 footerMenu">
                 <h1 className="text-sm font-semibold leading-6 text-gray-900">カテゴリー</h1>
                 <ul role="list" className="mt-6 space-y-4">
                   {footerNavigation.category.map((item) => (
@@ -97,7 +99,7 @@ export default function Footer() {
                 </ul>
               </div>
             </div>
-            <div className="md:grid md:grid-cols-2 md:gap-8">
+            <div className="md:grid md:grid-cols-2 md:gap-8 footerMenu">
               <div>
                 <h1 className="text-sm font-semibold leading-6 text-gray-900">利用規約</h1>
                 <ul role="list" className="mt-6 space-y-4">
@@ -113,7 +115,7 @@ export default function Footer() {
                   ))}
                 </ul>
               </div>
-              <div className="mt-10 md:mt-0">
+              <div className="mt-10 md:mt-0 footerMenu">
                 <h1 className="text-sm font-semibold leading-6 text-gray-900">お問い合わせ</h1>
                 <ul role="list" className="mt-6 space-y-4">
                   {footerNavigation.legal.map((item) => (

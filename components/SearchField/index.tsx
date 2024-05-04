@@ -18,13 +18,13 @@ export default function SearchField() {
   );
   const inputRef = useRef<HTMLInputElement>(null);
   const searchParams = useSearchParams();
-  const defaultQuery = searchParams.get('q') || '';
+  const defaultQuery = (searchParams?.get('q') ?? '') as string;
   return (
     <input
       type="search"
       name="q"
       ref={inputRef}
-      className={styles.search}
+      className={`${styles.search} hover:border-blue-500`}
       placeholder="Search..."
       onKeyDown={_onEnter}
       onCompositionStart={startComposition}

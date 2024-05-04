@@ -5,6 +5,7 @@ import ArticleListItem from '../ArticleListItem';
 import styles from './index.module.css';
 import SearchField from '../SearchField';
 import Image from 'next/image';
+import TagList from '../TagList';
 
 type Props = {
   articles?: Article[];
@@ -17,12 +18,16 @@ export default function ArticleList({ articles }: Props) {
   if (articles.length === 0) {
     return <p>記事がありません。</p>;
   }
+  const titleTags = articles[0].tags || [];
+
   return (
     <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto mt-20">
       <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
         {/* Main Content Area */}
         <div className="lg:col-span-2">
-          <h1 className="text-3xl font-bold pt-7 lg:pl-7">最新記事</h1>
+          <h1 className="categoryTitle text-3xl font-bold pt-7 lg:pl-7">
+            {titleTags.length > 0 ? <TagList tags={titleTags} hasLink={false} /> : '最新記事'}
+          </h1>
           <ul className={`${styles.main}`}>
             {articles.map((article) => (
               <ArticleListItem key={article.id} article={article} />
@@ -33,12 +38,12 @@ export default function ArticleList({ articles }: Props) {
         {/* Sidebar Area */}
         <div className="lg:col-span-1 lg:w-full lg:h-full pt-7">
           <div className="sidebar sticky top-0 start-0 lg:ps-8">
-            <div className="rounded-2xl bg-white px-8 border border-gray-300 py-5">
+            <div className="bg-white px-8 border border-gray-300 py-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold mb-5`}>検索</h1>
               <SearchField />
             </div>
             {/* Profile Media */}
-            <div className="rounded-2xl bg-white px-8 border border-gray-300 py-5 mt-5">
+            <div className="bg-white px-8 border border-gray-300 py-5 mt-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold pb-5`}>
                 ブログ運営者
               </h1>
@@ -103,12 +108,12 @@ export default function ArticleList({ articles }: Props) {
                 </li>
               </ul>
             </div>
-            <div className="rounded-2xl bg-white px-8 border border-gray-300 py-5 mt-5">
+            <div className="bg-white px-8 border border-gray-300 py-5 mt-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>カテゴリー</h1>
               <nav className="grid gap-4 mt-5 md:mt-5" aria-label="Tabs" role="tablist">
                 <a
                   href="/tags/university"
-                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 rounded-xl border"
+                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 border-gray-300 border"
                   id="tabs-with-card-item-1"
                   data-hs-tab="#tabs-with-card-1"
                   aria-controls="tabs-with-card-1"
@@ -126,7 +131,7 @@ export default function ArticleList({ articles }: Props) {
                 </a>
                 <a
                   href="/tags/programming"
-                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 rounded-xl border"
+                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 border-gray-300 border"
                   id="tabs-with-card-item-1"
                   data-hs-tab="#tabs-with-card-1"
                   aria-controls="tabs-with-card-1"

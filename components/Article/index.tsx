@@ -72,7 +72,7 @@ export default function Article({ data }: Props) {
       <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
         {/* Main Content Area */}
         <div className="lg:col-span-2">
-          <div className="py-8 lg:pe-8">
+          <div className="py-8">
             <div className="space-y-5 lg:space-y-8">
               {/* <a
                 className="inline-flex items-center gap-x-1.5 text-sm text-gray-600 decoration-2 hover:underline"
@@ -99,7 +99,9 @@ export default function Article({ data }: Props) {
                 {/* <TagList tags={data.tags} /> */}
                 <PublishedDate date={data.publishedAt || data.createdAt} />
               </div>
-              <p className="includeBanner text-center border p-3">記事内に広告が含まれています。</p>
+              <p className="includeBanner text-center border border-gray-300 p-3">
+                記事内に広告が含まれています。
+              </p>
 
               <div
                 className={styles.content}
@@ -113,15 +115,15 @@ export default function Article({ data }: Props) {
 
         {/* Sidebar Area */}
         <div className="lg:col-span-1 lg:w-full lg:h-full">
-          <div className="sidebar sticky top-0 start-0 lg:ps-8 py-8">
-            <div className="rounded-2xl bg-white px-8 border py-5">
+          <div className="sidebar sticky top-0 start-0 lg:ps-8 py-7">
+            <div className="bg-white px-8 border border-gray-300 py-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold mb-5`}>検索</h1>
               <SearchField />
             </div>
             {/* Profile Media */}
-            <div className="rounded-2xl bg-white px-8 border py-5 mt-5">
+            <div className="bg-white px-8 border border-gray-300 py-5 mt-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold pb-5`}>
-                この記事を書いた人
+                ブログ運営者
               </h1>
               <Image
                 className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
@@ -184,12 +186,12 @@ export default function Article({ data }: Props) {
                 </li>
               </ul>
             </div>
-            <div className="rounded-2xl bg-white px-8 border py-5 mt-5">
+            <div className="bg-white px-8 border border-gray-300 py-5 mt-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>カテゴリー</h1>
               <nav className="grid gap-4 mt-5 md:mt-5" aria-label="Tabs" role="tablist">
                 <a
                   href="/tags/university"
-                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 rounded-xl border"
+                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 border border-gray-300"
                   id="tabs-with-card-item-1"
                   data-hs-tab="#tabs-with-card-1"
                   aria-controls="tabs-with-card-1"
@@ -207,7 +209,7 @@ export default function Article({ data }: Props) {
                 </a>
                 <a
                   href="/tags/programming"
-                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 rounded-xl border"
+                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:border-blue-500 p-4 md:p-3 border-gray-300"
                   id="tabs-with-card-item-1"
                   data-hs-tab="#tabs-with-card-1"
                   aria-controls="tabs-with-card-1"

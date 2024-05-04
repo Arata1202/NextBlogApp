@@ -10,8 +10,8 @@ import { HomeIcon, UserIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
 
 const headerNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
-  { name: 'プロフィール', href: '/articles/profile', icon: UserIcon },
-  { name: 'お問い合わせ', href: '#', icon: EnvelopeIcon },
+  { name: 'プロフィール', href: '/fixed/profile', icon: UserIcon },
+  { name: 'お問い合わせ', href: '/fixed/contact', icon: EnvelopeIcon },
 ];
 
 export default function Header() {
