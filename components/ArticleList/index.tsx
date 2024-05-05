@@ -1,6 +1,6 @@
 'use client';
 
-import { Article } from '@/libs/microcms';
+import { Article, Tag } from '@/libs/microcms';
 import ArticleListItem from '../ArticleListItem';
 import styles from './index.module.css';
 import SearchField from '../SearchField';
@@ -19,7 +19,13 @@ export default function ArticleList({ articles }: Props) {
   if (articles.length === 0) {
     return <p>記事がありません。</p>;
   }
-  const titleTags = articles[0].tags || [];
+
+  const tagsSet = new Set<Tag>();
+  articles.forEach((article) => {
+    article.tags?.forEach((tag) => tagsSet.add(tag));
+  });
+
+  const showLatest = tagsSet.size > 1;
 
   return (
     <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto mt-20">
@@ -27,7 +33,7 @@ export default function ArticleList({ articles }: Props) {
         {/* Main Content Area */}
         <div className="lg:col-span-2">
           <h1 className="categoryTitle text-3xl font-bold pt-7">
-            {titleTags.length > 0 ? <TagList tags={titleTags} hasLink={false} /> : '最新記事'}
+            {showLatest ? '最新記事' : <TagList tags={Array.from(tagsSet)} hasLink={false} />}
           </h1>
           <ul className={`${styles.main}`}>
             {articles.map((article) => (
