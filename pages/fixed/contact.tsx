@@ -192,13 +192,12 @@ const ContactPage: React.FC = () => {
                       </label>
                       <div className="mt-2.5">
                         <input
-                          placeholder="東洋 太郎"
                           {...register('sei', { required: '※ 氏名を入力してください' })}
                           type="text"
                           name="sei"
                           id="sei"
                           autoComplete="given-name"
-                          className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
                         />
                         {errors.sei && <p className="text-red-500">{errors.sei.message}</p>}
                       </div>
@@ -212,13 +211,12 @@ const ContactPage: React.FC = () => {
                       </label>
                       <div className="mt-2.5">
                         <input
-                          placeholder="タイトル"
                           {...register('mei', { required: '※ 題名を入力してください' })}
                           type="text"
                           name="mei"
                           id="mei"
                           autoComplete="family-name"
-                          className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
                         />
                         {errors.mei && <p className="text-red-500">{errors.mei.message}</p>}
                       </div>
@@ -232,7 +230,6 @@ const ContactPage: React.FC = () => {
                       </label>
                       <div className="mt-2.5">
                         <input
-                          placeholder="example@example.com"
                           {...register('email', {
                             required: '※ メールアドレスを入力してください',
                             pattern: {
@@ -244,7 +241,7 @@ const ContactPage: React.FC = () => {
                           name="email"
                           id="email"
                           autoComplete="email"
-                          className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
                         />
                         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
                       </div>
@@ -258,12 +255,11 @@ const ContactPage: React.FC = () => {
                       </label>
                       <div className="mt-2.5">
                         <textarea
-                          placeholder="お問い合わせです。"
                           {...register('message', { required: '※ 内容を入力してください' })}
                           name="message"
                           id="message"
                           rows={4}
-                          className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 text-gray-800 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 text-gray-800 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
                           defaultValue={''}
                         />
                         {errors.message && <p className="text-red-500">{errors.message.message}</p>}

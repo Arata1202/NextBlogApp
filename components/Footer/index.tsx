@@ -8,7 +8,7 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {}
 const footerNavigation = {
   solutions: [
     { name: 'プロフィール', href: '/fixed/profile' },
-    { name: 'サイトマップ', href: '/articles/sitemap' },
+    { name: 'サイトマップ', href: '/fixed/sitemap' },
   ],
   category: [
     { name: '大学生活', href: '/tags/university' },

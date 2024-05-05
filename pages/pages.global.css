@@ -26,6 +26,10 @@
   .footerMenu {
     text-align: center;
   }
+  /* 目次 */
+  .tableOfContent {
+    width: 100%;
+  }
 }
 
 /* カテゴリーリストページ */
@@ -70,6 +74,7 @@ h2 {
 h3 {
   border: 1px solid lightgray;
   padding: 5px 15px 5px 15px;
+  border-left: 5px solid lightgray;
 }
 a u {
   color: royalblue;
