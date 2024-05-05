@@ -1,7 +1,5 @@
 //最適化済み
 
-'use client';
-
 import React from 'react';
 import { Article, Tag } from '@/libs/microcms';
 import ArticleListItem from '../ArticleListItem';

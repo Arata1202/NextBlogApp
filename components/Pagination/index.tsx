@@ -1,6 +1,7 @@
+//最適化済み
+
 import Link from 'next/link';
-import { useMemo } from 'react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './index.module.css';
 import { LIMIT } from '@/constants';
 
@@ -11,13 +12,12 @@ type Props = {
   q?: string;
 };
 
-const Pagination = React.memo(({ totalCount, current = 1, basePath = '', q }: Props) => {
-  const pages = useMemo(
-    () => Array.from({ length: Math.ceil(totalCount / LIMIT) }, (_, i) => i + 1),
-    [totalCount],
-  );
+const Pagination: React.FC<Props> = React.memo(({ totalCount, current = 1, basePath = '', q }) => {
+  const pages = useMemo(() => {
+    return Array.from({ length: Math.ceil(totalCount / LIMIT) }, (_, i) => i + 1);
+  }, [totalCount]);
 
-  const buildPageUrl = (page: number) => {
+  const getPageLink = (page: number) => {
     return `${basePath}/p/${page}${q ? `?q=${q}` : ''}`;
   };
 
@@ -26,7 +26,7 @@ const Pagination = React.memo(({ totalCount, current = 1, basePath = '', q }: Pr
       {pages.map((p) => (
         <li className={styles.list} key={p}>
           {current !== p ? (
-            <Link href={buildPageUrl(p)}>
+            <Link href={getPageLink(p)}>
               <a className={styles.item}>{p}</a>
             </Link>
           ) : (
@@ -39,5 +39,7 @@ const Pagination = React.memo(({ totalCount, current = 1, basePath = '', q }: Pr
     </ul>
   );
 });
+
+Pagination.displayName = 'Pagination';
 
 export default Pagination;

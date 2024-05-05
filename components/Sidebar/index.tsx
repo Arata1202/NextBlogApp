@@ -1,3 +1,5 @@
+//最適化済み
+
 import SearchField from '../SearchField';
 import Link from 'next/link';
 import Image from 'next/image';
