@@ -26,7 +26,7 @@ export default function ArticleList({ articles }: Props) {
       <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
         {/* Main Content Area */}
         <div className="lg:col-span-2">
-          <h1 className="categoryTitle text-3xl font-bold pt-7 lg:pl-7">
+          <h1 className="categoryTitle text-3xl font-bold pt-7">
             {titleTags.length > 0 ? <TagList tags={titleTags} hasLink={false} /> : '最新記事'}
           </h1>
           <ul className={`${styles.main}`}>
