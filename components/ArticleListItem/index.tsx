@@ -1,5 +1,9 @@
+//最適化済み
+
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { memo } from 'react';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import TagList from '../TagList';
@@ -10,9 +14,17 @@ type Props = {
   article: Article;
 };
 
-export default function ArticleListItem({ article }: Props) {
+function getImageSrcSizes(imageSrc: string) {
+  return {
+    mobileSrcSet: `${imageSrc}?fm=webp&w=414 1x, ${imageSrc}?fm=webp&w=414&dpr=2 2x`,
+    desktopSrcSet: `${imageSrc}?fm=webp&fit=crop&w=240&h=126 1x, ${imageSrc}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`,
+  };
+}
+
+const ArticleListItem = ({ article }: Props) => {
   const imageSrc = article.thumbnail?.url || '/no-image.png';
   const isThumbnailAvailable = !!article.thumbnail;
+  const { mobileSrcSet, desktopSrcSet } = getImageSrcSizes(imageSrc);
 
   return (
     <li className={styles.list}>
@@ -23,15 +35,8 @@ export default function ArticleListItem({ article }: Props) {
         <picture>
           {isThumbnailAvailable && (
             <>
-              <source
-                type="image/webp"
-                media="(max-width: 640px)"
-                srcSet={`${imageSrc}?fm=webp&w=414 1x, ${imageSrc}?fm=webp&w=414&dpr=2 2x`}
-              />
-              <source
-                type="image/webp"
-                srcSet={`${imageSrc}?fm=webp&fit=crop&w=240&h=126 1x, ${imageSrc}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`}
-              />
+              <source type="image/webp" media="(max-width: 640px)" srcSet={mobileSrcSet} />
+              <source type="image/webp" srcSet={desktopSrcSet} />
             </>
           )}
           <Image
@@ -57,4 +62,6 @@ export default function ArticleListItem({ article }: Props) {
       </Link>
     </li>
   );
-}
+};
+
+export default memo(ArticleListItem);

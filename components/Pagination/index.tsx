@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useMemo } from 'react';
+import React from 'react';
 import styles from './index.module.css';
 import { LIMIT } from '@/constants';
 
@@ -10,17 +11,22 @@ type Props = {
   q?: string;
 };
 
-export default function Pagination({ totalCount, current = 1, basePath = '', q }: Props) {
-  const pages = useMemo(() => {
-    return Array.from({ length: Math.ceil(totalCount / LIMIT) }, (_, i) => i + 1);
-  }, [totalCount]);
+const Pagination = React.memo(({ totalCount, current = 1, basePath = '', q }: Props) => {
+  const pages = useMemo(
+    () => Array.from({ length: Math.ceil(totalCount / LIMIT) }, (_, i) => i + 1),
+    [totalCount],
+  );
+
+  const buildPageUrl = (page: number) => {
+    return `${basePath}/p/${page}${q ? `?q=${q}` : ''}`;
+  };
 
   return (
     <ul className={styles.container}>
       {pages.map((p) => (
         <li className={styles.list} key={p}>
           {current !== p ? (
-            <Link href={`${basePath}/p/${p}${q ? `?q=${q}` : ''}`}>
+            <Link href={buildPageUrl(p)}>
               <a className={styles.item}>{p}</a>
             </Link>
           ) : (
@@ -32,4 +38,6 @@ export default function Pagination({ totalCount, current = 1, basePath = '', q }
       ))}
     </ul>
   );
-}
+});
+
+export default Pagination;
