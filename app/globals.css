@@ -12,6 +12,10 @@
   margin-left: 0 !important;
 }
 
+.Date_date__Jlt7B {
+  justify-content: right;
+}
+
 /* 検索 */
 .SearchField_search__ROj75 {
   margin: 0 !important;
@@ -29,6 +33,19 @@
   /* 目次 */
   .tableOfContent {
     width: 100%;
+  }
+  .ArticleListItem_content__MW0IH {
+    max-width: 100% !important;
+  }
+}
+@media (max-width: 882px) and (min-width: 641px) {
+  .ArticleListItem_content__MW0IH {
+    max-width: 45% !important;
+  }
+}
+@media (max-width: 1322px) and (min-width: 882px) {
+  .ArticleListItem_content__MW0IH {
+    max-width: 45% !important;
   }
 }
 

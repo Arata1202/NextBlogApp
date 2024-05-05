@@ -7,25 +7,34 @@ import SearchField from '../SearchField';
 import Image from 'next/image';
 import TagList from '../TagList';
 import Link from 'next/link';
+import {
+  HomeIcon,
+  UserIcon,
+  EnvelopeIcon,
+  FolderIcon,
+  FolderOpenIcon,
+  BellAlertIcon,
+} from '@heroicons/react/24/solid';
+import { useMemo, useCallback } from 'react';
 
 type Props = {
   articles?: Article[];
 };
 
 export default function ArticleList({ articles }: Props) {
-  if (!articles) {
-    return null;
-  }
-  if (articles.length === 0) {
+  const uniqueTags = useMemo(() => {
+    const tagsSet = new Set<Tag>();
+    articles?.forEach((article) => {
+      article.tags?.forEach((tag) => tagsSet.add(tag));
+    });
+    return Array.from(tagsSet);
+  }, [articles]);
+
+  const showLatest = useMemo(() => uniqueTags.length > 1, [uniqueTags]);
+
+  if (!articles || articles.length === 0) {
     return <p>記事がありません。</p>;
   }
-
-  const tagsSet = new Set<Tag>();
-  articles.forEach((article) => {
-    article.tags?.forEach((tag) => tagsSet.add(tag));
-  });
-
-  const showLatest = tagsSet.size > 1;
 
   return (
     <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto mt-20">
@@ -33,7 +42,17 @@ export default function ArticleList({ articles }: Props) {
         {/* Main Content Area */}
         <div className="lg:col-span-2">
           <h1 className="categoryTitle text-3xl font-bold pt-7">
-            {showLatest ? '最新記事' : <TagList tags={Array.from(tagsSet)} hasLink={false} />}
+            {showLatest ? (
+              <div className="flex items-center">
+                <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                <div>最新記事</div>
+              </div>
+            ) : (
+              <div className="flex items-center">
+                <FolderOpenIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                <TagList tags={uniqueTags} hasLink={false} />
+              </div>
+            )}
           </h1>
           <ul className={`${styles.main}`}>
             {articles.map((article) => (

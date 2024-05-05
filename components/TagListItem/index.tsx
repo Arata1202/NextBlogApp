@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Tag } from '@/libs/microcms';
 import styles from './index.module.css';
+import { HomeIcon, UserIcon, EnvelopeIcon, FolderIcon } from '@heroicons/react/24/solid';
 
 type Props = {
   tag: Tag;
@@ -11,9 +12,9 @@ export default function TagListItem({ tag, hasLink = true }: Props) {
   if (hasLink) {
     return (
       <Link href={`/tags/${tag.id}`} className={styles.tag}>
-        #{tag.name}
+        <b>{tag.name}</b>
       </Link>
     );
   }
-  return <span className={styles.tag}>#{tag.name}</span>;
+  return <span className={styles.tag}>{tag.name}</span>;
 }

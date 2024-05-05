@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import React, { useState, useEffect, useRef } from 'react';
 import { Disclosure, Menu, Transition, Dialog } from '@headlessui/react';
 import { Fragment } from 'react';
-import { EnvelopeIcon } from '@heroicons/react/20/solid';
+import { EnvelopeIcon, DocumentMagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -50,7 +50,10 @@ const ContactPage: React.FC = () => {
             <div className="lg:col-span-2">
               <div className="py-8">
                 <div className="space-y-5 lg:space-y-8">
-                  <h1 className="text-3xl font-bold lg:text-3xl">サイトマップ</h1>
+                  <div className="flex items-center">
+                    <DocumentMagnifyingGlassIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                    <h1 className="text-3xl font-bold lg:text-3xl">サイトマップ</h1>
+                  </div>
                   <div className="includeBanner flex justify-end gap-x-5">
                     {/* <TagList tags={data.tags} /> */}
                     <PublishedDate date={formattedDate} />

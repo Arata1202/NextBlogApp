@@ -6,11 +6,11 @@ import Link from 'next/link';
 import styles from './index.module.css';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import { HomeIcon, UserIcon, EnvelopeIcon, FolderIcon } from '@heroicons/react/24/solid';
+import { HomeIcon, UserCircleIcon, EnvelopeIcon, FolderIcon } from '@heroicons/react/24/solid';
 
 const headerNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
-  { name: 'プロフィール', href: '/fixed/profile', icon: UserIcon },
+  { name: 'プロフィール', href: '/fixed/profile', icon: UserCircleIcon },
   { name: 'お問い合わせ', href: '/fixed/contact', icon: EnvelopeIcon },
 ];
 
@@ -92,7 +92,7 @@ export default function Header() {
       </nav>
       <Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <Dialog.Panel className="hamburger fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
@@ -114,20 +114,21 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
+                <h1 className="text-2xl bg-gray-300 font-bold text-center mt-4 p-2">Menu</h1>
                 {headerNavigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
-                    className="mt-10 flex text-sm leading-6 text-gray-900 hover:text-blue-500"
+                    className="mt-10 flex text-2xl leading-6 text-gray-900 hover:text-blue-500"
                   >
-                    <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
-                    {item.name}
+                    <item.icon className="h-5 w-5 mr-2 my-4" aria-hidden="true" />
+                    <b className="text-2xl my-3">{item.name}</b>
                   </a>
                 ))}
                 <Popover className="relative">
                   <Popover.Button className="flex items-center text-sm font-medium text-gray-900 hover:text-blue-500 focus:outline-none">
                     <FolderIcon className="h-5 w-5 mr-2" aria-hidden="true" />
-                    カテゴリー
+                    <b className="text-2xl my-3">カテゴリー</b>
                     <ChevronDownIcon className="ml-1 h-5 w-5 text-gray-400" aria-hidden="true" />
                   </Popover.Button>
                   <Transition
@@ -145,7 +146,7 @@ export default function Header() {
                           <Link
                             key={category.name}
                             href={category.href}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            className="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100"
                             onClick={() => setMobileMenuOpen(false)}
                           >
                             {category.name}
