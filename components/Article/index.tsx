@@ -10,6 +10,14 @@ import SearchField from '../SearchField';
 import ArticleListItem from '../ArticleListItem';
 import Image from 'next/image';
 import Link from 'next/link';
+import TableOfContents from '../../components/TableOfContent';
+import { useState, useEffect } from 'react';
+
+interface Heading {
+  id: string;
+  title: string;
+  level: number;
+}
 
 type Props = {
   data: Article;
@@ -17,6 +25,27 @@ type Props = {
 };
 
 export default function Article({ data }: Props) {
+  //目次
+  const [headings, setHeadings] = useState<Heading[]>([]);
+
+  const extractHeadings = (html: string) => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    const titles: Heading[] = Array.from(tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6')).map(
+      (el) => ({
+        id: el.id,
+        title: el.textContent || '',
+        level: parseInt(el.tagName[1], 10),
+      }),
+    );
+    setHeadings(titles);
+  };
+  useEffect(() => {
+    if (data.content) {
+      extractHeadings(data.content);
+    }
+  }, [data.content]);
+
   return (
     // <main className={styles.main}>
     //   <h1 className={styles.title}>{data.title}</h1>
@@ -96,6 +125,14 @@ export default function Article({ data }: Props) {
 
               <h1 className="text-3xl font-bold lg:text-3xl">{data.title}</h1>
 
+              <img
+                src={data.thumbnail?.url}
+                alt=""
+                className={styles.thumbnail}
+                width={data.thumbnail?.width}
+                height={data.thumbnail?.height}
+              />
+
               <div className="includeBanner flex justify-end gap-x-5">
                 {/* <TagList tags={data.tags} /> */}
                 <PublishedDate date={data.publishedAt || data.createdAt} />
@@ -103,6 +140,16 @@ export default function Article({ data }: Props) {
               <p className="includeBanner text-center border border-gray-300 p-3">
                 記事内に広告が含まれています。
               </p>
+              {data.introduction && (
+                <div
+                  className={styles.content}
+                  dangerouslySetInnerHTML={{
+                    __html: `${formatRichText(data.introduction)}`,
+                  }}
+                />
+              )}
+
+              <div>{headings.length > 0 && <TableOfContents headings={headings} />}</div>
 
               <div
                 className={styles.content}
@@ -240,11 +287,11 @@ export default function Article({ data }: Props) {
                     width="1600"
                     height="900"
                   />
-                  <dl>
-                    <dt className="ArticleListItem_title font-bold">
+                  <div>
+                    <div className="ArticleListItem_title font-bold">
                       【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説
-                    </dt>
-                  </dl>
+                    </div>
+                  </div>
                 </a>
               </ol>
               <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
@@ -256,11 +303,11 @@ export default function Article({ data }: Props) {
                     width="1600"
                     height="900"
                   />
-                  <dl>
-                    <dt className="ArticleListItem_title">
+                  <div>
+                    <div className="ArticleListItem_title">
                       【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】
-                    </dt>
-                  </dl>
+                    </div>
+                  </div>
                 </a>
               </ol>
               <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
@@ -272,11 +319,11 @@ export default function Article({ data }: Props) {
                     width="1600"
                     height="900"
                   />
-                  <dl>
-                    <dt className="ArticleListItem_title">
+                  <div>
+                    <div className="ArticleListItem_title">
                       【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】
-                    </dt>
-                  </dl>
+                    </div>
+                  </div>
                 </a>
               </ol>
             </div>

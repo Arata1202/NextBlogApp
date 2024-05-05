@@ -26,9 +26,9 @@ const ContactPage: React.FC = () => {
 
   return (
     <div>
-      {/* プロフィール */}
+      {/* プライバシーポリシー */}
       <Head>
-        <title>プロフィール</title>
+        <title>プライバシーポリシー</title>
         <meta
           name="description"
           content="あなたのサイトのお問い合わせページです。ご質問やご意見があれば、お気軽にお問い合わせください。"
@@ -50,7 +50,7 @@ const ContactPage: React.FC = () => {
             <div className="lg:col-span-2">
               <div className="py-8">
                 <div className="space-y-5 lg:space-y-8">
-                  <h1 className="text-3xl font-bold lg:text-3xl">プロフィール</h1>
+                  <h1 className="text-3xl font-bold lg:text-3xl">プライバシーポリシー</h1>
                   <div className="includeBanner flex justify-end gap-x-5">
                     {/* <TagList tags={data.tags} /> */}
                     <PublishedDate date={formattedDate} />
@@ -60,13 +60,31 @@ const ContactPage: React.FC = () => {
                   </p>
                 </div>
                 <div className="flex justify-center">
-                  <Image
-                    src="/images/blog/face.webp"
-                    width={300}
-                    height={300}
-                    alt=""
-                    className="mt-10"
-                  />
+                  <nav
+                    aria-label="Table of contents"
+                    className="tableOfContent w-1/2 border border-gray-300 p-4"
+                  >
+                    <h1 className="text-center font-bold text-lg">目次</h1>
+                    <ol style={{ listStyleType: 'none', paddingLeft: 0 }} className="mt-4">
+                      {/* 目次の内容 */}
+                      <li style={{ marginLeft: '0px' }}>
+                        <a href="#heading1" className="hover:text-blue-500">
+                          1. Introduction
+                        </a>
+                      </li>
+                      <li style={{ marginLeft: '20px' }}>
+                        <a href="#heading2" className="hover:text-blue-500">
+                          1.1. Subsection 1
+                        </a>
+                      </li>
+                      <li style={{ marginLeft: '20px' }}>
+                        <a href="#heading3" className="hover:text-blue-500">
+                          1.2. Subsection 2
+                        </a>
+                      </li>
+                      {/* 他の見出しのリストアイテムも同様に追加 */}
+                    </ol>
+                  </nav>
                 </div>
                 <div className={`${styles.content} mt-10`}>
                   <p>

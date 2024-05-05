@@ -15,7 +15,7 @@ const footerNavigation = {
     { name: 'プログラミング', href: '/tags/programming' },
   ],
   company: [
-    { name: 'プライバシーポリシー', href: '/articles/privacy' },
+    { name: 'プライバシーポリシー', href: '/fixed/privacy' },
     // { name: '免責事項', href: '#' },
   ],
   legal: [{ name: 'お問い合わせ', href: '/fixed/contact' }],

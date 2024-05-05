@@ -160,7 +160,7 @@ export default function ArticleList({ articles }: Props) {
             <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
               <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>人気の投稿</h1>
               <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
-                <a className="" href="/articles/profile">
+                <Link className="" href="/articles/profile">
                   <Image
                     src="/images/test/2.webp"
                     alt=""
@@ -173,10 +173,10 @@ export default function ArticleList({ articles }: Props) {
                       【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説
                     </dt>
                   </dl>
-                </a>
+                </Link>
               </ol>
               <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
-                <a className="" href="/articles/profile">
+                <Link className="" href="/articles/profile">
                   <Image
                     src="/images/test/3.webp"
                     alt=""
@@ -189,10 +189,10 @@ export default function ArticleList({ articles }: Props) {
                       【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】
                     </dt>
                   </dl>
-                </a>
+                </Link>
               </ol>
               <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
-                <a className="" href="/articles/profile">
+                <Link className="" href="/articles/profile">
                   <Image
                     src="/images/test/8.webp"
                     alt=""
@@ -205,7 +205,7 @@ export default function ArticleList({ articles }: Props) {
                       【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】
                     </dt>
                   </dl>
-                </a>
+                </Link>
               </ol>
             </div>
             {/* More sidebar content */}
