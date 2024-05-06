@@ -116,7 +116,7 @@ export default function Sidebar() {
             <li>
               <Link className="" href="/articles/profile">
                 <Image
-                  src="/images/test/2.webp"
+                  src="/images/test/1.webp"
                   alt=""
                   className="ArticleListItem_image"
                   width="1600"
@@ -134,7 +134,7 @@ export default function Sidebar() {
             <li>
               <Link className="" href="/articles/profile">
                 <Image
-                  src="/images/test/3.webp"
+                  src="/images/test/2.webp"
                   alt=""
                   className="ArticleListItem_image"
                   width="1600"
@@ -152,7 +152,7 @@ export default function Sidebar() {
             <li>
               <Link className="" href="/articles/profile">
                 <Image
-                  src="/images/test/8.webp"
+                  src="/images/test/3.webp"
                   alt=""
                   className="ArticleListItem_image"
                   width="1600"
