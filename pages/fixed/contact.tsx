@@ -1,23 +1,21 @@
+import React, { useState, useEffect, useRef, useCallback, Fragment } from 'react';
+import { useForm } from 'react-hook-form';
+import { Dialog, Transition } from '@headlessui/react';
+import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { EnvelopeIcon } from '@heroicons/react/20/solid';
+import ReCAPTCHA from 'react-google-recaptcha';
+import '../pages.global.css';
+
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import '../pages.global.css';
-import styles from '../index.module.css';
-import SearchField from '@/components/SearchField';
-import Image from 'next/image';
-import PublishedDate from '@/components/Date';
-import ReCAPTCHA from 'react-google-recaptcha';
-import { useForm } from 'react-hook-form';
-import React, { useState, useEffect, useRef } from 'react';
-import { Disclosure, Menu, Transition, Dialog } from '@headlessui/react';
-import { Fragment } from 'react';
-import { EnvelopeIcon } from '@heroicons/react/20/solid';
-import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
-import Head from 'next/head';
-import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
+import PublishedDate from '@/components/Date';
+
+import styles from '../index.module.css';
+import Head from 'next/head';
 
 const ContactPage: React.FC = () => {
-  //出稿日
+  // Date for demonstration purposes
   const dummyDate = new Date(2024, 4, 4);
   const formattedDate = dummyDate.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -25,24 +23,17 @@ const ContactPage: React.FC = () => {
     day: '2-digit',
   });
 
+  // State management
   const [show, setContactConfirmShow] = useState(false);
-  const cancelButtonRef = useRef(null);
-
-  //recaptcha
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
-  const onChange = (value: string | null) => {
-    console.log('Captcha value:', value);
-    setCaptchaValue(value);
-  };
+  const [formData, setContactFormData] = useState<FormData | null>(null);
+  const [open, setContactDialogOpen] = useState(false);
+
+  // Refs
   const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
-  const resetCaptcha = () => {
-    if (recaptchaRef.current) {
-      recaptchaRef.current.reset();
-    }
-  };
-
-  //バリデーション
+  // Form handling via react-hook-form
   const {
     register,
     handleSubmit,
@@ -60,33 +51,29 @@ const ContactPage: React.FC = () => {
     honeypot: string;
   }
 
-  //問い合わせ
-  const [formData, setContactFormData] = useState<FormData | null>(null);
-  const [open, setContactDialogOpen] = useState(false);
+  const resetCaptcha = useCallback(() => {
+    recaptchaRef.current?.reset();
+  }, []);
+
+  const onChange = (value: string | null) => {
+    console.log('Captcha value:', value);
+    setCaptchaValue(value);
+  };
 
   const onSubmit = (data: FormData) => {
     if (!data.honeypot) {
       setContactFormData(data);
       setContactDialogOpen(true);
-    } else {
-      return;
     }
   };
-  const sendEmail = () => {
+
+  const sendEmail = useCallback(() => {
     if (!formData) return;
 
     fetch('https://microcmsblog.aratasportfolio.com/email.php', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        sei: formData.sei,
-        mei: formData.mei,
-        email: formData.email,
-        company: formData.company,
-        message: formData.message,
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -102,30 +89,30 @@ const ContactPage: React.FC = () => {
         }
       })
       .catch((error) => console.error('Error sending email:', error));
-  };
-  const handleConfirmSend = () => {
+  }, [formData, reset, resetCaptcha]);
+
+  const handleConfirmSend = useCallback(() => {
     const verifyCaptcha = async () => {
       try {
         const response = await fetch('https://microcmsblog.aratasportfolio.com/recaptcha.php', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: `g-recaptcha-response=${captchaValue}`,
         });
         const data = await response.json();
         if (data.success) {
           sendEmail();
         } else {
-          console.error('reCAPTCHA検証に失敗しました:', data.message);
+          console.error('reCAPTCHA validation failed:', data.message);
         }
       } catch (error) {
-        console.error('reCAPTCHAの検証中にエラーが発生しました:', error);
+        console.error('Error during reCAPTCHA validation:', error);
       }
     };
 
     verifyCaptcha();
-  };
+  }, [captchaValue, sendEmail]);
+
   const handleCancel = () => {
     setContactDialogOpen(false);
   };
@@ -135,7 +122,6 @@ const ContactPage: React.FC = () => {
       const timer = setTimeout(() => {
         setContactConfirmShow(false);
       }, 5000);
-
       return () => clearTimeout(timer);
     }
   }, [show]);

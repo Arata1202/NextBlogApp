@@ -4,18 +4,8 @@ import React from 'react';
 import { Article, Tag } from '@/libs/microcms';
 import ArticleListItem from '../ArticleListItem';
 import styles from './index.module.css';
-import SearchField from '../SearchField';
-import Image from 'next/image';
 import TagList from '../TagList';
-import Link from 'next/link';
-import {
-  HomeIcon,
-  UserIcon,
-  EnvelopeIcon,
-  FolderIcon,
-  FolderOpenIcon,
-  BellAlertIcon,
-} from '@heroicons/react/24/solid';
+import { FolderOpenIcon, BellAlertIcon } from '@heroicons/react/24/solid';
 import { useMemo, useCallback } from 'react';
 import Sidebar from '../Sidebar';
 

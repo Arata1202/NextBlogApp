@@ -6,14 +6,8 @@ import { formatRichText } from '@/libs/utils';
 import { type Article } from '@/libs/microcms';
 import PublishedDate from '../Date';
 import styles from './index.module.css';
-import TagList from '../TagList';
-import Profile from '../Profile';
-import SearchField from '../SearchField';
-import ArticleListItem from '../ArticleListItem';
 import Image from 'next/image';
-import Link from 'next/link';
 import TableOfContents from '../../components/TableOfContent';
-import { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar';
 import { useMemo } from 'react';
 
