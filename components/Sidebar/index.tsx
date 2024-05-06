@@ -119,8 +119,8 @@ export default function Sidebar() {
                   src="/images/test/1.webp"
                   alt=""
                   className="ArticleListItem_image"
-                  width="1600"
-                  height="900"
+                  width="800"
+                  height="450"
                 />
                 <div>
                   <div className="ArticleListItem_title font-bold">
@@ -137,8 +137,8 @@ export default function Sidebar() {
                   src="/images/test/2.webp"
                   alt=""
                   className="ArticleListItem_image"
-                  width="1600"
-                  height="900"
+                  width="800"
+                  height="450"
                 />
                 <div>
                   <div className="ArticleListItem_title font-bold">
@@ -155,8 +155,8 @@ export default function Sidebar() {
                   src="/images/test/3.webp"
                   alt=""
                   className="ArticleListItem_image"
-                  width="1600"
-                  height="900"
+                  width="800"
+                  height="450"
                 />
                 <div>
                   <div className="ArticleListItem_title font-bold">
