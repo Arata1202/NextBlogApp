@@ -37,6 +37,10 @@
   .ArticleListItem_content__MW0IH {
     max-width: 100% !important;
   }
+  .hamburger {
+    bottom: initial;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1) !important;
+  }
 }
 @media (max-width: 882px) and (min-width: 641px) {
   .ArticleListItem_content__MW0IH {

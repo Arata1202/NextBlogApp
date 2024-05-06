@@ -14,6 +14,17 @@ const headerNavigation = [
   { name: 'お問い合わせ', href: '/fixed/contact', icon: EnvelopeIcon },
 ];
 
+const mobileTopNavigation = [
+  { name: 'ホーム', href: '/', icon: HomeIcon },
+  { name: 'プロフィール', href: '/fixed/profile', icon: UserCircleIcon },
+];
+
+const mobileBottomNavigation = [
+  { name: 'サイトマップ', href: '/fixed/sitemap', icon: UserCircleIcon },
+  { name: 'プライバシーポリシー', href: '/fixed/privacy', icon: UserCircleIcon },
+  { name: 'お問い合わせ', href: '/fixed/contact', icon: EnvelopeIcon },
+];
+
 const categories = [
   { name: '大学生活', href: '/tags/university' },
   { name: 'プログラミング', href: '/tags/programming' },
@@ -21,6 +32,7 @@ const categories = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  console.log('モバイルメニューの状態：', mobileMenuOpen);
 
   return (
     <header className={`${styles.header} fixed top-0 left-0 w-full bg-white z-30`}>
@@ -33,15 +45,27 @@ export default function Header() {
           <Image width={165} height={30} src="/images/blog/title.webp" alt="ブログタイトル" />
         </a>
         <div className="flex lg:hidden">
-          <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-          </button>
+          {mobileMenuOpen ? (
+            <button
+              type="button"
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span className="sr-only">Close main menu</span>
+              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <span className="sr-only">Open main menu</span>
+              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            </button>
+          )}
         </div>
+
         <div className="hidden lg:flex lg:gap-x-12">
           {headerNavigation.map((item) => (
             <a
@@ -115,20 +139,43 @@ export default function Header() {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 <h1 className="text-2xl bg-gray-300 font-bold text-center mt-4 p-2">Menu</h1>
-                {headerNavigation.map((item) => (
+                {mobileTopNavigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
-                    className="mt-10 flex text-2xl leading-6 text-gray-900 hover:text-blue-500"
+                    className="mt-10 flex text-xl leading-6 text-gray-900 hover:text-blue-500 border-b border-gray-300"
                   >
-                    <item.icon className="h-5 w-5 mr-2 my-4" aria-hidden="true" />
-                    <b className="text-2xl my-3">{item.name}</b>
+                    {/* <item.icon className="h-5 w-5 mr-2 my-4" aria-hidden="true" /> */}
+                    <b className="text-xl my-3">▶︎ {item.name}</b>
                   </a>
                 ))}
-                <Popover className="relative">
+                <div className="mt-10 flex text-xl leading-6 text-gray-900 border-b border-gray-300">
+                  <b className="text-xl my-3">▶︎ カテゴリー</b>
+                </div>
+                {categories.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="ml-5 mt-10 flex text-xl leading-6 text-gray-900 hover:text-blue-500 border-b border-gray-300"
+                  >
+                    {/* <item.icon className="h-5 w-5 mr-2 my-4" aria-hidden="true" /> */}
+                    <b className="text-xl my-3">＞ {item.name}</b>
+                  </a>
+                ))}
+                {mobileBottomNavigation.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="mt-10 flex text-xl leading-6 text-gray-900 hover:text-blue-500 border-b border-gray-300"
+                  >
+                    {/* <item.icon className="h-5 w-5 mr-2 my-4" aria-hidden="true" /> */}
+                    <b className="text-xl my-3">▶︎ {item.name}</b>
+                  </a>
+                ))}
+                {/* <Popover className="relative">
                   <Popover.Button className="flex items-center text-sm font-medium text-gray-900 hover:text-blue-500 focus:outline-none">
                     <FolderIcon className="h-5 w-5 mr-2" aria-hidden="true" />
-                    <b className="text-2xl my-3">カテゴリー</b>
+                    <b className="text-2xl my-3">▶︎ カテゴリー</b>
                     <ChevronDownIcon className="ml-1 h-5 w-5 text-gray-400" aria-hidden="true" />
                   </Popover.Button>
                   <Transition
@@ -155,7 +202,7 @@ export default function Header() {
                       </div>
                     </Popover.Panel>
                   </Transition>
-                </Popover>
+                </Popover> */}
               </div>
             </div>
           </div>
