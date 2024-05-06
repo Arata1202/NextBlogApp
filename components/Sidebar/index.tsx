@@ -70,12 +70,11 @@ export default function Sidebar() {
         </div>
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>カテゴリー</h1>
-          <nav className="grid gap-4 mt-5 md:mt-5" aria-label="Tabs" role="tablist">
+          <nav className="grid gap-4 mt-5 md:mt-5" role="tablist">
             <a
               href="/tags/university"
               className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
               data-hs-tab="#tabs-with-card-1"
-              aria-controls="tabs-with-card-1"
               role="tab"
             >
               <span className="flex">
@@ -92,7 +91,6 @@ export default function Sidebar() {
               href="/tags/programming"
               className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border-gray-300 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
               data-hs-tab="#tabs-with-card-1"
-              aria-controls="tabs-with-card-1"
               role="tab"
             >
               <span className="flex">
