@@ -35,7 +35,27 @@ const ArticleList = ({ articles }: Props) => {
   const showLatest = uniqueTags.length > 1;
 
   if (!articles || articles.length === 0) {
-    return <p>記事がありません。</p>;
+    return (
+      <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto mt-20">
+        <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
+          {/* Main Content Area */}
+          <div className="lg:col-span-2">
+            <h1 className="categoryTitle text-3xl font-bold pt-7">
+              <div className="flex items-center">
+                <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                <div>最新記事</div>
+              </div>
+            </h1>
+            <div className="text-center pt-7">
+              <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                記事はまだありません
+              </h1>
+            </div>
+          </div>
+          <Sidebar />
+        </div>
+      </div>
+    );
   }
 
   return (
