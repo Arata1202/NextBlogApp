@@ -9,7 +9,9 @@ export default function Sidebar() {
     <div className="lg:col-span-1 lg:w-full lg:h-full">
       <div className="sidebar sticky top-0 start-0 lg:ps-8 py-7">
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5">
-          <h1 className={`${styles.profile} text-2xl text-center font-semibold mb-5`}>検索</h1>
+          <h1 className={`${styles.profile} text-2xl text-center font-semibold mb-5`}>
+            キーワードで探す
+          </h1>
           <SearchField />
         </div>
         {/* Profile Media */}
@@ -29,16 +31,6 @@ export default function Sidebar() {
               リアル大学生｜あお
             </Link>
           </h1>
-          <div className="text-lg leading-6 text-gray-800 mt-5">
-            <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
-              <li>20歳</li>
-              <li>千葉県在住</li>
-              <li>文系大学生｜26卒</li>
-              <li>マーケティング学科</li>
-              <li>Webエンジニアインターンに参加（主にLaravelやVue.js）</li>
-              <li>プログラミングは大学生から開始。独学でPHPやJavaScriptなどを習得</li>
-            </ul>
-          </div>
           <ul role="list" className="mt-6 flex justify-center gap-x-6">
             <li>
               <a
@@ -67,6 +59,16 @@ export default function Sidebar() {
               </a>
             </li>
           </ul>
+          <div className="text-lg leading-6 text-gray-800 mt-5">
+            <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
+              <li>20歳</li>
+              <li>千葉県在住</li>
+              <li>文系大学生｜26卒</li>
+              <li>マーケティング学科</li>
+              <li>Webエンジニアインターンに参加（主にLaravelやVue.js）</li>
+              <li>プログラミングは大学生から開始。独学でPHPやJavaScriptなどを習得</li>
+            </ul>
+          </div>
         </div>
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>カテゴリー</h1>
@@ -80,8 +82,9 @@ export default function Sidebar() {
               <span className="flex">
                 <span className="grow">
                   <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">
-                    <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
-                      <li>大学生活</li>
+                    {/* <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}> */}
+                    <ul>
+                      <li>▶︎ 大学生活</li>
                     </ul>
                   </span>
                 </span>
@@ -96,8 +99,9 @@ export default function Sidebar() {
               <span className="flex">
                 <span className="grow">
                   <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">
-                    <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
-                      <li>プログラミング</li>
+                    {/* <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}> */}
+                    <ul>
+                      <li>▶︎ プログラミング</li>
                     </ul>
                   </span>
                 </span>

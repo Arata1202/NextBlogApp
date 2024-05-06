@@ -32,7 +32,6 @@ const categories = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  console.log('モバイルメニューの状態：', mobileMenuOpen);
 
   return (
     <header className={`${styles.header} fixed top-0 left-0 w-full bg-white z-30`}>
@@ -40,7 +39,7 @@ export default function Header() {
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
       >
-        <a href="/" className="-m-1.5 p-1.5">
+        <a href="/" className="-m-1.5 p-1.5 hover:scale-110 transition-transform">
           <span className="sr-only">Your Company</span>
           <Image width={165} height={30} src="/images/blog/title.webp" alt="ブログタイトル" />
         </a>
@@ -143,33 +142,33 @@ export default function Header() {
                   <a
                     key={item.name}
                     href={item.href}
-                    className="mt-10 flex text-xl leading-6 text-gray-900 hover:text-blue-500 border-b border-gray-300"
+                    className="mt-10 flex text-lg leading-6 text-gray-900 hover:text-blue-500 border-b border-gray-300 font-bold p-2"
                   >
                     {/* <item.icon className="h-5 w-5 mr-2 my-4" aria-hidden="true" /> */}
-                    <b className="text-xl my-3">▶︎ {item.name}</b>
+                    ▶︎ {item.name}
                   </a>
                 ))}
-                <div className="mt-10 flex text-xl leading-6 text-gray-900 border-b border-gray-300">
-                  <b className="text-xl my-3">▶︎ カテゴリー</b>
+                <div className="mt-10 flex text-lg leading-6 text-gray-900 border-b border-gray-300 font-bold p-2">
+                  ▶︎ カテゴリー
                 </div>
                 {categories.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
-                    className="ml-5 mt-10 flex text-xl leading-6 text-gray-900 hover:text-blue-500 border-b border-gray-300"
+                    className="ml-5 mt-10 flex text-lg leading-6 text-gray-900 hover:text-blue-500 border-b border-gray-300 font-bold p-2"
                   >
-                    {/* <item.icon className="h-5 w-5 mr-2 my-4" aria-hidden="true" /> */}
-                    <b className="text-xl my-3">＞ {item.name}</b>
+                    {/* <item.icon className="h-5 w-5 mr-2 my-4" aria-hidden="true" /> */}＞{' '}
+                    {item.name}
                   </a>
                 ))}
                 {mobileBottomNavigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
-                    className="mt-10 flex text-xl leading-6 text-gray-900 hover:text-blue-500 border-b border-gray-300"
+                    className="mt-10 flex text-lg leading-6 text-gray-900 hover:text-blue-500 border-b border-gray-300 font-bold p-2"
                   >
                     {/* <item.icon className="h-5 w-5 mr-2 my-4" aria-hidden="true" /> */}
-                    <b className="text-xl my-3">▶︎ {item.name}</b>
+                    ▶︎ {item.name}
                   </a>
                 ))}
                 {/* <Popover className="relative">
