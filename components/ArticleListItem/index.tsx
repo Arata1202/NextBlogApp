@@ -49,16 +49,16 @@ const ArticleListItem = ({ article }: Props) => {
             blurDataURL={imageSrc}
           />
         </picture>
-        <dl className={styles.content}>
-          <dt className={styles.title}>{article.title}</dt>
-          <dd className={styles.description}>{article.description}</dd>
-          <dd className={styles.date}>
+        <div className={styles.content}>
+          <div className={styles.title}>{article.title}</div>
+          <div className={styles.description}>{article.description}</div>
+          <div className={styles.date}>
             <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
             <TagList tags={article.tags} hasLink={true} />
             &nbsp;&nbsp;&nbsp;&nbsp;
             <PublishedDate date={article.publishedAt || article.createdAt} />
-          </dd>
-        </dl>
+          </div>
+        </div>
       </Link>
     </li>
   );

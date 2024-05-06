@@ -74,7 +74,6 @@ export default function Sidebar() {
             <a
               href="/tags/university"
               className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
-              id="tabs-with-card-item-1"
               data-hs-tab="#tabs-with-card-1"
               aria-controls="tabs-with-card-1"
               role="tab"
@@ -92,7 +91,6 @@ export default function Sidebar() {
             <a
               href="/tags/programming"
               className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border-gray-300 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
-              id="tabs-with-card-item-1"
               data-hs-tab="#tabs-with-card-1"
               aria-controls="tabs-with-card-1"
               role="tab"
@@ -113,52 +111,58 @@ export default function Sidebar() {
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>人気の投稿</h1>
           <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
-            <Link className="" href="/articles/profile">
-              <Image
-                src="/images/test/2.webp"
-                alt=""
-                className="ArticleListItem_image"
-                width="1600"
-                height="900"
-              />
-              <dl>
-                <dt className="ArticleListItem_title font-bold">
-                  【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説
-                </dt>
-              </dl>
-            </Link>
+            <li>
+              <Link className="" href="/articles/profile">
+                <Image
+                  src="/images/test/2.webp"
+                  alt=""
+                  className="ArticleListItem_image"
+                  width="1600"
+                  height="900"
+                />
+                <div>
+                  <div className="ArticleListItem_title font-bold">
+                    【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説
+                  </div>
+                </div>
+              </Link>
+            </li>
           </ol>
           <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
-            <Link className="" href="/articles/profile">
-              <Image
-                src="/images/test/3.webp"
-                alt=""
-                className="ArticleListItem_image"
-                width="1600"
-                height="900"
-              />
-              <dl>
-                <dt className="ArticleListItem_title">
-                  【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】
-                </dt>
-              </dl>
-            </Link>
+            <li>
+              <Link className="" href="/articles/profile">
+                <Image
+                  src="/images/test/3.webp"
+                  alt=""
+                  className="ArticleListItem_image"
+                  width="1600"
+                  height="900"
+                />
+                <div>
+                  <div className="ArticleListItem_title font-bold">
+                    【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】
+                  </div>
+                </div>
+              </Link>
+            </li>
           </ol>
           <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
-            <Link className="" href="/articles/profile">
-              <Image
-                src="/images/test/8.webp"
-                alt=""
-                className="ArticleListItem_image"
-                width="1600"
-                height="900"
-              />
-              <dl>
-                <dt className="ArticleListItem_title">
-                  【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】
-                </dt>
-              </dl>
-            </Link>
+            <li>
+              <Link className="" href="/articles/profile">
+                <Image
+                  src="/images/test/8.webp"
+                  alt=""
+                  className="ArticleListItem_image"
+                  width="1600"
+                  height="900"
+                />
+                <div>
+                  <div className="ArticleListItem_title font-bold">
+                    【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】
+                  </div>
+                </div>
+              </Link>
+            </li>
           </ol>
         </div>
         {/* More sidebar content */}
