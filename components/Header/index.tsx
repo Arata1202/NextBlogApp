@@ -26,15 +26,9 @@ export default function Header() {
       >
         <a href="/" className="-m-1.5 p-1.5 hover:scale-110 transition-transform">
           <span className="sr-only">Your Company</span>
-          {BlogTitle.map((item) => (
-            <Image
-              key={item.imageUrl}
-              width={165}
-              height={30}
-              src={item.imageUrl}
-              alt={item.imageAlt}
-            />
-          ))}
+          {/* 修正箇所 */}
+          {/* <Image width={165} height={30} src="/images/blog/title.webp" alt="ブログタイトル" /> */}
+          <Image width={165} height={30} src="/images/sample/3.webp" alt="ブログタイトル" />
         </a>
         <div className="flex lg:hidden">
           {mobileMenuOpen ? (
@@ -143,7 +137,7 @@ export default function Header() {
                 <ul className="mt-5 space-y-6">
                   {mobileTopNavigation.map((item) => (
                     <li key={item.name}>
-                      <Link href={item.href}>
+                      <Link onClick={() => setMobileMenuOpen(false)} href={item.href}>
                         <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
                           <div>▶︎</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
@@ -159,7 +153,7 @@ export default function Header() {
                   </div>
                   {categories.map((item) => (
                     <li key={item.name}>
-                      <Link href={item.href}>
+                      <Link onClick={() => setMobileMenuOpen(false)} href={item.href}>
                         <div className="ml-5 flex items-center py-1 text-base font-medium text-gray-900 border-b border-gray-300 hover:text-blue-500">
                           <div>{'>'}</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
@@ -170,7 +164,7 @@ export default function Header() {
                   ))}
                   {mobileBottomNavigation.map((item) => (
                     <li key={item.name}>
-                      <Link href={item.href}>
+                      <Link onClick={() => setMobileMenuOpen(false)} href={item.href}>
                         <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
                           <div>▶︎</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
