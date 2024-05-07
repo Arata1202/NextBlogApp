@@ -49,7 +49,6 @@ const ArticleListItem = ({ article }: Props) => {
             // height={isThumbnailAvailable ? article.thumbnail?.height : 630}
             placeholder="blur"
             blurDataURL={imageSrc}
-            loading="eager"
           />
         </picture>
         <div className={styles.content}>
