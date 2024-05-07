@@ -50,34 +50,6 @@ export default function Sidebar() {
               </Link>
             </h1>
           ))}
-          {UserProfile.map((item) => (
-            <h1
-              key={item.profileTitle}
-              className={`${styles.profile} text-2xl text-center font-semibold pb-5`}
-            >
-              {item.profileTitle}
-            </h1>
-          ))}
-          {UserProfile.map((item) => (
-            <Image
-              key={item.imageUrl}
-              className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
-              src={item.imageUrl}
-              alt={item.imageAlt}
-              width={100}
-              height={100}
-            />
-          ))}
-          {UserProfile.map((item) => (
-            <h1
-              key={item.profileTitle}
-              className="mt-6 text-2xl text-center font-semibold leading-7 tracking-tight text-gray-800"
-            >
-              <Link href={item.profileHref} className="hover:text-blue-500">
-                {item.profileName}
-              </Link>
-            </h1>
-          ))}
           <ul role="list" className="mt-6 flex justify-center gap-x-6">
             {SocialIcon.map((icon, index) => (
               <li key={index}>
