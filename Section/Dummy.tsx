@@ -119,6 +119,13 @@ export const PopularPost = [
   },
 ];
 
+// コピーライト
+export const copyRight = [
+  {
+    title: '&copy; Copyright © 2024 サンプル All Rights Reserved.',
+  },
+];
+
 // import { HomeIcon, UserCircleIcon, EnvelopeIcon, FolderOpenIcon } from '@heroicons/react/24/solid';
 
 // type SocialIconType = {
@@ -238,5 +245,12 @@ export const PopularPost = [
 //     postHref: '/',
 //     imageHref: '/images/post/3.webp',
 //     imageAlt: 'サムネイル',
+//   },
+// ];
+
+// // コピーライト
+// export const copyRight = [
+//   {
+//     title: '&copy; Copyright © 2024 リアル大学生 All Rights Reserved.',
 //   },
 // ];

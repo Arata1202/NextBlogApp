@@ -1,6 +1,6 @@
 import styles from './index.module.css';
 import Image from 'next/image';
-import { BlogTitle } from '@/Section/Dummy';
+import { BlogTitle, copyRight } from '@/Section/Dummy';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {}
 
@@ -141,10 +141,11 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
-          <p className={`text-xs leading-5 text-gray-500`}>
-            &copy; Copyright © 2023-2024 サンプルサンプル All Rights Reserved.
-            {/* &copy; Copyright © 2023-2024 リアル大学生 All Rights Reserved. */}
-          </p>
+          {copyRight.map((item) => (
+            <p key={item.title} className={`text-xs leading-5 text-gray-500`}>
+              {item.title}
+            </p>
+          ))}
         </div>
       </div>
     </footer>

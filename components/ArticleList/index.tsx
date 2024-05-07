@@ -10,7 +10,7 @@ import { useMemo, useCallback } from 'react';
 import Sidebar from '../Sidebar';
 
 const tabs = [
-  { name: '全て', href: '/', current: false },
+  { name: '最新記事', href: '/', current: false },
   { name: '大学生活', href: '/tags/university', current: false },
   { name: 'プログラミング', href: '/tags/programming', current: false },
 ];
