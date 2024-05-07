@@ -323,7 +323,7 @@ const ContactPage: React.FC = () => {
                     <br />
                     連絡先：
                     <Link href="/fixed/contact" className="text-blue-500 hover:text-blue-700">
-                      https://mochaccinoblog.com/contact/
+                      https://realunivlog.com/contact/
                     </Link>
                   </p>
                 </div>

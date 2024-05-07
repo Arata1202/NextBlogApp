@@ -126,8 +126,9 @@ const ArticleList = ({ articles }: Props) => {
             ))}
           </ul>
         </div>
-
-        <Sidebar />
+        <div className="mobile">
+          <Sidebar />
+        </div>
       </div>
     </div>
   );

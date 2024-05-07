@@ -2,8 +2,6 @@
 
 'use client';
 
-'use client';
-
 import SearchField from '../SearchField';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,7 +11,7 @@ import { SocialIcon, CategoryList, PopularPost } from '@/Section/Dummy';
 export default function Sidebar() {
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
-      <div className="sidebar sticky top-0 start-0 lg:ps-8 py-7">
+      <div className="sidebar sticky top-0 start-0 pt-7">
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5">
           <h1 className={`${styles.profile} text-2xl text-center font-semibold mb-5`}>
             キーワードで探す
@@ -53,7 +51,7 @@ export default function Sidebar() {
           <ul role="list" className="mt-6 flex justify-center gap-x-6">
             {SocialIcon.map((icon, index) => (
               <li key={index}>
-                <a href={icon.href} className="text-gray-400 hover:text-blue-500">
+                <a target="blank" href={icon.href} className="text-gray-400 hover:text-blue-500">
                   <span className="sr-only">{icon.name}</span>
                   <icon.icon className="h-8 w-8" aria-hidden="true" />
                 </a>
@@ -70,14 +68,6 @@ export default function Sidebar() {
                 </div>
               ))}
             </ul>
-            {/* <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
-              <li>20歳</li>
-              <li>千葉県在住</li>
-              <li>文系大学生｜26卒</li>
-              <li>マーケティング学科</li>
-              <li>Webエンジニアインターンに参加（主にLaravelやVue.js）</li>
-              <li>プログラミングは大学生から開始。独学でPHPやJavaScriptなどを習得</li>
-            </ul> */}
           </div>
         </div>
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
