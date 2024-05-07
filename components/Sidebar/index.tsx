@@ -59,15 +59,15 @@ export default function Sidebar() {
             ))}
           </ul>
           <div className="text-lg leading-6 text-gray-800 mt-5">
-            <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
+            <div>
               {UserProfile.map((item, index) => (
-                <div key={index}>
+                <ul key={index} style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
                   {item.profileIntroduction.map((intro, introIndex) => (
                     <li key={introIndex}>{intro.sentence}</li>
                   ))}
-                </div>
+                </ul>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
