@@ -30,7 +30,7 @@ const ArticleListItem = ({ article }: Props) => {
     <li className={styles.list}>
       <Link
         href={`/articles/${article.id}`}
-        className={`${styles.link} p-5 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1`}
+        className={`${styles.link} p-1 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1`}
       >
         <picture>
           {isThumbnailAvailable && (
