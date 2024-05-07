@@ -6,36 +6,14 @@ import Link from 'next/link';
 import styles from './index.module.css';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import { HeaderFooter } from '@/Section/Dummy';
+import { FolderIcon } from '@heroicons/react/24/solid';
+import { BlogTitle } from '@/Section/Dummy';
 import {
-  HomeIcon,
-  UserCircleIcon,
-  EnvelopeIcon,
-  FolderIcon,
-  FolderOpenIcon,
-} from '@heroicons/react/24/solid';
-
-const headerNavigation = [
-  { name: 'ホーム', href: '/', icon: HomeIcon },
-  { name: 'プロフィール', href: '/fixed/profile', icon: UserCircleIcon },
-  { name: 'お問い合わせ', href: '/fixed/contact', icon: EnvelopeIcon },
-];
-
-const mobileTopNavigation = [
-  { name: 'ホーム', href: '/', icon: HomeIcon },
-  { name: 'プロフィール', href: '/fixed/profile', icon: UserCircleIcon },
-];
-
-const mobileBottomNavigation = [
-  { name: 'サイトマップ', href: '/fixed/sitemap', icon: UserCircleIcon },
-  { name: 'プライバシーポリシー', href: '/fixed/privacy', icon: UserCircleIcon },
-  { name: 'お問い合わせ', href: '/fixed/contact', icon: EnvelopeIcon },
-];
-
-const categories = [
-  { name: '大学生活', href: '/tags/university', icon: FolderOpenIcon },
-  { name: 'プログラミング', href: '/tags/programming', icon: FolderOpenIcon },
-];
+  headerNavigation,
+  mobileTopNavigation,
+  mobileBottomNavigation,
+  categories,
+} from '@/Section/Dummy';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -48,7 +26,7 @@ export default function Header() {
       >
         <a href="/" className="-m-1.5 p-1.5 hover:scale-110 transition-transform">
           <span className="sr-only">Your Company</span>
-          {HeaderFooter.map((item) => (
+          {BlogTitle.map((item) => (
             <Image
               key={item.imageUrl}
               width={165}

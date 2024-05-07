@@ -80,7 +80,7 @@ const ArticleList = ({ articles }: Props) => {
         <div className="lg:col-span-2">
           <h1 className="categoryTitle text-3xl font-bold pt-7">
             {showLatest ? (
-              <div className="flex items-center mt-2">
+              <div className="flex items-center pb-2 pt-2">
                 <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
                 <div>最新記事</div>
               </div>
