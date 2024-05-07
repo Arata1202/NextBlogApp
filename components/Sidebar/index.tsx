@@ -36,6 +36,7 @@ export default function Sidebar() {
               alt={item.imageAlt}
               width={100}
               height={100}
+              priority
             />
           ))}
           {UserProfile.map((item) => (
