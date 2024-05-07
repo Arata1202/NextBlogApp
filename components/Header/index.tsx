@@ -47,7 +47,9 @@ export default function Header() {
       >
         <a href="/" className="-m-1.5 p-1.5 hover:scale-110 transition-transform">
           <span className="sr-only">Your Company</span>
-          <Image width={165} height={30} src="/images/blog/title.webp" alt="ブログタイトル" />
+          {/* 修正箇所 */}
+          {/* <Image width={165} height={30} src="/images/blog/title.webp" alt="ブログタイトル" /> */}
+          <Image width={165} height={30} src="/images/sample/3.webp" alt="ブログタイトル" />
         </a>
         <div className="flex lg:hidden">
           {mobileMenuOpen ? (

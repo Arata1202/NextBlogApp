@@ -21,14 +21,25 @@ export default function Sidebar() {
           </h1>
           <Image
             className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
-            src="/images/blog/face.webp"
+            src="/images/sample/2.webp"
             alt=""
             width={100}
             height={100}
           />
+          {/* <Image
+            className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
+            src="/images/blog/face.webp"
+            alt=""
+            width={100}
+            height={100}
+          /> */}
           <h1 className="mt-6 text-2xl text-center font-semibold leading-7 tracking-tight text-gray-800">
-            <Link href="/fixed/profile" className="hover:text-blue-500">
+            {/* 修正箇所 */}
+            {/* <Link href="/fixed/profile" className="hover:text-blue-500">
               リアル大学生｜あお
+            </Link> */}
+            <Link href="/fixed/profile" className="hover:text-blue-500">
+              ダミーさん
             </Link>
           </h1>
           <ul role="list" className="mt-6 flex justify-center gap-x-6">
@@ -60,14 +71,23 @@ export default function Sidebar() {
             </li>
           </ul>
           <div className="text-lg leading-6 text-gray-800 mt-5">
+            {/* 修正箇所 */}
             <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
+              <li>ダミーです</li>
+              <li>ダミーです</li>
+              <li>ダミーです</li>
+              <li>ダミーです</li>
+              <li>ダミーです</li>
+              <li>ダミーです</li>
+            </ul>
+            {/* <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
               <li>20歳</li>
               <li>千葉県在住</li>
               <li>文系大学生｜26卒</li>
               <li>マーケティング学科</li>
               <li>Webエンジニアインターンに参加（主にLaravelやVue.js）</li>
               <li>プログラミングは大学生から開始。独学でPHPやJavaScriptなどを習得</li>
-            </ul>
+            </ul> */}
           </div>
         </div>
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
@@ -116,15 +136,19 @@ export default function Sidebar() {
             <li>
               <Link className="" href="/articles/profile">
                 <Image
-                  src="/images/test/1.webp"
+                  // src="/images/test/1.webp"
+                  src="/images/sample/6.webp"
                   alt=""
                   className="ArticleListItem_image"
                   width="800"
                   height="450"
                 />
                 <div>
-                  <div className="ArticleListItem_title font-bold">
+                  {/* <div className="ArticleListItem_title font-bold">
                     【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説
+                  </div> */}
+                  <div className="ArticleListItem_title font-bold">
+                    サンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプル
                   </div>
                 </div>
               </Link>
@@ -134,15 +158,19 @@ export default function Sidebar() {
             <li>
               <Link className="" href="/articles/profile">
                 <Image
-                  src="/images/test/2.webp"
+                  // src="/images/test/2.webp"
+                  src="/images/sample/4.webp"
                   alt=""
                   className="ArticleListItem_image"
                   width="800"
                   height="450"
                 />
                 <div>
-                  <div className="ArticleListItem_title font-bold">
+                  {/* <div className="ArticleListItem_title font-bold">
                     【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】
+                  </div> */}
+                  <div className="ArticleListItem_title font-bold">
+                    サンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプル
                   </div>
                 </div>
               </Link>
@@ -152,15 +180,19 @@ export default function Sidebar() {
             <li>
               <Link className="" href="/articles/profile">
                 <Image
-                  src="/images/test/3.webp"
+                  src="/images/sample/5.webp"
+                  // src="/images/test/3.webp"
                   alt=""
                   className="ArticleListItem_image"
                   width="800"
                   height="450"
                 />
                 <div>
-                  <div className="ArticleListItem_title font-bold">
+                  {/* <div className="ArticleListItem_title font-bold">
                     【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】
+                  </div> */}
+                  <div className="ArticleListItem_title font-bold">
+                    サンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプル
                   </div>
                 </div>
               </Link>

@@ -53,7 +53,9 @@ export default function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <a href="/" className="underLogo">
-              <Image width={165} height={30} src="/images/blog/title.webp" alt="ブログタイトル" />
+              {/* 修正箇所 */}
+              {/* <Image width={165} height={30} src="/images/blog/title.webp" alt="ブログタイトル" /> */}
+              <Image width={165} height={30} src="/images/sample/3.webp" alt="ブログタイトル" />
             </a>
             <div className="flex space-x-6 underLogo">
               {footerNavigation.social.map((item) => (
@@ -67,7 +69,7 @@ export default function Footer() {
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div className="footerMenu">
-                <h1 className="text-sm font-semibold leading-6 text-gray-900">リアル大学生</h1>
+                <h1 className="text-sm font-semibold leading-6 text-gray-900">ブログについて</h1>
                 <ul role="list" className="mt-6 space-y-4">
                   {footerNavigation.solutions.map((item) => (
                     <li key={item.name}>
@@ -133,7 +135,8 @@ export default function Footer() {
         </div>
         <div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
           <p className={`text-xs leading-5 text-gray-500`}>
-            &copy; Copyright © 2023-2024 リアル大学生 All Rights Reserved.
+            &copy; Copyright © 2023-2024 サンプルサンプル All Rights Reserved.
+            {/* &copy; Copyright © 2023-2024 リアル大学生 All Rights Reserved. */}
           </p>
         </div>
       </div>
