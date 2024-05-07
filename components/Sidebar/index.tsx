@@ -1,9 +1,12 @@
 //最適化済み
 
+'use client';
+
 import SearchField from '../SearchField';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './index.module.css';
+import { UserProfile } from '@/Section/Dummy';
 export default function Sidebar() {
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
@@ -16,32 +19,34 @@ export default function Sidebar() {
         </div>
         {/* Profile Media */}
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
-          <h1 className={`${styles.profile} text-2xl text-center font-semibold pb-5`}>
-            ブログ運営者
-          </h1>
-          <Image
-            className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
-            src="/images/sample/2.webp"
-            alt=""
-            width={100}
-            height={100}
-          />
-          {/* <Image
-            className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
-            src="/images/blog/face.webp"
-            alt=""
-            width={100}
-            height={100}
-          /> */}
-          <h1 className="mt-6 text-2xl text-center font-semibold leading-7 tracking-tight text-gray-800">
-            {/* 修正箇所 */}
-            {/* <Link href="/fixed/profile" className="hover:text-blue-500">
-              リアル大学生｜あお
-            </Link> */}
-            <Link href="/fixed/profile" className="hover:text-blue-500">
-              ダミーさん
-            </Link>
-          </h1>
+          {UserProfile.map((item) => (
+            <h1
+              key={item.profileTitle}
+              className={`${styles.profile} text-2xl text-center font-semibold pb-5`}
+            >
+              {item.profileTitle}
+            </h1>
+          ))}
+          {UserProfile.map((item) => (
+            <Image
+              key={item.imageUrl}
+              className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
+              src={item.imageUrl}
+              alt={item.imageAlt}
+              width={100}
+              height={100}
+            />
+          ))}
+          {UserProfile.map((item) => (
+            <h1
+              key={item.profileTitle}
+              className="mt-6 text-2xl text-center font-semibold leading-7 tracking-tight text-gray-800"
+            >
+              <Link href={item.profileHref} className="hover:text-blue-500">
+                {item.profileName}
+              </Link>
+            </h1>
+          ))}
           <ul role="list" className="mt-6 flex justify-center gap-x-6">
             <li>
               <a
@@ -71,14 +76,14 @@ export default function Sidebar() {
             </li>
           </ul>
           <div className="text-lg leading-6 text-gray-800 mt-5">
-            {/* 修正箇所 */}
             <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
-              <li>ダミーです</li>
-              <li>ダミーです</li>
-              <li>ダミーです</li>
-              <li>ダミーです</li>
-              <li>ダミーです</li>
-              <li>ダミーです</li>
+              {UserProfile.map((item, index) => (
+                <li key={index}>
+                  {item.profileIntroduction.map((intro, introIndex) => (
+                    <li key={introIndex}>{intro.sentence}</li>
+                  ))}
+                </li>
+              ))}
             </ul>
             {/* <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
               <li>20歳</li>

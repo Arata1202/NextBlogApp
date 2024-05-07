@@ -1,5 +1,6 @@
 import styles from './index.module.css';
 import Image from 'next/image';
+import { HeaderFooter } from '@/Section/Dummy';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {}
 
@@ -53,9 +54,15 @@ export default function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <a href="/" className="underLogo">
-              {/* 修正箇所 */}
-              {/* <Image width={165} height={30} src="/images/blog/title.webp" alt="ブログタイトル" /> */}
-              <Image width={165} height={30} src="/images/sample/3.webp" alt="ブログタイトル" />
+              {HeaderFooter.map((item) => (
+                <Image
+                  key={item.imageUrl}
+                  width={165}
+                  height={30}
+                  src={item.imageUrl}
+                  alt={item.imageAlt}
+                />
+              ))}
             </a>
             <div className="flex space-x-6 underLogo">
               {footerNavigation.social.map((item) => (

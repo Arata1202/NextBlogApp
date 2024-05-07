@@ -6,6 +6,7 @@ import Link from 'next/link';
 import styles from './index.module.css';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { HeaderFooter } from '@/Section/Dummy';
 import {
   HomeIcon,
   UserCircleIcon,
@@ -47,9 +48,15 @@ export default function Header() {
       >
         <a href="/" className="-m-1.5 p-1.5 hover:scale-110 transition-transform">
           <span className="sr-only">Your Company</span>
-          {/* 修正箇所 */}
-          {/* <Image width={165} height={30} src="/images/blog/title.webp" alt="ブログタイトル" /> */}
-          <Image width={165} height={30} src="/images/sample/3.webp" alt="ブログタイトル" />
+          {HeaderFooter.map((item) => (
+            <Image
+              key={item.imageUrl}
+              width={165}
+              height={30}
+              src={item.imageUrl}
+              alt={item.imageAlt}
+            />
+          ))}
         </a>
         <div className="flex lg:hidden">
           {mobileMenuOpen ? (
