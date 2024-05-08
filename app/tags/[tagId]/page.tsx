@@ -2,6 +2,7 @@ import { getList, getTag } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import Pagination from '@/components/Pagination';
 import ArticleList from '@/components/ArticleList';
+import Sidebar from '@/components/Sidebar';
 
 type Props = {
   params: {
@@ -22,6 +23,9 @@ export default async function Page({ params }: Props) {
     <>
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} basePath={`/tags/${tagId}`} />
+      <div className="pc">
+        <Sidebar />
+      </div>
     </>
   );
 }

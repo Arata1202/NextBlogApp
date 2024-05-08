@@ -1,6 +1,7 @@
 import { getList } from '@/libs/microcms';
 import ArticleList from '@/components/ArticleList';
 import Pagination from '@/components/Pagination';
+import Sidebar from '@/components/Sidebar';
 
 type Props = {
   searchParams: {
@@ -19,6 +20,9 @@ export default async function Page({ searchParams }: Props) {
     <>
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} basePath="/search" q={searchParams.q} />
+      <div className="pc">
+        <Sidebar />
+      </div>
     </>
   );
 }

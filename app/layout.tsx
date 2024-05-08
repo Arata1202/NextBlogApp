@@ -5,20 +5,19 @@ import Footer from '@/components/Footer';
 import Nav from '@/components/Nav';
 import './globals.css';
 import styles from './layout.module.css';
-import Head from 'next/head';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
-  title: 'Simple Blog',
-  description: 'A simple blog presented by microCMS',
+  title: 'リアル大学生',
+  description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
   openGraph: {
-    title: 'Simple Blog',
-    description: 'A simple blog presented by microCMS',
-    images: '/ogp.png',
+    title: 'リアル大学生',
+    description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
+    images: '/ogp.webp',
   },
-  alternates: {
-    canonical: '/',
-  },
+  // alternates: {
+  //   canonical: '/',
+  // },
 };
 
 type Props = {
@@ -31,18 +30,17 @@ export default async function RootLayout({ children }: Props) {
   });
   return (
     <html lang="ja">
-      <Head>
-        <meta charSet="utf-8" />
+      <head>
         {/* 変動 */}
-        <title>リアル大学生</title>
+        {/* <title>リアル大学生</title> */}
         {/* 変動 */}
-        <meta
+        {/* <meta
           name="description"
           content="大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。"
-        />
+        /> */}
         <link rel="canonical" href="https://realunivlog.com" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes" />
+        {/* <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes" /> */}
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
         {/* ファビコン */}
         <link
@@ -73,13 +71,13 @@ export default async function RootLayout({ children }: Props) {
         {/* OG */}
         <meta property="og:url" content="https://realunivlog.com" />
         {/* 変動 */}
-        <meta property="og:title" content="リアル大学生" />
+        {/* <meta property="og:title" content="リアル大学生" /> */}
         <meta property="og:type" content="blog" />
         {/* 変動 */}
-        <meta
+        {/* <meta
           property="og:description"
           content="大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。"
-        />
+        /> */}
         <meta
           property="og:image"
           content="https://realunivlog.com/images/head/realstudent512.png"
@@ -89,7 +87,7 @@ export default async function RootLayout({ children }: Props) {
         <meta name="twitter:site" content="@Aokumoblog" />
         <meta property="og:site_name" content="リアル大学生" />
         <meta property="og:locale" content="ja_JP" />
-      </Head>
+      </head>
       <body>
         <Header />
         {/* <Nav tags={tags.contents} /> */}
