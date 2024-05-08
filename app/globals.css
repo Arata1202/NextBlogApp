@@ -46,6 +46,9 @@
     padding-top: 10px;
     padding-bottom: 10px;
   }
+  .articleListArea {
+    margin-top: 45px;
+  }
 }
 
 /* @media (max-width: 882px) and (min-width: 641px) {
