@@ -94,6 +94,7 @@ export default async function RootLayout({ children }: Props) {
         {/* <Nav tags={tags.contents} /> */}
         <main className={styles.main}>{children}</main>
         <Footer />
+        <SpeedInsights />
       </body>
     </html>
   );
