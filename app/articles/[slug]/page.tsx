@@ -19,10 +19,10 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   });
 
   return {
-    title: data.title,
+    title: data.title + '｜リアル大学生',
     description: data.description,
     openGraph: {
-      title: data.title,
+      title: data.title + '｜リアル大学生',
       description: data.description,
       images: [data?.thumbnail?.url || ''],
     },
