@@ -27,7 +27,7 @@ const Pagination: React.FC<Props> = React.memo(({ totalCount, current = 1, baseP
         <li className={styles.list} key={p}>
           {current !== p ? (
             <Link href={getPageLink(p)}>
-              <a className={styles.item}>{p}</a>
+              <p className={styles.item}>{p}</p>
             </Link>
           ) : (
             <span className={`${styles.item} ${styles.current}`} aria-current="page">
