@@ -41,7 +41,7 @@ const PrivacyPage: React.FC = () => {
           <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
             {/* Main Content Area */}
             <div className="lg:col-span-2">
-              <div className="py-8">
+              <div className="">
                 <div className="space-y-5 lg:space-y-8">
                   <div className="flex items-center">
                     <InformationCircleIcon className="h-8 w-8 mr-2" aria-hidden="true" />
