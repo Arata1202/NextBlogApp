@@ -104,7 +104,7 @@ const ArticleList = ({ articles }: Props) => {
                     tab.current ? 'text-gray-900' : 'text-gray-800 hover:text-gray-700',
                     tabIdx === 0 ? 'rounded-l-lg' : '',
                     tabIdx === tabs.length - 1 ? 'rounded-r-lg' : '',
-                    'tabItem group relative min-w-0 flex-1 overflow-hidden bg-white py-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10',
+                    'tabItem group relative min-w-0 flex-1 overflow-hidden bg-white py-4 text-center text-sm font-medium hover:text-blue-500 focus:z-10',
                   )}
                   aria-current={tab.current ? 'page' : undefined}
                 >
