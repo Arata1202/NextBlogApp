@@ -1,17 +1,18 @@
+'use client';
+
 import React, { useState, useEffect, useRef, useCallback, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { EnvelopeIcon } from '@heroicons/react/20/solid';
 import ReCAPTCHA from 'react-google-recaptcha';
-import '../pages.global.css';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
 import PublishedDate from '@/components/Date';
 
-import styles from '../index.module.css';
+import styles from './index.module.css';
 import Head from 'next/head';
 
 const ContactPage: React.FC = () => {

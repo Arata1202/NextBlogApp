@@ -1,7 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import '../pages.global.css';
-import styles from '../index.module.css';
+import styles from './index.module.css';
 import PublishedDate from '@/components/Date';
 import React from 'react';
 import { DocumentMagnifyingGlassIcon } from '@heroicons/react/20/solid';
@@ -9,7 +8,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 
-const ContactPage: React.FC = () => {
+const SitemapPage: React.FC = () => {
   //出稿日
   const dummyDate = new Date(2024, 4, 4);
   const formattedDate = dummyDate.toLocaleDateString('en-US', {
@@ -119,4 +118,4 @@ const ContactPage: React.FC = () => {
   );
 };
 
-export default ContactPage;
+export default SitemapPage;

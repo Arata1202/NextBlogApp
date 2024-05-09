@@ -1,7 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import '../pages.global.css';
-import styles from '../index.module.css';
+import styles from './index.module.css';
 import Image from 'next/image';
 import PublishedDate from '@/components/Date';
 import React from 'react';
@@ -9,7 +8,7 @@ import { UserCircleIcon } from '@heroicons/react/20/solid';
 import Head from 'next/head';
 import Sidebar from '@/components/Sidebar';
 
-const ContactPage: React.FC = () => {
+const ProfilePage: React.FC = () => {
   //出稿日
   const dummyDate = new Date(2024, 4, 4);
   const formattedDate = dummyDate.toLocaleDateString('en-US', {
@@ -150,4 +149,4 @@ const ContactPage: React.FC = () => {
   );
 };
 
-export default ContactPage;
+export default ProfilePage;

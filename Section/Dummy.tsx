@@ -18,23 +18,23 @@
 // // PC　ヘッダーナビゲーション
 // export const headerNavigation = [
 //   { name: 'ホーム', href: '/', icon: HomeIcon },
-//   { name: 'プロフィール', href: '/fixed/profile', icon: UserCircleIcon },
-//   { name: 'お問い合わせ', href: '/fixed/contact', icon: EnvelopeIcon },
+//   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
+//   { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
 // ];
 
 // // ハンバーガーメニュー
 // export const mobileTopNavigation = [
 //   { name: 'ホーム', href: '/', icon: HomeIcon },
-//   { name: 'プロフィール', href: '/fixed/profile', icon: UserCircleIcon },
+//   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
 // ];
 // export const categories = [
 //   { name: '大学生活', href: '/tags/university', icon: FolderOpenIcon },
 //   { name: 'プログラミング', href: '/tags/programming', icon: FolderOpenIcon },
 // ];
 // export const mobileBottomNavigation = [
-//   { name: 'サイトマップ', href: '/fixed/sitemap', icon: UserCircleIcon },
-//   { name: 'プライバシーポリシー', href: '/fixed/privacy', icon: UserCircleIcon },
-//   { name: 'お問い合わせ', href: '/fixed/contact', icon: EnvelopeIcon },
+//   { name: 'サイトマップ', href: '/sitemap', icon: UserCircleIcon },
+//   { name: 'プライバシーポリシー', href: '/privacy', icon: UserCircleIcon },
+//   { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
 // ];
 
 // // プロフィール
@@ -44,7 +44,7 @@
 //     profileTitle: 'ブログ運営者',
 //     // ユーザー名
 //     profileName: 'ダミーさん',
-//     profileHref: '/fixed/profile',
+//     profileHref: '/profile',
 //     // ユーザー写真
 //     imageUrl: '/images/sample/2.webp',
 //     imageAlt: '筆者のイメージ',
@@ -150,23 +150,23 @@ export const BlogTitle = [
 // PC　ヘッダーナビゲーション
 export const headerNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
-  { name: 'プロフィール', href: '/fixed/profile', icon: UserCircleIcon },
-  { name: 'お問い合わせ', href: '/fixed/contact', icon: EnvelopeIcon },
+  { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
+  { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
 ];
 
 // ハンバーガーメニュー
 export const mobileTopNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
-  { name: 'プロフィール', href: '/fixed/profile', icon: UserCircleIcon },
+  { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
 ];
 export const categories = [
   { name: '大学生活', href: '/tags/university', icon: FolderOpenIcon },
   { name: 'プログラミング', href: '/tags/programming', icon: FolderOpenIcon },
 ];
 export const mobileBottomNavigation = [
-  { name: 'サイトマップ', href: '/fixed/sitemap', icon: UserCircleIcon },
-  { name: 'プライバシーポリシー', href: '/fixed/privacy', icon: UserCircleIcon },
-  { name: 'お問い合わせ', href: '/fixed/contact', icon: EnvelopeIcon },
+  { name: 'サイトマップ', href: '/sitemap', icon: UserCircleIcon },
+  { name: 'プライバシーポリシー', href: '/privacy', icon: UserCircleIcon },
+  { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
 ];
 
 // プロフィール
@@ -176,7 +176,7 @@ export const UserProfile = [
     profileTitle: 'ブログ運営者',
     // ユーザー名
     profileName: 'リアル大学生｜あお',
-    profileHref: '/fixed/profile',
+    profileHref: '/profile',
     // ユーザー写真
     imageUrl: '/images/blog/face.webp',
     imageAlt: '筆者のイメージ',

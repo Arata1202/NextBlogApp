@@ -6,18 +6,18 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {}
 
 const footerNavigation = {
   solutions: [
-    { name: 'プロフィール', href: '/fixed/profile' },
-    { name: 'サイトマップ', href: '/fixed/sitemap' },
+    { name: 'プロフィール', href: '/profile' },
+    { name: 'サイトマップ', href: '/sitemap' },
   ],
   category: [
     { name: '大学生活', href: '/tags/university' },
     { name: 'プログラミング', href: '/tags/programming' },
   ],
   company: [
-    { name: 'プライバシーポリシー', href: '/fixed/privacy' },
+    { name: 'プライバシーポリシー', href: '/privacy' },
     // { name: '免責事項', href: '#' },
   ],
-  legal: [{ name: 'お問い合わせ', href: '/fixed/contact' }],
+  legal: [{ name: 'お問い合わせ', href: '/contact' }],
   social: [
     {
       name: 'Instagram',
