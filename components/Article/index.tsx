@@ -93,11 +93,11 @@ export default function Article({ data }: Props) {
     //   />
     //   <Profile writer={data.writer} />
     // </main>
-    <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto mt-20">
+    <div className="categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
       <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
         {/* Main Content Area */}
         <div className="lg:col-span-2">
-          <div className="py-8">
+          <div className="">
             <div className="space-y-5 lg:space-y-8">
               {/* <a
                 className="inline-flex items-center gap-x-1.5 text-sm text-gray-600 decoration-2 hover:underline"
