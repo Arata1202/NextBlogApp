@@ -8,9 +8,28 @@ type Props = {
   };
 };
 
+export const metadata = {
+  metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
+  title: '',
+  description: '',
+  openGraph: {
+    title: '',
+    description: '',
+    images: '/ogp.webp',
+  },
+  // alternates: {
+  //   canonical: '/',
+  // },
+};
+
 export default async function TagsLayout({ children, params }: Props) {
   const { tagId } = params;
   const tag = await getTag(tagId);
+
+  metadata.title = `${tag.name}｜リアル大学生`;
+  metadata.description = `${tag.name}について解説するカテゴリーです。`;
+  metadata.openGraph.title = `${tag.name}｜リアル大学生`;
+  metadata.openGraph.description = `${tag.name}について解説するカテゴリーです。`;
   return (
     <div>
       {/* <div className="tagTitle"> */}
