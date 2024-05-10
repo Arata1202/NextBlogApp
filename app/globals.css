@@ -136,7 +136,8 @@ a {
   color: inherit;
   text-decoration: none;
 }
-a:focus {
+
+button:focus {
   outline: none;
 }
 
