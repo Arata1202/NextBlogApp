@@ -17,6 +17,10 @@
   }
 }
 
+.categoryTitle {
+  padding-top: 80px !important;
+}
+
 /* スマートフォン用 */
 @media (max-width: 768px) {
   /* フッター */
@@ -46,8 +50,11 @@
     padding-top: 10px;
     padding-bottom: 10px;
   }
-  .articleListArea {
-    margin-top: 45px;
+}
+
+@media (max-width: 640px) {
+  .categoryTitle {
+    padding-top: 56px !important;
   }
 }
 

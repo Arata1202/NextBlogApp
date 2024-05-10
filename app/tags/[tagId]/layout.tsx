@@ -1,6 +1,7 @@
 import { getTag } from '@/libs/microcms';
 import TagListItem from '@/components/TagListItem';
 import styles from './layout.module.css';
+import { FolderOpenIcon } from '@heroicons/react/24/solid';
 
 type Props = {
   children: React.ReactNode;
@@ -15,10 +16,12 @@ export default async function TagsLayout({ children, params }: Props) {
   return (
     <div>
       {/* <div className="tagTitle"> */}
-      {/* <h1 className="text-3xl font-bold lg:text-3xl ml-10 pl-5 pt-3">
-        {tag.name}
-        記事一覧
-      </h1> */}
+      <h1 className="categoryTitle text-3xl font-bold pt-5 max-w-[85rem] sm:px-6 lg:px-8 mx-auto">
+        <div className="flex items-center pb-2 pt-2">
+          <FolderOpenIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+          <div>{tag.name}</div>
+        </div>
+      </h1>
       <div>{children}</div>
     </div>
   );
