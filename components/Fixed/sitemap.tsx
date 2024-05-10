@@ -20,7 +20,7 @@ const SitemapPage: React.FC = () => {
   return (
     <div>
       {/* プロフィール */}
-      <Head>
+      {/* <Head>
         <title>サイトマップ</title>
         <meta
           name="description"
@@ -33,7 +33,7 @@ const SitemapPage: React.FC = () => {
         />
         <meta property="og:image" content="アイキャッチ画像のURL" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </Head> */}
 
       <Header />
       <main className={styles.main}>
@@ -58,22 +58,22 @@ const SitemapPage: React.FC = () => {
                     <h2>固定ページ</h2>
                     <ul>
                       <li>
-                        <Link href="/fixed/contact" className="text-blue-500 hover:text-blue-700">
+                        <Link href="/contact" className="text-blue-500 hover:text-blue-700">
                           お問い合わせ
                         </Link>
                       </li>
                       <li>
-                        <Link href="/fixed/sitemap" className="text-blue-500 hover:text-blue-700">
+                        <Link href="/sitemap" className="text-blue-500 hover:text-blue-700">
                           サイトマップ
                         </Link>
                       </li>
                       <li>
-                        <Link href="/fixed/profile" className="text-blue-500 hover:text-blue-700">
+                        <Link href="/profile" className="text-blue-500 hover:text-blue-700">
                           プロフィール
                         </Link>
                       </li>
                       <li>
-                        <Link href="/fixed/privacy" className="text-blue-500 hover:text-blue-700">
+                        <Link href="/privacy" className="text-blue-500 hover:text-blue-700">
                           プライバシーポリシー
                         </Link>
                       </li>
@@ -81,7 +81,7 @@ const SitemapPage: React.FC = () => {
                     <h2>投稿一覧</h2>
                     <ul>
                       <li>
-                        <Link href="/fixed/contact" className="text-blue-500 hover:text-blue-700">
+                        <Link href="/contact" className="text-blue-500 hover:text-blue-700">
                           例
                         </Link>
                       </li>

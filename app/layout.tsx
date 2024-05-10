@@ -39,38 +39,41 @@ export default async function RootLayout({ children }: Props) {
           name="description"
           content="大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。"
         /> */}
-        <link rel="canonical" href="https://realunivlog.com" />
+        {/* <link rel="canonical" href="https:/realunivlog.vercel.app" /> */}
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         {/* <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes" /> */}
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
         {/* ファビコン */}
         <link
           rel="icon"
-          href="https://realunivlog.com/images/head/16.png"
+          href="https:/realunivlog.vercel.app/images/head/16.png"
           sizes="16x16"
           type="image/png"
         />
         <link
           rel="icon"
-          href="https://realunivlog.com/images/head/32.png"
+          href="https:/realunivlog.vercel.app/images/head/32.png"
           sizes="32x32"
           type="image/png"
         />
         <link
           rel="icon"
-          href="https://realunivlog.com/images/head/48.png"
+          href="https:/realunivlog.vercel.app/images/head/48.png"
           sizes="48x48"
           type="image/png"
         />
         {/* アイコン */}
-        <link rel="apple-touch-icon" href="https://realunivlog.com/images/head/realstudent.png" />
+        <link
+          rel="apple-touch-icon"
+          href="https:/realunivlog.vercel.app/images/head/realstudent.png"
+        />
         <meta
           name="msapplication-TileImage"
-          content="https://realunivlog.com/images/head/realstudent512.png"
+          content="https:/realunivlog.vercel.app/images/head/realstudent512.png"
         />
         <meta name="msapplication-TileColor" content="#F0F0F0" />
         {/* OG */}
-        <meta property="og:url" content="https://realunivlog.com" />
+        <meta property="og:url" content="https:/realunivlog.vercel.app" />
         {/* 変動 */}
         {/* <meta property="og:title" content="リアル大学生" /> */}
         <meta property="og:type" content="blog" />
@@ -81,7 +84,7 @@ export default async function RootLayout({ children }: Props) {
         /> */}
         <meta
           property="og:image"
-          content="https://realunivlog.com/images/head/realstudent512.png"
+          content="https:/realunivlog.vercel.app/images/head/realstudent512.png"
         />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:creator" content="@Aokumoblog" />

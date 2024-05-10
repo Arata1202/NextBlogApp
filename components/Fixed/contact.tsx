@@ -24,17 +24,14 @@ const ContactPage: React.FC = () => {
     day: '2-digit',
   });
 
-  // State management
   const [show, setContactConfirmShow] = useState(false);
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const [formData, setContactFormData] = useState<FormData | null>(null);
   const [open, setContactDialogOpen] = useState(false);
 
-  // Refs
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Form handling via react-hook-form
   const {
     register,
     handleSubmit,
@@ -130,7 +127,7 @@ const ContactPage: React.FC = () => {
   return (
     <div>
       {/* metaデータ */}
-      <Head>
+      {/* <Head>
         <title>お問い合わせ</title>
         <meta
           name="description"
@@ -143,7 +140,7 @@ const ContactPage: React.FC = () => {
         />
         <meta property="og:image" content="アイキャッチ画像のURL" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </Head> */}
       <Header />
       <main className={styles.main}>
         <div className="categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">

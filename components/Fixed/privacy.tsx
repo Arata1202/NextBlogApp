@@ -20,7 +20,7 @@ const PrivacyPage: React.FC = () => {
   return (
     <div>
       {/* プライバシーポリシー */}
-      <Head>
+      {/* <Head>
         <title>プライバシーポリシー</title>
         <meta
           name="description"
@@ -33,7 +33,7 @@ const PrivacyPage: React.FC = () => {
         />
         <meta property="og:image" content="アイキャッチ画像のURL" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </Head> */}
 
       <Header />
       <main className={styles.main}>
@@ -321,8 +321,8 @@ const PrivacyPage: React.FC = () => {
                     サイト運営者：あお
                     <br />
                     連絡先：
-                    <Link href="/fixed/contact" className="text-blue-500 hover:text-blue-700">
-                      https://realunivlog.com/contact/
+                    <Link href="/contact" className="text-blue-500 hover:text-blue-700">
+                      https://realunivlog.vercel.app/contact/
                     </Link>
                   </p>
                 </div>

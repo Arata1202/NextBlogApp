@@ -20,55 +20,55 @@ const ProfilePage: React.FC = () => {
   return (
     <div>
       {/* プロフィール */}
-      <Head>
+      {/* <Head>
         <title>プロフィール｜リアル大学生</title>
         <meta name="description" content="筆者のプロフィールを紹介しています。" />
 
-        <link rel="canonical" href="https://realunivlog.com" />
+        <link rel="canonical" href="https://realunivlog.vercel.app" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
-        {/* ファビコン */}
         <link
           rel="icon"
-          href="https://realunivlog.com/images/head/16.png"
+          href="https://realunivlog.vercel.app/images/head/16.png"
           sizes="16x16"
           type="image/png"
         />
         <link
           rel="icon"
-          href="https://realunivlog.com/images/head/32.png"
+          href="https://realunivlog.vercel.app/images/head/32.png"
           sizes="32x32"
           type="image/png"
         />
         <link
           rel="icon"
-          href="https://realunivlog.com/images/head/48.png"
+          href="https://realunivlog.vercel.app/images/head/48.png"
           sizes="48x48"
           type="image/png"
         />
-        {/* アイコン */}
-        <link rel="apple-touch-icon" href="https://realunivlog.com/images/head/realstudent.png" />
+        <link
+          rel="apple-touch-icon"
+          href="https://realunivlog.vercel.app/images/head/realstudent.png"
+        />
         <meta
           name="msapplication-TileImage"
-          content="https://realunivlog.com/images/head/realstudent512.png"
+          content="https://realunivlog.vercel.app/images/head/realstudent512.png"
         />
         <meta name="msapplication-TileColor" content="#F0F0F0" />
-        {/* OG */}
-        <meta property="og:url" content="https://realunivlog.com/fixed/profile" />
+        <meta property="og:url" content="https://realunivlog.vercel.app/profile" />
         <meta property="og:title" content="リアル大学生" />
         <meta property="og:type" content="blog" />
         <meta property="og:description" content="筆者のプロフィールを紹介しています。" />
         <meta
           property="og:image"
-          content="https://realunivlog.com/images/head/realstudent512.png"
+          content="https://realunivlog.vercel.app/images/head/realstudent512.png"
         />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:creator" content="@Aokumoblog" />
         <meta name="twitter:site" content="@Aokumoblog" />
         <meta property="og:site_name" content="リアル大学生" />
         <meta property="og:locale" content="ja_JP" />
-      </Head>
+      </Head> */}
 
       <Header />
       <main className={styles.main}>
