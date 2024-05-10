@@ -1,6 +1,4 @@
 import { getTag } from '@/libs/microcms';
-import TagListItem from '@/components/TagListItem';
-import styles from './layout.module.css';
 import { FolderOpenIcon } from '@heroicons/react/24/solid';
 
 type Props = {
