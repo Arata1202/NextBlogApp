@@ -72,13 +72,13 @@ const ProfilePage: React.FC = () => {
 
       <Header />
       <main className={styles.main}>
-        <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto mt-20">
+        <div className="categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
           <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
             {/* Main Content Area */}
             <div className="lg:col-span-2">
               <div className="">
                 <div className="space-y-5 lg:space-y-8">
-                  <div className="flex items-center">
+                  <div className="flex items-center py-2">
                     <UserCircleIcon className="h-8 w-8 mr-2" aria-hidden="true" />
                     <h1 className="text-3xl font-bold lg:text-3xl">プロフィール</h1>
                   </div>

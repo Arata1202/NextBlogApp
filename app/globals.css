@@ -18,7 +18,7 @@
 }
 
 .categoryTitle {
-  padding-top: 80px !important;
+  padding-top: 89px !important;
 }
 
 /* スマートフォン用 */
@@ -54,7 +54,7 @@
 
 @media (max-width: 640px) {
   .categoryTitle {
-    padding-top: 56px !important;
+    padding-top: 65px !important;
   }
 }
 

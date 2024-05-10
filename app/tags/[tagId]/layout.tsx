@@ -14,7 +14,7 @@ export default async function TagsLayout({ children, params }: Props) {
   return (
     <div>
       {/* <div className="tagTitle"> */}
-      <h1 className="categoryTitle text-3xl font-bold pt-5 max-w-[85rem] sm:px-6 lg:px-8 mx-auto">
+      <h1 className="categoryTitle text-3xl font-bold pt-5 max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
         <div className="flex items-center pb-2 pt-2">
           <FolderOpenIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           <div>{tag.name}</div>
