@@ -10,6 +10,7 @@ import Image from 'next/image';
 import TableOfContents from '../../components/TableOfContent';
 import Sidebar from '../Sidebar';
 import { useMemo } from 'react';
+import './article.css';
 
 interface Heading {
   id: string;
