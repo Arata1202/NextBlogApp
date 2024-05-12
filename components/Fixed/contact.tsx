@@ -44,7 +44,6 @@ const ContactPage: React.FC = () => {
     company: string;
     tel: string;
     message: string;
-    honeypot: string;
   }
 
   const resetCaptcha = useCallback(() => {
@@ -57,10 +56,8 @@ const ContactPage: React.FC = () => {
   };
 
   const onSubmit = (data: FormData) => {
-    if (!data.honeypot) {
-      setContactFormData(data);
-      setContactDialogOpen(true);
-    }
+    setContactFormData(data);
+    setContactDialogOpen(true);
   };
 
   const sendEmail = useCallback(() => {
@@ -365,7 +362,7 @@ const ContactPage: React.FC = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+            <div className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 mt-16">
               <div className="p-4">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
