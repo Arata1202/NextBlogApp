@@ -318,7 +318,7 @@ const ContactPage: React.FC = () => {
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          お問い合わせの内容は、ポートフォリオの作成者に共有されます。
+                          お問い合わせの内容は、ブログの運営者に送信されます。
                         </p>
                       </div>
                     </div>
