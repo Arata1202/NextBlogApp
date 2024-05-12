@@ -144,15 +144,15 @@ const ContactPage: React.FC = () => {
       <Header />
       <main className={styles.main}>
         <div className="categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
+          <div className="flex items-center py-2">
+            <EnvelopeIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+            <h1 className="text-3xl font-bold lg:text-3xl">お問い合わせ</h1>
+          </div>
           <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
             {/* Main Content Area */}
             <div className="lg:col-span-2">
               <div className="">
                 <div className="space-y-5 lg:space-y-8">
-                  <div className="flex items-center py-2">
-                    <EnvelopeIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                    <h1 className="text-3xl font-bold lg:text-3xl">お問い合わせ</h1>
-                  </div>
                   <div className="includeBanner flex justify-end gap-x-5">
                     {/* <TagList tags={data.tags} /> */}
                     <PublishedDate date={formattedDate} />

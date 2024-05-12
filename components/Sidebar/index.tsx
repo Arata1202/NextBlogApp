@@ -11,7 +11,7 @@ import { SocialIcon, CategoryList, PopularPost } from '@/Section/Dummy';
 export default function Sidebar() {
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
-      <div className="sidebar sticky top-0 start-0 pt-7">
+      <div className="sidebar sticky top-0 start-0">
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5">
           <h1 className={`${styles.profile} text-2xl text-center font-semibold mb-5`}>
             キーワードで探す
