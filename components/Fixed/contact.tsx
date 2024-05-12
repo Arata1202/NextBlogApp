@@ -139,7 +139,7 @@ const ContactPage: React.FC = () => {
       <Header />
       <main className={styles.main}>
         <div className="categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
-          <div className="flex items-center py-2">
+          <div className="flex items-center py-2 mt-2">
             <EnvelopeIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             <h1 className="text-3xl font-bold lg:text-3xl">お問い合わせ</h1>
           </div>
