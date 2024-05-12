@@ -1,4 +1,3 @@
-import { getList } from '@/libs/microcms';
 import Sidebar from '@/components/Sidebar';
 import PrivacyPage from '@/components/Fixed/privacy';
 

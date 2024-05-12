@@ -11,9 +11,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
 import PublishedDate from '@/components/Date';
-
 import styles from './index.module.css';
-import Head from 'next/head';
 
 const ContactPage: React.FC = () => {
   // Date for demonstration purposes

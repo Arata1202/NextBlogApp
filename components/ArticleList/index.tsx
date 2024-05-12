@@ -4,9 +4,8 @@ import React from 'react';
 import { Article, Tag } from '@/libs/microcms';
 import ArticleListItem from '../ArticleListItem';
 import styles from './index.module.css';
-import TagList from '../TagList';
-import { FolderOpenIcon, BellAlertIcon } from '@heroicons/react/24/solid';
-import { useMemo, useCallback } from 'react';
+import { BellAlertIcon } from '@heroicons/react/24/solid';
+import { useMemo } from 'react';
 import Sidebar from '../Sidebar';
 
 const tabs = [
