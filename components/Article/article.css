@@ -14,3 +14,11 @@ a {
 a strong:hover {
   color: black;
 }
+
+.Article_content__m_nzR th {
+  background-color: white !important;
+}
+
+.articleSidebar {
+  margin-top: 60px;
+}
