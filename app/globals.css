@@ -141,9 +141,17 @@ button:focus {
   outline: none;
 }
 
+p {
+  font-size: 18px !important;
+}
+
 ol,
 ul {
   list-style: none;
+}
+
+li {
+  font-size: 18px !important;
 }
 
 /* .categoryTitle {
