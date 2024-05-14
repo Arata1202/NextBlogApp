@@ -2,6 +2,7 @@ import { getList } from '@/libs/microcms';
 import ArticleList from '@/components/ArticleList';
 import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 type Props = {
   searchParams: {
@@ -18,6 +19,12 @@ export default async function Page({ searchParams }: Props) {
 
   return (
     <>
+      <h1 className="categoryTitle text-3xl font-bold pt-5 max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
+        <div className="flex items-center pb-2 pt-2">
+          <MagnifyingGlassIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+          <div>キーワードで探す</div>
+        </div>
+      </h1>
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} basePath="/search" q={searchParams.q} />
       <div className="pc">
