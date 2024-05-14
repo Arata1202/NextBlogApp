@@ -147,9 +147,9 @@ export default function Footer() {
         </div>
         <div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
           {copyRight.map((item) => (
-            <p key={item.title} className={`text-xs leading-5 text-gray-500`}>
+            <h1 key={item.title} className={`text-xs leading-5 text-gray-500`}>
               {item.title}
-            </p>
+            </h1>
           ))}
         </div>
       </div>
