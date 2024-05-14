@@ -4,3 +4,13 @@
   margin: 0 !important;
   margin-top: 24px !important;
 }
+
+a strong {
+  color: royalblue;
+}
+a {
+  text-decoration: none !important;
+}
+a strong:hover {
+  color: black;
+}

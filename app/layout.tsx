@@ -4,7 +4,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import './globals.css';
 import styles from './layout.module.css';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
@@ -77,7 +76,6 @@ export default async function RootLayout({ children }: Props) {
         {/* <Nav tags={tags.contents} /> */}
         <main className={styles.main}>{children}</main>
         <Footer />
-        <SpeedInsights />
       </body>
     </html>
   );
