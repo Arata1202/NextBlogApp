@@ -43,7 +43,7 @@ const ProfilePage: React.FC = () => {
                     src="/images/blog/face.webp"
                     width={300}
                     height={300}
-                    alt=""
+                    alt="筆者のイメージ"
                     className="mt-10"
                   />
                 </div>

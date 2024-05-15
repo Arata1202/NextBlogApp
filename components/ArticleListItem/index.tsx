@@ -41,7 +41,7 @@ const ArticleListItem = ({ article }: Props) => {
           )}
           <Image
             src={imageSrc}
-            alt="タイトルのイメージ"
+            alt="サムネイル"
             className={styles.image}
             width={isThumbnailAvailable ? article.thumbnail?.width : 900}
             height={isThumbnailAvailable ? article.thumbnail?.height : 450}
