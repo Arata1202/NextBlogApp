@@ -4,6 +4,23 @@ import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
+export const metadata = {
+  metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
+  title: 'キーワードで探す｜リアル大学生',
+  description: 'キーワードで記事を検索するページです。',
+  openGraph: {
+    title: 'キーワードで探す｜リアル大学生',
+    description: 'キーワードで記事を検索するページです。',
+    images: '/ogp.webp',
+  },
+  robots: {
+    index: false,
+  },
+  // alternates: {
+  //   canonical: '/',
+  // },
+};
+
 type Props = {
   searchParams: {
     q?: string;

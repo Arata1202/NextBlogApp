@@ -68,12 +68,6 @@ const ArticleList = ({ articles }: Props) => {
                 ))}
               </nav>
             </div>
-            <h1 className="categoryTitle text-3xl font-bold pt-7">
-              <div className="flex items-center">
-                <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                <div>最新記事</div>
-              </div>
-            </h1>
             <div className="text-center pt-7">
               <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
                 記事はまだありません

@@ -13,6 +13,23 @@ type Props = {
   };
 };
 
+export const metadata = {
+  metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
+  title: 'キーワードで探す｜リアル大学生',
+  description: 'キーワードで記事を検索するページです。',
+  openGraph: {
+    title: 'キーワードで探す｜リアル大学生',
+    description: 'キーワードで記事を検索するページです。',
+    images: '/ogp.webp',
+  },
+  robots: {
+    index: false,
+  },
+  // alternates: {
+  //   canonical: '/',
+  // },
+};
+
 export const revalidate = 60;
 
 export default async function Page({ params, searchParams }: Props) {

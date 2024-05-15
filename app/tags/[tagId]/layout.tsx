@@ -11,10 +11,10 @@ type Props = {
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
   title: 'カテゴリー｜リアル大学生',
-  description: 'カテゴリー記事を解説するカテゴリーです。',
+  description: 'カテゴリー記事を解説するページです。',
   openGraph: {
     title: 'カテゴリー｜リアル大学生',
-    description: 'カテゴリー記事を解説するカテゴリーです。',
+    description: 'カテゴリー記事を解説するページです。',
     images: '/ogp.webp',
   },
   // alternates: {
