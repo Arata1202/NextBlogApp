@@ -16,6 +16,9 @@
   height: 36px;
   border-radius: var(--border-radius);
 }
+.item:hover {
+  color: rgb(59 130 246);
+}
 .current {
   background-color: var(--color-current);
 }
