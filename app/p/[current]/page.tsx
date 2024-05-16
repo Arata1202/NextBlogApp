@@ -3,6 +3,7 @@ import { LIMIT } from '@/constants';
 import Pagination from '@/components/Pagination';
 import ArticleList from '@/components/ArticleList';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
+import Sidebar from '@/components/Sidebar';
 
 type Props = {
   params: {
@@ -28,6 +29,9 @@ export default async function Page({ params }: Props) {
       </h1>
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} current={current} />
+      <div className="pc">
+        <Sidebar />
+      </div>
     </>
   );
 }
