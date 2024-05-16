@@ -66,74 +66,10 @@ const SitemapPage: React.FC = () => {
                     <ul>
                       <li>
                         <Link
-                          href="https://realunivlog.netlify.app/articles/student-should-get-car-license"
+                          href="https://realunivlog.netlify.app/articles/study-javascript-recommend-method"
                           className="text-blue-500 hover:text-blue-700"
                         >
-                          【いつ取るの？】大学生の間に運転免許を取得するべき理由について解説【現役大学生】
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="https://realunivlog.netlify.app/articles/study-php-recommend-method"
-                          className="text-blue-500 hover:text-blue-700"
-                        >
-                          【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="https://realunivlog.netlify.app/articles/reality-portfolio-example-make-method"
-                          className="text-blue-500 hover:text-blue-700"
-                        >
-                          【実物あり】ポートフォリオの作り方を例として解説【大学生エンジニア】
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="https://realunivlog.netlify.app/articles/nyuto-hotspring-tsurunoyu-reservation-access"
-                          className="text-blue-500 hover:text-blue-700"
-                        >
-                          【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="https://realunivlog.netlify.app/articles/study-python-recommend-method"
-                          className="text-blue-500 hover:text-blue-700"
-                        >
-                          【勉強法】２週間で習得！Python学習のおすすめロードマップを解説【プログラミング】
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="https://realunivlog.netlify.app/articles/example-inexperience-become-engineer-method"
-                          className="text-blue-500 hover:text-blue-700"
-                        >
-                          【最短】未経験がエンジニアになるまでのロードマップを紹介【プログラミング】
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="https://realunivlog.netlify.app/articles/university-student-real-personal-effects"
-                          className="text-blue-500 hover:text-blue-700"
-                        >
-                          【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="https://realunivlog.netlify.app/articles/after-get-license-should-drive"
-                          className="text-blue-500 hover:text-blue-700"
-                        >
-                          免許を取ったらすぐに運転練習をするべき理由について解説【現役大学生】
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="https://realunivlog.netlify.app/articles/seminar-select-attention"
-                          className="text-blue-500 hover:text-blue-700"
-                        >
-                          【ゼミとは何？】大学生のゼミの選び方の注意点について解説【文系大学生】
+                          【勉強法】最速！JavaScript学習のおすすめロードマップを紹介【プログラミング】
                         </Link>
                       </li>
                       <li>
@@ -146,10 +82,74 @@ const SitemapPage: React.FC = () => {
                       </li>
                       <li>
                         <Link
-                          href="https://realunivlog.netlify.app/articles/study-javascript-recommend-method"
+                          href="https://realunivlog.netlify.app/articles/seminar-select-attention"
                           className="text-blue-500 hover:text-blue-700"
                         >
-                          【勉強法】最速！JavaScript学習のおすすめロードマップを紹介【プログラミング】
+                          【ゼミとは何？】大学生のゼミの選び方の注意点について解説【文系大学生】
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://realunivlog.netlify.app/articles/after-get-license-should-drive"
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          免許を取ったらすぐに運転練習をするべき理由について解説【現役大学生】
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://realunivlog.netlify.app/articles/university-student-real-personal-effects"
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://realunivlog.netlify.app/articles/example-inexperience-become-engineer-method"
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          【最短】未経験がエンジニアになるまでのロードマップを紹介【プログラミング】
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://realunivlog.netlify.app/articles/study-python-recommend-method"
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          【勉強法】２週間で習得！Python学習のおすすめロードマップを解説【プログラミング】
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://realunivlog.netlify.app/articles/nyuto-hotspring-tsurunoyu-reservation-access"
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://realunivlog.netlify.app/articles/reality-portfolio-example-make-method"
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          【実物あり】ポートフォリオの作り方を例として解説【大学生エンジニア】
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://realunivlog.netlify.app/articles/study-php-recommend-method"
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://realunivlog.netlify.app/articles/student-should-get-car-license"
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          【いつ取るの？】大学生の間に運転免許を取得するべき理由について解説【現役大学生】
                         </Link>
                       </li>
                     </ul>
