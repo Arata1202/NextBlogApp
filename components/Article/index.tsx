@@ -11,6 +11,22 @@ import TableOfContents from '../../components/TableOfContent';
 import Sidebar from '../Sidebar';
 import { useMemo } from 'react';
 import './article.css';
+import {
+  TwitterShareButton,
+  TwitterIcon,
+  FacebookShareButton,
+  FacebookIcon,
+  LineShareButton,
+  LineIcon,
+  HatenaShareButton,
+  HatenaIcon,
+  PinterestShareButton,
+  PinterestIcon,
+  RedditShareButton,
+  RedditIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+} from 'react-share';
 
 interface Heading {
   id: string;
@@ -91,6 +107,46 @@ export default function Article({ data }: Props) {
                   __html: `${formatRichText(data.content)}`,
                 }}
               />
+              <div className="text-center text-2xl font-bold pt-10">シェアする</div>
+              <div className="flex justify-center">
+                <TwitterShareButton url={data.url} title={data.title} className="m-1">
+                  <TwitterIcon size={40} round={true} />
+                </TwitterShareButton>
+
+                <FacebookShareButton url={data.url} title={data.title} className="m-1">
+                  <FacebookIcon size={40} round={true} />
+                </FacebookShareButton>
+
+                <LineShareButton url={data.url} title={data.title} className="m-1">
+                  <LineIcon size={40} round={true} />
+                </LineShareButton>
+
+                <HatenaShareButton url={data.url} title={data.title} className="m-1">
+                  <HatenaIcon size={40} round={true} />
+                </HatenaShareButton>
+
+                <PinterestShareButton
+                  url={data.url}
+                  media="画像のURL"
+                  description="説明"
+                  className="m-1"
+                >
+                  <PinterestIcon size={40} round={true} />
+                </PinterestShareButton>
+
+                <RedditShareButton url={data.url} title={data.title} className="m-1">
+                  <RedditIcon size={40} round={true} />
+                </RedditShareButton>
+
+                <LinkedinShareButton
+                  url={data.url}
+                  title={data.title}
+                  summary="要約"
+                  className="m-1"
+                >
+                  <LinkedinIcon size={40} round={true} />
+                </LinkedinShareButton>
+              </div>
             </div>
           </div>
         </div>
