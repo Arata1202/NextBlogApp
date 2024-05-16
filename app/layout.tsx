@@ -32,6 +32,7 @@ export default async function RootLayout({ children }: Props) {
       <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
+        <link rel="manifest" href="/manifest.json" />
         <link
           rel="icon"
           href="https://realunivlog.netlify.app/images/head/16.png"
