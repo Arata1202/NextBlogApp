@@ -306,7 +306,7 @@ const PrivacyPage: React.FC = () => {
                     <br />
                     連絡先：
                     <Link href="/contact" className="text-blue-500 hover:text-blue-700">
-                      https://realunivlog.vercel.app/contact/
+                      https://realunivlog.netlify.app/contact/
                     </Link>
                   </p>
                 </div>

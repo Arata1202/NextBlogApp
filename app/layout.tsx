@@ -34,36 +34,36 @@ export default async function RootLayout({ children }: Props) {
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
         <link
           rel="icon"
-          href="https://realunivlog.vercel.app/images/head/16.png"
+          href="https://realunivlog.netlify.app/images/head/16.png"
           sizes="16x16"
           type="image/png"
         />
         <link
           rel="icon"
-          href="https://realunivlog.vercel.app/images/head/32.png"
+          href="https://realunivlog.netlify.app/images/head/32.png"
           sizes="32x32"
           type="image/png"
         />
         <link
           rel="icon"
-          href="https://realunivlog.vercel.app/images/head/48.png"
+          href="https://realunivlog.netlify.app/images/head/48.png"
           sizes="48x48"
           type="image/png"
         />
         <link
           rel="apple-touch-icon"
-          href="https://realunivlog.vercel.app/images/head/realstudent.png"
+          href="https://realunivlog.netlify.app/images/head/realstudent.png"
         />
         <meta
           name="msapplication-TileImage"
-          content="https://realunivlog.vercel.app/images/head/realstudent512.png"
+          content="https://realunivlog.netlify.app/images/head/realstudent512.png"
         />
         <meta name="msapplication-TileColor" content="#F0F0F0" />
-        <meta property="og:url" content="https://realunivlog.vercel.app" />
+        <meta property="og:url" content="https://realunivlog.netlify.app" />
         <meta property="og:type" content="blog" />
         <meta
           property="og:image"
-          content="https://realunivlog.vercel.app/images/head/realstudent512.png"
+          content="https://realunivlog.netlify.app/images/head/realstudent512.png"
         />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:creator" content="@Aokumoblog" />
