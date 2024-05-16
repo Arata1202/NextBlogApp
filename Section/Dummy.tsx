@@ -130,7 +130,14 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import { HomeIcon, UserCircleIcon, EnvelopeIcon, FolderOpenIcon } from '@heroicons/react/24/solid';
+import {
+  HomeIcon,
+  UserCircleIcon,
+  EnvelopeIcon,
+  FolderOpenIcon,
+  DocumentMagnifyingGlassIcon,
+  InformationCircleIcon,
+} from '@heroicons/react/24/solid';
 
 type SocialIconType = {
   name: string;
@@ -164,8 +171,8 @@ export const categories = [
   { name: 'プログラミング', href: '/tags/programming', icon: FolderOpenIcon },
 ];
 export const mobileBottomNavigation = [
-  { name: 'サイトマップ', href: '/sitemap', icon: UserCircleIcon },
-  { name: 'プライバシーポリシー', href: '/privacy', icon: UserCircleIcon },
+  { name: 'サイトマップ', href: '/sitemap', icon: DocumentMagnifyingGlassIcon },
+  { name: 'プライバシーポリシー', href: '/privacy', icon: InformationCircleIcon },
   { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
 ];
 
