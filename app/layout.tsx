@@ -30,7 +30,6 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="ja">
       <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
         <link rel="manifest" href="/manifest.json" />
         <link
