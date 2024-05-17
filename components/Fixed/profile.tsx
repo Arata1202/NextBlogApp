@@ -7,7 +7,7 @@ import React from 'react';
 import { UserCircleIcon } from '@heroicons/react/20/solid';
 import Sidebar from '@/components/Sidebar';
 
-const ProfilePage: React.FC = () => {
+const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   //出稿日
   const dummyDate = new Date(2024, 4, 4);
   const formattedDate = dummyDate.toLocaleDateString('en-US', {
@@ -89,7 +89,7 @@ const ProfilePage: React.FC = () => {
               </div>
             </div>
             <div className="mobile">
-              <Sidebar />
+              <Sidebar articles={sidebarArticles.contents} />
             </div>
           </div>
         </div>
