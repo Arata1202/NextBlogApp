@@ -39,6 +39,9 @@ export default async function Page({ params, searchParams }: Props) {
     offset: LIMIT * (current - 1),
     q: searchParams.q,
   });
+  const data2 = await getList({
+    limit: LIMIT,
+  });
   return (
     <>
       <ArticleList articles={data.contents} />
@@ -49,7 +52,7 @@ export default async function Page({ params, searchParams }: Props) {
         q={searchParams.q}
       />
       <div className="pc">
-        <Sidebar />
+        <Sidebar articles={data2.contents} />
       </div>
     </>
   );

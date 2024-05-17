@@ -18,13 +18,16 @@ export default async function Page({ params }: Props) {
     limit: LIMIT,
     filters: `tags[contains]${tagId}`,
   });
+  const data2 = await getList({
+    limit: LIMIT,
+  });
   const tag = await getTag(tagId);
   return (
     <>
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} basePath={`/tags/${tagId}`} />
       <div className="pc">
-        <Sidebar />
+        <Sidebar articles={data2.contents} />
       </div>
     </>
   );

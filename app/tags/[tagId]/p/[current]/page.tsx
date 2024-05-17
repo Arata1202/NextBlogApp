@@ -21,12 +21,15 @@ export default async function Page({ params }: Props) {
     offset: LIMIT * (current - 1),
     filters: `tags[contains]${tagId}`,
   });
+  const data2 = await getList({
+    limit: LIMIT,
+  });
   return (
     <>
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} current={current} basePath={`/tags/${tagId}`} />
       <div className="pc">
-        <Sidebar />
+        <Sidebar articles={data2.contents} />
       </div>
     </>
   );

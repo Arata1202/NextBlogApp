@@ -3,6 +3,7 @@ import ArticleList from '@/components/ArticleList';
 import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { LIMIT } from '@/constants';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
@@ -30,6 +31,9 @@ type Props = {
 export const revalidate = 60;
 
 export default async function Page({ searchParams }: Props) {
+  const data2 = await getList({
+    limit: LIMIT,
+  });
   const data = await getList({
     q: searchParams.q,
   });
@@ -45,7 +49,7 @@ export default async function Page({ searchParams }: Props) {
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} basePath="/search" q={searchParams.q} />
       <div className="pc">
-        <Sidebar />
+        <Sidebar articles={data2.contents} />
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import { getList } from '@/libs/microcms';
 import Sidebar from '@/components/Sidebar';
 import SitemapPage from '@/components/Fixed/sitemap';
+import { LIMIT } from '@/constants';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
@@ -19,11 +20,14 @@ export const metadata = {
 export const revalidate = 60;
 
 export default async function Page() {
+  const data = await getList({
+    limit: LIMIT,
+  });
   return (
     <>
       <SitemapPage />
       <div className="pc">
-        <Sidebar />
+        <Sidebar articles={data.contents} />
       </div>
     </>
   );
