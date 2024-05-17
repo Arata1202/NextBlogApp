@@ -1,4 +1,3 @@
-// Sidebar.tsx
 'use client';
 
 import React from 'react';
@@ -9,7 +8,6 @@ import styles from './index.module.css';
 import { UserProfile } from '@/Section/Dummy';
 import { SocialIcon, CategoryList, PopularPost } from '@/Section/Dummy';
 import { Article } from '@/libs/microcms';
-import ArticleListItem from '../ArticleListItem';
 import SidebarArticleListItem from '../SidebarArticleListItem';
 
 type Props = {

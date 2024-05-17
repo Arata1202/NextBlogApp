@@ -89,9 +89,6 @@ export default function Article({ data }: Props) {
                 {/* <TagList tags={data.tags} /> */}
                 <PublishedDate date={data.publishedAt || data.createdAt} />
               </div>
-              <p className="includeBanner text-center border border-gray-300 p-3">
-                記事内に広告が含まれています。
-              </p>
               {data.introduction && (
                 <div
                   className={styles.content}
