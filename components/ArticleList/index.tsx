@@ -74,7 +74,7 @@ const ArticleList = ({ articles }: Props) => {
               </h1>
             </div>
           </div>
-          <Sidebar />
+          <Sidebar articles={articles} />
         </div>
       </div>
     );
