@@ -1,14 +1,31 @@
-//最適化済み
-
+// Sidebar.tsx
 'use client';
 
+import React from 'react';
 import SearchField from '../SearchField';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './index.module.css';
 import { UserProfile } from '@/Section/Dummy';
 import { SocialIcon, CategoryList, PopularPost } from '@/Section/Dummy';
-export default function Sidebar() {
+import { Article } from '@/libs/microcms';
+import ArticleListItem from '../ArticleListItem';
+import SidebarArticleListItem from '../SidebarArticleListItem';
+
+type Props = {
+  articles?: Article[];
+};
+
+export default function Sidebar({ articles }: Props) {
+  const sortedArticles = articles
+    ?.slice()
+    .sort((a, b) => {
+      const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
+      const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
+      return dateB - dateA;
+    })
+    .slice(0, 3);
+
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
       <div className="sidebar sticky top-0 start-0">
@@ -85,7 +102,6 @@ export default function Sidebar() {
                 <span className="flex">
                   <span className="grow">
                     <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">
-                      {/* <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}> */}
                       <ul>
                         <li>{item.name}</li>
                       </ul>
@@ -122,7 +138,18 @@ export default function Sidebar() {
             </ol>
           ))}
         </div>
-        {/* More sidebar content */}
+        <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
+          <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>新着記事</h1>
+          {sortedArticles && sortedArticles.length > 0 ? (
+            <ul>
+              {sortedArticles.map((article) => (
+                <SidebarArticleListItem key={article.id} article={article} />
+              ))}
+            </ul>
+          ) : (
+            <p className="text-center">新着記事はありません</p>
+          )}
+        </div>
       </div>
     </div>
   );

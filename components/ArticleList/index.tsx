@@ -149,7 +149,7 @@ const ArticleList = ({ articles }: Props) => {
           </ul>
         </div>
         <div className="mobile">
-          <Sidebar />
+          <Sidebar articles={articles} />
         </div>
       </div>
     </div>

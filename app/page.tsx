@@ -11,6 +11,7 @@ export default async function Page() {
   const data = await getList({
     limit: LIMIT,
   });
+
   return (
     <>
       <h1 className="categoryTitle text-3xl font-bold pt-5 pb-2 max-w-[85rem] sm:px-6 lg:px-8 mx-auto">
@@ -22,7 +23,7 @@ export default async function Page() {
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} />
       <div className="pc">
-        <Sidebar />
+        <Sidebar articles={data.contents} />
       </div>
     </>
   );
