@@ -145,26 +145,22 @@ const ContactPage: React.FC = () => {
           </div>
           <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
             {/* Main Content Area */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 mb-20">
               <div className="">
                 <div className="space-y-5 lg:space-y-8">
                   <div className="includeBanner flex justify-end gap-x-5">
                     {/* <TagList tags={data.tags} /> */}
                     <PublishedDate date={formattedDate} />
                   </div>
-                  <p className="includeBanner text-center border border-gray-300 p-3">
+                  {/* <p className="includeBanner text-center border border-gray-300 p-3">
                     記事内に広告が含まれています。
-                  </p>
+                  </p> */}
                 </div>
-                <p className="mt-10">
+                <p className="mt-5">
                   当ブログに関するご質問やお気づきの点がございましたら、お気軽にお問い合わせください。
                   お問い合わせから2～3日中にはご返信させていただきます。
                 </p>
-                <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  method="POST"
-                  className="pt-20  py-0 sm:py-10 "
-                >
+                <form onSubmit={handleSubmit(onSubmit)} method="POST" className="pt-5">
                   <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                     <div className="sm:col-span-2">
                       <label
@@ -268,11 +264,12 @@ const ContactPage: React.FC = () => {
                 </form>
               </div>
             </div>
-            <Sidebar />
+            <div className="mobile">
+              <Sidebar />
+            </div>
           </div>
         </div>
       </main>
-      <Footer />
       {/* 送信確認モーダル */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog
