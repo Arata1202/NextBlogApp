@@ -8,7 +8,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 
-const SitemapPage: React.FC = () => {
+const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   //出稿日
   const dummyDate = new Date(2024, 4, 4);
   const formattedDate = dummyDate.toLocaleDateString('en-US', {
@@ -174,7 +174,7 @@ const SitemapPage: React.FC = () => {
               </div>
             </div>
             <div className="mobile">
-              <Sidebar />
+              <Sidebar articles={sidebarArticles.contents} />
             </div>
           </div>
         </div>

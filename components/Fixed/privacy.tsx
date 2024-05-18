@@ -8,7 +8,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 
-const PrivacyPage: React.FC = () => {
+const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   //出稿日
   const dummyDate = new Date(2024, 4, 4);
   const formattedDate = dummyDate.toLocaleDateString('en-US', {
@@ -313,7 +313,7 @@ const PrivacyPage: React.FC = () => {
               </div>
             </div>
             <div className="mobile">
-              <Sidebar />
+              <Sidebar articles={sidebarArticles.contents} />
             </div>
           </div>
         </div>

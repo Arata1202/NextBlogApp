@@ -25,7 +25,7 @@ export default async function Page() {
   });
   return (
     <>
-      <SitemapPage />
+      <SitemapPage sidebarArticles={data} />
       <div className="pc">
         <Sidebar articles={data.contents} />
       </div>

@@ -13,8 +13,7 @@ import Sidebar from '@/components/Sidebar';
 import PublishedDate from '@/components/Date';
 import styles from './index.module.css';
 
-const ContactPage: React.FC = () => {
-  // Date for demonstration purposes
+const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   const dummyDate = new Date(2024, 4, 4);
   const formattedDate = dummyDate.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -265,7 +264,7 @@ const ContactPage: React.FC = () => {
               </div>
             </div>
             <div className="mobile">
-              <Sidebar />
+              <Sidebar articles={sidebarArticles.contents} />
             </div>
           </div>
         </div>
