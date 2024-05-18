@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
-import { getDetail } from '@/libs/microcms';
+import { getDetail, getList } from '@/libs/microcms';
 import Article from '@/components/Article';
+import { LIMIT } from '@/constants';
 
 type Props = {
   params: {
@@ -33,6 +34,9 @@ export default async function Page({ params, searchParams }: Props) {
   const data = await getDetail(params.slug, {
     draftKey: searchParams.dk,
   });
+  const data2 = await getList({
+    limit: LIMIT,
+  });
 
-  return <Article data={data} />;
+  return <Article data={data} articles={data2.contents} />;
 }

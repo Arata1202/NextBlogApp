@@ -3,7 +3,7 @@
 'use client';
 
 import { formatRichText } from '@/libs/utils';
-import { type Article } from '@/libs/microcms';
+import { Article } from '@/libs/microcms';
 import PublishedDate from '../Date';
 import styles from './index.module.css';
 import Image from 'next/image';
@@ -54,7 +54,7 @@ function useExtractHeadings(htmlContent: string): Heading[] {
   }, [htmlContent]);
 }
 
-export default function Article({ data }: Props) {
+export default function Article({ data, articles }: Props) {
   //目次
   const headings = useExtractHeadings(data.content);
 
@@ -148,7 +148,7 @@ export default function Article({ data }: Props) {
           </div>
         </div>
         <div className="articleSidebar">
-          <Sidebar />
+          <Sidebar articles={articles} />
         </div>
       </div>
     </div>
