@@ -137,7 +137,7 @@ export default function Sidebar({ articles }: Props) {
           ))}
         </div>
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
-          <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>新着記事</h1>
+          <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>最新記事</h1>
           {sortedArticles && sortedArticles.length > 0 ? (
             <ul>
               {sortedArticles.map((article) => (
