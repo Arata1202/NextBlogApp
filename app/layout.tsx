@@ -13,7 +13,8 @@ export const metadata = {
   openGraph: {
     title: 'リアル大学生',
     description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
-    images: '/ogp.webp',
+    images: '/images/thumbnail/7.webp',
+    url: 'https://realunivlog.vercel.app',
   },
   // alternates: {
   //   canonical: '/',
@@ -31,8 +32,11 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="ja">
       <head>
+        {/* 共通 */}
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
+        {/* 共通 PWA */}
         <link rel="manifest" href="/manifest.json" />
+        {/* 共通 ファビコン */}
         <link
           rel="icon"
           href="https://realunivlog.vercel.app/images/head/16.png"
@@ -51,21 +55,19 @@ export default async function RootLayout({ children }: Props) {
           sizes="48x48"
           type="image/png"
         />
+        {/* 共通 Appleアイコン */}
         <link
           rel="apple-touch-icon"
           href="https://realunivlog.vercel.app/images/head/realstudent.png"
         />
+        {/* 共通 Windows用アイコン */}
         <meta
           name="msapplication-TileImage"
           content="https://realunivlog.vercel.app/images/head/realstudent512.png"
         />
-        <meta name="msapplication-TileColor" content="#F0F0F0" />
-        <meta property="og:url" content="https://realunivlog.vercel.app" />
+        <meta name="msapplication-TileColor" content="#E0CBBA" />
+        {/* 共通 Twitter用 */}
         <meta property="og:type" content="blog" />
-        <meta
-          property="og:image"
-          content="https://realunivlog.vercel.app/images/head/realstudent512.png"
-        />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:creator" content="@Aokumoblog" />
         <meta name="twitter:site" content="@Aokumoblog" />
