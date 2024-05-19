@@ -165,11 +165,11 @@ export default function Sidebar({ articles }: Props) {
             最新の投稿
           </h1>
           {sortedArticles && sortedArticles.length > 0 ? (
-            <ul>
+            <div>
               {sortedArticles.map((article) => (
                 <SidebarArticleListItem key={article.id} article={article} />
               ))}
-            </ul>
+            </div>
           ) : (
             <p className="text-center">新着記事はありません</p>
           )}
