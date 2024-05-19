@@ -31,7 +31,7 @@ export default async function TagsLayout({ children, params }: Props) {
   metadata.description = `${tag.name}について解説するカテゴリーです。`;
   metadata.openGraph.title = `${tag.name}｜リアル大学生`;
   metadata.openGraph.description = `${tag.name}について解説するカテゴリーです。`;
-  metadata.openGraph.images = `https://realunivlog.vercel.app/images/tags/${tag.id}`;
+  metadata.openGraph.images = `https://realunivlog.vercel.app/images/thumbnail/${tag.id}.webp`;
   metadata.openGraph.url = `https://realunivlog.vercel.app/tags/${tag.id}`;
   return (
     <div>

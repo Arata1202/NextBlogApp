@@ -68,7 +68,7 @@ export default async function RootLayout({ children }: Props) {
         <meta name="msapplication-TileColor" content="#E0CBBA" />
         {/* 共通 Twitter用 */}
         <meta property="og:type" content="blog" />
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@Aokumoblog" />
         <meta name="twitter:site" content="@Aokumoblog" />
         <meta property="og:site_name" content="リアル大学生" />
