@@ -12,7 +12,8 @@ export const metadata = {
   openGraph: {
     title: 'キーワードで探す｜リアル大学生',
     description: 'キーワードで記事を検索するページです。',
-    images: '/ogp.webp',
+    images: '/images/thumbnail/7.webp',
+    url: 'https://realunivlog.vercel.app',
   },
   robots: {
     index: false,

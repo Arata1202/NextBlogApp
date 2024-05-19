@@ -10,7 +10,8 @@ export const metadata = {
   openGraph: {
     title: 'プロフィール｜リアル大学生',
     description: '筆者のプロフィールを紹介しています。',
-    images: '/ogp.webp',
+    images: '/images/thumbnail/2.webp',
+    url: 'https://realunivlog.vercel.app/profile',
   },
   // alternates: {
   //   canonical: '/',

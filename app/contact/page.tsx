@@ -10,7 +10,8 @@ export const metadata = {
   openGraph: {
     title: 'お問い合わせ｜リアル大学生',
     description: 'お問い合わせのフォームを記載しています。',
-    images: '/ogp.webp',
+    images: '/images/thumbnail/1.webp',
+    url: 'https://realunivlog.vercel.app/contact',
   },
   // alternates: {
   //   canonical: '/',

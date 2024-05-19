@@ -10,7 +10,8 @@ export const metadata = {
   openGraph: {
     title: 'サイトマップ｜リアル大学生',
     description: '当ブログのサイトマップを記載しています。',
-    images: '/ogp.webp',
+    images: '/images/thumbnail/3.webp',
+    url: 'https://realunivlog.vercel.app/sitemap',
   },
   // alternates: {
   //   canonical: '/',
