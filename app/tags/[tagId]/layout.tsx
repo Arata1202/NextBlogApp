@@ -1,5 +1,6 @@
 import { getTag } from '@/libs/microcms';
 import { FolderOpenIcon } from '@heroicons/react/24/solid';
+import { Metadata } from 'next';
 
 type Props = {
   children: React.ReactNode;
@@ -8,28 +9,10 @@ type Props = {
   };
 };
 
-// 未検証
-let metadata = {
-  metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
-  title: 'カテゴリー｜リアル大学生',
-  description: 'カテゴリー記事を解説するページです。',
-  openGraph: {
-    title: 'カテゴリー｜リアル大学生',
-    description: 'カテゴリー記事を解説するページです。',
-    images: '/',
-    url: '/',
-  },
-  // alternates: {
-  //   canonical: '/',
-  // },
-};
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const tag = await getTag(params.tagId);
 
-export default async function TagsLayout({ children, params }: Props) {
-  const { tagId } = params;
-  const tag = await getTag(tagId);
-
-  metadata = {
-    metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
+  return {
     title: `${tag.name}｜リアル大学生`,
     description: `${tag.name}について解説するカテゴリーです。`,
     openGraph: {
@@ -38,10 +21,11 @@ export default async function TagsLayout({ children, params }: Props) {
       images: `https://realunivlog.vercel.app/images/thumbnail/${tag.id}.webp`,
       url: `https://realunivlog.vercel.app/tags/${tag.id}`,
     },
-    // alternates: {
-    //   canonical: `https://realunivlog.vercel.app/tags/${tag.id}`,
-    // },
   };
+}
+
+export default async function TagsLayout({ children, params }: Props) {
+  const tag = await getTag(params.tagId);
 
   return (
     <div>
@@ -55,5 +39,3 @@ export default async function TagsLayout({ children, params }: Props) {
     </div>
   );
 }
-
-export { metadata };
