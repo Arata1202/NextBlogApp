@@ -9,6 +9,13 @@ import { UserProfile } from '@/Section/Dummy';
 import { SocialIcon, CategoryList, PopularPost } from '@/Section/Dummy';
 import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
+import {
+  MagnifyingGlassIcon,
+  BellAlertIcon,
+  FolderIcon,
+  BoltIcon,
+  UserCircleIcon,
+} from '@heroicons/react/24/solid';
 
 type Props = {
   articles?: Article[];
@@ -28,7 +35,10 @@ export default function Sidebar({ articles }: Props) {
     <div className="lg:col-span-1 lg:w-full lg:h-full">
       <div className="sidebar sticky top-0 start-0">
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5">
-          <h1 className={`${styles.profile} text-2xl text-center font-semibold mb-5`}>
+          <h1
+            className={`${styles.profile} text-2xl text-center font-semibold mb-5 flex justify-center`}
+          >
+            <MagnifyingGlassIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             キーワードで探す
           </h1>
           <SearchField />
@@ -38,8 +48,9 @@ export default function Sidebar({ articles }: Props) {
           {UserProfile.map((item) => (
             <h1
               key={item.profileTitle}
-              className={`${styles.profile} text-2xl text-center font-semibold pb-5`}
+              className={`${styles.profile} text-2xl text-center font-semibold pb-5 flex justify-center`}
             >
+              <UserCircleIcon className="h-8 w-8 mr-2" aria-hidden="true" />
               {item.profileTitle}
             </h1>
           ))}
@@ -87,7 +98,12 @@ export default function Sidebar({ articles }: Props) {
           </div>
         </div>
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
-          <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>カテゴリー</h1>
+          <h1
+            className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
+          >
+            <FolderIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+            カテゴリー
+          </h1>
           <nav className="grid gap-4 mt-5 md:mt-5" role="tablist">
             {CategoryList.map((item, index) => (
               <a
@@ -112,7 +128,12 @@ export default function Sidebar({ articles }: Props) {
         </div>
 
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
-          <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>人気の投稿</h1>
+          <h1
+            className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
+          >
+            <BoltIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+            人気の投稿
+          </h1>
           {PopularPost.map((item, index) => (
             <ol
               key={item.postName}
@@ -137,7 +158,12 @@ export default function Sidebar({ articles }: Props) {
           ))}
         </div>
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
-          <h1 className={`${styles.profile} text-2xl text-center font-semibold`}>最新記事</h1>
+          <h1
+            className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
+          >
+            <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+            最新の投稿
+          </h1>
           {sortedArticles && sortedArticles.length > 0 ? (
             <ul>
               {sortedArticles.map((article) => (
