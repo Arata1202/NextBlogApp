@@ -14,13 +14,15 @@ type Props = {
 };
 
 export const metadata = {
+  // 未検証
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
-  title: 'キーワードで探す｜リアル大学生',
-  description: 'キーワードで記事を検索するページです。',
+  title: 'リアル大学生',
+  description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
   openGraph: {
-    title: 'キーワードで探す｜リアル大学生',
-    description: 'キーワードで記事を検索するページです。',
-    images: '/ogp.webp',
+    title: 'リアル大学生',
+    description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
+    images: '/images/thumbnail/7.webp',
+    url: 'https://realunivlog.vercel.app',
   },
   robots: {
     index: false,

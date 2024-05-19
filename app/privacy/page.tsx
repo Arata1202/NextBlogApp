@@ -4,6 +4,7 @@ import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 
 export const metadata = {
+  // 検証OK
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
   title: 'プライバシーポリシー・免責事項｜リアル大学生',
   description: 'プライバシーポリシーと免責事項を記載しています。',
@@ -13,6 +14,8 @@ export const metadata = {
     images: '/images/thumbnail/4.webp',
     url: 'https://realunivlog.vercel.app/privacy',
   },
+  // noindex不要
+
   // alternates: {
   //   canonical: '/',
   // },

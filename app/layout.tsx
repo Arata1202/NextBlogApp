@@ -7,6 +7,7 @@ import './globals.css';
 import styles from './layout.module.css';
 
 export const metadata = {
+  // 検証 OK
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
   title: 'リアル大学生',
   description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
@@ -16,6 +17,8 @@ export const metadata = {
     images: '/images/thumbnail/7.webp',
     url: 'https://realunivlog.vercel.app',
   },
+  // noindex 不要
+
   // alternates: {
   //   canonical: '/',
   // },
@@ -32,11 +35,11 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="ja">
       <head>
-        {/* 共通 */}
+        {/* 共通 OK */}
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
-        {/* 共通 PWA */}
+        {/* 共通 PWA OK */}
         <link rel="manifest" href="/manifest.json" />
-        {/* 共通 ファビコン */}
+        {/* 共通 ファビコン OK */}
         <link
           rel="icon"
           href="https://realunivlog.vercel.app/images/head/16.png"
@@ -55,18 +58,18 @@ export default async function RootLayout({ children }: Props) {
           sizes="48x48"
           type="image/png"
         />
-        {/* 共通 Appleアイコン */}
+        {/* 共通 Appleアイコン OK */}
         <link
           rel="apple-touch-icon"
           href="https://realunivlog.vercel.app/images/head/realstudent.png"
         />
-        {/* 共通 Windows用アイコン */}
+        {/* 共通 Windows用アイコン OK */}
         <meta
           name="msapplication-TileImage"
           content="https://realunivlog.vercel.app/images/head/realstudent512.png"
         />
         <meta name="msapplication-TileColor" content="#E0CBBA" />
-        {/* 共通 Twitter用 */}
+        {/* 共通 Twitter用 OK */}
         <meta property="og:type" content="blog" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@Aokumoblog" />

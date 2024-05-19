@@ -4,6 +4,7 @@ import SitemapPage from '@/components/Fixed/sitemap';
 import { LIMIT } from '@/constants';
 
 export const metadata = {
+  // 検証済み
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
   title: 'サイトマップ｜リアル大学生',
   description: '当ブログのサイトマップを記載しています。',
@@ -13,6 +14,8 @@ export const metadata = {
     images: '/images/thumbnail/3.webp',
     url: 'https://realunivlog.vercel.app/sitemap',
   },
+  // noindex不要
+
   // alternates: {
   //   canonical: '/',
   // },

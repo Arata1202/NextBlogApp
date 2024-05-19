@@ -20,6 +20,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   });
 
   return {
+    //検証 OK
     title: data.title + '｜リアル大学生',
     description: data.description,
     openGraph: {
@@ -28,6 +29,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       images: [data?.thumbnail?.url || ''],
       url: data.url,
     },
+
+    // noindex 不要
   };
 }
 
