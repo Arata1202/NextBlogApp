@@ -117,12 +117,14 @@ export default function Sidebar({ articles }: Props) {
                   <span className="grow">
                     <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">
                       <ul>
-                        <div className="flex justify-center">
-                          <item.icon className="w-12 h-12" aria-hidden="true" />
-                        </div>
-                        <div className="flex justify-center mt-2">
-                          <li>{item.name}</li>
-                        </div>
+                        <li>
+                          <div className="flex justify-center">
+                            <item.icon className="w-12 h-12" aria-hidden="true" />
+                          </div>
+                          <div className="flex justify-center mt-2">
+                            <div>{item.name}</div>
+                          </div>
+                        </li>
                       </ul>
                     </span>
                   </span>
