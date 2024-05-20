@@ -22,7 +22,7 @@ export const metadata = {
     title: 'リアル大学生',
     description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
     images: '/images/thumbnail/7.webp',
-    url: 'https://realunivlog.vercel.app',
+    url: 'https://realunivlog.com',
   },
   robots: {
     index: false,
