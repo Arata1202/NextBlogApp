@@ -14,7 +14,7 @@ const ScrollTopButton: React.FC = () => {
   return (
     <button
       onClick={scrollToTop}
-      className="fixed z-50 inline-flex items-center bg-white justify-center w-5 h-5 text-white shadow hover:bg-gray-300 hover:bg-opacity-40 transition-opacity duration-300 border border-gray-300"
+      className="fixed z-50 inline-flex items-center bg-white justify-center w-5 h-5 text-white shadow hover:bg-white duration-300 border border-gray-300"
       aria-label="Scroll to top"
       style={{
         transition: 'opacity 0.3s, visibility 0.3s',
@@ -25,7 +25,7 @@ const ScrollTopButton: React.FC = () => {
       }}
     >
       <ChevronDoubleUpIcon
-        className="h-4 w-4 text-black"
+        className="h-4 w-4 text-black hover:text-blue-500"
         aria-hidden="true"
         style={{ height: '25px', width: '25px' }}
       />
