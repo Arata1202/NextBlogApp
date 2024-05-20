@@ -9,13 +9,12 @@
 
 .link {
   display: flex;
-  gap: 100px;
+  gap: 10px;
 }
 
 .image {
-  width: 130%;
   height: auto;
-  max-width: 130%;
+  max-width: 260px;
 }
 
 .description {
@@ -23,7 +22,7 @@
 }
 
 .content {
-  max-width: 490px;
+  max-width: 100%;
 }
 
 .title {
@@ -32,12 +31,23 @@
   margin-bottom: 0.5rem;
 }
 
+@media (max-width: 1023px) and (min-width: 641px) {
+  .image {
+    height: auto;
+    max-width: 220px;
+  }
+  .content {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 640px) {
   .link {
     display: block;
   }
   .image {
     width: 100%;
+    max-width: 100%;
     height: auto;
     margin-bottom: 1rem;
   }
