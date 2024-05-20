@@ -52,6 +52,12 @@
   }
 }
 
+@media (min-width: 641px) and (max-width: 1023px) {
+  .sidebarArticleList {
+    display: flex !important;
+  }
+}
+
 @media (max-width: 640px) {
   .categoryTitle {
     padding-top: 65px !important;

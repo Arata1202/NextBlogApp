@@ -14,7 +14,7 @@
 
 .image {
   height: auto;
-  max-width: 260px;
+  max-width: 300px;
 }
 
 .description {
@@ -34,13 +34,31 @@
 @media (max-width: 1023px) and (min-width: 641px) {
   .image {
     height: auto;
-    max-width: 220px;
+    max-width: 300px;
+  }
+  .content {
+    max-width: 100%;
+  }
+}
+@media (max-width: 1081px) and (min-width: 1023px) {
+  .image {
+    height: auto;
+    max-width: 250px;
   }
   .content {
     max-width: 100%;
   }
 }
 
+@media (max-width: 717px) and (min-width: 641px) {
+  .image {
+    height: auto;
+    max-width: 200px;
+  }
+  .content {
+    max-width: 100%;
+  }
+}
 @media (max-width: 640px) {
   .link {
     display: block;

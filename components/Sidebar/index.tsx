@@ -127,52 +127,54 @@ export default function Sidebar({ articles }: Props) {
           </nav>
         </div>
 
-        <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
-          <h1
-            className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
-          >
-            <BoltIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-            人気の投稿
-          </h1>
-          {PopularPost.map((item, index) => (
-            <ol
-              key={item.postName}
-              className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        <div className="sidebarArticleList">
+          <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
+            <h1
+              className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
             >
-              <li>
-                <Link className="" href={item.postHref}>
-                  <Image
-                    src={item.imageHref}
-                    alt={item.imageAlt}
-                    className="ArticleListItem_image"
-                    width="800"
-                    height="450"
-                    key={index}
-                  />
-                  <div>
-                    <div className="ArticleListItem_title font-bold">{item.postName}</div>
-                  </div>
-                </Link>
-              </li>
-            </ol>
-          ))}
-        </div>
-        <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
-          <h1
-            className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
-          >
-            <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-            最新の投稿
-          </h1>
-          {sortedArticles && sortedArticles.length > 0 ? (
-            <div>
-              {sortedArticles.map((article) => (
-                <SidebarArticleListItem key={article.id} article={article} />
-              ))}
-            </div>
-          ) : (
-            <p className="text-center">新着記事はありません</p>
-          )}
+              <BoltIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+              人気の投稿
+            </h1>
+            {PopularPost.map((item, index) => (
+              <ol
+                key={item.postName}
+                className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+              >
+                <li>
+                  <Link className="" href={item.postHref}>
+                    <Image
+                      src={item.imageHref}
+                      alt={item.imageAlt}
+                      className="ArticleListItem_image"
+                      width="800"
+                      height="450"
+                      key={index}
+                    />
+                    <div>
+                      <div className="ArticleListItem_title font-bold">{item.postName}</div>
+                    </div>
+                  </Link>
+                </li>
+              </ol>
+            ))}
+          </div>
+          <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
+            <h1
+              className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
+            >
+              <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+              最新の投稿
+            </h1>
+            {sortedArticles && sortedArticles.length > 0 ? (
+              <div>
+                {sortedArticles.map((article) => (
+                  <SidebarArticleListItem key={article.id} article={article} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-center">新着記事はありません</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
