@@ -62,7 +62,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
   const sendEmail = useCallback(() => {
     if (!formData) return;
 
-    fetch('https://microcmsblog.aratasportfolio.com/email.php', {
+    fetch('https://realunivlog.com/api/email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
@@ -86,7 +86,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
   const handleConfirmSend = useCallback(() => {
     const verifyCaptcha = async () => {
       try {
-        const response = await fetch('https://microcmsblog.aratasportfolio.com/recaptcha.php', {
+        const response = await fetch('https://realunivlog.com/api/recaptcha', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: `g-recaptcha-response=${captchaValue}`,
