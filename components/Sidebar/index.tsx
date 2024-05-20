@@ -104,11 +104,11 @@ export default function Sidebar({ articles }: Props) {
             <FolderIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             カテゴリー
           </h1>
-          <nav className="grid gap-4 mt-5 md:mt-5" role="tablist">
+          <nav className="flex gap-4 mt-5 md:mt-5" role="tablist">
             {CategoryList.map((item, index) => (
               <a
                 href={item.href}
-                className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+                className="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
                 data-hs-tab="#tabs-with-card-1"
                 role="tab"
                 key={item.name}
@@ -117,7 +117,12 @@ export default function Sidebar({ articles }: Props) {
                   <span className="grow">
                     <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">
                       <ul>
-                        <li>{item.name}</li>
+                        <div className="flex justify-center">
+                          <item.icon className="w-12 h-12" aria-hidden="true" />
+                        </div>
+                        <div className="flex justify-center mt-2">
+                          <li>{item.name}</li>
+                        </div>
                       </ul>
                     </span>
                   </span>

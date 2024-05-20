@@ -17,6 +17,10 @@
   }
 }
 
+.sidebarCategory {
+  width: 50%;
+}
+
 .categoryTitle {
   padding-top: 89px !important;
 }

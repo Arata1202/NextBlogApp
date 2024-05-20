@@ -139,6 +139,8 @@ import {
   InformationCircleIcon,
 } from '@heroicons/react/24/solid';
 
+import { CodeBracketIcon, CommandLineIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
+
 type SocialIconType = {
   name: string;
   href: string;
@@ -228,12 +230,14 @@ export const SocialIcon = [
 // カテゴリー サイドバー
 export const CategoryList = [
   {
-    name: '▶︎ 大学生活',
+    name: '大学生活',
     href: '/tags/university',
+    icon: AcademicCapIcon,
   },
   {
-    name: '▶︎ プログラミング',
+    name: 'プログラミング',
     href: '/tags/programming',
+    icon: CommandLineIcon,
   },
 ];
 
