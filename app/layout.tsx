@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import './globals.css';
 import styles from './layout.module.css';
+import ScrollTopButton from '@/components/Common/ScrollToTop/page';
 
 export const metadata = {
   // 検証 OK
@@ -32,6 +33,13 @@ export default async function RootLayout({ children }: Props) {
   const tags = await getTagList({
     limit: LIMIT,
   });
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
   return (
     <html lang="ja">
       <head>
@@ -79,6 +87,7 @@ export default async function RootLayout({ children }: Props) {
         {/* <Nav tags={tags.contents} /> */}
         <main className={styles.main}>{children}</main>
         <Footer />
+        <ScrollTopButton />
         <SpeedInsights />
       </body>
     </html>
