@@ -15,7 +15,7 @@ export const metadata = {
     title: 'リアル大学生',
     description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
     images: '/images/thumbnail/7.webp',
-    url: 'https://realunivlog.vercel.app',
+    url: 'https://realunivlog.com',
   },
   // noindex 不要
 
@@ -42,31 +42,28 @@ export default async function RootLayout({ children }: Props) {
         {/* 共通 ファビコン OK */}
         <link
           rel="icon"
-          href="https://realunivlog.vercel.app/images/head/16.png"
+          href="https://realunivlog.com/images/head/16.png"
           sizes="16x16"
           type="image/png"
         />
         <link
           rel="icon"
-          href="https://realunivlog.vercel.app/images/head/32.png"
+          href="https://realunivlog.com/images/head/32.png"
           sizes="32x32"
           type="image/png"
         />
         <link
           rel="icon"
-          href="https://realunivlog.vercel.app/images/head/48.png"
+          href="https://realunivlog.com/images/head/48.png"
           sizes="48x48"
           type="image/png"
         />
         {/* 共通 Appleアイコン OK */}
-        <link
-          rel="apple-touch-icon"
-          href="https://realunivlog.vercel.app/images/head/realstudent.png"
-        />
+        <link rel="apple-touch-icon" href="https://realunivlog.com/images/head/realstudent.png" />
         {/* 共通 Windows用アイコン OK */}
         <meta
           name="msapplication-TileImage"
-          content="https://realunivlog.vercel.app/images/head/realstudent512.png"
+          content="https://realunivlog.com/images/head/realstudent512.png"
         />
         <meta name="msapplication-TileColor" content="#E0CBBA" />
         {/* 共通 Twitter用 OK */}

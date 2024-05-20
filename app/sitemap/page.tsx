@@ -12,7 +12,7 @@ export const metadata = {
     title: 'サイトマップ｜リアル大学生',
     description: '当ブログのサイトマップを記載しています。',
     images: '/images/thumbnail/3.webp',
-    url: 'https://realunivlog.vercel.app/sitemap',
+    url: 'https://realunivlog.com/sitemap',
   },
   // noindex不要
 

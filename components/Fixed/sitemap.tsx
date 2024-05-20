@@ -66,7 +66,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     <ul>
                       <li>
                         <Link
-                          href="https://realunivlog.vercel.app/articles/study-javascript-recommend-method"
+                          href="https://realunivlog.com/articles/study-javascript-recommend-method"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           【勉強法】最速！JavaScript学習のおすすめロードマップを紹介【プログラミング】
@@ -74,7 +74,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </li>
                       <li>
                         <Link
-                          href="https://realunivlog.vercel.app/articles/engineer-intern-application-method"
+                          href="https://realunivlog.com/articles/engineer-intern-application-method"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           【未経験可能】エンジニアインターンの応募方法や注意点について解説【現役大学生】
@@ -82,7 +82,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </li>
                       <li>
                         <Link
-                          href="https://realunivlog.vercel.app/articles/seminar-select-attention"
+                          href="https://realunivlog.com/articles/seminar-select-attention"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           【ゼミとは何？】大学生のゼミの選び方の注意点について解説【文系大学生】
@@ -90,7 +90,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </li>
                       <li>
                         <Link
-                          href="https://realunivlog.vercel.app/articles/after-get-license-should-drive"
+                          href="https://realunivlog.com/articles/after-get-license-should-drive"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           免許を取ったらすぐに運転練習をするべき理由について解説【現役大学生】
@@ -98,7 +98,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </li>
                       <li>
                         <Link
-                          href="https://realunivlog.vercel.app/articles/university-student-real-personal-effects"
+                          href="https://realunivlog.com/articles/university-student-real-personal-effects"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】
@@ -106,7 +106,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </li>
                       <li>
                         <Link
-                          href="https://realunivlog.vercel.app/articles/example-inexperience-become-engineer-method"
+                          href="https://realunivlog.com/articles/example-inexperience-become-engineer-method"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           【最短】未経験がエンジニアになるまでのロードマップを紹介【プログラミング】
@@ -114,7 +114,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </li>
                       <li>
                         <Link
-                          href="https://realunivlog.vercel.app/articles/study-python-recommend-method"
+                          href="https://realunivlog.com/articles/study-python-recommend-method"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           【勉強法】２週間で習得！Python学習のおすすめロードマップを解説【プログラミング】
@@ -122,7 +122,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </li>
                       <li>
                         <Link
-                          href="https://realunivlog.vercel.app/articles/nyuto-hotspring-tsurunoyu-reservation-access"
+                          href="https://realunivlog.com/articles/nyuto-hotspring-tsurunoyu-reservation-access"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説
@@ -130,7 +130,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </li>
                       <li>
                         <Link
-                          href="https://realunivlog.vercel.app/articles/reality-portfolio-example-make-method"
+                          href="https://realunivlog.com/articles/reality-portfolio-example-make-method"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           【実物あり】ポートフォリオの作り方を例として解説【大学生エンジニア】
@@ -138,7 +138,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </li>
                       <li>
                         <Link
-                          href="https://realunivlog.vercel.app/articles/study-php-recommend-method"
+                          href="https://realunivlog.com/articles/study-php-recommend-method"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】
@@ -146,7 +146,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </li>
                       <li>
                         <Link
-                          href="https://realunivlog.vercel.app/articles/student-should-get-car-license"
+                          href="https://realunivlog.com/articles/student-should-get-car-license"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           【いつ取るの？】大学生の間に運転免許を取得するべき理由について解説【現役大学生】

@@ -306,7 +306,7 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     <br />
                     連絡先：
                     <Link href="/contact" className="text-blue-500 hover:text-blue-700">
-                      https://realunivlog.vercel.app/contact/
+                      https://realunivlog.com/contact/
                     </Link>
                   </p>
                 </div>

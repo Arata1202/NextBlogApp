@@ -12,7 +12,7 @@ export const metadata = {
     title: 'プロフィール｜リアル大学生',
     description: '筆者のプロフィールを紹介しています。',
     images: '/images/thumbnail/2.webp',
-    url: 'https://realunivlog.vercel.app/profile',
+    url: 'https://realunivlog.com/profile',
   },
   // noindex不要
 

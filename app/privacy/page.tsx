@@ -12,7 +12,7 @@ export const metadata = {
     title: 'プライバシーポリシー・免責事項｜リアル大学生',
     description: 'プライバシーポリシーと免責事項を記載しています。',
     images: '/images/thumbnail/4.webp',
-    url: 'https://realunivlog.vercel.app/privacy',
+    url: 'https://realunivlog.com/privacy',
   },
   // noindex不要
 

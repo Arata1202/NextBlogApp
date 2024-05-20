@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${tag.name}｜リアル大学生`,
       description: `${tag.name}について解説するカテゴリーです。`,
-      images: `https://realunivlog.vercel.app/images/thumbnail/${tag.id}.webp`,
-      url: `https://realunivlog.vercel.app/tags/${tag.id}`,
+      images: `https://realunivlog.com/images/thumbnail/${tag.id}.webp`,
+      url: `https://realunivlog.com/tags/${tag.id}`,
     },
   };
 }
