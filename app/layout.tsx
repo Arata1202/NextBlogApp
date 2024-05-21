@@ -81,6 +81,9 @@ export default async function RootLayout({ children }: Props) {
         <meta name="twitter:site" content="@Aokumoblog" />
         <meta property="og:site_name" content="リアル大学生" />
         <meta property="og:locale" content="ja_JP" />
+
+        {/* Search Console */}
+        <meta name="google-site-verification" content={process.env.SEARCH_CONSOLE_ID} />
       </head>
       <body>
         <Header />
