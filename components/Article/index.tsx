@@ -1,14 +1,13 @@
-//最適化済み
-
 'use client';
 
 import { formatRichText } from '@/libs/utils';
-import { Article } from '@/libs/microcms';
+import { Article as ArticleType } from '@/libs/microcms';
 import PublishedDate from '../Date';
 import styles from './index.module.css';
 import Image from 'next/image';
 import TableOfContents from '../../components/TableOfContent';
 import Sidebar from '../Sidebar';
+import ArticleListItem from '../ArticleListItem';
 import { useMemo } from 'react';
 import './article.css';
 import {
@@ -27,6 +26,7 @@ import {
   LinkedinShareButton,
   LinkedinIcon,
 } from 'react-share';
+import { ArrowPathIcon } from '@heroicons/react/24/solid';
 
 interface Heading {
   id: string;
@@ -35,8 +35,8 @@ interface Heading {
 }
 
 type Props = {
-  data: Article;
-  articles?: Article[];
+  data: ArticleType;
+  articles?: ArticleType[];
 };
 
 function useExtractHeadings(htmlContent: string): Heading[] {
@@ -55,8 +55,16 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 }
 
 export default function Article({ data, articles }: Props) {
-  //目次
+  // 目次
   const headings = useExtractHeadings(data.content);
+
+  const relatedArticles = articles
+    ?.filter(
+      (article) =>
+        article.id !== data.id &&
+        article.tags?.some((tag) => data.tags?.some((dataTag) => dataTag.id === tag.id)),
+    )
+    .slice(0, 3);
 
   return (
     <div className="categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
@@ -144,6 +152,21 @@ export default function Article({ data, articles }: Props) {
                   <LinkedinIcon size={40} round={true} />
                 </LinkedinShareButton>
               </div>
+              {relatedArticles && relatedArticles.length > 0 && (
+                <div className="related-articles mt-10">
+                  <h1
+                    className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
+                  >
+                    <ArrowPathIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                    関連記事
+                  </h1>
+                  <div className="mt-5">
+                    {relatedArticles.map((article) => (
+                      <ArticleListItem key={article.id} article={article} />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
