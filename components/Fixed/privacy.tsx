@@ -29,7 +29,7 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
           </div>
           <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
             {/* Main Content Area */}
-            <div className="lg:col-span-2 mb-20">
+            <div className="lg:col-span-2">
               <div className="">
                 <div className="space-y-5 lg:space-y-8">
                   <div className="includeBanner flex justify-end gap-x-5">
@@ -136,7 +136,7 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     </ol>
                   </nav>
                 </div>
-                <div className={`${styles.content} mt-10`}>
+                <div className={`${styles.content} mt-10 mb-5`}>
                   <h2 id="introduction">個人情報取り扱いに関する基本方針</h2>
                   <p>
                     リアル大学生（以下、「当サイト」と言います。）では、ご利用頂くお客様の個人情報を適切に保護するため、個人情報の保護に関する法律、その他の関係法令を遵守すると共に、以下に定めるプライバシーポリシーに従って、個人情報を安全かつ適切に取り扱うことを宣言いたします。

@@ -28,7 +28,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
           </div>
           <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
             {/* Main Content Area */}
-            <div className="lg:col-span-2 mb-20">
+            <div className="lg:col-span-2">
               <div className="">
                 <div className="space-y-5 lg:space-y-8">
                   <div className="includeBanner flex justify-end gap-x-5">
@@ -48,7 +48,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     className="mt-10"
                   />
                 </div>
-                <div className={`${styles.content} mt-10`}>
+                <div className={`${styles.content} mt-10 mb-5`}>
                   <p>
                     初めまして、大学生のあおと申します。
                     <br />
