@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://realunivlog.com/
+
+# Sitemaps
+Sitemap: https://realunivlog.com/sitemap.xml
