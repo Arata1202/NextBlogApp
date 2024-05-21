@@ -60,8 +60,8 @@ export default function Sidebar({ articles }: Props) {
               className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
               src={item.imageUrl}
               alt={item.imageAlt}
-              width={100}
-              height={100}
+              width={250}
+              height={250}
               priority
             />
           ))}
