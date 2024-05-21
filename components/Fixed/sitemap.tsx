@@ -29,7 +29,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
           </div>
           <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
             {/* Main Content Area */}
-            <div className="lg:col-span-2 mb-20">
+            <div className="lg:col-span-2">
               <div className="">
                 <div className="space-y-5 lg:space-y-8">
                   <div className="includeBanner flex justify-end gap-x-5">
@@ -39,7 +39,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   {/* <p className="includeBanner text-center border border-gray-300 p-3">
                     記事内に広告が含まれています。
                   </p> */}
-                  <div className={`${styles.content} mt-10`}>
+                  <div className={`${styles.content} mt-10 mb-5`}>
                     <h2>固定ページ</h2>
                     <ul>
                       <li>
