@@ -169,8 +169,8 @@ export const mobileTopNavigation = [
   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
 ];
 export const categories = [
-  { name: '大学生活', href: '/tags/university', icon: FolderOpenIcon },
-  { name: 'プログラミング', href: '/tags/programming', icon: FolderOpenIcon },
+  { name: '大学生活', href: '/category/university', icon: FolderOpenIcon },
+  { name: 'プログラミング', href: '/category/programming', icon: FolderOpenIcon },
 ];
 export const mobileBottomNavigation = [
   { name: 'サイトマップ', href: '/sitemap', icon: DocumentMagnifyingGlassIcon },
@@ -231,12 +231,12 @@ export const SocialIcon = [
 export const CategoryList = [
   {
     name: '大学生活',
-    href: '/tags/university',
+    href: '/category/university',
     icon: AcademicCapIcon,
   },
   {
     name: 'プログラミング',
-    href: '/tags/programming',
+    href: '/category/programming',
     icon: CommandLineIcon,
   },
 ];
