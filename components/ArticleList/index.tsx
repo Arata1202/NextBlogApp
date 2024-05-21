@@ -10,8 +10,8 @@ import Sidebar from '../Sidebar';
 
 const tabs = [
   { name: '最新記事', href: '/', current: false },
-  { name: '大学生活', href: '/tags/university', current: false },
-  { name: 'プログラミング', href: '/tags/programming', current: false },
+  { name: '大学生活', href: '/category/university', current: false },
+  { name: 'プログラミング', href: '/category/programming', current: false },
 ];
 
 function classNames(...classes: (string | undefined | null | boolean)[]) {

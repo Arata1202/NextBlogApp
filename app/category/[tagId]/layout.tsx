@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${tag.name}｜リアル大学生`,
       description: `${tag.name}について解説するカテゴリーです。`,
       images: `https://realunivlog.com/images/thumbnail/${tag.id}.webp`,
-      url: `https://realunivlog.com/tags/${tag.id}`,
+      url: `https://realunivlog.com/category/${tag.id}`,
     },
   };
 }

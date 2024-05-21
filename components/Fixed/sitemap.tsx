@@ -157,14 +157,17 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     <ul>
                       <li>
                         <Link
-                          href="/tags/programming"
+                          href="/category/programming"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           プログラミング
                         </Link>
                       </li>
                       <li>
-                        <Link href="/tags/university" className="text-blue-500 hover:text-blue-700">
+                        <Link
+                          href="/category/university"
+                          className="text-blue-500 hover:text-blue-700"
+                        >
                           大学生活
                         </Link>
                       </li>
