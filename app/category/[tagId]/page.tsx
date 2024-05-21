@@ -24,7 +24,7 @@ export default async function Page({ params }: Props) {
   const tag = await getTag(tagId);
   return (
     <>
-      <ArticleList articles={data.contents} />
+      <ArticleList articles={data.contents} allArticles={data2.contents} />
       <Pagination totalCount={data.totalCount} basePath={`/category/${tagId}`} />
       <div className="pc">
         <Sidebar articles={data2.contents} />
