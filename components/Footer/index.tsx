@@ -10,8 +10,8 @@ const footerNavigation = {
     { name: 'サイトマップ', href: '/sitemap' },
   ],
   category: [
-    { name: '大学生活', href: '/tags/university' },
-    { name: 'プログラミング', href: '/tags/programming' },
+    { name: '大学生活', href: '/category/university' },
+    { name: 'プログラミング', href: '/category/programming' },
   ],
   company: [
     { name: 'プライバシーポリシー', href: '/privacy' },
