@@ -128,39 +128,66 @@ export default function Article({ data, articles }: Props) {
                 </h1>
               </div>
               <div className="flex justify-center">
-                <TwitterShareButton url={data.url} title={data.title} className="m-1">
+                <TwitterShareButton
+                  aria-label="シェアボタン"
+                  url={data.url}
+                  title={data.title}
+                  className="m-1"
+                >
                   <TwitterIcon size={40} round={true} />
                 </TwitterShareButton>
 
-                <FacebookShareButton url={data.url} title={data.title} className="m-1">
+                <FacebookShareButton
+                  aria-label="シェアボタン"
+                  url={data.url}
+                  title={data.title}
+                  className="m-1"
+                >
                   <FacebookIcon size={40} round={true} />
                 </FacebookShareButton>
 
-                <LineShareButton url={data.url} title={data.title} className="m-1">
+                <LineShareButton
+                  aria-label="シェアボタン"
+                  url={data.url}
+                  title={data.title}
+                  className="m-1"
+                >
                   <LineIcon size={40} round={true} />
                 </LineShareButton>
 
-                <HatenaShareButton url={data.url} title={data.title} className="m-1">
+                <HatenaShareButton
+                  aria-label="シェアボタン"
+                  url={data.url}
+                  title={data.title}
+                  className="m-1"
+                >
                   <HatenaIcon size={40} round={true} />
                 </HatenaShareButton>
 
                 <PinterestShareButton
+                  aria-label="シェアボタン"
                   url={data.url}
-                  media="画像のURL"
-                  description="説明"
+                  media={data.thumbnail?.url || ''}
+                  description={data.title}
                   className="m-1"
                 >
                   <PinterestIcon size={40} round={true} />
                 </PinterestShareButton>
 
-                <RedditShareButton url={data.url} title={data.title} className="m-1">
+                <RedditShareButton
+                  aria-label="シェアボタン"
+                  url={data.url}
+                  title={data.title}
+                  className="m-1"
+                >
                   <RedditIcon size={40} round={true} />
                 </RedditShareButton>
 
                 <LinkedinShareButton
+                  aria-label="シェアボタン"
                   url={data.url}
                   title={data.title}
-                  summary="要約"
+                  summary={data.description}
                   className="m-1"
                 >
                   <LinkedinIcon size={40} round={true} />

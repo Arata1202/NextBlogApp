@@ -68,8 +68,8 @@ export default function Share() {
         <PinterestShareButton
           aria-label="シェアボタン"
           url="https://realunivlog.com"
-          media="画像のURL"
-          description="説明"
+          media="/images/head/realstudent512.png"
+          description="リアル大学生"
           className="m-1"
         >
           <PinterestIcon size={40} round={true} />
@@ -88,7 +88,7 @@ export default function Share() {
           aria-label="シェアボタン"
           url="https://realunivlog.com"
           title="リアル大学生"
-          summary="要約"
+          summary="大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。"
           className="m-1"
         >
           <LinkedinIcon size={40} round={true} />
