@@ -6,6 +6,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { EnvelopeIcon } from '@heroicons/react/20/solid';
 import ReCAPTCHA from 'react-google-recaptcha';
+import Share from '../Share';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -261,6 +262,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     </button>
                   </div>
                 </form>
+                <Share />
               </div>
             </div>
             <div className="mobile">

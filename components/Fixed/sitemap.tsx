@@ -7,6 +7,7 @@ import { DocumentMagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import Head from 'next/head';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
+import Share from '../Share';
 
 const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   //出稿日
@@ -174,6 +175,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     </ul>
                   </div>
                 </div>
+                <Share />
               </div>
             </div>
             <div className="mobile">

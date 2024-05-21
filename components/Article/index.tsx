@@ -30,6 +30,7 @@ import {
   ArrowPathIcon,
   ChevronDoubleRightIcon,
   ChevronDoubleLeftIcon,
+  HandThumbUpIcon,
 } from '@heroicons/react/24/solid';
 
 interface Heading {
@@ -120,7 +121,12 @@ export default function Article({ data, articles }: Props) {
                   __html: `${formatRichText(data.content)}`,
                 }}
               />
-              <div className="text-center text-2xl font-bold pt-10">シェアする</div>
+              <div className="pt-10">
+                <h1 className={`${styles.profile} text-2xl font-semibold flex justify-center mb-5`}>
+                  <HandThumbUpIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                  シェアする
+                </h1>
+              </div>
               <div className="flex justify-center">
                 <TwitterShareButton url={data.url} title={data.title} className="m-1">
                   <TwitterIcon size={40} round={true} />
