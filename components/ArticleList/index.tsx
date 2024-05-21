@@ -7,6 +7,7 @@ import styles from './index.module.css';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { useMemo } from 'react';
 import Sidebar from '../Sidebar';
+import Share from '../Share';
 
 const tabs = [
   { name: '最新記事', href: '/', current: false },
@@ -148,6 +149,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
               <ArticleListItem key={article.id} article={article} />
             ))}
           </ul>
+          <Share />
         </div>
         <div className="mobile">
           <Sidebar articles={allArticles || articles} />

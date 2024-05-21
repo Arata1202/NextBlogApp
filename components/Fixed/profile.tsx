@@ -6,6 +6,7 @@ import PublishedDate from '@/components/Date';
 import React from 'react';
 import { UserCircleIcon } from '@heroicons/react/20/solid';
 import Sidebar from '@/components/Sidebar';
+import Share from '../Share';
 
 const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   //出稿日
@@ -86,6 +87,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     まずはこのブログを多くの方に見ていただき、良質な記事と有用な知識を提供することが目標です。副業としても収益が出せるように頑張りたいです。少なくともレンタルサーバー代を取り戻せたら嬉しいです。
                   </p>
                 </div>
+                <Share />
               </div>
             </div>
             <div className="mobile">
