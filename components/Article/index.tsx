@@ -191,7 +191,7 @@ export default function Article({ data, articles }: Props) {
                       className={`${styles.profile} text-2xl font-semibold flex justify-end mb-5`}
                     >
                       前の記事
-                      <ChevronDoubleRightIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                      <ChevronDoubleRightIcon className="h-8 w-8 ml-2" aria-hidden="true" />
                     </h1>
                     <ArticleListItem article={nextArticle} />
                   </div>
