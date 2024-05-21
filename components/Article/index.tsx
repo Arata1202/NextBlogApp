@@ -26,7 +26,11 @@ import {
   LinkedinShareButton,
   LinkedinIcon,
 } from 'react-share';
-import { ArrowPathIcon } from '@heroicons/react/24/solid';
+import {
+  ArrowPathIcon,
+  ChevronDoubleRightIcon,
+  ChevronDoubleLeftIcon,
+} from '@heroicons/react/24/solid';
 
 interface Heading {
   id: string;
@@ -57,6 +61,10 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 export default function Article({ data, articles }: Props) {
   // 目次
   const headings = useExtractHeadings(data.content);
+
+  const currentIndex = articles!.findIndex((article) => article.id === data.id);
+  const prevArticle = currentIndex > 0 ? articles![currentIndex - 1] : null;
+  const nextArticle = currentIndex < articles!.length - 1 ? articles![currentIndex + 1] : null;
 
   const relatedArticles = articles
     ?.filter(
@@ -167,6 +175,28 @@ export default function Article({ data, articles }: Props) {
                   </div>
                 </div>
               )}
+              <div className="mt-10">
+                {prevArticle && (
+                  <div className="">
+                    <h1 className={`${styles.profile} text-2xl font-semibold flex pt-10 mb-5`}>
+                      <ChevronDoubleLeftIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                      次の記事
+                    </h1>
+                    <ArticleListItem article={prevArticle} />
+                  </div>
+                )}
+                {nextArticle && (
+                  <div className="">
+                    <h1
+                      className={`${styles.profile} text-2xl font-semibold flex justify-end mb-5`}
+                    >
+                      前の記事
+                      <ChevronDoubleRightIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                    </h1>
+                    <ArticleListItem article={nextArticle} />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
