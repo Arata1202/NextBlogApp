@@ -26,7 +26,7 @@ export default async function Page({ params }: Props) {
   });
   return (
     <>
-      <ArticleList articles={data.contents} />
+      <ArticleList articles={data.contents} allArticles={data2.contents} />
       <Pagination totalCount={data.totalCount} current={current} basePath={`/category/${tagId}`} />
       <div className="pc">
         <Sidebar articles={data2.contents} />

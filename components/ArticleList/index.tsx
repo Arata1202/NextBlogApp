@@ -20,9 +20,10 @@ function classNames(...classes: (string | undefined | null | boolean)[]) {
 
 type Props = {
   articles?: Article[];
+  allArticles?: Article[];
 };
 
-const ArticleList = ({ articles }: Props) => {
+const ArticleList = ({ articles, allArticles }: Props) => {
   const uniqueTags = useMemo(() => {
     const tagsSet = new Set<Tag>();
     articles?.forEach((article) => {
@@ -149,7 +150,7 @@ const ArticleList = ({ articles }: Props) => {
           </ul>
         </div>
         <div className="mobile">
-          <Sidebar articles={articles} />
+          <Sidebar articles={allArticles || articles} />
         </div>
       </div>
     </div>
