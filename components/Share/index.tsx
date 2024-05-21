@@ -29,23 +29,44 @@ export default function Share() {
         </h1>
       </div>
       <div className="flex justify-center">
-        <TwitterShareButton url="https://realunivlog.com" title="リアル大学生" className="m-1">
+        <TwitterShareButton
+          aria-label="シェアボタン"
+          url="https://realunivlog.com"
+          title="リアル大学生"
+          className="m-1"
+        >
           <TwitterIcon size={40} round={true} />
         </TwitterShareButton>
 
-        <FacebookShareButton url="https://realunivlog.com" title="リアル大学生" className="m-1">
+        <FacebookShareButton
+          aria-label="シェアボタン"
+          url="https://realunivlog.com"
+          title="リアル大学生"
+          className="m-1"
+        >
           <FacebookIcon size={40} round={true} />
         </FacebookShareButton>
 
-        <LineShareButton url="https://realunivlog.com" title="リアル大学生" className="m-1">
+        <LineShareButton
+          aria-label="シェアボタン"
+          url="https://realunivlog.com"
+          title="リアル大学生"
+          className="m-1"
+        >
           <LineIcon size={40} round={true} />
         </LineShareButton>
 
-        <HatenaShareButton url="https://realunivlog.com" title="リアル大学生" className="m-1">
+        <HatenaShareButton
+          aria-label="シェアボタン"
+          url="https://realunivlog.com"
+          title="リアル大学生"
+          className="m-1"
+        >
           <HatenaIcon size={40} round={true} />
         </HatenaShareButton>
 
         <PinterestShareButton
+          aria-label="シェアボタン"
           url="https://realunivlog.com"
           media="画像のURL"
           description="説明"
@@ -54,11 +75,17 @@ export default function Share() {
           <PinterestIcon size={40} round={true} />
         </PinterestShareButton>
 
-        <RedditShareButton url="https://realunivlog.com" title="リアル大学生" className="m-1">
+        <RedditShareButton
+          aria-label="シェアボタン"
+          url="https://realunivlog.com"
+          title="リアル大学生"
+          className="m-1"
+        >
           <RedditIcon size={40} round={true} />
         </RedditShareButton>
 
         <LinkedinShareButton
+          aria-label="シェアボタン"
           url="https://realunivlog.com"
           title="リアル大学生"
           summary="要約"
