@@ -8,7 +8,7 @@ import Image from 'next/image';
 import TableOfContents from '../../components/TableOfContent';
 import Sidebar from '../Sidebar';
 import ArticleListItem from '../ArticleListItem';
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import './article.css';
 import {
   TwitterShareButton,
@@ -45,18 +45,22 @@ type Props = {
 };
 
 function useExtractHeadings(htmlContent: string): Heading[] {
-  return useMemo(() => {
+  const [headings, setHeadings] = useState<Heading[]>([]);
+
+  useEffect(() => {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = htmlContent;
-    const headings: Heading[] = Array.from(tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6')).map(
-      (el) => ({
-        id: el.id,
-        title: el.textContent || '',
-        level: parseInt(el.tagName[1], 10),
-      }),
-    );
-    return headings;
+    const extractedHeadings: Heading[] = Array.from(
+      tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6'),
+    ).map((el) => ({
+      id: el.id,
+      title: el.textContent || '',
+      level: parseInt(el.tagName[1], 10),
+    }));
+    setHeadings(extractedHeadings);
   }, [htmlContent]);
+
+  return headings;
 }
 
 export default function Article({ data, articles }: Props) {
