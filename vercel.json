@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    {
+      "source": "/articles/cl94wuqshzzv",
+      "destination": "/articles/student-should-get-car-license",
+      "statusCode": 301
+    }
+  ]
+}
