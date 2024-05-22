@@ -31,3 +31,9 @@ a strong:hover {
 .underline_blue {
   background: linear-gradient(transparent 70%, skyblue 70%);
 }
+.underline_red {
+  background: linear-gradient(transparent 70%, pink 70%);
+}
+.underline_yellow {
+  background: linear-gradient(transparent 70%, yellow 70%);
+}
