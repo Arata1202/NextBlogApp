@@ -15,6 +15,10 @@
   .pc {
     display: block;
   }
+
+  .scrollTop {
+    display: none;
+  }
 }
 
 .sidebarCategory {
