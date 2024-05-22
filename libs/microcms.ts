@@ -21,6 +21,11 @@ export type Writer = {
 } & MicroCMSContentId &
   MicroCMSDate;
 
+export type ContentBlock = {
+  rich_text?: string;
+  custom_html?: string;
+};
+
 // ブログの型定義
 export type Blog = {
   title: string;
@@ -32,6 +37,7 @@ export type Blog = {
   thumbnail?: MicroCMSImage;
   tags?: Tag[];
   writer?: Writer;
+  content_blocks: ContentBlock[];
 };
 
 export type Article = Blog & MicroCMSContentId & MicroCMSDate;
