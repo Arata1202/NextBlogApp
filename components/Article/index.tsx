@@ -64,6 +64,13 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 }
 
 export default function Article({ data, articles }: Props) {
+  // useEffect(() => {
+  //   if (Array.isArray(data.content_blocks)) {
+  //     data.content_blocks.forEach((block, index) => {
+  //       console.log(`Block ${index}:`, block);
+  //     });
+  //   }
+  // }, [data.content_blocks]);
   // 目次
   const headings = useExtractHeadings(data.content);
 
@@ -125,6 +132,22 @@ export default function Article({ data, articles }: Props) {
                   __html: `${formatRichText(data.content)}`,
                 }}
               />
+              <div>
+                {data.content_blocks.map((block, index) => (
+                  <div key={index}>
+                    {block.rich_text && (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: formatRichText(block.rich_text),
+                        }}
+                      />
+                    )}
+                    {block.custom_html && (
+                      <div dangerouslySetInnerHTML={{ __html: block.custom_html }} />
+                    )}
+                  </div>
+                ))}
+              </div>
               <div className="pt-10">
                 <h1 className={`${styles.profile} text-2xl font-semibold flex justify-center mb-5`}>
                   <HandThumbUpIcon className="h-8 w-8 mr-2" aria-hidden="true" />
