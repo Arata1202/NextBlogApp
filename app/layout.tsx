@@ -6,7 +6,6 @@ import Footer from '@/components/Footer';
 import './globals.css';
 import styles from './layout.module.css';
 import ScrollTopButton from '@/components/Common/ScrollToTop/page';
-import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata = {
   // 検証 OK
@@ -44,7 +43,6 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="ja">
       <head>
-        <GoogleAnalytics gaId="G-LSE2CK3HZM" />
         {/* 共通 OK */}
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
         {/* 共通 PWA OK */}
