@@ -43,6 +43,20 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="ja">
       <head>
+        {/* GoogleAnalytics */}
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=G-LSE2CK3HZM`} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-LSE2CK3HZM', {
+                  page_path: window.location.pathname,
+                });
+              `,
+          }}
+        />
         {/* 共通 OK */}
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
         {/* 共通 PWA OK */}
