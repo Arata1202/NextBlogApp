@@ -67,8 +67,11 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 
 export default function Article({ data, articles }: Props) {
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    document.body.style.pointerEvents = 'none';
+    const targetDiv = document.getElementById('hiddenBlock');
+    if (targetDiv) {
+      targetDiv.style.overflow = 'hidden';
+      targetDiv.style.pointerEvents = 'none';
+    }
     const superReload = sessionStorage.getItem(data.id);
     if (!superReload) {
       const keys = Object.keys(sessionStorage);
@@ -80,8 +83,10 @@ export default function Article({ data, articles }: Props) {
       sessionStorage.setItem(data.id, 'true');
       window.location.reload();
     } else {
-      document.body.style.overflow = '';
-      document.body.style.pointerEvents = '';
+      if (targetDiv) {
+        targetDiv.style.overflow = '';
+        targetDiv.style.pointerEvents = '';
+      }
     }
   }, [data.id]);
 
@@ -108,7 +113,7 @@ export default function Article({ data, articles }: Props) {
     .slice(0, 3);
 
   return (
-    <div className="categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
+    <div className="hiddenBlock categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
       <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
         {/* Main Content Area */}
         <div className="lg:col-span-2">
