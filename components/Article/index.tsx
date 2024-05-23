@@ -118,6 +118,9 @@ export default function Article({ data, articles }: Props) {
               <div className="includeBanner flex justify-end gap-x-5">
                 <PublishedDate date={data.publishedAt || data.createdAt} />
               </div>
+              <p className="includeBanner text-center border border-gray-300 p-3">
+                このサイトはアフィリエイト広告を掲載しています。
+              </p>
               {/* {data.introduction && (
                 <div
                   className={styles.content}

@@ -35,9 +35,9 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     {/* <TagList tags={data.tags} /> */}
                     <PublishedDate date={formattedDate} />
                   </div>
-                  {/* <p className="includeBanner text-center border border-gray-300 p-3">
-                    記事内に広告が含まれています。
-                  </p> */}
+                  <p className="includeBanner text-center border border-gray-300 p-3">
+                    このサイトはアフィリエイト広告を掲載しています。
+                  </p>
                 </div>
                 <div className="flex justify-center">
                   <Image
