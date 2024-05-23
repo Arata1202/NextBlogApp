@@ -24,6 +24,8 @@ export type Writer = {
 export type ContentBlock = {
   rich_text?: string;
   custom_html?: string;
+  articleLink?: string;
+  articleLink2?: string;
 };
 
 // ブログの型定義
