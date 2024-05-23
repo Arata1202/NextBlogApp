@@ -67,11 +67,6 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 
 export default function Article({ data, articles }: Props) {
   useEffect(() => {
-    const targetDiv = document.getElementById('hiddenBlock');
-    if (targetDiv) {
-      targetDiv.style.overflow = 'hidden';
-      targetDiv.style.pointerEvents = 'none';
-    }
     const superReload = sessionStorage.getItem(data.id);
     if (!superReload) {
       const keys = Object.keys(sessionStorage);
@@ -82,11 +77,6 @@ export default function Article({ data, articles }: Props) {
       });
       sessionStorage.setItem(data.id, 'true');
       window.location.reload();
-    } else {
-      if (targetDiv) {
-        targetDiv.style.overflow = '';
-        targetDiv.style.pointerEvents = '';
-      }
     }
   }, [data.id]);
 
