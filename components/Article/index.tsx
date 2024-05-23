@@ -133,7 +133,7 @@ export default function Article({ data, articles }: Props) {
                 <PublishedDate date={data.publishedAt || data.createdAt} />
               </div>
               <p className="includeBanner text-center border border-gray-300 p-3">
-                このサイトはアフィリエイト広告を掲載しています。
+                記事内に広告が含まれています。
               </p>
               {/* {data.introduction && (
                 <div
