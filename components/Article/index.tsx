@@ -67,6 +67,8 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 
 export default function Article({ data, articles }: Props) {
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.body.style.pointerEvents = 'none';
     const superReload = sessionStorage.getItem(data.id);
     if (!superReload) {
       const keys = Object.keys(sessionStorage);
@@ -77,6 +79,9 @@ export default function Article({ data, articles }: Props) {
       });
       sessionStorage.setItem(data.id, 'true');
       window.location.reload();
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.pointerEvents = '';
     }
   }, [data.id]);
 
