@@ -52,6 +52,7 @@ function useExtractHeadings(htmlContent: string): Heading[] {
     if (!superReloadDone) {
       sessionStorage.setItem('superReloadDone', 'true');
       window.location.reload();
+      sessionStorage.removeItem('superReloadDone');
     }
   }, []);
 
