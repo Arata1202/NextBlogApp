@@ -55,8 +55,10 @@ const ArticleListItem = ({ article }: Props) => {
           <div className={styles.title}>{article.title}</div>
           <div className={styles.description}>{article.description}</div>
           <div className={styles.date}>
-            <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
-            <TagList tags={article.tags} hasLink={true} />
+            {/* <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" /> */}
+            {/* {article.tags?.map((tag) => (
+              <li key={tag.id}>{tag.id}</li>
+            ))} */}
             &nbsp;&nbsp;&nbsp;&nbsp;
             <PublishedDate date={article.publishedAt || article.createdAt} />
           </div>
