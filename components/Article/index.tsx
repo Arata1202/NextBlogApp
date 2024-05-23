@@ -47,14 +47,6 @@ type Props = {
 };
 
 function useExtractHeadings(htmlContent: string): Heading[] {
-  useEffect(() => {
-    const superReload = sessionStorage.getItem('superReload');
-    if (!superReload) {
-      sessionStorage.setItem('superReload', 'true');
-      window.location.reload();
-    }
-  }, []);
-
   const [headings, setHeadings] = useState<Heading[]>([]);
 
   useEffect(() => {
@@ -74,6 +66,15 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 }
 
 export default function Article({ data, articles }: Props) {
+  useEffect(() => {
+    const superReload = sessionStorage.getItem(data.id);
+    if (!superReload) {
+      console.log(data.id);
+      sessionStorage.setItem(data.id, 'true');
+      window.location.reload();
+    }
+  }, []);
+
   const headings = useExtractHeadings(data.content);
 
   // useEffect(() => {
