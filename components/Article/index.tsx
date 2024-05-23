@@ -48,15 +48,11 @@ type Props = {
 
 function useExtractHeadings(htmlContent: string): Heading[] {
   useEffect(() => {
-    const superReloadDone = sessionStorage.getItem('superReloadDone');
-    if (!superReloadDone) {
+    const superReload = sessionStorage.getItem('superReload');
+    if (!superReload) {
       sessionStorage.setItem('superReload', 'true');
       window.location.reload();
     }
-
-    return () => {
-      sessionStorage.removeItem('superReload');
-    };
   }, []);
 
   const [headings, setHeadings] = useState<Heading[]>([]);
