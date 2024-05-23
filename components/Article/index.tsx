@@ -8,7 +8,8 @@ import Image from 'next/image';
 import TableOfContents from '../../components/TableOfContent';
 import Sidebar from '../Sidebar';
 import ArticleListItem from '../ArticleListItem';
-import { useMemo, useEffect, useState } from 'react';
+import WithArticleItem from '../WithArticleItem';
+import { useEffect, useState } from 'react';
 import './article.css';
 import {
   TwitterShareButton,
@@ -31,6 +32,7 @@ import {
   ChevronDoubleRightIcon,
   ChevronDoubleLeftIcon,
   HandThumbUpIcon,
+  LinkIcon,
 } from '@heroicons/react/24/solid';
 
 interface Heading {
@@ -64,15 +66,15 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 }
 
 export default function Article({ data, articles }: Props) {
-  // useEffect(() => {
-  //   if (Array.isArray(data.content_blocks)) {
-  //     data.content_blocks.forEach((block, index) => {
-  //       console.log(`Block ${index}:`, block);
-  //     });
-  //   }
-  // }, [data.content_blocks]);
-  // 目次
   const headings = useExtractHeadings(data.content);
+
+  useEffect(() => {
+    if (Array.isArray(data.content_blocks)) {
+      data.content_blocks.forEach((block, index) => {
+        console.log(`Block ${index}:`, block);
+      });
+    }
+  }, [data.content_blocks]);
 
   const currentIndex = articles!.findIndex((article) => article.id === data.id);
   const prevArticle = currentIndex > 0 ? articles![currentIndex - 1] : null;
@@ -114,7 +116,6 @@ export default function Article({ data, articles }: Props) {
                 />
               </picture>
               <div className="includeBanner flex justify-end gap-x-5">
-                {/* <TagList tags={data.tags} /> */}
                 <PublishedDate date={data.publishedAt || data.createdAt} />
               </div>
               {data.introduction && (
@@ -125,7 +126,7 @@ export default function Article({ data, articles }: Props) {
                   }}
                 />
               )}
-              <div>{headings.length > 0 && <TableOfContents headings={headings} />}</div>
+              {headings.length > 0 && <TableOfContents headings={headings} />}
               <div
                 className={styles.content}
                 dangerouslySetInnerHTML={{
@@ -137,13 +138,35 @@ export default function Article({ data, articles }: Props) {
                   <div key={index}>
                     {block.rich_text && (
                       <div
+                        className={styles.content}
                         dangerouslySetInnerHTML={{
                           __html: formatRichText(block.rich_text),
                         }}
                       />
                     )}
                     {block.custom_html && (
-                      <div dangerouslySetInnerHTML={{ __html: block.custom_html }} />
+                      <div
+                        className={styles.content}
+                        dangerouslySetInnerHTML={{ __html: block.custom_html }}
+                      />
+                    )}
+                    {block.articleLink && typeof block.articleLink !== 'string' && (
+                      <div>
+                        <div className="flex mt-10">
+                          <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                          <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
+                        </div>
+                        <WithArticleItem article={block.articleLink as ArticleType} />
+                      </div>
+                    )}
+                    {block.articleLink2 && typeof block.articleLink2 !== 'string' && (
+                      <div>
+                        <div className="flex mt-10">
+                          <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                          <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
+                        </div>
+                        <WithArticleItem article={block.articleLink2 as ArticleType} />
+                      </div>
                     )}
                   </div>
                 ))}
