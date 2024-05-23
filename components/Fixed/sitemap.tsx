@@ -37,7 +37,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     <PublishedDate date={formattedDate} />
                   </div>
                   <p className="includeBanner text-center border border-gray-300 p-3">
-                    このサイトはアフィリエイト広告を掲載しています。
+                    記事内に広告が含まれています。
                   </p>
                   <div className={`${styles.content} mt-10 mb-5`}>
                     <h2>固定ページ</h2>
