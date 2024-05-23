@@ -118,21 +118,57 @@ export default function Article({ data, articles }: Props) {
               <div className="includeBanner flex justify-end gap-x-5">
                 <PublishedDate date={data.publishedAt || data.createdAt} />
               </div>
-              {data.introduction && (
+              {/* {data.introduction && (
                 <div
                   className={styles.content}
                   dangerouslySetInnerHTML={{
                     __html: `${formatRichText(data.introduction)}`,
                   }}
                 />
-              )}
+              )} */}
+              {data.introduction_blocks.map((block, index) => (
+                <div key={index}>
+                  {block.rich_text && (
+                    <div
+                      className={styles.content}
+                      dangerouslySetInnerHTML={{
+                        __html: formatRichText(block.rich_text),
+                      }}
+                    />
+                  )}
+                  {block.custom_html && (
+                    <div
+                      className={styles.content}
+                      dangerouslySetInnerHTML={{ __html: block.custom_html }}
+                    />
+                  )}
+                  {block.articleLink && typeof block.articleLink !== 'string' && (
+                    <div>
+                      <div className="flex mt-10">
+                        <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                        <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
+                      </div>
+                      <WithArticleItem article={block.articleLink as ArticleType} />
+                    </div>
+                  )}
+                  {block.articleLink2 && typeof block.articleLink2 !== 'string' && (
+                    <div>
+                      <div className="flex mt-10">
+                        <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                        <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
+                      </div>
+                      <WithArticleItem article={block.articleLink2 as ArticleType} />
+                    </div>
+                  )}
+                </div>
+              ))}
               {headings.length > 0 && <TableOfContents headings={headings} />}
-              <div
+              {/* <div
                 className={styles.content}
                 dangerouslySetInnerHTML={{
                   __html: `${formatRichText(data.content)}`,
                 }}
-              />
+              /> */}
               <div>
                 {data.content_blocks.map((block, index) => (
                   <div key={index}>
