@@ -142,7 +142,7 @@ export default function Article({ data, articles }: Props) {
                     className={styles.thumbnail}
                     width={960}
                     height={504}
-                    loading="lazy"
+                    loading="eager"
                   />
                 </picture>
                 <div className="includeBanner flex justify-end gap-x-5">
