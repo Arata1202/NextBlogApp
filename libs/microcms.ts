@@ -21,6 +21,12 @@ export type Writer = {
 } & MicroCMSContentId &
   MicroCMSDate;
 
+export type IntroductionBlock = {
+  rich_text?: string;
+  custom_html?: string;
+  articleLink?: string;
+  articleLink2?: string;
+};
 export type ContentBlock = {
   rich_text?: string;
   custom_html?: string;
@@ -40,6 +46,7 @@ export type Blog = {
   tags?: Tag[];
   writer?: Writer;
   content_blocks: ContentBlock[];
+  introduction_blocks: IntroductionBlock[];
 };
 
 export type Article = Blog & MicroCMSContentId & MicroCMSDate;
