@@ -50,10 +50,13 @@ function useExtractHeadings(htmlContent: string): Heading[] {
   useEffect(() => {
     const superReloadDone = sessionStorage.getItem('superReloadDone');
     if (!superReloadDone) {
-      sessionStorage.setItem('superReloadDone', 'true');
+      sessionStorage.setItem('superReload', 'true');
       window.location.reload();
-      sessionStorage.removeItem('superReloadDone');
     }
+
+    return () => {
+      sessionStorage.removeItem('superReload');
+    };
   }, []);
 
   const [headings, setHeadings] = useState<Heading[]>([]);
