@@ -66,6 +66,20 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 }
 
 export default function Article({ data, articles }: Props) {
+  useEffect(() => {
+    const superReload = sessionStorage.getItem(data.id);
+    if (!superReload) {
+      const keys = Object.keys(sessionStorage);
+      keys.forEach((key) => {
+        if (key !== data.id) {
+          sessionStorage.removeItem(key);
+        }
+      });
+      sessionStorage.setItem(data.id, 'true');
+      window.location.reload();
+    }
+  }, [data.id]);
+
   const headings = useExtractHeadings(data.content);
 
   // useEffect(() => {
