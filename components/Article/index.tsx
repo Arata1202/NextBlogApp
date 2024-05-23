@@ -62,13 +62,13 @@ function useExtractHeadings(htmlContent: string): Heading[] {
     setHeadings(extractedHeadings);
   }, [htmlContent]);
 
-  useEffect(() => {
-    const superReloadDone = sessionStorage.getItem('superReloadDone');
-    if (!superReloadDone) {
-      sessionStorage.setItem('superReloadDone', 'true');
-      window.location.reload();
-    }
-  }, []);
+  // useEffect(() => {
+  //   const superReloadDone = sessionStorage.getItem('superReloadDone');
+  //   if (!superReloadDone) {
+  //     sessionStorage.setItem('superReloadDone', 'true');
+  //     window.location.reload();
+  //   }
+  // }, []);
 
   return headings;
 }
