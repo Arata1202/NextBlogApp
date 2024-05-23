@@ -68,13 +68,13 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 export default function Article({ data, articles }: Props) {
   const headings = useExtractHeadings(data.content);
 
-  useEffect(() => {
-    if (Array.isArray(data.content_blocks)) {
-      data.content_blocks.forEach((block, index) => {
-        console.log(`Block ${index}:`, block);
-      });
-    }
-  }, [data.content_blocks]);
+  // useEffect(() => {
+  //   if (Array.isArray(data.content_blocks)) {
+  //     data.content_blocks.forEach((block, index) => {
+  //       console.log(`Block ${index}:`, block);
+  //     });
+  //   }
+  // }, [data.content_blocks]);
 
   const currentIndex = articles!.findIndex((article) => article.id === data.id);
   const prevArticle = currentIndex > 0 ? articles![currentIndex - 1] : null;
