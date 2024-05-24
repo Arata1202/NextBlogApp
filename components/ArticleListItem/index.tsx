@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo, useCallback } from 'react';
+import React, { memo } from 'react';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
@@ -24,13 +24,10 @@ const ArticleListItem = ({ article }: Props) => {
   const isThumbnailAvailable = !!article.thumbnail;
   const { mobileSrcSet, desktopSrcSet } = getImageSrcSizes(imageSrc);
 
-  const handleClick = useCallback(
-    (event: React.MouseEvent) => {
-      event.preventDefault();
-      window.location.href = `/articles/${article.id}`;
-    },
-    [article.id],
-  );
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    window.location.href = `/articles/${article.id}`;
+  };
 
   return (
     <li className={styles.list}>
