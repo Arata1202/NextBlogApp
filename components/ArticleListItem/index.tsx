@@ -32,8 +32,8 @@ const ArticleListItem = ({ article }: Props) => {
   return (
     <li className={styles.list}>
       <a
-        href={`/articles/${article.id}`}
         onClick={handleClick}
+        href="javascript:void(0)"
         className={`${styles.link} p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1`}
       >
         <picture>
