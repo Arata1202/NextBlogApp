@@ -9,7 +9,7 @@ import TableOfContents from '../../components/TableOfContent';
 import Sidebar from '../Sidebar';
 import ArticleListItem from '../ArticleListItem';
 import WithArticleItem from '../WithArticleItem';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import './article.css';
 import {
   TwitterShareButton,
@@ -66,61 +66,71 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 }
 
 export default function Article({ data, articles }: Props) {
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const superReload = sessionStorage.getItem(data.id);
-  //   if (!superReload) {
-  //     const keys = Object.keys(sessionStorage);
-  //     keys.forEach((key) => {
-  //       if (key !== data.id) {
-  //         sessionStorage.removeItem(key);
-  //       }
-  //     });
-  //     sessionStorage.setItem(data.id, 'true');
-  //     window.location.reload();
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [data.id]);
-
-  // useEffect(() => {
-  //   if (loading) {
-  //     document.body.classList.add('loading');
-  //     document.documentElement.classList.add('loading');
-  //   } else {
-  //     document.body.classList.remove('loading');
-  //     document.documentElement.classList.remove('loading');
-  //   }
-  // }, [loading]);
-
   const headings = useExtractHeadings(data.content);
 
-  // useEffect(() => {
-  //   if (Array.isArray(data.content_blocks)) {
-  //     data.content_blocks.forEach((block, index) => {
-  //       console.log(`Block ${index}:`, block);
-  //     });
-  //   }
-  // }, [data.content_blocks]);
+  const currentIndex = useMemo(
+    () => articles?.findIndex((article) => article.id === data.id) || 0,
+    [articles, data.id],
+  );
 
-  const currentIndex = articles!.findIndex((article) => article.id === data.id);
-  const prevArticle = currentIndex > 0 ? articles![currentIndex - 1] : null;
-  const nextArticle = currentIndex < articles!.length - 1 ? articles![currentIndex + 1] : null;
+  const prevArticle = useMemo(
+    () => (currentIndex > 0 ? articles![currentIndex - 1] : null),
+    [currentIndex, articles],
+  );
 
-  const relatedArticles = articles
-    ?.filter(
-      (article) =>
-        article.id !== data.id &&
-        article.tags?.some((tag) => data.tags?.some((dataTag) => dataTag.id === tag.id)),
-    )
-    .slice(0, 3);
+  const nextArticle = useMemo(
+    () => (currentIndex < articles!.length - 1 ? articles![currentIndex + 1] : null),
+    [currentIndex, articles],
+  );
+
+  const relatedArticles = useMemo(() => {
+    return articles
+      ?.filter(
+        (article) =>
+          article.id !== data.id &&
+          article.tags?.some((tag) => data.tags?.some((dataTag) => dataTag.id === tag.id)),
+      )
+      .slice(0, 3);
+  }, [articles, data.id, data.tags]);
+
+  const renderBlockContent = useCallback((block: any, index: number) => {
+    return (
+      <div key={index}>
+        {block.rich_text && (
+          <div
+            className={styles.content}
+            dangerouslySetInnerHTML={{
+              __html: formatRichText(block.rich_text),
+            }}
+          />
+        )}
+        {block.custom_html && (
+          <div className={styles.content} dangerouslySetInnerHTML={{ __html: block.custom_html }} />
+        )}
+        {block.articleLink && typeof block.articleLink !== 'string' && (
+          <div>
+            <div className="flex mt-10">
+              <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+              <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
+            </div>
+            <WithArticleItem article={block.articleLink as ArticleType} />
+          </div>
+        )}
+        {block.articleLink2 && typeof block.articleLink2 !== 'string' && (
+          <div>
+            <div className="flex mt-10">
+              <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+              <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
+            </div>
+            <WithArticleItem article={block.articleLink2 as ArticleType} />
+          </div>
+        )}
+      </div>
+    );
+  }, []);
 
   return (
     <>
-      {/* <>
-      {loading && <div className="loadingOverlay"></div>}
-      </> */}
       <div className="hiddenBlock categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
         <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
           {/* Main Content Area */}
@@ -153,95 +163,9 @@ export default function Article({ data, articles }: Props) {
                 <p className="includeBanner text-center border border-gray-300 p-3">
                   記事内に広告が含まれています。
                 </p>
-                {/* {data.introduction && (
-                <div
-                  className={styles.content}
-                  dangerouslySetInnerHTML={{
-                    __html: `${formatRichText(data.introduction)}`,
-                  }}
-                />
-              )} */}
-                {data.introduction_blocks.map((block, index) => (
-                  <div key={index}>
-                    {block.rich_text && (
-                      <div
-                        className={styles.content}
-                        dangerouslySetInnerHTML={{
-                          __html: formatRichText(block.rich_text),
-                        }}
-                      />
-                    )}
-                    {block.custom_html && (
-                      <div
-                        className={styles.content}
-                        dangerouslySetInnerHTML={{ __html: block.custom_html }}
-                      />
-                    )}
-                    {block.articleLink && typeof block.articleLink !== 'string' && (
-                      <div>
-                        <div className="flex mt-10">
-                          <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                          <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
-                        </div>
-                        <WithArticleItem article={block.articleLink as ArticleType} />
-                      </div>
-                    )}
-                    {block.articleLink2 && typeof block.articleLink2 !== 'string' && (
-                      <div>
-                        <div className="flex mt-10">
-                          <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                          <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
-                        </div>
-                        <WithArticleItem article={block.articleLink2 as ArticleType} />
-                      </div>
-                    )}
-                  </div>
-                ))}
+                {data.introduction_blocks.map(renderBlockContent)}
                 {headings.length > 0 && <TableOfContents headings={headings} />}
-                {/* <div
-                className={styles.content}
-                dangerouslySetInnerHTML={{
-                  __html: `${formatRichText(data.content)}`,
-                }}
-              /> */}
-                <div>
-                  {data.content_blocks.map((block, index) => (
-                    <div key={index}>
-                      {block.rich_text && (
-                        <div
-                          className={styles.content}
-                          dangerouslySetInnerHTML={{
-                            __html: formatRichText(block.rich_text),
-                          }}
-                        />
-                      )}
-                      {block.custom_html && (
-                        <div
-                          className={styles.content}
-                          dangerouslySetInnerHTML={{ __html: block.custom_html }}
-                        />
-                      )}
-                      {block.articleLink && typeof block.articleLink !== 'string' && (
-                        <div>
-                          <div className="flex mt-10">
-                            <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                            <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
-                          </div>
-                          <WithArticleItem article={block.articleLink as ArticleType} />
-                        </div>
-                      )}
-                      {block.articleLink2 && typeof block.articleLink2 !== 'string' && (
-                        <div>
-                          <div className="flex mt-10">
-                            <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                            <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
-                          </div>
-                          <WithArticleItem article={block.articleLink2 as ArticleType} />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                <div>{data.content_blocks.map(renderBlockContent)}</div>
                 <div className="pt-10">
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center mb-5`}
