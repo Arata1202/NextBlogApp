@@ -1,9 +1,7 @@
-//最適化済み
+'use client';
 
-import React from 'react';
-import Link from 'next/link';
+import React, { memo } from 'react';
 import Image from 'next/image';
-import { memo } from 'react';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import TagList from '../TagList';
@@ -26,10 +24,16 @@ const ArticleListItem = ({ article }: Props) => {
   const isThumbnailAvailable = !!article.thumbnail;
   const { mobileSrcSet, desktopSrcSet } = getImageSrcSizes(imageSrc);
 
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    window.location.href = `/articles/${article.id}`;
+  };
+
   return (
     <li className={styles.list}>
-      <Link
+      <a
         href={`/articles/${article.id}`}
+        onClick={handleClick}
         className={`${styles.link} p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1`}
       >
         <picture>
@@ -45,8 +49,6 @@ const ArticleListItem = ({ article }: Props) => {
             className={styles.image}
             width={isThumbnailAvailable ? article.thumbnail?.width : 900}
             height={isThumbnailAvailable ? article.thumbnail?.height : 450}
-            // width={isThumbnailAvailable ? article.thumbnail?.width : 1200}
-            // height={isThumbnailAvailable ? article.thumbnail?.height : 630}
             placeholder="blur"
             blurDataURL={imageSrc}
           />
@@ -61,7 +63,7 @@ const ArticleListItem = ({ article }: Props) => {
             <PublishedDate date={article.publishedAt || article.createdAt} />
           </div>
         </div>
-      </Link>
+      </a>
     </li>
   );
 };
