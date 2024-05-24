@@ -10,7 +10,6 @@ import Sidebar from '../Sidebar';
 import ArticleListItem from '../ArticleListItem';
 import WithArticleItem from '../WithArticleItem';
 import { useEffect, useState } from 'react';
-import Script from 'next/script';
 import './article.css';
 import {
   TwitterShareButton,
@@ -67,35 +66,14 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 }
 
 export default function Article({ data, articles }: Props) {
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const superReload = sessionStorage.getItem(data.id);
-  //   if (!superReload) {
-  //     const keys = Object.keys(sessionStorage);
-  //     keys.forEach((key) => {
-  //       if (key !== data.id) {
-  //         sessionStorage.removeItem(key);
-  //       }
-  //     });
-  //     sessionStorage.setItem(data.id, 'true');
-  //     window.location.reload();
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [data.id]);
-
-  // useEffect(() => {
-  //   if (loading) {
-  //     document.body.classList.add('loading');
-  //     document.documentElement.classList.add('loading');
-  //   } else {
-  //     document.body.classList.remove('loading');
-  //     document.documentElement.classList.remove('loading');
-  //   }
-  // }, [loading]);
-
   const headings = useExtractHeadings(data.content);
+  const [clientRendered, setClientRendered] = useState(false);
+  useEffect(() => {
+    setClientRendered(true);
+  }, []);
+  if (!clientRendered) {
+    return null;
+  }
 
   // useEffect(() => {
   //   if (Array.isArray(data.content_blocks)) {
@@ -119,9 +97,6 @@ export default function Article({ data, articles }: Props) {
 
   return (
     <>
-      {/* <div>
-      {loading && <div className="loadingOverlay"></div>}
-    </div> */}
       <div className="hiddenBlock categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
         <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
           {/* Main Content Area */}
@@ -173,13 +148,9 @@ export default function Article({ data, articles }: Props) {
                       />
                     )}
                     {block.custom_html && (
-                      <Script
-                        id="custom-script"
+                      <div
                         className={styles.content}
-                        strategy="afterInteractive"
-                        dangerouslySetInnerHTML={{
-                          __html: block.custom_html.replace(/<script>(.*?)<\/script>/g, '$1'),
-                        }}
+                        dangerouslySetInnerHTML={{ __html: block.custom_html }}
                       />
                     )}
                     {block.articleLink && typeof block.articleLink !== 'string' && (
