@@ -45,8 +45,8 @@ const ArticleListItem = ({ article }: Props) => {
             src={imageSrc}
             alt="サムネイル"
             className={styles.image}
-            width={isThumbnailAvailable ? article.thumbnail?.width : 900}
-            height={isThumbnailAvailable ? article.thumbnail?.height : 450}
+            width="600"
+            height="300"
             // width={isThumbnailAvailable ? article.thumbnail?.width : 1200}
             // height={isThumbnailAvailable ? article.thumbnail?.height : 630}
             placeholder="blur"
