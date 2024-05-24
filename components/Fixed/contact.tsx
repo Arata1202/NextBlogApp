@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback, Fragment, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
@@ -14,24 +14,13 @@ import Sidebar from '@/components/Sidebar';
 import PublishedDate from '@/components/Date';
 import styles from './index.module.css';
 
-interface FormData {
-  sei: string;
-  mei: string;
-  email: string;
-  message: string;
-}
-
 const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
-  const dummyDate = useMemo(() => new Date(2024, 4, 4), []);
-  const formattedDate = useMemo(
-    () =>
-      dummyDate.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }),
-    [dummyDate],
-  );
+  const dummyDate = new Date(2024, 4, 4);
+  const formattedDate = dummyDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
 
   const [show, setContactConfirmShow] = useState(false);
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
@@ -48,18 +37,28 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
     reset,
   } = useForm<FormData>();
 
+  interface FormData {
+    sei: string;
+    mei: string;
+    email: string;
+    company: string;
+    tel: string;
+    message: string;
+  }
+
   const resetCaptcha = useCallback(() => {
     recaptchaRef.current?.reset();
   }, []);
 
-  const onChange = useCallback((value: string | null) => {
+  const onChange = (value: string | null) => {
+    console.log('Captcha value:', value);
     setCaptchaValue(value);
-  }, []);
+  };
 
-  const onSubmit = useCallback((data: FormData) => {
+  const onSubmit = (data: FormData) => {
     setContactFormData(data);
     setContactDialogOpen(true);
-  }, []);
+  };
 
   const sendEmail = useCallback(() => {
     if (!formData) return;
@@ -72,15 +71,17 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
       .then((response) => response.json())
       .then((data) => {
         if (data.status === 'success') {
+          console.log('Email sent successfully');
           setContactConfirmShow(true);
           reset();
           resetCaptcha();
           setContactDialogOpen(false);
         } else {
+          console.log('Failed to send email');
           setContactConfirmShow(false);
         }
       })
-      .catch(() => setContactConfirmShow(false));
+      .catch((error) => console.error('Error sending email:', error));
   }, [formData, reset, resetCaptcha]);
 
   const handleConfirmSend = useCallback(() => {
@@ -105,9 +106,9 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
     verifyCaptcha();
   }, [captchaValue, sendEmail]);
 
-  const handleCancel = useCallback(() => {
+  const handleCancel = () => {
     setContactDialogOpen(false);
-  }, []);
+  };
 
   useEffect(() => {
     if (show) {
@@ -120,6 +121,21 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
 
   return (
     <div>
+      {/* metaデータ */}
+      {/* <Head>
+        <title>お問い合わせ</title>
+        <meta
+          name="description"
+          content="あなたのサイトのお問い合わせページです。ご質問やご意見があれば、お気軽にお問い合わせください。"
+        />
+        <meta property="og:title" content="お問い合わせ - あなたのサイト名" />
+        <meta
+          property="og:description"
+          content="あなたのサイトのお問い合わせページです。ご質問やご意見があれば、お気軽にお問い合わせください。"
+        />
+        <meta property="og:image" content="アイキャッチ画像のURL" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head> */}
       <Header />
       <main className={styles.main}>
         <div className="categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
@@ -128,15 +144,20 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
             <h1 className="text-3xl font-bold lg:text-3xl">お問い合わせ</h1>
           </div>
           <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
+            {/* Main Content Area */}
             <div className="lg:col-span-2">
               <div className="">
                 <div className="space-y-5 lg:space-y-8">
                   <div className="includeBanner flex justify-end gap-x-5">
+                    {/* <TagList tags={data.tags} /> */}
                     <PublishedDate date={formattedDate} />
                   </div>
                   <p className="includeBanner text-center border border-gray-300 p-3">
                     記事内に広告が含まれています。
                   </p>
+                  {/* <p className="includeBanner text-center border border-gray-300 p-3">
+                    記事内に広告が含まれています。
+                  </p> */}
                 </div>
                 <p className="mt-5">
                   当ブログに関するご質問やお気づきの点がございましたら、お気軽にお問い合わせください。
@@ -146,7 +167,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                     <div className="sm:col-span-2">
                       <label
-                        htmlFor="sei"
+                        htmlFor="first-name"
                         className="block text-sm font-semibold leading-6 text-gray-800"
                       >
                         氏名
@@ -155,6 +176,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         <input
                           {...register('sei', { required: '※ 氏名を入力してください' })}
                           type="text"
+                          name="sei"
                           id="sei"
                           autoComplete="given-name"
                           className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
@@ -164,7 +186,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     </div>
                     <div className="sm:col-span-2">
                       <label
-                        htmlFor="mei"
+                        htmlFor="last-name"
                         className="block text-sm font-semibold leading-6 text-gray-800"
                       >
                         題名
@@ -173,6 +195,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         <input
                           {...register('mei', { required: '※ 題名を入力してください' })}
                           type="text"
+                          name="mei"
                           id="mei"
                           autoComplete="family-name"
                           className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
@@ -197,6 +220,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                             },
                           })}
                           type="text"
+                          name="email"
                           id="email"
                           autoComplete="email"
                           className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
@@ -214,14 +238,17 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       <div className="mt-2.5">
                         <textarea
                           {...register('message', { required: '※ 内容を入力してください' })}
+                          name="message"
                           id="message"
                           rows={4}
                           className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 text-gray-800 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                          defaultValue={''}
                         />
                         {errors.message && <p className="text-red-500">{errors.message.message}</p>}
                       </div>
                     </div>
                   </div>
+                  {/* スパム */}
                   <ReCAPTCHA
                     ref={recaptchaRef}
                     sitekey="6LcslaspAAAAAA15eqFJy4_vL856A7uu4ANjeqId"
@@ -247,6 +274,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
           </div>
         </div>
       </main>
+      {/* 送信確認モーダル */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -319,6 +347,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
           </div>
         </Dialog>
       </Transition.Root>
+      {/* 送信完了アラート */}
       <div
         aria-live="assertive"
         className="confirmAlert pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6"
