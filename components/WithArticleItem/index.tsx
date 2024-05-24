@@ -21,15 +21,16 @@ const ArticleListItem = ({ article }: Props) => {
   const isThumbnailAvailable = !!article.thumbnail;
   const { mobileSrcSet, desktopSrcSet } = getImageSrcSizes(imageSrc);
 
-  const handleNavigation = (url: string) => {
+  const handleNavigation = (event: React.MouseEvent<HTMLAnchorElement>, url: string) => {
+    event.preventDefault();
     window.location.href = url;
   };
 
   return (
     <li className={styles.list}>
       <a
-        onClick={() => handleNavigation(`/articles/${article.id}`)}
-        href="javascript:void(0)"
+        onClick={(event) => handleNavigation(event, `/articles/${article.id}`)}
+        href="#"
         className={`${styles.link} p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 cursor-pointer`}
       >
         <picture>

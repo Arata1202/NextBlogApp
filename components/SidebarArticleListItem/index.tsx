@@ -20,19 +20,16 @@ const SidebarArticleListItem = ({ article }: Props) => {
   const isThumbnailAvailable = !!article.thumbnail;
   const { mobileSrcSet, desktopSrcSet } = getImageSrcSizes(imageSrc);
 
-  const handleClick = (event: React.MouseEvent) => {
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     window.location.href = `/articles/${article.id}`;
   };
 
   return (
     <div>
-      <ol
-        className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
-        onClick={handleClick}
-      >
+      <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
         <li>
-          <a href="javascript:void(0)">
+          <a href="#" onClick={handleClick}>
             <Image
               src={imageSrc}
               alt="サムネイル"

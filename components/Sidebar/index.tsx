@@ -146,12 +146,15 @@ export default function Sidebar({ articles }: Props) {
               <ol
                 key={item.postName}
                 className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
-                onClick={() => {
-                  window.location.href = item.postHref;
-                }}
               >
                 <li>
-                  <a href="javascript:void(0)">
+                  <a
+                    href="#"
+                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+                      event.preventDefault();
+                      window.location.href = item.postHref;
+                    }}
+                  >
                     <Image
                       src={item.imageHref}
                       alt={item.imageAlt}
@@ -185,26 +188,26 @@ export default function Sidebar({ articles }: Props) {
               <p className="text-center">新着記事はありません</p>
             )}
           </div>
-          <div className="mt-5 flex justify-center border py-5 px-4">
+        </div>
+        <div className="mt-5 flex justify-center border border-gray-300 py-5 px-4">
+          <Image
+            src="http://www.rentracks.jp/adx/p.gifx?idx=0.61256.344874.638.7876&dna=105544"
+            height="1"
+            width="1"
+            alt=""
+          />
+          <a
+            href="http://www.rentracks.jp/adx/r.html?idx=0.61256.344874.638.7876&dna=105544"
+            rel="nofollow noopener"
+            target="_blank"
+          >
             <Image
-              src="http://www.rentracks.jp/adx/p.gifx?idx=0.61256.344874.638.7876&dna=105544"
-              height="1"
-              width="1"
-              alt=""
+              src="http://www.image-rentracks.com/7876/300_250.jpg"
+              width="400"
+              height="250"
+              alt="Ad"
             />
-            <a
-              href="http://www.rentracks.jp/adx/r.html?idx=0.61256.344874.638.7876&dna=105544"
-              rel="nofollow noopener"
-              target="_blank"
-            >
-              <Image
-                src="http://www.image-rentracks.com/7876/300_250.jpg"
-                width="400"
-                height="250"
-                alt="Ad"
-              />
-            </a>
-          </div>
+          </a>
         </div>
       </div>
     </div>
