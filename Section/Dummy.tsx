@@ -245,19 +245,19 @@ export const CategoryList = [
 export const PopularPost = [
   {
     postName: '【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説',
-    postHref: 'https://realunivlog.com/articles/nyuto-hotspring-tsurunoyu-reservation-access',
+    postHref: '/articles/nyuto-hotspring-tsurunoyu-reservation-access',
     imageHref: '/images/post/1.webp',
     imageAlt: 'サムネイル',
   },
   {
     postName: '【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】',
-    postHref: 'https://realunivlog.com/articles/university-student-real-personal-effects',
+    postHref: '/articles/university-student-real-personal-effects',
     imageHref: '/images/post/2.webp',
     imageAlt: 'サムネイル',
   },
   {
     postName: '【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】',
-    postHref: 'https://realunivlog.com/articles/study-php-recommend-method',
+    postHref: '/articles/study-php-recommend-method',
     imageHref: '/images/post/3.webp',
     imageAlt: 'サムネイル',
   },

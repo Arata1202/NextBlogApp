@@ -32,7 +32,7 @@ const SidebarArticleListItem = ({ article }: Props) => {
         onClick={handleClick}
       >
         <li>
-          <div>
+          <a href="javascript:void(0)">
             <Image
               src={imageSrc}
               alt="サムネイル"
@@ -44,7 +44,7 @@ const SidebarArticleListItem = ({ article }: Props) => {
             <div>
               <div className="ArticleListItem_title font-bold">{article.title}</div>
             </div>
-          </div>
+          </a>
         </li>
       </ol>
     </div>

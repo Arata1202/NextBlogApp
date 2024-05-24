@@ -31,8 +31,9 @@ const ArticleListItem = ({ article }: Props) => {
 
   return (
     <li className={styles.list}>
-      <div
+      <a
         onClick={handleClick}
+        href="javascript:void(0)"
         className={`${styles.link} p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1`}
       >
         <picture>
@@ -62,7 +63,7 @@ const ArticleListItem = ({ article }: Props) => {
             <PublishedDate date={article.publishedAt || article.createdAt} />
           </div>
         </div>
-      </div>
+      </a>
     </li>
   );
 };
