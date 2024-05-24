@@ -146,21 +146,22 @@ export default function Sidebar({ articles }: Props) {
               <ol
                 key={item.postName}
                 className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+                onClick={() => {
+                  window.location.href = item.postHref;
+                }}
               >
                 <li>
-                  <Link className="" href={item.postHref}>
-                    <Image
-                      src={item.imageHref}
-                      alt={item.imageAlt}
-                      className="ArticleListItem_image"
-                      width="800"
-                      height="450"
-                      key={index}
-                    />
-                    <div>
-                      <div className="ArticleListItem_title font-bold">{item.postName}</div>
-                    </div>
-                  </Link>
+                  <Image
+                    src={item.imageHref}
+                    alt={item.imageAlt}
+                    className="ArticleListItem_image"
+                    width="800"
+                    height="450"
+                    key={index}
+                  />
+                  <div>
+                    <div className="ArticleListItem_title font-bold">{item.postName}</div>
+                  </div>
                 </li>
               </ol>
             ))}
