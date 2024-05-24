@@ -66,33 +66,33 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 }
 
 export default function Article({ data, articles }: Props) {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const superReload = sessionStorage.getItem(data.id);
-    if (!superReload) {
-      const keys = Object.keys(sessionStorage);
-      keys.forEach((key) => {
-        if (key !== data.id) {
-          sessionStorage.removeItem(key);
-        }
-      });
-      sessionStorage.setItem(data.id, 'true');
-      window.location.reload();
-    } else {
-      setLoading(false);
-    }
-  }, [data.id]);
+  // useEffect(() => {
+  //   const superReload = sessionStorage.getItem(data.id);
+  //   if (!superReload) {
+  //     const keys = Object.keys(sessionStorage);
+  //     keys.forEach((key) => {
+  //       if (key !== data.id) {
+  //         sessionStorage.removeItem(key);
+  //       }
+  //     });
+  //     sessionStorage.setItem(data.id, 'true');
+  //     window.location.reload();
+  //   } else {
+  //     setLoading(false);
+  //   }
+  // }, [data.id]);
 
-  useEffect(() => {
-    if (loading) {
-      document.body.classList.add('loading');
-      document.documentElement.classList.add('loading');
-    } else {
-      document.body.classList.remove('loading');
-      document.documentElement.classList.remove('loading');
-    }
-  }, [loading]);
+  // useEffect(() => {
+  //   if (loading) {
+  //     document.body.classList.add('loading');
+  //     document.documentElement.classList.add('loading');
+  //   } else {
+  //     document.body.classList.remove('loading');
+  //     document.documentElement.classList.remove('loading');
+  //   }
+  // }, [loading]);
 
   const headings = useExtractHeadings(data.content);
 
@@ -118,7 +118,9 @@ export default function Article({ data, articles }: Props) {
 
   return (
     <>
+      {/* <>
       {loading && <div className="loadingOverlay"></div>}
+      </> */}
       <div className="hiddenBlock categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
         <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
           {/* Main Content Area */}
