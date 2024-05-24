@@ -231,3 +231,30 @@ li {
 /* .tagTitle {
   margin-top: 100px !important;
 } */
+
+/* 商品リンク */
+/* .product-link .image {
+  object-fit: cover;
+}
+.product-link .button:hover {
+  opacity: 0.7;
+}
+.button.amazon {
+  background: #febd69;
+}
+.button.rakuten {
+  color: #fff;
+  background: #bf0000;
+}
+.fa-rakuten::before {
+  content: 'R';
+  font-weight: 700;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  color: #bf0000;
+  background: #fff;
+}
+.button.yahoo {
+  color: #fff;
+  background: #ff0033;
+} */
