@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
 
@@ -8,22 +8,22 @@ type Props = {
   article: Article;
 };
 
-function getImageSrcSizes(imageSrc: string) {
-  return {
-    mobileSrcSet: `${imageSrc}?fm=webp&w=414 1x, ${imageSrc}?fm=webp&w=414&dpr=2 2x`,
-    desktopSrcSet: `${imageSrc}?fm=webp&fit=crop&w=240&h=126 1x, ${imageSrc}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`,
-  };
-}
+const getImageSrcSizes = (imageSrc: string) => ({
+  mobileSrcSet: `${imageSrc}?fm=webp&w=414 1x, ${imageSrc}?fm=webp&w=414&dpr=2 2x`,
+  desktopSrcSet: `${imageSrc}?fm=webp&fit=crop&w=240&h=126 1x, ${imageSrc}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`,
+});
 
 const SidebarArticleListItem = ({ article }: Props) => {
   const imageSrc = article.thumbnail?.url || '/no-image.png';
-  const isThumbnailAvailable = !!article.thumbnail;
   const { mobileSrcSet, desktopSrcSet } = getImageSrcSizes(imageSrc);
 
-  const handleClick = (event: React.MouseEvent) => {
-    event.preventDefault();
-    window.location.href = `/articles/${article.id}`;
-  };
+  const handleClick = useCallback(
+    (event: React.MouseEvent) => {
+      event.preventDefault();
+      window.location.href = `/articles/${article.id}`;
+    },
+    [article.id],
+  );
 
   return (
     <div>
@@ -36,8 +36,8 @@ const SidebarArticleListItem = ({ article }: Props) => {
             <Image
               src={imageSrc}
               alt="サムネイル"
-              width="800"
-              height="450"
+              width={800}
+              height={450}
               placeholder="blur"
               blurDataURL={imageSrc}
             />

@@ -1,23 +1,17 @@
-//最適化済み
-
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Article, Tag } from '@/libs/microcms';
 import ArticleListItem from '../ArticleListItem';
 import styles from './index.module.css';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
-import { useMemo } from 'react';
 import Sidebar from '../Sidebar';
 import Share from '../Share';
+import classNames from 'classnames';
 
 const tabs = [
   { name: '最新記事', href: '/', current: false },
   { name: '大学生活', href: '/category/university', current: false },
   { name: 'プログラミング', href: '/category/programming', current: false },
 ];
-
-function classNames(...classes: (string | undefined | null | boolean)[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 type Props = {
   articles?: Article[];
@@ -84,37 +78,9 @@ const ArticleList = ({ articles, allArticles }: Props) => {
 
   return (
     <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto">
-      {/* <div className="sm:hidden">
-        <label htmlFor="tabs" className="sr-only">
-          Select a tab
-        </label>
-        <select
-          id="tabs"
-          name="tabs"
-          className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-          defaultValue={tabs.find((tab) => tab.current).name}
-        >
-          {tabs.map((tab) => (
-            <option key={tab.name}>{tab.name}</option>
-          ))}
-        </select>
-      </div> */}
       <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
         {/* Main Content Area */}
         <div className="lg:col-span-2">
-          {/* <h1 className="categoryTitle text-3xl font-bold pt-7">
-            {showLatest ? (
-              <div className="flex items-center pb-2 pt-2">
-                <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                <div>最新記事</div>
-              </div>
-            ) : (
-              <div className="flex items-center">
-                <FolderOpenIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                <TagList tags={uniqueTags} hasLink={false} />
-              </div>
-            )}
-          </h1> */}
           <div className="">
             <nav
               className="isolate flex divide-x divide-gray-300 border border-gray-300 shadow"
@@ -158,4 +124,5 @@ const ArticleList = ({ articles, allArticles }: Props) => {
     </div>
   );
 };
+
 export default React.memo(ArticleList);

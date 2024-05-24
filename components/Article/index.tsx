@@ -1,5 +1,4 @@
 'use client';
-
 import { formatRichText } from '@/libs/utils';
 import { Article as ArticleType } from '@/libs/microcms';
 import PublishedDate from '../Date';
