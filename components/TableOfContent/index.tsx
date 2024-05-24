@@ -1,3 +1,5 @@
+//最適化済み
+
 import React, { useMemo } from 'react';
 
 interface Heading {
@@ -30,9 +32,11 @@ const TableOfContents: React.FC<TableOfContentsProps> = React.memo(({ headings }
       }
 
       return {
-        ...heading,
+        id: heading.id,
+        title: heading.title,
+        level: heading.level,
         number: headingNumber,
-        marginLeft: (heading.level - 1) * 20,
+        marginLeft: `${(heading.level - 1) * 20}px`,
       };
     });
   }, [headings]);
