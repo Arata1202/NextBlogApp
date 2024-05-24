@@ -3,9 +3,7 @@ import Image from 'next/image';
 import { memo } from 'react';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import TagList from '../TagList';
 import PublishedDate from '../Date';
-import { FolderIcon } from '@heroicons/react/24/outline';
 
 type Props = {
   article: Article;
@@ -47,8 +45,6 @@ const ArticleListItem = ({ article }: Props) => {
             className={styles.image}
             width="600"
             height="300"
-            // width={isThumbnailAvailable ? article.thumbnail?.width : 1200}
-            // height={isThumbnailAvailable ? article.thumbnail?.height : 630}
             placeholder="blur"
             blurDataURL={imageSrc}
           />
@@ -57,10 +53,6 @@ const ArticleListItem = ({ article }: Props) => {
           <div className={styles.title}>{article.title}</div>
           <div className={styles.description}>{article.description}</div>
           <div className={styles.date}>
-            {/* <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" /> */}
-            {/* {article.tags?.map((tag) => (
-              <li key={tag.id}>{tag.id}</li>
-            ))} */}
             &nbsp;&nbsp;&nbsp;&nbsp;
             <PublishedDate date={article.publishedAt || article.createdAt} />
           </div>

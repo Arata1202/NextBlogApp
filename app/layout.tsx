@@ -18,11 +18,9 @@ export const metadata = {
     images: '/images/thumbnail/7.webp',
     url: 'https://realunivlog.com',
   },
-  // noindex 不要
-
-  // alternates: {
-  //   canonical: '/',
-  // },
+  alternates: {
+    canonical: 'https://realunivlog.com',
+  },
 };
 
 type Props = {

@@ -14,11 +14,9 @@ export const metadata = {
     images: '/images/thumbnail/1.webp',
     url: 'https://realunivlog.com/contact',
   },
-  // noindex 不要
-
-  // alternates: {
-  //   canonical: '/',
-  // },
+  alternates: {
+    canonical: 'https://realunivlog.com/contact',
+  },
 };
 
 export const revalidate = 60;

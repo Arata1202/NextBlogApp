@@ -1,10 +1,8 @@
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import styles from './index.module.css';
 import PublishedDate from '@/components/Date';
 import React from 'react';
 import { DocumentMagnifyingGlassIcon } from '@heroicons/react/20/solid';
-import Head from 'next/head';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 import Share from '../Share';

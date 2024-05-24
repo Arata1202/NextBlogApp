@@ -22,6 +22,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: `https://realunivlog.com/images/thumbnail/${tag.id}.webp`,
       url: `https://realunivlog.com/category/${tag.id}`,
     },
+    alternates: {
+      canonical: `https://realunivlog.com/category/${tag.id}`,
+    },
   };
 }
 

@@ -1,5 +1,4 @@
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import styles from './index.module.css';
 import Image from 'next/image';
 import PublishedDate from '@/components/Date';
