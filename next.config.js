@@ -15,8 +15,13 @@ module.exports = withPWA({
 
 module.exports = {
   images: {
-    domains: ['images.microcms-assets.io'],
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.microcms-assets.io',
+        port: '',
+        pathname: '**',
+      },
       {
         protocol: 'http',
         hostname: 'www.rentracks.jp',
