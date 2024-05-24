@@ -55,6 +55,7 @@ export default async function RootLayout({ children }: Props) {
               `,
           }}
         />
+        <meta http-equiv="Cache-Control" content="no-store" />
         {/* 共通 OK */}
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
         {/* 共通 PWA OK */}
