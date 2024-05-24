@@ -36,8 +36,8 @@ const SidebarArticleListItem = ({ article }: Props) => {
             <Image
               src={imageSrc}
               alt="サムネイル"
-              width="600"
-              height="300"
+              width="800"
+              height="450"
               placeholder="blur"
               blurDataURL={imageSrc}
             />
