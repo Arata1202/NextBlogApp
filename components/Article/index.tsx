@@ -178,7 +178,7 @@ export default function Article({ data, articles }: Props) {
                         className={styles.content}
                         strategy="afterInteractive"
                         dangerouslySetInnerHTML={{
-                          __html: block.custom_html.replace(/<script>(.*?)<\/script>/g, '$1'),
+                          __html: block.custom_html.replace(/<\/?script>/g, ''),
                         }}
                       />
                     )}
