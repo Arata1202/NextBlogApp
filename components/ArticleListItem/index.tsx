@@ -1,4 +1,5 @@
 'use client';
+
 import React, { memo } from 'react';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
@@ -31,8 +32,8 @@ const ArticleListItem = ({ article }: Props) => {
   return (
     <li className={styles.list}>
       <a
+        href={`/articles/${article.id}`}
         onClick={handleClick}
-        href="javascript:void(0)"
         className={`${styles.link} p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1`}
       >
         <picture>
@@ -46,8 +47,8 @@ const ArticleListItem = ({ article }: Props) => {
             src={imageSrc}
             alt="サムネイル"
             className={styles.image}
-            width="600"
-            height="300"
+            width={isThumbnailAvailable ? article.thumbnail?.width : 900}
+            height={isThumbnailAvailable ? article.thumbnail?.height : 450}
             placeholder="blur"
             blurDataURL={imageSrc}
           />
