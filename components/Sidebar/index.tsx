@@ -151,17 +151,19 @@ export default function Sidebar({ articles }: Props) {
                 }}
               >
                 <li>
-                  <Image
-                    src={item.imageHref}
-                    alt={item.imageAlt}
-                    className="ArticleListItem_image"
-                    width="800"
-                    height="450"
-                    key={index}
-                  />
-                  <div>
-                    <div className="ArticleListItem_title font-bold">{item.postName}</div>
-                  </div>
+                  <a href="javascript:void(0)">
+                    <Image
+                      src={item.imageHref}
+                      alt={item.imageAlt}
+                      className="ArticleListItem_image"
+                      width="800"
+                      height="450"
+                      key={index}
+                    />
+                    <div>
+                      <div className="ArticleListItem_title font-bold">{item.postName}</div>
+                    </div>
+                  </a>
                 </li>
               </ol>
             ))}
