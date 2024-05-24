@@ -1,7 +1,4 @@
-//最適化済み
-
 import React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { memo } from 'react';
 import { Article } from '@/libs/microcms';
@@ -26,11 +23,15 @@ const ArticleListItem = ({ article }: Props) => {
   const isThumbnailAvailable = !!article.thumbnail;
   const { mobileSrcSet, desktopSrcSet } = getImageSrcSizes(imageSrc);
 
+  const handleNavigation = (url: string) => {
+    window.location.href = url;
+  };
+
   return (
     <li className={styles.list}>
-      <Link
-        href={`/articles/${article.id}`}
-        className={`${styles.link} p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1`}
+      <div
+        onClick={() => handleNavigation(`/articles/${article.id}`)}
+        className={`${styles.link} p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 cursor-pointer`}
       >
         <picture>
           {isThumbnailAvailable && (
@@ -63,7 +64,7 @@ const ArticleListItem = ({ article }: Props) => {
             <PublishedDate date={article.publishedAt || article.createdAt} />
           </div>
         </div>
-      </Link>
+      </div>
     </li>
   );
 };
