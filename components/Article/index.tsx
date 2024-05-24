@@ -66,43 +66,7 @@ function useExtractHeadings(htmlContent: string): Heading[] {
 }
 
 export default function Article({ data, articles }: Props) {
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const superReload = sessionStorage.getItem(data.id);
-  //   if (!superReload) {
-  //     const keys = Object.keys(sessionStorage);
-  //     keys.forEach((key) => {
-  //       if (key !== data.id) {
-  //         sessionStorage.removeItem(key);
-  //       }
-  //     });
-  //     sessionStorage.setItem(data.id, 'true');
-  //     window.location.reload();
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [data.id]);
-
-  // useEffect(() => {
-  //   if (loading) {
-  //     document.body.classList.add('loading');
-  //     document.documentElement.classList.add('loading');
-  //   } else {
-  //     document.body.classList.remove('loading');
-  //     document.documentElement.classList.remove('loading');
-  //   }
-  // }, [loading]);
-
   const headings = useExtractHeadings(data.content);
-
-  // useEffect(() => {
-  //   if (Array.isArray(data.content_blocks)) {
-  //     data.content_blocks.forEach((block, index) => {
-  //       console.log(`Block ${index}:`, block);
-  //     });
-  //   }
-  // }, [data.content_blocks]);
 
   const currentIndex = articles!.findIndex((article) => article.id === data.id);
   const prevArticle = currentIndex > 0 ? articles![currentIndex - 1] : null;
@@ -118,9 +82,6 @@ export default function Article({ data, articles }: Props) {
 
   return (
     <>
-      {/* <>
-      {loading && <div className="loadingOverlay"></div>}
-      </> */}
       <div className="hiddenBlock categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
         <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
           {/* Main Content Area */}
@@ -153,14 +114,6 @@ export default function Article({ data, articles }: Props) {
                 <p className="includeBanner text-center border border-gray-300 p-3">
                   記事内に広告が含まれています。
                 </p>
-                {/* {data.introduction && (
-                <div
-                  className={styles.content}
-                  dangerouslySetInnerHTML={{
-                    __html: `${formatRichText(data.introduction)}`,
-                  }}
-                />
-              )} */}
                 {data.introduction_blocks.map((block, index) => (
                   <div key={index}>
                     {block.rich_text && (
@@ -198,12 +151,6 @@ export default function Article({ data, articles }: Props) {
                   </div>
                 ))}
                 {headings.length > 0 && <TableOfContents headings={headings} />}
-                {/* <div
-                className={styles.content}
-                dangerouslySetInnerHTML={{
-                  __html: `${formatRichText(data.content)}`,
-                }}
-              /> */}
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>

@@ -29,8 +29,9 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       images: [data?.thumbnail?.url || ''],
       url: data.url,
     },
-
-    // noindex 不要
+    alternates: {
+      canonical: data.url,
+    },
   };
 }
 

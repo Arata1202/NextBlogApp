@@ -1,5 +1,3 @@
-//最適化済み
-
 import React, { useMemo } from 'react';
 
 interface Heading {

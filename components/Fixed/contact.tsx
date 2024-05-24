@@ -121,21 +121,6 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
 
   return (
     <div>
-      {/* metaデータ */}
-      {/* <Head>
-        <title>お問い合わせ</title>
-        <meta
-          name="description"
-          content="あなたのサイトのお問い合わせページです。ご質問やご意見があれば、お気軽にお問い合わせください。"
-        />
-        <meta property="og:title" content="お問い合わせ - あなたのサイト名" />
-        <meta
-          property="og:description"
-          content="あなたのサイトのお問い合わせページです。ご質問やご意見があれば、お気軽にお問い合わせください。"
-        />
-        <meta property="og:image" content="アイキャッチ画像のURL" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head> */}
       <Header />
       <main className={styles.main}>
         <div className="categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
