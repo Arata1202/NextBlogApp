@@ -46,8 +46,8 @@ const ArticleListItem = ({ article }: Props) => {
             src={imageSrc}
             alt="サムネイル"
             className={styles.image}
-            width={isThumbnailAvailable ? article.thumbnail?.width : 900}
-            height={isThumbnailAvailable ? article.thumbnail?.height : 450}
+            width="600"
+            height="300"
             placeholder="blur"
             blurDataURL={imageSrc}
           />

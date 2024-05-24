@@ -156,8 +156,8 @@ export default function Sidebar({ articles }: Props) {
                       src={item.imageHref}
                       alt={item.imageAlt}
                       className="ArticleListItem_image"
-                      width="800"
-                      height="450"
+                      width="600"
+                      height="300"
                       key={index}
                     />
                     <div>
