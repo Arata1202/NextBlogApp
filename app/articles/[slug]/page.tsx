@@ -27,10 +27,10 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
       title: data.title + '｜リアル大学生',
       description: data.description,
       images: [data?.thumbnail?.url || ''],
-      url: data.url,
+      url: 'https://realunivlog.com/articles/' + data.id,
     },
     alternates: {
-      canonical: data.url,
+      canonical: 'https://realunivlog.com/articles/' + data.id,
     },
   };
 }
