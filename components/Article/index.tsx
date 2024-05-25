@@ -200,7 +200,7 @@ export default function Article({ data, articles }: Props) {
                 <div className="flex justify-center">
                   <TwitterShareButton
                     aria-label="シェアボタン"
-                    url={data.url}
+                    url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
                     className="m-1"
                   >
@@ -209,7 +209,7 @@ export default function Article({ data, articles }: Props) {
 
                   <FacebookShareButton
                     aria-label="シェアボタン"
-                    url={data.url}
+                    url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
                     className="m-1"
                   >
@@ -218,7 +218,7 @@ export default function Article({ data, articles }: Props) {
 
                   <LineShareButton
                     aria-label="シェアボタン"
-                    url={data.url}
+                    url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
                     className="m-1"
                   >
@@ -227,7 +227,7 @@ export default function Article({ data, articles }: Props) {
 
                   <HatenaShareButton
                     aria-label="シェアボタン"
-                    url={data.url}
+                    url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
                     className="m-1"
                   >
@@ -236,7 +236,7 @@ export default function Article({ data, articles }: Props) {
 
                   <PinterestShareButton
                     aria-label="シェアボタン"
-                    url={data.url}
+                    url={`https://realunivlog.com/articles/${data.id}`}
                     media={data.thumbnail?.url || ''}
                     description={data.title}
                     className="m-1"
@@ -246,7 +246,7 @@ export default function Article({ data, articles }: Props) {
 
                   <RedditShareButton
                     aria-label="シェアボタン"
-                    url={data.url}
+                    url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
                     className="m-1"
                   >
@@ -255,7 +255,7 @@ export default function Article({ data, articles }: Props) {
 
                   <LinkedinShareButton
                     aria-label="シェアボタン"
-                    url={data.url}
+                    url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
                     summary={data.description}
                     className="m-1"
