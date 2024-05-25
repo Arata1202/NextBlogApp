@@ -21,6 +21,9 @@ export const metadata = {
   alternates: {
     canonical: 'https://realunivlog.com',
   },
+  icons: {
+    icon: '/images/head/favicon.ico',
+  },
 };
 
 type Props = {
@@ -60,7 +63,6 @@ export default async function RootLayout({ children }: Props) {
         {/* 共通 PWA OK */}
         <link rel="manifest" href="/manifest.json" />
         {/* 共通 ファビコン OK */}
-        <link rel="icon" href="images/head/favicon.ico" />
         <link
           rel="icon"
           href="https://realunivlog.com/images/head/16.png"
