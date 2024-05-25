@@ -7,7 +7,7 @@ import 'highlight.js/styles/hybrid.css';
 export const formatDate = (date: string) => {
   const utcDate = new Date(date);
   const jstDate = utcToZonedTime(utcDate, 'Asia/Tokyo');
-  return format(jstDate, 'd MMMM, yyyy');
+  return format(jstDate, 'yyyy年M月d日');
 };
 
 export const formatRichText = (richText: string) => {
