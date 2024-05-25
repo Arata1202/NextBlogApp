@@ -88,7 +88,7 @@ export default function Article({ data, articles }: Props) {
           <div className="lg:col-span-2">
             <div className="">
               <div className="space-y-5 lg:space-y-8">
-                <h1 className="text-3xl font-bold lg:text-3xl">{data.title}</h1>
+                <h1 className={`${styles.title} text-3xl font-bold lg:text-3xl`}>{data.title}</h1>
                 <picture className="w-full">
                   <source
                     type="image/webp"
