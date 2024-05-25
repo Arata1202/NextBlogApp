@@ -11,7 +11,7 @@ export default function TagListItem({ tag, hasLink = true }: Props) {
   if (hasLink) {
     return (
       // <Link href={`/tags/${tag.id}`} className={styles.tag}>
-      <b>{tag.name}</b>
+      <p className={styles.tag}>{tag.name}</p>
       // </Link>
     );
   }
