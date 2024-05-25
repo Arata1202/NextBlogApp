@@ -22,7 +22,7 @@ export const metadata = {
     canonical: 'https://realunivlog.com',
   },
   icons: {
-    icon: '/images/head/favicon.ico',
+    icon: '/favicon.ico',
   },
 };
 
