@@ -29,7 +29,7 @@ const SidebarArticleListItem = ({ article }: Props) => {
     <div>
       <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
         <li>
-          <a href="#" onClick={handleClick}>
+          <a href={`/articles/${article.id}`} onClick={handleClick}>
             <Image
               src={imageSrc}
               alt="サムネイル"
