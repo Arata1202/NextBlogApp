@@ -11,6 +11,7 @@ import ArticleListItem from '../ArticleListItem';
 import WithArticleItem from '../WithArticleItem';
 import { useEffect, useState } from 'react';
 import './article.css';
+import TagList from '../TagList';
 import {
   TwitterShareButton,
   TwitterIcon,
@@ -33,6 +34,7 @@ import {
   ChevronDoubleLeftIcon,
   HandThumbUpIcon,
   LinkIcon,
+  FolderIcon,
 } from '@heroicons/react/24/solid';
 
 interface Heading {
@@ -108,7 +110,10 @@ export default function Article({ data, articles }: Props) {
                     loading="eager"
                   />
                 </picture>
-                <div className="includeBanner flex justify-end gap-x-5">
+                <div className={styles.date}>
+                  <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
+                  <TagList tags={data.tags} hasLink={true} />
+                  &nbsp;&nbsp;&nbsp;&nbsp;
                   <PublishedDate date={data.publishedAt || data.createdAt} />
                 </div>
                 <p className="includeBanner text-center border border-gray-300 p-3">
