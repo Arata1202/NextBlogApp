@@ -149,7 +149,7 @@ export default function Sidebar({ articles }: Props) {
               >
                 <li>
                   <a
-                    href="#"
+                    href={item.postHref}
                     onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
                       event.preventDefault();
                       window.location.href = item.postHref;
