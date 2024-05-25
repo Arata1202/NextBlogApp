@@ -160,7 +160,7 @@ export default function Header() {
                   {categories.map((item) => (
                     <li key={item.name}>
                       <Link onClick={() => setMobileMenuOpen(false)} href={item.href}>
-                        <div className="ml-5 flex items-center py-1 text-base font-medium text-gray-900 border-b border-gray-300 hover:text-blue-500">
+                        <div className="ml-5 flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
                           <div>{'>'}</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                           {item.name}
