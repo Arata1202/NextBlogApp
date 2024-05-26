@@ -153,7 +153,7 @@ export default function Header() {
                     </li>
                   ))}
                   <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300">
-                    <div>▼</div>
+                    <div>▶︎</div>
                     <FolderIcon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                     カテゴリー
                   </div>
