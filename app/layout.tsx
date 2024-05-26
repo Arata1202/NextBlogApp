@@ -46,6 +46,8 @@ export default async function RootLayout({ children }: Props) {
       <head>
         {/* GoogleAnalytics */}
         <script async src={`https://www.googletagmanager.com/gtag/js?id=G-LSE2CK3HZM`} />
+        {/* GoogleAdsense */}
+        <meta name="google-adsense-account" content="ca-pub-1705865999592590" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
