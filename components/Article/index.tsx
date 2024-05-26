@@ -48,27 +48,35 @@ type Props = {
   articles?: ArticleType[];
 };
 
-function useExtractHeadings(htmlContent: string): Heading[] {
+function useExtractHeadings(contentBlocks: { rich_text?: string }[]): Heading[] {
   const [headings, setHeadings] = useState<Heading[]>([]);
 
   useEffect(() => {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-    const extractedHeadings: Heading[] = Array.from(
-      tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6'),
-    ).map((el) => ({
-      id: el.id,
-      title: el.textContent || '',
-      level: parseInt(el.tagName[1], 10),
-    }));
+    const extractedHeadings: Heading[] = [];
+
+    contentBlocks.forEach((block) => {
+      if (block.rich_text) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = block.rich_text;
+        const blockHeadings: Heading[] = Array.from(
+          tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6'),
+        ).map((el) => ({
+          id: el.id,
+          title: el.textContent || '',
+          level: parseInt(el.tagName[1], 10),
+        }));
+        extractedHeadings.push(...blockHeadings);
+      }
+    });
+
     setHeadings(extractedHeadings);
-  }, [htmlContent]);
+  }, [contentBlocks]);
 
   return headings;
 }
 
 export default function Article({ data, articles }: Props) {
-  const headings = useExtractHeadings(data.content);
+  const headings = useExtractHeadings(data.content_blocks);
 
   const currentIndex = articles!.findIndex((article) => article.id === data.id);
   const prevArticle = currentIndex > 0 ? articles![currentIndex - 1] : null;
