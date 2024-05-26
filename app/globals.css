@@ -30,6 +30,10 @@
   padding-top: 89px !important;
 }
 
+.tableOfContent {
+  margin-top: 30px !important;
+}
+
 /* スマートフォン用 */
 @media (max-width: 768px) {
   /* フッター */
