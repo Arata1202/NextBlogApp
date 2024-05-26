@@ -39,6 +39,16 @@ const TableOfContents: React.FC<TableOfContentsProps> = React.memo(({ headings }
     });
   }, [headings]);
 
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
+    event.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      const yOffset = -100;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="flex justify-center">
       <nav
@@ -49,7 +59,11 @@ const TableOfContents: React.FC<TableOfContentsProps> = React.memo(({ headings }
         <ol className="mt-4 list-none pl-0">
           {formattedHeadings.map((heading) => (
             <li key={heading.id} style={{ marginLeft: heading.marginLeft }}>
-              <a href={`#${heading.id}`} className="hover:text-blue-500">
+              <a
+                href={`#${heading.id}`}
+                onClick={(e) => handleClick(e, heading.id)}
+                className="hover:text-blue-500"
+              >
                 {heading.number} {heading.title}
               </a>
             </li>
