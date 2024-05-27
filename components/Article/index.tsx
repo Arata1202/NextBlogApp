@@ -48,16 +48,16 @@ type Props = {
   articles?: ArticleType[];
 };
 
-function useExtractHeadings(contentBlocks: { rich_text?: string }[]): Heading[] {
+function useExtractHeadings(contentBlocks: { rich_text2?: string }[]): Heading[] {
   const [headings, setHeadings] = useState<Heading[]>([]);
 
   useEffect(() => {
     const extractedHeadings: Heading[] = [];
 
     contentBlocks.forEach((block) => {
-      if (block.rich_text) {
+      if (block.rich_text2) {
         const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = block.rich_text;
+        tempDiv.innerHTML = block.rich_text2;
         const blockHeadings: Heading[] = Array.from(
           tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6'),
         ).map((el) => ({
@@ -129,36 +129,27 @@ export default function Article({ data, articles }: Props) {
                 </p>
                 {data.introduction_blocks.map((block, index) => (
                   <div key={index}>
-                    {block.rich_text && (
+                    {block.rich_text2 && (
                       <div
                         className={styles.content}
                         dangerouslySetInnerHTML={{
-                          __html: formatRichText(block.rich_text),
+                          __html: formatRichText(block.rich_text2),
                         }}
                       />
                     )}
-                    {block.custom_html && (
+                    {block.custom_html2 && (
                       <div
                         className={styles.content}
-                        dangerouslySetInnerHTML={{ __html: block.custom_html }}
+                        dangerouslySetInnerHTML={{ __html: block.custom_html2 }}
                       />
                     )}
-                    {block.articleLink && typeof block.articleLink !== 'string' && (
+                    {block.articleLink3 && typeof block.articleLink3 !== 'string' && (
                       <div>
                         <div className="flex mt-10">
                           <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
                           <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
                         </div>
-                        <WithArticleItem article={block.articleLink as ArticleType} />
-                      </div>
-                    )}
-                    {block.articleLink2 && typeof block.articleLink2 !== 'string' && (
-                      <div>
-                        <div className="flex mt-10">
-                          <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                          <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
-                        </div>
-                        <WithArticleItem article={block.articleLink2 as ArticleType} />
+                        <WithArticleItem article={block.articleLink3 as ArticleType} />
                       </div>
                     )}
                   </div>
@@ -167,36 +158,27 @@ export default function Article({ data, articles }: Props) {
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
-                      {block.rich_text && (
+                      {block.rich_text2 && (
                         <div
                           className={styles.content}
                           dangerouslySetInnerHTML={{
-                            __html: formatRichText(block.rich_text),
+                            __html: formatRichText(block.rich_text2),
                           }}
                         />
                       )}
-                      {block.custom_html && (
+                      {block.custom_html2 && (
                         <div
                           className={styles.content}
-                          dangerouslySetInnerHTML={{ __html: block.custom_html }}
+                          dangerouslySetInnerHTML={{ __html: block.custom_html2 }}
                         />
                       )}
-                      {block.articleLink && typeof block.articleLink !== 'string' && (
+                      {block.articleLink3 && typeof block.articleLink3 !== 'string' && (
                         <div>
                           <div className="flex mt-10">
                             <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
                             <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
                           </div>
-                          <WithArticleItem article={block.articleLink as ArticleType} />
-                        </div>
-                      )}
-                      {block.articleLink2 && typeof block.articleLink2 !== 'string' && (
-                        <div>
-                          <div className="flex mt-10">
-                            <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                            <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
-                          </div>
-                          <WithArticleItem article={block.articleLink2 as ArticleType} />
+                          <WithArticleItem article={block.articleLink3 as ArticleType} />
                         </div>
                       )}
                     </div>
