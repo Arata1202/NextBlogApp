@@ -37,3 +37,75 @@ a strong:hover {
 .underline_yellow {
   background: linear-gradient(transparent 70%, yellow 70%);
 }
+
+/* 吹き出し */
+.speech-bubble {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.speech-bubble.left {
+  justify-content: flex-start;
+}
+
+.speech-bubble.right {
+  flex-direction: row-reverse;
+}
+
+.bubble-image {
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.bubble-content {
+  max-width: 60%;
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+  background-color: #eaf4fc;
+  display: flex;
+  flex-direction: column;
+}
+
+.speech-bubble.left .bubble-content:after,
+.speech-bubble.right .bubble-content:after {
+  content: '';
+  position: absolute;
+  top: 40%;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+}
+
+.speech-bubble.left .bubble-content:after {
+  left: -20px;
+  border-right-color: #eaf4fc;
+}
+
+.speech-bubble.right .bubble-content:after {
+  right: -20px;
+  border-left-color: #eaf4fc;
+}
+
+.bubble-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.bubble-text {
+  margin: 0;
+}
+
+.bubble-image-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.bubble-image-wrapper.left {
+  margin-right: 10px;
+}
+
+.bubble-image-wrapper.right {
+  margin-left: 10px;
+}
