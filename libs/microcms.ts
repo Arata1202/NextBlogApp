@@ -44,12 +44,8 @@ export type ContentBlock = {
 export type Blog = {
   title: string;
   description: string;
-  content: string;
-  html: string;
-  introduction: string;
   thumbnail?: MicroCMSImage;
   tags?: Tag[];
-  writer?: Writer;
   content_blocks: ContentBlock[];
   introduction_blocks: IntroductionBlock[];
 };
