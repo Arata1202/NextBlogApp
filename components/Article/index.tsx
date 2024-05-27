@@ -129,6 +129,33 @@ export default function Article({ data, articles }: Props) {
                 </p>
                 {data.introduction_blocks.map((block, index) => (
                   <div key={index}>
+                    {(block.bubble_name || block.bubble_text || block.bubble_image) && (
+                      <div className={`speech-bubble ${block.bubble_isRight ? 'right' : 'left'}`}>
+                        {block.bubble_image && (
+                          <div
+                            className={`bubble-image-wrapper ${
+                              block.bubble_isRight ? 'right' : 'left'
+                            }`}
+                          >
+                            <div>
+                              <Image
+                                src={block.bubble_image.url}
+                                width={100}
+                                height={100}
+                                alt="吹き出しのイメージ"
+                                className="bubble-image"
+                              />
+                              <p className="bubble-name text-center">{block.bubble_name}</p>
+                            </div>
+                          </div>
+                        )}
+                        <div
+                          className={`bubble-content ${block.bubble_isRight ? 'right' : 'left'}`}
+                        >
+                          <p className="bubble-text">{block.bubble_text}</p>
+                        </div>
+                      </div>
+                    )}
                     {block.rich_text2 && (
                       <div
                         className={styles.content}
@@ -158,6 +185,31 @@ export default function Article({ data, articles }: Props) {
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
+                      {(block.bubble_name || block.bubble_text || block.bubble_image) && (
+                        <div className={`speech-bubble ${block.bubble_isRight ? 'right' : 'left'}`}>
+                          {block.bubble_image && (
+                            <div
+                              className={`bubble-image-wrapper ${
+                                block.bubble_isRight ? 'right' : 'left'
+                              }`}
+                            >
+                              <Image
+                                src={block.bubble_image.url}
+                                width={100}
+                                height={100}
+                                alt="吹き出しのイメージ"
+                                className="bubble-image"
+                              />
+                            </div>
+                          )}
+                          <div
+                            className={`bubble-content ${block.bubble_isRight ? 'right' : 'left'}`}
+                          >
+                            <p className="bubble-name">{block.bubble_name}</p>
+                            <p className="bubble-text">{block.bubble_text}</p>
+                          </div>
+                        </div>
+                      )}
                       {block.rich_text2 && (
                         <div
                           className={styles.content}
