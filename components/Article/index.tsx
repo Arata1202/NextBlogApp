@@ -37,8 +37,11 @@ import {
   ChevronDoubleRightIcon,
   ChevronDoubleLeftIcon,
   HandThumbUpIcon,
+  HandThumbDownIcon,
   LinkIcon,
   FolderIcon,
+  LightBulbIcon,
+  InformationCircleIcon,
 } from '@heroicons/react/24/solid';
 
 interface Heading {
@@ -202,6 +205,42 @@ export default function Article({ data, articles }: Props) {
                         <WithArticleItem article={block.articleLink3 as ArticleType} />
                       </div>
                     )}
+                    {block.box_merit && (
+                      <div className={`${styles.tab_merit_box} flex items-center`}>
+                        <HandThumbUpIcon
+                          className={`h-8 w-8 ${styles.tab_merit_box_icon}`}
+                          aria-hidden="true"
+                        />
+                        <div dangerouslySetInnerHTML={{ __html: block.box_merit }} />
+                      </div>
+                    )}
+                    {block.box_demerit && (
+                      <div className={`${styles.tab_demerit_box} flex items-center`}>
+                        <HandThumbDownIcon
+                          className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
+                          aria-hidden="true"
+                        />
+                        <div dangerouslySetInnerHTML={{ __html: block.box_demerit }} />
+                      </div>
+                    )}
+                    {block.box_point && (
+                      <div className={`${styles.tab_demerit_box} flex items-center`}>
+                        <LightBulbIcon
+                          className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
+                          aria-hidden="true"
+                        />
+                        <div dangerouslySetInnerHTML={{ __html: block.box_point }} />
+                      </div>
+                    )}
+                    {block.box_common && (
+                      <div className={`${styles.tab_demerit_box} flex items-center`}>
+                        <InformationCircleIcon
+                          className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
+                          aria-hidden="true"
+                        />
+                        <div dangerouslySetInnerHTML={{ __html: block.box_common }} />
+                      </div>
+                    )}
                   </div>
                 ))}
                 {headings.length > 0 && <TableOfContents headings={headings} />}
@@ -262,6 +301,42 @@ export default function Article({ data, articles }: Props) {
                             <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
                           </div>
                           <WithArticleItem article={block.articleLink3 as ArticleType} />
+                        </div>
+                      )}
+                      {block.box_merit && (
+                        <div className={`${styles.tab_merit_box} flex items-center`}>
+                          <HandThumbUpIcon
+                            className={`h-8 w-8 ${styles.tab_merit_box_icon}`}
+                            aria-hidden="true"
+                          />
+                          <div dangerouslySetInnerHTML={{ __html: block.box_merit }} />
+                        </div>
+                      )}
+                      {block.box_demerit && (
+                        <div className={`${styles.tab_demerit_box} flex items-center`}>
+                          <HandThumbDownIcon
+                            className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
+                            aria-hidden="true"
+                          />
+                          <div dangerouslySetInnerHTML={{ __html: block.box_demerit }} />
+                        </div>
+                      )}
+                      {block.box_point && (
+                        <div className={`${styles.tab_demerit_box} flex items-center`}>
+                          <LightBulbIcon
+                            className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
+                            aria-hidden="true"
+                          />
+                          <div dangerouslySetInnerHTML={{ __html: block.box_point }} />
+                        </div>
+                      )}
+                      {block.box_common && (
+                        <div className={`${styles.tab_demerit_box} flex items-center`}>
+                          <InformationCircleIcon
+                            className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
+                            aria-hidden="true"
+                          />
+                          <div dangerouslySetInnerHTML={{ __html: block.box_common }} />
                         </div>
                       )}
                     </div>

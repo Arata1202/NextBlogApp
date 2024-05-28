@@ -29,6 +29,10 @@ export type IntroductionBlock = {
   bubble_name?: string;
   bubble_text?: string;
   bubble_isRight?: boolean;
+  box_merit?: string;
+  box_demerit?: string;
+  box_point?: string;
+  box_common?: string;
 };
 export type ContentBlock = {
   rich_text2?: string;
@@ -38,6 +42,10 @@ export type ContentBlock = {
   bubble_name?: string;
   bubble_text?: string;
   bubble_isRight?: boolean;
+  box_merit?: string;
+  box_demerit?: string;
+  box_point?: string;
+  box_common?: string;
 };
 
 // ブログの型定義
