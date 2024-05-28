@@ -110,6 +110,18 @@ a strong:hover {
   margin-left: 10px;
 }
 
+@media (max-width: 768px) {
+  .bubble-content {
+    max-width: 80%;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+    background-color: #eaf4fc;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 /* コードブロック */
 code {
   background-color: #2b2b2b !important;

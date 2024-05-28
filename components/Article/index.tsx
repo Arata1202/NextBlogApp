@@ -222,8 +222,8 @@ export default function Article({ data, articles }: Props) {
                                 <div>
                                   <Image
                                     src={block.bubble_image.url}
-                                    width={100}
-                                    height={100}
+                                    width={75}
+                                    height={75}
                                     alt="吹き出しのイメージ"
                                     className="bubble-image"
                                   />
