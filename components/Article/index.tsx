@@ -224,18 +224,18 @@ export default function Article({ data, articles }: Props) {
                       </div>
                     )}
                     {block.box_point && (
-                      <div className={`${styles.tab_demerit_box} flex items-center`}>
+                      <div className={`${styles.tab_point_box} flex items-center`}>
                         <LightBulbIcon
-                          className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
+                          className={`h-8 w-8 ${styles.tab_point_box_icon}`}
                           aria-hidden="true"
                         />
                         <div dangerouslySetInnerHTML={{ __html: block.box_point }} />
                       </div>
                     )}
                     {block.box_common && (
-                      <div className={`${styles.tab_demerit_box} flex items-center`}>
+                      <div className={`${styles.tab_common_box} flex items-center`}>
                         <InformationCircleIcon
-                          className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
+                          className={`h-8 w-8 ${styles.tab_common_box_icon}`}
                           aria-hidden="true"
                         />
                         <div dangerouslySetInnerHTML={{ __html: block.box_common }} />
@@ -322,18 +322,18 @@ export default function Article({ data, articles }: Props) {
                         </div>
                       )}
                       {block.box_point && (
-                        <div className={`${styles.tab_demerit_box} flex items-center`}>
+                        <div className={`${styles.tab_point_box} flex items-center`}>
                           <LightBulbIcon
-                            className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
+                            className={`h-8 w-8 ${styles.tab_point_box_icon}`}
                             aria-hidden="true"
                           />
                           <div dangerouslySetInnerHTML={{ __html: block.box_point }} />
                         </div>
                       )}
                       {block.box_common && (
-                        <div className={`${styles.tab_demerit_box} flex items-center`}>
+                        <div className={`${styles.tab_common_box} flex items-center`}>
                           <InformationCircleIcon
-                            className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
+                            className={`h-8 w-8 ${styles.tab_common_box_icon}`}
                             aria-hidden="true"
                           />
                           <div dangerouslySetInnerHTML={{ __html: block.box_common }} />
