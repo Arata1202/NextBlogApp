@@ -16,7 +16,7 @@ import PublishedDate from '@/components/Date';
 import styles from './index.module.css';
 
 const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
-  const dummyDate = new Date(2024, 4, 4);
+  const dummyDate = new Date(2023, 10, 27);
   const formattedDate = dummyDate.toLocaleDateString('en-US', {
     year: 'numeric',
     month: '2-digit',
