@@ -1,5 +1,8 @@
 'use client';
 
+import cheerio from 'cheerio';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/hybrid.css';
 import { formatRichText } from '@/libs/utils';
 import { Article as ArticleType } from '@/libs/microcms';
 import PublishedDate from '../Date';
@@ -89,6 +92,25 @@ export default function Article({ data, articles }: Props) {
         article.tags?.some((tag) => data.tags?.some((dataTag) => dataTag.id === tag.id)),
     )
     .slice(0, 3);
+
+  useEffect(() => {
+    const highlightCode = (blocks: { rich_text2?: string }[]) => {
+      blocks.forEach((block) => {
+        if (block.rich_text2) {
+          const $ = cheerio.load(block.rich_text2);
+          $('pre code').each((_, elm) => {
+            const result = hljs.highlightAuto($(elm).text());
+            $(elm).html(result.value);
+            $(elm).addClass('hljs');
+          });
+          block.rich_text2 = $.html();
+        }
+      });
+    };
+
+    highlightCode(data.introduction_blocks);
+    highlightCode(data.content_blocks);
+  }, [data.introduction_blocks, data.content_blocks]);
 
   return (
     <>

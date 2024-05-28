@@ -110,6 +110,11 @@ a strong:hover {
   margin-left: 10px;
 }
 
+/* コードブロック */
+code {
+  background-color: #2b2b2b !important;
+}
+
 /* 引用 */
 blockquote,
 q {
