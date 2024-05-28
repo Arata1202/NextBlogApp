@@ -15,6 +15,7 @@ import WithArticleItem from '../WithArticleItem';
 import { useEffect, useState } from 'react';
 import './article.css';
 import TagList from '../TagList';
+import AdAlert from '../AdAlert';
 import {
   TwitterShareButton,
   TwitterIcon,
@@ -146,9 +147,7 @@ export default function Article({ data, articles }: Props) {
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <PublishedDate date={data.publishedAt || data.createdAt} />
                 </div>
-                <p className="includeBanner text-center border border-gray-300 p-3">
-                  記事内に広告が含まれています。
-                </p>
+                <AdAlert />
                 {data.introduction_blocks.map((block, index) => (
                   <div key={index}>
                     {(block.bubble_name || block.bubble_text || block.bubble_image) && (

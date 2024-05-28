@@ -7,6 +7,7 @@ import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { EnvelopeIcon } from '@heroicons/react/20/solid';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Share from '../Share';
+import AdAlert from '../AdAlert';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -137,12 +138,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     {/* <TagList tags={data.tags} /> */}
                     <PublishedDate date={formattedDate} />
                   </div>
-                  <p className="includeBanner text-center border border-gray-300 p-3">
-                    記事内に広告が含まれています。
-                  </p>
-                  {/* <p className="includeBanner text-center border border-gray-300 p-3">
-                    記事内に広告が含まれています。
-                  </p> */}
+                  <AdAlert />
                 </div>
                 <p className="mt-5">
                   当ブログに関するご質問やお気づきの点がございましたら、お気軽にお問い合わせください。
