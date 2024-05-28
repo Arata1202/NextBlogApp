@@ -1,4 +1,4 @@
-import { BellIcon } from '@heroicons/react/24/solid';
+import { BellIcon } from '@heroicons/react/24/outline';
 
 export default function AdAlert() {
   return (
