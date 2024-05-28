@@ -6,6 +6,7 @@ import React from 'react';
 import { UserCircleIcon } from '@heroicons/react/20/solid';
 import Sidebar from '@/components/Sidebar';
 import Share from '../Share';
+import AdAlert from '../AdAlert';
 
 const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   //出稿日
@@ -34,9 +35,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     {/* <TagList tags={data.tags} /> */}
                     <PublishedDate date={formattedDate} />
                   </div>
-                  <p className="includeBanner text-center border border-gray-300 p-3">
-                    記事内に広告が含まれています。
-                  </p>
+                  <AdAlert />
                 </div>
                 <div className="flex justify-center">
                   <Image

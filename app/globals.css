@@ -34,6 +34,13 @@
   margin-top: 30px !important;
 }
 
+.AdAlert {
+  color: black;
+  text-shadow: 0 0 5px white;
+  background: -webkit-repeating-linear-gradient(-45deg, #f1f1f1, #f1f1f1 3px, #fff 3px, #fff 7px);
+  background: repeating-linear-gradient(-45deg, #f1f1f1, #f1f1f1 3px, #fff 3px, #fff 7px);
+}
+
 /* スマートフォン用 */
 @media (max-width: 768px) {
   /* フッター */

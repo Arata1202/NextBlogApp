@@ -6,6 +6,7 @@ import { DocumentMagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 import Share from '../Share';
+import AdAlert from '../AdAlert';
 
 const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   //出稿日
@@ -34,9 +35,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     {/* <TagList tags={data.tags} /> */}
                     <PublishedDate date={formattedDate} />
                   </div>
-                  <p className="includeBanner text-center border border-gray-300 p-3">
-                    記事内に広告が含まれています。
-                  </p>
+                  <AdAlert />
                   <div className={`${styles.content} mt-10 mb-5`}>
                     <h2>固定ページ</h2>
                     <ul>
