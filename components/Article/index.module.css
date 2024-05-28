@@ -6,6 +6,63 @@
   margin-top: 100px;
 }
 
+/* タブボックス (メリット) */
+.tab_merit_box {
+  padding: 10px;
+  background-color: #ecffe9;
+  display: flex;
+}
+.tab_merit_box ul {
+  list-style: disc;
+  margin-left: 30px;
+}
+.tab_merit_box_icon {
+  color: #00d084;
+  margin-left: 10px;
+}
+/* タブボックス (デメリット) */
+.tab_demerit_box {
+  padding: 10px;
+  background-color: #ffecec;
+  display: flex;
+}
+.tab_demerit_box ul {
+  list-style: disc;
+  margin-left: 30px;
+}
+.tab_demerit_box_icon {
+  color: #ff7f7f;
+  margin-left: 10px;
+}
+/* タブボックス (ポイント) */
+.tab_demerit_box {
+  padding: 10px;
+  background-color: #fffacd;
+  display: flex;
+}
+.tab_demerit_box ul {
+  list-style: disc;
+  margin-left: 30px;
+}
+.tab_demerit_box_icon {
+  color: #ffd700;
+  margin-left: 10px;
+}
+/* タブボックス (汎用) */
+.tab_demerit_box {
+  padding: 10px;
+  background-color: #eaf4fc;
+  display: flex;
+}
+.tab_demerit_box ul {
+  list-style: disc;
+  margin-left: 30px;
+}
+.tab_demerit_box_icon {
+  color: #4682b4;
+  margin-left: 10px;
+}
+
 .date {
   display: flex;
   justify-content: right;
