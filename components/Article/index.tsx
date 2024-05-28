@@ -170,7 +170,7 @@ export default function Article({ data, articles }: Props) {
                                   alt="吹き出しのイメージ"
                                   className="bubble-image"
                                 />
-                                <p className="bubble-name text-center">{block.bubble_name}</p>
+                                {/* <p className="bubble-name text-center">{block.bubble_name}</p> */}
                               </div>
                             </div>
                           )}
@@ -275,7 +275,7 @@ export default function Article({ data, articles }: Props) {
                                 block.bubble_isRight ? 'right' : 'left'
                               }`}
                             >
-                              <p className="bubble-text">{block.bubble_text}</p>
+                              {/* <p className="bubble-text">{block.bubble_text}</p> */}
                             </div>
                           </div>
                         </div>
