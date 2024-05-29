@@ -42,6 +42,8 @@ import {
   FolderIcon,
   LightBulbIcon,
   InformationCircleIcon,
+  HomeIcon,
+  ChevronRightIcon,
 } from '@heroicons/react/24/solid';
 
 interface Heading {
@@ -123,6 +125,30 @@ export default function Article({ data, articles }: Props) {
           {/* Main Content Area */}
           <div className="lg:col-span-2">
             <div className="">
+              <nav className="flex" aria-label="Breadcrumb">
+                <ol role="list" className="flex items-center space-x-4">
+                  <li>
+                    <a href="/" className="flex text-gray-500 hover:text-blue-500">
+                      <HomeIcon className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+                      <div className="ml-1 text-sm font-medium">ホーム</div>
+                    </a>
+                  </li>
+                  <li>
+                    <div className="flex items-center">
+                      <ChevronRightIcon
+                        className="h-4 w-4 flex-shrink-0 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      <a
+                        href={`${data.id}`}
+                        className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
+                      >
+                        {data.title}
+                      </a>
+                    </div>
+                  </li>
+                </ol>
+              </nav>
               <div className="space-y-5 lg:space-y-8">
                 <h1 className={`${styles.title} text-3xl font-bold lg:text-3xl`}>{data.title}</h1>
                 <picture className="w-full">
