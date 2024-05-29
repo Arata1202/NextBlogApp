@@ -11,7 +11,7 @@ import Link from 'next/link';
 
 const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   //出稿日
-  const dummyDate = new Date(2024, 4, 4);
+  const dummyDate = new Date(2023, 10, 27);
   const formattedDate = dummyDate.toLocaleDateString('en-US', {
     year: 'numeric',
     month: '2-digit',
