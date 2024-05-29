@@ -110,6 +110,7 @@ export default async function RootLayout({ children }: Props) {
         <Footer />
         <ScrollTopButton />
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
