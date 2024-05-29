@@ -39,7 +39,6 @@ export default async function TagsLayout({ children, params }: Props) {
             <li>
               <a href="/" className="flex text-gray-500 hover:text-blue-500">
                 <HomeIcon className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
-                <div className="ml-1 text-sm font-medium">ホーム</div>
               </a>
             </li>
             <li>
