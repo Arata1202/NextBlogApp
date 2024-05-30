@@ -145,7 +145,11 @@
 }
 
 .content a {
+  color: #3b82f6;
   text-decoration: underline;
+}
+.content a:hover {
+  color: #2563eb;
 }
 
 .content > figure {
