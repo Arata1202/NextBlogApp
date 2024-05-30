@@ -84,6 +84,10 @@
   }
 }
 
+code {
+  white-space: pre-wrap !important;
+}
+
 /* @media (max-width: 882px) and (min-width: 641px) {
   .ArticleListItem_content__MW0IH {
     max-width: 45% !important;
