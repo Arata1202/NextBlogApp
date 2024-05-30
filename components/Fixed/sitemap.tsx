@@ -1,4 +1,3 @@
-import Header from '@/components/Header';
 import styles from './index.module.css';
 import PublishedDate from '@/components/Date';
 import React from 'react';
@@ -19,7 +18,6 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
 
   return (
     <div>
-      <Header />
       <main className={styles.main}>
         <div className=" categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
           <nav className="flex" aria-label="Breadcrumb">

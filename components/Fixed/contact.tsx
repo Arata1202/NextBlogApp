@@ -8,9 +8,6 @@ import { EnvelopeIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/so
 import ReCAPTCHA from 'react-google-recaptcha';
 import Share from '../Share';
 import AdAlert from '../AdAlert';
-
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
 import PublishedDate from '@/components/Date';
 import styles from './index.module.css';
@@ -122,7 +119,6 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
 
   return (
     <div>
-      <Header />
       <main className={styles.main}>
         <div className="categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
           <nav className="flex" aria-label="Breadcrumb">
