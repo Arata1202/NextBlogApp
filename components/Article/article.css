@@ -1,10 +1,7 @@
-a strong {
+.Article_content__m_nzR a {
   color: #3b82f6;
 }
-a {
-  text-decoration: none !important;
-}
-a strong:hover {
+.Article_content__m_nzR a:hover {
   color: #2563eb;
 }
 
