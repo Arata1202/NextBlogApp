@@ -1,7 +1,6 @@
 'use client';
 
 import cheerio from 'cheerio';
-import hljs from 'highlight.js';
 import 'highlight.js/styles/hybrid.css';
 import { formatRichText } from '@/libs/utils';
 import { Article as ArticleType } from '@/libs/microcms';
@@ -56,6 +55,8 @@ type Props = {
   data: ArticleType;
   articles?: ArticleType[];
 };
+
+const hljs = require('highlight.js');
 
 function useExtractHeadings(contentBlocks: { rich_text2?: string }[]): Heading[] {
   const [headings, setHeadings] = useState<Heading[]>([]);
