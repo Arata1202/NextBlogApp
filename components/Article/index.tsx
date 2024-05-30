@@ -213,7 +213,7 @@ export default function Article({ data, articles }: Props) {
                         dangerouslySetInnerHTML={{
                           __html: formatRichText(block.rich_text2).replace(
                             /<img/g,
-                            '<Image loading="lazy" width="856" height="481"',
+                            '<img loading="lazy"',
                           ),
                         }}
                       />
