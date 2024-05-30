@@ -107,7 +107,7 @@ export default function Article({ data, articles }: Props) {
           $('pre code').each((_, elm) => {
             const result = hljs.highlightAuto($(elm).text());
             $(elm).html(result.value);
-            $(elm).addClass('typescript');
+            $(elm).addClass('hljs');
           });
           block.rich_text2 = $.html();
         }
@@ -211,10 +211,7 @@ export default function Article({ data, articles }: Props) {
                       <div
                         className={styles.content}
                         dangerouslySetInnerHTML={{
-                          __html: formatRichText(block.rich_text2).replace(
-                            /<img/g,
-                            '<img loading="lazy"',
-                          ),
+                          __html: formatRichText(block.rich_text2),
                         }}
                       />
                     )}
@@ -312,10 +309,7 @@ export default function Article({ data, articles }: Props) {
                         <div
                           className={styles.content}
                           dangerouslySetInnerHTML={{
-                            __html: formatRichText(block.rich_text2).replace(
-                              /<img/g,
-                              '<img loading="lazy"',
-                            ),
+                            __html: formatRichText(block.rich_text2),
                           }}
                         />
                       )}
