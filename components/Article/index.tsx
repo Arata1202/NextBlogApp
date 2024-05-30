@@ -107,7 +107,7 @@ export default function Article({ data, articles }: Props) {
           $('pre code').each((_, elm) => {
             const result = hljs.highlightAuto($(elm).text());
             $(elm).html(result.value);
-            $(elm).addClass('hljs');
+            $(elm).addClass('typescript');
           });
           block.rich_text2 = $.html();
         }
