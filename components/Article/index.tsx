@@ -1,9 +1,8 @@
 'use client';
 
-import { load } from 'cheerio';
-import hljs from 'highlight.js';
+import cheerio from 'cheerio';
+const hljs = require('highlight.js/lib/common');
 import 'highlight.js/styles/hybrid.css';
-import { formatRichText } from '@/libs/utils';
 import { Article as ArticleType } from '@/libs/microcms';
 import PublishedDate from '../Date';
 import styles from './index.module.css';
@@ -57,6 +56,24 @@ type Props = {
   articles?: ArticleType[];
 };
 
+const formatRichText = (richText: string) => {
+  const $ = cheerio.load(richText);
+  const highlight = (text: string, lang?: string) => {
+    if (!lang) return hljs.highlightAuto(text);
+    try {
+      return hljs.highlight(text, { language: lang?.replace(/^language-/, '') || '' });
+    } catch (e) {
+      return hljs.highlightAuto(text);
+    }
+  };
+  $('pre code').each((_, elm) => {
+    const lang = $(elm).attr('class');
+    const res = highlight($(elm).text(), lang);
+    $(elm).html(res.value);
+  });
+  return $.html();
+};
+
 function useExtractHeadings(contentBlocks: { rich_text2?: string }[]): Heading[] {
   const [headings, setHeadings] = useState<Heading[]>([]);
 
@@ -103,7 +120,7 @@ export default function Article({ data, articles }: Props) {
     const highlightCode = (blocks: { rich_text2?: string }[]) => {
       blocks.forEach((block) => {
         if (block.rich_text2) {
-          const $ = load(block.rich_text2);
+          const $ = cheerio.load(block.rich_text2);
           $('pre code').each((_, elm) => {
             const result = hljs.highlightAuto($(elm).text());
             $(elm).html(result.value);
