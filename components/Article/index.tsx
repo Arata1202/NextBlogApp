@@ -1,6 +1,6 @@
 'use client';
 
-import cheerio from 'cheerio';
+import { load } from 'cheerio';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/hybrid.css';
 import { formatRichText } from '@/libs/utils';
@@ -103,7 +103,7 @@ export default function Article({ data, articles }: Props) {
     const highlightCode = (blocks: { rich_text2?: string }[]) => {
       blocks.forEach((block) => {
         if (block.rich_text2) {
-          const $ = cheerio.load(block.rich_text2);
+          const $ = load(block.rich_text2);
           $('pre code').each((_, elm) => {
             const result = hljs.highlightAuto($(elm).text());
             $(elm).html(result.value);
@@ -211,7 +211,10 @@ export default function Article({ data, articles }: Props) {
                       <div
                         className={styles.content}
                         dangerouslySetInnerHTML={{
-                          __html: formatRichText(block.rich_text2),
+                          __html: formatRichText(block.rich_text2).replace(
+                            /<img/g,
+                            '<img loading="lazy"',
+                          ),
                         }}
                       />
                     )}
@@ -309,7 +312,10 @@ export default function Article({ data, articles }: Props) {
                         <div
                           className={styles.content}
                           dangerouslySetInnerHTML={{
-                            __html: formatRichText(block.rich_text2),
+                            __html: formatRichText(block.rich_text2).replace(
+                              /<img/g,
+                              '<img loading="lazy"',
+                            ),
                           }}
                         />
                       )}
