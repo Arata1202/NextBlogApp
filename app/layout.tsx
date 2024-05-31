@@ -33,13 +33,6 @@ export default async function RootLayout({ children }: Props) {
   const tags = await getTagList({
     limit: LIMIT,
   });
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
   return (
     <html lang="ja">
       <head>
