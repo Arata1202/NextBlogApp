@@ -2,6 +2,10 @@
 
 import cheerio from 'cheerio';
 const hljs = require('highlight.js/lib/common');
+import javascript from 'highlight.js/lib/languages/javascript';
+import php from 'highlight.js/lib/languages/php';
+import shell from 'highlight.js/lib/languages/shell';
+import python from 'highlight.js/lib/languages/python';
 import 'highlight.js/styles/hybrid.css';
 import { Article as ArticleType } from '@/libs/microcms';
 import PublishedDate from '../Date';
@@ -44,6 +48,11 @@ import {
   HomeIcon,
   ChevronRightIcon,
 } from '@heroicons/react/24/solid';
+
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('php', php);
+hljs.registerLanguage('shell', shell);
+hljs.registerLanguage('python', python);
 
 interface Heading {
   id: string;
