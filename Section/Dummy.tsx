@@ -59,12 +59,13 @@ export const UserProfile = [
     imageAlt: '筆者のイメージ',
     //　紹介文
     profileIntroduction: [
-      { sentence: '20歳' },
+      { sentence: '21歳' },
       { sentence: '千葉県在住' },
       { sentence: '文系大学生｜26卒' },
-      { sentence: 'マーケティング学科' },
-      { sentence: 'Webエンジニアインターンに参加（主にLaravelやVue.js）' },
-      { sentence: 'プログラミングは大学生から開始。独学でPHPやJavaScriptなどを習得' },
+      { sentence: '経営学部 マーケティング学科' },
+      { sentence: 'Webエンジニアインターンに参加中' },
+      { sentence: 'インターン：Vue.js, Laravel' },
+      { sentence: '個人開発：React, Next.js, PHP' },
     ],
   },
 ];
