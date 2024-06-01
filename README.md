@@ -23,3 +23,12 @@
 - Recaptcha
 - XMLサイトマップ
 - PWA
+
+- ## 技術構成
+
+- Next.js
+- TailwindCSS
+- PHP（バックエンドAPI）
+- microCMS
+- Vercel
+- Prettier
