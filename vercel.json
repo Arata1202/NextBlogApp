@@ -4,6 +4,11 @@
       "source": "/articles/cl94wuqshzzv",
       "destination": "/articles/student-should-get-car-license",
       "statusCode": 301
+    },
+    {
+      "source": "/articles/ywed2fzhh5du",
+      "destination": "/articles/how-to-write-head-seo",
+      "statusCode": 301
     }
   ]
 }
