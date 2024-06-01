@@ -165,7 +165,11 @@ body {
 }
 
 code {
-  font-family: menlo, inconsolata, monospace;
+  font-family: monospace;
+}
+
+pre {
+  white-space: pre-wrap !important;
 }
 
 a {
