@@ -176,6 +176,7 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   </p>
                   <ul>
                     <li>もしもアフィリエイト</li>
+                    <li>レントラックスアフィリエイト</li>
                   </ul>
                   <p>
                     これらのサービスにおいて取得・収集される情報については、各プログラムのプライバシーポリシーにてご確認ください。
