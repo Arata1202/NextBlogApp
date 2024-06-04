@@ -27,6 +27,15 @@
 .underline_yellow {
   background: linear-gradient(transparent 70%, yellow 70%);
 }
+.underline_code {
+  background-color: #f7f7fc;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  color: #2b2c30;
+  margin: 0 2px;
+  padding: 2px 4px;
+  font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+}
 
 /* 吹き出し */
 .speech-bubble {
