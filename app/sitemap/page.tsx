@@ -1,7 +1,6 @@
 import { getList } from '@/libs/microcms';
 import Sidebar from '@/components/Sidebar';
 import SitemapPage from '@/components/Fixed/sitemap';
-import { LIMIT } from '@/constants';
 
 export const metadata = {
   // 検証済み
@@ -23,7 +22,7 @@ export const revalidate = 60;
 
 export default async function Page() {
   const data = await getList({
-    limit: LIMIT,
+    limit: 100,
   });
   return (
     <>
