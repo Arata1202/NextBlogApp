@@ -6,6 +6,13 @@ import javascript from 'highlight.js/lib/languages/javascript';
 import php from 'highlight.js/lib/languages/php';
 import shell from 'highlight.js/lib/languages/shell';
 import python from 'highlight.js/lib/languages/python';
+import css from 'highlight.js/lib/languages/css';
+import go from 'highlight.js/lib/languages/go';
+import json from 'highlight.js/lib/languages/json';
+import java from 'highlight.js/lib/languages/java';
+import sql from 'highlight.js/lib/languages/sql';
+import typescript from 'highlight.js/lib/languages/typescript';
+import vim from 'highlight.js/lib/languages/vim';
 import 'highlight.js/styles/hybrid.css';
 import { Article as ArticleType } from '@/libs/microcms';
 import PublishedDate from '../Date';
@@ -53,6 +60,13 @@ hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
 hljs.registerLanguage('shell', shell);
 hljs.registerLanguage('python', python);
+hljs.registerLanguage('css', css);
+hljs.registerLanguage('go', go);
+hljs.registerLanguage('json', json);
+hljs.registerLanguage('java', java);
+hljs.registerLanguage('sql', sql);
+hljs.registerLanguage('typescript', typescript);
+hljs.registerLanguage('vim', vim);
 
 interface Heading {
   id: string;
