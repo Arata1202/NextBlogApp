@@ -67,10 +67,10 @@ export default async function Page({ searchParams }: Props) {
         </div>
       </h1>
       <ArticleList articles={data.contents} />
+      <Pagination totalCount={data.totalCount} basePath="/search" q={searchParams.q} />
       <div className="pc">
         <Sidebar articles={data2.contents} />
       </div>
-      <Pagination totalCount={data.totalCount} basePath="/search" q={searchParams.q} />
     </>
   );
 }
