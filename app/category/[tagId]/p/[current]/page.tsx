@@ -2,7 +2,7 @@ import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import Pagination from '@/components/Pagination';
 import ArticleList from '@/components/ArticleList';
-import Sidebar from '@/components/Sidebar';
+import TopSidebar from '@/components/TopSidebar';
 
 type Props = {
   params: {
@@ -34,7 +34,7 @@ export default async function Page({ params }: Props) {
     <>
       <ArticleList articles={data.contents} allArticles={data2.contents} />
       <div className="pc">
-        <Sidebar articles={data2.contents} />
+        <TopSidebar articles={data2.contents} />
       </div>
       <Pagination totalCount={data.totalCount} current={current} basePath={`/category/${tagId}`} />
     </>
