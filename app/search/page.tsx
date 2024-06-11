@@ -1,7 +1,7 @@
 import { getList } from '@/libs/microcms';
 import ArticleList from '@/components/ArticleList';
 import Pagination from '@/components/Pagination';
-import Sidebar from '@/components/Sidebar';
+import TopSidebar from '@/components/TopSidebar';
 import { MagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { LIMIT } from '@/constants';
 
@@ -69,7 +69,7 @@ export default async function Page({ searchParams }: Props) {
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} basePath="/search" q={searchParams.q} />
       <div className="pc">
-        <Sidebar articles={data2.contents} />
+        <TopSidebar articles={data2.contents} />
       </div>
     </>
   );
