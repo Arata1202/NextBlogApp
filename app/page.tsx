@@ -21,10 +21,10 @@ export default async function Page() {
         </div>
       </h1>
       <ArticleList articles={data.contents} />
+      <Pagination totalCount={data.totalCount} />
       <div className="pc">
         <TopSidebar articles={data.contents} />
       </div>
-      <Pagination totalCount={data.totalCount} />
     </>
   );
 }
