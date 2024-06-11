@@ -3,7 +3,7 @@ import { Article, Tag } from '@/libs/microcms';
 import ArticleListItem from '../ArticleListItem';
 import styles from './index.module.css';
 import { useMemo } from 'react';
-import Sidebar from '../Sidebar';
+import TopSidebar from '../TopSidebar';
 import Share from '../Share';
 
 const tabs = [
@@ -73,7 +73,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
               </h1>
             </div>
           </div>
-          <Sidebar articles={articles} />
+          <TopSidebar articles={articles} />
         </div>
       </div>
     );
@@ -121,7 +121,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
           <Share />
         </div>
         <div className="mobile">
-          <Sidebar articles={allArticles || articles} />
+          <TopSidebar articles={allArticles || articles} />
         </div>
       </div>
     </div>
