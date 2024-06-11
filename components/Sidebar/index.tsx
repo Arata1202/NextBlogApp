@@ -85,7 +85,7 @@ export default function Sidebar({ articles }: Props) {
               </li>
             ))}
           </ul>
-          <div className="text-lg leading-6 text-gray-800 mt-5">
+          <div className="text-lg leading-6 text-gray-800 mt-5 flex justify-center">
             <div>
               {UserProfile.map((item, index) => (
                 <ul key={index} style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
