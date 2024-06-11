@@ -47,6 +47,9 @@ export type ContentBlock = {
   box_point?: string;
   box_common?: string;
 };
+export type RelatedArticle = {
+  articleLink3?: string;
+};
 
 // ブログの型定義
 export type Blog = {
@@ -56,6 +59,7 @@ export type Blog = {
   tags?: Tag[];
   content_blocks: ContentBlock[];
   introduction_blocks: IntroductionBlock[];
+  related_articles?: RelatedArticle[];
 };
 
 export type Article = Blog & MicroCMSContentId & MicroCMSDate;
