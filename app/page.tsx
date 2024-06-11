@@ -2,7 +2,7 @@ import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import Pagination from '@/components/Pagination';
 import ArticleList from '@/components/ArticleList';
-import Sidebar from '@/components/Sidebar';
+import TopSidebar from '@/components/TopSidebar';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 
 export const revalidate = 60;
@@ -22,7 +22,7 @@ export default async function Page() {
       </h1>
       <ArticleList articles={data.contents} />
       <div className="pc">
-        <Sidebar articles={data.contents} />
+        <TopSidebar articles={data.contents} />
       </div>
       <Pagination totalCount={data.totalCount} />
     </>
