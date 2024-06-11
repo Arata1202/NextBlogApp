@@ -25,6 +25,7 @@ import WithArticleItem from '../WithArticleItem';
 import { useEffect, useState } from 'react';
 import './article.css';
 import TagList from '../TagList';
+import PanTagList from '../PanTagList';
 import AdAlert from '../AdAlert';
 import {
   TwitterShareButton,
@@ -139,6 +140,17 @@ export default function Article({ data, articles }: Props) {
                     <a href="/" className="flex text-gray-500 hover:text-blue-500">
                       <HomeIcon className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                     </a>
+                  </li>
+                  <li>
+                    <div className="flex items-center">
+                      <ChevronRightIcon
+                        className="h-4 w-4 flex-shrink-0 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      <div className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500">
+                        <PanTagList tags={data.tags} hasLink={true} />
+                      </div>
+                    </div>
                   </li>
                   <li>
                     <div className="flex items-center">
