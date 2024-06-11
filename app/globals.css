@@ -72,9 +72,21 @@
   }
 }
 
-@media (min-width: 641px) and (max-width: 1023px) {
+/* @media (min-width: 641px) and (max-width: 1023px) {
   .sidebarArticleList {
     display: flex !important;
+  }
+} */
+
+@media (max-width: 1023px) and (min-width: 641px) {
+  .sidebarPopularPost {
+    display: flex !important;
+  }
+  .sidebarPopularPost img {
+    max-width: 300px !important;
+  }
+  .ArticleListItem_title {
+    font-size: 1.3rem !important;
   }
 }
 
