@@ -477,7 +477,7 @@ export default function Article({ data, articles }: Props) {
               </div>
             </div>
           </div>
-          <div className="">
+          <div className="articleSidebar">
             <Sidebar articles={articles} />
           </div>
         </div>
