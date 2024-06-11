@@ -381,7 +381,26 @@ export default function Article({ data, articles }: Props) {
                     </div>
                   ))}
                 </div>
-                <div className="pt-10">
+                <div className="related-articles mt-10">
+                  <h1
+                    className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
+                  >
+                    <ArrowPathIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                    関連記事
+                  </h1>
+                  <div className="mt-5">
+                    {data.related_articles?.map((block, index) => (
+                      <div key={index}>
+                        {block.articleLink3 && typeof block.articleLink3 !== 'string' && (
+                          <div>
+                            <WithArticleItem article={block.articleLink3 as ArticleType} />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ paddingTop: '12px' }}>
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center mb-5`}
                   >
@@ -455,29 +474,10 @@ export default function Article({ data, articles }: Props) {
                     <LinkedinIcon size={40} round={true} />
                   </LinkedinShareButton>
                 </div>
-                <div className="related-articles mt-10">
-                  <h1
-                    className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
-                  >
-                    <ArrowPathIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                    関連記事
-                  </h1>
-                  <div className="mt-5">
-                    {data.related_articles?.map((block, index) => (
-                      <div key={index}>
-                        {block.articleLink3 && typeof block.articleLink3 !== 'string' && (
-                          <div>
-                            <WithArticleItem article={block.articleLink3 as ArticleType} />
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
             </div>
           </div>
-          <div className="articleSidebar">
+          <div className="">
             <Sidebar articles={articles} />
           </div>
         </div>
