@@ -44,8 +44,6 @@ import {
 } from 'react-share';
 import {
   ArrowPathIcon,
-  ChevronDoubleRightIcon,
-  ChevronDoubleLeftIcon,
   HandThumbUpIcon,
   HandThumbDownIcon,
   LinkIcon,
@@ -127,18 +125,6 @@ function useExtractHeadings(contentBlocks: { rich_text2?: string }[]): Heading[]
 
 export default function Article({ data, articles }: Props) {
   const headings = useExtractHeadings(data.content_blocks);
-
-  const currentIndex = articles!.findIndex((article) => article.id === data.id);
-  const prevArticle = currentIndex > 0 ? articles![currentIndex - 1] : null;
-  const nextArticle = currentIndex < articles!.length - 1 ? articles![currentIndex + 1] : null;
-
-  const relatedArticles = articles
-    ?.filter(
-      (article) =>
-        article.id !== data.id &&
-        article.tags?.some((tag) => data.tags?.some((dataTag) => dataTag.id === tag.id)),
-    )
-    .slice(0, 3);
 
   return (
     <>
@@ -469,42 +455,24 @@ export default function Article({ data, articles }: Props) {
                     <LinkedinIcon size={40} round={true} />
                   </LinkedinShareButton>
                 </div>
-                {relatedArticles && relatedArticles.length > 0 && (
-                  <div className="related-articles mt-10">
-                    <h1
-                      className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
-                    >
-                      <ArrowPathIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                      関連記事
-                    </h1>
-                    <div className="mt-5">
-                      {relatedArticles.map((article) => (
-                        <ArticleListItem key={article.id} article={article} />
-                      ))}
-                    </div>
+                <div className="related-articles mt-10">
+                  <h1
+                    className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
+                  >
+                    <ArrowPathIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                    関連記事
+                  </h1>
+                  <div className="mt-5">
+                    {data.related_articles?.map((block, index) => (
+                      <div key={index}>
+                        {block.articleLink3 && typeof block.articleLink3 !== 'string' && (
+                          <div>
+                            <WithArticleItem article={block.articleLink3 as ArticleType} />
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                )}
-                <div className="mt-10">
-                  {prevArticle && (
-                    <div className="">
-                      <h1 className={`${styles.profile} text-2xl font-semibold flex pt-10 mb-5`}>
-                        <ChevronDoubleLeftIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-                        次の記事
-                      </h1>
-                      <ArticleListItem article={prevArticle} />
-                    </div>
-                  )}
-                  {nextArticle && (
-                    <div className="">
-                      <h1
-                        className={`${styles.profile} text-2xl font-semibold flex justify-end mb-5`}
-                      >
-                        前の記事
-                        <ChevronDoubleRightIcon className="h-8 w-8 ml-2" aria-hidden="true" />
-                      </h1>
-                      <ArticleListItem article={nextArticle} />
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
