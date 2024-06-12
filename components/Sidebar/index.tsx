@@ -9,6 +9,7 @@ import { UserProfile } from '@/Section/Dummy';
 import { SocialIcon, CategoryList, PopularPost } from '@/Section/Dummy';
 import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
+import TableOfContents from '../TableOfContent';
 import {
   MagnifyingGlassIcon,
   BellAlertIcon,
@@ -16,12 +17,51 @@ import {
   BoltIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/solid';
+import { useEffect, useState } from 'react';
+
+interface Heading {
+  id: string;
+  title: string;
+  level: number;
+}
+
+interface ContentBlock {
+  rich_text2?: string;
+}
+
+function useExtractHeadings(contentBlocks: ContentBlock[]): Heading[] {
+  const [headings, setHeadings] = useState<Heading[]>([]);
+
+  useEffect(() => {
+    const extractedHeadings: Heading[] = [];
+
+    contentBlocks.forEach((block) => {
+      if (block.rich_text2) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = block.rich_text2;
+        const blockHeadings = Array.from(tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6')).map(
+          (el) => ({
+            id: el.id,
+            title: el.textContent || '',
+            level: parseInt(el.tagName[1], 10),
+          }),
+        );
+        extractedHeadings.push(...blockHeadings);
+      }
+    });
+
+    setHeadings(extractedHeadings);
+  }, [contentBlocks]);
+
+  return headings;
+}
 
 type Props = {
   articles?: Article[];
+  contentBlocks?: { rich_text2?: string }[];
 };
 
-export default function Sidebar({ articles }: Props) {
+export default function Sidebar({ articles, contentBlocks = [] }: Props) {
   const sortedArticles = articles
     ?.slice()
     .sort((a, b) => {
@@ -30,6 +70,8 @@ export default function Sidebar({ articles }: Props) {
       return dateB - dateA;
     })
     .slice(0, 3);
+
+  const headings = useExtractHeadings(contentBlocks);
 
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
@@ -209,6 +251,18 @@ export default function Sidebar({ articles }: Props) {
               alt="Ad"
             />
           </a>
+        </div>
+        <div
+          className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+          style={{ position: 'sticky', top: '0' }}
+        >
+          <h1
+            className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
+          >
+            <FolderIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+            目次
+          </h1>
+          {headings.length > 0 && <TableOfContents headings={headings} />}
         </div>
       </div>
     </div>
