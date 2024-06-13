@@ -1,1 +1,1 @@
-export const tags = [{ name: 'git', link: '/tag/git' }];
+export const tags = [{ name: 'Git', link: '/tag/git' }];

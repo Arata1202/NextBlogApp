@@ -196,15 +196,13 @@ export default function Article({ data, articles }: Props) {
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <PublishedDate date={data.publishedAt || data.createdAt} />
                 </div>
-                <>
-                  {data.tags2 && (
-                    <div className={styles.date}>
-                      <TagIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
-                      <TagList2 tags={data.tags2} hasLink={true} />
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </div>
-                  )}
-                </>
+                {data.tags2 && data.tags2.length > 0 && (
+                  <div className={styles.date}>
+                    <TagIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
+                    <TagList2 tags={data.tags2} hasLink={true} />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                )}
                 <AdAlert />
                 {data.introduction_blocks.map((block, index) => (
                   <div key={index}>
