@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: Props) {
     <html lang="ja">
       <head>
         {/* GoogleAnalytics */}
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=G-LSE2CK3HZM`} />
+        <script async src={process.env.GOOGLE_ANALYTICS_ID} />
         {/* GoogleAdsense */}
         <meta name="google-adsense-account" content="ca-pub-1705865999592590" />
         <script
