@@ -6,11 +6,11 @@ import { useMemo } from 'react';
 import TopSidebar from '../TopSidebar';
 import Share from '../Share';
 
-const tabs = [
-  { name: '最新記事', href: '/', current: false },
-  { name: '大学生活', href: '/category/university', current: false },
-  { name: 'プログラミング', href: '/category/programming', current: false },
-];
+// const tabs = [
+//   { name: '最新記事', href: '/', current: false },
+//   { name: '大学生活', href: '/category/university', current: false },
+//   { name: 'プログラミング', href: '/category/programming', current: false },
+// ];
 
 function classNames(...classes: (string | undefined | null | boolean)[]) {
   return classes.filter(Boolean).join(' ');
@@ -38,7 +38,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
         <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
           {/* Main Content Area */}
           <div className="lg:col-span-2">
-            <div className="">
+            {/* <div className="">
               <nav
                 className="isolate flex divide-x divide-gray-300 border border-gray-300 shadow"
                 aria-label="Tabs"
@@ -66,7 +66,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
                   </a>
                 ))}
               </nav>
-            </div>
+            </div> */}
             <div className="text-center pt-7">
               <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
                 記事はまだありません
@@ -84,7 +84,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
       <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
         {/* Main Content Area */}
         <div className="lg:col-span-2">
-          <div className="">
+          {/* <div className="">
             <nav
               className="isolate flex divide-x divide-gray-300 border border-gray-300 shadow"
               aria-label="Tabs"
@@ -112,7 +112,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
                 </a>
               ))}
             </nav>
-          </div>
+          </div> */}
           <ul className={`${styles.main}`}>
             {articles.map((article) => (
               <ArticleListItem key={article.id} article={article} />
