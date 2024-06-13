@@ -25,6 +25,7 @@ import WithArticleItem from '../WithArticleItem';
 import { useEffect, useState } from 'react';
 import './article.css';
 import TagList from '../TagList';
+import TagList2 from '../TagList2';
 import PanTagList from '../PanTagList';
 import AdAlert from '../AdAlert';
 import {
@@ -48,12 +49,12 @@ import {
   HandThumbUpIcon,
   HandThumbDownIcon,
   LinkIcon,
-  FolderIcon,
   LightBulbIcon,
   InformationCircleIcon,
   HomeIcon,
   ChevronRightIcon,
 } from '@heroicons/react/24/solid';
+import { TagIcon, FolderIcon } from '@heroicons/react/24/outline';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
@@ -195,6 +196,15 @@ export default function Article({ data, articles }: Props) {
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <PublishedDate date={data.publishedAt || data.createdAt} />
                 </div>
+                <>
+                  {data.tags2 && (
+                    <div className={styles.date}>
+                      <TagIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
+                      <TagList2 tags={data.tags2} hasLink={true} />
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                  )}
+                </>
                 <AdAlert />
                 {data.introduction_blocks.map((block, index) => (
                   <div key={index}>
