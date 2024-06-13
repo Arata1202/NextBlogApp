@@ -7,8 +7,14 @@ import type {
 } from 'microcms-js-sdk';
 import { notFound } from 'next/navigation';
 
-// タグの型定義
+// カテゴリーの型定義
 export type Tag = {
+  name: string;
+} & MicroCMSContentId &
+  MicroCMSDate;
+
+// タグの型定義
+export type Tag2 = {
   name: string;
 } & MicroCMSContentId &
   MicroCMSDate;
@@ -57,6 +63,7 @@ export type Blog = {
   description: string;
   thumbnail?: MicroCMSImage;
   tags?: Tag[];
+  tags2?: Tag2[];
   content_blocks: ContentBlock[];
   introduction_blocks: IntroductionBlock[];
   related_articles?: RelatedArticle[];
@@ -102,7 +109,7 @@ export const getDetail = async (contentId: string, queries?: MicroCMSQueries) =>
   return detailData;
 };
 
-// タグの一覧を取得
+// カテゴリーの一覧を取得
 export const getTagList = async (queries?: MicroCMSQueries) => {
   const listData = await client
     .getList<Tag>({
@@ -114,11 +121,36 @@ export const getTagList = async (queries?: MicroCMSQueries) => {
   return listData;
 };
 
-// タグの詳細を取得
+// タグの一覧を取得
+export const getTag2List = async (queries?: MicroCMSQueries) => {
+  const listData = await client
+    .getList<Tag2>({
+      endpoint: 'tags2',
+      queries,
+    })
+    .catch(notFound);
+
+  return listData;
+};
+
+// カテゴリーの詳細を取得
 export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
     .getListDetail<Tag>({
       endpoint: 'tags',
+      contentId,
+      queries,
+    })
+    .catch(notFound);
+
+  return detailData;
+};
+
+// タグの詳細を取得
+export const getTag2 = async (contentId: string, queries?: MicroCMSQueries) => {
+  const detailData = await client
+    .getListDetail<Tag2>({
+      endpoint: 'tags2',
       contentId,
       queries,
     })

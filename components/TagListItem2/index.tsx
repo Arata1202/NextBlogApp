@@ -1,16 +1,16 @@
 import Link from 'next/link';
-import { Tag } from '@/libs/microcms';
+import { Tag2 } from '@/libs/microcms';
 import styles from './index.module.css';
 
 type Props = {
-  tag: Tag;
+  tag: Tag2;
   hasLink?: boolean;
 };
 
-export default function TagListItem({ tag, hasLink = true }: Props) {
+export default function TagListItem2({ tag, hasLink = true }: Props) {
   if (hasLink) {
     return (
-      <Link href={`/category/${tag.id}`} className={styles.tag}>
+      <Link href={`/tag/${tag.id}`} className={styles.tag}>
         <p className={styles.tag}>{tag.name}</p>
       </Link>
     );

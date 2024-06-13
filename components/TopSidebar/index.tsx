@@ -10,11 +10,12 @@ import { SocialIcon, CategoryList, PopularPost } from '@/Section/Dummy';
 import { Article } from '@/libs/microcms';
 import {
   MagnifyingGlassIcon,
-  BellAlertIcon,
   FolderIcon,
   BoltIcon,
   UserCircleIcon,
+  TagIcon,
 } from '@heroicons/react/24/solid';
+import { tags } from '@/Section/Tag';
 
 type Props = {
   articles?: Article[];
@@ -131,6 +132,26 @@ export default function TopSidebar({ articles }: Props) {
               </a>
             ))}
           </nav>
+        </div>
+
+        <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
+          <h1
+            className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
+          >
+            <TagIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+            タグ
+          </h1>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {tags.map((tag, index) => (
+              <Link
+                key={index}
+                href={tag.link}
+                className="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+              >
+                {tag.name}
+              </Link>
+            ))}
+          </div>
         </div>
 
         <div className="sidebarArticleList">
