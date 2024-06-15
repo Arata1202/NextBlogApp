@@ -20,6 +20,10 @@
   .scrollTop {
     display: none;
   }
+
+  .topTitle {
+    margin-top: 0;
+  }
 }
 
 .sidebarCategory {
