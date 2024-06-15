@@ -6,30 +6,21 @@ const client = createClient({
   apiKey: process.env.MICROCMS_API_KEY,
 });
 
-const getList = async (queries) => {
-  try {
-    const listData = await client.getList({
-      endpoint: 'blog',
-      queries,
-    });
-    return listData;
-  } catch (error) {
-    console.error('Failed to fetch blog list:', error);
-    return { contents: [] };
-  }
-};
+const getAllContents = async (endpoint) => {
+  let allContents = [];
+  let offset = 0;
+  const limit = 100;
 
-const getTagList = async (queries) => {
-  try {
-    const listData = await client.getList({
-      endpoint: 'tags',
-      queries,
+  while (true) {
+    const res = await client.getList({
+      endpoint,
+      queries: { offset, limit },
     });
-    return listData;
-  } catch (error) {
-    console.error('Failed to fetch tag list:', error);
-    return { contents: [] };
+    if (res.contents.length === 0) break;
+    allContents = allContents.concat(res.contents);
+    offset += limit;
   }
+  return allContents;
 };
 
 module.exports = {
@@ -39,8 +30,8 @@ module.exports = {
   additionalPaths: async (config) => {
     const paths = [];
 
-    const articles = await getList({ limit: 100 });
-    articles.contents.forEach((article) => {
+    const articles = await getAllContents('blog');
+    articles.forEach((article) => {
       paths.push({
         loc: `${config.siteUrl}/articles/${article.id}`,
         lastmod: new Date(article.updatedAt).toISOString(),
@@ -49,8 +40,8 @@ module.exports = {
       });
     });
 
-    const tags = await getTagList({ limit: 100 });
-    tags.contents.forEach((tag) => {
+    const tags = await getAllContents('tags');
+    tags.forEach((tag) => {
       paths.push({
         loc: `${config.siteUrl}/category/${tag.id}`,
         lastmod: new Date(tag.updatedAt).toISOString(),
