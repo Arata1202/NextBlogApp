@@ -81,19 +81,6 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         </Link>
                       </li>
                     </ul>
-                    <h2>投稿一覧</h2>
-                    <ul>
-                      {sidebarArticles.contents.map((article: any) => (
-                        <li key={article.id}>
-                          <Link
-                            href={`/articles/${article.id}`}
-                            className="text-blue-500 hover:text-blue-700"
-                          >
-                            {article.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
                     <h2>カテゴリー</h2>
                     <ul>
                       <li>
@@ -112,6 +99,19 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                           大学生活
                         </Link>
                       </li>
+                    </ul>
+                    <h2>投稿一覧</h2>
+                    <ul>
+                      {sidebarArticles.contents.map((article: any) => (
+                        <li key={article.id}>
+                          <Link
+                            href={`/articles/${article.id}`}
+                            className="text-blue-500 hover:text-blue-700"
+                          >
+                            {article.title}
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
