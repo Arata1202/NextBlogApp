@@ -20,15 +20,31 @@ export const metadata = {
 
 export const revalidate = 60;
 
+async function fetchAllData(limit = 100): Promise<any[]> {
+  let offset = 0;
+  let allData: any[] = [];
+  let response;
+  let loopCount = 0;
+
+  do {
+    response = await getList({ limit, offset });
+    if (response && response.contents) {
+      allData = [...allData, ...response.contents];
+    }
+    loopCount++;
+    offset += limit;
+  } while (response && response.contents && response.contents.length === limit);
+  return allData;
+}
+
 export default async function Page() {
-  const data = await getList({
-    limit: 100,
-  });
+  const data = await fetchAllData();
+
   return (
     <>
-      <SitemapPage sidebarArticles={data} />
+      <SitemapPage sidebarArticles={{ contents: data }} />
       <div className="pc">
-        <Sidebar articles={data.contents} />
+        <Sidebar articles={data} />
       </div>
     </>
   );
