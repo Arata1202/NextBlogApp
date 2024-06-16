@@ -500,20 +500,20 @@ export default function Article({ data, articles }: Props) {
                     <a
                       aria-label="RSSフォローボタン"
                       href="https://realunivlog.com/rss.xml"
-                      className="bg-orange-500 rounded-full p-1 m-1"
+                      className="bg-orange-500 rounded-full p-2 m-1"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <RssIcon className="h-8 w-8 text-white" aria-hidden="true" />
+                      <RssIcon className="h-6 w-6 text-white" aria-hidden="true" />
                     </a>
                     <a
                       aria-label="Feedlyフォローボタン"
                       href="https://feedly.com/i/subscription/feed/https://realunivlog.com/rss.xml"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-green-500 rounded-full p-1 m-1"
+                      className="bg-green-500 rounded-full p-2 m-1"
                     >
-                      <SiFeedly className="h-8 w-8 text-white" aria-hidden="true" />
+                      <SiFeedly className="h-6 w-6 text-white" aria-hidden="true" />
                     </a>
                   </div>
                 </div>
