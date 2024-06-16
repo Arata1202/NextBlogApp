@@ -34,6 +34,7 @@ const generateRSSFeed = async () => {
     site_url: 'https://realunivlog.com',
     language: 'ja',
     ttl: 60,
+    lastBuildDate: new Date().toUTCString(),
   });
 
   const articles = await getAllContents('blog');
