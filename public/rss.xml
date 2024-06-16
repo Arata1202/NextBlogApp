@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[リアル大学生]]></title>
+        <description><![CDATA[大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。]]></description>
+        <link>https://realunivlog.com</link>
+        <generator>RSS for Node</generator>
+        <lastBuildDate>Sun, 16 Jun 2024 08:45:38 GMT</lastBuildDate>
+        <atom:link href="https://realunivlog.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <language><![CDATA[ja]]></language>
+        <ttl>60</ttl>
+        <item>
+            <title><![CDATA[【活用法】エンジニア向けなChatGPTの使い方を紹介]]></title>
+            <description><![CDATA[Web開発の際にChatGPTは活用していますか？この記事では、ChatGPTを使った便利なアプリ開発方法について紹介しています。]]></description>
+            <link>https://realunivlog.com/articles/how-to-practical-use-openai</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-practical-use-openai</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Fri, 14 Jun 2024 13:32:13 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/beb345f25c574a2988b2c9852b4d22e3/26.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【zsh】Macでエイリアスを設定する方法を例として紹介]]></title>
+            <description><![CDATA[普段使っているコマンドが長いと感じたことはありませんか？この記事では、コマンドを省略して実行するための設定手順と、実際の使用例を紹介しています。]]></description>
+            <link>https://realunivlog.com/articles/how-to-use-alias</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-use-alias</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Wed, 12 Jun 2024 14:14:17 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/039922dfaa984a3da64952f816d41bfe/25.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【チートシート】TailwindCSSのテンプレートの使い方を詳しく解説]]></title>
+            <description><![CDATA[CSSの記述って難しくないですか？この記事ではTailwindCSSを使って簡単にWebデザインを整える方法について紹介しています。]]></description>
+            <link>https://realunivlog.com/articles/how-to-use-tailwind-css</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-use-tailwind-css</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Mon, 10 Jun 2024 15:00:36 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/3b171710f8ec436ca3ed33ec8f832d5b/24.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【Xserver】レンタルサーバーをAPIとして使用する方法を紹介]]></title>
+            <description><![CDATA[皆さんはAPIを使用した経験はありますか？APIはバックエンドの動作を担う便利な機能です。この記事ではXserverをAPIとして使用する方法を紹介します。]]></description>
+            <link>https://realunivlog.com/articles/how-to-use-xserver-api</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-use-xserver-api</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Sat, 08 Jun 2024 21:41:25 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/bd866742774244dbb2517509088a8908/22.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【必需品】エンジニアにおすすめな持ち物を大公開【2024年版】]]></title>
+            <description><![CDATA[この記事ではエンジニアにとってあると便利な持ち物について、実際の経験に基づいて紹介しています。]]></description>
+            <link>https://realunivlog.com/articles/engineer-recommend-item</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/engineer-recommend-item</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Fri, 07 Jun 2024 13:28:25 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/ab4309c8399d4426b6774e2192ec5b5b/21.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【未経験】エンジニアインターンに半年参加して感じたメリットを紹介]]></title>
+            <description><![CDATA[エンジニアインターンに参加したいけれど、仕事に追いつけるか不安に感じる方もいるでしょう。この記事ではインターンに参加してみて感じたメリットについて解説していきます。]]></description>
+            <link>https://realunivlog.com/articles/join-enginner-intern-merit</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/join-enginner-intern-merit</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Thu, 06 Jun 2024 13:38:20 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/fa5f0ad9e90949d0a98b74eb7d2ebb4b/40.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【お名前.com】Vercelで独自ドメインを割り当てる方法を写真付きで解説]]></title>
+            <description><![CDATA[Vercelに独自ドメインを設定する方法をご存知ですか？この記事ではお名前.comで取得したドメインを割り当てる方法を解説します。]]></description>
+            <link>https://realunivlog.com/articles/how-to-change-domain-vercel</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-change-domain-vercel</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Wed, 05 Jun 2024 12:35:51 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/0620b50fdf95415d820c4478b9419437/37.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【Next.jsとは何？】立ち上げ方法やチュートリアルを詳しく解説]]></title>
+            <description><![CDATA[皆さんはJavaScriptのフレームワークをご存知でしょうか？この記事では代表的なNext.jsの立ち上げ方法について解説していきます。]]></description>
+            <link>https://realunivlog.com/articles/how-to-build-next</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-build-next</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Tue, 04 Jun 2024 04:25:37 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/a229e3078f624fb9923561de7a0e8578/34.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【Vercelとは何？】Webアプリケーションを無料かつ簡単にデプロイする手順を解説]]></title>
+            <description><![CDATA[みなさんはVercelというサービスをご存知でしょうか？この記事ではアプリケーションを簡単にデプロイする方法について解説しています。]]></description>
+            <link>https://realunivlog.com/articles/how-to-deploy-vercel</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-deploy-vercel</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Mon, 03 Jun 2024 12:13:48 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/5d0e7957a2184efb82c8f7ced9eca4f6/30.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【git】commitの取り消し方法を詳しく解説【reset・revertの違い】]]></title>
+            <description><![CDATA[gitで間違えてcommitしてしまったこと、ありませんか？この記事ではcommitを取り消す方法や、reset・revertの違いについて紹介します。]]></description>
+            <link>https://realunivlog.com/articles/github-revert-reset-method</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/github-revert-reset-method</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Sun, 02 Jun 2024 01:38:40 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/7a9eb66a70b048af91118439f9e9ae42/27.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【書き方】SEO対策に必要なheadタグの中身を大紹介【2024年版】]]></title>
+            <description><![CDATA[SEO対策のためにheadタグ内に記述するべき内容がよくわからない。そんな方々に向けて今回はhead内に記述するべきmetaタグを詳しく解説します。]]></description>
+            <link>https://realunivlog.com/articles/how-to-write-head-seo</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-write-head-seo</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Sat, 01 Jun 2024 04:39:51 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/288d05c2dffd401db400770f24150756/22.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【commitとは何？】gitでpushする際のcommitする手順を写真付きで解説]]></title>
+            <description><![CDATA[commitという言葉を知ってはいるが、実際の使い方がよくわからない。そんな方々に向けて今回はgitでcommitする方法を詳しく解説します。]]></description>
+            <link>https://realunivlog.com/articles/github-commit-method-with-picture</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/github-commit-method-with-picture</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Thu, 30 May 2024 15:07:50 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/3c5c1fa4a36343e893447ddd98defbfa/21.png" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【pushできない？】gitでpushする手順を写真付きで解説]]></title>
+            <description><![CDATA[gitでpushをしたいけれど、やり方がよくわからない。そんな方に向けて、pushする方法を詳細に解説していきます。]]></description>
+            <link>https://realunivlog.com/articles/github-push-method-with-picture</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/github-push-method-with-picture</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Thu, 30 May 2024 02:00:35 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/257a982140d04864a2144319465479f2/16.png" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【勉強法】最速！JavaScript学習のおすすめロードマップを紹介【プログラミング】]]></title>
+            <description><![CDATA[JavaScriptを習得したいけど、学習の進め方がわからない。そんな方いませんか？この記事では、私が実際にJavaScriptを習得した方法について解説していきます。]]></description>
+            <link>https://realunivlog.com/articles/study-javascript-recommend-method</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/study-javascript-recommend-method</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Tue, 06 Feb 2024 15:34:34 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/5ddf80a1d8ca46faa9282afab5ea5749/32.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【未経験可能】エンジニアインターンの応募方法や注意点について解説【現役大学生】]]></title>
+            <description><![CDATA[エンジニアインターンに興味のある方はいますか？この記事では、魅力や時給などについて解説しています。]]></description>
+            <link>https://realunivlog.com/articles/engineer-intern-application-method</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/engineer-intern-application-method</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Sat, 13 Jan 2024 15:24:59 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/3175e345ae63467f91dd4902e600d1ca/44.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【ゼミとは何？】大学生のゼミの選び方の注意点について解説【文系大学生】]]></title>
+            <description><![CDATA[ゼミに入るか迷っている方はいませんか？この記事ではゼミを選ぶ際の注意点について解説しています。]]></description>
+            <link>https://realunivlog.com/articles/seminar-select-attention</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/seminar-select-attention</guid>
+            <category><![CDATA[大学生活]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Sat, 13 Jan 2024 15:15:26 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/05de97707d594ebeafe7e74989938aeb/37.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[免許を取ったらすぐに運転練習をするべき理由について解説【現役大学生】]]></title>
+            <description><![CDATA[免許取得後に運転練習はしていますか？この記事では免許取得後すぐに運転練習を行うべき理由について解説しています。]]></description>
+            <link>https://realunivlog.com/articles/after-get-license-should-drive</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/after-get-license-should-drive</guid>
+            <category><![CDATA[大学生活]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Wed, 10 Jan 2024 15:05:38 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/692703dbc9a64fdcb39af2ec4c612601/10.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】]]></title>
+            <description><![CDATA[この記事では、文系大学生の普段の持ち物について紹介しています。1つの例として見ていただけると幸いです。]]></description>
+            <link>https://realunivlog.com/articles/university-student-real-personal-effects</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/university-student-real-personal-effects</guid>
+            <category><![CDATA[大学生活]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Wed, 10 Jan 2024 14:37:23 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/3bd82616bbe94ca9865007d6bc9441fb/6.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【最短】未経験がエンジニアになるまでのロードマップを紹介【プログラミング】]]></title>
+            <description><![CDATA[エンジニアに転職したいけれど、未経験でもなれるのか疑問に考える方もいると思います。この記事では、エンジニアになるためのロードマップを紹介しています。]]></description>
+            <link>https://realunivlog.com/articles/example-inexperience-become-engineer-method</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/example-inexperience-become-engineer-method</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Wed, 10 Jan 2024 14:30:08 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/208114201bf8474ba6fc5102e011c244/19.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【勉強法】２週間で習得！Python学習のおすすめロードマップを解説【プログラミング】]]></title>
+            <description><![CDATA[Pythonを習得したいけど、学習の進め方がわからない。そんな方いませんか？この記事では、私が実際に2週間でPythonを習得した方法について解説していきます。]]></description>
+            <link>https://realunivlog.com/articles/study-python-recommend-method</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/study-python-recommend-method</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Mon, 01 Jan 2024 11:50:40 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/e9bdb3c497a44aee92aae78a630911b5/22.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説]]></title>
+            <description><![CDATA[みなさんは乳頭温泉郷をご存じですか？この記事では乳頭温泉郷・鶴の湯の予約方法やアクセス、日帰り入浴について解説しています。魅力あふれる、非常に素晴らしい温泉であったため、紹介します。]]></description>
+            <link>https://realunivlog.com/articles/nyuto-hotspring-tsurunoyu-reservation-access</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/nyuto-hotspring-tsurunoyu-reservation-access</guid>
+            <category><![CDATA[大学生活]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Fri, 29 Dec 2023 09:42:49 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/f778c34435f24594ba47a419bbd1ce98/5.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【実物あり】ポートフォリオの作り方を例として解説【大学生エンジニア】]]></title>
+            <description><![CDATA[ポートフォリオを作成したいけれど作り方がよくわからない。そんな方いませんか？この記事ではエンジニアインターンに未経験で採用された私が、ポートフォリオの作成方法について紹介します。]]></description>
+            <link>https://realunivlog.com/articles/reality-portfolio-example-make-method</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/reality-portfolio-example-make-method</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Sat, 23 Dec 2023 11:14:57 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/f9061ffc54f4437e9f688e06c524cdda/5.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】]]></title>
+            <description><![CDATA[PHPを習得したいけど、学習の進め方がわからない。そんな方いませんか？この記事では、私が実際に一か月でPHPを習得した方法について解説していきます。]]></description>
+            <link>https://realunivlog.com/articles/study-php-recommend-method</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/study-php-recommend-method</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Fri, 15 Dec 2023 03:18:04 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/6dc6ebc15e2c496bbc7797f02bfdde3e/27.webp" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【いつ取るの？】大学生の間に運転免許を取得するべき理由について解説【現役大学生】]]></title>
+            <description><![CDATA[大学生になったそこのあなた、運転免許を取得するか迷ってないですか？この記事では現役大学生の私が、運転免許を取得して感じたメリット・デメリットについて解説していきます。]]></description>
+            <link>https://realunivlog.com/articles/student-should-get-car-license</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/student-should-get-car-license</guid>
+            <category><![CDATA[大学生活]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Mon, 11 Dec 2023 14:13:32 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/2644b10d3578479ea2d4491f9c2f370b/1.webp" length="0" type="image/jpg"/>
+        </item>
+    </channel>
+</rss>
