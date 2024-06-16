@@ -53,7 +53,10 @@ import {
   InformationCircleIcon,
   HomeIcon,
   ChevronRightIcon,
+  RssIcon,
+  UserPlusIcon,
 } from '@heroicons/react/24/solid';
+import { SiFeedly } from 'react-icons/si';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
@@ -485,6 +488,34 @@ export default function Article({ data, articles }: Props) {
                   >
                     <LinkedinIcon size={40} round={true} />
                   </LinkedinShareButton>
+                </div>
+                <div className="mt-2">
+                  <div className="pt-3">
+                    <h1 className={`text-2xl font-semibold flex justify-center mb-5`}>
+                      <UserPlusIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                      フォローする
+                    </h1>
+                  </div>
+                  <div className="flex justify-center">
+                    <a
+                      aria-label="RSSフォローボタン"
+                      href="https://realunivlog.com/rss.xml"
+                      className="bg-orange-500 rounded-full p-1 m-1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <RssIcon className="h-8 w-8 text-white" aria-hidden="true" />
+                    </a>
+                    <a
+                      aria-label="Feedlyフォローボタン"
+                      href="https://feedly.com/i/subscription/feed/https://realunivlog.com/rss.xml"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-green-500 rounded-full p-1 m-1"
+                    >
+                      <SiFeedly className="h-8 w-8 text-white" aria-hidden="true" />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
