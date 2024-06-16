@@ -16,8 +16,7 @@ import {
   LinkedinShareButton,
   LinkedinIcon,
 } from 'react-share';
-
-import { HandThumbUpIcon } from '@heroicons/react/24/solid';
+import { HandThumbUpIcon, RssIcon } from '@heroicons/react/24/solid';
 
 export default function Share() {
   return (
@@ -94,6 +93,17 @@ export default function Share() {
           >
             <LinkedinIcon size={40} round={true} />
           </LinkedinShareButton>
+        </div>
+        <div className="flex justify-center mt-5">
+          <a
+            aria-label="RSSフォローボタン"
+            href="https://realunivlog.com/rss.xml"
+            className="bg-orange-500 rounded-full p-1"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <RssIcon className="h-8 w-8 text-white" aria-hidden="true" />
+          </a>
         </div>
       </div>
     </>
