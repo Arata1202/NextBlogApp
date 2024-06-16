@@ -20,7 +20,6 @@ import styles from './index.module.css';
 import Image from 'next/image';
 import TableOfContents from '../../components/TableOfContent';
 import Sidebar from '../Sidebar';
-import ArticleListItem from '../ArticleListItem';
 import WithArticleItem from '../WithArticleItem';
 import { useEffect, useState } from 'react';
 import './article.css';
