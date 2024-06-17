@@ -44,9 +44,15 @@ table {
 table tr th {
   border: 1px solid #ccc;
   background-color: #eaf4fc !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 table tr td {
   border: 1px solid #ccc;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 /* 吹き出し */
