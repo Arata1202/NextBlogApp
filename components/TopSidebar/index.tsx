@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './index.module.css';
 import { UserProfile } from '@/Section/Dummy';
-import { SocialIcon, CategoryList, PopularPost } from '@/Section/Dummy';
+import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/Section/Dummy';
 import { Article } from '@/libs/microcms';
 import {
   MagnifyingGlassIcon,
@@ -105,6 +105,34 @@ export default function TopSidebar({ articles }: Props) {
           </h1>
           <nav className="flex gap-4 mt-5 md:mt-5" role="tablist">
             {CategoryList.map((item, index) => (
+              <a
+                href={item.href}
+                className="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+                data-hs-tab="#tabs-with-card-1"
+                role="tab"
+                key={item.name}
+              >
+                <span className="flex">
+                  <span className="grow">
+                    <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">
+                      <ul>
+                        <li>
+                          <div className="flex justify-center">
+                            <item.icon className="w-12 h-12" aria-hidden="true" />
+                          </div>
+                          <div className="flex justify-center mt-2">
+                            <div>{item.name}</div>
+                          </div>
+                        </li>
+                      </ul>
+                    </span>
+                  </span>
+                </span>
+              </a>
+            ))}
+          </nav>
+          <nav className="flex gap-4 mt-5 md:mt-5" role="tablist">
+            {CategoryList2.map((item, index) => (
               <a
                 href={item.href}
                 className="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
