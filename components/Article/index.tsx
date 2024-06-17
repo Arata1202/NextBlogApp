@@ -80,12 +80,6 @@ type Props = {
   articles?: ArticleType[];
 };
 
-declare global {
-  interface Window {
-    adsbygoogle: any[];
-  }
-}
-
 const formatRichText = (richText: string) => {
   const $ = cheerio.load(richText);
   const highlight = (text: string, lang?: string) => {
@@ -99,7 +93,11 @@ const formatRichText = (richText: string) => {
 
   const adCode = `
     <div class="ad-container">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1705865999592590" crossorigin="anonymous"></script>
       <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1705865999592590" data-ad-slot="7197259627" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
     </div>
   `;
 
@@ -146,28 +144,6 @@ function useExtractHeadings(contentBlocks: { rich_text2?: string }[]): Heading[]
 
 export default function Article({ data, articles }: Props) {
   const headings = useExtractHeadings(data.content_blocks);
-
-  useEffect(() => {
-    const loadAds = () => {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-      script.crossOrigin = 'anonymous';
-      document.body.appendChild(script);
-
-      script.onload = () => {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      };
-    };
-
-    loadAds();
-  }, []);
-
-  useEffect(() => {
-    if (window.adsbygoogle) {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    }
-  }, [data]);
 
   return (
     <>
