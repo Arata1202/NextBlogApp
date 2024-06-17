@@ -6,8 +6,9 @@ import {
   DocumentMagnifyingGlassIcon,
   InformationCircleIcon,
 } from '@heroicons/react/24/solid';
+import { IoAirplaneOutline } from 'react-icons/io5';
 
-import { CodeBracketIcon, CommandLineIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
+import { BookOpenIcon, CommandLineIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
 
 type SocialIconType = {
   name: string;
@@ -107,6 +108,18 @@ export const CategoryList = [
     name: 'プログラミング',
     href: '/category/programming',
     icon: CommandLineIcon,
+  },
+];
+export const CategoryList2 = [
+  {
+    name: '旅行',
+    href: '/category/travel',
+    icon: IoAirplaneOutline,
+  },
+  {
+    name: 'ブログ',
+    href: '/category/blog',
+    icon: BookOpenIcon,
   },
 ];
 
