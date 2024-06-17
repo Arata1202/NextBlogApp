@@ -13,7 +13,7 @@ import {
   FolderIcon,
   BoltIcon,
   UserCircleIcon,
-  TagIcon,
+  HashtagIcon,
 } from '@heroicons/react/24/solid';
 import { tags } from '@/Section/Tag';
 
@@ -138,7 +138,7 @@ export default function TopSidebar({ articles }: Props) {
           <h1
             className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
           >
-            <TagIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+            <HashtagIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             タグ
           </h1>
           <div className="mt-5 flex flex-wrap gap-2">
