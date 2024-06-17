@@ -39,7 +39,12 @@ export default async function RootLayout({ children }: Props) {
         {/* GoogleAnalytics */}
         <script async src={process.env.GOOGLE_ANALYTICS_ID} />
         {/* GoogleAdsense */}
-        <meta name="google-adsense-account" content="ca-pub-1705865999592590" />
+        {/* <meta name="google-adsense-account" content="ca-pub-1705865999592590" /> */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1705865999592590"
+          crossOrigin="anonymous"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
