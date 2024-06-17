@@ -1,5 +1,5 @@
 import { getTag2 } from '@/libs/microcms';
-import { FolderOpenIcon, HomeIcon, ChevronRightIcon, TagIcon } from '@heroicons/react/24/solid';
+import { FolderOpenIcon, HomeIcon, ChevronRightIcon, HashtagIcon } from '@heroicons/react/24/solid';
 import { Metadata } from 'next';
 
 type Props = {
@@ -61,7 +61,7 @@ export default async function TagsLayout({ children, params }: Props) {
           </ol>
         </nav>
         <div className="flex items-center pb-2 pt-2 mt-5">
-          <TagIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+          <HashtagIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           <div>{tag.name}</div>
         </div>
       </h1>
