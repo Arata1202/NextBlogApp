@@ -200,7 +200,6 @@ export default function Article({ data, articles }: Props) {
                   <div className={styles.date}>
                     <HashtagIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
                     <TagList2 tags={data.tags2} hasLink={true} />
-                    &nbsp;&nbsp;&nbsp;&nbsp;
                   </div>
                 )}
                 <AdAlert />
