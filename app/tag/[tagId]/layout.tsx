@@ -1,5 +1,5 @@
-import { getTag } from '@/libs/microcms';
-import { FolderOpenIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { getTag2 } from '@/libs/microcms';
+import { FolderOpenIcon, HomeIcon, ChevronRightIcon, HashtagIcon } from '@heroicons/react/24/solid';
 import { Metadata } from 'next';
 
 type Props = {
@@ -10,26 +10,29 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tag = await getTag(params.tagId);
+  const tag = await getTag2(params.tagId);
 
   // 検証済み
   return {
     title: `${tag.name}｜リアル大学生`,
-    description: `${tag.name}について解説するカテゴリーです。`,
+    description: `${tag.name}について解説するタグです。`,
     openGraph: {
       title: `${tag.name}｜リアル大学生`,
-      description: `${tag.name}について解説するカテゴリーです。`,
+      description: `${tag.name}について解説するタグです。`,
       images: `https://realunivlog.com/images/thumbnail/7.webp`,
-      url: `https://realunivlog.com/category/${tag.id}`,
+      url: `https://realunivlog.com/tag/${tag.id}`,
     },
     alternates: {
-      canonical: `https://realunivlog.com/category/${tag.id}`,
+      canonical: `https://realunivlog.com/tag/${tag.id}`,
+    },
+    robots: {
+      index: false,
     },
   };
 }
 
 export default async function TagsLayout({ children, params }: Props) {
-  const tag = await getTag(params.tagId);
+  const tag = await getTag2(params.tagId);
 
   return (
     <div>
@@ -58,7 +61,7 @@ export default async function TagsLayout({ children, params }: Props) {
           </ol>
         </nav>
         <div className="flex items-center pb-2 pt-2 mt-5">
-          <FolderOpenIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+          <HashtagIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           <div>{tag.name}</div>
         </div>
       </h1>
