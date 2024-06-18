@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${tag.name}｜リアル大学生`,
       description: `${tag.name}について解説するカテゴリーです。`,
-      images: `https://realunivlog.com/images/thumbnail/${tag.id}.webp`,
+      images: `https://realunivlog.com/images/thumbnail/7.webp`,
       url: `https://realunivlog.com/category/${tag.id}`,
     },
     alternates: {
