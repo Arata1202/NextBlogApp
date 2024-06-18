@@ -54,7 +54,7 @@ import {
   HomeIcon,
   ChevronRightIcon,
 } from '@heroicons/react/24/solid';
-import { TagIcon, FolderIcon } from '@heroicons/react/24/outline';
+import { HashtagIcon, FolderIcon } from '@heroicons/react/24/outline';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
@@ -198,7 +198,7 @@ export default function Article({ data, articles }: Props) {
                 </div>
                 {data.tags2 && data.tags2.length > 0 && (
                   <div className={styles.date}>
-                    <TagIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
+                    <HashtagIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
                     <TagList2 tags={data.tags2} hasLink={true} />
                     &nbsp;&nbsp;&nbsp;&nbsp;
                   </div>
