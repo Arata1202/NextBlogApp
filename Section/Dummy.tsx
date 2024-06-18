@@ -40,6 +40,8 @@ export const mobileTopNavigation = [
 export const categories = [
   { name: '大学生活', href: '/category/university', icon: FolderOpenIcon },
   { name: 'プログラミング', href: '/category/programming', icon: FolderOpenIcon },
+  { name: '旅行', href: '/category/travel', icon: FolderOpenIcon },
+  { name: 'ブログ', href: '/category/blog', icon: FolderOpenIcon },
 ];
 export const mobileBottomNavigation = [
   { name: 'サイトマップ', href: '/sitemap', icon: DocumentMagnifyingGlassIcon },
