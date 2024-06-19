@@ -34,7 +34,6 @@ export default async function Page({ params }: Props) {
   return (
     <>
       <ArticleList articles={data.contents} allArticles={data2.contents} />
-      <Pagination totalCount={data.totalCount} current={current} basePath={`/tag/${tagId}`} />
       <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
         <ins
           className="adsbygoogle"
@@ -50,6 +49,7 @@ export default async function Page({ params }: Props) {
         `}
         </Script>
       </div>
+      <Pagination totalCount={data.totalCount} current={current} basePath={`/tag/${tagId}`} />
       <div className="pc">
         <TopSidebar articles={data2.contents} />
       </div>
