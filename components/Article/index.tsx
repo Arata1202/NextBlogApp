@@ -27,6 +27,7 @@ import TagList from '../TagList';
 import TagList2 from '../TagList2';
 import PanTagList from '../PanTagList';
 import AdAlert from '../AdAlert';
+import Script from 'next/script';
 import {
   TwitterShareButton,
   TwitterIcon,
@@ -192,6 +193,23 @@ export default function Article({ data, articles }: Props) {
                     loading="eager"
                   />
                 </picture>
+                {/* 広告 */}
+                <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+                  <ins
+                    className="adsbygoogle"
+                    style={{ display: 'block', width: '100%' }}
+                    data-ad-client="ca-pub-1705865999592590"
+                    data-ad-slot="7197259627"
+                    data-ad-format="auto"
+                    data-full-width-responsive="false"
+                  ></ins>
+                  <Script id="adsbygoogle-init" strategy="afterInteractive">
+                    {`
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        `}
+                  </Script>
+                </div>
+                {/* ここまで */}
                 <div className={styles.date}>
                   <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
                   <TagList tags={data.tags} hasLink={true} />
@@ -301,6 +319,21 @@ export default function Article({ data, articles }: Props) {
                   </div>
                 ))}
                 {headings.length > 0 && <TableOfContents headings={headings} />}
+                <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+                  <ins
+                    className="adsbygoogle"
+                    style={{ display: 'block', width: '100%' }}
+                    data-ad-client="ca-pub-1705865999592590"
+                    data-ad-slot="7197259627"
+                    data-ad-format="auto"
+                    data-full-width-responsive="false"
+                  ></ins>
+                  <Script id="adsbygoogle-init" strategy="afterInteractive">
+                    {`
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        `}
+                  </Script>
+                </div>
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
@@ -401,6 +434,21 @@ export default function Article({ data, articles }: Props) {
                       )}
                     </div>
                   ))}
+                </div>
+                <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+                  <ins
+                    className="adsbygoogle"
+                    style={{ display: 'block', width: '100%' }}
+                    data-ad-format="autorelaxed"
+                    data-ad-client="ca-pub-1705865999592590"
+                    data-ad-slot="5469260892"
+                    data-full-width-responsive="false"
+                  ></ins>
+                  <Script id="adsbygoogle-init" strategy="afterInteractive">
+                    {`
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        `}
+                  </Script>
                 </div>
                 <div className="related-articles mt-10">
                   <h1

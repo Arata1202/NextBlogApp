@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import './globals.css';
 import styles from './layout.module.css';
 import ScrollTopButton from '@/components/Common/ScrollToTop/page';
+import Script from 'next/script';
 
 export const metadata = {
   // 検証 OK
@@ -40,7 +41,12 @@ export default async function RootLayout({ children }: Props) {
         <script async src={process.env.GOOGLE_ANALYTICS_ID} />
         {/* GoogleAdsense */}
         {/* <meta name="google-adsense-account" content="ca-pub-1705865999592590" /> */}
-        <script async src={process.env.GOOGLE_ADSENSE_ID} crossOrigin="anonymous" />
+        <Script
+          async
+          src={process.env.GOOGLE_ADSENSE_ID}
+          crossOrigin="anonymous"
+          data-full-width-responsive="false"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
