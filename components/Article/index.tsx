@@ -194,7 +194,7 @@ export default function Article({ data, articles }: Props) {
                   />
                 </picture>
                 {/* 広告 */}
-                <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+                {/* <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
                   <ins
                     className="adsbygoogle"
                     style={{ display: 'block', width: '100%' }}
@@ -208,7 +208,7 @@ export default function Article({ data, articles }: Props) {
           (adsbygoogle = window.adsbygoogle || []).push({});
         `}
                   </Script>
-                </div>
+                </div> */}
                 {/* ここまで */}
                 <div className={styles.date}>
                   <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
@@ -319,7 +319,7 @@ export default function Article({ data, articles }: Props) {
                   </div>
                 ))}
                 {headings.length > 0 && <TableOfContents headings={headings} />}
-                <div>
+                {/* <div>
                   <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
                     <ins
                       className="adsbygoogle"
@@ -335,7 +335,7 @@ export default function Article({ data, articles }: Props) {
         `}
                     </Script>
                   </div>
-                </div>
+                </div> */}
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>

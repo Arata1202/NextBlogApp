@@ -100,7 +100,7 @@ export default function Sidebar({ articles }: Props) {
             </div>
           </div>
         </div>
-        <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+        {/* <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
           <ins
             className="adsbygoogle"
             style={{ display: 'block', width: '100%' }}
@@ -114,7 +114,7 @@ export default function Sidebar({ articles }: Props) {
           (adsbygoogle = window.adsbygoogle || []).push({});
         `}
           </Script>
-        </div>
+        </div> */}
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           <h1
             className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
