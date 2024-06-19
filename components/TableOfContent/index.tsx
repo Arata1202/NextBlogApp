@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import Script from 'next/script';
 
 interface Heading {
   id: string;
@@ -50,26 +51,43 @@ const TableOfContents: React.FC<TableOfContentsProps> = React.memo(({ headings }
   };
 
   return (
-    <div className="flex justify-center">
-      <nav
-        aria-label="Table of contents"
-        className="tableOfContent w-1/2 border border-gray-300 p-4"
-      >
-        <h1 className="text-center font-bold text-lg">目次</h1>
-        <ol className="mt-4 list-none pl-0">
-          {formattedHeadings.map((heading) => (
-            <li key={heading.id} style={{ marginLeft: heading.marginLeft }}>
-              <a
-                href={`#${heading.id}`}
-                onClick={(e) => handleClick(e, heading.id)}
-                className="hover:text-blue-500"
-              >
-                {heading.number} {heading.title}
-              </a>
-            </li>
-          ))}
-        </ol>
-      </nav>
+    <div>
+      <div className="flex justify-center">
+        <nav
+          aria-label="Table of contents"
+          className="tableOfContent w-1/2 border border-gray-300 p-4"
+        >
+          <h1 className="text-center font-bold text-lg">目次</h1>
+          <ol className="mt-4 list-none pl-0">
+            {formattedHeadings.map((heading) => (
+              <li key={heading.id} style={{ marginLeft: heading.marginLeft }}>
+                <a
+                  href={`#${heading.id}`}
+                  onClick={(e) => handleClick(e, heading.id)}
+                  className="hover:text-blue-500"
+                >
+                  {heading.number} {heading.title}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </div>
+      <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+        <ins
+          className="adsbygoogle"
+          style={{ display: 'block', width: '100%' }}
+          data-ad-client="ca-pub-1705865999592590"
+          data-ad-slot="7197259627"
+          data-ad-format="auto"
+          data-full-width-responsive="false"
+        ></ins>
+        <Script id="adsbygoogle-init" strategy="afterInteractive">
+          {`
+(adsbygoogle = window.adsbygoogle || []).push({});
+`}
+        </Script>
+      </div>
     </div>
   );
 });
