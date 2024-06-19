@@ -26,7 +26,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       <ArticleList articles={data.contents} allArticles={data2.contents} />
-      <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+      {/* <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
         <ins
           className="adsbygoogle"
           style={{ display: 'block', width: '100%' }}
@@ -40,7 +40,7 @@ export default async function Page({ params }: Props) {
           (adsbygoogle = window.adsbygoogle || []).push({});
         `}
         </Script>
-      </div>
+      </div> */}
       <Pagination totalCount={data.totalCount} basePath={`/category/${tagId}`} />
       <div className="pc">
         <TopSidebar articles={data2.contents} />
