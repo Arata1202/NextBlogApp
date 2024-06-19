@@ -338,25 +338,15 @@ export default function Article({ data, articles }: Props) {
                         </div>
                       )}
                       {block.rich_text2 && (
-                        <>
-                          <ins
-                            className="adsbygoogle"
-                            style={{ display: 'block' }}
-                            data-ad-client="ca-pub-1705865999592590"
-                            data-ad-slot="7197259627"
-                            data-ad-format="auto"
-                            data-full-width-responsive="true"
-                          ></ins>
-                          <div
-                            className={styles.content}
-                            dangerouslySetInnerHTML={{
-                              __html: formatRichText(block.rich_text2).replace(
-                                /<img/g,
-                                '<img loading="lazy"',
-                              ),
-                            }}
-                          />
-                        </>
+                        <div
+                          className={styles.content}
+                          dangerouslySetInnerHTML={{
+                            __html: formatRichText(block.rich_text2).replace(
+                              /<img/g,
+                              '<img loading="lazy"',
+                            ),
+                          }}
+                        />
                       )}
                       {block.custom_html2 && (
                         <div
