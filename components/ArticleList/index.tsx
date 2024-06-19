@@ -130,9 +130,11 @@ const ArticleList = ({ articles, allArticles }: Props) => {
             </Script>
           </div>
           <ul className={`${styles.main}`}>
-            {articles.map((article) => (
-              <ArticleListItem key={article.id} article={article} />
-            ))}
+            <div style={{ marginTop: '20px' }}>
+              {articles.map((article) => (
+                <ArticleListItem key={article.id} article={article} />
+              ))}
+            </div>
           </ul>
           <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
             <ins
