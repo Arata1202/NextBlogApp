@@ -70,6 +70,12 @@ hljs.registerLanguage('sql', sql);
 hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('vim', vim);
 
+declare global {
+  interface Window {
+    adsbygoogle: any[];
+  }
+}
+
 interface Heading {
   id: string;
   title: string;
@@ -129,6 +135,19 @@ function useExtractHeadings(contentBlocks: { rich_text2?: string }[]): Heading[]
 
 export default function Article({ data, articles }: Props) {
   const headings = useExtractHeadings(data.content_blocks);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src =
+      'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1705865999592590';
+    script.crossOrigin = 'anonymous';
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    };
+  }, []);
 
   return (
     <>
