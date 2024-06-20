@@ -193,7 +193,7 @@ export default function Article({ data, articles }: Props) {
                     loading="eager"
                   />
                 </picture>
-                <div className="mobile">
+                <div className="mobilee">
                   {/* 広告 */}
                   <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
                     <ins
