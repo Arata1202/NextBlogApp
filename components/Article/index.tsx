@@ -135,6 +135,25 @@ export default function Article({ data, articles }: Props) {
     <>
       <div className="hiddenBlock categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
         <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
+          <div className="mobile">
+            {/* 広告 */}
+            <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+              <ins
+                className="adsbygoogle"
+                style={{ display: 'block', width: '100%' }}
+                data-ad-client="ca-pub-1705865999592590"
+                data-ad-slot="7197259627"
+                data-ad-format="auto"
+                data-full-width-responsive="false"
+              ></ins>
+              <Script id="adsbygoogle-init" strategy="afterInteractive">
+                {`
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        `}
+              </Script>
+            </div>
+            {/* ここまで */}
+          </div>
           {/* Main Content Area */}
           <div className="lg:col-span-2">
             <div className="">
@@ -320,25 +339,6 @@ export default function Article({ data, articles }: Props) {
                   </div>
                 ))}
                 {headings.length > 0 && <TableOfContents headings={headings} />}
-                <div className="mobile">
-                  {/* 広告 */}
-                  <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
-                    <ins
-                      className="adsbygoogle"
-                      style={{ display: 'block', width: '100%' }}
-                      data-ad-client="ca-pub-1705865999592590"
-                      data-ad-slot="7197259627"
-                      data-ad-format="auto"
-                      data-full-width-responsive="false"
-                    ></ins>
-                    <Script id="adsbygoogle-init" strategy="afterInteractive">
-                      {`
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        `}
-                    </Script>
-                  </div>
-                  {/* ここまで */}
-                </div>
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
