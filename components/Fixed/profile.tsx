@@ -190,7 +190,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     </Link>
                   </p>
                 </div>
-                {/* <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+                <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
                   <ins
                     className="adsbygoogle"
                     style={{ display: 'block', width: '100%' }}
@@ -204,7 +204,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
           (adsbygoogle = window.adsbygoogle || []).push({});
         `}
                   </Script>
-                </div> */}
+                </div>
                 <Share />
               </div>
             </div>
