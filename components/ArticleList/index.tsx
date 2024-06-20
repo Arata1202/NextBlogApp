@@ -114,7 +114,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
               ))}
             </nav>
           </div> */}
-          {/* <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+          <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
             <ins
               className="adsbygoogle"
               style={{ display: 'block', width: '100%' }}
@@ -128,7 +128,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
           (adsbygoogle = window.adsbygoogle || []).push({});
         `}
             </Script>
-          </div> */}
+          </div>
           <ul className={`${styles.main}`}>
             <div>
               {articles.map((article) => (
