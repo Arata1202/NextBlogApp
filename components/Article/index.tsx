@@ -27,7 +27,6 @@ import TagList from '../TagList';
 import TagList2 from '../TagList2';
 import PanTagList from '../PanTagList';
 import AdAlert from '../AdAlert';
-import Script from 'next/script';
 import {
   TwitterShareButton,
   TwitterIcon,
@@ -218,7 +217,6 @@ export default function Article({ data, articles }: Props) {
                 </div>
                 {data.tags2 && data.tags2.length > 0 && (
                   <div className={styles.date}>
-                    <HashtagIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
                     <TagList2 tags={data.tags2} hasLink={true} />
                   </div>
                 )}
