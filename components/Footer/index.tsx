@@ -12,6 +12,8 @@ const footerNavigation = {
   category: [
     { name: '大学生活', href: '/category/university' },
     { name: 'プログラミング', href: '/category/programming' },
+    { name: '旅行', href: '/category/travel' },
+    { name: 'ブログ', href: '/category/blog' },
   ],
   company: [
     { name: 'プライバシーポリシー', href: '/privacy' },
