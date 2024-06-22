@@ -10,6 +10,8 @@ import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/Section/
 import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
 import Script from 'next/script';
+import TableOfContents from '../TableOfContent';
+import { useEffect, useState } from 'react';
 import { tags } from '@/Section/Tag';
 import {
   MagnifyingGlassIcon,
@@ -22,9 +24,49 @@ import {
 
 type Props = {
   articles?: Article[];
+  contentBlocks?: { rich_text2?: string }[];
 };
 
-export default function Sidebar({ articles }: Props) {
+interface ContentBlock {
+  rich_text2?: string;
+}
+
+interface Heading {
+  id: string;
+  title: string;
+  level: number;
+}
+
+function useExtractHeadings(contentBlocks: ContentBlock[]): Heading[] {
+  const [headings, setHeadings] = useState<Heading[]>([]);
+
+  useEffect(() => {
+    const extractedHeadings: Heading[] = [];
+
+    contentBlocks.forEach((block) => {
+      if (block.rich_text2) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = block.rich_text2;
+        const blockHeadings = Array.from(tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6')).map(
+          (el) => ({
+            id: el.id,
+            title: el.textContent || '',
+            level: parseInt(el.tagName[1], 10),
+          }),
+        );
+        extractedHeadings.push(...blockHeadings);
+      }
+    });
+
+    setHeadings(extractedHeadings);
+  }, [contentBlocks]);
+
+  return headings;
+}
+
+export default function Sidebar({ articles, contentBlocks = [] }: Props) {
+  const headings = useExtractHeadings(contentBlocks);
+
   const sortedArticles = articles
     ?.slice()
     .sort((a, b) => {
@@ -36,7 +78,7 @@ export default function Sidebar({ articles }: Props) {
 
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
-      <div className="sidebar sticky top-0 start-0">
+      <div className="sidebar">
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5">
           <h1
             className={`${styles.profile} text-2xl text-center font-semibold mb-5 flex justify-center`}
@@ -538,6 +580,9 @@ export default function Sidebar({ articles }: Props) {
             />
           </a>
         </div>
+      </div>
+      <div className="SidebarTableOfContens mobile">
+        {headings.length > 0 && <TableOfContents headings={headings} />}
       </div>
     </div>
   );
