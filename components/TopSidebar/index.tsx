@@ -223,7 +223,7 @@ export default function TopSidebar({ articles }: Props) {
           </div>
         </div>
 
-        <div className="flex justify-center mt-5">
+        <div className="flex justify-center">
           <blockquote
             className="instagram-media"
             data-instgrm-permalink="https://www.instagram.com/p/C2maqCNPUvg/?utm_source=ig_embed&amp;utm_campaign=loading"
@@ -234,6 +234,7 @@ export default function TopSidebar({ articles }: Props) {
               borderRadius: '0px',
               boxShadow: '0 0 1px 0',
               margin: '1px',
+              marginTop: '20px',
               maxWidth: '540px',
               minWidth: '326px',
               padding: '0',
