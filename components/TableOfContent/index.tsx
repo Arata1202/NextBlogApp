@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import Script from 'next/script';
+import { useEffect, useState } from 'react';
 
 interface Heading {
   id: string;
@@ -12,6 +12,7 @@ interface TableOfContentsProps {
 }
 
 const TableOfContents: React.FC<TableOfContentsProps> = React.memo(({ headings }) => {
+  const [activeId, setActiveId] = useState<string>('');
   const formattedHeadings = useMemo(() => {
     const headingNumbers: { [level: number]: number } = {};
     return headings.map((heading) => {
@@ -50,6 +51,32 @@ const TableOfContents: React.FC<TableOfContentsProps> = React.memo(({ headings }
     }
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      let currentId = '';
+      headings.forEach((heading, index) => {
+        const element = document.getElementById(heading.id);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom > 150) {
+            currentId = heading.id;
+          } else if (rect.top <= 150 && headings[index + 1]) {
+            const nextElement = document.getElementById(headings[index + 1].id);
+            if (nextElement && nextElement.getBoundingClientRect().top > 150) {
+              currentId = heading.id;
+            }
+          }
+        }
+      });
+      setActiveId(currentId);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [headings]);
+
   return (
     <div>
       <div className="flex justify-center">
@@ -60,7 +87,14 @@ const TableOfContents: React.FC<TableOfContentsProps> = React.memo(({ headings }
           <h1 className="text-center font-bold text-lg">目次</h1>
           <ol className="mt-4 list-none pl-0">
             {formattedHeadings.map((heading) => (
-              <li key={heading.id} style={{ marginLeft: heading.marginLeft }}>
+              <li
+                key={heading.id}
+                style={{
+                  marginLeft: heading.marginLeft,
+                  backgroundColor: activeId === heading.id ? '#eaf4fc' : 'transparent',
+                  transition: 'background-color 0.3s ease',
+                }}
+              >
                 <a
                   href={`#${heading.id}`}
                   onClick={(e) => handleClick(e, heading.id)}
