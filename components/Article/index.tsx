@@ -546,7 +546,7 @@ export default function Article({ data, articles }: Props) {
             </div>
           </div>
           <div className="articleSidebar">
-            <Sidebar articles={articles} />
+            <Sidebar articles={articles} contentBlocks={data.content_blocks} />
           </div>
         </div>
       </div>
