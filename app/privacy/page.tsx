@@ -1,4 +1,4 @@
-import Sidebar from '@/components/Sidebar';
+import FixedSidebar from '@/components/FixedSidebar';
 import PrivacyPage from '@/components/Fixed/privacy';
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
@@ -29,7 +29,7 @@ export default async function Page() {
     <>
       <PrivacyPage sidebarArticles={data} />
       <div className="pc">
-        <Sidebar articles={data.contents} />
+        <FixedSidebar articles={data.contents} />
       </div>
     </>
   );

@@ -5,7 +5,7 @@ import PublishedDate from '@/components/Date';
 import React from 'react';
 import { InformationCircleIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
-import Sidebar from '@/components/Sidebar';
+import FixedSidebar from '@/components/FixedSidebar';
 import Share from '../Share';
 import AdAlert from '../AdAlert';
 import TableOfContents from '../TableOfContent';
@@ -292,7 +292,7 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
               <Share />
             </div>
             <div className="mobile">
-              <Sidebar articles={sidebarArticles.contents} />
+              <FixedSidebar articles={sidebarArticles.contents} />
             </div>
           </div>
         </div>

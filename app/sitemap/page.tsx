@@ -1,5 +1,5 @@
 import { getList } from '@/libs/microcms';
-import Sidebar from '@/components/Sidebar';
+import FixedSidebar from '@/components/FixedSidebar';
 import SitemapPage from '@/components/Fixed/sitemap';
 
 export const metadata = {
@@ -44,7 +44,7 @@ export default async function Page() {
     <>
       <SitemapPage sidebarArticles={{ contents: data }} />
       <div className="pc">
-        <Sidebar articles={data} />
+        <FixedSidebar articles={data} />
       </div>
     </>
   );
