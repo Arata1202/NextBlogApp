@@ -3,7 +3,7 @@ import PublishedDate from '@/components/Date';
 import React from 'react';
 import { DocumentMagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
-import Sidebar from '@/components/Sidebar';
+import FixedSidebar from '@/components/FixedSidebar';
 import Share from '../Share';
 import AdAlert from '../AdAlert';
 import Script from 'next/script';
@@ -150,7 +150,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
               </div>
             </div>
             <div className="mobile">
-              <Sidebar articles={sidebarArticles.contents} />
+              <FixedSidebar articles={sidebarArticles.contents} />
             </div>
           </div>
         </div>

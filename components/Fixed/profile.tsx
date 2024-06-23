@@ -3,7 +3,7 @@ import Image from 'next/image';
 import PublishedDate from '@/components/Date';
 import React from 'react';
 import { UserCircleIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import Sidebar from '@/components/Sidebar';
+import FixedSidebar from '@/components/FixedSidebar';
 import Share from '../Share';
 import AdAlert from '../AdAlert';
 import Link from 'next/link';
@@ -209,7 +209,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
               </div>
             </div>
             <div className="mobile">
-              <Sidebar articles={sidebarArticles.contents} />
+              <FixedSidebar articles={sidebarArticles.contents} />
             </div>
           </div>
         </div>

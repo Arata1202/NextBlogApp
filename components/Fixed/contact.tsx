@@ -8,7 +8,7 @@ import { EnvelopeIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/so
 import ReCAPTCHA from 'react-google-recaptcha';
 import Share from '../Share';
 import AdAlert from '../AdAlert';
-import Sidebar from '@/components/Sidebar';
+import FixedSidebar from '@/components/FixedSidebar';
 import PublishedDate from '@/components/Date';
 import styles from './index.module.css';
 import Script from 'next/script';
@@ -300,7 +300,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
               </div>
             </div>
             <div className="mobile">
-              <Sidebar articles={sidebarArticles.contents} />
+              <FixedSidebar articles={sidebarArticles.contents} />
             </div>
           </div>
         </div>
