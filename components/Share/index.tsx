@@ -16,6 +16,7 @@ import {
   LinkedinShareButton,
   LinkedinIcon,
 } from 'react-share';
+import Image from 'next/image';
 import { HandThumbUpIcon, RssIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 import { SiFeedly } from 'react-icons/si';
 
@@ -120,6 +121,39 @@ export default function Share() {
               className="bg-green-500 rounded-full p-2 m-1"
             >
               <SiFeedly className="h-6 w-6 text-white" aria-hidden="true" />
+            </a>
+          </div>
+          <div className="flex justify-center mt-5">
+            <a
+              href="https://blogmura.com/profiles/11190305/?p_cid=11190305&reader=11190305"
+              target="_blank"
+            >
+              <img
+                src="https://b.blogmura.com/banner-blogmura-reader-white-small.svg"
+                width="160"
+                height="36"
+                alt="リアル大学生 - にほんブログ村"
+              />
+            </a>
+            <a
+              href="https://blog.with2.net/link/?id=2117761"
+              title="人気ブログランキング"
+              target="_blank"
+              className="ml-3"
+            >
+              <img
+                alt="人気ブログランキング"
+                width="93"
+                height="36"
+                src="https://blog.with2.net/img/banner/banner_22.gif"
+              />
+            </a>
+            <a
+              href="https://blogranking.fc2.com/in.php?id=1067087"
+              target="_blank"
+              className="ml-3"
+            >
+              <img src="https://static.fc2.com/blogranking/ranking_banner/a_02.gif" />
             </a>
           </div>
         </div>
