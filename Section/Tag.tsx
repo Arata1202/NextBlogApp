@@ -4,4 +4,5 @@ export const tags = [
   { name: 'Google AdSense', link: '/tag/adsense' },
   { name: 'Git', link: '/tag/git' },
   { name: 'JavaScript', link: '/tag/javascript' },
+  { name: '金融', link: '/tag/finance' },
 ];
