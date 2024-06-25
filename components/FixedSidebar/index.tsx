@@ -10,6 +10,7 @@ import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/Section/
 import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
 import { tags } from '@/Section/Tag';
+import Instagram from '../Instagram/page';
 import {
   MagnifyingGlassIcon,
   BellAlertIcon,
@@ -255,6 +256,9 @@ export default function FixedSidebar({ articles }: Props) {
             )}
           </div>
         </div>
+
+        <Instagram />
+
         <div className="mt-5 flex justify-center border border-gray-300 py-5 px-4">
           <Image
             src="http://www.rentracks.jp/adx/p.gifx?idx=0.61256.344874.638.7876&dna=105544"

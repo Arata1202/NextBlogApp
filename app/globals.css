@@ -10,6 +10,10 @@
   overflow: hidden !important;
 }
 
+.instagram-media {
+  margin-bottom: 0 !important;
+}
+
 .SidebarTableOfContens {
   position: sticky;
   top: 60px;
