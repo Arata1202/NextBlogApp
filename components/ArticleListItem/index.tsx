@@ -6,6 +6,7 @@ import styles from './index.module.css';
 import TagList from '../TagList';
 import PublishedDate from '../Date';
 import { FolderIcon } from '@heroicons/react/24/outline';
+import Script from 'next/script';
 
 type Props = {
   article: Article;
@@ -74,6 +75,11 @@ const ArticleListItem = ({ article }: Props) => {
         data-ad-slot="1678694276"
         data-full-width-responsive="false"
       ></ins>
+      <Script id="adsbygoogle-init" strategy="afterInteractive">
+        {`
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        `}
+      </Script>
     </>
   );
 };
