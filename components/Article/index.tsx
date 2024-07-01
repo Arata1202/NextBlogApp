@@ -29,6 +29,7 @@ import PanTagList from '../PanTagList';
 import AdAlert from '../AdAlert';
 import Display from '../Adsense/display';
 import Mulchplex from '../Adsense/mulchplex';
+import InArticle from '../Adsense/inarticle';
 import {
   TwitterShareButton,
   TwitterIcon,
@@ -209,6 +210,7 @@ export default function Article({ data, articles }: Props) {
                 <AdAlert />
                 {data.introduction_blocks.map((block, index) => (
                   <div key={index}>
+                    <InArticle />
                     {(block.bubble_name || block.bubble_text || block.bubble_image) && (
                       <div className="my-10">
                         <div className={`speech-bubble ${block.bubble_isRight ? 'right' : 'left'}`}>
@@ -306,6 +308,7 @@ export default function Article({ data, articles }: Props) {
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
+                      <InArticle />
                       {(block.bubble_name || block.bubble_text || block.bubble_image) && (
                         <div className="my-10">
                           <div
