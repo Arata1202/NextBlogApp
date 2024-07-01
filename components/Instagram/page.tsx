@@ -1,5 +1,3 @@
-import Script from 'next/script';
-
 export default function Instagram() {
   return (
     <div className="flex justify-center mt-5">
@@ -258,7 +256,6 @@ export default function Instagram() {
           </p>
         </div>
       </blockquote>
-      <Script async src="//www.instagram.com/embed.js" />
     </div>
   );
 }
