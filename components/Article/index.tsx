@@ -28,6 +28,7 @@ import TagList2 from '../TagList2';
 import PanTagList from '../PanTagList';
 import AdAlert from '../AdAlert';
 import Display from '../Adsense/display';
+import Mulchplex from '../Adsense/mulchplex';
 import {
   TwitterShareButton,
   TwitterIcon,
@@ -403,6 +404,7 @@ export default function Article({ data, articles }: Props) {
                     </div>
                   ))}
                 </div>
+                <Mulchplex />
                 <div className="related-articles mt-10">
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
