@@ -9,7 +9,7 @@ import FixedSidebar from '@/components/FixedSidebar';
 import Share from '../Share';
 import AdAlert from '../AdAlert';
 import TableOfContents from '../TableOfContent';
-import Script from 'next/script';
+import Display from '../Adsense/display';
 
 const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   // const headings = [
@@ -74,21 +74,7 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
           <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
             {/* Main Content Area */}
             <div className="lg:col-span-2">
-              <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
-                <ins
-                  className="adsbygoogle"
-                  style={{ display: 'block', width: '100%' }}
-                  data-ad-client="ca-pub-1705865999592590"
-                  data-ad-slot="7197259627"
-                  data-ad-format="auto"
-                  data-full-width-responsive="false"
-                ></ins>
-                <Script id="adsbygoogle-init" strategy="afterInteractive">
-                  {`
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        `}
-                </Script>
-              </div>
+              <Display />
               <div className="">
                 <div className="space-y-5 lg:space-y-8">
                   <div className="includeBanner flex justify-end gap-x-5">
@@ -274,21 +260,6 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   </p>
                 </div>
               </div>
-              {/* <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
-                <ins
-                  className="adsbygoogle"
-                  style={{ display: 'block', width: '100%' }}
-                  data-ad-client="ca-pub-1705865999592590"
-                  data-ad-slot="7197259627"
-                  data-ad-format="auto"
-                  data-full-width-responsive="false"
-                ></ins>
-                <Script id="adsbygoogle-init" strategy="afterInteractive">
-                  {`
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        `}
-                </Script>
-              </div> */}
               <Share />
             </div>
             <div className="mobile">
