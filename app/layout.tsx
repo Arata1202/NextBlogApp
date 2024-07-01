@@ -107,6 +107,11 @@ export default async function RootLayout({ children }: Props) {
         <main className={styles.main}>{children}</main>
         <Footer />
         <ScrollTopButton />
+        <Script id="adsbygoogle-init" strategy="afterInteractive">
+          {`
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        `}
+        </Script>
       </body>
     </html>
   );
