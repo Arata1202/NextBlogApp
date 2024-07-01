@@ -6,6 +6,7 @@ import styles from './index.module.css';
 import TagList from '../TagList';
 import PublishedDate from '../Date';
 import { FolderIcon } from '@heroicons/react/24/outline';
+import InFeed from '../Adsense/infeed';
 
 type Props = {
   article: Article;
@@ -65,15 +66,7 @@ const ArticleListItem = ({ article }: Props) => {
           </div>
         </a>
       </li>
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block', width: '100%' }}
-        data-ad-format="fluid"
-        data-ad-layout-key="-5k+co+1n-b5+e3"
-        data-ad-client="ca-pub-1705865999592590"
-        data-ad-slot="1678694276"
-        data-full-width-responsive="false"
-      ></ins>
+      <InFeed />
     </>
   );
 };
