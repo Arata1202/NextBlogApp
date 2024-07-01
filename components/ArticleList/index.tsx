@@ -5,7 +5,7 @@ import styles from './index.module.css';
 import { useMemo } from 'react';
 import TopSidebar from '../TopSidebar';
 import Share from '../Share';
-import Script from 'next/script';
+import Display from '../Adsense/display';
 
 // const tabs = [
 //   { name: '最新記事', href: '/', current: false },
@@ -114,21 +114,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
               ))}
             </nav>
           </div> */}
-          <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
-            <ins
-              className="adsbygoogle"
-              style={{ display: 'block', width: '100%' }}
-              data-ad-client="ca-pub-1705865999592590"
-              data-ad-slot="7197259627"
-              data-ad-format="auto"
-              data-full-width-responsive="false"
-            ></ins>
-            <Script id="adsbygoogle-init" strategy="afterInteractive">
-              {`
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        `}
-            </Script>
-          </div>
+          <Display />
           <ul className={`${styles.main}`}>
             <div>
               {articles.map((article) => (
