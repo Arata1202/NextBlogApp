@@ -184,6 +184,11 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     data-ad-format="auto"
                     data-full-width-responsive="false"
                   ></ins>
+                  <Script id="adsbygoogle-init" strategy="afterInteractive">
+                    {`
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        `}
+                  </Script>
                 </div>
                 <Share />
               </div>
