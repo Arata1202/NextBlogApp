@@ -114,7 +114,9 @@ const ArticleList = ({ articles, allArticles }: Props) => {
               ))}
             </nav>
           </div> */}
-          <Display />
+          <div className="FirstAd">
+            <Display />
+          </div>
           <ul className={`${styles.main}`}>
             <div>
               {articles.map((article) => (
