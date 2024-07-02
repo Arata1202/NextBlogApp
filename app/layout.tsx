@@ -105,7 +105,6 @@ export default async function RootLayout({ children }: Props) {
         <ScrollTopButton />
         <Script
           async
-          strategy="lazyOnload"
           src={process.env.GOOGLE_ADSENSE_ID}
           crossOrigin="anonymous"
           data-full-width-responsive="false"
