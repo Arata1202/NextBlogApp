@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './index.module.css';
 import Image from 'next/image';
 import { BlogTitle, copyRight } from '@/Section/Dummy';
@@ -89,6 +91,10 @@ export default function Footer() {
                     <li key={item.name}>
                       <a
                         href={item.href}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          window.location.href = item.href;
+                        }}
                         className="text-sm leading-6 text-gray-600 hover:text-blue-500"
                       >
                         {item.name}
@@ -104,6 +110,10 @@ export default function Footer() {
                     <li key={item.name}>
                       <a
                         href={item.href}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          window.location.href = item.href;
+                        }}
                         className="text-sm leading-6 text-gray-600 hover:text-blue-500"
                       >
                         {item.name}
@@ -121,6 +131,10 @@ export default function Footer() {
                     <li key={item.name}>
                       <a
                         href={item.href}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          window.location.href = item.href;
+                        }}
                         className="text-sm leading-6 text-gray-600 hover:text-blue-500"
                       >
                         {item.name}
@@ -136,6 +150,10 @@ export default function Footer() {
                     <li key={item.name}>
                       <a
                         href={item.href}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          window.location.href = item.href;
+                        }}
                         className="text-sm leading-6 text-gray-600 hover:text-blue-500"
                       >
                         {item.name}
