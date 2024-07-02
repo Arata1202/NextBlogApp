@@ -210,7 +210,7 @@ export default function Article({ data, articles }: Props) {
                 <AdAlert />
                 {data.introduction_blocks.map((block, index) => (
                   <div key={index}>
-                    <InArticle />
+                    <Display />
                     {(block.bubble_name || block.bubble_text || block.bubble_image) && (
                       <div className="my-10">
                         <div className={`speech-bubble ${block.bubble_isRight ? 'right' : 'left'}`}>
@@ -308,7 +308,7 @@ export default function Article({ data, articles }: Props) {
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
-                      <InArticle />
+                      <Display />
                       {(block.bubble_name || block.bubble_text || block.bubble_image) && (
                         <div className="my-10">
                           <div
@@ -407,7 +407,7 @@ export default function Article({ data, articles }: Props) {
                     </div>
                   ))}
                 </div>
-                <Mulchplex />
+                <Display />
                 <div className="related-articles mt-10">
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
