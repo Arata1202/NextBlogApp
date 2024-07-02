@@ -9,7 +9,7 @@ import { UserProfile } from '@/Section/Dummy';
 import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/Section/Dummy';
 import { Article } from '@/libs/microcms';
 import Instagram from '../Instagram/page';
-import LevatechRookie from '../Affiliate/LevatechRookie';
+import LevatechRookie from '../Affiliate/levatechrookie';
 import {
   MagnifyingGlassIcon,
   FolderIcon,
