@@ -535,6 +535,7 @@ export default function Article({ data, articles }: Props) {
                     >
                       <img
                         src="https://b.blogmura.com/banner-blogmura-reader-white-small.svg"
+                        loading="lazy"
                         width="160"
                         height="36"
                         alt="リアル大学生 - にほんブログ村"
@@ -548,6 +549,7 @@ export default function Article({ data, articles }: Props) {
                     >
                       <img
                         alt="人気ブログランキング"
+                        loading="lazy"
                         width="93"
                         height="36"
                         src="https://blog.with2.net/img/banner/banner_22.gif"
@@ -558,7 +560,10 @@ export default function Article({ data, articles }: Props) {
                       target="_blank"
                       className="ml-3"
                     >
-                      <img src="https://static.fc2.com/blogranking/ranking_banner/a_02.gif" />
+                      <img
+                        loading="lazy"
+                        src="https://static.fc2.com/blogranking/ranking_banner/a_02.gif"
+                      />
                     </a>
                   </div>
                 </div>
