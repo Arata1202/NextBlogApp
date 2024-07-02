@@ -38,25 +38,28 @@ export default async function RootLayout({ children }: Props) {
     <html lang="ja">
       <head>
         {/* GoogleAnalytics */}
-        <script async src={process.env.GOOGLE_ANALYTICS_ID} />
+        <Script async strategy="lazyOnload" src={process.env.GOOGLE_ANALYTICS_ID} />
         {/* GoogleAdsense */}
         {/* <meta name="google-adsense-account" content="ca-pub-1705865999592590" /> */}
         <Script
           async
+          strategy="lazyOnload"
           src={process.env.GOOGLE_ADSENSE_ID}
           crossOrigin="anonymous"
           data-full-width-responsive="false"
         />
-        <script
+        <Script
+          id="google-analytics"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-LSE2CK3HZM', {
-                  page_path: window.location.pathname,
-                });
-              `,
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-LSE2CK3HZM', {
+              page_path: window.location.pathname,
+            });
+          `,
           }}
         />
         {/* 共通 OK */}
@@ -107,12 +110,12 @@ export default async function RootLayout({ children }: Props) {
         <main className={styles.main}>{children}</main>
         <Footer />
         <ScrollTopButton />
-        <Script id="adsbygoogle-init" strategy="afterInteractive">
+        <Script id="adsbygoogle-init" strategy="lazyOnload">
           {`
           (adsbygoogle = window.adsbygoogle || []).push({});
         `}
         </Script>
-        <Script async src="//www.instagram.com/embed.js" />
+        <Script async strategy="lazyOnload" src="//www.instagram.com/embed.js" />
       </body>
     </html>
   );
