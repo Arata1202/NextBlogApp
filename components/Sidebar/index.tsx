@@ -13,7 +13,7 @@ import TableOfContents from '../TableOfContent';
 import { useEffect, useState } from 'react';
 import { tags } from '@/Section/Tag';
 import Instagram from '../Instagram/page';
-import LevatechRookie from '../Affiliate/levatechrookie';
+import LevatechRookie from '../Affiliate/LevatechRookie';
 import {
   MagnifyingGlassIcon,
   BellAlertIcon,
