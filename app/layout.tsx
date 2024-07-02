@@ -115,7 +115,8 @@ export default async function RootLayout({ children }: Props) {
           (adsbygoogle = window.adsbygoogle || []).push({});
         `}
         </Script>
-        <Script async strategy="lazyOnload" src="//www.instagram.com/embed.js" />
+        {/* <Script async strategy="lazyOnload" src="//www.instagram.com/embed.js" /> */}
+        <Script async src="//www.instagram.com/embed.js" />
       </body>
     </html>
   );
