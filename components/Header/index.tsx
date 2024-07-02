@@ -62,6 +62,10 @@ export default function Header() {
           {headerNavigation.map((item) => (
             <a
               key={item.name}
+              onClick={(event) => {
+                event.preventDefault();
+                window.location.href = item.href;
+              }}
               href={item.href}
               className="flex text-sm leading-6 text-gray-900 hover:text-blue-500"
             >
@@ -89,14 +93,18 @@ export default function Header() {
                   <Popover.Panel className="absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {categories.map((category) => (
-                        <Link
+                        <a
                           key={category.name}
                           href={category.href}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          onClick={() => close()}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            close();
+                            window.location.href = category.href;
+                          }}
                         >
                           {category.name}
-                        </Link>
+                        </a>
                       ))}
                     </div>
                   </Popover.Panel>
@@ -143,13 +151,20 @@ export default function Header() {
                 <ul className="mt-5 space-y-6">
                   {mobileTopNavigation.map((item) => (
                     <li key={item.name}>
-                      <Link onClick={() => setMobileMenuOpen(false)} href={item.href}>
+                      <a
+                        onClick={(event) => {
+                          event.preventDefault();
+                          setMobileMenuOpen(false);
+                          window.location.href = item.href;
+                        }}
+                        href={item.href}
+                      >
                         <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
                           <div>▶︎</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                           {item.name}
                         </div>
-                      </Link>
+                      </a>
                     </li>
                   ))}
                   <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300">
@@ -159,24 +174,38 @@ export default function Header() {
                   </div>
                   {categories.map((item) => (
                     <li key={item.name}>
-                      <Link onClick={() => setMobileMenuOpen(false)} href={item.href}>
+                      <a
+                        onClick={(event) => {
+                          event.preventDefault();
+                          setMobileMenuOpen(false);
+                          window.location.href = item.href;
+                        }}
+                        href={item.href}
+                      >
                         <div className="ml-5 flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
                           <div>{'>'}</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                           {item.name}
                         </div>
-                      </Link>
+                      </a>
                     </li>
                   ))}
                   {mobileBottomNavigation.map((item) => (
                     <li key={item.name}>
-                      <Link onClick={() => setMobileMenuOpen(false)} href={item.href}>
+                      <a
+                        onClick={(event) => {
+                          event.preventDefault();
+                          setMobileMenuOpen(false);
+                          window.location.href = item.href;
+                        }}
+                        href={item.href}
+                      >
                         <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
                           <div>▶︎</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                           {item.name}
                         </div>
-                      </Link>
+                      </a>
                     </li>
                   ))}
                 </ul>
