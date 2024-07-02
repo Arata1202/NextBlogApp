@@ -1,14 +1,13 @@
 import Script from 'next/script';
 export default function Display() {
   return (
-    <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+    <div style={{ maxWidth: '100%' }}>
       <ins
         className="adsbygoogle"
-        style={{ display: 'block', width: '100%' }}
+        style={{ display: 'block' }}
         data-ad-client="ca-pub-1705865999592590"
         data-ad-slot="7197259627"
         data-ad-format="auto"
-        data-full-width-responsive="false"
       ></ins>
       <Script id="adsbygoogle-init" strategy="lazyOnload">
         {`

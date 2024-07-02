@@ -407,6 +407,7 @@ export default function Article({ data, articles }: Props) {
                     </div>
                   ))}
                 </div>
+                <Mulchplex />
                 <div className="related-articles mt-10">
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
@@ -426,7 +427,6 @@ export default function Article({ data, articles }: Props) {
                     ))}
                   </div>
                 </div>
-                <Mulchplex />
                 <div style={{ paddingTop: '12px' }}>
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center mb-5`}
