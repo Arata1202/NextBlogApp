@@ -11,7 +11,6 @@ import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
 import { tags } from '@/Section/Tag';
 import Instagram from '../Instagram/page';
-import LevatechRookie from '../Affiliate/LevatechRookie';
 import {
   MagnifyingGlassIcon,
   BellAlertIcon,
@@ -257,8 +256,29 @@ export default function FixedSidebar({ articles }: Props) {
             )}
           </div>
         </div>
+
         <Instagram />
-        <LevatechRookie />
+
+        <div className="mt-5 flex justify-center border border-gray-300 py-5 px-4">
+          <Image
+            src="http://www.rentracks.jp/adx/p.gifx?idx=0.61256.344874.638.7876&dna=105544"
+            height="1"
+            width="1"
+            alt=""
+          />
+          <a
+            href="http://www.rentracks.jp/adx/r.html?idx=0.61256.344874.638.7876&dna=105544"
+            rel="nofollow noopener"
+            target="_blank"
+          >
+            <Image
+              src="http://www.image-rentracks.com/7876/300_250.jpg"
+              width="400"
+              height="250"
+              alt="Ad"
+            />
+          </a>
+        </div>
       </div>
     </div>
   );
