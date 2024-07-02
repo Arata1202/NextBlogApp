@@ -306,6 +306,7 @@ export default function Article({ data, articles }: Props) {
                   </div>
                 ))}
                 {headings.length > 0 && <TableOfContents headings={headings} />}
+                <Display />
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
@@ -407,7 +408,6 @@ export default function Article({ data, articles }: Props) {
                     </div>
                   ))}
                 </div>
-                <Mulchplex />
                 <div className="related-articles mt-10">
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
@@ -427,6 +427,7 @@ export default function Article({ data, articles }: Props) {
                     ))}
                   </div>
                 </div>
+                <Display />
                 <div style={{ paddingTop: '12px' }}>
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center mb-5`}
