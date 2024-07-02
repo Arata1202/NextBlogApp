@@ -35,7 +35,7 @@ export default async function TagsLayout({ children, params }: Props) {
   const tag = await getTag2(params.tagId);
 
   return (
-    <div>
+    <>
       <h1 className="categoryTitle text-3xl font-bold pt-5 max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
         <nav className="flex" aria-label="Breadcrumb">
           <ol role="list" className="flex items-center space-x-4">
@@ -65,7 +65,7 @@ export default async function TagsLayout({ children, params }: Props) {
           <div>{tag.name}</div>
         </div>
       </h1>
-      <div>{children}</div>
-    </div>
+      <>{children}</>
+    </>
   );
 }
