@@ -9,6 +9,7 @@ import { UserProfile } from '@/Section/Dummy';
 import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/Section/Dummy';
 import { Article } from '@/libs/microcms';
 import Instagram from '../Instagram/page';
+import LevatechRookie from '../Affiliate/levatechrookie';
 import {
   MagnifyingGlassIcon,
   FolderIcon,
@@ -228,29 +229,8 @@ export default function TopSidebar({ articles }: Props) {
             ))}
           </div>
         </div>
-
         <Instagram />
-
-        <div className="mt-5 flex justify-center border border-gray-300 py-5 px-4">
-          <Image
-            src="http://www.rentracks.jp/adx/p.gifx?idx=0.61256.344874.638.7876&dna=105544"
-            height="1"
-            width="1"
-            alt=""
-          />
-          <a
-            href="http://www.rentracks.jp/adx/r.html?idx=0.61256.344874.638.7876&dna=105544"
-            rel="nofollow noopener"
-            target="_blank"
-          >
-            <Image
-              src="http://www.image-rentracks.com/7876/300_250.jpg"
-              width="400"
-              height="250"
-              alt="Ad"
-            />
-          </a>
-        </div>
+        <LevatechRookie />
       </div>
     </div>
   );
