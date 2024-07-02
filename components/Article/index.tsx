@@ -195,7 +195,9 @@ export default function Article({ data, articles }: Props) {
                     loading="eager"
                   />
                 </picture>
-                <Display />
+                <div className="FirstAd">
+                  <Display />
+                </div>
                 <div className={styles.date}>
                   <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
                   <TagList tags={data.tags} hasLink={true} />

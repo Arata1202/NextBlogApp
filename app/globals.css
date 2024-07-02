@@ -10,6 +10,10 @@
   overflow: hidden !important;
 }
 
+.FirstAd {
+  min-height: 280px;
+}
+
 .instagram-media {
   margin-bottom: 0 !important;
 }
@@ -120,6 +124,9 @@
   }
   .Pagination_container__bVB1J {
     margin-bottom: 1.75rem;
+  }
+  .FirstAd {
+    min-height: 200px;
   }
 }
 
