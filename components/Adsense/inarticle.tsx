@@ -1,10 +1,10 @@
 import Script from 'next/script';
 export default function InArticle() {
   return (
-    <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+    <div style={{ maxWidth: '100%' }}>
       <ins
         className="adsbygoogle"
-        style={{ display: 'block', width: '100%', textAlign: 'center' }}
+        style={{ display: 'block', textAlign: 'center' }}
         data-ad-layout="in-article"
         data-ad-format="fluid"
         data-ad-client="ca-pub-1705865999592590"
