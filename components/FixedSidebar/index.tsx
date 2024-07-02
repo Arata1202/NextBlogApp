@@ -58,17 +58,32 @@ export default function FixedSidebar({ articles }: Props) {
               {item.profileTitle}
             </h1>
           ))}
-          {UserProfile.map((item) => (
-            <Image
-              key={item.imageUrl}
-              className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
-              src={item.imageUrl}
-              alt={item.imageAlt}
-              width={250}
-              height={250}
-              priority
-            />
-          ))}
+          <div className="mobile">
+            {UserProfile.map((item) => (
+              <Image
+                key={item.imageUrl}
+                className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
+                src={item.imageUrl}
+                alt={item.imageAlt}
+                width={250}
+                height={250}
+                loading="eager"
+              />
+            ))}
+          </div>
+          <div className="pc">
+            {UserProfile.map((item) => (
+              <Image
+                key={item.imageUrl}
+                className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
+                src={item.imageUrl}
+                alt={item.imageAlt}
+                width={250}
+                height={250}
+                loading="lazy"
+              />
+            ))}
+          </div>
           {UserProfile.map((item) => (
             <h1
               key={item.profileTitle}

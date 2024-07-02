@@ -24,15 +24,6 @@ type Props = {
 };
 
 export default function TopSidebar({ articles }: Props) {
-  const sortedArticles = articles
-    ?.slice()
-    .sort((a, b) => {
-      const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
-      const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
-      return dateB - dateA;
-    })
-    .slice(0, 3);
-
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
       <div className="sidebar sticky top-0 start-0">
@@ -56,17 +47,32 @@ export default function TopSidebar({ articles }: Props) {
               {item.profileTitle}
             </h1>
           ))}
-          {UserProfile.map((item) => (
-            <Image
-              key={item.imageUrl}
-              className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
-              src={item.imageUrl}
-              alt={item.imageAlt}
-              width={250}
-              height={250}
-              priority
-            />
-          ))}
+          <div className="mobile">
+            {UserProfile.map((item) => (
+              <Image
+                key={item.imageUrl}
+                className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
+                src={item.imageUrl}
+                alt={item.imageAlt}
+                width={250}
+                height={250}
+                loading="eager"
+              />
+            ))}
+          </div>
+          <div className="pc">
+            {UserProfile.map((item) => (
+              <Image
+                key={item.imageUrl}
+                className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
+                src={item.imageUrl}
+                alt={item.imageAlt}
+                width={250}
+                height={250}
+                loading="lazy"
+              />
+            ))}
+          </div>
           {UserProfile.map((item) => (
             <h1
               key={item.profileTitle}
