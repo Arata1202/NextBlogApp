@@ -1,3 +1,4 @@
+import Script from 'next/script';
 export default function Display() {
   return (
     <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
@@ -9,6 +10,11 @@ export default function Display() {
         data-ad-format="auto"
         data-full-width-responsive="false"
       ></ins>
+      <Script id="adsbygoogle-init" strategy="lazyOnload">
+        {`
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        `}
+      </Script>
     </div>
   );
 }
