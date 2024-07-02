@@ -42,13 +42,6 @@ export default async function RootLayout({ children }: Props) {
         {/* GoogleAdsense */}
         {/* <meta name="google-adsense-account" content="ca-pub-1705865999592590" /> */}
         <Script
-          async
-          strategy="lazyOnload"
-          src={process.env.GOOGLE_ADSENSE_ID}
-          crossOrigin="anonymous"
-          data-full-width-responsive="false"
-        />
-        <Script
           id="google-analytics"
           strategy="lazyOnload"
           dangerouslySetInnerHTML={{
@@ -110,12 +103,14 @@ export default async function RootLayout({ children }: Props) {
         <main className={styles.main}>{children}</main>
         <Footer />
         <ScrollTopButton />
-        <Script id="adsbygoogle-init" strategy="lazyOnload">
-          {`
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        `}
-        </Script>
-        <Script async strategy="lazyOnload" src="//www.instagram.com/embed.js" />
+        <Script
+          async
+          strategy="lazyOnload"
+          src={process.env.GOOGLE_ADSENSE_ID}
+          crossOrigin="anonymous"
+          data-full-width-responsive="false"
+        />
+        <Script async src="//www.instagram.com/embed.js" />
       </body>
     </html>
   );
