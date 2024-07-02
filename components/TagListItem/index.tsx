@@ -8,11 +8,15 @@ type Props = {
 };
 
 export default function TagListItem({ tag, hasLink = true }: Props) {
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    window.location.href = `/category/${tag.id}`;
+  };
   if (hasLink) {
     return (
-      <Link href={`/category/${tag.id}`} className={styles.tag}>
+      <a onClick={handleClick} href={`/category/${tag.id}`} className={styles.tag}>
         <p className={styles.tag}>{tag.name}</p>
-      </Link>
+      </a>
     );
   }
   return <span className={styles.tag}>{tag.name}</span>;

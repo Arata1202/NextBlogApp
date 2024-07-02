@@ -9,12 +9,16 @@ type Props = {
 };
 
 export default function TagListItem2({ tag, hasLink = true }: Props) {
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    window.location.href = `/tag/${tag.id}`;
+  };
   if (hasLink) {
     return (
-      <Link href={`/tag/${tag.id}`} className={styles.tag}>
+      <a onClick={handleClick} href={`/tag/${tag.id}`} className={styles.tag}>
         <HashtagIcon className="h-5 w-5 mt-1" aria-hidden="true" />
         <p className={styles.tag}>{tag.name}</p>
-      </Link>
+      </a>
     );
   }
   return <span className={styles.tag}>{tag.name}</span>;
