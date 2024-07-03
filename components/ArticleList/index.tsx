@@ -125,6 +125,9 @@ const ArticleList = ({ articles, allArticles }: Props) => {
             </div>
           </ul>
           <Share />
+          <div className="FirstAd">
+            <Display slot="1831092739" />
+          </div>
         </div>
         <div className="mobile">
           <TopSidebar articles={allArticles || articles} />
