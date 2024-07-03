@@ -18,7 +18,7 @@ type DisplayProps = {
   style?: any;
 };
 
-const Display = ({ slot, format = 'auto', responsive = 'true', style }: DisplayProps) => {
+const Display = ({ slot, format = 'auto', responsive = 'false', style }: DisplayProps) => {
   let pathname = usePathname();
   pathname = pathname ? pathname : '';
 
