@@ -306,12 +306,13 @@ export default function Article({ data, articles }: Props) {
                   </div>
                 ))}
                 <div>{headings.length > 0 && <TableOfContents headings={headings} />}</div>
-                <div className="FirstAd">
+                {/* <div className="FirstAd">
                   <Display slot="3000085625" />
-                </div>
+                </div> */}
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
+                      {block.adsense && <Display slot={block.adsense} />}
                       {(block.bubble_name || block.bubble_text || block.bubble_image) && (
                         <div className="my-10">
                           <div

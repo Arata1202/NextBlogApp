@@ -41,6 +41,7 @@ export type IntroductionBlock = {
   box_common?: string;
 };
 export type ContentBlock = {
+  adsense?: string;
   rich_text2?: string;
   custom_html2?: string;
   articleLink3?: string;
