@@ -235,10 +235,7 @@ export default function TopSidebar({ articles }: Props) {
           </div>
         </div>
         <Instagram />
-        <div className="FirstAd mt-5">
-          <Display slot="9574685533" />
-        </div>
-        {/* <LevatechRookie /> */}
+        <LevatechRookie />
       </div>
     </div>
   );

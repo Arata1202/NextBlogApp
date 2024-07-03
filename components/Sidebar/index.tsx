@@ -305,10 +305,7 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
           </div>
         </div>
         <Instagram />
-        <div className="FirstAd mt-5">
-          <Display slot="9574685533" />
-        </div>
-        {/* <LevatechRookie /> */}
+        <LevatechRookie />
       </div>
       <div className="SidebarTableOfContens mobile">
         {headings.length > 0 && <TableOfContents headings={headings} />}
