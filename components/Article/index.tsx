@@ -408,6 +408,7 @@ export default function Article({ data, articles }: Props) {
                     </div>
                   ))}
                 </div>
+                <Mulchplex slot="8943295990" />
                 <div className="related-articles mt-10">
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
