@@ -234,10 +234,10 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                 </p>
               </div>
             </div>
-            <Share />
             <div className="FirstAd">
               <Display slot="1831092739" />
             </div>
+            <Share />
           </div>
           <div className="mobile">
             <FixedSidebar articles={sidebarArticles.contents} />

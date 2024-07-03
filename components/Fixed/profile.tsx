@@ -150,10 +150,10 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   </Link>
                 </p>
               </div>
-              <Share />
               <div className="FirstAd">
                 <Display slot="1831092739" />
               </div>
+              <Share />
             </div>
           </div>
           <div className="mobile">
