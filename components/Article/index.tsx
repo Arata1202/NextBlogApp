@@ -307,7 +307,7 @@ export default function Article({ data, articles }: Props) {
                 ))}
                 <div>{headings.length > 0 && <TableOfContents headings={headings} />}</div>
                 <div className="FirstAd">
-                  <Display slot="8070580918" />
+                  <Display slot="3000085625" />
                 </div>
                 <div>
                   {data.content_blocks.map((block, index) => (
