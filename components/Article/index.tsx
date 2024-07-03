@@ -407,7 +407,9 @@ export default function Article({ data, articles }: Props) {
                     </div>
                   ))}
                 </div>
-                <Display slot="1831092739" />
+                <div className="FirstAd">
+                  <Display slot="1831092739" />
+                </div>
                 <div className="related-articles mt-10">
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
