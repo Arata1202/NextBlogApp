@@ -244,9 +244,9 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
           </div>
         </div>
 
-        {/* <div className="FirstAd mt-5">
+        <div className="FirstAd pc mt-5">
           <Display slot="8452341403" />
-        </div> */}
+        </div>
 
         <div className="sidebarArticleList">
           <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
