@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 import TopSidebar from '../TopSidebar';
 import Share from '../Share';
 import Display from '../Adsense/display';
+import InFeed from '../Adsense/infeed';
 
 // const tabs = [
 //   { name: '最新記事', href: '/', current: false },
@@ -115,7 +116,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
             </nav>
           </div> */}
           <div className="FirstAd">
-            <Display slot="7197259627" />
+            <InFeed slot="5742417588" />
           </div>
           <ul className={`${styles.main}`}>
             <div>
@@ -124,10 +125,10 @@ const ArticleList = ({ articles, allArticles }: Props) => {
               ))}
             </div>
           </ul>
-          <Share />
           <div className="FirstAd">
-            <Display slot="1831092739" />
+            <InFeed slot="2589640631" />
           </div>
+          <Share />
         </div>
         <div className="mobile">
           <TopSidebar articles={allArticles || articles} />
