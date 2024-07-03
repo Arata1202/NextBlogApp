@@ -12,6 +12,8 @@
 
 .FirstAd {
   min-height: 280px;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .instagram-media {

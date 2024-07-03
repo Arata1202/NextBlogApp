@@ -33,11 +33,12 @@ const Display = ({ slot, format = 'auto', responsive = 'false', style }: Display
   return (
     <div
       style={{ maxWidth: '100%', overflow: 'hidden' }}
+      className="FirstAd"
       key={pathname.replace(/\//g, '-') + '-' + slot}
     >
       <p className="text-center">スポンサーリンク</p>
       <ins
-        className="adsbygoogle check"
+        className="adsbygoogle"
         style={{ display: 'block', width: '100%', ...style }}
         data-ad-client={`ca-pub-${PUBLISHER_ID}`}
         data-ad-slot={slot}
