@@ -31,7 +31,11 @@ const Display = ({ slot, format = 'auto', responsive = 'true', style }: DisplayP
   }, [pathname]);
 
   return (
-    <div key={pathname.replace(/\//g, '-') + '-' + slot}>
+    <div
+      style={{ maxWidth: '100%', overflow: 'hidden' }}
+      key={pathname.replace(/\//g, '-') + '-' + slot}
+    >
+      <p className="text-center">スポンサーリンク</p>
       <ins
         className="adsbygoogle check"
         style={{ display: 'block', width: '100%', ...style }}
