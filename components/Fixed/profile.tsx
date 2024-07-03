@@ -27,7 +27,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
             <div className="">
               <div className="space-y-5 lg:space-y-8">
                 <div className="FirstAd">
-                  <Display />
+                  <Display slot="7197259627" />
                 </div>
                 <div className="includeBanner flex justify-end gap-x-5">
                   {/* <TagList tags={data.tags} /> */}
@@ -150,7 +150,6 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   </Link>
                 </p>
               </div>
-              <Display />
               <Share />
             </div>
           </div>

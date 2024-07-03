@@ -6,6 +6,7 @@ import './globals.css';
 import styles from './layout.module.css';
 import ScrollTopButton from '@/components/Common/ScrollToTop/page';
 import Script from 'next/script';
+import { Adsense } from '@/components/Adsense/adsense';
 
 export const metadata = {
   // 検証 OK
@@ -103,13 +104,7 @@ export default async function RootLayout({ children }: Props) {
         <main className={styles.main}>{children}</main>
         <Footer />
         <ScrollTopButton />
-        <Script
-          async
-          strategy="lazyOnload"
-          src={process.env.GOOGLE_ADSENSE_ID}
-          crossOrigin="anonymous"
-          data-full-width-responsive="false"
-        />
+        <Adsense />
         <Script async src="//www.instagram.com/embed.js" />
       </body>
     </html>

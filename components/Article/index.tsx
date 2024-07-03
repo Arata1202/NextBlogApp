@@ -196,7 +196,7 @@ export default function Article({ data, articles }: Props) {
                   />
                 </picture>
                 <div className="FirstAd">
-                  <Display />
+                  <Display slot="7197259627" />
                 </div>
                 <div className={styles.date}>
                   <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
@@ -305,8 +305,8 @@ export default function Article({ data, articles }: Props) {
                     )}
                   </div>
                 ))}
+                <Display slot="3862359702" />
                 {headings.length > 0 && <TableOfContents headings={headings} />}
-                <Display />
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
@@ -427,7 +427,6 @@ export default function Article({ data, articles }: Props) {
                     ))}
                   </div>
                 </div>
-                <Display />
                 <div style={{ paddingTop: '12px' }}>
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center mb-5`}
