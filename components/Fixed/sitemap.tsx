@@ -91,10 +91,10 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   </ul>
                 </div>
               </div>
-              <Share />
               <div className="FirstAd">
                 <Display slot="1831092739" />
               </div>
+              <Share />
             </div>
           </div>
           <div className="mobile">
