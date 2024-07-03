@@ -245,6 +245,9 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                 </div>
               </form>
               <Share />
+              <div className="FirstAd">
+                <Display slot="1831092739" />
+              </div>
             </div>
           </div>
           <div className="mobile">

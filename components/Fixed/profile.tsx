@@ -151,6 +151,9 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                 </p>
               </div>
               <Share />
+              <div className="FirstAd">
+                <Display slot="1831092739" />
+              </div>
             </div>
           </div>
           <div className="mobile">
