@@ -9,6 +9,7 @@ import { UserProfile } from '@/Section/Dummy';
 import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/Section/Dummy';
 import { Article } from '@/libs/microcms';
 import Instagram from '../Instagram/page';
+import Display from '../Adsense/display';
 import LevatechRookie from '../Affiliate/levatechrookie';
 import {
   MagnifyingGlassIcon,
@@ -188,6 +189,10 @@ export default function TopSidebar({ articles }: Props) {
               </Link>
             ))}
           </div>
+        </div>
+
+        <div className="FirstAd mt-5">
+          <Display slot="8452341403" />
         </div>
 
         <div className="sidebarArticleList">
