@@ -7,6 +7,7 @@ import Image from 'next/image';
 import styles from './index.module.css';
 import { UserProfile } from '@/Section/Dummy';
 import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/Section/Dummy';
+import Display from '../Adsense/display';
 import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
 import TableOfContents from '../TableOfContent';
@@ -241,6 +242,10 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
               </Link>
             ))}
           </div>
+        </div>
+
+        <div className="FirstAd mt-5">
+          <Display slot="8452341403" />
         </div>
 
         <div className="sidebarArticleList">

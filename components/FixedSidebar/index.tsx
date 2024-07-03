@@ -11,6 +11,7 @@ import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
 import { tags } from '@/Section/Tag';
 import Instagram from '../Instagram/page';
+import Display from '../Adsense/display';
 import LevatechRookie from '../Affiliate/levatechrookie';
 import {
   MagnifyingGlassIcon,
@@ -199,6 +200,10 @@ export default function FixedSidebar({ articles }: Props) {
               </Link>
             ))}
           </div>
+        </div>
+
+        <div className="FirstAd mt-5">
+          <Display slot="8452341403" />
         </div>
 
         <div className="sidebarArticleList">
