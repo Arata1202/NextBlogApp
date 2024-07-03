@@ -305,7 +305,6 @@ export default function Article({ data, articles }: Props) {
                     )}
                   </div>
                 ))}
-                <Display slot="3862359702" />
                 {headings.length > 0 && <TableOfContents headings={headings} />}
                 <div>
                   {data.content_blocks.map((block, index) => (
@@ -408,7 +407,7 @@ export default function Article({ data, articles }: Props) {
                     </div>
                   ))}
                 </div>
-                <Mulchplex slot="8943295990" />
+                <Display slot="1831092739" />
                 <div className="related-articles mt-10">
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
