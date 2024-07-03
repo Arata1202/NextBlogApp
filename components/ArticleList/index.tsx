@@ -116,7 +116,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
             </nav>
           </div> */}
           <div className="FirstAd">
-            <InFeed slot="5742417588" />
+            <Display slot="7197259627" />
           </div>
           <ul className={`${styles.main}`}>
             <div>
@@ -126,7 +126,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
             </div>
           </ul>
           <div className="FirstAd">
-            <InFeed slot="2589640631" />
+            <Display slot="1831092739" />
           </div>
           <Share />
         </div>
