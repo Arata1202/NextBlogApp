@@ -115,7 +115,7 @@ const ArticleList = ({ articles, allArticles }: Props) => {
             </nav>
           </div> */}
           <div className="FirstAd">
-            <Display />
+            <Display slot="7197259627" />
           </div>
           <ul className={`${styles.main}`}>
             <div>
