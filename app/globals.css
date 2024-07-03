@@ -11,9 +11,7 @@
 }
 
 .FirstAd {
-  min-height: 280px;
-  max-width: 100%;
-  overflow: hidden;
+  min-height: 280px !important;
 }
 
 .instagram-media {
@@ -128,7 +126,7 @@
     margin-bottom: 1.75rem;
   }
   .FirstAd {
-    min-height: 200px;
+    min-height: 200px !important;
   }
 }
 
