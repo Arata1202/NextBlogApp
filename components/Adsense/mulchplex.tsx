@@ -1,20 +1,52 @@
-import Script from 'next/script';
-export default function Mulchplex() {
+'use client';
+
+import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+
+const PUBLISHER_ID = '1705865999592590';
+
+declare global {
+  interface Window {
+    adsbygoogle: { [key: string]: unknown }[];
+  }
+}
+
+type MulchplexProps = {
+  slot: string;
+  format?: string;
+  responsive?: string;
+  style?: any;
+};
+
+const Mulchplex = ({
+  slot,
+  format = 'autorelaxed',
+  responsive = 'true',
+  style,
+}: MulchplexProps) => {
+  let pathname = usePathname();
+  pathname = pathname ? pathname : '';
+
+  useEffect(() => {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (err) {
+      console.error(err);
+    }
+  }, [pathname]);
+
   return (
-    <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+    <div key={pathname.replace(/\//g, '-') + '-' + slot}>
       <ins
         className="adsbygoogle"
-        style={{ display: 'block', width: '100%' }}
-        data-ad-client="ca-pub-1705865999592590"
-        data-ad-slot="5469260892"
-        data-ad-format="autorelaxed"
-        data-full-width-responsive="false"
-      ></ins>
-      <Script id="adsbygoogle-init" strategy="lazyOnload">
-        {`
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        `}
-      </Script>
+        style={{ display: 'block', width: '100%', ...style }}
+        data-ad-client={`ca-pub-${PUBLISHER_ID}`}
+        data-ad-slot={slot}
+        data-ad-format={format}
+        data-full-width-responsive={responsive}
+      />
     </div>
   );
-}
+};
+
+export default Mulchplex;
