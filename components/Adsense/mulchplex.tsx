@@ -36,7 +36,12 @@ const Mulchplex = ({
   }, [pathname]);
 
   return (
-    <div key={pathname.replace(/\//g, '-') + '-' + slot}>
+    <div
+      style={{ maxWidth: '100%', overflow: 'hidden' }}
+      className="FirstAd"
+      key={pathname.replace(/\//g, '-') + '-' + slot}
+    >
+      <p className="text-center">スポンサーリンク</p>
       <ins
         className="adsbygoogle"
         style={{ display: 'block', width: '100%', ...style }}
