@@ -105,7 +105,7 @@ export default async function RootLayout({ children }: Props) {
         <Footer />
         <ScrollTopButton />
         <Adsense />
-        <Script async src="//www.instagram.com/embed.js" />
+        <Script async strategy="afterInteractive" src="//www.instagram.com/embed.js" />
       </body>
     </html>
   );
