@@ -3,6 +3,7 @@ import ContactPage from '@/components/Fixed/contact';
 import { EnvelopeIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
+import Display from '@/components/Adsense/display';
 
 export const metadata = {
   // 検証 OK
@@ -61,6 +62,7 @@ export default async function Page() {
       <div className="pc">
         <FixedSidebar articles={data.contents} />
       </div>
+      <Display slot="5969933704" />
     </>
   );
 }

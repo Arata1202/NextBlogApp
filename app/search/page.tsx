@@ -4,7 +4,7 @@ import Pagination from '@/components/Pagination';
 import TopSidebar from '@/components/TopSidebar';
 import { MagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { LIMIT } from '@/constants';
-import Script from 'next/script';
+import Display from '@/components/Adsense/display';
 
 export const metadata = {
   // 検証済み
@@ -72,6 +72,7 @@ export default async function Page({ searchParams }: Props) {
       <div className="pc">
         <TopSidebar articles={data2.contents} />
       </div>
+      <Display slot="5969933704" />
     </>
   );
 }

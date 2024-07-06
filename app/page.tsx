@@ -4,6 +4,7 @@ import Pagination from '@/components/Pagination';
 import ArticleList from '@/components/ArticleList';
 import TopSidebar from '@/components/TopSidebar';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
+import Display from '@/components/Adsense/display';
 
 export const revalidate = 60;
 
@@ -25,6 +26,7 @@ export default async function Page() {
       <div className="pc">
         <TopSidebar articles={data.contents} />
       </div>
+      <Display slot="5969933704" />
     </>
   );
 }

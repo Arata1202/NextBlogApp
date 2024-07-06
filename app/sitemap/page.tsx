@@ -2,6 +2,7 @@ import { getList } from '@/libs/microcms';
 import FixedSidebar from '@/components/FixedSidebar';
 import SitemapPage from '@/components/Fixed/sitemap';
 import { DocumentMagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import Display from '@/components/Adsense/display';
 
 export const metadata = {
   // 検証済み
@@ -76,6 +77,7 @@ export default async function Page() {
       <div className="pc">
         <FixedSidebar articles={data} />
       </div>
+      <Display slot="5969933704" />
     </>
   );
 }

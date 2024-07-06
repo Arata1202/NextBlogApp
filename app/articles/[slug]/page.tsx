@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { getDetail, getList } from '@/libs/microcms';
 import Article from '@/components/Article';
 import { LIMIT } from '@/constants';
+import Display from '@/components/Adsense/display';
 
 type Props = {
   params: {
@@ -43,5 +44,10 @@ export default async function Page({ params, searchParams }: Props) {
     limit: LIMIT,
   });
 
-  return <Article data={data} articles={data2.contents} />;
+  return (
+    <>
+      <Article data={data} articles={data2.contents} />
+      <Display slot="5969933704" />
+    </>
+  );
 }
