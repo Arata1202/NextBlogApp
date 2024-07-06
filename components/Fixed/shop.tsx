@@ -128,7 +128,7 @@ const ShopPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
                       <div className="mt-2">
                         <a
                           href={product.href}
-                          className="block w-full rounded-md bg-white px-3.5 py-1.5 text-center text-sm font-semibold text-gray-800 shadow-s border border-gray-300"
+                          className="block w-full rounded-md bg-white px-3.5 py-1.5 text-center text-sm font-semibold text-gray-800 shadow-s border border-gray-300 hover:text-blue-500"
                         >
                           購入する
                         </a>
