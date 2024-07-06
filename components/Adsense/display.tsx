@@ -37,16 +37,14 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
       key={pathname.replace(/\//g, '-') + '-' + slot}
     >
       <p className="text-center">スポンサーリンク</p>
-      <div className="flex justify-center">
-        <ins
-          className="adsbygoogle"
-          style={{ display: 'block', width: '100%', ...style }}
-          data-ad-client={`ca-pub-${PUBLISHER_ID}`}
-          data-ad-slot={slot}
-          data-ad-format={format}
-          data-full-width-responsive={responsive}
-        />
-      </div>
+      <ins
+        className="adsbygoogle flex justify-center"
+        style={{ display: 'block', width: '100%', ...style }}
+        data-ad-client={`ca-pub-${PUBLISHER_ID}`}
+        data-ad-slot={slot}
+        data-ad-format={format}
+        data-full-width-responsive={responsive}
+      />
     </div>
   );
 };
