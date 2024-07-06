@@ -15,6 +15,45 @@ const ShopPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
     day: '2-digit',
   });
 
+  const products = [
+    {
+      id: 1,
+      name: 'エコバッグ',
+      color: 'Natural',
+      price: '1000円 （税込）',
+      href: '#',
+      imageSrc: '/images/head/realstudent512.png',
+      imageAlt: 'Hand stitched, orange エコバッグ.',
+    },
+    {
+      id: 2,
+      name: 'エコバッグ',
+      color: 'Natural',
+      price: '1000円 （税込）',
+      href: '#',
+      imageSrc: '/images/head/realstudent512.png',
+      imageAlt: 'Hand stitched, orange エコバッグ.',
+    },
+    {
+      id: 3,
+      name: 'エコバッグ',
+      color: 'Natural',
+      price: '1000円 （税込）',
+      href: '#',
+      imageSrc: '/images/head/realstudent512.png',
+      imageAlt: 'Hand stitched, orange エコバッグ.',
+    },
+    {
+      id: 4,
+      name: 'エコバッグ',
+      color: 'Natural',
+      price: '1000円 （税込）',
+      href: '#',
+      imageSrc: '/images/head/realstudent512.png',
+      imageAlt: 'Hand stitched, orange エコバッグ.',
+    },
+  ];
+
   return (
     <>
       <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
@@ -31,8 +70,25 @@ const ShopPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
                   <PublishedDate date={formattedDate} />
                 </div>
                 <AdAlert />
-                <div className={`${styles.content} mt-10 mb-5`}>
-                  <h2>ショップページ</h2>
+                <div className="mt-10 mb-5 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
+                  {products.map((product) => (
+                    <div key={product.id} className="group relative">
+                      <div className="w-full bg-gray-200">
+                        <img
+                          alt={product.imageAlt}
+                          src={product.imageSrc}
+                          className="h-full w-full object-cover object-center"
+                        />
+                      </div>
+                      <div className="mt-2 text-lg font-bold text-gray-700">
+                        <a href={product.href}>
+                          <span className="absolute inset-0" />
+                          {product.name}
+                        </a>
+                      </div>
+                      <div className="mb-2 mt-1 text-lg text-gray-900">{product.price}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="FirstAd">
