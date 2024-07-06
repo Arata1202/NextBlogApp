@@ -412,8 +412,8 @@ export default function Article({ data, articles }: Props) {
                   ))}
                 </div>
                 <div className="FirstAd">
-                  {/* <Display slot="1831092739" /> */}
-                  <Mulchplex slot="8943295990" />
+                  <Display slot="1831092739" />
+                  {/* <Mulchplex slot="8943295990" /> */}
                 </div>
                 <div className="related-articles mt-10">
                   <h1
