@@ -5,6 +5,7 @@ import {
   FolderOpenIcon,
   DocumentMagnifyingGlassIcon,
   InformationCircleIcon,
+  ShoppingCartIcon,
 } from '@heroicons/react/24/solid';
 import { IoAirplaneOutline } from 'react-icons/io5';
 
@@ -29,6 +30,7 @@ export const BlogTitle = [
 export const headerNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
+  { name: 'ショップ', href: '/shop', icon: ShoppingCartIcon },
   { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
 ];
 
@@ -36,6 +38,7 @@ export const headerNavigation = [
 export const mobileTopNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
+  { name: 'ショップ', href: '/shop', icon: ShoppingCartIcon },
 ];
 export const categories = [
   { name: '大学生活', href: '/category/university', icon: FolderOpenIcon },
@@ -44,8 +47,8 @@ export const categories = [
   { name: 'ブログ', href: '/category/blog', icon: FolderOpenIcon },
 ];
 export const mobileBottomNavigation = [
-  { name: 'サイトマップ', href: '/sitemap', icon: DocumentMagnifyingGlassIcon },
-  { name: 'プライバシーポリシー', href: '/privacy', icon: InformationCircleIcon },
+  // { name: 'サイトマップ', href: '/sitemap', icon: DocumentMagnifyingGlassIcon },
+  // { name: 'プライバシーポリシー', href: '/privacy', icon: InformationCircleIcon },
   { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
 ];
 
