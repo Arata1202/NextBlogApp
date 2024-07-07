@@ -18,75 +18,123 @@ const ShopPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   const products = [
     {
       id: 1,
-      name: 'エコバッグ',
-      color: 'Natural',
-      price: '1000円 （税込）',
-      href: '#',
-      imageSrc: '/images/head/realstudent512.png',
-      imageAlt: 'Hand stitched, orange エコバッグ.',
+      name: 'アクリルキーホルダー',
+      price: '999円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16207027/acrylic-keychain/50x50mm/clear',
+      imageSrc: '/images/shop/1720359991-512x512.webp',
+      imageAlt: 'アクリルキーホルダー',
     },
     {
       id: 2,
-      name: 'エコバッグ',
-      color: 'Natural',
-      price: '1000円 （税込）',
-      href: '#',
-      imageSrc: '/images/head/realstudent512.png',
-      imageAlt: 'Hand stitched, orange エコバッグ.',
+      name: 'ステッカー',
+      price: '512円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16207027/sticker/m/white',
+      imageSrc: '/images/shop/sticker.webp',
+      imageAlt: 'ステッカー',
     },
     {
       id: 3,
-      name: 'エコバッグ',
-      color: 'Natural',
-      price: '1000円 （税込）',
-      href: '#',
-      imageSrc: '/images/head/realstudent512.png',
-      imageAlt: 'Hand stitched, orange エコバッグ.',
+      name: 'アクリルスタンド',
+      price: '1446円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16207027/acrylic-stand/50mm/clear',
+      imageSrc: '/images/shop/スタンド.webp',
+      imageAlt: 'アクリルスタンド',
     },
     {
       id: 4,
       name: 'エコバッグ',
-      color: 'Natural',
-      price: '1000円 （税込）',
-      href: '#',
-      imageSrc: '/images/head/realstudent512.png',
-      imageAlt: 'Hand stitched, orange エコバッグ.',
+      price: '2563円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16207027/reusable-bag/m/white',
+      imageSrc: '/images/shop/エコバッグ.webp',
+      imageAlt: 'エコバッグ',
     },
     {
       id: 5,
-      name: 'エコバッグ',
-      color: 'Natural',
-      price: '1000円 （税込）',
-      href: '#',
-      imageSrc: '/images/head/realstudent512.png',
-      imageAlt: 'Hand stitched, orange エコバッグ.',
+      name: 'スタンダードTシャツ',
+      price: '3476円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16207027/t-shirt/s/white',
+      imageSrc: '/images/shop/tシャツ.webp',
+      imageAlt: 'スタンダードTシャツ',
     },
     {
       id: 6,
-      name: 'エコバッグ',
-      color: 'Natural',
-      price: '1000円 （税込）',
-      href: '#',
-      imageSrc: '/images/head/realstudent512.png',
-      imageAlt: 'Hand stitched, orange エコバッグ.',
+      name: 'クリアファイル',
+      price: '1180円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16207027/clear-file-folder/a4/clear',
+      imageSrc: '/images/shop/クリアファイル.webp',
+      imageAlt: 'クリアファイル',
     },
     {
       id: 7,
-      name: 'エコバッグ',
-      color: 'Natural',
-      price: '1000円 （税込）',
-      href: '#',
-      imageSrc: '/images/head/realstudent512.png',
-      imageAlt: 'Hand stitched, orange エコバッグ.',
+      name: 'ノート',
+      price: '1892円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16207027/note/m/white',
+      imageSrc: '/images/shop/ノート.webp',
+      imageAlt: 'ノート',
     },
     {
       id: 8,
-      name: 'エコバッグ',
-      color: 'Natural',
-      price: '1000円 （税込）',
-      href: '#',
-      imageSrc: '/images/head/realstudent512.png',
-      imageAlt: 'Hand stitched, orange エコバッグ.',
+      name: 'ソフトクリアケース',
+      price: '2233円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16207027/soft-clear-smartphone-case/iphone15/clear',
+      imageSrc: '/images/shop/ソフトクリアスマホケース.webp',
+      imageAlt: 'ソフトクリアスマホケース',
+    },
+    {
+      id: 9,
+      name: 'クリアケース',
+      price: '2233円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16207027/clear-smartphone-case/iphone15/clear',
+      imageSrc: '/images/shop/クリアケース.webp',
+      imageAlt: 'クリアスマホケース',
+    },
+    {
+      id: 10,
+      name: 'スマホケース',
+      price: '2453円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16207027/smartphone-case/iphone15/white',
+      imageSrc: '/images/shop/スマホケース.webp',
+      imageAlt: 'スマホケース',
+    },
+    {
+      id: 11,
+      name: 'ワンポイントTシャツ',
+      price: '2750円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16206903/one-point-t-shirt/l/white',
+      imageSrc: '/images/shop/ワンポイントTシャツ.webp',
+      imageAlt: 'ワンポイントTシャツ',
+    },
+    {
+      id: 12,
+      name: 'ステッカー',
+      price: '512円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16206903/sticker/m/white',
+      imageSrc: '/images/shop/ステッカー透過.webp',
+      imageAlt: 'ステッカー',
+    },
+    {
+      id: 13,
+      name: 'マルチケース',
+      price: '1606円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16206903/clear-multi-case/m/clear',
+      imageSrc: '/images/shop/クリアマルチケース.webp',
+      imageAlt: 'クリアマルチケース',
+    },
+    {
+      id: 14,
+      name: 'ミニマルチケース',
+      price: '1386円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16206903/mini-clear-multi-case/m/clear',
+      imageSrc: '/images/shop/ミニクリアマルチケース.webp',
+      imageAlt: 'ミニクリアマルチケース',
+    },
+    {
+      id: 15,
+      name: '缶バッジ',
+      price: '792円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16206903/can-badge/75mm/white',
+      imageSrc: '/images/shop/缶バッジ.webp',
+      imageAlt: '缶バッジ',
     },
   ];
 
@@ -106,6 +154,10 @@ const ShopPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
                   <PublishedDate date={formattedDate} />
                 </div>
                 <AdAlert />
+                {/* <p className="mt-5">
+                  <a href="https://suzuri.jp/realunivlog">SUZURI</a>
+                  にて商品を販売しております。ネタ要素強めですがよかったらどうぞ（笑）
+                </p> */}
                 <div className="mt-10 mb-5 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
                   {products.map((product) => (
                     <div key={product.id} className="mt-10 mb-5">
@@ -128,6 +180,7 @@ const ShopPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
                       <div className="mt-2">
                         <a
                           href={product.href}
+                          target="_blank"
                           className="block w-full rounded-md bg-white px-3.5 py-1.5 text-center text-sm font-semibold text-gray-800 shadow-s border border-gray-300 hover:text-blue-500"
                         >
                           購入する
