@@ -6,4 +6,5 @@ export const tags = [
   { name: 'JavaScript', link: '/tag/javascript' },
   { name: '金融', link: '/tag/finance' },
   { name: 'AWS', link: '/tag/aws' },
+  { name: '料理', link: '/tag/cook' },
 ];
