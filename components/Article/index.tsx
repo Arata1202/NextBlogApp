@@ -188,7 +188,7 @@ export default function Article({ data, articles }: Props) {
                   />
                   <Image
                     src={data.thumbnail?.url || ''}
-                    alt="サムネイル"
+                    alt={data.title}
                     className={styles.thumbnail}
                     width={960}
                     height={504}
