@@ -246,6 +246,7 @@ const ShopPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
                   <a
                     href="https://suzuri.jp/realunivlog"
                     className="text-blue-500 hover:text-blue-700"
+                    target={'_blank'}
                   >
                     SUZURI
                   </a>
