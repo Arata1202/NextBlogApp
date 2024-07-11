@@ -107,7 +107,7 @@ const ShopPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
     {
       id: 2,
       name: 'スマホストラップ',
-      price: '1490円 （税込）',
+      price: '1496円 （税込）',
       href: 'https://suzuri.jp/realunivlog/16206903/smartphone-strap/free/black',
       imageSrc: '/images/shop/スマホストラップ.webp',
       imageAlt: 'スマホストラップ',
@@ -184,22 +184,22 @@ const ShopPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
       imageSrc: '/images/shop/ドッグTシャツ.webp',
       imageAlt: 'ドッグTシャツ',
     },
-    // {
-    //   id: 12,
-    //   name: 'タオルハンカチ',
-    //   price: '1565円 （税込）',
-    //   href: 'https://suzuri.jp/realunivlog/16206903/towel-handkerchief/l/white',
-    //   imageSrc: '/images/shop/タオルハンカチ.webp',
-    //   imageAlt: 'タオルハンカチ',
-    // },
-    // {
-    //   id: 13,
-    //   name: 'バンダナ',
-    //   price: '2310円 （税込）',
-    //   href: 'https://suzuri.jp/realunivlog/16206903/bandana/m/white',
-    //   imageSrc: '/images/shop/バンダナ.webp',
-    //   imageAlt: 'バンダナ',
-    // },
+    {
+      id: 12,
+      name: 'タオルハンカチ',
+      price: '1565円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16206903/towel-handkerchief/l/white',
+      imageSrc: '/images/shop/タオルハンカチ.webp',
+      imageAlt: 'タオルハンカチ',
+    },
+    {
+      id: 13,
+      name: 'バンダナ',
+      price: '2310円 （税込）',
+      href: 'https://suzuri.jp/realunivlog/16206903/bandana/m/white',
+      imageSrc: '/images/shop/バンダナ.webp',
+      imageAlt: 'バンダナ',
+    },
     {
       id: 14,
       name: 'ジップパーカー',
@@ -215,6 +215,14 @@ const ShopPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
     //   href: 'https://suzuri.jp/realunivlog/16206903/heavyweight-zip-hoodie/l/offwhite',
     //   imageSrc: '/images/shop/ヘビーウェイトジップパーカー.webp',
     //   imageAlt: 'ヘビーウェイトジップパーカー',
+    // },
+    // {
+    //   id: 1,
+    //   name: 'アクリルキーホルダー',
+    //   price: '999円 （税込）',
+    //   href: 'https://suzuri.jp/realunivlog/16207027/acrylic-keychain/50x50mm/clear',
+    //   imageSrc: '/images/shop/1720359991-512x512.webp',
+    //   imageAlt: 'アクリルキーホルダー',
     // },
   ];
 
