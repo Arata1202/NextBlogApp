@@ -304,7 +304,7 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
             )}
           </div>
         </div>
-        <Instagram />
+        {/* <Instagram /> */}
         {/* <div className="FirstAd mt-5">
           <Display slot="9574685533" />
         </div> */}

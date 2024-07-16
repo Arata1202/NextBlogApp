@@ -262,7 +262,7 @@ export default function FixedSidebar({ articles }: Props) {
             )}
           </div>
         </div>
-        <Instagram />
+        {/* <Instagram /> */}
         {/* <div className="FirstAd mt-5">
           <Display slot="9574685533" />
         </div> */}
