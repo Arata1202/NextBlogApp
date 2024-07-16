@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { tags } from '@/Section/Tag';
 import Instagram from '../Instagram/page';
 import LevatechRookie from '../Affiliate/levatechrookie';
+import Suzuri from '../Affiliate/suzuri';
 import {
   MagnifyingGlassIcon,
   BellAlertIcon,
@@ -159,6 +160,7 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
             </div>
           </div>
         </div>
+        <Suzuri />
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           <h1
             className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
@@ -308,7 +310,7 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
         {/* <div className="FirstAd mt-5">
           <Display slot="9574685533" />
         </div> */}
-        <LevatechRookie />
+        {/* <LevatechRookie /> */}
       </div>
       <div className="SidebarTableOfContens mobile">
         {headings.length > 0 && <TableOfContents headings={headings} />}

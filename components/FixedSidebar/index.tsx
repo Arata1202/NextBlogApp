@@ -13,6 +13,7 @@ import { tags } from '@/Section/Tag';
 import Instagram from '../Instagram/page';
 import Display from '../Adsense/display';
 import LevatechRookie from '../Affiliate/levatechrookie';
+import Suzuri from '../Affiliate/suzuri';
 import {
   MagnifyingGlassIcon,
   BellAlertIcon,
@@ -117,6 +118,7 @@ export default function FixedSidebar({ articles }: Props) {
             </div>
           </div>
         </div>
+        <Suzuri />
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           <h1
             className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
@@ -266,7 +268,7 @@ export default function FixedSidebar({ articles }: Props) {
         {/* <div className="FirstAd mt-5">
           <Display slot="9574685533" />
         </div> */}
-        <LevatechRookie />
+        {/* <LevatechRookie /> */}
       </div>
     </div>
   );
