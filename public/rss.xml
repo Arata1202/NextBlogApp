@@ -4,10 +4,150 @@
         <description><![CDATA[大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。]]></description>
         <link>https://realunivlog.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Tue, 18 Jun 2024 04:25:58 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 16 Jul 2024 09:44:48 GMT</lastBuildDate>
         <atom:link href="https://realunivlog.com/rss.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[ja]]></language>
         <ttl>60</ttl>
+        <item>
+            <title><![CDATA[【簡単】生春巻きとスイートチリソースのレシピを紹介]]></title>
+            <description><![CDATA[皆さんは生春巻きを作ったことはありますか？この記事では、簡単で美味しい生春巻きとスイートチリソースの作り方を紹介します。]]></description>
+            <link>https://realunivlog.com/articles/zv90a9igtfz</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/zv90a9igtfz</guid>
+            <category><![CDATA[大学生活]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Mon, 15 Jul 2024 07:32:27 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/ac91aa41ddc344c38da67c1d470d1a94/41.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【簡単】ローストビーフのおすすめレシピを紹介]]></title>
+            <description><![CDATA[皆さんはローストビーフを作ったことはありますか？この記事では、簡単で美味しいローストビーフの作り方を紹介します。]]></description>
+            <link>https://realunivlog.com/articles/how-to-cook-roastbeef</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-cook-roastbeef</guid>
+            <category><![CDATA[大学生活]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Tue, 09 Jul 2024 01:51:39 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/d910de132cfb43e2ba8ea6a5155a356f/40.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【チェリーピックとは】GItで特定のコミットのみを反映する方法を紹介]]></title>
+            <description><![CDATA[皆さんはGitのチェリーピックをご存知ですか？この記事ではチェリーピックを使用して、特定のコミットだけを反映させる方法を紹介します。]]></description>
+            <link>https://realunivlog.com/articles/how-to-use-cherrypick</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-use-cherrypick</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Sun, 07 Jul 2024 02:04:27 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/3be3331a1f284626b84ea523ad2c817a/39.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【ECRとは？】使い方やpush手順を画像を使って解説【AWS】]]></title>
+            <description><![CDATA[皆さんはAWSのECRをご存知ですか？この記事ではDockerコンテナを簡単にECRにpushする方法について紹介します。]]></description>
+            <link>https://realunivlog.com/articles/how-to-push-ecr</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-push-ecr</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Fri, 05 Jul 2024 04:19:18 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/a26996a3a6e342aab4a1e1a808464e5b/38.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【JREポイント交換】グリーン車の乗り方を詳しく解説]]></title>
+            <description><![CDATA[在来線のグリーン車に興味はありませんか？この記事ではJREポイントを利用してグリーン車に乗る方法について紹介しています。]]></description>
+            <link>https://realunivlog.com/articles/how-to-use-green-car</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-use-green-car</guid>
+            <category><![CDATA[旅行]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Thu, 04 Jul 2024 02:48:19 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/8633172919944d5bb3edac0221b60840/37.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【Lambda】関数の作成手順を写真付きでわかりやすく解説]]></title>
+            <description><![CDATA[皆さんはLambdaをご存知ですか？この記事ではサーバーレスで簡単にバックエンドを実装する方法を紹介します。]]></description>
+            <link>https://realunivlog.com/articles/how-to-deploy-lambda</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-deploy-lambda</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Sun, 30 Jun 2024 06:27:39 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/f2d7aeac9ff246a2bb8d5ba075265ff1/36.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【AWS】AWS CLIのインストール手順を写真付きで解説]]></title>
+            <description><![CDATA[AWSには興味ありませんか？この記事ではAWSを扱う際に便利な、AWS CLIのインストール方法を写真を使って解説しています。]]></description>
+            <link>https://realunivlog.com/articles/how-to-install-aws-cli</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-install-aws-cli</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Fri, 28 Jun 2024 14:22:21 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/dba465f7a4b04d36af91744297133fcd/35.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【小豆島】大学生も感動！人生で一度は行くべき観光スポットを紹介]]></title>
+            <description><![CDATA[小豆島という観光地をご存知ですか？この記事では魅力あふれる、小豆島のおすすめスポットを解説します。]]></description>
+            <link>https://realunivlog.com/articles/should-visit-spot-syodoshima</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/should-visit-spot-syodoshima</guid>
+            <category><![CDATA[旅行]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Wed, 26 Jun 2024 15:25:33 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/105771075a124a3692fa96b409c015f7/35.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【Paidy】大学生でも審査に通過できるのかについて解説]]></title>
+            <description><![CDATA[Paidyを使ってAppleデバイスの購入を考えている方に向けて、この記事ではPaidyの審査に大学生でも通過できるのかについて解説します。]]></description>
+            <link>https://realunivlog.com/articles/student-can-success-paidy</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/student-can-success-paidy</guid>
+            <category><![CDATA[大学生活]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Tue, 25 Jun 2024 22:57:54 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/8228ee9cface49a189a27cf75dc069cc/33.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【Prefixとは？】Gitのcommit時に使いたい単語一覧を紹介]]></title>
+            <description><![CDATA[gitでcommitする際に、どのように名前をつけていますか？この記事では、わかりやすく名前を設定するためのプレフィックスについて紹介します。]]></description>
+            <link>https://realunivlog.com/articles/how-to-name-commit-git</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-name-commit-git</guid>
+            <category><![CDATA[プログラミング]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Tue, 25 Jun 2024 01:49:59 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/3f700ff5788f4cd5baad5955767ff0b9/33.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【Canva（キャンバ）とは何？】便利な使い方を紹介]]></title>
+            <description><![CDATA[皆さんはCanva（キャンバ）をご存知ですか？非常に簡単に画像を用意することのできる、Canvaについてや使い方について紹介します。]]></description>
+            <link>https://realunivlog.com/articles/how-to-use-canva</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-use-canva</guid>
+            <category><![CDATA[ブログ]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Sun, 23 Jun 2024 02:36:08 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/f48268775f73413fa46d38c54e6c5579/31.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【Googleアドセンス】MicroCMSで広告を設置する手順を紹介]]></title>
+            <description><![CDATA[この記事では、Next.jsとMicroCMSで構築したブログにGoogle AdSense広告を設置する手順について解説しています。]]></description>
+            <link>https://realunivlog.com/articles/how-to-set-ad-next</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-set-ad-next</guid>
+            <category><![CDATA[ブログ]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Thu, 20 Jun 2024 14:27:52 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/3b9cfe1c3eda459085f0b9e366cf1201/29.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【Googleアドセンス】MicroCMSとNext.jsで合格した方法を紹介します]]></title>
+            <description><![CDATA[皆さんはMicroCMSをご存知ですか？この記事ではMicroCMSとNext.jsを使用してGoogleアドセンスの審査に通過する方法を紹介します。]]></description>
+            <link>https://realunivlog.com/articles/how-to-success-adsense-point</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/how-to-success-adsense-point</guid>
+            <category><![CDATA[ブログ]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Thu, 20 Jun 2024 02:33:48 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/a841a787b4354ad3b9c33e1af80dd389/32.jpg" length="0" type="image/jpg"/>
+        </item>
+        <item>
+            <title><![CDATA[【ビューカード】大学生に絶対に持って欲しいクレカを紹介]]></title>
+            <description><![CDATA[大学生なってクレジットカード選びに困っている方はいませんか？この記事では私が普段愛用しているビューカードについて詳しく紹介します。]]></description>
+            <link>https://realunivlog.com/articles/recommend-use-credit-view</link>
+            <guid isPermaLink="true">https://realunivlog.com/articles/recommend-use-credit-view</guid>
+            <category><![CDATA[大学生活]]></category>
+            <dc:creator><![CDATA[あお]]></dc:creator>
+            <pubDate>Tue, 18 Jun 2024 14:16:26 GMT</pubDate>
+            <enclosure url="https://images.microcms-assets.io/assets/639f013556a941baa65d29b650dae51f/0da9596c2f154c06a006db1c2f9bf6c0/30.jpg" length="0" type="image/jpg"/>
+        </item>
         <item>
             <title><![CDATA[【ドメイン変更】SEO評価を引き継ぐ方法を詳しく解説]]></title>
             <description><![CDATA[ドメインを変更したいけれど正しい手順がわからない。そんな方々に向けてこの記事では、適切にSEOを引き継いでドメインを変更する方法を紹介します。]]></description>
