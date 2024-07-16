@@ -10,7 +10,7 @@ const footerNavigation = {
   solutions: [
     { name: 'プロフィール', href: '/profile' },
     { name: 'サイトマップ', href: '/sitemap' },
-    { name: 'ショップ', href: '/shop' },
+    // { name: 'ショップ', href: '/shop' },
   ],
   category: [
     { name: '大学生活', href: '/category/university' },

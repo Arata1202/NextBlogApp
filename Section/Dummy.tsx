@@ -30,7 +30,7 @@ export const BlogTitle = [
 export const headerNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
-  { name: 'ショップ', href: '/shop', icon: ShoppingCartIcon },
+  // { name: 'ショップ', href: '/shop', icon: ShoppingCartIcon },
   { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
 ];
 
@@ -38,7 +38,7 @@ export const headerNavigation = [
 export const mobileTopNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
-  { name: 'ショップ', href: '/shop', icon: ShoppingCartIcon },
+  // { name: 'ショップ', href: '/shop', icon: ShoppingCartIcon },
 ];
 export const categories = [
   { name: '大学生活', href: '/category/university', icon: FolderOpenIcon },
