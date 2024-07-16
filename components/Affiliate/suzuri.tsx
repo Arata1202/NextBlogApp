@@ -8,7 +8,7 @@ export default function Suzuri() {
           target="brank"
           className="duration-200 transform hover:-translate-y-1"
         >
-          <img width="400" height="250" src="/images/shop/suzuri.png" alt="suzuri" />
+          <img width="400" height="250" src="/images/shop/suzuri.png" alt="suzuri" loading="lazy" />
         </a>
       </div>
     </>
