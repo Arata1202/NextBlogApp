@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { tags } from '@/Section/Tag';
 import Instagram from '../Instagram/page';
 import LevatechRookie from '../Affiliate/levatechrookie';
+import { OneSignalInitial } from '@/libs/OneSignalInitial';
 import Suzuri from '../Affiliate/suzuri';
 import {
   MagnifyingGlassIcon,
@@ -91,6 +92,7 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
           </h1>
           <SearchField />
         </div>
+        <OneSignalInitial />
         {/* Profile Media */}
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           {UserProfile.map((item) => (
