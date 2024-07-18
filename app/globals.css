@@ -10,6 +10,10 @@
   overflow: hidden !important;
 }
 
+.onesignal-customlink-container {
+  min-height: 0 !important;
+}
+
 .FirstAd {
   min-height: 280px !important;
 }
