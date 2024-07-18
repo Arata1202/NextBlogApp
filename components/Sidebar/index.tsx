@@ -91,9 +91,6 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
           </h1>
           <SearchField />
         </div>
-        <div className="flex justify-center mt-5">
-          <div className="onesignal-customlink-container"></div>
-        </div>
         {/* Profile Media */}
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           {UserProfile.map((item) => (
