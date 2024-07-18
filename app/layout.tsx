@@ -7,6 +7,7 @@ import styles from './layout.module.css';
 import ScrollTopButton from '@/components/Common/ScrollToTop/page';
 import Script from 'next/script';
 import { Adsense } from '@/components/Adsense/adsense';
+import { OneSignalInitial } from '@/libs/OneSignalInitial';
 
 export const metadata = {
   // 検証 OK
@@ -103,8 +104,9 @@ export default async function RootLayout({ children }: Props) {
         {/* <Nav tags={tags.contents} /> */}
         <main className={styles.main}>{children}</main>
         <Footer />
-        <ScrollTopButton />
+        {/* <ScrollTopButton /> */}
         <Adsense />
+        <OneSignalInitial />
         <Script async strategy="afterInteractive" src="//www.instagram.com/embed.js" />
       </body>
     </html>
