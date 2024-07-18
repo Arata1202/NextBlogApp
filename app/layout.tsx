@@ -106,25 +106,6 @@ export default async function RootLayout({ children }: Props) {
         <ScrollTopButton />
         <Adsense />
         <Script async strategy="afterInteractive" src="//www.instagram.com/embed.js" />
-        <Script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer />
-        <Script
-          id="onesignal-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.OneSignalDeferred = window.OneSignalDeferred || [];
-              OneSignalDeferred.push(async function(OneSignal) {
-                await OneSignal.init({
-                  appId: "${process.env.ONESIGNAL_APP_ID}",
-                  safari_web_id: "${process.env.ONESIGNAL_SAFARI_WEB_ID}",
-                  notifyButton: {
-                    enable: true,
-                  },
-                });
-              });
-            `,
-          }}
-        />
       </body>
     </html>
   );
