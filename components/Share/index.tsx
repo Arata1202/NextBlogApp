@@ -17,7 +17,7 @@ import {
   LinkedinIcon,
 } from 'react-share';
 import Image from 'next/image';
-import { HandThumbUpIcon, RssIcon, UserPlusIcon } from '@heroicons/react/24/solid';
+import { HandThumbUpIcon, MegaphoneIcon, RssIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 import { SiFeedly } from 'react-icons/si';
 
 export default function Share() {
@@ -160,6 +160,17 @@ export default function Share() {
                 src="https://static.fc2.com/blogranking/ranking_banner/a_02.gif"
               />
             </a>
+          </div>
+        </div>
+        <div className="mt-2">
+          <div className="pt-3">
+            <h1 className={`text-2xl font-semibold flex justify-center mb-5`}>
+              <MegaphoneIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+              プッシュ通知を受け取る
+            </h1>
+          </div>
+          <div className="flex justify-center">
+            <div className="onesignal-customlink-container"></div>
           </div>
         </div>
       </div>
