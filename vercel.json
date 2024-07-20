@@ -6,6 +6,11 @@
       "statusCode": 301
     },
     {
+      "source": "/articles/zv90a9igtfz",
+      "destination": "/articles/how-to-cook-fresh-spring-roll",
+      "statusCode": 301
+    },
+    {
       "source": "/articles/ywed2fzhh5du",
       "destination": "/articles/how-to-write-head-seo",
       "statusCode": 301
