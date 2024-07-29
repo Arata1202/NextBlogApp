@@ -62,7 +62,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
   const sendEmail = useCallback(() => {
     if (!formData) return;
 
-    fetch('https://microcmsblog.aratasportfolio.com/email.php', {
+    fetch('https://microcmsblog.mochaccinoblog.com/email.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
