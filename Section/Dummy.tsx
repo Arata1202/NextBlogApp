@@ -153,6 +153,6 @@ export const PopularPost = [
 // コピーライト
 export const copyRight = [
   {
-    title: '&copy; Copyright © 2024 リアル大学生 All Rights Reserved.',
+    title: '© 2024 リアル大学生. All Rights Reserved.',
   },
 ];
