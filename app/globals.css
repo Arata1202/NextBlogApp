@@ -132,6 +132,12 @@
   .FirstAd {
     min-height: 200px !important;
   }
+  .app-badge {
+    height: 20px !important;
+  }
+  .app-badge-link {
+    left: 90px !important;
+  }
 }
 
 pre {

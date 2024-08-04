@@ -12,7 +12,7 @@ import Instagram from '../Instagram/page';
 import Display from '../Adsense/display';
 import LevatechRookie from '../Affiliate/levatechrookie';
 import Suzuri from '../Affiliate/suzuri';
-import { OneSignalInitial } from '@/libs/OneSignalInitial';
+// import { OneSignalInitial } from '@/libs/OneSignalInitial';
 import {
   MagnifyingGlassIcon,
   FolderIcon,
@@ -39,7 +39,7 @@ export default function TopSidebar({ articles }: Props) {
           </h1>
           <SearchField />
         </div>
-        <OneSignalInitial />
+        {/* <OneSignalInitial /> */}
         {/* Profile Media */}
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           {UserProfile.map((item) => (

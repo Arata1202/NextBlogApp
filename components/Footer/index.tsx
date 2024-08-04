@@ -51,7 +51,45 @@ const footerNavigation = {
 
 export default function Footer() {
   return (
-    <footer className={`${styles.footer} w-full bg-white mt-20`}>
+    <footer className={`${styles.footer} w-full bg-white`}>
+      <div className="flex justify-center" style={{ backgroundColor: '#d9d9d9' }}>
+        <div style={{ position: 'relative', width: '700px' }}>
+          <img style={{ padding: '0 12px' }} src="/images/blog/mobilebanner.webp" alt="" />
+          <a
+            href="https://apps.apple.com/jp/app/リアル大学生-モバイル/id6590619103"
+            target="_blank"
+            style={{
+              position: 'absolute',
+              bottom: '10px',
+              left: '15px',
+            }}
+          >
+            <img
+              src="/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg"
+              alt="Download on the App Store"
+              style={{ height: '40px' }}
+              className="app-badge"
+            />
+          </a>
+          {/* <a
+            target="_blank"
+            style={{
+              position: 'absolute',
+              bottom: '10px',
+              left: '150px',
+            }}
+            className="app-badge-link"
+          >
+            <img
+              src="/GetItOnGooglePlay_Badge_Web_color_English.png"
+              alt="Download on the Play Store"
+              style={{ height: '40px' }}
+              className="app-badge"
+            />
+          </a> */}
+        </div>
+      </div>
+
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
