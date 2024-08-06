@@ -52,7 +52,7 @@ const footerNavigation = {
 export default function Footer() {
   return (
     <footer className={`${styles.footer} w-full bg-white`}>
-      <div className="flex justify-center" style={{ backgroundColor: '#d9d9d9' }}>
+      <div className="flex justify-center mt-20" style={{ backgroundColor: '#d9d9d9' }}>
         <div style={{ position: 'relative', width: '700px' }}>
           <img style={{ padding: '0 12px' }} src="/images/blog/mobilebanner.webp" alt="" />
           <a
