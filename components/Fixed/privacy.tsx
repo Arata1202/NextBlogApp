@@ -208,7 +208,7 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <br />
                   連絡先：
                   <a href="/contact" className="text-blue-500 hover:text-blue-700">
-                    https://realunivlog.com/contact/
+                    お問い合わせ
                   </a>
                 </p>
               </div>

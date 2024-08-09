@@ -14,10 +14,10 @@ export const metadata = {
     title: '著作権｜リアル大学生',
     description: '著作権についてを記載しています。',
     images: '/images/thumbnail/4.webp',
-    url: 'https://realunivlog.com/disclaimer',
+    url: 'https://realunivlog.com/copyright',
   },
   alternates: {
-    canonical: 'https://realunivlog.com/disclaimer',
+    canonical: 'https://realunivlog.com/copyright',
   },
   robots: {
     index: false,
@@ -47,7 +47,7 @@ export default async function Page() {
                   aria-hidden="true"
                 />
                 <a
-                  href="/disclaimer"
+                  href="/copyright"
                   className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
                 >
                   著作権

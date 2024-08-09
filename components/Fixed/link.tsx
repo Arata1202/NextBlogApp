@@ -61,7 +61,10 @@ const LinkPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
               <div className={`${styles.content} mt-10 mb-5`}>
                 <h2 id="link">リンクについて</h2>
                 <p>
-                  本サービスは完全リンクフリーです。リンクを行う場合の本サービスへの許可や連絡は不要です。
+                  リアル大学生（以下、「本サービス」と言います。）は完全リンクフリーです。リンクを行う場合の本サービスへの許可や連絡は不要です。
+                  <br />
+                  <br />
+                  ただし、インラインフレームの使用や画像の直リンクはご遠慮ください。
                 </p>
               </div>
             </div>
