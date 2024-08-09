@@ -19,6 +19,9 @@ export const metadata = {
   alternates: {
     canonical: 'https://realunivlog.com/disclaimer',
   },
+  robots: {
+    index: false,
+  },
 };
 
 export const revalidate = 60;
