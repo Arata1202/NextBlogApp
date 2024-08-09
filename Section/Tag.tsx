@@ -8,4 +8,5 @@ export const tags = [
   { name: 'AWS', link: '/tag/aws' },
   { name: '料理', link: '/tag/cook' },
   { name: 'Apple Developer', link: '/tag/appledeveloper' },
+  { name: 'ガジェット', link: '/tag/gadget' },
 ];
