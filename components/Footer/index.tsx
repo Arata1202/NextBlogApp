@@ -21,6 +21,8 @@ const footerNavigation = {
   company: [
     { name: 'プライバシーポリシー', href: '/privacy' },
     { name: '免責事項', href: '/disclaimer' },
+    { name: '著作権', href: '/copyright' },
+    { name: 'リンク', href: '/link' },
     // { name: '免責事項', href: '#' },
   ],
   legal: [{ name: 'お問い合わせ', href: '/contact' }],
