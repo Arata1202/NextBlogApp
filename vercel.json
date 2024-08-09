@@ -14,6 +14,11 @@
       "source": "/articles/ywed2fzhh5du",
       "destination": "/404",
       "statusCode": 404
+    },
+    {
+      "source": "/shop",
+      "destination": "/404",
+      "statusCode": 404
     }
   ]
 }
