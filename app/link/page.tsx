@@ -14,10 +14,10 @@ export const metadata = {
     title: 'リンク｜リアル大学生',
     description: 'リンクについてを記載しています。',
     images: '/images/thumbnail/4.webp',
-    url: 'https://realunivlog.com/disclaimer',
+    url: 'https://realunivlog.com/link',
   },
   alternates: {
-    canonical: 'https://realunivlog.com/disclaimer',
+    canonical: 'https://realunivlog.com/link',
   },
   robots: {
     index: false,
@@ -47,7 +47,7 @@ export default async function Page() {
                   aria-hidden="true"
                 />
                 <a
-                  href="/disclaimer"
+                  href="/link"
                   className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
                 >
                   リンク
