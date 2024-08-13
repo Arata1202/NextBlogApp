@@ -82,6 +82,8 @@ export default async function RootLayout({ children }: Props) {
         />
         {/* 共通 Appleアイコン OK */}
         <link rel="apple-touch-icon" href="https://realunivlog.com/images/head/realstudent.png" />
+        <meta name="apple-itunes-app" content="app-id=6590619103" />
+
         {/* 共通 Windows用アイコン OK */}
         <meta
           name="msapplication-TileImage"
