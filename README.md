@@ -3,12 +3,14 @@
 ### Google AdSense
 
 - 不正なインプレッションが存在しないか、レポートを確認
+  - GASで管理中
 - ポリシーセンターで、ポリシー違反がないか確認
 - 収益の確認
 
 ### Google Analytics
 
 - 地域別に絞り込み、不正なインプレッションが存在しないか確認
+  - GASで管理中
 - 定期的にリアルタイムユーザーを確認
 
 ### Google Search Console
@@ -19,9 +21,8 @@
 ## 記事出稿の手順
 
 - 記事作成
-- パーマリンクを適切に設定
-  - 忘れた場合は、301 リダイレクトを設定
 - インデックスのリクエストを送信
+  - サイトマップで短縮
 
 ## 開発方法
 
@@ -74,6 +75,7 @@ npm start
 
 - PWA
 - プッシュ通知
+  - モバイル限定として、Web版からは削除済み
 
 ### 固定ページ
 
@@ -85,7 +87,10 @@ npm start
 - プロフィール
 - サイトマップ
 - お問い合わせ
-- プライバシーポリシー・免責事項
+- プライバシーポリシー
+- 免責事項
+- 著作権について
+- リンクについて
 
 ### 動的ページ
 
@@ -98,27 +103,28 @@ npm start
 - Next.js
 - TypeScript
 - TailwindCSS
-- PHP（バックエンド API）
-- microCMS
+- AWS Lambda
+- MicroCMS
 - Vercel
 - Prettier
 - GitHub
 - Canva
+- Figma
 
 ## 料金 （月）
 
 - MicroCMS: Hobby （無料）
 - Vercel: Pro （約 3000 円）
-- Xserver: Standard （約 1000 円）
 
 ## 今後実装したい機能・課題
 
 ### 課題
 
 - 広告表示の関係で`Link`ではなく`window.location.href`を使用しているが、パフォーマンスが悪いので`Link`に変更したい。（Next.js の魅力を最大限に引き出す。）
+  - 結論、aタグで良い。（未実装）
 - Google AdSense を導入してから、全体的にパフォーマンスが落ちている。（ PageSpeedInsight ）
+  - 許容範囲ではある。
 
 ### 機能
 
-- バックエンド API を AWS に移行
 - コードタグにコピーボタンの実装
