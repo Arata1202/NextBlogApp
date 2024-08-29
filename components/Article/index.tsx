@@ -306,6 +306,15 @@ export default function Article({ data, articles }: Props) {
                   </div>
                 ))}
                 <div>{headings.length > 0 && <TableOfContents headings={headings} />}</div>
+                <img src="/images/blog/community.jpeg" alt="" />
+                <p className="Article_content__m_nzR">
+                  X：
+                  <a target="blank" href="https://x.com/Aokumoblog">
+                    https://x.com/Aokumoblog
+                  </a>
+                  <br />
+                  ※人数が集まらなかった場合は、中止となる場合がございます。
+                </p>
                 {/* <div className="FirstAd">
                   <Display slot="3000085625" />
                 </div> */}
