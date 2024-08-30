@@ -5,7 +5,6 @@ import { DocumentMagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroic
 import Display from '@/components/Adsense/display';
 
 export const metadata = {
-  // 検証済み
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
   title: 'サイトマップ｜リアル大学生',
   description: '当ブログのサイトマップを記載しています。',
@@ -26,16 +25,19 @@ async function fetchAllData(limit = 100): Promise<any[]> {
   let offset = 0;
   let allData: any[] = [];
   let response;
-  let loopCount = 0;
 
-  do {
-    response = await getList({ limit, offset });
-    if (response && response.contents) {
-      allData = [...allData, ...response.contents];
-    }
-    loopCount++;
-    offset += limit;
-  } while (response && response.contents && response.contents.length === limit);
+  try {
+    do {
+      response = await getList({ limit, offset, fields: 'id,title,thumbnail' });
+      if (response && response.contents) {
+        allData = [...allData, ...response.contents];
+      }
+      offset += limit;
+    } while (response && response.contents && response.contents.length === limit);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+
   return allData;
 }
 
