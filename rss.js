@@ -14,15 +14,20 @@ const getAllContents = async (endpoint) => {
   let offset = 0;
   const limit = 100;
 
-  while (true) {
-    const res = await client.getList({
-      endpoint,
-      queries: { offset, limit },
-    });
-    if (res.contents.length === 0) break;
-    allContents = allContents.concat(res.contents);
-    offset += limit;
+  try {
+    while (true) {
+      const res = await client.getList({
+        endpoint,
+        queries: { offset, limit, fields: 'id,title,description,publishedAt,tags,thumbnail' },
+      });
+      if (res.contents.length === 0) break;
+      allContents = allContents.concat(res.contents);
+      offset += limit;
+    }
+  } catch (error) {
+    console.error(`Error fetching data from ${endpoint}:`, error);
   }
+
   return allContents;
 };
 
@@ -40,24 +45,38 @@ const generateRSSFeed = async () => {
   const articles = await getAllContents('blog');
 
   articles.forEach((article) => {
-    feed.item({
-      title: article.title,
-      description: article.description,
-      url: `https://realunivlog.com/articles/${article.id}`,
-      author: 'あお',
-      date: article.publishedAt,
-      categories: article.tags.map((tag) => tag.name),
-      enclosure: {
-        url: article.thumbnail.url,
-        type: 'image/jpg',
-      },
-    });
+    if (
+      article &&
+      article.title &&
+      article.description &&
+      article.publishedAt &&
+      article.thumbnail
+    ) {
+      feed.item({
+        title: article.title,
+        description: article.description,
+        url: `https://realunivlog.com/articles/${article.id}`,
+        author: 'あお',
+        date: article.publishedAt,
+        categories: article.tags ? article.tags.map((tag) => tag.name) : [],
+        enclosure: {
+          url: article.thumbnail.url,
+          type: 'image/jpg',
+        },
+      });
+    }
   });
 
   const xml = feed.xml({ indent: true });
 
-  fs.writeFileSync(path.join(__dirname, 'public', 'rss.xml'), xml);
-  console.log('RSS feed generated successfully');
+  try {
+    const rssPath = path.join(__dirname, 'public', 'rss.xml');
+    fs.mkdirSync(path.dirname(rssPath), { recursive: true });
+    fs.writeFileSync(rssPath, xml);
+    console.log('RSS feed generated successfully');
+  } catch (error) {
+    console.error('Error writing RSS feed to file:', error);
+  }
 };
 
 generateRSSFeed().catch((error) => {
