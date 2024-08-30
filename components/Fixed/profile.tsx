@@ -6,7 +6,6 @@ import { UserCircleIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/
 import FixedSidebar from '@/components/FixedSidebar';
 import Share from '../Share';
 import AdAlert from '../AdAlert';
-import Link from 'next/link';
 import Display from '../Adsense/display';
 
 const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
@@ -145,9 +144,9 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   サイト運営者：あお
                   <br />
                   連絡先：
-                  <Link href="/contact" className="text-blue-500 hover:text-blue-700">
+                  <a href="/contact" className="text-blue-500 hover:text-blue-700">
                     https://realunivlog.com/contact/
-                  </Link>
+                  </a>
                 </p>
               </div>
               <div className="FirstAd">
