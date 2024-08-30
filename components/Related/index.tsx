@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
@@ -10,7 +9,7 @@ type Props = {
 const RelatedArticleItem: React.FC<Props> = ({ article }) => {
   return (
     <li className={styles.item}>
-      <Link href={`/articles/${article.id}`}>
+      <a href={`/articles/${article.id}`}>
         <a className={styles.link}>
           {article.thumbnail ? (
             <Image
@@ -31,7 +30,7 @@ const RelatedArticleItem: React.FC<Props> = ({ article }) => {
             <p className={styles.description}>{article.description}</p>
           </div>
         </a>
-      </Link>
+      </a>
     </li>
   );
 };
