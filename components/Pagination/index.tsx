@@ -1,6 +1,5 @@
 //最適化済み
 
-import Link from 'next/link';
 import React, { useMemo } from 'react';
 import styles from './index.module.css';
 import { LIMIT } from '@/constants';
@@ -26,9 +25,9 @@ const Pagination: React.FC<Props> = React.memo(({ totalCount, current = 1, baseP
       {pages.map((p) => (
         <li className={styles.list} key={p}>
           {current !== p ? (
-            <Link href={getPageLink(p)}>
+            <a href={getPageLink(p)}>
               <p className={styles.item}>{p}</p>
-            </Link>
+            </a>
           ) : (
             <span className={`${styles.item} ${styles.current}`} aria-current="page">
               {p}
