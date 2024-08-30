@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { Tag } from '@/libs/microcms';
 import styles from './index.module.css';
 
@@ -10,9 +9,9 @@ type Props = {
 export default function PanTagListItem({ tag, hasLink = true }: Props) {
   if (hasLink) {
     return (
-      <Link href={`/category/${tag.id}`} className={styles.tag}>
+      <a href={`/category/${tag.id}`} className={styles.tag}>
         <p className={styles.tag}>{tag.name}</p>
-      </Link>
+      </a>
     );
   }
   return <span className={styles.tag}>{tag.name}</span>;
