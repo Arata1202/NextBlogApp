@@ -37,55 +37,74 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <h2>固定ページ</h2>
                   <ul>
                     <li>
-                      <Link href="/contact" className="text-blue-500 hover:text-blue-700">
+                      <a href="/contact" className="text-blue-500 hover:text-blue-700">
                         お問い合わせ
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link href="/sitemap" className="text-blue-500 hover:text-blue-700">
+                      <a href="/sitemap" className="text-blue-500 hover:text-blue-700">
                         サイトマップ
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link href="/profile" className="text-blue-500 hover:text-blue-700">
+                      <a href="/profile" className="text-blue-500 hover:text-blue-700">
                         プロフィール
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link href="/privacy" className="text-blue-500 hover:text-blue-700">
+                      <a href="/privacy" className="text-blue-500 hover:text-blue-700">
                         プライバシーポリシー
-                      </Link>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/disclaimer" className="text-blue-500 hover:text-blue-700">
+                        免責事項
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/copyright" className="text-blue-500 hover:text-blue-700">
+                        著作権
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/link" className="text-blue-500 hover:text-blue-700">
+                        リンク
+                      </a>
                     </li>
                   </ul>
                   <h2>カテゴリー</h2>
                   <ul>
                     <li>
-                      <Link
-                        href="/category/programming"
-                        className="text-blue-500 hover:text-blue-700"
-                      >
+                      <a href="/category/programming" className="text-blue-500 hover:text-blue-700">
                         プログラミング
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link
-                        href="/category/university"
-                        className="text-blue-500 hover:text-blue-700"
-                      >
+                      <a href="/category/university" className="text-blue-500 hover:text-blue-700">
                         大学生活
-                      </Link>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/category/travel" className="text-blue-500 hover:text-blue-700">
+                        旅行
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/category/blog" className="text-blue-500 hover:text-blue-700">
+                        ブログ
+                      </a>
                     </li>
                   </ul>
                   <h2>投稿一覧</h2>
                   <ul>
                     {sidebarArticles.contents.map((article: any) => (
                       <li key={article.id}>
-                        <Link
+                        <a
                           href={`/articles/${article.id}`}
                           className="text-blue-500 hover:text-blue-700"
                         >
                           {article.title}
-                        </Link>
+                        </a>
                       </li>
                     ))}
                   </ul>
