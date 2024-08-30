@@ -11,15 +11,20 @@ const getAllContents = async (endpoint) => {
   let offset = 0;
   const limit = 100;
 
-  while (true) {
-    const res = await client.getList({
-      endpoint,
-      queries: { offset, limit },
-    });
-    if (res.contents.length === 0) break;
-    allContents = allContents.concat(res.contents);
-    offset += limit;
+  try {
+    while (true) {
+      const res = await client.getList({
+        endpoint,
+        queries: { offset, limit, fields: 'id,updatedAt' },
+      });
+      if (res.contents.length === 0) break;
+      allContents = allContents.concat(res.contents);
+      offset += limit;
+    }
+  } catch (error) {
+    console.error(`Failed to fetch data from ${endpoint}:`, error);
   }
+
   return allContents;
 };
 
