@@ -2,7 +2,6 @@
 
 import React from 'react';
 import SearchField from '../SearchField';
-import Link from 'next/link';
 import Image from 'next/image';
 import styles from './index.module.css';
 import { UserProfile } from '@/Section/Dummy';
@@ -82,9 +81,9 @@ export default function TopSidebar({ articles }: Props) {
               key={item.profileTitle}
               className="mt-6 text-2xl text-center font-semibold leading-7 tracking-tight text-gray-800"
             >
-              <Link href={item.profileHref} className="hover:text-blue-500">
+              <a href={item.profileHref} className="hover:text-blue-500">
                 {item.profileName}
-              </Link>
+              </a>
             </h1>
           ))}
           <ul role="list" className="mt-6 flex justify-center gap-x-6">
@@ -186,13 +185,13 @@ export default function TopSidebar({ articles }: Props) {
           </h1>
           <div className="mt-5 flex flex-wrap gap-2">
             {tags.map((tag, index) => (
-              <Link
+              <a
                 key={index}
                 href={tag.link}
                 className="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
               >
                 {tag.name}
-              </Link>
+              </a>
             ))}
           </div>
         </div>
