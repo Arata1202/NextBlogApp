@@ -1,7 +1,7 @@
 export default function Suzuri() {
   return (
     <>
-      <p className="mt-5 text-center">\ オリジナルグッズ販売中 /</p>
+      <p className="mt-5 text-center">＼ オリジナルグッズ販売中 ／</p>
       <div className="flex justify-center">
         <a
           href="https://suzuri.jp/realunivlog"
