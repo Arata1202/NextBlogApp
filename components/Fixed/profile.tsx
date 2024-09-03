@@ -120,7 +120,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <li>フロントエンド｜React, Next.js, Vue.js, TypeScript, TailwindCSS</li>
                   <li>バックエンド｜PHP, Laravel</li>
                   <li>データベース｜MySQL</li>
-                  <li>ホスティング｜Vercel, AWS, Xserver</li>
+                  <li>ホスティング｜Vercel, AWS</li>
                   <li>ツール｜GitHub, Docker</li>
                 </ul>
                 <p>
@@ -134,7 +134,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <li>フロントエンド｜Next.js, TypeScript, TailwindCSS</li>
                   <li>ツール｜MicroCMS, GitHub</li>
                   <li>ホスティング｜Vercel</li>
-                  <li>バックエンド｜PHP, FTP, Xserver</li>
+                  <li>バックエンド｜AWS Lambda</li>
                 </ul>
                 <h2>お問い合わせ</h2>
                 <p>
