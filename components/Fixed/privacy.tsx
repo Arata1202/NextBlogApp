@@ -204,7 +204,7 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   本ポリシーに関するお問い合わせは、下記の窓口までお願いいたします。
                   <br />
                   <br />
-                  サイト運営者：あお
+                  サイト運営者：あらた
                   <br />
                   連絡先：
                   <a href="/contact" className="text-blue-500 hover:text-blue-700">
