@@ -45,7 +45,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
               </div>
               <div className={`${styles.content} mt-10 mb-5`}>
                 <p>
-                  初めまして、現役大学生のあおと申します。
+                  初めまして、現役大学生のあらたと申します。
                   <br />
                   <br />
                   「プログラミングを勉強する大学生」をテーマにブログを始めました。
@@ -141,7 +141,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   お問い合わせの際は、下記の窓口からお願いいたします。
                   <br />
                   <br />
-                  サイト運営者：あお
+                  サイト運営者：あらた
                   <br />
                   連絡先：
                   <a href="/contact" className="text-blue-500 hover:text-blue-700">

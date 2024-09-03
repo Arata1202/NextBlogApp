@@ -58,7 +58,7 @@ export const UserProfile = [
     // 肩書き
     profileTitle: 'ブログ運営者',
     // ユーザー名
-    profileName: 'リアル大学生｜あお',
+    profileName: 'あらた',
     profileHref: '/profile',
     // ユーザー写真
     imageUrl: '/images/blog/face.webp',
