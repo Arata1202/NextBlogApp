@@ -306,15 +306,21 @@ export default function Article({ data, articles }: Props) {
                   </div>
                 ))}
                 <div>{headings.length > 0 && <TableOfContents headings={headings} />}</div>
-                <img src="/images/blog/community.jpeg" alt="" />
-                <p className="Article_content__m_nzR">
+                <a target="blank" href="https://discord.gg/346ndctX">
+                  <img
+                    className="mt-10 duration-200 transform hover:-translate-y-1"
+                    src="/images/blog/66292B61-8EA2-4152-8B60-E8F5F31E17A2_1_201_a.jpeg"
+                    alt=""
+                  />
+                </a>
+                {/* <p className="Article_content__m_nzR">
                   X：
                   <a target="blank" href="https://x.com/Aokumoblog">
                     https://x.com/Aokumoblog
                   </a>
                   <br />
                   ※人数が集まらなかった場合は、中止となる場合がございます。
-                </p>
+                </p> */}
                 {/* <div className="FirstAd">
                   <Display slot="3000085625" />
                 </div> */}
