@@ -306,13 +306,13 @@ export default function Article({ data, articles }: Props) {
                   </div>
                 ))}
                 <div>{headings.length > 0 && <TableOfContents headings={headings} />}</div>
-                <a target="blank" href="https://discord.gg/346ndctX">
+                {/* <a target="blank" href="https://discord.gg/346ndctX">
                   <img
                     className="mt-10 duration-200 transform hover:-translate-y-1"
                     src="/images/blog/66292B61-8EA2-4152-8B60-E8F5F31E17A2_1_201_a.jpeg"
                     alt=""
                   />
-                </a>
+                </a> */}
                 {/* <p className="Article_content__m_nzR">
                   X：
                   <a target="blank" href="https://x.com/Aokumoblog">
@@ -325,6 +325,43 @@ export default function Article({ data, articles }: Props) {
                   <Display slot="3000085625" />
                 </div> */}
                 <div>
+                  <div className={styles.content}>
+                    <h2>（宣伝）コミュニティのお知らせ </h2>
+                    <img className="" src="/images/blog/community.jpg" alt="" />
+                    <p>
+                      エンジニア初学者の方がゆるく楽しく学べる場所、<b>リアル大学生コミュニティ</b>
+                      を紹介します！
+                      <br />
+                      以下のような活動を通じて、メンバー同士で交流しています。
+                    </p>
+                    <ul>
+                      <li>
+                        <b>アプリ紹介</b>
+                        ：メンバーが自身の開発物を共有できます（開発物がなくてもOK）。
+                      </li>
+                      <li>
+                        <b>フィードバックやアドバイス</b>
+                        ：開発物に対するフィードバックを送り合うことができます。
+                      </li>
+                      <li>
+                        <b>ヘルプ</b>
+                        ：わからないことがあればいつでも質問可能です。
+                      </li>
+                      <li>
+                        <b>雑談</b>
+                        ：エンジニア関連の話題から、それ以外のことまで自由に話せます。
+                      </li>
+                    </ul>
+                    <p>
+                      学生以外やエンジニア初学者以外も大歓迎です！
+                      <br />
+                      興味のある方は、ぜひ以下のリンクからご参加ください。お待ちしております✨
+                      <br />
+                      <a target="blank" href="https://discord.gg/dzqeSFZf">
+                        👉コミュニティに参加する
+                      </a>
+                    </p>
+                  </div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
                       {block.adsense && <Display slot={block.adsense} />}
