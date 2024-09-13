@@ -337,7 +337,7 @@ export default function Article({ data, articles }: Props) {
                     <ul>
                       <li>
                         <b>アプリ紹介</b>
-                        ：メンバーが自身の開発物を共有できます（開発物がなくてもOK）。
+                        ：メンバーが自身の開発物を紹介できます（開発物がなくてもOK）。
                       </li>
                       <li>
                         <b>フィードバックやアドバイス</b>
