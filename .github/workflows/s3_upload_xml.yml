@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - sitemap
+  repository_dispatch:
+    types: [update]
 
 jobs:
   build-and-deploy:
