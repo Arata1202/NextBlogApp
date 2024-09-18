@@ -32,7 +32,7 @@ jobs:
 
       # XML ファイルの生成
       - name: Generate XML files
-        run: npm run generate
+        run: npm run build
 
       # AWS CLI のインストール
       - name: Install AWS CLI
