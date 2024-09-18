@@ -6,6 +6,7 @@ import {
   DocumentMagnifyingGlassIcon,
   InformationCircleIcon,
   ShoppingCartIcon,
+  UserGroupIcon,
 } from '@heroicons/react/24/solid';
 import { IoAirplaneOutline } from 'react-icons/io5';
 
@@ -31,6 +32,7 @@ export const headerNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
   // { name: 'ショップ', href: '/shop', icon: ShoppingCartIcon },
+  { name: 'コミュニティ', href: '/community', icon: UserGroupIcon },
   { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
 ];
 
