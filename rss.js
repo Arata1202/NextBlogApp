@@ -56,7 +56,7 @@ const generateRSSFeed = async () => {
         title: article.title,
         description: article.description,
         url: `https://realunivlog.com/articles/${article.id}`,
-        author: 'あお',
+        author: 'あらた',
         date: article.publishedAt,
         categories: article.tags ? article.tags.map((tag) => tag.name) : [],
         enclosure: {
