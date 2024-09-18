@@ -24,6 +24,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # 環境変数を設定
+      - name: Set environment variables
+        run: |
+          echo "MICROCMS_SERVICE_DOMAIN=${{ secrets.MICROCMS_SERVICE_DOMAIN }}" >> $GITHUB_ENV
+          echo "MICROCMS_API_KEY=${{ secrets.MICROCMS_API_KEY }}" >> $GITHUB_ENV
+
       # XML ファイルの生成
       - name: Generate XML files
         run: npm run generate
