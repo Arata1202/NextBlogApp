@@ -30,7 +30,7 @@ const getAllContents = async (endpoint) => {
 
 module.exports = {
   siteUrl: 'https://realunivlog.com/',
-  generateRobotsTxt: true,
+  // generateRobotsTxt: true,
   sitemapSize: 7000,
   additionalPaths: async (config) => {
     const paths = [];
