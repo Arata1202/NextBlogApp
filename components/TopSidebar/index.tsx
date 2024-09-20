@@ -4,8 +4,8 @@ import React from 'react';
 import SearchField from '../SearchField';
 import Image from 'next/image';
 import styles from './index.module.css';
-import { UserProfile } from '@/Section/Dummy';
-import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/Section/Dummy';
+import { UserProfile } from '@/section/Dummy';
+import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/Dummy';
 import { Article } from '@/libs/microcms';
 import Instagram from '../Instagram/page';
 import Display from '../Adsense/display';
@@ -19,7 +19,7 @@ import {
   UserCircleIcon,
   HashtagIcon,
 } from '@heroicons/react/24/solid';
-import { tags } from '@/Section/Tag';
+import { tags } from '@/section/Tag';
 
 type Props = {
   articles?: Article[];
