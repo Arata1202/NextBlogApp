@@ -47,7 +47,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           aws s3 cp ./public/sitemap-0.xml s3://realunivlog/sitemap-0.xml --region ap-northeast-2 --debug
-          aws s3 cp ./public/sitemap.xml s3://realunivlog/sitemap.xml --region ap-northeast-2 --debug
           aws s3 cp ./public/rss.xml s3://realunivlog/rss.xml --region ap-northeast-2 --debug
 
       # CloudFront キャッシュの無効化
