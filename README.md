@@ -24,6 +24,10 @@
 - インデックスのリクエストを送信
   - サイトマップで短縮 -->
 
+## アーキテクチャ
+
+![名称未設定ファイル drawio](https://github.com/user-attachments/assets/79e5b984-804e-4703-a9ee-a27d3389686c)
+
 ## 開発方法
 
 まずは`.env.example`を`.env`に変更し、適切に設定する。
