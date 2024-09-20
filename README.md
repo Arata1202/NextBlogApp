@@ -26,7 +26,7 @@
 
 ## アーキテクチャ
 
-![名称未設定ファイル drawio](https://github.com/user-attachments/assets/e318a3d8-f437-487f-972b-d173f64d567f)
+![名称未設定ファイル drawio](https://github.com/user-attachments/assets/35362673-7c38-4ede-a374-12c5d0579065)
 
 ## 開発方法
 
