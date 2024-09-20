@@ -3,7 +3,7 @@ name: Deploy XML to S3
 on:
   push:
     branches:
-      - sitemap
+      - master
   repository_dispatch:
     types: [update]
 
