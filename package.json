@@ -38,7 +38,7 @@
     "microcms-js-sdk": "^2.3.2",
     "next": ">=14.1.1",
     "next-pwa": "^5.6.0",
-    "preline": "^2.1.0",
+    "preline": "^2.4.1",
     "prettier": "^2.8.4",
     "punycode": "^2.3.1",
     "react": "18.2.0",
