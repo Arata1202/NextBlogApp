@@ -1,0 +1,42 @@
+name: Update Lambda with Latest ECR Image
+
+on:
+  workflow_run:
+    workflows: ['Deploy Containers to ECR']
+    types:
+      - completed
+
+jobs:
+  update-lambda:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Update PushNotification Lambda function
+        run: |
+          aws lambda update-function-code \
+            --function-name nextblogapp_pushnotification \
+            --image-uri 578654894315.dkr.ecr.ap-northeast-2.amazonaws.com/nextblogapp_pushnotification:latest
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-northeast-2
+
+      - name: Update Recaptcha Lambda function
+        run: |
+          aws lambda update-function-code \
+            --function-name nextblogapp_recaptcha \
+            --image-uri 578654894315.dkr.ecr.ap-northeast-2.amazonaws.com/nextblogapp_recaptcha:latest
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-northeast-2
+
+      - name: Update SendEmail Lambda function
+        run: |
+          aws lambda update-function-code \
+            --function-name nextblogapp_email \
+            --image-uri 578654894315.dkr.ecr.ap-northeast-2.amazonaws.com/nextblogapp_email:latest
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-northeast-2
