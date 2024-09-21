@@ -23,9 +23,9 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
 
-      - name: Build and push PushNotifications Docker image
+      - name: Build and push PushNotification Docker image
         run: |
-          docker build -t ${{ secrets.FUNCTIONS_PUSHNOTIFICATION }} --platform linux/x86_64 functions/PushNotifications/
+          docker build -t ${{ secrets.FUNCTIONS_PUSHNOTIFICATION }} --platform linux/x86_64 functions/PushNotification/
           docker tag ${{ secrets.FUNCTIONS_PUSHNOTIFICATION }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_PUSHNOTIFICATION }}:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_PUSHNOTIFICATION }}:latest
 
