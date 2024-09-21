@@ -1,0 +1,42 @@
+name: Deploy Containers to ECR
+
+on:
+  push:
+    branches:
+      - feature/#146
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-northeast-2
+
+      - name: Build and push PushNotifications Docker image
+        run: |
+          docker build -t nextblogapp_pushnotification --platform linux/x86_64 functions/PushNotifications/
+          docker tag nextblogapp_pushnotification:latest 578654894315.dkr.ecr.ap-northeast-2.amazonaws.com/nextblogapp_pushnotification:latest
+          docker push 578654894315.dkr.ecr.ap-northeast-2.amazonaws.com/nextblogapp_pushnotification:latest
+
+      - name: Build and push Recaptcha Docker image
+        run: |
+          docker build -t nextblogapp_recaptcha --platform linux/x86_64 functions/Recaptcha/
+          docker tag nextblogapp_recaptcha:latest 578654894315.dkr.ecr.ap-northeast-2.amazonaws.com/nextblogapp_recaptcha:latest
+          docker push 578654894315.dkr.ecr.ap-northeast-2.amazonaws.com/nextblogapp_recaptcha:latest
+
+      - name: Build and push SendEmail Docker image
+        run: |
+          docker build -t nextblogapp_email --platform linux/x86_64 functions/SendEmail/
+          docker tag nextblogapp_email:latest 578654894315.dkr.ecr.ap-northeast-2.amazonaws.com/nextblogapp_email:latest
+          docker push 578654894315.dkr.ecr.ap-northeast-2.amazonaws.com/nextblogapp_email:latest
