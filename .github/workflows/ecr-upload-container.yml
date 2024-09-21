@@ -23,9 +23,9 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ap-northeast-2
 
-      - name: Build and push PushNotifications Docker image
+      - name: Build and push PushNotification Docker image
         run: |
-          docker build -t nextblogapp_pushnotification --platform linux/x86_64 functions/PushNotifications/
+          docker build -t nextblogapp_pushnotification --platform linux/x86_64 functions/PushNotification/
           docker tag nextblogapp_pushnotification:latest 578654894315.dkr.ecr.ap-northeast-2.amazonaws.com/nextblogapp_pushnotification:latest
           docker push 578654894315.dkr.ecr.ap-northeast-2.amazonaws.com/nextblogapp_pushnotification:latest
 
