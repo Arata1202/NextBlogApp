@@ -3,7 +3,7 @@ name: Deploy Containers to ECR
 on:
   push:
     branches:
-      - feature/#146
+      - master
 
 jobs:
   build:
