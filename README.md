@@ -108,12 +108,17 @@ npm start
 - TypeScript
 - TailwindCSS
 - AWS Lambda
+  - Docker
+  - AWS ECR
+- AWS S3
+- AWS CloudFront
 - MicroCMS
 - Vercel
 - Prettier
 - GitHub
 - Canva
 - Figma
+- Dockerのリバースプロキシにも対応
 
 ## 料金 （月）
 
