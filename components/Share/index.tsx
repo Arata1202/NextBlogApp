@@ -16,7 +16,6 @@ import {
   LinkedinShareButton,
   LinkedinIcon,
 } from 'react-share';
-import Image from 'next/image';
 import { HandThumbUpIcon, RssIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 import { SiFeedly } from 'react-icons/si';
 

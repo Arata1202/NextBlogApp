@@ -6,7 +6,6 @@ import styles from './index.module.css';
 import TagList from '../TagList';
 import PublishedDate from '../Date';
 import { FolderIcon } from '@heroicons/react/24/outline';
-import InFeed from '../Adsense/infeed';
 
 type Props = {
   article: Article;

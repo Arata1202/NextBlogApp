@@ -1,4 +1,4 @@
-import { getList, getTag } from '@/libs/microcms';
+import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import Pagination from '@/components/Pagination';
 import ArticleList from '@/components/ArticleList';
@@ -19,16 +19,12 @@ export default async function Page({ params }: Props) {
     limit: LIMIT,
     filters: `tags[contains]${tagId}`,
   });
-  const data2 = await getList({
-    limit: LIMIT,
-  });
-  const tag = await getTag(tagId);
   return (
     <>
-      <ArticleList articles={data.contents} allArticles={data2.contents} />
+      <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} basePath={`/category/${tagId}`} />
       <div className="pc">
-        <TopSidebar articles={data2.contents} />
+        <TopSidebar />
       </div>
       <Display slot="5969933704" />
     </>

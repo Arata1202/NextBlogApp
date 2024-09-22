@@ -6,10 +6,7 @@ import Image from 'next/image';
 import styles from './index.module.css';
 import { UserProfile } from '@/section/Dummy';
 import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/Dummy';
-import { Article } from '@/libs/microcms';
-import Instagram from '../Instagram/page';
 import Display from '../Adsense/display';
-import LevatechRookie from '../Affiliate/levatechrookie';
 import Suzuri from '../Affiliate/suzuri';
 // import { OneSignalInitial } from '@/libs/OneSignalInitial';
 import {
@@ -21,11 +18,7 @@ import {
 } from '@heroicons/react/24/solid';
 import { tags } from '@/section/Tag';
 
-type Props = {
-  articles?: Article[];
-};
-
-export default function TopSidebar({ articles }: Props) {
+export default function TopSidebar() {
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
       <div className="sidebar sticky top-0 start-0">
@@ -39,7 +32,6 @@ export default function TopSidebar({ articles }: Props) {
           <SearchField />
         </div>
         {/* <OneSignalInitial /> */}
-        {/* Profile Media */}
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           {UserProfile.map((item) => (
             <h1
@@ -119,7 +111,7 @@ export default function TopSidebar({ articles }: Props) {
             カテゴリー
           </h1>
           <nav className="flex gap-4 mt-5 md:mt-5" role="tablist">
-            {CategoryList.map((item, index) => (
+            {CategoryList.map((item) => (
               <a
                 href={item.href}
                 className="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
@@ -147,7 +139,7 @@ export default function TopSidebar({ articles }: Props) {
             ))}
           </nav>
           <nav className="flex gap-4 mt-5 md:mt-5" role="tablist">
-            {CategoryList2.map((item, index) => (
+            {CategoryList2.map((item) => (
               <a
                 href={item.href}
                 className="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"

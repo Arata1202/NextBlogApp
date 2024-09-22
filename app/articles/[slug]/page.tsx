@@ -1,3 +1,4 @@
+import React from 'react';
 import { Metadata } from 'next';
 import { getDetail, getList } from '@/libs/microcms';
 import Article from '@/components/Article';
@@ -21,7 +22,6 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   });
 
   return {
-    //検証 OK
     title: data.title + '｜リアル大学生',
     description: data.description,
     openGraph: {

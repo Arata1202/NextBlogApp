@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
