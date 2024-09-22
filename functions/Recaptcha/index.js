@@ -2,12 +2,16 @@ const https = require('https');
 const querystring = require('querystring');
 
 exports.handler = async (event) => {
-  const allowedOrigins = ['https://realunivlog.com', 'http://localhost:3000'];
+  const allowedOrigins = [
+    'https://realunivlog.com',
+    'http://localhost:3000',
+    'https://suzukiseminar.vercel.app',
+  ];
 
   const responseHeaders = {
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Origin": allowedOrigins[0],
-    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Origin': allowedOrigins[0],
+    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
   };
 
   if (event.httpMethod !== 'POST') {
@@ -28,7 +32,7 @@ exports.handler = async (event) => {
       };
     }
 
-    responseHeaders["Access-Control-Allow-Origin"] = origin;
+    responseHeaders['Access-Control-Allow-Origin'] = origin;
 
     const body = querystring.parse(event.body);
 
@@ -45,31 +49,37 @@ exports.handler = async (event) => {
     const apiUrl = 'https://www.google.com/recaptcha/api/siteverify';
     const postData = querystring.stringify({
       secret: secret,
-      response: recaptchaResponse
+      response: recaptchaResponse,
     });
 
     const verifyRecaptcha = () => {
       return new Promise((resolve, reject) => {
-        const req = https.request(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Length': postData.length
-          }
-        }, (res) => {
-          let data = '';
-          res.on('data', (chunk) => {
-            data += chunk;
-          });
-          res.on('end', () => {
-            if (res.statusCode === 200) {
-              const responseData = JSON.parse(data);
-              resolve(responseData.success);
-            } else {
-              reject(new Error(`reCAPTCHA検証が失敗しました。ステータスコード: ${res.statusCode}`));
-            }
-          });
-        });
+        const req = https.request(
+          apiUrl,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Content-Length': postData.length,
+            },
+          },
+          (res) => {
+            let data = '';
+            res.on('data', (chunk) => {
+              data += chunk;
+            });
+            res.on('end', () => {
+              if (res.statusCode === 200) {
+                const responseData = JSON.parse(data);
+                resolve(responseData.success);
+              } else {
+                reject(
+                  new Error(`reCAPTCHA検証が失敗しました。ステータスコード: ${res.statusCode}`),
+                );
+              }
+            });
+          },
+        );
 
         req.on('error', (e) => {
           reject(new Error(`HTTPSリクエストエラー: ${e.message}`));
@@ -84,7 +94,7 @@ exports.handler = async (event) => {
 
     const response = {
       success: success,
-      message: success ? "reCAPTCHAが正常に検証されました" : "reCAPTCHA検証に失敗しました"
+      message: success ? 'reCAPTCHAが正常に検証されました' : 'reCAPTCHA検証に失敗しました',
     };
 
     return {
