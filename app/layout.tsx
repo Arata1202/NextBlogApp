@@ -1,16 +1,12 @@
-import { getTagList } from '@/libs/microcms';
-import { LIMIT } from '@/constants';
+import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import './globals.css';
 import styles from './layout.module.css';
-import ScrollTopButton from '@/components/Common/ScrollToTop/page';
 import Script from 'next/script';
 import { Adsense } from '@/components/Adsense/adsense';
-// import { OneSignalInitial } from '@/libs/OneSignalInitial';
 
 export const metadata = {
-  // 検証 OK
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
   title: 'リアル大学生',
   description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
@@ -33,16 +29,10 @@ type Props = {
 };
 
 export default async function RootLayout({ children }: Props) {
-  const tags = await getTagList({
-    limit: LIMIT,
-  });
   return (
     <html lang="ja">
       <head>
-        {/* GoogleAnalytics */}
         <Script async strategy="lazyOnload" src={process.env.GOOGLE_ANALYTICS_ID} />
-        {/* GoogleAdsense */}
-        {/* <meta name="google-adsense-account" content="ca-pub-1705865999592590" /> */}
         <Script
           id="google-analytics"
           strategy="lazyOnload"
@@ -57,11 +47,8 @@ export default async function RootLayout({ children }: Props) {
           `,
           }}
         />
-        {/* 共通 OK */}
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
-        {/* 共通 PWA OK */}
         <link rel="manifest" href="/manifest.json" />
-        {/* 共通 ファビコン OK */}
         <link
           rel="icon"
           href="https://realunivlog.com/images/head/16.png"
@@ -80,35 +67,26 @@ export default async function RootLayout({ children }: Props) {
           sizes="48x48"
           type="image/png"
         />
-        {/* 共通 Appleアイコン OK */}
         <link rel="apple-touch-icon" href="https://realunivlog.com/images/head/realstudent.png" />
         <meta name="apple-itunes-app" content="app-id=6590619103" />
-
-        {/* 共通 Windows用アイコン OK */}
         <meta
           name="msapplication-TileImage"
           content="https://realunivlog.com/images/head/realstudent512.png"
         />
         <meta name="msapplication-TileColor" content="#E0CBBA" />
-        {/* 共通 Twitter用 OK */}
         <meta property="og:type" content="blog" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@Aokumoblog" />
         <meta name="twitter:site" content="@Aokumoblog" />
         <meta property="og:site_name" content="リアル大学生" />
         <meta property="og:locale" content="ja_JP" />
-
-        {/* Search Console */}
         <meta name="google-site-verification" content={process.env.SEARCH_CONSOLE_ID} />
       </head>
       <body>
         <Header />
-        {/* <Nav tags={tags.contents} /> */}
         <main className={styles.main}>{children}</main>
         <Footer />
-        {/* <ScrollTopButton /> */}
         <Adsense />
-        {/* <OneSignalInitial /> */}
         <Script async strategy="afterInteractive" src="//www.instagram.com/embed.js" />
       </body>
     </html>

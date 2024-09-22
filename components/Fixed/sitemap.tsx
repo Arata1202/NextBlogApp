@@ -1,15 +1,12 @@
 import styles from './index.module.css';
 import PublishedDate from '@/components/Date';
 import React from 'react';
-import { DocumentMagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import Link from 'next/link';
 import FixedSidebar from '@/components/FixedSidebar';
 import Share from '../Share';
 import AdAlert from '../AdAlert';
 import Display from '../Adsense/display';
 
 const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
-  //出稿日
   const dummyDate = new Date(2023, 10, 27);
   const formattedDate = dummyDate.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -29,7 +26,6 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
               </div>
               <div className="space-y-5 lg:space-y-8">
                 <div className="includeBanner flex justify-end gap-x-5">
-                  {/* <TagList tags={data.tags} /> */}
                   <PublishedDate date={formattedDate} />
                 </div>
                 <AdAlert />

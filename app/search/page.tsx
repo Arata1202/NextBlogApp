@@ -3,11 +3,9 @@ import ArticleList from '@/components/ArticleList';
 import Pagination from '@/components/Pagination';
 import TopSidebar from '@/components/TopSidebar';
 import { MagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { LIMIT } from '@/constants';
 import Display from '@/components/Adsense/display';
 
 export const metadata = {
-  // 検証済み
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
   title: 'リアル大学生',
   description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
@@ -20,9 +18,6 @@ export const metadata = {
   robots: {
     index: false,
   },
-  // alternates: {
-  //   canonical: '/',
-  // },
 };
 
 type Props = {
@@ -34,9 +29,6 @@ type Props = {
 export const revalidate = 60;
 
 export default async function Page({ searchParams }: Props) {
-  const data2 = await getList({
-    limit: LIMIT,
-  });
   const data = await getList({
     q: searchParams.q,
   });
@@ -70,7 +62,7 @@ export default async function Page({ searchParams }: Props) {
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} basePath="/search" q={searchParams.q} />
       <div className="pc">
-        <TopSidebar articles={data2.contents} />
+        <TopSidebar />
       </div>
       <Display slot="5969933704" />
     </>

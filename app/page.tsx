@@ -24,7 +24,7 @@ export default async function Page() {
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} />
       <div className="pc">
-        <TopSidebar articles={data.contents} />
+        <TopSidebar />
       </div>
       <Display slot="5969933704" />
     </>

@@ -1,5 +1,6 @@
+import React from 'react';
 import { getTag2 } from '@/libs/microcms';
-import { FolderOpenIcon, HomeIcon, ChevronRightIcon, HashtagIcon } from '@heroicons/react/24/solid';
+import { HomeIcon, ChevronRightIcon, HashtagIcon } from '@heroicons/react/24/solid';
 import { Metadata } from 'next';
 
 type Props = {
@@ -12,7 +13,6 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tag = await getTag2(params.tagId);
 
-  // 検証済み
   return {
     title: `${tag.name}｜リアル大学生`,
     description: `${tag.name}について解説するタグです。`,
