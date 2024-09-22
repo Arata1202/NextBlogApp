@@ -39,9 +39,6 @@ export default async function Page({ params, searchParams }: Props) {
     offset: LIMIT * (current - 1),
     q: searchParams.q,
   });
-  const data2 = await getList({
-    limit: LIMIT,
-  });
   return (
     <>
       <h1 className="categoryTitle text-3xl font-bold pt-5 max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
@@ -80,7 +77,7 @@ export default async function Page({ params, searchParams }: Props) {
         q={searchParams.q}
       />
       <div className="pc">
-        <TopSidebar articles={data2.contents} />
+        <TopSidebar />
       </div>
       <Display slot="5969933704" />
     </>

@@ -3,7 +3,6 @@ import ArticleList from '@/components/ArticleList';
 import Pagination from '@/components/Pagination';
 import TopSidebar from '@/components/TopSidebar';
 import { MagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { LIMIT } from '@/constants';
 import Display from '@/components/Adsense/display';
 
 export const metadata = {
@@ -30,9 +29,6 @@ type Props = {
 export const revalidate = 60;
 
 export default async function Page({ searchParams }: Props) {
-  const data2 = await getList({
-    limit: LIMIT,
-  });
   const data = await getList({
     q: searchParams.q,
   });
@@ -66,7 +62,7 @@ export default async function Page({ searchParams }: Props) {
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} basePath="/search" q={searchParams.q} />
       <div className="pc">
-        <TopSidebar articles={data2.contents} />
+        <TopSidebar />
       </div>
       <Display slot="5969933704" />
     </>
