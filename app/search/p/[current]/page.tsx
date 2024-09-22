@@ -16,7 +16,6 @@ type Props = {
 };
 
 export const metadata = {
-  // 検証済み
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
   title: 'リアル大学生',
   description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
@@ -29,9 +28,6 @@ export const metadata = {
   robots: {
     index: false,
   },
-  // alternates: {
-  //   canonical: '/',
-  // },
 };
 
 export const revalidate = 60;

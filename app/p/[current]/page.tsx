@@ -13,7 +13,6 @@ type Props = {
 };
 
 export const metadata = {
-  // 検証 OK
   robots: {
     index: false,
   },
