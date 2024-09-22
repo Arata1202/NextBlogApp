@@ -8,6 +8,7 @@
     "generate": "next build && next-sitemap --config next-sitemap.config.js && node rss.js",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "eslint components/ app/ --fix",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json,css}'"
   },
   "prettier": {
