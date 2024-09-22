@@ -115,10 +115,14 @@ npm start
 - MicroCMS
 - Vercel
 - Prettier
+- Eslint
+- Husky
+  - pre-commit
 - GitHub
 - Canva
 - Figma
-- Dockerのリバースプロキシにも対応
+- Docker
+  - Reverse Proxy
 
 ## 料金 （月）
 
