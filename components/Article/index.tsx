@@ -28,8 +28,6 @@ import TagList2 from '../TagList2';
 import PanTagList from '../PanTagList';
 import AdAlert from '../AdAlert';
 import Display from '../Adsense/display';
-import Mulchplex from '../Adsense/mulchplex';
-import InArticle from '../Adsense/inarticle';
 import {
   TwitterShareButton,
   TwitterIcon,
@@ -58,7 +56,7 @@ import {
   RssIcon,
   UserPlusIcon,
 } from '@heroicons/react/24/solid';
-import { HashtagIcon, FolderIcon } from '@heroicons/react/24/outline';
+import { FolderIcon } from '@heroicons/react/24/outline';
 import { SiFeedly } from 'react-icons/si';
 
 hljs.registerLanguage('javascript', javascript);
@@ -229,7 +227,6 @@ export default function Article({ data, articles }: Props) {
                                   alt="吹き出しのイメージ"
                                   className="bubble-image"
                                 />
-                                {/* <p className="bubble-name text-center">{block.bubble_name}</p> */}
                               </div>
                             </div>
                           )}
@@ -306,24 +303,6 @@ export default function Article({ data, articles }: Props) {
                   </div>
                 ))}
                 <div>{headings.length > 0 && <TableOfContents headings={headings} />}</div>
-                {/* <a target="blank" href="https://discord.gg/346ndctX">
-                  <img
-                    className="mt-10 duration-200 transform hover:-translate-y-1"
-                    src="/images/blog/66292B61-8EA2-4152-8B60-E8F5F31E17A2_1_201_a.jpeg"
-                    alt=""
-                  />
-                </a> */}
-                {/* <p className="Article_content__m_nzR">
-                  X：
-                  <a target="blank" href="https://x.com/Aokumoblog">
-                    https://x.com/Aokumoblog
-                  </a>
-                  <br />
-                  ※人数が集まらなかった場合は、中止となる場合がございます。
-                </p> */}
-                {/* <div className="FirstAd">
-                  <Display slot="3000085625" />
-                </div> */}
                 <div>
                   <div className={styles.content}>
                     <h2>（宣伝）コミュニティのお知らせ </h2>
@@ -384,7 +363,6 @@ export default function Article({ data, articles }: Props) {
                                     alt="吹き出しのイメージ"
                                     className="bubble-image"
                                   />
-                                  {/* <p className="bubble-name text-center">{block.bubble_name}</p> */}
                                 </div>
                               </div>
                             )}

@@ -26,9 +26,6 @@ export default async function Page({ params }: Props) {
     limit: LIMIT,
     offset: LIMIT * (current - 1),
   });
-  const data2 = await getList({
-    limit: LIMIT,
-  });
   return (
     <>
       <h1 className="categoryTitle text-3xl font-bold pt-5 pb-2 max-w-[85rem] sm:px-6 lg:px-8 mx-auto">
@@ -40,7 +37,7 @@ export default async function Page({ params }: Props) {
       <ArticleList articles={data.contents} />
       <Pagination totalCount={data.totalCount} current={current} />
       <div className="pc">
-        <TopSidebar articles={data2.contents} />
+        <TopSidebar />
       </div>
       <Display slot="5969933704" />
     </>

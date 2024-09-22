@@ -9,9 +9,7 @@ import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/
 import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
 import { tags } from '@/section/Tag';
-import Instagram from '../Instagram/page';
 import Display from '../Adsense/display';
-import LevatechRookie from '../Affiliate/levatechrookie';
 import Suzuri from '../Affiliate/suzuri';
 import {
   MagnifyingGlassIcon,
@@ -126,7 +124,7 @@ export default function FixedSidebar({ articles }: Props) {
             カテゴリー
           </h1>
           <nav className="flex gap-4 mt-5 md:mt-5" role="tablist">
-            {CategoryList.map((item, index) => (
+            {CategoryList.map((item) => (
               <a
                 href={item.href}
                 className="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
@@ -154,7 +152,7 @@ export default function FixedSidebar({ articles }: Props) {
             ))}
           </nav>
           <nav className="flex gap-4 mt-5 md:mt-5" role="tablist">
-            {CategoryList2.map((item, index) => (
+            {CategoryList2.map((item) => (
               <a
                 href={item.href}
                 className="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
