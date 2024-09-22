@@ -1,4 +1,4 @@
-import { getList, getTag } from '@/libs/microcms';
+import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import Pagination from '@/components/Pagination';
 import ArticleList from '@/components/ArticleList';
@@ -22,7 +22,6 @@ export default async function Page({ params }: Props) {
   const data2 = await getList({
     limit: LIMIT,
   });
-  const tag = await getTag(tagId);
   return (
     <>
       <ArticleList articles={data.contents} allArticles={data2.contents} />

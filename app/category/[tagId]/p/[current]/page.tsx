@@ -3,7 +3,6 @@ import { LIMIT } from '@/constants';
 import Pagination from '@/components/Pagination';
 import ArticleList from '@/components/ArticleList';
 import TopSidebar from '@/components/TopSidebar';
-import Script from 'next/script';
 import Display from '@/components/Adsense/display';
 
 type Props = {

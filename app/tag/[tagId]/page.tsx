@@ -22,7 +22,6 @@ export default async function Page({ params }: Props) {
   const data2 = await getList({
     limit: LIMIT,
   });
-  const tag = await getTag2(tagId);
   return (
     <>
       <ArticleList articles={data.contents} allArticles={data2.contents} />
