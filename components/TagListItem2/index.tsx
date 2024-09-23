@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import React from 'react';
 import { Tag2 } from '@/libs/microcms';
 import styles from './index.module.css';
 import { HashtagIcon } from '@heroicons/react/24/outline';

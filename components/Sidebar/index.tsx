@@ -4,14 +4,14 @@ import React from 'react';
 import SearchField from '../SearchField';
 import Image from 'next/image';
 import styles from './index.module.css';
-import { UserProfile } from '@/Section/Dummy';
-import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/Section/Dummy';
+import { UserProfile } from '@/section/Dummy';
+import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/Dummy';
 import Display from '../Adsense/display';
 import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
 import TableOfContents from '../TableOfContent';
 import { useEffect, useState } from 'react';
-import { tags } from '@/Section/Tag';
+import { tags } from '@/section/Tag';
 import Suzuri from '../Affiliate/suzuri';
 import {
   MagnifyingGlassIcon,
@@ -166,7 +166,7 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
             カテゴリー
           </h1>
           <nav className="flex gap-4 mt-5 md:mt-5" role="tablist">
-            {CategoryList.map((item, index) => (
+            {CategoryList.map((item) => (
               <a
                 href={item.href}
                 className="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
@@ -194,7 +194,7 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
             ))}
           </nav>
           <nav className="flex gap-4 mt-5 md:mt-5" role="tablist">
-            {CategoryList2.map((item, index) => (
+            {CategoryList2.map((item) => (
               <a
                 href={item.href}
                 className="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
@@ -303,11 +303,6 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
             )}
           </div>
         </div>
-        {/* <Instagram /> */}
-        {/* <div className="FirstAd mt-5">
-          <Display slot="9574685533" />
-        </div> */}
-        {/* <LevatechRookie /> */}
       </div>
       <div className="SidebarTableOfContens mobile">
         {headings.length > 0 && <TableOfContents headings={headings} />}

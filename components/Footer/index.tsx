@@ -1,8 +1,9 @@
 'use client';
 
+import React from 'react';
 import styles from './index.module.css';
 import Image from 'next/image';
-import { BlogTitle, copyRight } from '@/Section/Dummy';
+import { BlogTitle, copyRight } from '@/section/Dummy';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {}
 

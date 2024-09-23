@@ -2,18 +2,17 @@
 
 import { Fragment, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import styles from './index.module.css';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { FolderIcon } from '@heroicons/react/24/solid';
-import { BlogTitle } from '@/Section/Dummy';
+import { BlogTitle } from '@/section/Dummy';
 import {
   headerNavigation,
   mobileTopNavigation,
   mobileBottomNavigation,
   categories,
-} from '@/Section/Dummy';
+} from '@/section/Dummy';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -74,7 +73,7 @@ export default function Header() {
             </a>
           ))}
           <Popover className="relative">
-            {({ open, close }) => (
+            {({ close }) => (
               <>
                 <Popover.Button className="flex items-center text-sm font-medium text-gray-900 hover:text-blue-500 focus:outline-none">
                   <FolderIcon className="h-5 w-5 mr-2" aria-hidden="true" />

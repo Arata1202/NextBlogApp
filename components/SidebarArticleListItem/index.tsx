@@ -8,17 +8,8 @@ type Props = {
   article: Article;
 };
 
-function getImageSrcSizes(imageSrc: string) {
-  return {
-    mobileSrcSet: `${imageSrc}?fm=webp&w=414 1x, ${imageSrc}?fm=webp&w=414&dpr=2 2x`,
-    desktopSrcSet: `${imageSrc}?fm=webp&fit=crop&w=240&h=126 1x, ${imageSrc}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`,
-  };
-}
-
 const SidebarArticleListItem = ({ article }: Props) => {
   const imageSrc = article.thumbnail?.url || '/no-image.png';
-  const isThumbnailAvailable = !!article.thumbnail;
-  const { mobileSrcSet, desktopSrcSet } = getImageSrcSizes(imageSrc);
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import React from 'react';
 import { Tag } from '@/libs/microcms';
 import styles from './index.module.css';
 

@@ -24,6 +24,10 @@
 - インデックスのリクエストを送信
   - サイトマップで短縮 -->
 
+## アーキテクチャ
+
+![名称未設定ファイル drawio](https://github.com/user-attachments/assets/303bfd82-020c-493a-8f1a-d8e635022457)
+
 ## 開発方法
 
 まずは`.env.example`を`.env`に変更し、適切に設定する。
@@ -104,12 +108,21 @@ npm start
 - TypeScript
 - TailwindCSS
 - AWS Lambda
+  - Docker
+  - AWS ECR
+- AWS S3
+- AWS CloudFront
 - MicroCMS
 - Vercel
 - Prettier
+- Eslint
+- Husky
+  - pre-commit
 - GitHub
 - Canva
 - Figma
+- Docker
+  - Reverse Proxy
 
 ## 料金 （月）
 

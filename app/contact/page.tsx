@@ -6,7 +6,6 @@ import { LIMIT } from '@/constants';
 import Display from '@/components/Adsense/display';
 
 export const metadata = {
-  // 検証 OK
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
   title: 'お問い合わせ｜リアル大学生',
   description: 'お問い合わせのフォームを記載しています。',
