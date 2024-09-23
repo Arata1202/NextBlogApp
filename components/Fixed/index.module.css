@@ -9,6 +9,23 @@
   }
 }
 
+/* タブボックス (汎用) */
+.tab_common_box {
+  padding: 10px;
+  background-color: #eaf4fc;
+  display: flex;
+  margin-bottom: 2.5rem;
+  margin-top: 2.5rem;
+}
+.tab_common_box ul {
+  list-style: disc;
+  margin-left: 50px;
+}
+.tab_common_box_icon {
+  color: #4682b4;
+  margin-left: 10px;
+}
+
 .title {
   font-size: 1.8rem;
   font-weight: bold;
