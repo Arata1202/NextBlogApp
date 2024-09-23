@@ -16,7 +16,6 @@ import {
   LinkedinShareButton,
   LinkedinIcon,
 } from 'react-share';
-import Image from 'next/image';
 import { HandThumbUpIcon, RssIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 import { SiFeedly } from 'react-icons/si';
 
@@ -106,7 +105,7 @@ export default function Share() {
           <div className="flex justify-center">
             <a
               aria-label="RSSフォローボタン"
-              href="https://realunivlog.com/rss.xml"
+              href="https://d1n5q2wwrdsa8j.cloudfront.net/rss.xml"
               className="bg-orange-500 rounded-full p-2 m-1"
               target="_blank"
               rel="noopener noreferrer"
@@ -115,7 +114,7 @@ export default function Share() {
             </a>
             <a
               aria-label="Feedlyフォローボタン"
-              href="https://feedly.com/i/subscription/feed/https://realunivlog.com/rss.xml"
+              href="https://feedly.com/i/subscription/feed/https://d1n5q2wwrdsa8j.cloudfront.net/rss.xml"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-500 rounded-full p-2 m-1"
