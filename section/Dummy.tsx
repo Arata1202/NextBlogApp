@@ -1,22 +1,14 @@
+import React from 'react';
 import {
   HomeIcon,
   UserCircleIcon,
   EnvelopeIcon,
   FolderOpenIcon,
-  DocumentMagnifyingGlassIcon,
-  InformationCircleIcon,
-  ShoppingCartIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/solid';
 import { IoAirplaneOutline } from 'react-icons/io5';
 
 import { BookOpenIcon, CommandLineIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
-
-type SocialIconType = {
-  name: string;
-  href: string;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-};
 
 // ブログ情報
 export const BlogTitle = [
@@ -27,7 +19,7 @@ export const BlogTitle = [
   },
 ];
 
-// PC　ヘッダーナビゲーション
+// PC ヘッダーナビゲーション
 export const headerNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
@@ -40,6 +32,7 @@ export const headerNavigation = [
 export const mobileTopNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
+  { name: 'コミュニティ', href: '/community', icon: UserGroupIcon },
   // { name: 'ショップ', href: '/shop', icon: ShoppingCartIcon },
 ];
 export const categories = [
@@ -65,7 +58,7 @@ export const UserProfile = [
     // ユーザー写真
     imageUrl: '/images/blog/face.webp',
     imageAlt: '筆者のイメージ',
-    //　紹介文
+    // 紹介文
     profileIntroduction: [
       { sentence: '21歳' },
       { sentence: '千葉県在住' },
