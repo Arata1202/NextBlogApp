@@ -3,36 +3,13 @@
 import styles from './index.module.css';
 import PublishedDate from '@/components/Date';
 import React from 'react';
-import { InformationCircleIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import Link from 'next/link';
 import FixedSidebar from '@/components/FixedSidebar';
 import Share from '../Share';
 import AdAlert from '../AdAlert';
-import TableOfContents from '../TableOfContent';
 import Display from '../Adsense/display';
+import { InformationCircleIcon } from '@heroicons/react/24/solid';
 
 const CommunityPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
-  // const headings = [
-  //   { id: 'introduction', title: '個人情報取り扱いに関する基本方針', level: 2 },
-  //   { id: 'definition', title: '個人情報の定義', level: 2 },
-  //   { id: 'acquisition', title: '個人情報の取得方法', level: 2 },
-  //   { id: 'cookie', title: 'クッキー（Cookie）', level: 3 },
-  //   { id: 'analytics', title: 'アクセス解析ツール', level: 3 },
-  //   { id: 'comment', title: 'コメントについて', level: 3 },
-  //   { id: 'purpose', title: '個人情報の利用目的', level: 2 },
-  //   { id: 'advertisement', title: '本サービスが利用している広告サービス', level: 2 },
-  //   { id: 'amazon', title: 'Amazonアソシエイトプログラム', level: 3 },
-  //   { id: 'google', title: 'Googleアドセンス', level: 3 },
-  //   { id: 'management', title: '個人情報の管理方法', level: 2 },
-  //   { id: 'third-party', title: '個人情報の第三者提供', level: 2 },
-  //   { id: 'disclosure', title: '個人情報の開示、訂正などの手続きについて', level: 2 },
-  //   { id: 'disclaimer', title: '免責事項', level: 2 },
-  //   { id: 'copyright', title: '著作権について', level: 2 },
-  //   { id: 'link', title: 'リンクについて', level: 2 },
-  //   { id: 'contact', title: '個人情報の取扱いに関する相談や苦情の連絡先', level: 2 },
-  // ];
-
-  //出稿日
   const dummyDate = new Date(2024, 8, 17);
   const formattedDate = dummyDate.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -61,44 +38,41 @@ const CommunityPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) 
               <div className={`${styles.content} mt-10 mb-5`}>
                 <h2>コミュニティについて</h2>
                 <p>
-                  エンジニア初学者のためのゆるく楽しく学べる場所である、
-                  <span className="underline_red">コミュニティ</span>をご紹介します！
+                  主にエンジニア初学者が集まり、楽しく交流や勉強を行っている「リアル大学生コミュニティ」について紹介します！
                   <br />
-                  メンバー同士の交流を通じて、楽しく学べる環境を用意しております！
-                </p>
-
-                <h2>参加資格</h2>
-                <p>参加資格は以下の通りです。</p>
-                <ul>
-                  <li>エンジニアの方</li>
-                  <li>エンジニアに興味がある方</li>
-                </ul>
-                <p>
-                  年齢や職業に関係なく、学生以外の方もご参加いただけます。
                   <br />
-                  実際に学生以外の参加者もおります。
+                  <span className="underline_red">
+                    ※学生限定のコミュニティではありませんので、学生以外の参加者もいらっしゃいます！
+                  </span>
+                  <br />
+                  <span className="underline_red">※参加・退会は自由です！</span>
                 </p>
 
                 <h2>活動内容</h2>
-                <p>
-                  次に活動内容について紹介します
-                  <br />
-                  主な内容としては以下の通りです。
-                </p>
-                <ul>
-                  <li>アプリ紹介</li>
-                  <li>質問・ヘルプ</li>
-                  <li>雑談</li>
-                  <li>作業記録</li>
-                </ul>
+                <p>主な活動目的は以下の通りです！</p>
+                <div className={`${styles.tab_common_box} flex items-center`}>
+                  <InformationCircleIcon
+                    className={`h-8 w-8 ${styles.tab_common_box_icon}`}
+                    aria-hidden="true"
+                  />
+                  <ul>
+                    <li>アプリ紹介</li>
+                    <li>質問・ヘルプ</li>
+                    <li>雑談</li>
+                    <li>作業記録</li>
+                  </ul>
+                </div>
 
                 <h3>アプリ紹介</h3>
                 <p>
-                  このチャンネルでは、開発したアプリを紹介し、フィードバックを得ることができます。
+                  開発したアプリを紹介し、フィードバックを得ることができます。
                   <br />
                   <br />
-                  サービスは開発がゴールではなく、実際に使ってもらうことでその価値が高まっていきます。
-                  コミュニティを活用して実用性を磨きましょう。
+                  サービスは開発がゴールではなく、どのように人に使ってもらうかを考えることなどが大切です。
+                  フィードバックを受けることで、より良いサービスを開発することができます。
+                  <br />
+                  <br />
+                  私自身もアドバイスしますし、コミュニティメンバーからも様々なアドバイスを得られます。
                 </p>
 
                 <h3>質問・ヘルプ</h3>
@@ -106,7 +80,12 @@ const CommunityPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) 
                   このチャンネルでは、開発やエンジニアに関する疑問を気軽に質問できます。
                   <br />
                   <br />
-                  助け合いの場としても活用でき、お互いに学び合うことができます。
+                  開発者それぞれが持つ技術や知識は異なりますので、詳しい人に聞くことで疑問を解決できると思います。
+                  <br />
+                  ちなみに、私はWeb開発中心の技術についてお答えできるかもしれません。
+                  <br />
+                  <br />
+                  助け合いの場として、ぜひ活用してください。
                 </p>
 
                 <h3>雑談</h3>
@@ -114,15 +93,43 @@ const CommunityPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) 
                   このチャンネルでは、気軽な雑談ができます。
                   <br />
                   <br />
-                  エンジニアに関する話題に限らず、日常のエピソードを通じてメンバー同士の仲を深めましょう。
+                  エンジニアに関する話題だけでなく、日常のエピソードを通じてメンバー同士の仲を深めています。
                 </p>
 
                 <h3>作業記録</h3>
                 <p>
-                  日々の作業内容を記録・共有するチャンネルです。
+                  日々の作業内容を記録・共有するためのチャンネルです。
                   <br />
                   <br />
                   お互いに進捗を報告し合うことで、モチベーションの向上にもつながります。
+                </p>
+
+                <h2>参加資格</h2>
+                <p>以下のような方をお待ちしています！</p>
+                <div className={`${styles.tab_common_box} flex items-center`}>
+                  <InformationCircleIcon
+                    className={`h-8 w-8 ${styles.tab_common_box_icon}`}
+                    aria-hidden="true"
+                  />
+                  <ul>
+                    <li>エンジニアの方</li>
+                    <li>エンジニアに興味がある方</li>
+                  </ul>
+                </div>
+                <p>年齢や職業に関係なく、学生以外の方も参加できます。</p>
+
+                <h2>参加方法</h2>
+                <p>
+                  お手数ですが、私の
+                  <a target="blank" href="https://x.com/Aokumoblog">
+                    X（旧 Twitter）
+                  </a>
+                  のDMにてご連絡ください。
+                  <br />
+                  「参加希望します」とお伝えいただければ大丈夫です！
+                  <br />
+                  <br />
+                  それではお待ちしております！
                 </p>
               </div>
             </div>
