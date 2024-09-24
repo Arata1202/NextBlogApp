@@ -6,4 +6,4 @@ Allow: /
 Host: https://realunivlog.com/
 
 # Sitemaps
-Sitemap: https://d1n5q2wwrdsa8j.cloudfront.net/sitemap.xml
+Sitemap: https://meta.realunivlog.com/sitemap.xml
