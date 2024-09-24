@@ -35,7 +35,7 @@ const generateRSSFeed = async () => {
   const feed = new RSS({
     title: 'リアル大学生',
     description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
-    feed_url: 'https://d1n5q2wwrdsa8j.cloudfront.net/rss.xml',
+    feed_url: 'https://meta.realunivlog.com/rss.xml',
     site_url: 'https://realunivlog.com',
     language: 'ja',
     ttl: 60,
