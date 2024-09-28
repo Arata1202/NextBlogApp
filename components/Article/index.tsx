@@ -304,49 +304,6 @@ export default function Article({ data, articles }: Props) {
                 ))}
                 <div>{headings.length > 0 && <TableOfContents headings={headings} />}</div>
                 <div>
-                  {/* <div className={styles.content}>
-                    <h2>（宣伝）コミュニティのお知らせ </h2>
-                    <img className="" src="/images/blog/community.jpg" alt="" />
-                    <p>
-                      エンジニア初学者の方がゆるく楽しく学べる場所、<b>エンジニアコミュニティ</b>
-                      を紹介します！
-                      <br />
-                      以下のような活動を通じて、メンバー同士で交流しています。
-                    </p>
-                    <ul>
-                      <li>
-                        <b>アプリ紹介</b>
-                        ：メンバーが自身の開発物を紹介できます（開発物がなくてもOK）。
-                      </li>
-                      <li>
-                        <b>フィードバックやアドバイス</b>
-                        ：開発物に対するフィードバックを送り合うことができます。
-                      </li>
-                      <li>
-                        <b>活動報告</b>
-                        ：その日の活動記録を報告し合うことができます（任意）。
-                      </li>
-                      <li>
-                        <b>ヘルプ</b>
-                        ：わからないことがあればいつでも質問可能です。
-                      </li>
-                      <li>
-                        <b>雑談</b>
-                        ：エンジニア関連の話題から、それ以外のことまで自由に話せます。
-                      </li>
-                    </ul>
-                    <p>
-                      <span className="underline_red">
-                        ⚠️年齢や経験の有無は問いません。学生以外の参加者もございます。
-                      </span>
-                      <br />
-                      興味のある方は、ぜひ以下のリンクからご参加ください。お待ちしております✨
-                      <br />
-                      <a target="blank" href="https://discord.gg/dzqeSFZf">
-                        👉コミュニティに参加する
-                      </a>
-                    </p>
-                  </div> */}
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
                       {block.adsense && <Display slot={block.adsense} />}
