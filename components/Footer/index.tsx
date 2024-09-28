@@ -11,7 +11,6 @@ const footerNavigation = {
   solutions: [
     { name: 'プロフィール', href: '/profile' },
     { name: 'サイトマップ', href: '/sitemap' },
-    { name: 'コミュニティ', href: '/community' },
   ],
   category: [
     { name: '大学生活', href: '/category/university' },

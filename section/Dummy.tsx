@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  HomeIcon,
-  UserCircleIcon,
-  EnvelopeIcon,
-  FolderOpenIcon,
-  UserGroupIcon,
-} from '@heroicons/react/24/solid';
+import { HomeIcon, UserCircleIcon, EnvelopeIcon, FolderOpenIcon } from '@heroicons/react/24/solid';
 import { IoAirplaneOutline } from 'react-icons/io5';
 
 import { BookOpenIcon, CommandLineIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
@@ -23,8 +17,6 @@ export const BlogTitle = [
 export const headerNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
-  // { name: 'ショップ', href: '/shop', icon: ShoppingCartIcon },
-  { name: 'コミュニティ', href: '/community', icon: UserGroupIcon },
   { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
 ];
 
@@ -32,8 +24,6 @@ export const headerNavigation = [
 export const mobileTopNavigation = [
   { name: 'ホーム', href: '/', icon: HomeIcon },
   { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
-  { name: 'コミュニティ', href: '/community', icon: UserGroupIcon },
-  // { name: 'ショップ', href: '/shop', icon: ShoppingCartIcon },
 ];
 export const categories = [
   { name: '大学生活', href: '/category/university', icon: FolderOpenIcon },
