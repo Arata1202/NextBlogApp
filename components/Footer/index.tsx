@@ -4,6 +4,7 @@ import React from 'react';
 import styles from './index.module.css';
 import Image from 'next/image';
 import { BlogTitle, copyRight } from '@/section/Dummy';
+import MobileBanner from '../MobileBanner';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {}
 
@@ -64,47 +65,7 @@ const footerNavigation = {
 export default function Footer() {
   return (
     <footer className={`${styles.footer} w-full bg-white`}>
-      <div className="flex justify-center mt-20" style={{ backgroundColor: '#d9d9d9' }}>
-        <div style={{ position: 'relative', width: '700px' }}>
-          <img
-            loading="lazy"
-            style={{ padding: '0 12px' }}
-            src="/images/blog/mobilebanner.png"
-            alt=""
-          />
-          <div
-            style={{
-              position: 'absolute',
-              bottom: '10px',
-              left: '15px',
-              display: 'flex',
-              justifyContent: 'center',
-              width: '45%',
-            }}
-          >
-            <a
-              href="https://apps.apple.com/jp/app/リアル大学生-モバイル/id6590619103"
-              target="_blank"
-            >
-              <img
-                src="/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg"
-                alt="Download on the App Store"
-                style={{ height: '40px' }}
-                className="app-badge"
-              />
-            </a>
-            <a target="_blank" className="app-badge-link" style={{ marginLeft: '10%' }}>
-              <img
-                src="/GetItOnGooglePlay_Badge_Web_color_English.png"
-                alt="Download on the Play Store"
-                style={{ height: '40px' }}
-                className="app-badge"
-              />
-            </a>
-          </div>
-        </div>
-      </div>
-
+      <MobileBanner />
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
