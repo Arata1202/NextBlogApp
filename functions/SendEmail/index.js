@@ -33,10 +33,10 @@ exports.handler = async (event) => {
       html: `
                 <p>以下の内容でお問い合わせを承りました。</p>
                 <p>数日以内にご連絡いたしますので、しばらくお待ちください。</p>
-                <p style='padding: 12px; border-left: 4px solid #d0d0d0; font-style: italic;'>氏名: ${sei}</p>
-                <p style='padding: 12px; border-left: 4px solid #d0d0d0; font-style: italic;'>題名: ${mei}</p>
-                <p style='padding: 12px; border-left: 4px solid #d0d0d0; font-style: italic;'>メールアドレス: ${email}</p>
-                <p style='padding: 12px; border-left: 4px solid #d0d0d0; font-style: italic;'>お問い合わせ内容: ${message}</p>
+                <p style='padding: 12px; border-left: 4px solid #d0d0d0;'>氏名: ${sei}</p>
+                <p style='padding: 12px; border-left: 4px solid #d0d0d0;'>題名: ${mei}</p>
+                <p style='padding: 12px; border-left: 4px solid #d0d0d0;'>メールアドレス: ${email}</p>
+                <p style='padding: 12px; border-left: 4px solid #d0d0d0;'>お問い合わせ内容: ${message}</p>
             `,
     };
 
