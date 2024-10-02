@@ -1,9 +1,11 @@
-import React from 'react';
+'use client';
+import React, { memo } from 'react';
 import Image from 'next/image';
-import { memo } from 'react';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import PublishedDate from '../Date';
+import CategoryList from '../../Categories/CategoryList';
+import PublishedDate from '../../Elements/Date';
+import { FolderIcon } from '@heroicons/react/24/outline';
 
 type Props = {
   article: Article;
@@ -21,17 +23,17 @@ const ArticleListItem = ({ article }: Props) => {
   const isThumbnailAvailable = !!article.thumbnail;
   const { mobileSrcSet, desktopSrcSet } = getImageSrcSizes(imageSrc);
 
-  const handleNavigation = (event: React.MouseEvent<HTMLAnchorElement>, url: string) => {
+  const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
-    window.location.href = url;
+    window.location.href = `/articles/${article.id}`;
   };
 
   return (
     <li className={styles.list}>
       <a
-        onClick={(event) => handleNavigation(event, `/articles/${article.id}`)}
+        onClick={handleClick}
         href={`/articles/${article.id}`}
-        className={`${styles.link} p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 cursor-pointer`}
+        className={`${styles.link} p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1`}
       >
         <picture>
           {isThumbnailAvailable && (
@@ -54,6 +56,8 @@ const ArticleListItem = ({ article }: Props) => {
           <div className={styles.title}>{article.title}</div>
           <div className={styles.description}>{article.description}</div>
           <div className={styles.date}>
+            <FolderIcon className="h-5 w-5 mr-2 mt-4" aria-hidden="true" />
+            <CategoryList tags={article.tags} hasLink={false} />
             &nbsp;&nbsp;&nbsp;&nbsp;
             <PublishedDate date={article.publishedAt || article.createdAt} />
           </div>

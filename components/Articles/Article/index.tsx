@@ -15,19 +15,19 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import vim from 'highlight.js/lib/languages/vim';
 import 'highlight.js/styles/hybrid.css';
 import { Article as ArticleType } from '@/libs/microcms';
-import PublishedDate from '../Date';
+import PublishedDate from '../../Elements/Date';
 import styles from './index.module.css';
 import Image from 'next/image';
-import TableOfContents from '../../components/TableOfContent';
-import Sidebar from '../Sidebars/Sidebar';
+import TableOfContents from '../TableOfContent';
+import Sidebar from '../../Sidebars/Sidebar';
 import WithArticleItem from '../WithArticleItem';
 import { useEffect, useState } from 'react';
 import './article.css';
-import CategoryList from '../Categories/CategoryList';
-import TagList from '../Tags/TagList';
-import PanTagList from '../Breadcrumbs/PanTagList';
+import CategoryList from '../../Categories/CategoryList';
+import TagList from '../../Tags/TagList';
+import PanTagList from '../../Breadcrumbs/PanTagList';
 import AdAlert from '../AdAlert';
-import Display from '../Adsense/display';
+import Display from '../../Adsense/display';
 import {
   TwitterShareButton,
   TwitterIcon,

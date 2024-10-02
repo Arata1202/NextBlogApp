@@ -3,7 +3,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Listbox } from '@headlessui/react';
-import SearchField from '../../SearchField';
+import SearchField from '../../Elements/SearchField';
 import Image from 'next/image';
 import styles from './index.module.css';
 import { UserProfile } from '@/section/Dummy';

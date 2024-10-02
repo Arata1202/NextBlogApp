@@ -2,9 +2,9 @@ import React from 'react';
 import { Article } from '@/libs/microcms';
 import ArticleListItem from '../ArticleListItem';
 import styles from './index.module.css';
-import TopSidebar from '../Sidebars/TopSidebar';
-import Share from '../Share';
-import Display from '../Adsense/display';
+import TopSidebar from '../../Sidebars/TopSidebar';
+import Share from '../../Articles/Share';
+import Display from '../../Adsense/display';
 
 type Props = {
   articles?: Article[];
