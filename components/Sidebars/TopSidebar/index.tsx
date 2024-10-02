@@ -1,85 +1,28 @@
 'use client';
 
 import React from 'react';
+import { useState } from 'react';
 import { Listbox } from '@headlessui/react';
-import SearchField from '../SearchField';
+import SearchField from '../../SearchField';
 import Image from 'next/image';
 import styles from './index.module.css';
 import { UserProfile } from '@/section/Dummy';
 import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/Dummy';
-import Display from '../Adsense/display';
-import { Article } from '@/libs/microcms';
-import SidebarArticleListItem from '../SidebarArticleListItem';
-import TableOfContents from '../TableOfContent';
-import { useEffect, useState } from 'react';
-import { tags } from '@/section/Tag';
+import { NewspaperIcon, CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
+import Display from '../../Adsense/display';
 import { news } from '@/section/news';
 import { archive } from '@/section/archive';
-import { NewspaperIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
+// import { OneSignalInitial } from '@/libs/OneSignalInitial';
 import {
   MagnifyingGlassIcon,
-  BellAlertIcon,
   FolderIcon,
   BoltIcon,
-  HashtagIcon,
   UserCircleIcon,
-  CalendarDaysIcon,
+  HashtagIcon,
 } from '@heroicons/react/24/solid';
+import { tags } from '@/section/Tag';
 
-type Props = {
-  articles?: Article[];
-  contentBlocks?: { rich_text2?: string }[];
-};
-
-interface ContentBlock {
-  rich_text2?: string;
-}
-
-interface Heading {
-  id: string;
-  title: string;
-  level: number;
-}
-
-function useExtractHeadings(contentBlocks: ContentBlock[]): Heading[] {
-  const [headings, setHeadings] = useState<Heading[]>([]);
-
-  useEffect(() => {
-    const extractedHeadings: Heading[] = [];
-
-    contentBlocks.forEach((block) => {
-      if (block.rich_text2) {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = block.rich_text2;
-        const blockHeadings = Array.from(tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6')).map(
-          (el) => ({
-            id: el.id,
-            title: el.textContent || '',
-            level: parseInt(el.tagName[1], 10),
-          }),
-        );
-        extractedHeadings.push(...blockHeadings);
-      }
-    });
-
-    setHeadings(extractedHeadings);
-  }, [contentBlocks]);
-
-  return headings;
-}
-
-export default function Sidebar({ articles, contentBlocks = [] }: Props) {
-  const headings = useExtractHeadings(contentBlocks);
-
-  const sortedArticles = articles
-    ?.slice()
-    .sort((a, b) => {
-      const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
-      const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
-      return dateB - dateA;
-    })
-    .slice(0, 3);
-
+export default function TopSidebar() {
   const [selectedMonth, setSelectedMonth] = useState('');
 
   const handleArchiveChange = (value: string) => {
@@ -88,10 +31,9 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
       setSelectedMonth('');
     }
   };
-
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
-      <div className="sidebar">
+      <div className="sidebar sticky top-0 start-0">
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5">
           <h1
             className={`${styles.profile} text-2xl text-center font-semibold mb-5 flex justify-center`}
@@ -101,7 +43,7 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
           </h1>
           <SearchField />
         </div>
-        {/* Profile Media */}
+        {/* <OneSignalInitial /> */}
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           {UserProfile.map((item) => (
             <h1
@@ -170,6 +112,7 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
             </div>
           </div>
         </div>
+
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           <h1
             className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
@@ -191,7 +134,6 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
                         className={`max-w-0 ${
                           index === 0 ? 'pt-0 pb-5' : 'py-5'
                         } pl-4 pr-3 text-sm sm:pl-0`}
-                        style={{ border: 'none' }}
                       >
                         <div style={{ fontSize: '18px' }} className="text-gray-900">
                           {news.name}
@@ -214,7 +156,9 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
             </div>
           </div>
         </div>
+
         {/* <Suzuri /> */}
+
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           <h1
             className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
@@ -300,7 +244,7 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
           </div>
         </div>
 
-        <div className="FirstAd pc mt-5">
+        <div className="FirstAd mt-5">
           <Display slot="8452341403" />
         </div>
 
@@ -342,77 +286,58 @@ export default function Sidebar({ articles, contentBlocks = [] }: Props) {
               </ol>
             ))}
           </div>
-          <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
-            <h1
-              className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
-            >
-              <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-              最新の投稿
-            </h1>
-            {sortedArticles && sortedArticles.length > 0 ? (
-              <div>
-                {sortedArticles.map((article) => (
-                  <SidebarArticleListItem key={article.id} article={article} />
-                ))}
-              </div>
-            ) : (
-              <p className="text-center">新着記事はありません</p>
-            )}
-          </div>
         </div>
-      </div>
 
-      <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
-        <h1 className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}>
-          <CalendarDaysIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-          アーカイブ
-        </h1>
+        <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
+          <h1
+            className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
+          >
+            <CalendarDaysIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+            アーカイブ
+          </h1>
 
-        <Listbox value={selectedMonth} onChange={handleArchiveChange}>
-          <div className="relative mt-5">
-            <Listbox.Button
-              style={{ height: '40px' }}
-              className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            >
-              <span style={{ fontSize: '18px' }} className="block truncate">
-                {selectedMonth
-                  ? `${selectedMonth.split('/')[0]}年${selectedMonth
-                      .split('/')[1]
-                      .replace(/^0+/, '')}月`
-                  : 'アーカイブを選択'}
-              </span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                <ChevronUpDownIcon className="h-7 w-7 text-gray-400" aria-hidden="true" />
-              </span>
-            </Listbox.Button>
+          <Listbox value={selectedMonth} onChange={handleArchiveChange}>
+            <div className="relative mt-5">
+              <Listbox.Button
+                style={{ height: '40px' }}
+                className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              >
+                <span style={{ fontSize: '18px' }} className="block truncate">
+                  {selectedMonth
+                    ? `${selectedMonth.split('/')[0]}年${selectedMonth
+                        .split('/')[1]
+                        .replace(/^0+/, '')}月`
+                    : 'アーカイブを選択'}
+                </span>
+                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                  <ChevronUpDownIcon className="h-7 w-7 text-gray-400" aria-hidden="true" />
+                </span>
+              </Listbox.Button>
 
-            <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {archive.map((item, index) => (
-                <Listbox.Option
-                  key={index}
-                  value={`${item.year}/${item.monthForPath}`}
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 ${
-                      active ? 'bg-[#eaf4fc]' : 'text-gray-900'
-                    }`
-                  }
-                >
-                  <span
-                    className={`block truncate font-normal ${
-                      selectedMonth === `${item.year}/${item.monthForPath}` ? 'font-semibold' : ''
-                    }`}
+              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                {archive.map((item, index) => (
+                  <Listbox.Option
+                    key={index}
+                    value={`${item.year}/${item.monthForPath}`}
+                    className={({ active }) =>
+                      `relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 ${
+                        active ? 'bg-[#eaf4fc]' : 'text-gray-900'
+                      }`
+                    }
                   >
-                    {`${item.year}年${item.month}月`}
-                  </span>
-                </Listbox.Option>
-              ))}
-            </Listbox.Options>
-          </div>
-        </Listbox>
-      </div>
-
-      <div className="SidebarTableOfContens mobile">
-        {headings.length > 0 && <TableOfContents headings={headings} />}
+                    <span
+                      className={`block truncate font-normal ${
+                        selectedMonth === `${item.year}/${item.monthForPath}` ? 'font-semibold' : ''
+                      }`}
+                    >
+                      {`${item.year}年${item.month}月`}
+                    </span>
+                  </Listbox.Option>
+                ))}
+              </Listbox.Options>
+            </div>
+          </Listbox>
+        </div>
       </div>
     </div>
   );
