@@ -24,7 +24,7 @@ import WithArticleItem from '../WithArticleItem';
 import { useEffect, useState } from 'react';
 import './article.css';
 import CategoryList from '../CategoryList';
-import TagList2 from '../TagList2';
+import TagList from '../TagList';
 import PanTagList from '../PanTagList';
 import AdAlert from '../AdAlert';
 import Display from '../Adsense/display';
@@ -204,7 +204,7 @@ export default function Article({ data, articles }: Props) {
                 </div>
                 {data.tags2 && data.tags2.length > 0 && (
                   <div className={styles.date}>
-                    <TagList2 tags={data.tags2} hasLink={true} />
+                    <TagList tags={data.tags2} hasLink={true} />
                   </div>
                 )}
                 <AdAlert />
