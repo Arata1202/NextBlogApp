@@ -6,13 +6,13 @@ import styles from './index.module.css';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { FolderIcon } from '@heroicons/react/24/solid';
-import { BlogTitle } from '@/section/Dummy';
+import { BlogTitle } from '@/section/dummy';
 import {
   headerNavigation,
   mobileTopNavigation,
   mobileBottomNavigation,
   categories,
-} from '@/section/Dummy';
+} from '@/section/dummy';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
