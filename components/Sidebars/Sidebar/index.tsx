@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Listbox } from '@headlessui/react';
-import SearchField from '../../SearchField';
+import SearchField from '../../Elements/SearchField';
 import Image from 'next/image';
 import styles from './index.module.css';
 import { UserProfile } from '@/section/Dummy';
@@ -10,7 +10,7 @@ import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/
 import Display from '../../Adsense/display';
 import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
-import TableOfContents from '../../TableOfContent';
+import TableOfContents from '../../Articles/TableOfContent';
 import { useEffect, useState } from 'react';
 import { tags } from '@/section/Tag';
 import { news } from '@/section/news';

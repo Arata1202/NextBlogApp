@@ -1,9 +1,9 @@
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import Pagination from '@/components/Layouts/Pagination';
-import ArticleList from '@/components/ArticleList';
+import ArticleList from '@/components/ArticleLists/ArticleList';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
-import TopSidebar from '@/components/TopSidebar';
+import TopSidebar from '@/components/Sidebars/TopSidebar';
 import Display from '@/components/Adsense/display';
 
 type Props = {

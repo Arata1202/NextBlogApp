@@ -1,5 +1,5 @@
 import { getList } from '@/libs/microcms';
-import FixedSidebar from '@/components/FixedSidebar';
+import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import SitemapPage from '@/components/Fixed/sitemap';
 import { DocumentMagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import Display from '@/components/Adsense/display';

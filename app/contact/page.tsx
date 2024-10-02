@@ -1,4 +1,4 @@
-import FixedSidebar from '@/components/FixedSidebar';
+import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import ContactPage from '@/components/Fixed/contact';
 import { EnvelopeIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getList } from '@/libs/microcms';

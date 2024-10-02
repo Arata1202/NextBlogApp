@@ -1,7 +1,7 @@
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import Pagination from '@/components/Layouts/Pagination';
-import ArticleList from '@/components/ArticleList';
+import ArticleList from '@/components/ArticleLists/ArticleList';
 import TopSidebar from '@/components/Sidebars/TopSidebar';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import Display from '@/components/Adsense/display';

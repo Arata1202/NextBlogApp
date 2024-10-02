@@ -1,4 +1,4 @@
-import FixedSidebar from '@/components/FixedSidebar';
+import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import DisclaimerPage from '@/components/Fixed/disclaimer';
 import { ShieldExclamationIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getList } from '@/libs/microcms';
