@@ -2,7 +2,7 @@ import styles from './index.module.css';
 import Image from 'next/image';
 import PublishedDate from '@/components/Date';
 import React from 'react';
-import FixedSidebar from '@/components/FixedSidebar';
+import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import Share from '../Share';
 import AdAlert from '../AdAlert';
 import Display from '../Adsense/display';

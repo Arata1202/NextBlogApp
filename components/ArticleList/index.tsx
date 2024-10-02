@@ -2,7 +2,7 @@ import React from 'react';
 import { Article } from '@/libs/microcms';
 import ArticleListItem from '../ArticleListItem';
 import styles from './index.module.css';
-import TopSidebar from '../TopSidebar';
+import TopSidebar from '../Sidebars/TopSidebar';
 import Share from '../Share';
 import Display from '../Adsense/display';
 

@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import CategoryList from '../CategoryList';
+import CategoryList from '../Categories/CategoryList';
 import PublishedDate from '../Date';
 import { FolderIcon } from '@heroicons/react/24/outline';
 

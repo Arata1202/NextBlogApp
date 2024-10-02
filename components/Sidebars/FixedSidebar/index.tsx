@@ -3,26 +3,42 @@
 import React from 'react';
 import { useState } from 'react';
 import { Listbox } from '@headlessui/react';
-import SearchField from '../SearchField';
+import SearchField from '../../SearchField';
 import Image from 'next/image';
 import styles from './index.module.css';
 import { UserProfile } from '@/section/Dummy';
 import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/Dummy';
-import { NewspaperIcon, CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
-import Display from '../Adsense/display';
+import { Article } from '@/libs/microcms';
+import SidebarArticleListItem from '../SidebarArticleListItem';
+import { tags } from '@/section/Tag';
+import Display from '../../Adsense/display';
 import { news } from '@/section/news';
 import { archive } from '@/section/archive';
-// import { OneSignalInitial } from '@/libs/OneSignalInitial';
+import { NewspaperIcon } from '@heroicons/react/24/outline';
+import { CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import {
   MagnifyingGlassIcon,
+  BellAlertIcon,
   FolderIcon,
   BoltIcon,
-  UserCircleIcon,
   HashtagIcon,
+  UserCircleIcon,
 } from '@heroicons/react/24/solid';
-import { tags } from '@/section/Tag';
 
-export default function TopSidebar() {
+type Props = {
+  articles?: Article[];
+};
+
+export default function FixedSidebar({ articles }: Props) {
+  const sortedArticles = articles
+    ?.slice()
+    .sort((a, b) => {
+      const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
+      const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
+      return dateB - dateA;
+    })
+    .slice(0, 3);
+
   const [selectedMonth, setSelectedMonth] = useState('');
 
   const handleArchiveChange = (value: string) => {
@@ -31,9 +47,10 @@ export default function TopSidebar() {
       setSelectedMonth('');
     }
   };
+
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
-      <div className="sidebar sticky top-0 start-0">
+      <div className="sidebar">
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5">
           <h1
             className={`${styles.profile} text-2xl text-center font-semibold mb-5 flex justify-center`}
@@ -43,7 +60,7 @@ export default function TopSidebar() {
           </h1>
           <SearchField />
         </div>
-        {/* <OneSignalInitial /> */}
+        {/* Profile Media */}
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           {UserProfile.map((item) => (
             <h1
@@ -112,7 +129,6 @@ export default function TopSidebar() {
             </div>
           </div>
         </div>
-
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           <h1
             className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
@@ -156,9 +172,7 @@ export default function TopSidebar() {
             </div>
           </div>
         </div>
-
         {/* <Suzuri /> */}
-
         <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
           <h1
             className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
@@ -285,6 +299,23 @@ export default function TopSidebar() {
                 </li>
               </ol>
             ))}
+          </div>
+          <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
+            <h1
+              className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
+            >
+              <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+              最新の投稿
+            </h1>
+            {sortedArticles && sortedArticles.length > 0 ? (
+              <div>
+                {sortedArticles.map((article) => (
+                  <SidebarArticleListItem key={article.id} article={article} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-center">新着記事はありません</p>
+            )}
           </div>
         </div>
 

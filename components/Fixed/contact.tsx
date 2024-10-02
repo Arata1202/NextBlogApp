@@ -8,7 +8,7 @@ import { EnvelopeIcon } from '@heroicons/react/24/solid';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Share from '../Share';
 import AdAlert from '../AdAlert';
-import FixedSidebar from '@/components/FixedSidebar';
+import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import PublishedDate from '@/components/Date';
 import Display from '../Adsense/display';
 
