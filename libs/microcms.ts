@@ -111,7 +111,7 @@ export const getDetail = async (contentId: string, queries?: MicroCMSQueries) =>
 };
 
 // カテゴリーの一覧を取得
-export const getTagList = async (queries?: MicroCMSQueries) => {
+export const getCategoryList = async (queries?: MicroCMSQueries) => {
   const listData = await client
     .getList<Tag>({
       endpoint: 'tags',
@@ -123,7 +123,7 @@ export const getTagList = async (queries?: MicroCMSQueries) => {
 };
 
 // タグの一覧を取得
-export const getTag2List = async (queries?: MicroCMSQueries) => {
+export const getTagList = async (queries?: MicroCMSQueries) => {
   const listData = await client
     .getList<Tag2>({
       endpoint: 'tags2',
@@ -135,7 +135,7 @@ export const getTag2List = async (queries?: MicroCMSQueries) => {
 };
 
 // カテゴリーの詳細を取得
-export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
+export const getCategory = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
     .getListDetail<Tag>({
       endpoint: 'tags',
@@ -148,7 +148,7 @@ export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
 };
 
 // タグの詳細を取得
-export const getTag2 = async (contentId: string, queries?: MicroCMSQueries) => {
+export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
     .getListDetail<Tag2>({
       endpoint: 'tags2',
