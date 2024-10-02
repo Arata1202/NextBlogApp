@@ -1,5 +1,5 @@
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
-import DisclaimerPage from '@/components/Fixed/disclaimer';
+import DisclaimerPage from '@/components/Fixed/Disclaimer';
 import { ShieldExclamationIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';

@@ -1,5 +1,5 @@
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
-import ProfilePage from '@/components/Fixed/profile';
+import ProfilePage from '@/components/Fixed/Profile';
 import { UserCircleIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';

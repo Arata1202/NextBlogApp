@@ -1,5 +1,5 @@
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
-import CopyrightPage from '@/components/Fixed/copyright';
+import CopyrightPage from '@/components/Fixed/Copyright';
 import { DocumentTextIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';

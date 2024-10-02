@@ -6,11 +6,11 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { EnvelopeIcon } from '@heroicons/react/24/solid';
 import ReCAPTCHA from 'react-google-recaptcha';
-import Share from '../Articles/Share';
-import AdAlert from '../Articles/AdAlert';
+import Share from '../../Articles/Share';
+import AdAlert from '../../Articles/AdAlert';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import PublishedDate from '@/components/Elements/Date';
-import Display from '../Adsense/display';
+import Display from '../../Adsense/display';
 
 const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   const dummyDate = new Date(2023, 10, 27);
