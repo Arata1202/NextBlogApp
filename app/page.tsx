@@ -1,10 +1,10 @@
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
-import Pagination from '@/components/Pagination';
-import ArticleList from '@/components/ArticleList';
-import TopSidebar from '@/components/TopSidebar';
+import Pagination from '@/components/Layouts/Pagination';
+import ArticleList from '@/components/ArticleLists/ArticleList';
+import TopSidebar from '@/components/Sidebars/TopSidebar';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
-import Display from '@/components/Adsense/display';
+import Display from '@/components/Adsense/Display';
 
 export const revalidate = 60;
 

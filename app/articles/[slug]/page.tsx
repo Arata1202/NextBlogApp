@@ -1,9 +1,9 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { getDetail, getList } from '@/libs/microcms';
-import Article from '@/components/Article';
+import Article from '@/components/Articles/Article';
 import { LIMIT } from '@/constants';
-import Display from '@/components/Adsense/display';
+import Display from '@/components/Adsense/Display';
 
 type Props = {
   params: {

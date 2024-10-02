@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Header from '@/components/Layouts/Header';
+import Footer from '@/components/Layouts/Footer';
 import './globals.css';
 import styles from './layout.module.css';
 import Script from 'next/script';
-import { Adsense } from '@/components/Adsense/adsense';
+import { Adsense } from '@/components/Adsense/AdsenseScript';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),

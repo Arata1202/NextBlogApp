@@ -1,9 +1,9 @@
-import FixedSidebar from '@/components/FixedSidebar';
-import CopyrightPage from '@/components/Fixed/copyright';
+import FixedSidebar from '@/components/Sidebars/FixedSidebar';
+import CopyrightPage from '@/components/Fixed/Copyright';
 import { DocumentTextIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
-import Display from '@/components/Adsense/display';
+import Display from '@/components/Adsense/Display';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
