@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useState } from 'react';
+import { Listbox } from '@headlessui/react';
 import SearchField from '../SearchField';
 import Image from 'next/image';
 import styles from './index.module.css';
@@ -12,8 +13,9 @@ import SidebarArticleListItem from '../SidebarArticleListItem';
 import { tags } from '@/section/Tag';
 import Display from '../Adsense/display';
 import { news } from '@/section/news';
+import { archive } from '@/section/archive';
 import { NewspaperIcon } from '@heroicons/react/24/outline';
-import { CalendarDaysIcon } from '@heroicons/react/24/solid';
+import { CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import {
   MagnifyingGlassIcon,
   BellAlertIcon,
@@ -39,21 +41,7 @@ export default function FixedSidebar({ articles }: Props) {
 
   const [selectedMonth, setSelectedMonth] = useState('');
 
-  const generateMonths = () => {
-    const months = [];
-    const current = new Date();
-    const start = new Date(2023, 11);
-    while (start <= current) {
-      const year = start.getFullYear();
-      const month = (start.getMonth() + 1).toString().padStart(2, '0');
-      months.push({ year, month });
-      start.setMonth(start.getMonth() + 1);
-    }
-    return months.reverse();
-  };
-
-  const handleArchiveChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
+  const handleArchiveChange = (value: string) => {
     if (value) {
       window.location.href = `/archive/${value}`;
       setSelectedMonth('');
@@ -339,26 +327,47 @@ export default function FixedSidebar({ articles }: Props) {
             アーカイブ
           </h1>
 
-          <div>
-            <select
-              id="archive"
-              name="archive"
-              value={selectedMonth}
-              onChange={(e) => {
-                setSelectedMonth(e.target.value);
-                handleArchiveChange(e);
-              }}
-              className="mt-5 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              style={{ height: '40px', fontSize: '18px' }}
-            >
-              <option value="">アーカイブを選択</option>
-              {generateMonths().map((item, index) => (
-                <option key={index} value={`${item.year}/${item.month}`}>
-                  {`${item.year}年${item.month}月`}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Listbox value={selectedMonth} onChange={handleArchiveChange}>
+            <div className="relative mt-5">
+              <Listbox.Button
+                style={{ height: '40px' }}
+                className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              >
+                <span style={{ fontSize: '18px' }} className="block truncate">
+                  {selectedMonth
+                    ? `${selectedMonth.split('/')[0]}年${selectedMonth
+                        .split('/')[1]
+                        .replace(/^0+/, '')}月`
+                    : 'アーカイブを選択'}
+                </span>
+                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                  <ChevronUpDownIcon className="h-7 w-7 text-gray-400" aria-hidden="true" />
+                </span>
+              </Listbox.Button>
+
+              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                {archive.map((item, index) => (
+                  <Listbox.Option
+                    key={index}
+                    value={`${item.year}/${item.monthForPath}`}
+                    className={({ active }) =>
+                      `relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 ${
+                        active ? 'bg-[#eaf4fc]' : 'text-gray-900'
+                      }`
+                    }
+                  >
+                    <span
+                      className={`block truncate font-normal ${
+                        selectedMonth === `${item.year}/${item.monthForPath}` ? 'font-semibold' : ''
+                      }`}
+                    >
+                      {`${item.year}年${item.month}月`}
+                    </span>
+                  </Listbox.Option>
+                ))}
+              </Listbox.Options>
+            </div>
+          </Listbox>
         </div>
       </div>
     </div>
