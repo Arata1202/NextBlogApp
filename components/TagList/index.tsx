@@ -1,5 +1,5 @@
 import { Tag2 } from '@/libs/microcms';
-import TagListItem from '../TagListItem2';
+import TagListItem from '../TagListItem';
 import styles from './index.module.css';
 
 type Props = {

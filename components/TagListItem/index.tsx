@@ -8,7 +8,7 @@ type Props = {
   hasLink?: boolean;
 };
 
-export default function TagListItem2({ tag, hasLink = true }: Props) {
+export default function TagListItem({ tag, hasLink = true }: Props) {
   const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
     window.location.href = `/tag/${tag.id}`;
