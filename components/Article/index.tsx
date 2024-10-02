@@ -23,7 +23,7 @@ import Sidebar from '../Sidebar';
 import WithArticleItem from '../WithArticleItem';
 import { useEffect, useState } from 'react';
 import './article.css';
-import TagList from '../TagList';
+import CategoryList from '../CategoryList';
 import TagList2 from '../TagList2';
 import PanTagList from '../PanTagList';
 import AdAlert from '../AdAlert';
@@ -198,7 +198,7 @@ export default function Article({ data, articles }: Props) {
                 </div>
                 <div className={styles.date}>
                   <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
-                  <TagList tags={data.tags} hasLink={true} />
+                  <CategoryList tags={data.tags} hasLink={true} />
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <PublishedDate date={data.publishedAt || data.createdAt} />
                 </div>
