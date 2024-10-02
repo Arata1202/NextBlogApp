@@ -6,8 +6,8 @@ import { Listbox } from '@headlessui/react';
 import SearchField from '../SearchField';
 import Image from 'next/image';
 import styles from './index.module.css';
-import { UserProfile } from '@/section/Dummy';
-import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/Dummy';
+import { UserProfile } from '@/section/dummy';
+import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/dummy';
 import { NewspaperIcon, CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import Display from '../Adsense/display';
 import { news } from '@/section/news';
@@ -20,7 +20,7 @@ import {
   UserCircleIcon,
   HashtagIcon,
 } from '@heroicons/react/24/solid';
-import { tags } from '@/section/Tag';
+import { tags } from '@/section/tag';
 
 export default function TopSidebar() {
   const [selectedMonth, setSelectedMonth] = useState('');
