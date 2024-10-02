@@ -1,5 +1,5 @@
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
-import PrivacyPage from '@/components/Fixed/privacy';
+import PrivacyPage from '@/components/Fixed/Privacy';
 import { InformationCircleIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';

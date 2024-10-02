@@ -1,11 +1,11 @@
-import styles from './index.module.css';
+import styles from '../index.module.css';
 import Image from 'next/image';
 import PublishedDate from '@/components/Elements/Date';
 import React from 'react';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
-import Share from '../Articles/Share';
-import AdAlert from '../Articles/AdAlert';
-import Display from '../Adsense/display';
+import Share from '../../Articles/Share';
+import AdAlert from '../../Articles/AdAlert';
+import Display from '../../Adsense/display';
 
 const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   const dummyDate = new Date(2023, 10, 27);

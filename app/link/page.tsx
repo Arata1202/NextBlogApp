@@ -1,5 +1,5 @@
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
-import LinkPage from '@/components/Fixed/link';
+import LinkPage from '@/components/Fixed/Link';
 import { LinkIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
