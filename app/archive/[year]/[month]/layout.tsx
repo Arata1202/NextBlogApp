@@ -14,11 +14,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { year, month } = params;
 
   return {
-    title: `${year}年${month}月｜リアル大学生`,
-    description: `${year}年${month}月の記事一覧です。`,
+    title: `${year}年${parseInt(month)}月｜リアル大学生`,
+    description: `${year}年${parseInt(month)}月の記事一覧です。`,
     openGraph: {
-      title: `${year}年${month}月｜リアル大学生`,
-      description: `${year}年${month}月の記事一覧です。`,
+      title: `${year}年${parseInt(month)}月｜リアル大学生`,
+      description: `${year}年${parseInt(month)}月の記事一覧です。`,
       images: `https://realunivlog.com/images/thumbnail/7.webp`,
       url: `https://realunivlog.com/archive/${year}/${month}`,
     },
@@ -54,7 +54,7 @@ export default async function TagsLayout({ children, params }: Props) {
                   href={`/archive/${year}/${month}`}
                   className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
                 >
-                  {year}月{month}月
+                  {year}月{parseInt(month)}月
                 </a>
               </div>
             </li>
@@ -63,7 +63,7 @@ export default async function TagsLayout({ children, params }: Props) {
         <div className="flex items-center pb-2 pt-2 mt-5">
           <CalendarDaysIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           <div>
-            {year}年{month}月
+            {year}年{parseInt(month)}月
           </div>
         </div>
       </h1>
