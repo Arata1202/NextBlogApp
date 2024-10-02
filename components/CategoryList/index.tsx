@@ -7,7 +7,7 @@ type Props = {
   hasLink?: boolean;
 };
 
-export default function TagList({ tags, hasLink = true }: Props) {
+export default function CategoryList({ tags, hasLink = true }: Props) {
   if (!tags) {
     return null;
   }

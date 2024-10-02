@@ -1,7 +1,7 @@
 'use client';
 
 import { Tag } from '@/libs/microcms';
-import TagList from '@/components/TagList';
+import CategoryList from '@/components/CategoryList';
 import SearchField from '@/components/SearchField';
 import styles from './index.module.css';
 
@@ -13,7 +13,7 @@ export default function Nav({ tags }: Props) {
   return (
     <nav className={styles.nav}>
       <SearchField />
-      <TagList tags={tags} />
+      <CategoryList tags={tags} />
     </nav>
   );
 }
