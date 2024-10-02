@@ -1,12 +1,13 @@
 'use client';
 
 import React from 'react';
+import { useState } from 'react';
 import SearchField from '../SearchField';
 import Image from 'next/image';
 import styles from './index.module.css';
 import { UserProfile } from '@/section/Dummy';
 import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/Dummy';
-import { NewspaperIcon } from '@heroicons/react/24/solid';
+import { NewspaperIcon, CalendarDaysIcon } from '@heroicons/react/24/solid';
 import Display from '../Adsense/display';
 import { news } from '@/section/news';
 // import { OneSignalInitial } from '@/libs/OneSignalInitial';
@@ -20,6 +21,28 @@ import {
 import { tags } from '@/section/Tag';
 
 export default function TopSidebar() {
+  const [selectedMonth, setSelectedMonth] = useState('');
+
+  const generateMonths = () => {
+    const months = [];
+    const current = new Date();
+    const start = new Date(2023, 11);
+    while (start <= current) {
+      const year = start.getFullYear();
+      const month = (start.getMonth() + 1).toString().padStart(2, '0');
+      months.push({ year, month });
+      start.setMonth(start.getMonth() + 1);
+    }
+    return months.reverse();
+  };
+
+  const handleArchiveChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    if (value) {
+      window.location.href = `/archive/${value}`;
+      setSelectedMonth('');
+    }
+  };
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
       <div className="sidebar sticky top-0 start-0">
@@ -276,11 +299,36 @@ export default function TopSidebar() {
             ))}
           </div>
         </div>
-        {/* <Instagram /> */}
-        {/* <div className="FirstAd mt-5">
-          <Display slot="9574685533" />
-        </div> */}
-        {/* <LevatechRookie /> */}
+
+        <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
+          <h1
+            className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}
+          >
+            <CalendarDaysIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+            アーカイブ
+          </h1>
+
+          <div>
+            <select
+              id="archive"
+              name="archive"
+              value={selectedMonth}
+              onChange={(e) => {
+                setSelectedMonth(e.target.value);
+                handleArchiveChange(e);
+              }}
+              className="mt-5 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              style={{ height: '40px', fontSize: '18px' }}
+            >
+              <option value="">アーカイブを選択</option>
+              {generateMonths().map((item, index) => (
+                <option key={index} value={`${item.year}/${item.month}`}>
+                  {`${item.year}年${item.month}月`}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   );
