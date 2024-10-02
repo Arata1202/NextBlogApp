@@ -1,9 +1,9 @@
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
-import Pagination from '@/components/Pagination';
-import ArticleList from '@/components/ArticleList';
-import TopSidebar from '@/components/TopSidebar';
-import Display from '@/components/Adsense/display';
+import Pagination from '@/components/Layouts/Pagination';
+import ArticleList from '@/components/ArticleLists/ArticleList';
+import TopSidebar from '@/components/Sidebars/TopSidebar';
+import Display from '@/components/Adsense/Display';
 
 type Props = {
   params: {

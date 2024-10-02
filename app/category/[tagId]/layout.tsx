@@ -1,5 +1,5 @@
 import React from 'react';
-import { getTag } from '@/libs/microcms';
+import { getCategory } from '@/libs/microcms';
 import { FolderOpenIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { Metadata } from 'next';
 
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tag = await getTag(params.tagId);
+  const tag = await getCategory(params.tagId);
 
   return {
     title: `${tag.name}｜リアル大学生`,
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function TagsLayout({ children, params }: Props) {
-  const tag = await getTag(params.tagId);
+  const tag = await getCategory(params.tagId);
 
   return (
     <>
