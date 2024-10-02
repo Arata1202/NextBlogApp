@@ -4,7 +4,7 @@ import ArticleListItem from '../ArticleListItem';
 import styles from './index.module.css';
 import TopSidebar from '../../Sidebars/TopSidebar';
 import Share from '../../Articles/Share';
-import Display from '../../Adsense/display';
+import Display from '../../Adsense/Display';
 
 type Props = {
   articles?: Article[];

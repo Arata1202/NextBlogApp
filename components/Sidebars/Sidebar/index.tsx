@@ -7,7 +7,7 @@ import Image from 'next/image';
 import styles from './index.module.css';
 import { UserProfile } from '@/section/Dummy';
 import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/Dummy';
-import Display from '../../Adsense/display';
+import Display from '../../Adsense/Display';
 import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
 import TableOfContents from '../../Articles/TableOfContent';

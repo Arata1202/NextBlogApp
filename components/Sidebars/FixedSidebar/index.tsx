@@ -11,7 +11,7 @@ import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/
 import { Article } from '@/libs/microcms';
 import SidebarArticleListItem from '../SidebarArticleListItem';
 import { tags } from '@/section/Tag';
-import Display from '../../Adsense/display';
+import Display from '../../Adsense/Display';
 import { news } from '@/section/news';
 import { archive } from '@/section/archive';
 import { NewspaperIcon } from '@heroicons/react/24/outline';
