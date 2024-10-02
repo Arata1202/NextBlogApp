@@ -27,7 +27,7 @@ import CategoryList from '../../Categories/CategoryList';
 import TagList from '../../Tags/TagList';
 import PanTagList from '../../Breadcrumbs/PanTagList';
 import AdAlert from '../AdAlert';
-import Display from '../../Adsense/display';
+import Display from '../../Adsense/Display';
 import {
   TwitterShareButton,
   TwitterIcon,

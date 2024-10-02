@@ -10,7 +10,7 @@ import Share from '../../Articles/Share';
 import AdAlert from '../../Articles/AdAlert';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import PublishedDate from '@/components/Elements/Date';
-import Display from '../../Adsense/display';
+import Display from '../../Adsense/Display';
 
 const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   const dummyDate = new Date(2023, 10, 27);

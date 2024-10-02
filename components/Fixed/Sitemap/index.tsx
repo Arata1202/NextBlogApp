@@ -4,7 +4,7 @@ import React from 'react';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import Share from '../../Articles/Share';
 import AdAlert from '../../Articles/AdAlert';
-import Display from '../../Adsense/display';
+import Display from '../../Adsense/Display';
 
 const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
   const dummyDate = new Date(2023, 10, 27);

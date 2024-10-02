@@ -9,7 +9,7 @@ import styles from './index.module.css';
 import { UserProfile } from '@/section/Dummy';
 import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/Dummy';
 import { NewspaperIcon, CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
-import Display from '../../Adsense/display';
+import Display from '../../Adsense/Display';
 import { news } from '@/section/news';
 import { archive } from '@/section/archive';
 // import { OneSignalInitial } from '@/libs/OneSignalInitial';
