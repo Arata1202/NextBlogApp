@@ -2,7 +2,7 @@ import { getList } from '@/libs/microcms';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import SitemapPage from '@/components/Fixed/Sitemap';
 import { DocumentMagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import Display from '@/components/Adsense/display';
+import Display from '@/components/Adsense/Display';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
