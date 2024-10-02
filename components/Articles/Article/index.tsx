@@ -25,7 +25,7 @@ import { useEffect, useState } from 'react';
 import './article.css';
 import CategoryList from '../../Categories/CategoryList';
 import TagList from '../../Tags/TagList';
-import PanTagList from '../../Breadcrumbs/PanTagList';
+import BreadcrumbsCategoryList from '../../Breadcrumbs/BreadcrumbsCategoryList';
 import AdAlert from '../AdAlert';
 import Display from '../../Adsense/Display';
 import {
@@ -152,7 +152,7 @@ export default function Article({ data, articles }: Props) {
                         aria-hidden="true"
                       />
                       <div className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500">
-                        <PanTagList tags={data.tags} hasLink={true} />
+                        <BreadcrumbsCategoryList tags={data.tags} hasLink={true} />
                       </div>
                     </div>
                   </li>

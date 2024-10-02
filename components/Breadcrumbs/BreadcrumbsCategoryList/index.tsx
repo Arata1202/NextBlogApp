@@ -1,5 +1,5 @@
 import { Tag } from '@/libs/microcms';
-import PanTagListItem from '../PanTagListItem';
+import BreadcrumbsCategoryListItem from '../BreadcrumbsCategoryListItem';
 import styles from './index.module.css';
 
 type Props = {
@@ -15,7 +15,7 @@ export default function PanTagList({ tags, hasLink = true }: Props) {
     <ul className={styles.tags}>
       {tags.map((tag) => (
         <li key={tag.id}>
-          <PanTagListItem tag={tag} hasLink={hasLink} />
+          <BreadcrumbsCategoryListItem tag={tag} hasLink={hasLink} />
         </li>
       ))}
     </ul>
