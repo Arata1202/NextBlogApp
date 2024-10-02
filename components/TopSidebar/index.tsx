@@ -11,6 +11,7 @@ import { SocialIcon, CategoryList, CategoryList2, PopularPost } from '@/section/
 import { NewspaperIcon, CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import Display from '../Adsense/display';
 import { news } from '@/section/news';
+import { archive } from '@/section/archive';
 // import { OneSignalInitial } from '@/libs/OneSignalInitial';
 import {
   MagnifyingGlassIcon,
@@ -24,28 +25,12 @@ import { tags } from '@/section/Tag';
 export default function TopSidebar() {
   const [selectedMonth, setSelectedMonth] = useState('');
 
-  const generateMonths = () => {
-    const months = [];
-    const current = new Date();
-    const start = new Date(2023, 11);
-    while (start <= current) {
-      const year = start.getFullYear();
-      const month = (start.getMonth() + 1).toString();
-      const monthForPath = (start.getMonth() + 1).toString().padStart(2, '0');
-      months.push({ year, month, monthForPath });
-      start.setMonth(start.getMonth() + 1);
-    }
-    return months.reverse();
-  };
-
   const handleArchiveChange = (value: string) => {
     if (value) {
       window.location.href = `/archive/${value}`;
       setSelectedMonth('');
     }
   };
-
-  const months = generateMonths();
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
       <div className="sidebar sticky top-0 start-0">
@@ -330,7 +315,7 @@ export default function TopSidebar() {
               </Listbox.Button>
 
               <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {months.map((item, index) => (
+                {archive.map((item, index) => (
                   <Listbox.Option
                     key={index}
                     value={`${item.year}/${item.monthForPath}`}
