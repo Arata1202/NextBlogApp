@@ -19,7 +19,7 @@ import PublishedDate from '../../Elements/Date';
 import styles from './index.module.css';
 import Image from 'next/image';
 import TableOfContents from '../TableOfContent';
-import Sidebar from '../../Sidebars/Sidebar';
+import ArticleSidebar from '../../Sidebars/ArticleSidebar';
 import WithArticleItem from '../WithArticleItem';
 import { useEffect, useState } from 'react';
 import './article.css';
@@ -571,7 +571,7 @@ export default function Article({ data, articles }: Props) {
             </div>
           </div>
           <div className="articleSidebar">
-            <Sidebar articles={articles} contentBlocks={data.content_blocks} />
+            <ArticleSidebar articles={articles} contentBlocks={data.content_blocks} />
           </div>
         </div>
       </div>

@@ -56,7 +56,7 @@ function useExtractHeadings(contentBlocks: ContentBlock[]): Heading[] {
   return headings;
 }
 
-export default function Sidebar({ articles, contentBlocks = [] }: Props) {
+export default function ArticleSidebar({ articles, contentBlocks = [] }: Props) {
   const headings = useExtractHeadings(contentBlocks);
 
   return (
