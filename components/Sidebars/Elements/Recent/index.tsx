@@ -1,11 +1,8 @@
-// Recent/index.tsx
-'use client';
-
 import React from 'react';
-import SidebarArticleListItem from '../SidebarArticleListItem';
+import SidebarArticleListItem from '../Elements/SidebarArticleListItem';
 import { Article } from '@/libs/microcms';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
-import styles from '../../FixedSidebar/index.module.css';
+import styles from './index.module.css';
 
 type Props = {
   articles?: Article[];

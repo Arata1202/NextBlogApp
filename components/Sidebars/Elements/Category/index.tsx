@@ -1,6 +1,6 @@
 import { FolderIcon } from '@heroicons/react/24/solid';
 import { CategoryList, CategoryList2 } from '@/section/dummy';
-import styles from '../../FixedSidebar/index.module.css';
+import styles from './index.module.css';
 
 export default function Category() {
   return (

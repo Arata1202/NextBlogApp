@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import styles from '../../FixedSidebar/index.module.css';
+import styles from './index.module.css';
 import { BoltIcon } from '@heroicons/react/24/solid';
 import { PopularPost } from '@/section/dummy';
 

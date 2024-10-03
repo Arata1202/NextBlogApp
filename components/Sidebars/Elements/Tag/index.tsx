@@ -1,5 +1,5 @@
 import { HashtagIcon } from '@heroicons/react/24/solid';
-import styles from '../../FixedSidebar/index.module.css';
+import styles from './index.module.css';
 import { tags } from '@/section/tag';
 
 export default function Tag() {
