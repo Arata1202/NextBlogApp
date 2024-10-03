@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import SidebarArticleListItem from '../../SidebarArticleListItem';
+import SidebarArticleListItem from '../SidebarArticleListItem';
 import { Article } from '@/libs/microcms';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import styles from '../../FixedSidebar/index.module.css';
