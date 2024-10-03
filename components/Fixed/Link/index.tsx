@@ -4,7 +4,7 @@ import styles from './index.module.css';
 import PublishedDate from '@/components/Elements/Date';
 import React from 'react';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
-import Share from '../../Articles/Share';
+import Share from '../../Elements/Share';
 import AdAlert from '../../Articles/AdAlert';
 import Display from '../../Adsense/Display';
 
