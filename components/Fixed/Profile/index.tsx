@@ -1,4 +1,4 @@
-import styles from '../index.module.css';
+import styles from './index.module.css';
 import Image from 'next/image';
 import PublishedDate from '@/components/Elements/Date';
 import React from 'react';

@@ -1,4 +1,4 @@
-import styles from '../index.module.css';
+import styles from './index.module.css';
 import PublishedDate from '@/components/Elements/Date';
 import React from 'react';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
