@@ -20,7 +20,7 @@ export default function News() {
               {news.map((news, index) => (
                 <tr key={news.id} className="border-b border-gray-200">
                   <td
-                    className={`max-w-0 ${
+                    className={`max-w-0 border-none ${
                       index === 0 ? 'pt-0 pb-5' : 'py-5'
                     } pl-4 pr-3 text-sm sm:pl-0`}
                   >
