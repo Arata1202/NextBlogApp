@@ -3,7 +3,7 @@ import PublishedDate from '@/components/Elements/Date';
 import React from 'react';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import Share from '../../Elements/Share';
-import AdAlert from '../../Articles/AdAlert';
+import AdAlert from '../../Articles/Elements/AdAlert';
 import Display from '../../Adsense/Display';
 
 const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
