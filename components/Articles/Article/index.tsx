@@ -18,15 +18,15 @@ import { Article as ArticleType } from '@/libs/microcms';
 import PublishedDate from '../../Elements/Date';
 import styles from './index.module.css';
 import Image from 'next/image';
-import TableOfContents from '../TableOfContent';
+import TableOfContents from '../Elements/TableOfContent';
 import ArticleSidebar from '../../Sidebars/ArticleSidebar';
-import WithArticleItem from '../WithArticleItem';
+import WithArticleItem from '../Elements/WithArticleItem';
 import { useEffect, useState } from 'react';
 import './article.css';
 import CategoryList from '../../Categories/CategoryList';
 import TagList from '../../Tags/TagList';
 import BreadcrumbsCategoryList from '../../Breadcrumbs/BreadcrumbsCategoryList';
-import AdAlert from '../AdAlert';
+import AdAlert from '../Elements/AdAlert';
 import Display from '../../Adsense/Display';
 import {
   TwitterShareButton,

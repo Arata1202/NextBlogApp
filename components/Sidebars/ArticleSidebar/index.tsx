@@ -11,7 +11,7 @@ import Popular from '../Elements/Popular';
 import Recent from '../Elements/Recent';
 import Display from '../../Adsense/Display';
 import { Article } from '@/libs/microcms';
-import TableOfContents from '../../Articles/TableOfContent';
+import TableOfContents from '../../Articles/Elements/TableOfContent';
 import { useEffect, useState } from 'react';
 
 type Props = {

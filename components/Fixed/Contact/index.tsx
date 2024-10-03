@@ -7,7 +7,7 @@ import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { EnvelopeIcon } from '@heroicons/react/24/solid';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Share from '../../Elements/Share';
-import AdAlert from '../../Articles/AdAlert';
+import AdAlert from '../../Articles/Elements/AdAlert';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import PublishedDate from '@/components/Elements/Date';
 import Display from '../../Adsense/Display';
