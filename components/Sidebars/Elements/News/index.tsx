@@ -1,5 +1,5 @@
 import { NewspaperIcon } from '@heroicons/react/24/solid';
-import styles from '../../FixedSidebar/index.module.css';
+import styles from './index.module.css';
 import { news } from '@/section/news';
 
 export default function News() {

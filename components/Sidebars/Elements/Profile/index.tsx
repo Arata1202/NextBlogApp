@@ -1,7 +1,7 @@
 import { UserProfile, SocialIcon } from '@/section/dummy';
 import Image from 'next/image';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
-import styles from '../../FixedSidebar/index.module.css';
+import styles from './index.module.css';
 
 export default function Profile() {
   return (

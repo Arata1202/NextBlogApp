@@ -1,6 +1,6 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import SearchField from '../../../Elements/SearchField';
-import styles from '../../FixedSidebar/index.module.css';
+import styles from './index.module.css';
 
 export default function Search() {
   return (

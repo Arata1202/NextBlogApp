@@ -2,7 +2,7 @@ import { Listbox } from '@headlessui/react';
 import { CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import { archive } from '@/section/archive';
 import { useState } from 'react';
-import styles from '../../FixedSidebar/index.module.css';
+import styles from './index.module.css';
 
 export default function Archive() {
   const [selectedMonth, setSelectedMonth] = useState('');
