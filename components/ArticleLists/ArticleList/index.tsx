@@ -3,7 +3,7 @@ import { Article } from '@/libs/microcms';
 import ArticleListItem from '../ArticleListItem';
 import styles from './index.module.css';
 import TopSidebar from '../../Sidebars/TopSidebar';
-import Share from '../../Articles/Share';
+import Share from '../../Elements/Share';
 import Display from '../../Adsense/Display';
 
 type Props = {
