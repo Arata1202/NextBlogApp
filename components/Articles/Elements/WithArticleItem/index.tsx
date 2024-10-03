@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { memo } from 'react';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import PublishedDate from '../../Elements/Date';
+import PublishedDate from '../../../Elements/Date';
 
 type Props = {
   article: Article;
