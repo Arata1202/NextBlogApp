@@ -194,6 +194,9 @@
 .content {
   width: 100%;
 }
+.content iframe {
+  width: 100%;
+}
 
 .content *:first-child {
   margin-top: 0;
