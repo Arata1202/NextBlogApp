@@ -28,6 +28,17 @@
 
 ![名称未設定ファイル drawio](https://github.com/user-attachments/assets/303bfd82-020c-493a-8f1a-d8e635022457)
 
+## リンク集
+
+ブログ
+ - https://realunivlog.com
+
+サイトマップ
+ - https://meta.realunivlog.com/sitemap-0.xml
+
+Figma
+- https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1&node-type=canvas&t=zcqCjvUj22ccvYpV-11
+
 ## 開発方法
 
 まずは`.env.example`を`.env`に変更し、適切に設定する。
