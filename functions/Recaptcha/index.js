@@ -5,7 +5,7 @@ exports.handler = async (event) => {
   const allowedOrigins = [
     'https://realunivlog.com',
     'http://localhost:3000',
-    'https://suzukiseminar.vercel.app',
+    'https://suzuki-seminar.com',
   ];
 
   const responseHeaders = {
