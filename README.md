@@ -30,13 +30,16 @@
 
 ## リンク集
 
-ブログ
- - https://realunivlog.com
+### ブログ
 
-サイトマップ
- - https://meta.realunivlog.com/sitemap-0.xml
+- https://realunivlog.com
 
-Figma
+### サイトマップ
+
+- https://meta.realunivlog.com/sitemap-0.xml
+
+### Figma
+
 - https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1&node-type=canvas&t=zcqCjvUj22ccvYpV-11
 
 ## 開発方法
