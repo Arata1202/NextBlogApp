@@ -1,6 +1,6 @@
 ## アーキテクチャ
 
-![名称未設定ファイル drawio (2)](https://github.com/user-attachments/assets/b4e054a5-7216-4217-988e-6a4dba3f7f23)
+![名称未設定ファイル drawio (3)](https://github.com/user-attachments/assets/76d95aef-dcbd-4235-918f-7b35df656f01)
 
 ## リンク集
 
