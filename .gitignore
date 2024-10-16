@@ -3,7 +3,6 @@
 # dependencies
 /node_modules
 /functions/SendEmail/node_modules
-/functions/SearchHistory/node_modules
 /.pnp
 .pnp.js
 
