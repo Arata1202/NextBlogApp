@@ -1,32 +1,6 @@
-<!-- ## ブログ運営の日課
-
-### Google AdSense
-
-- 不正なインプレッションが存在しないか、レポートを確認
-  - GASで管理中
-- ポリシーセンターで、ポリシー違反がないか確認
-- 収益の確認
-
-### Google Analytics
-
-- 地域別に絞り込み、不正なインプレッションが存在しないか確認
-  - GASで管理中
-- 定期的にリアルタイムユーザーを確認
-
-### Google Search Console
-
-- 検索キーワード・流入の分析
-- カバレッジエラーが存在しないか確認
-
-## 記事出稿の手順
-
-- 記事作成
-- インデックスのリクエストを送信
-  - サイトマップで短縮 -->
-
 ## アーキテクチャ
 
-![名称未設定ファイル drawio](https://github.com/user-attachments/assets/303bfd82-020c-493a-8f1a-d8e635022457)
+![名称未設定ファイル drawio (3)](https://github.com/user-attachments/assets/76d95aef-dcbd-4235-918f-7b35df656f01)
 
 ## リンク集
 
