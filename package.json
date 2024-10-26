@@ -19,14 +19,6 @@
       "prettier --write"
     ]
   },
-  "prettier": {
-    "trailingComma": "all",
-    "tabWidth": 2,
-    "semi": true,
-    "singleQuote": true,
-    "jsxSingleQuote": false,
-    "printWidth": 100
-  },
   "engines": {
     "node": ">=18.x"
   },
