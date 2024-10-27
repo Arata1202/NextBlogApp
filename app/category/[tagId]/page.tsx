@@ -6,14 +6,15 @@ import TopSidebar from '@/components/Sidebars/TopSidebar';
 import Display from '@/components/Adsense/Display';
 
 type Props = {
-  params: {
+  params: Promise<{
     tagId: string;
-  };
+  }>;
 };
 
 export const revalidate = 60;
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params;
   const { tagId } = params;
   const data = await getList({
     limit: LIMIT,

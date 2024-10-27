@@ -7,12 +7,12 @@ import { MagnifyingGlassIcon, ChevronRightIcon, HomeIcon } from '@heroicons/reac
 import Display from '@/components/Adsense/Display';
 
 type Props = {
-  params: {
+  params: Promise<{
     current: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     q?: string;
-  };
+  }>;
 };
 
 export const metadata = {
@@ -32,7 +32,9 @@ export const metadata = {
 
 export const revalidate = 60;
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page(props: Props) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const current = parseInt(params.current as string, 10);
   const data = await getList({
     limit: LIMIT,

@@ -4,13 +4,14 @@ import { Metadata } from 'next';
 
 type Props = {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     year: string;
     month: string;
-  };
+  }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const { year, month } = params;
 
   return {
@@ -31,7 +32,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function TagsLayout({ children, params }: Props) {
+export default async function TagsLayout(props: Props) {
+  const params = await props.params;
+
+  const { children } = props;
+
   const { year, month } = params;
 
   return (
