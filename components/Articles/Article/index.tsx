@@ -1,6 +1,6 @@
 'use client';
 
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 const hljs = require('highlight.js/lib/common');
 import javascript from 'highlight.js/lib/languages/javascript';
 import php from 'highlight.js/lib/languages/php';
