@@ -4,13 +4,22 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
+interface Article {
+  id: string;
+  title: string;
+  description: string;
+  publishedAt: string;
+  tags?: { name: string }[];
+  thumbnail: { url: string };
+}
+
 const client = createClient({
   serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN,
   apiKey: process.env.MICROCMS_API_KEY,
 });
 
-const getAllContents = async (endpoint) => {
-  let allContents = [];
+const getAllContents = async (endpoint: string): Promise<Article[]> => {
+  let allContents: Article[] = [];
   let offset = 0;
   const limit = 100;
 
