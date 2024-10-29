@@ -240,7 +240,7 @@ export default function Article({ data, articles }: Props) {
                     )}
                     {block.rich_text2 && (
                       <div
-                        className={styles.content}
+                        className={`${styles.content} ArticleContents`}
                         dangerouslySetInnerHTML={{
                           __html: formatRichText(block.rich_text2).replace(
                             /<img/g,
@@ -341,7 +341,7 @@ export default function Article({ data, articles }: Props) {
                       )}
                       {block.rich_text2 && (
                         <div
-                          className={styles.content}
+                          className={`${styles.content} ArticleContents`}
                           dangerouslySetInnerHTML={{
                             __html: formatRichText(block.rich_text2).replace(
                               /<img/g,
