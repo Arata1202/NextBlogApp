@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ArticleList ArticleList) 1`] = `
+exports[`ArticleList スナップショット(ArticleList) 1`] = `
 <DocumentFragment>
   <div
     class="max-w-[85rem] sm:px-6 lg:px-8 mx-auto"

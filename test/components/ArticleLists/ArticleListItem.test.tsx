@@ -15,7 +15,7 @@ const article: Article = {
 };
 
 describe('ArticleListItem', () => {
-  test('ArticleListItem)', () => {
+  test('スナップショット(ArticleListItem)', () => {
     const { asFragment } = render(<ArticleListItem key={article.id} article={article} />);
     expect(asFragment()).toMatchSnapshot();
   });

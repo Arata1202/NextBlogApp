@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 import { Adsense } from '@/components/Adsense/AdsenseScript';
 
-describe('Adsense', () => {
-  test('Adsense)', () => {
+describe('AdsenseScript', () => {
+  test('AdsenseScript)', () => {
     const { asFragment } = render(<Adsense />);
     expect(asFragment()).toMatchSnapshot();
   });

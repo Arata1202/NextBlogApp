@@ -978,38 +978,7 @@ exports[`ArticleSidebar スナップショット（ArticleSidebar） 1`] = `
     </div>
     <div
       class="SidebarTableOfContens mobile"
-    >
-      <div>
-        <div
-          class="flex justify-center"
-        >
-          <nav
-            aria-label="Table of contents"
-            class="tableOfContent w-1/2 border border-gray-300 p-4"
-          >
-            <h1
-              class="text-center font-bold text-lg"
-            >
-              目次
-            </h1>
-            <ol
-              class="mt-4 list-none pl-0"
-            >
-              <li
-                style="margin-left: 20px; background-color: rgb(234, 244, 252); transition: background-color 0.3s ease;"
-              >
-                <a
-                  class="hover:text-blue-500"
-                  href="#"
-                >
-                  1 サンプルヘッディング
-                </a>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
-    </div>
+    />
   </div>
 </DocumentFragment>
 `;

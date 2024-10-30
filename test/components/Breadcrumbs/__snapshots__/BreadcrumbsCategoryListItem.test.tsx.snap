@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BreadcrumbsCategoryListItem BreadcrumbsCategoryListItem) 1`] = `
+exports[`BreadcrumbsCategoryListItem スナップショット(BreadcrumbsCategoryListItem) 1`] = `
 <DocumentFragment>
   <a
     class="tag"

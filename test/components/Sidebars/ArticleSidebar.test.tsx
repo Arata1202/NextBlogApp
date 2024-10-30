@@ -29,7 +29,7 @@ const mockArticles: Article[] = [
 
 const mockContentBlocks = [
   {
-    rich_text2: '<h2>サンプルヘッディング</h2>',
+    rich_text2: 'サンプルヘッディング',
     adsense: '1234567890',
     bubble_name: '名前',
     bubble_text: 'テキスト',
