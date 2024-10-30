@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ArticleListItem ArticleListItem) 1`] = `
+exports[`ArticleListItem スナップショット(ArticleListItem) 1`] = `
 <DocumentFragment>
   <li
     class="list"

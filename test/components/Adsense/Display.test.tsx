@@ -3,7 +3,7 @@ import Display from '@/components/Adsense/Display';
 
 describe('Display', () => {
   test('スナップショット（Display)', () => {
-    const { asFragment } = render(<Display slot="" />);
+    const { asFragment } = render(<Display slot="00000" />);
     expect(asFragment()).toMatchSnapshot();
   });
 });
