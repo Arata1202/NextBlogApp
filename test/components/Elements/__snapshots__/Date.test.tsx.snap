@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PublishedDate スナップショット（PublishedDate） 1`] = `
+<DocumentFragment>
+  <span
+    class="date"
+  >
+    <img
+      alt=""
+      data-nimg="1"
+      decoding="async"
+      height="16"
+      src="/clock.svg"
+      style="color: transparent;"
+      width="16"
+    />
+    2023年11月27日
+  </span>
+</DocumentFragment>
+`;

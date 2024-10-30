@@ -1,0 +1,984 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleSidebar スナップショット（ArticleSidebar） 1`] = `
+<DocumentFragment>
+  <div
+    class="lg:col-span-1 lg:w-full lg:h-full"
+  >
+    <div
+      class="sidebar"
+    >
+      <div
+        class="bg-white pt-8 px-4 border border-gray-300 py-5"
+      >
+        <h1
+          class="profile text-2xl text-center font-semibold mb-5 flex justify-center"
+        >
+          <svg
+            aria-hidden="true"
+            class="h-8 w-8 mr-2"
+            data-slot="icon"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+              fill-rule="evenodd"
+            />
+          </svg>
+          キーワードで探す
+        </h1>
+        <form
+          action="/search"
+          method="GET"
+        >
+          <input
+            class="search hover:border-blue-500"
+            name="q"
+            placeholder="検索"
+            style="width: 100%; border-radius: 0;"
+            type="search"
+            value=""
+          />
+          <button
+            style="display: none;"
+            type="submit"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+      <div
+        class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+      >
+        <h1
+          class="profile text-2xl text-center font-semibold pb-5 flex justify-center"
+        >
+          <svg
+            aria-hidden="true"
+            class="h-8 w-8 mr-2"
+            data-slot="icon"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+              fill-rule="evenodd"
+            />
+          </svg>
+          ブログ運営者
+        </h1>
+        <div
+          class="mobile"
+        >
+          <img
+            alt="筆者のイメージ"
+            class="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
+            data-nimg="1"
+            decoding="async"
+            height="250"
+            loading="eager"
+            src="/_next/image?url=%2Fimages%2Fblog%2Fface.webp&w=640&q=75"
+            srcset="/_next/image?url=%2Fimages%2Fblog%2Fface.webp&w=256&q=75 1x, /_next/image?url=%2Fimages%2Fblog%2Fface.webp&w=640&q=75 2x"
+            style="color: transparent;"
+            width="250"
+          />
+        </div>
+        <div
+          class="pc"
+        >
+          <img
+            alt="筆者のイメージ"
+            class="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
+            data-nimg="1"
+            decoding="async"
+            height="250"
+            loading="lazy"
+            src="/_next/image?url=%2Fimages%2Fblog%2Fface.webp&w=640&q=75"
+            srcset="/_next/image?url=%2Fimages%2Fblog%2Fface.webp&w=256&q=75 1x, /_next/image?url=%2Fimages%2Fblog%2Fface.webp&w=640&q=75 2x"
+            style="color: transparent;"
+            width="250"
+          />
+        </div>
+        <h1
+          class="mt-6 text-2xl text-center font-semibold leading-7 tracking-tight text-gray-800"
+        >
+          <a
+            class="hover:text-blue-500"
+            href="/profile"
+          >
+            あらた
+          </a>
+        </h1>
+        <ul
+          class="mt-6 flex justify-center gap-x-6"
+          role="list"
+        >
+          <li>
+            <a
+              class="text-gray-400 hover:text-blue-500"
+              href="https://twitter.com/Aokumoblog"
+              target="blank"
+            >
+              <span
+                class="sr-only"
+              >
+                X
+              </span>
+              <svg
+                aria-hidden="true"
+                class="h-8 w-8"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              class="text-gray-400 hover:text-blue-500"
+              href="https://www.instagram.com/ao_realstudent/?hl=ja"
+              target="blank"
+            >
+              <span
+                class="sr-only"
+              >
+                Instagram
+              </span>
+              <svg
+                aria-hidden="true"
+                class="h-8 w-8"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              class="text-gray-400 hover:text-blue-500"
+              href="https://github.com/Arata1202"
+              target="blank"
+            >
+              <span
+                class="sr-only"
+              >
+                GitHub
+              </span>
+              <svg
+                aria-hidden="true"
+                class="h-8 w-8"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 0.297c-6.627 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387 0.6 0.111 0.82-0.261 0.82-0.577 0-0.285-0.011-1.04-0.017-2.042-3.338 0.724-4.042-1.611-4.042-1.611-0.546-1.387-1.333-1.757-1.333-1.757-1.089-0.745 0.083-0.729 0.083-0.729 1.205 0.084 1.839 1.236 1.839 1.236 1.07 1.835 2.807 1.304 3.492 0.997 0.108-0.775 0.418-1.305 0.762-1.605-2.665-0.303-5.467-1.333-5.467-5.931 0-1.31 0.469-2.381 1.236-3.221-0.123-0.303-0.536-1.523 0.117-3.176 0 0 1.008-0.323 3.301 1.23 0.957-0.266 1.983-0.398 3.005-0.403 1.02 0.005 2.047 0.137 3.006 0.403 2.292-1.553 3.299-1.23 3.299-1.23 0.655 1.653 0.242 2.873 0.119 3.176 0.769 0.84 1.235 1.911 1.235 3.221 0 4.609-2.805 5.625-5.476 5.922 0.43 0.371 0.814 1.103 0.814 2.222 0 1.606-0.014 2.896-0.014 3.287 0 0.32 0.217 0.694 0.825 0.576 4.765-1.589 8.199-6.085 8.199-11.386 0-6.627-5.373-12-12-12z"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <div
+          class="text-lg leading-6 text-gray-800 mt-5 flex justify-center"
+        >
+          <div>
+            <ul
+              style="list-style-type: disc; padding-left: 20px;"
+            >
+              <li>
+                21歳
+              </li>
+              <li>
+                千葉県在住
+              </li>
+              <li>
+                文系大学生｜26卒
+              </li>
+              <li>
+                経営学部 マーケティング学科
+              </li>
+              <li>
+                Webエンジニアインターンに参加中
+              </li>
+              <li>
+                インターン：Vue.js, Laravel
+              </li>
+              <li>
+                個人開発：React, Next.js, PHP
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div
+        class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+      >
+        <h1
+          class="profile text-2xl text-center font-semibold flex justify-center"
+        >
+          <svg
+            aria-hidden="true"
+            class="h-8 w-8 mr-2"
+            data-slot="icon"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M4.125 3C3.089 3 2.25 3.84 2.25 4.875V18a3 3 0 0 0 3 3h15a3 3 0 0 1-3-3V4.875C17.25 3.839 16.41 3 15.375 3H4.125ZM12 9.75a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5H12Zm-.75-2.25a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5H12a.75.75 0 0 1-.75-.75ZM6 12.75a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5H6Zm-.75 3.75a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75ZM6 6.75a.75.75 0 0 0-.75.75v3c0 .414.336.75.75.75h3a.75.75 0 0 0 .75-.75v-3A.75.75 0 0 0 9 6.75H6Z"
+              fill-rule="evenodd"
+            />
+            <path
+              d="M18.75 6.75h1.875c.621 0 1.125.504 1.125 1.125V18a1.5 1.5 0 0 1-3 0V6.75Z"
+            />
+          </svg>
+          お知らせ
+        </h1>
+        <div
+          class=""
+        >
+          <div
+            class="mt-5"
+            style="max-height: 240px; overflow-y: auto;"
+          >
+            <table
+              class="min-w-full"
+            >
+              <colgroup>
+                <col
+                  class="w-full sm:w-1/2"
+                />
+              </colgroup>
+              <tbody>
+                <tr
+                  class="border-b border-gray-200"
+                >
+                  <td
+                    class="max-w-0 border-none pt-0 pb-5 pl-4 pr-3 text-sm sm:pl-0"
+                  >
+                    <div
+                      class="text-gray-900"
+                      style="font-size: 18px;"
+                    >
+                      Android版アプリ「リアル大学生：モバイル」がリリースされました。
+                    </div>
+                    <div
+                      class="mt-1 truncate"
+                    >
+                      <a
+                        class="text-blue-500 hover:text-blue-700"
+                        href="https://play.google.com/store/apps/details?id=com.realunivlog.flutterblogapp"
+                        target="blank"
+                      >
+                        Google Playからダウンロードする
+                      </a>
+                    </div>
+                    <div
+                      class="mt-1 truncate text-gray-500"
+                    >
+                      2024年9月30日
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  class="border-b border-gray-200"
+                >
+                  <td
+                    class="max-w-0 border-none py-5 pl-4 pr-3 text-sm sm:pl-0"
+                  >
+                    <div
+                      class="text-gray-900"
+                      style="font-size: 18px;"
+                    >
+                      RSSの不具合を修正しました。お手数ですが、新しいURLから再登録をお願いします。
+                    </div>
+                    <div
+                      class="mt-1 truncate"
+                    >
+                      <a
+                        class="text-blue-500 hover:text-blue-700"
+                        href="https://meta.realunivlog.com/rss.xml"
+                        target="blank"
+                      >
+                        RSSを登録する
+                      </a>
+                    </div>
+                    <div
+                      class="mt-1 truncate text-gray-500"
+                    >
+                      2024年9月30日
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  class="border-b border-gray-200"
+                >
+                  <td
+                    class="max-w-0 border-none py-5 pl-4 pr-3 text-sm sm:pl-0"
+                  >
+                    <div
+                      class="text-gray-900"
+                      style="font-size: 18px;"
+                    >
+                      iOS版アプリ「リアル大学生：モバイル」がリリースされました。
+                    </div>
+                    <div
+                      class="mt-1 truncate"
+                    >
+                      <a
+                        class="text-blue-500 hover:text-blue-700"
+                        href="https://apps.apple.com/jp/app/リアル大学生-モバイル/id6590619103"
+                        target="blank"
+                      >
+                        App Storeからダウンロードする
+                      </a>
+                    </div>
+                    <div
+                      class="mt-1 truncate text-gray-500"
+                    >
+                      2024年8月3日
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div
+        class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+      >
+        <h1
+          class="profile text-2xl text-center font-semibold flex justify-center"
+        >
+          <svg
+            aria-hidden="true"
+            class="h-8 w-8 mr-2"
+            data-slot="icon"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z"
+            />
+          </svg>
+          カテゴリー
+        </h1>
+        <nav
+          class="flex gap-4 mt-5 md:mt-5"
+          role="tablist"
+        >
+          <a
+            class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+            data-hs-tab="#tabs-with-card-1"
+            href="/category/university"
+            role="tab"
+          >
+            <span
+              class="flex"
+            >
+              <span
+                class="grow"
+              >
+                <span
+                  class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+                >
+                  <ul>
+                    <li>
+                      <div
+                        class="flex justify-center"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="w-12 h-12"
+                          data-slot="icon"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="flex justify-center mt-2"
+                      >
+                        <div>
+                          大学生活
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </span>
+              </span>
+            </span>
+          </a>
+          <a
+            class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+            data-hs-tab="#tabs-with-card-1"
+            href="/category/programming"
+            role="tab"
+          >
+            <span
+              class="flex"
+            >
+              <span
+                class="grow"
+              >
+                <span
+                  class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+                >
+                  <ul>
+                    <li>
+                      <div
+                        class="flex justify-center"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="w-12 h-12"
+                          data-slot="icon"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="flex justify-center mt-2"
+                      >
+                        <div>
+                          プログラミング
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </span>
+              </span>
+            </span>
+          </a>
+        </nav>
+        <nav
+          class="flex gap-4 mt-5 md:mt-5"
+          role="tablist"
+        >
+          <a
+            class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+            data-hs-tab="#tabs-with-card-1"
+            href="/category/travel"
+            role="tab"
+          >
+            <span
+              class="flex"
+            >
+              <span
+                class="grow"
+              >
+                <span
+                  class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+                >
+                  <ul>
+                    <li>
+                      <div
+                        class="flex justify-center"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="w-12 h-12"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M407.72 224c-3.4 0-14.79.1-18 .3l-64.9 1.7a1.83 1.83 0 0 1-1.69-.9L193.55 67.56a9 9 0 0 0-6.66-3.56H160l73 161a2.35 2.35 0 0 1-2.26 3.35l-121.69 1.8a8.06 8.06 0 0 1-6.6-3.1l-37-45c-3-3.9-8.62-6-13.51-6H33.08c-1.29 0-1.1 1.21-.75 2.43l19.84 71.42a16.3 16.3 0 0 1 0 11.9L32.31 333c-.59 1.95-.52 3 1.77 3H52c8.14 0 9.25-1.06 13.41-6.3l37.7-45.7a8.19 8.19 0 0 1 6.6-3.1l120.68 2.7a2.7 2.7 0 0 1 2.43 3.74L160 448h26.64a9 9 0 0 0 6.65-3.55L323.14 287c.39-.6 2-.9 2.69-.9l63.9 1.7c3.3.2 14.59.3 18 .3C452 288.1 480 275.93 480 256s-27.88-32-72.28-32z"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="32"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="flex justify-center mt-2"
+                      >
+                        <div>
+                          旅行
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </span>
+              </span>
+            </span>
+          </a>
+          <a
+            class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+            data-hs-tab="#tabs-with-card-1"
+            href="/category/blog"
+            role="tab"
+          >
+            <span
+              class="flex"
+            >
+              <span
+                class="grow"
+              >
+                <span
+                  class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+                >
+                  <ul>
+                    <li>
+                      <div
+                        class="flex justify-center"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="w-12 h-12"
+                          data-slot="icon"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="flex justify-center mt-2"
+                      >
+                        <div>
+                          ブログ
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </span>
+              </span>
+            </span>
+          </a>
+        </nav>
+      </div>
+      <div
+        class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+      >
+        <h1
+          class="profile text-2xl text-center font-semibold flex justify-center"
+        >
+          <svg
+            aria-hidden="true"
+            class="h-8 w-8 mr-2"
+            data-slot="icon"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M11.097 1.515a.75.75 0 0 1 .589.882L10.666 7.5h4.47l1.079-5.397a.75.75 0 1 1 1.47.294L16.665 7.5h3.585a.75.75 0 0 1 0 1.5h-3.885l-1.2 6h3.585a.75.75 0 0 1 0 1.5h-3.885l-1.08 5.397a.75.75 0 1 1-1.47-.294l1.02-5.103h-4.47l-1.08 5.397a.75.75 0 1 1-1.47-.294l1.02-5.103H3.75a.75.75 0 0 1 0-1.5h3.885l1.2-6H5.25a.75.75 0 0 1 0-1.5h3.885l1.08-5.397a.75.75 0 0 1 .882-.588ZM10.365 9l-1.2 6h4.47l1.2-6h-4.47Z"
+              fill-rule="evenodd"
+            />
+          </svg>
+          タグ
+        </h1>
+        <div
+          class="mt-5 flex flex-wrap gap-2"
+        >
+          <a
+            class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+            href="/tag/seo"
+          >
+            SEO対策
+          </a>
+          <a
+            class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+            href="/tag/microcms"
+          >
+            MicroCMS
+          </a>
+          <a
+            class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+            href="/tag/adsense"
+          >
+            Google AdSense
+          </a>
+          <a
+            class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+            href="/tag/git"
+          >
+            Git
+          </a>
+          <a
+            class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+            href="/tag/javascript"
+          >
+            JavaScript
+          </a>
+          <a
+            class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+            href="/tag/finance"
+          >
+            金融
+          </a>
+          <a
+            class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+            href="/tag/aws"
+          >
+            AWS
+          </a>
+          <a
+            class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+            href="/tag/cook"
+          >
+            料理
+          </a>
+          <a
+            class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+            href="/tag/appledeveloper"
+          >
+            Apple Developer
+          </a>
+          <a
+            class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+            href="/tag/gadget"
+          >
+            ガジェット
+          </a>
+          <a
+            class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+            href="/tag/flutter"
+          >
+            Flutter
+          </a>
+        </div>
+      </div>
+      <div
+        class="FirstAd pc mt-5"
+      >
+        <div
+          class="FirstAd"
+          style="max-width: 100%; overflow: hidden;"
+        >
+          <p
+            class="text-center"
+          >
+            スポンサーリンク
+          </p>
+          <ins
+            class="adsbygoogle"
+            data-ad-client="ca-pub-1705865999592590"
+            data-ad-format="rectangle"
+            data-ad-slot="8452341403"
+            data-full-width-responsive="false"
+            style="display: flex; justify-content: center; width: 100%;"
+          />
+        </div>
+      </div>
+      <div
+        class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+      >
+        <h1
+          class="profile text-2xl text-center font-semibold flex justify-center"
+        >
+          <svg
+            aria-hidden="true"
+            class="h-8 w-8 mr-2"
+            data-slot="icon"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z"
+              fill-rule="evenodd"
+            />
+          </svg>
+          アーカイブ
+        </h1>
+        <div
+          class="relative mt-5"
+          data-headlessui-state=""
+        >
+          <button
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            data-headlessui-state=""
+            id="headlessui-listbox-button-:r2:"
+            style="height: 40px;"
+            type="button"
+          >
+            <span
+              class="block truncate"
+              style="font-size: 18px;"
+            >
+              アーカイブを選択
+            </span>
+            <span
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
+            >
+              <svg
+                aria-hidden="true"
+                class="h-7 w-7 text-gray-400"
+                data-slot="icon"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M11.47 4.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1-1.06 1.06L12 6.31 8.78 9.53a.75.75 0 0 1-1.06-1.06l3.75-3.75Zm-3.75 9.75a.75.75 0 0 1 1.06 0L12 17.69l3.22-3.22a.75.75 0 1 1 1.06 1.06l-3.75 3.75a.75.75 0 0 1-1.06 0l-3.75-3.75a.75.75 0 0 1 0-1.06Z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div
+        class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+      >
+        <h1
+          class="profile text-2xl text-center font-semibold flex justify-center"
+        >
+          <svg
+            aria-hidden="true"
+            class="h-8 w-8 mr-2"
+            data-slot="icon"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z"
+              fill-rule="evenodd"
+            />
+          </svg>
+          人気の投稿
+        </h1>
+        <ol
+          class="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        >
+          <li>
+            <a
+              class="sidebarPopularPost"
+              href="/articles/nyuto-hotspring-tsurunoyu-reservation-access"
+            >
+              <img
+                alt="サムネイル"
+                class="ArticleListItem_image"
+                data-nimg="1"
+                decoding="async"
+                height="300"
+                loading="lazy"
+                src="/_next/image?url=%2Fimages%2Fpost%2F1.webp&w=1200&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fpost%2F1.webp&w=640&q=75 1x, /_next/image?url=%2Fimages%2Fpost%2F1.webp&w=1200&q=75 2x"
+                style="color: transparent;"
+                width="600"
+              />
+              <div>
+                <div
+                  class="ArticleListItem_title font-bold"
+                >
+                  【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説
+                </div>
+              </div>
+            </a>
+          </li>
+        </ol>
+        <ol
+          class="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        >
+          <li>
+            <a
+              class="sidebarPopularPost"
+              href="/articles/university-student-real-personal-effects"
+            >
+              <img
+                alt="サムネイル"
+                class="ArticleListItem_image"
+                data-nimg="1"
+                decoding="async"
+                height="300"
+                loading="lazy"
+                src="/_next/image?url=%2Fimages%2Fpost%2F2.webp&w=1200&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fpost%2F2.webp&w=640&q=75 1x, /_next/image?url=%2Fimages%2Fpost%2F2.webp&w=1200&q=75 2x"
+                style="color: transparent;"
+                width="600"
+              />
+              <div>
+                <div
+                  class="ArticleListItem_title font-bold"
+                >
+                  【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】
+                </div>
+              </div>
+            </a>
+          </li>
+        </ol>
+        <ol
+          class="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        >
+          <li>
+            <a
+              class="sidebarPopularPost"
+              href="/articles/study-php-recommend-method"
+            >
+              <img
+                alt="サムネイル"
+                class="ArticleListItem_image"
+                data-nimg="1"
+                decoding="async"
+                height="300"
+                loading="lazy"
+                src="/_next/image?url=%2Fimages%2Fpost%2F3.webp&w=1200&q=75"
+                srcset="/_next/image?url=%2Fimages%2Fpost%2F3.webp&w=640&q=75 1x, /_next/image?url=%2Fimages%2Fpost%2F3.webp&w=1200&q=75 2x"
+                style="color: transparent;"
+                width="600"
+              />
+              <div>
+                <div
+                  class="ArticleListItem_title font-bold"
+                >
+                  【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】
+                </div>
+              </div>
+            </a>
+          </li>
+        </ol>
+      </div>
+      <div
+        class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+      >
+        <h1
+          class="profile text-2xl text-center font-semibold flex justify-center"
+        >
+          <svg
+            aria-hidden="true"
+            class="h-8 w-8 mr-2"
+            data-slot="icon"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M5.85 3.5a.75.75 0 0 0-1.117-1 9.719 9.719 0 0 0-2.348 4.876.75.75 0 0 0 1.479.248A8.219 8.219 0 0 1 5.85 3.5ZM19.267 2.5a.75.75 0 1 0-1.118 1 8.22 8.22 0 0 1 1.987 4.124.75.75 0 0 0 1.48-.248A9.72 9.72 0 0 0 19.266 2.5Z"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M12 2.25A6.75 6.75 0 0 0 5.25 9v.75a8.217 8.217 0 0 1-2.119 5.52.75.75 0 0 0 .298 1.206c1.544.57 3.16.99 4.831 1.243a3.75 3.75 0 1 0 7.48 0 24.583 24.583 0 0 0 4.83-1.244.75.75 0 0 0 .298-1.205 8.217 8.217 0 0 1-2.118-5.52V9A6.75 6.75 0 0 0 12 2.25ZM9.75 18c0-.034 0-.067.002-.1a25.05 25.05 0 0 0 4.496 0l.002.1a2.25 2.25 0 1 1-4.5 0Z"
+              fill-rule="evenodd"
+            />
+          </svg>
+          最新の投稿
+        </h1>
+        <div>
+          <div>
+            <ol
+              class="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+            >
+              <li>
+                <a
+                  class="sidebarPopularPost"
+                  href="/articles/1"
+                >
+                  <img
+                    alt="サムネイル"
+                    data-nimg="1"
+                    decoding="async"
+                    height="300"
+                    loading="lazy"
+                    src="/_next/image?url=https%3A%2F%2Fexample.com%2Fthumbnail1.jpg&w=1200&q=75"
+                    srcset="/_next/image?url=https%3A%2F%2Fexample.com%2Fthumbnail1.jpg&w=640&q=75 1x, /_next/image?url=https%3A%2F%2Fexample.com%2Fthumbnail1.jpg&w=1200&q=75 2x"
+                    style="color: transparent; background-size: cover; background-position: 50% 50%; background-repeat: no-repeat;"
+                    width="600"
+                  />
+                  <div>
+                    <div
+                      class="ArticleListItem_title font-bold"
+                    >
+                      サンプル記事1
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ol>
+          </div>
+          <div>
+            <ol
+              class="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+            >
+              <li>
+                <a
+                  class="sidebarPopularPost"
+                  href="/articles/2"
+                >
+                  <img
+                    alt="サムネイル"
+                    data-nimg="1"
+                    decoding="async"
+                    height="300"
+                    loading="lazy"
+                    src="/_next/image?url=https%3A%2F%2Fexample.com%2Fthumbnail2.jpg&w=1200&q=75"
+                    srcset="/_next/image?url=https%3A%2F%2Fexample.com%2Fthumbnail2.jpg&w=640&q=75 1x, /_next/image?url=https%3A%2F%2Fexample.com%2Fthumbnail2.jpg&w=1200&q=75 2x"
+                    style="color: transparent; background-size: cover; background-position: 50% 50%; background-repeat: no-repeat;"
+                    width="600"
+                  />
+                  <div>
+                    <div
+                      class="ArticleListItem_title font-bold"
+                    >
+                      サンプル記事2
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="SidebarTableOfContens mobile"
+    />
+  </div>
+</DocumentFragment>
+`;
