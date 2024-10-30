@@ -19,7 +19,7 @@ const Pagination: React.FC<Props> = React.memo(({ totalCount, current = 1, baseP
   };
 
   return (
-    <ul className={styles.container}>
+    <ul className={`${styles.container} PaginationContainer`}>
       {pages.map((p) => (
         <li className={styles.list} key={p}>
           {current !== p ? (
