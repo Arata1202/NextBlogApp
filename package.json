@@ -11,7 +11,8 @@
     "lint:fix": "eslint --fix",
     "prepare": "husky install",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json,css}'",
-    "test": "jest"
+    "test": "jest",
+    "test:snapshot": "jest --updateSnapshot"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
