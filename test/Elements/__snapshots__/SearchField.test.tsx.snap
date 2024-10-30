@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchField スナップショット（SearchField） 1`] = `
+<DocumentFragment>
+  <form
+    action="/search"
+    method="GET"
+  >
+    <input
+      class="search hover:border-blue-500"
+      name="q"
+      placeholder="検索"
+      style="width: 100%; border-radius: 0;"
+      type="search"
+      value=""
+    />
+    <button
+      style="display: none;"
+      type="submit"
+    >
+      Search
+    </button>
+  </form>
+</DocumentFragment>
+`;
