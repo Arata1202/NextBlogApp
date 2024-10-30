@@ -3,7 +3,7 @@
 exports[`Pagination スナップショット（Pagination） 1`] = `
 <DocumentFragment>
   <ul
-    class="container"
+    class="container PaginationContainer"
   >
     <li
       class="list"
