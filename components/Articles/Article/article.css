@@ -1,7 +1,7 @@
-.Article_content__JUauZ a {
+.ArticleContents a {
   color: #3b82f6;
 }
-.Article_content__JUauZ a:hover {
+.ArticleContents a:hover {
   color: #2563eb;
 }
 
@@ -34,7 +34,13 @@
   color: #2b2c30;
   margin: 0 2px;
   padding: 2px 4px;
-  font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+  font-family:
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
 }
 
 table {
@@ -156,7 +162,9 @@ pre {
 blockquote,
 q {
   quotes: none;
-  background: url('/images/plugin/icon_quote.svg') no-repeat 20px 10px, #eee;
+  background:
+    url('/images/plugin/icon_quote.svg') no-repeat 20px 10px,
+    #eee;
   background-size: 25px 25px;
   padding: 50px 20px 20px;
   border-left: none !important;

@@ -1,0 +1,240 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Category スナップショット（Category） 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+  >
+    <h1
+      class="profile text-2xl text-center font-semibold flex justify-center"
+    >
+      <svg
+        aria-hidden="true"
+        class="h-8 w-8 mr-2"
+        data-slot="icon"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z"
+        />
+      </svg>
+      カテゴリー
+    </h1>
+    <nav
+      class="flex gap-4 mt-5 md:mt-5"
+      role="tablist"
+    >
+      <a
+        class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        data-hs-tab="#tabs-with-card-1"
+        href="/category/university"
+        role="tab"
+      >
+        <span
+          class="flex"
+        >
+          <span
+            class="grow"
+          >
+            <span
+              class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+            >
+              <ul>
+                <li>
+                  <div
+                    class="flex justify-center"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="w-12 h-12"
+                      data-slot="icon"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex justify-center mt-2"
+                  >
+                    <div>
+                      大学生活
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </span>
+        </span>
+      </a>
+      <a
+        class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        data-hs-tab="#tabs-with-card-1"
+        href="/category/programming"
+        role="tab"
+      >
+        <span
+          class="flex"
+        >
+          <span
+            class="grow"
+          >
+            <span
+              class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+            >
+              <ul>
+                <li>
+                  <div
+                    class="flex justify-center"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="w-12 h-12"
+                      data-slot="icon"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex justify-center mt-2"
+                  >
+                    <div>
+                      プログラミング
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </span>
+        </span>
+      </a>
+    </nav>
+    <nav
+      class="flex gap-4 mt-5 md:mt-5"
+      role="tablist"
+    >
+      <a
+        class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        data-hs-tab="#tabs-with-card-1"
+        href="/category/travel"
+        role="tab"
+      >
+        <span
+          class="flex"
+        >
+          <span
+            class="grow"
+          >
+            <span
+              class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+            >
+              <ul>
+                <li>
+                  <div
+                    class="flex justify-center"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="w-12 h-12"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M407.72 224c-3.4 0-14.79.1-18 .3l-64.9 1.7a1.83 1.83 0 0 1-1.69-.9L193.55 67.56a9 9 0 0 0-6.66-3.56H160l73 161a2.35 2.35 0 0 1-2.26 3.35l-121.69 1.8a8.06 8.06 0 0 1-6.6-3.1l-37-45c-3-3.9-8.62-6-13.51-6H33.08c-1.29 0-1.1 1.21-.75 2.43l19.84 71.42a16.3 16.3 0 0 1 0 11.9L32.31 333c-.59 1.95-.52 3 1.77 3H52c8.14 0 9.25-1.06 13.41-6.3l37.7-45.7a8.19 8.19 0 0 1 6.6-3.1l120.68 2.7a2.7 2.7 0 0 1 2.43 3.74L160 448h26.64a9 9 0 0 0 6.65-3.55L323.14 287c.39-.6 2-.9 2.69-.9l63.9 1.7c3.3.2 14.59.3 18 .3C452 288.1 480 275.93 480 256s-27.88-32-72.28-32z"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="32"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex justify-center mt-2"
+                  >
+                    <div>
+                      旅行
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </span>
+        </span>
+      </a>
+      <a
+        class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        data-hs-tab="#tabs-with-card-1"
+        href="/category/blog"
+        role="tab"
+      >
+        <span
+          class="flex"
+        >
+          <span
+            class="grow"
+          >
+            <span
+              class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+            >
+              <ul>
+                <li>
+                  <div
+                    class="flex justify-center"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="w-12 h-12"
+                      data-slot="icon"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex justify-center mt-2"
+                  >
+                    <div>
+                      ブログ
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </span>
+        </span>
+      </a>
+    </nav>
+  </div>
+</DocumentFragment>
+`;

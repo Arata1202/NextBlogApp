@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WithArticleItem スナップショット（WithArticleItem） 1`] = `
+<DocumentFragment>
+  <li
+    class="list"
+  >
+    <a
+      class="link p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 cursor-pointer"
+      href="/articles/1"
+    >
+      <picture>
+        <source
+          media="(max-width: 640px)"
+          srcset="https://thumbnail.com/thumbnail.jpg?fm=webp&w=414 1x, https://thumbnail.com/thumbnail.jpg?fm=webp&w=414&dpr=2 2x"
+          type="image/webp"
+        />
+        <source
+          srcset="https://thumbnail.com/thumbnail.jpg?fm=webp&fit=crop&w=240&h=126 1x, https://thumbnail.com/thumbnail.jpg?fm=webp&fit=crop&w=240&h=126&dpr=2 2x"
+          type="image/webp"
+        />
+        <img
+          alt="サムネイル"
+          class="image"
+          data-nimg="1"
+          decoding="async"
+          height="300"
+          loading="lazy"
+          src="/_next/image?url=https%3A%2F%2Fthumbnail.com%2Fthumbnail.jpg&w=1200&q=75"
+          srcset="/_next/image?url=https%3A%2F%2Fthumbnail.com%2Fthumbnail.jpg&w=640&q=75 1x, /_next/image?url=https%3A%2F%2Fthumbnail.com%2Fthumbnail.jpg&w=1200&q=75 2x"
+          style="color: transparent; background-size: cover; background-position: 50% 50%; background-repeat: no-repeat;"
+          width="600"
+        />
+      </picture>
+      <div
+        class="content"
+      >
+        <div
+          class="title"
+        >
+          タイトル
+        </div>
+        <div
+          class="description"
+        >
+          概要
+        </div>
+        <div
+          class="date"
+        >
+              
+          <span
+            class="date"
+          >
+            <img
+              alt=""
+              data-nimg="1"
+              decoding="async"
+              height="16"
+              src="/clock.svg"
+              style="color: transparent;"
+              width="16"
+            />
+            2023年10月30日
+          </span>
+        </div>
+      </div>
+    </a>
+  </li>
+</DocumentFragment>
+`;
