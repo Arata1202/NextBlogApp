@@ -48,7 +48,7 @@ export default async function RootLayout({ children }: Props) {
           }}
         />
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
-        <link rel="manifest" href="/manifest.json" />
+        {/* <link rel="manifest" href="/manifest.json" /> */}
         <link
           rel="icon"
           href="https://realunivlog.com/images/head/16.png"
