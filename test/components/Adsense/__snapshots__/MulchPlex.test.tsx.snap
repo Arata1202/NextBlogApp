@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MulchPlex スナップショット（MulchPlex) 1`] = `
+<DocumentFragment>
+  <div
+    class="FirstAd"
+    style="max-width: 100%; overflow: hidden;"
+  >
+    <p
+      class="text-center"
+    >
+      スポンサーリンク
+    </p>
+    <ins
+      class="adsbygoogle"
+      data-ad-client="ca-pub-1705865999592590"
+      data-ad-format="autorelaxed"
+      data-ad-slot=""
+      data-full-width-responsive="true"
+      style="display: block; width: 100%;"
+    />
+  </div>
+</DocumentFragment>
+`;

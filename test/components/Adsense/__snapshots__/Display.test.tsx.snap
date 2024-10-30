@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Display スナップショット（Display) 1`] = `
+<DocumentFragment>
+  <div
+    class="FirstAd"
+    style="max-width: 100%; overflow: hidden;"
+  >
+    <p
+      class="text-center"
+    >
+      スポンサーリンク
+    </p>
+    <ins
+      class="adsbygoogle"
+      data-ad-client="ca-pub-1705865999592590"
+      data-ad-format="rectangle"
+      data-ad-slot=""
+      data-full-width-responsive="false"
+      style="display: flex; justify-content: center; width: 100%;"
+    />
+  </div>
+</DocumentFragment>
+`;
