@@ -7,6 +7,7 @@ const config: Config.InitialOptions = {
   moduleNameMapper: {
     '^@/(.+)$': '<rootDir>/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '^cheerio$': '<rootDir>/test/__mocks__/CheerioMock.ts',
   },
 };
 
