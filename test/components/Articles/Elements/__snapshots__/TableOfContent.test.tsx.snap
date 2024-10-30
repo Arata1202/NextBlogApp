@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableOfContent スナップショット（TableOfContent） 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="flex justify-center"
+    >
+      <nav
+        aria-label="Table of contents"
+        class="tableOfContent w-1/2 border border-gray-300 p-4"
+      >
+        <h1
+          class="text-center font-bold text-lg"
+        >
+          目次
+        </h1>
+        <ol
+          class="mt-4 list-none pl-0"
+        >
+          <li
+            style="margin-left: 0px; background-color: transparent; transition: background-color 0.3s ease;"
+          >
+            <a
+              class="hover:text-blue-500"
+              href="#1"
+            >
+              1 Heading 1
+            </a>
+          </li>
+          <li
+            style="margin-left: 20px; background-color: transparent; transition: background-color 0.3s ease;"
+          >
+            <a
+              class="hover:text-blue-500"
+              href="#2"
+            >
+              1.1 Heading 2
+            </a>
+          </li>
+          <li
+            style="margin-left: 40px; background-color: transparent; transition: background-color 0.3s ease;"
+          >
+            <a
+              class="hover:text-blue-500"
+              href="#3"
+            >
+              1.1.1 Heading 3
+            </a>
+          </li>
+          <li
+            style="margin-left: 20px; background-color: transparent; transition: background-color 0.3s ease;"
+          >
+            <a
+              class="hover:text-blue-500"
+              href="#4"
+            >
+              1.2 Heading 2
+            </a>
+          </li>
+          <li
+            style="margin-left: 0px; background-color: transparent; transition: background-color 0.3s ease;"
+          >
+            <a
+              class="hover:text-blue-500"
+              href="#5"
+            >
+              2 Heading 1
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</DocumentFragment>
+`;
