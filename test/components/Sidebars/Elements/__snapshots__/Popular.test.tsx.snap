@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Popular スナップショット（Popular） 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+  >
+    <h1
+      class="profile text-2xl text-center font-semibold flex justify-center"
+    >
+      <svg
+        aria-hidden="true"
+        class="h-8 w-8 mr-2"
+        data-slot="icon"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z"
+          fill-rule="evenodd"
+        />
+      </svg>
+      人気の投稿
+    </h1>
+    <ol
+      class="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+    >
+      <li>
+        <a
+          class="sidebarPopularPost"
+          href="/articles/nyuto-hotspring-tsurunoyu-reservation-access"
+        >
+          <img
+            alt="サムネイル"
+            class="ArticleListItem_image"
+            data-nimg="1"
+            decoding="async"
+            height="300"
+            loading="lazy"
+            src="/_next/image?url=%2Fimages%2Fpost%2F1.webp&w=1200&q=75"
+            srcset="/_next/image?url=%2Fimages%2Fpost%2F1.webp&w=640&q=75 1x, /_next/image?url=%2Fimages%2Fpost%2F1.webp&w=1200&q=75 2x"
+            style="color: transparent;"
+            width="600"
+          />
+          <div>
+            <div
+              class="ArticleListItem_title font-bold"
+            >
+              【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説
+            </div>
+          </div>
+        </a>
+      </li>
+    </ol>
+    <ol
+      class="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+    >
+      <li>
+        <a
+          class="sidebarPopularPost"
+          href="/articles/university-student-real-personal-effects"
+        >
+          <img
+            alt="サムネイル"
+            class="ArticleListItem_image"
+            data-nimg="1"
+            decoding="async"
+            height="300"
+            loading="lazy"
+            src="/_next/image?url=%2Fimages%2Fpost%2F2.webp&w=1200&q=75"
+            srcset="/_next/image?url=%2Fimages%2Fpost%2F2.webp&w=640&q=75 1x, /_next/image?url=%2Fimages%2Fpost%2F2.webp&w=1200&q=75 2x"
+            style="color: transparent;"
+            width="600"
+          />
+          <div>
+            <div
+              class="ArticleListItem_title font-bold"
+            >
+              【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】
+            </div>
+          </div>
+        </a>
+      </li>
+    </ol>
+    <ol
+      class="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+    >
+      <li>
+        <a
+          class="sidebarPopularPost"
+          href="/articles/study-php-recommend-method"
+        >
+          <img
+            alt="サムネイル"
+            class="ArticleListItem_image"
+            data-nimg="1"
+            decoding="async"
+            height="300"
+            loading="lazy"
+            src="/_next/image?url=%2Fimages%2Fpost%2F3.webp&w=1200&q=75"
+            srcset="/_next/image?url=%2Fimages%2Fpost%2F3.webp&w=640&q=75 1x, /_next/image?url=%2Fimages%2Fpost%2F3.webp&w=1200&q=75 2x"
+            style="color: transparent;"
+            width="600"
+          />
+          <div>
+            <div
+              class="ArticleListItem_title font-bold"
+            >
+              【勉強法】１か月で習得！PHP学習のおすすめロードマップを紹介【プログラミング】
+            </div>
+          </div>
+        </a>
+      </li>
+    </ol>
+  </div>
+</DocumentFragment>
+`;
