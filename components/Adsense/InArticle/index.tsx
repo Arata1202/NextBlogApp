@@ -37,6 +37,7 @@ const InArticle = ({ slot, format = 'fluid', responsive = 'false', style }: Disp
       key={pathname.replace(/\//g, '-') + '-' + slot}
     >
       <p className="text-center">スポンサーリンク</p>
+      <p className="text-center">スポンサーリンク</p>
       <ins
         className="adsbygoogle"
         style={{ display: 'flex', justifyContent: 'center', width: '100%', ...style }}
