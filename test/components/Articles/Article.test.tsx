@@ -10,6 +10,7 @@ jest.mock('@/components/Tags/TagList');
 jest.mock('@/components/Breadcrumbs/BreadcrumbsCategoryList');
 jest.mock('@/components/Articles/Elements/AdAlert');
 jest.mock('@/components/Adsense/Display');
+jest.mock('@/components/Sidebars/ArticleSidebar');
 
 const mockArticleData: Article = {
   id: '1',
