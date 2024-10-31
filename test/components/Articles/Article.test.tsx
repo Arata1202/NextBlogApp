@@ -2,6 +2,15 @@ import { render } from '@testing-library/react';
 import ArticleComponent from '@/components/Articles/Article';
 import { Article } from '@/libs/microcms';
 
+jest.mock('@/components/Elements/Date');
+jest.mock('@/components/Articles/Elements/TableOfContent');
+jest.mock('@/components/Articles/Elements/WithArticleItem');
+jest.mock('@/components/Categories/CategoryList');
+jest.mock('@/components/Tags/TagList');
+jest.mock('@/components/Breadcrumbs/BreadcrumbsCategoryList');
+jest.mock('@/components/Articles/Elements/AdAlert');
+jest.mock('@/components/Adsense/Display');
+
 const mockArticleData: Article = {
   id: '1',
   title: 'サンプルタイトル',

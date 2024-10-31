@@ -1,6 +1,12 @@
 import { render } from '@testing-library/react';
 import LinkPage from '@/components/Fixed/Link';
 
+jest.mock('@/components/Elements/Share');
+jest.mock('@/components/Articles/Elements/AdAlert');
+jest.mock('@/components/Sidebars/FixedSidebar');
+jest.mock('@/components/Elements/Date');
+jest.mock('@/components/Adsense/Display');
+
 const mockSidebarArticles = {
   contents: [
     { id: '1', title: '記事1', description: '概要1', url: '/articles/1' },
