@@ -2,6 +2,9 @@ import { render } from '@testing-library/react';
 import ArticleListItem from '@/components/ArticleLists/ArticleListItem';
 import { Article } from '@/libs/microcms';
 
+jest.mock('@/components/Categories/CategoryList');
+jest.mock('@/components/Elements/Date');
+
 const article: Article = {
   id: '1',
   title: 'タイトル',

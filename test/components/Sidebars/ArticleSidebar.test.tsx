@@ -2,6 +2,17 @@ import { render } from '@testing-library/react';
 import ArticleSidebar from '@/components/Sidebars/ArticleSidebar';
 import type { Article } from '@/libs/microcms';
 
+jest.mock('@/components/Sidebars/Elements/Search');
+jest.mock('@/components/Sidebars/Elements/Profile');
+jest.mock('@/components/Sidebars/Elements/Category');
+jest.mock('@/components/Sidebars/Elements/News');
+jest.mock('@/components/Sidebars/Elements/Tag');
+jest.mock('@/components/Sidebars/Elements/Archive');
+jest.mock('@/components/Sidebars/Elements/Popular');
+jest.mock('@/components/Sidebars/Elements/Recent');
+jest.mock('@/components/Adsense/Display');
+jest.mock('@/components/Articles/Elements/TableOfContent');
+
 const mockArticles: Article[] = [
   {
     id: '1',

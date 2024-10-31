@@ -65,20 +65,6 @@ exports[`ArticleListItem スナップショット(ArticleListItem) 1`] = `
             />
           </svg>
               
-          <span
-            class="date"
-          >
-            <img
-              alt=""
-              data-nimg="1"
-              decoding="async"
-              height="16"
-              src="/clock.svg"
-              style="color: transparent;"
-              width="16"
-            />
-            2023年10月30日
-          </span>
         </div>
       </div>
     </a>

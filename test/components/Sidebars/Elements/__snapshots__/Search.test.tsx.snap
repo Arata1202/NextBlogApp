@@ -24,25 +24,6 @@ exports[`Search スナップショット（Search） 1`] = `
       </svg>
       キーワードで探す
     </h1>
-    <form
-      action="/search"
-      method="GET"
-    >
-      <input
-        class="search hover:border-blue-500"
-        name="q"
-        placeholder="検索"
-        style="width: 100%; border-radius: 0;"
-        type="search"
-        value=""
-      />
-      <button
-        style="display: none;"
-        type="submit"
-      >
-        Search
-      </button>
-    </form>
   </div>
 </DocumentFragment>
 `;
