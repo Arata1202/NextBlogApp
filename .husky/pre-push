@@ -1,8 +1,1 @@
-pnpm test
-
-if [ $? -ne 0 ]; then
-  echo "Tests failed. Aborting push."
-  exit 1
-fi
-
-exit 0
+pnpm run test
