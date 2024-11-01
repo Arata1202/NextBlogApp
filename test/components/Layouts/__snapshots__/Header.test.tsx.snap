@@ -3,7 +3,7 @@
 exports[`Header スナップショット（Header） 1`] = `
 <DocumentFragment>
   <header
-    class="header fixed top-0 left-0 w-full bg-white z-30"
+    class="header fixed top-0 left-0 w-full bg-white z-30 lightTheme"
   >
     <nav
       aria-label="Global"
@@ -34,7 +34,7 @@ exports[`Header スナップショット（Header） 1`] = `
         class="flex lg:hidden"
       >
         <button
-          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 "
           type="button"
         >
           <span
@@ -44,7 +44,7 @@ exports[`Header スナップショット（Header） 1`] = `
           </span>
           <svg
             aria-hidden="true"
-            class="h-6 w-6"
+            class="h-6 w-6 lightTheme"
             data-slot="icon"
             fill="none"
             stroke="currentColor"
@@ -64,7 +64,7 @@ exports[`Header スナップショット（Header） 1`] = `
         class="hidden lg:flex lg:gap-x-12"
       >
         <a
-          class="flex text-sm leading-6 text-gray-900 hover:text-blue-500"
+          class="flex text-sm leading-6  hover:text-blue-500 lightTheme"
           href="/"
         >
           <svg
@@ -85,7 +85,7 @@ exports[`Header スナップショット（Header） 1`] = `
           ホーム
         </a>
         <a
-          class="flex text-sm leading-6 text-gray-900 hover:text-blue-500"
+          class="flex text-sm leading-6  hover:text-blue-500 lightTheme"
           href="/profile"
         >
           <svg
@@ -105,7 +105,7 @@ exports[`Header スナップショット（Header） 1`] = `
           プロフィール
         </a>
         <a
-          class="flex text-sm leading-6 text-gray-900 hover:text-blue-500"
+          class="flex text-sm leading-6  hover:text-blue-500 lightTheme"
           href="/contact"
         >
           <svg
@@ -131,7 +131,7 @@ exports[`Header スナップショット（Header） 1`] = `
         >
           <button
             aria-expanded="false"
-            class="flex items-center text-sm font-medium text-gray-900 hover:text-blue-500 focus:outline-none"
+            class="flex items-center text-sm font-medium  hover:text-blue-500 focus:outline-none lightTheme"
             data-headlessui-state=""
             id="headlessui-popover-button-:r2:"
             type="button"
@@ -151,7 +151,7 @@ exports[`Header スナップショット（Header） 1`] = `
             カテゴリー
             <svg
               aria-hidden="true"
-              class="ml-1 h-5 w-5 text-gray-400"
+              class="ml-1 h-5 w-5"
               data-slot="icon"
               fill="none"
               stroke="currentColor"

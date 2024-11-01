@@ -6,6 +6,15 @@
 
 /* @import url('https://fonts.googleapis.com/css2?family=Briem+Hand:wght@900&family=Sedan+SC&family=Sora:wght@100..800&display=swap'); */
 
+.lightTheme {
+  background-color: white;
+  color: rgb(55 65 81);
+}
+.DarkTheme {
+  background-color: #262626;
+  color: white;
+}
+
 .google-auto-placed {
   max-width: 100% !important;
   overflow: hidden !important;

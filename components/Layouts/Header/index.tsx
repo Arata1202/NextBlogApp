@@ -14,11 +14,17 @@ import {
   categories,
 } from '@/section/dummy';
 
-export default function Header() {
+interface Props {
+  isDarkMode?: boolean;
+}
+
+export default function Header({ isDarkMode }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className={`${styles.header} fixed top-0 left-0 w-full bg-white z-30`}>
+    <header
+      className={`${styles.header} fixed top-0 left-0 w-full bg-white z-30 ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}
+    >
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -30,7 +36,7 @@ export default function Header() {
               key={item.imageUrl}
               width={165}
               height={30}
-              src={item.imageUrl}
+              src={isDarkMode ? '/images/blog/title.dark.jpeg' : '/images/blog/title.webp'}
               alt={item.imageAlt}
             />
           ))}
@@ -39,20 +45,26 @@ export default function Header() {
           {mobileMenuOpen ? (
             <button
               type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 "
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close main menu</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+              <XMarkIcon
+                className={`h-6 w-6 ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}
+                aria-hidden="true"
+              />
             </button>
           ) : (
             <button
               type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 "
               onClick={() => setMobileMenuOpen(true)}
             >
               <span className="sr-only">Open main menu</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+              <Bars3Icon
+                className={`h-6 w-6 ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}
+                aria-hidden="true"
+              />
             </button>
           )}
         </div>
@@ -66,7 +78,7 @@ export default function Header() {
                 window.location.href = item.href;
               }}
               href={item.href}
-              className="flex text-sm leading-6 text-gray-900 hover:text-blue-500"
+              className={`flex text-sm leading-6  hover:text-blue-500 ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}
             >
               <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
               {item.name}
@@ -75,10 +87,12 @@ export default function Header() {
           <Popover className="relative">
             {({ close }) => (
               <>
-                <Popover.Button className="flex items-center text-sm font-medium text-gray-900 hover:text-blue-500 focus:outline-none">
+                <Popover.Button
+                  className={`flex items-center text-sm font-medium  hover:text-blue-500 focus:outline-none ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}
+                >
                   <FolderIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                   カテゴリー
-                  <ChevronDownIcon className="ml-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+                  <ChevronDownIcon className="ml-1 h-5 w-5" aria-hidden="true" />
                 </Popover.Button>
                 <Transition
                   as={Fragment}
@@ -90,12 +104,12 @@ export default function Header() {
                   leaveTo="opacity-0 translate-y-1"
                 >
                   <Popover.Panel className="absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
+                    <div className={`py-1 ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}>
                       {categories.map((category) => (
                         <a
                           key={category.name}
                           href={category.href}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          className="block px-4 py-2 text-sm hover:text-blue-500"
                           onClick={(event) => {
                             event.preventDefault();
                             close();
@@ -137,16 +151,25 @@ export default function Header() {
             leaveTo="translate-x-full"
           >
             <Dialog.Panel className="fixed inset-y-0 right-0 flex max-w-xs w-full bg-white shadow-xl">
-              <div className="flex w-full flex-col p-5">
+              <div
+                className={`flex w-full flex-col p-5 ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}
+              >
                 <button
                   type="button"
                   className="-ml-2 flex items-center justify-end p-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <XMarkIcon className="h-6 w-6 text-gray-900" aria-hidden="true" />
+                  <XMarkIcon
+                    className={`h-6 w-6  ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}
+                    aria-hidden="true"
+                  />
                   <span className="sr-only">Close menu</span>
                 </button>
-                <div className="bg-gray-300 text-center py-2 text-xl font-bold">Menu</div>
+                <div
+                  className={`text-center py-2 text-xl font-bold ${isDarkMode ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                >
+                  Menu
+                </div>
                 <ul className="mt-5 space-y-6">
                   {mobileTopNavigation.map((item) => (
                     <li key={item.name}>
@@ -158,7 +181,9 @@ export default function Header() {
                         }}
                         href={item.href}
                       >
-                        <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
+                        <div
+                          className={`flex items-center py-1 text-base font-bold  border-b border-gray-300 hover:text-blue-500 ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}
+                        >
                           <div>▶︎</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                           {item.name}
@@ -166,7 +191,9 @@ export default function Header() {
                       </a>
                     </li>
                   ))}
-                  <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300">
+                  <div
+                    className={`flex items-center py-1 text-base font-bold  border-b border-gray-300 ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}
+                  >
                     <div>▶︎</div>
                     <FolderIcon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                     カテゴリー
@@ -181,7 +208,9 @@ export default function Header() {
                         }}
                         href={item.href}
                       >
-                        <div className="ml-5 flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
+                        <div
+                          className={`ml-5 flex items-center py-1 text-base font-bold  border-b border-gray-300 hover:text-blue-500  ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}
+                        >
                           <div>{'>'}</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                           {item.name}
@@ -199,7 +228,9 @@ export default function Header() {
                         }}
                         href={item.href}
                       >
-                        <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
+                        <div
+                          className={`flex items-center py-1 text-base font-bold  border-b border-gray-300 hover:text-blue-500 ${isDarkMode ? 'DarkTheme' : 'lightTheme'}`}
+                        >
                           <div>▶︎</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                           {item.name}
