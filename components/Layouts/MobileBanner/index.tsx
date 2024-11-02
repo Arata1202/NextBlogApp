@@ -1,11 +1,14 @@
-export default function MobileBanner() {
+interface Props {
+  isDarkMode?: boolean;
+}
+export default function MobileBanner({ isDarkMode }: Props) {
   return (
-    <div className="flex justify-center mt-20" style={{ backgroundColor: '#d9d9d9' }}>
+    <div className={`flex justify-center mt-20 ${isDarkMode ? 'bg-gray-500' : 'd9d9d9'}`}>
       <div style={{ position: 'relative', width: '700px' }}>
         <img
           loading="lazy"
           style={{ padding: '0 12px' }}
-          src="/images/blog/mobilebanner.png"
+          src={isDarkMode ? '/images/blog/mobilebanner.dark.png' : '/images/blog/mobilebanner.png'}
           alt=""
         />
         <div
