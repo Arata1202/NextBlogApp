@@ -1,0 +1,43 @@
+name: Deploy STORYBOOK to S3
+
+on:
+  push:
+    branches:
+      - feature/#193_2
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate STORYBOOK files
+        run: npm run build-storybook
+
+      - name: Install AWS CLI
+        run: sudo apt-get install awscli -y
+
+      - name: Upload STORYBOOK files to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 cp ./storybook-static s3://realunivlog-story/ --recursive --region ap-northeast-2 --debug
+
+      - name: Invalidate CloudFront Cache
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-northeast-2
+        run: |
+          aws cloudfront create-invalidation --distribution-id E208XYMUO9PV2 --paths "/*"
