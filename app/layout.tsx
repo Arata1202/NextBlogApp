@@ -5,6 +5,7 @@ import './globals.css';
 import styles from './layout.module.css';
 import Script from 'next/script';
 import { Adsense } from '@/components/Adsense/AdsenseScript';
+import { ThemeProvider } from '@/libs/theme-provider';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
@@ -30,7 +31,7 @@ type Props = {
 
 export default async function RootLayout({ children }: Props) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <head>
         <Script async strategy="lazyOnload" src={process.env.GOOGLE_ANALYTICS_ID} />
         <Script
@@ -83,11 +84,13 @@ export default async function RootLayout({ children }: Props) {
         <meta name="google-site-verification" content={process.env.SEARCH_CONSOLE_ID} />
       </head>
       <body>
-        <Header />
-        <main className={styles.main}>{children}</main>
-        <Footer />
-        <Adsense />
-        <Script async strategy="afterInteractive" src="//www.instagram.com/embed.js" />
+        <ThemeProvider>
+          <Header />
+          <main className={styles.main}>{children}</main>
+          <Footer />
+          <Adsense />
+          <Script async strategy="afterInteractive" src="//www.instagram.com/embed.js" />
+        </ThemeProvider>
       </body>
     </html>
   );

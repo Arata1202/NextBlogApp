@@ -6,6 +6,21 @@
 
 /* @import url('https://fonts.googleapis.com/css2?family=Briem+Hand:wght@900&family=Sedan+SC&family=Sora:wght@100..800&display=swap'); */
 
+/* テーマ */
+.LightTheme {
+  background-color: white;
+  color: rgb(55 65 81);
+  border-color: rgb(209 213 219);
+}
+.DarkTheme {
+  background-color: #262626;
+  color: white;
+  border-color: rgb(107 114 128);
+}
+.d9d9d9 {
+  background-color: #d9d9d9;
+}
+
 .google-auto-placed {
   max-width: 100% !important;
   overflow: hidden !important;
