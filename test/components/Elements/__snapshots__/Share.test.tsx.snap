@@ -9,7 +9,7 @@ exports[`Share スナップショット（Share） 1`] = `
       class="pt-3"
     >
       <h1
-        class="text-2xl font-semibold flex justify-center mb-5 LightTheme"
+        class="text-2xl font-semibold flex justify-center mb-5"
       >
         <svg
           aria-hidden="true"
@@ -191,7 +191,7 @@ exports[`Share スナップショット（Share） 1`] = `
         class="pt-3"
       >
         <h1
-          class="text-2xl font-semibold flex justify-center mb-5 LightTheme"
+          class="text-2xl font-semibold flex justify-center mb-5"
         >
           <svg
             aria-hidden="true"

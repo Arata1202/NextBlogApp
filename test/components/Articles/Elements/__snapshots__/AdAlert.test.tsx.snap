@@ -3,7 +3,7 @@
 exports[`AdAlert スナップショット（AdAlert） 1`] = `
 <DocumentFragment>
   <div
-    class="includeBanner flex justify-center text-center p-3 border border-gray-300 text-gray-700"
+    class="AdAlert includeBanner flex justify-center text-center p-3"
   >
     <svg
       aria-hidden="true"
