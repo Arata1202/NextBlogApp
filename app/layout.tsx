@@ -6,6 +6,7 @@ import styles from './layout.module.css';
 import Script from 'next/script';
 import { Adsense } from '@/components/Adsense/AdsenseScript';
 import { ThemeProvider } from '@/libs/theme-provider';
+import ThemeWrapper from '@/libs/theme-wrapper';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
@@ -85,6 +86,7 @@ export default async function RootLayout({ children }: Props) {
       </head>
       <body>
         <ThemeProvider defaultTheme="light">
+          <ThemeWrapper />
           <Header />
           <main className={styles.main}>{children}</main>
           <Footer />
