@@ -12,7 +12,7 @@ export const ThemeProvider: FC<ThemeProviderProps> = (props) => {
   }, []);
 
   if (!isMounted) {
-    return null;
+    return <div style={{ visibility: 'hidden' }}>{props.children}</div>;
   }
 
   return <NextThemesProvider {...props}>{props.children}</NextThemesProvider>;
