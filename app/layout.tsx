@@ -84,7 +84,7 @@ export default async function RootLayout({ children }: Props) {
         <meta name="google-site-verification" content={process.env.SEARCH_CONSOLE_ID} />
       </head>
       <body>
-        <ThemeProvider>
+        <ThemeProvider defaultTheme="light">
           <Header />
           <main className={styles.main}>{children}</main>
           <Footer />
