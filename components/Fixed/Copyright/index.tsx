@@ -1,5 +1,5 @@
 'use client';
-
+import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import PublishedDate from '@/components/Elements/Date';
 import React from 'react';
@@ -15,6 +15,8 @@ const CopyrightPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) 
     month: '2-digit',
     day: '2-digit',
   });
+
+  const { theme } = useTheme();
 
   return (
     <>
@@ -33,7 +35,12 @@ const CopyrightPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) 
                 <AdAlert />
               </div>
               <div className={`${styles.content} mt-10 mb-5`}>
-                <h2 id="copyright">著作権について</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  id="copyright"
+                >
+                  著作権について
+                </h2>
                 <p>
                   リアル大学生（以下、「本サービス」と言います。）のコンテンツ（写真や画像、文章など）の著作権につきましては、
                   原則として本サービスに帰属しており、無断転載することを禁止します。

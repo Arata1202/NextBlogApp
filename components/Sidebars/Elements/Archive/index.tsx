@@ -30,7 +30,7 @@ export default function Archive() {
             style={{ height: '40px' }}
             className={`relative w-full cursor-default rounded-md py-1.5 pl-3 pr-10 text-left shadow-sm ring-1 ring-inset focus:outline-none focus:ring-2 hover:ring-blue-500 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           >
-            <span style={{ fontSize: '18px' }} className="block truncate">
+            <span style={{ fontSize: '18px' }} className="block truncate text-gray-500">
               {selectedMonth
                 ? `${selectedMonth.split('/')[0]}年${selectedMonth
                     .split('/')[1]

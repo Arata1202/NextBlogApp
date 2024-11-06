@@ -1,5 +1,5 @@
 'use client';
-
+import { useTheme } from 'next-themes';
 import React, { useState, useEffect, useRef, useCallback, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { Dialog, Transition } from '@headlessui/react';
@@ -19,6 +19,8 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
     month: '2-digit',
     day: '2-digit',
   });
+
+  const { theme } = useTheme();
 
   const [show, setContactConfirmShow] = useState(false);
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
@@ -146,7 +148,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <div className="sm:col-span-2">
                     <label
                       htmlFor="first-name"
-                      className="block text-sm font-semibold leading-6 text-gray-800"
+                      className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
                     >
                       氏名
                     </label>
@@ -157,7 +159,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         name="sei"
                         id="sei"
                         autoComplete="given-name"
-                        className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       />
                       {errors.sei && <p className="text-red-500">{errors.sei.message}</p>}
                     </div>
@@ -165,7 +167,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <div className="sm:col-span-2">
                     <label
                       htmlFor="last-name"
-                      className="block text-sm font-semibold leading-6 text-gray-800"
+                      className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
                     >
                       題名
                     </label>
@@ -176,7 +178,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         name="mei"
                         id="mei"
                         autoComplete="family-name"
-                        className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       />
                       {errors.mei && <p className="text-red-500">{errors.mei.message}</p>}
                     </div>
@@ -184,7 +186,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <div className="sm:col-span-2">
                     <label
                       htmlFor="email"
-                      className="block text-sm font-semibold leading-6 text-gray-800"
+                      className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
                     >
                       メールアドレス
                     </label>
@@ -201,7 +203,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         name="email"
                         id="email"
                         autoComplete="email"
-                        className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       />
                       {errors.email && <p className="text-red-500">{errors.email.message}</p>}
                     </div>
@@ -209,7 +211,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <div className="sm:col-span-2">
                     <label
                       htmlFor="message"
-                      className="block text-sm font-semibold leading-6 text-gray-800"
+                      className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
                     >
                       内容
                     </label>
@@ -219,7 +221,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         name="message"
                         id="message"
                         rows={4}
-                        className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 text-gray-800 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                         defaultValue={''}
                       />
                       {errors.message && <p className="text-red-500">{errors.message.message}</p>}
@@ -237,7 +239,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <button
                     type="submit"
                     disabled={!captchaValue}
-                    className="block w-full rounded-md bg-white px-3.5 py-2.5 text-center text-sm font-semibold text-gray-800 shadow-s border border-gray-300 hover:text-blue-500"
+                    className={`block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-s border hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                   >
                     送信
                   </button>

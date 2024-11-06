@@ -45,11 +45,7 @@ export default function News() {
                         {news.meta}
                       </a>
                     </div>
-                    <div
-                      className={`mt-1 truncate ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                    >
-                      {news.description}
-                    </div>
+                    <div className={`mt-1 truncate text-gray-500`}>{news.description}</div>
                   </td>
                 </tr>
               ))}
