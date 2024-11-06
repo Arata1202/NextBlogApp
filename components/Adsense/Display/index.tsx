@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
 
 const PUBLISHER_ID = '1705865999592590';
 
@@ -30,13 +31,17 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
     }
   }, [pathname]);
 
+  const { theme } = useTheme();
+
   return (
     <div
       style={{ maxWidth: '100%', overflow: 'hidden' }}
       className="FirstAd"
       key={pathname.replace(/\//g, '-') + '-' + slot}
     >
-      <p className="text-center">スポンサーリンク</p>
+      <p className={`text-center ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
+        スポンサーリンク
+      </p>
       <ins
         className="adsbygoogle"
         style={{ display: 'flex', justifyContent: 'center', width: '100%', ...style }}
