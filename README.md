@@ -1,5 +1,7 @@
 ## アーキテクチャ
 
+※ VercelもGitHub Actions経由になりました。
+
 ![名称未設定ファイル drawio (3)](https://github.com/user-attachments/assets/76d95aef-dcbd-4235-918f-7b35df656f01)
 
 ## リンク集
@@ -8,14 +10,19 @@
 
 - https://realunivlog.com
 
-### サイトマップ
+### サイトマップ・RSS
 
 - https://meta.realunivlog.com/sitemap-0.xml
+- https://meta.realunivlog.com/rss.xml
 
 ### Figma
 
 - https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1&node-type=canvas&t=zcqCjvUj22ccvYpV-11
 
+### Storybook （ダークモード開発中）
+
+- https://d39bs3pqaz25oq.cloudfront.net
+<!--
 ## 開発方法
 
 まずは`.env.example`を`.env`に変更し、適切に設定する。
@@ -34,15 +41,15 @@ npm install
 npm run build
 npm start
 ```
-
+-->
 ## 実装機能
 
 ### Google
 
 - Google Analytics
-- Google Adsense
+- Google AdSense
 - Google Search Console
-- Recaptcha
+- Google Recaptcha
 
 ### サイトマップ
 
@@ -62,10 +69,12 @@ npm start
 - ぱんくずリスト
 - 関連記事
 - あわせて読みたい
+- シェアする
 
 ### 拡張機能
 
 - PWA
+  - メリットを感じられず、削除。
 - プッシュ通知
   - モバイル限定として、Web 版からは削除済み
 
@@ -74,8 +83,7 @@ npm start
 - トップページ
   - 最新記事
   - 人気記事
-  - SNS シェアボタン
-  - 検索
+  - お知らせ
 - プロフィール
 - サイトマップ
 - お問い合わせ
@@ -89,28 +97,43 @@ npm start
 - カテゴリー
 - タグ
 - 記事ページ
+- アーカイブ
+- キーワードで探す
 
 ## 技術構成
+
+### ブログ
 
 - Next.js
 - TypeScript
 - TailwindCSS
+  - TailwindUI
 - AWS Lambda
   - Docker
-  - AWS ECR
-- AWS S3
-- AWS CloudFront
+  - AWS Elastic Container Registry
 - MicroCMS
 - Vercel
-- Prettier
-- Eslint
 - Husky
   - pre-commit
-- GitHub
+    - Prettier
+    - ESLint
+  - pre-push
+    - Jest
+- GitHub Actions
+- Storybook
+- Docker （オプション）
+  - Reverse Proxy
+
+### サイトマップ・RSS
+
+- AWS S3
+- AWS CloudFront
+- AWS Route53
+- AWS Certificate Manager
+
+### デザインツール
 - Canva
 - Figma
-- Docker
-  - Reverse Proxy
 
 ## 料金 （月）
 
