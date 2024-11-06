@@ -58,9 +58,7 @@ exports[`ProfilePage スナップショット（ProfilePage） 1`] = `
               <br />
               どうぞよろしくお願いいたします。
             </p>
-            <h2
-              class="bg-gray-300 text-gray-700"
-            >
+            <h2>
               ブログ始めたきっかけ
             </h2>
             <p>
@@ -69,17 +67,13 @@ exports[`ProfilePage スナップショット（ProfilePage） 1`] = `
               <br />
               そんな中、自分なりに解決法を探しながら生活してきました。それらの経験を無駄にせず、同じ気持ちを抱く大学生の方々に共有したいと考え、ブログを始めました。
             </p>
-            <h2
-              class="bg-gray-300 text-gray-700"
-            >
+            <h2>
               プロフィール
             </h2>
             <p>
               筆者の活動や趣味についてご紹介します。
             </p>
-            <h3
-              class="border-gray-300 text-gray-700"
-            >
+            <h3>
               筆者について
             </h3>
             <ul>
@@ -99,17 +93,13 @@ exports[`ProfilePage スナップショット（ProfilePage） 1`] = `
                 趣味｜旅行、ドライブ、ゲーム、プログラミングなどなど
               </li>
             </ul>
-            <h4
-              class="border-gray-300 text-gray-700"
-            >
+            <h4>
               大学
             </h4>
             <p>
               大学では経営学部のマーケティング学科に所属し、ゼミでは消費者行動の研究や企業の成長戦略について議論しています。
             </p>
-            <h4
-              class="border-gray-300 text-gray-700"
-            >
+            <h4>
               インターンシップ
             </h4>
             <p>
@@ -118,9 +108,7 @@ exports[`ProfilePage スナップショット（ProfilePage） 1`] = `
               <br />
               使用している技術は、Vue.js、Laravel、Next.jsなどです。
             </p>
-            <h4
-              class="border-gray-300 text-gray-700"
-            >
+            <h4>
               旅行
             </h4>
             <p>
@@ -140,9 +128,7 @@ exports[`ProfilePage スナップショット（ProfilePage） 1`] = `
                 Instagram
               </a>
             </p>
-            <h4
-              class="border-gray-300 text-gray-700"
-            >
+            <h4>
               ゲーム
             </h4>
             <p>
@@ -151,17 +137,13 @@ exports[`ProfilePage スナップショット（ProfilePage） 1`] = `
               <br />
               FPSゲームが特に好きで、APEXやスプラトゥーンをよくプレイしています。
             </p>
-            <h4
-              class="border-gray-300 text-gray-700"
-            >
+            <h4>
               プログラミング
             </h4>
             <p>
               去年始めたプログラミングにすっかりハマり、趣味の一つになりました。このブログも自分で作成しました。
             </p>
-            <h2
-              class="bg-gray-300 text-gray-700"
-            >
+            <h2>
               技術スタック
             </h2>
             <p>
@@ -187,9 +169,7 @@ exports[`ProfilePage スナップショット（ProfilePage） 1`] = `
             <p>
               インターンではVue.jsとLaravel、個人開発ではReactやNext.js, PHPの使用頻度が高いです。
             </p>
-            <h2
-              class="bg-gray-300 text-gray-700"
-            >
+            <h2>
               当ブログ（リアル大学生）の使用技術
             </h2>
             <p />
@@ -210,9 +190,7 @@ exports[`ProfilePage スナップショット（ProfilePage） 1`] = `
                 バックエンド｜AWS Lambda
               </li>
             </ul>
-            <h2
-              class="bg-gray-300 text-gray-700"
-            >
+            <h2>
               お問い合わせ
             </h2>
             <p>

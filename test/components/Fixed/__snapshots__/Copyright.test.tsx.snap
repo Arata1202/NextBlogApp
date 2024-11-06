@@ -28,7 +28,6 @@ exports[`CopyrightPage スナップショット（CopyrightPage） 1`] = `
             class="content mt-10 mb-5"
           >
             <h2
-              class="bg-gray-300 text-gray-700"
               id="copyright"
             >
               著作権について

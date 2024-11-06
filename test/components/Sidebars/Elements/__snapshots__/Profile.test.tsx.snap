@@ -3,7 +3,7 @@
 exports[`Profile スナップショット（Profile） 1`] = `
 <DocumentFragment>
   <div
-    class="pt-8 px-4 border py-5 mt-5 LightTheme"
+    class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
   >
     <h1
       class="profile text-2xl text-center font-semibold pb-5 flex justify-center"
@@ -57,7 +57,7 @@ exports[`Profile スナップショット（Profile） 1`] = `
       />
     </div>
     <h1
-      class="mt-6 text-2xl text-center font-semibold leading-7 tracking-tight LightTheme"
+      class="mt-6 text-2xl text-center font-semibold leading-7 tracking-tight text-gray-800"
     >
       <a
         class="hover:text-blue-500"
@@ -72,7 +72,7 @@ exports[`Profile スナップショット（Profile） 1`] = `
     >
       <li>
         <a
-          class="hover:text-blue-500 LightTheme"
+          class="text-gray-400 hover:text-blue-500"
           href="https://twitter.com/Aokumoblog"
           target="blank"
         >
@@ -95,7 +95,7 @@ exports[`Profile スナップショット（Profile） 1`] = `
       </li>
       <li>
         <a
-          class="hover:text-blue-500 LightTheme"
+          class="text-gray-400 hover:text-blue-500"
           href="https://www.instagram.com/ao_realstudent/?hl=ja"
           target="blank"
         >
@@ -120,7 +120,7 @@ exports[`Profile スナップショット（Profile） 1`] = `
       </li>
       <li>
         <a
-          class="hover:text-blue-500 LightTheme"
+          class="text-gray-400 hover:text-blue-500"
           href="https://github.com/Arata1202"
           target="blank"
         >
@@ -143,7 +143,7 @@ exports[`Profile スナップショット（Profile） 1`] = `
       </li>
     </ul>
     <div
-      class="text-lg leading-6 mt-5 flex justify-center LightTheme"
+      class="text-lg leading-6 text-gray-800 mt-5 flex justify-center"
     >
       <div>
         <ul
