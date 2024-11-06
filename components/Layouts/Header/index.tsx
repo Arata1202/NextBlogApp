@@ -8,6 +8,7 @@ import { Dialog, Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { FolderIcon } from '@heroicons/react/24/solid';
 import { BlogTitle } from '@/section/dummy';
+import { useTheme } from 'next-themes';
 import {
   headerNavigation,
   mobileTopNavigation,
@@ -17,9 +18,12 @@ import {
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme } = useTheme();
 
   return (
-    <header className={`${styles.header} fixed top-0 left-0 w-full bg-white z-30`}>
+    <header
+      className={`${styles.header} fixed top-0 left-0 w-full z-30 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+    >
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -31,7 +35,7 @@ export default function Header() {
               key={item.imageUrl}
               width={165}
               height={30}
-              src={item.imageUrl}
+              src={theme === 'dark' ? '/images/blog/title-dark.jpeg' : '/images/blog/title.webp'}
               alt={item.imageAlt}
             />
           ))}
@@ -40,7 +44,7 @@ export default function Header() {
           {mobileMenuOpen ? (
             <button
               type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+              className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close main menu</span>
@@ -48,12 +52,14 @@ export default function Header() {
             </button>
           ) : (
             <div className="flex">
-              <div className="-m-2.5 inline-flex items-center justify-center rounded-md p-3 text-gray-700">
+              <div
+                className={`-m-2.5 inline-flex items-center justify-center rounded-md p-3 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              >
                 <ThemeSwitch />
               </div>
               <button
                 type="button"
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 ml-1 text-gray-700"
+                className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 ml-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                 onClick={() => setMobileMenuOpen(true)}
               >
                 <span className="sr-only">Open main menu</span>
@@ -72,7 +78,7 @@ export default function Header() {
                 window.location.href = item.href;
               }}
               href={item.href}
-              className="flex text-sm leading-6 text-gray-900 hover:text-blue-500"
+              className={`flex text-sm leading-6 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
               {item.name}
@@ -81,10 +87,12 @@ export default function Header() {
           <Popover className="relative">
             {({ close }) => (
               <>
-                <Popover.Button className="flex items-center text-sm font-medium text-gray-900 hover:text-blue-500 focus:outline-none">
+                <Popover.Button
+                  className={`flex items-center text-sm font-medium hover:text-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                >
                   <FolderIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                   カテゴリー
-                  <ChevronDownIcon className="ml-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+                  <ChevronDownIcon className="ml-1 h-5 w-5" aria-hidden="true" />
                 </Popover.Button>
                 <Transition
                   as={Fragment}
@@ -95,13 +103,15 @@ export default function Header() {
                   leaveFrom="opacity-100 translate-y-0"
                   leaveTo="opacity-0 translate-y-1"
                 >
-                  <Popover.Panel className="absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Popover.Panel
+                    className={`absolute z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-opacity-5 focus:outline-none  ${theme === 'dark' ? 'DarkTheme ring-gray-500' : 'LightTheme ring-gray-300'}`}
+                  >
                     <div className="py-1">
                       {categories.map((category) => (
                         <a
                           key={category.name}
                           href={category.href}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          className={`block px-4 py-2 text-sm hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                           onClick={(event) => {
                             event.preventDefault();
                             close();
@@ -131,7 +141,7 @@ export default function Header() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-opacity-25" />
           </Transition.Child>
 
           <Transition.Child
@@ -143,17 +153,25 @@ export default function Header() {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="fixed inset-y-0 right-0 flex max-w-xs w-full bg-white shadow-xl">
+            <Dialog.Panel
+              className={`fixed inset-y-0 right-0 flex max-w-xs w-full shadow-xl  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            >
               <div className="flex w-full flex-col p-5">
                 <button
                   type="button"
                   className="-ml-2 flex items-center justify-end p-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <XMarkIcon className="h-6 w-6 text-gray-900" aria-hidden="true" />
+                  <XMarkIcon
+                    className={`h-6 w-6" aria-hidden="true  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  />
                   <span className="sr-only">Close menu</span>
                 </button>
-                <div className="bg-gray-300 text-center py-2 text-xl font-bold">Menu</div>
+                <div
+                  className={`text-center py-2 text-xl font-bold  ${theme === 'dark' ? 'bg-gray-500' : 'bg-gray-300'}`}
+                >
+                  Menu
+                </div>
                 <ul className="mt-5 space-y-6">
                   {mobileTopNavigation.map((item) => (
                     <li key={item.name}>
@@ -165,7 +183,9 @@ export default function Header() {
                         }}
                         href={item.href}
                       >
-                        <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
+                        <div
+                          className={`flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                        >
                           <div>▶︎</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                           {item.name}
@@ -173,7 +193,9 @@ export default function Header() {
                       </a>
                     </li>
                   ))}
-                  <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300">
+                  <div
+                    className={`flex items-center py-1 text-base font-bold border-b  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  >
                     <div>▶︎</div>
                     <FolderIcon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                     カテゴリー
@@ -188,7 +210,9 @@ export default function Header() {
                         }}
                         href={item.href}
                       >
-                        <div className="ml-5 flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
+                        <div
+                          className={`ml-5 flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                        >
                           <div>{'>'}</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                           {item.name}
@@ -206,7 +230,9 @@ export default function Header() {
                         }}
                         href={item.href}
                       >
-                        <div className="flex items-center py-1 text-base font-bold text-gray-900 border-b border-gray-300 hover:text-blue-500">
+                        <div
+                          className={`flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                        >
                           <div>▶︎</div>
                           <item.icon className="h-6 w-6 mr-2 ml-2" aria-hidden="true" />
                           {item.name}
