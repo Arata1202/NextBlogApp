@@ -1,10 +1,13 @@
+'use client';
+import { useTheme } from 'next-themes';
 import { FolderIcon } from '@heroicons/react/24/solid';
 import { CategoryList, CategoryList2 } from '@/section/dummy';
 import styles from './index.module.css';
 
 export default function Category() {
+  const { theme } = useTheme();
   return (
-    <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
+    <div className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
       <h1 className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}>
         <FolderIcon className="h-8 w-8 mr-2" aria-hidden="true" />
         カテゴリー
@@ -13,14 +16,16 @@ export default function Category() {
         {CategoryList.map((item) => (
           <a
             href={item.href}
-            className="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+            className={`sidebarCategory text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             data-hs-tab="#tabs-with-card-1"
             role="tab"
             key={item.name}
           >
             <span className="flex">
               <span className="grow">
-                <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">
+                <span
+                  className={`block text-lg font-semibold ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                >
                   <ul>
                     <li>
                       <div className="flex justify-center">
@@ -41,14 +46,16 @@ export default function Category() {
         {CategoryList2.map((item) => (
           <a
             href={item.href}
-            className="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+            className={`sidebarCategory text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             data-hs-tab="#tabs-with-card-1"
             role="tab"
             key={item.name}
           >
             <span className="flex">
               <span className="grow">
-                <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">
+                <span
+                  className={`block text-lg font-semibold ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                >
                   <ul>
                     <li>
                       <div className="flex justify-center">
