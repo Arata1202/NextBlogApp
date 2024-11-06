@@ -3,7 +3,7 @@
 exports[`News スナップショット（News） 1`] = `
 <DocumentFragment>
   <div
-    class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+    class="pt-8 px-4 border py-5 mt-5 LightTheme"
   >
     <h1
       class="profile text-2xl text-center font-semibold flex justify-center"
@@ -44,13 +44,13 @@ exports[`News スナップショット（News） 1`] = `
           </colgroup>
           <tbody>
             <tr
-              class="border-b border-gray-200"
+              class="border-b LightTheme"
             >
               <td
                 class="max-w-0 border-none pt-0 pb-5 pl-4 pr-3 text-sm sm:pl-0"
               >
                 <div
-                  class="text-gray-900"
+                  class="LightTheme"
                   style="font-size: 18px;"
                 >
                   Android版アプリ「リアル大学生：モバイル」がリリースされました。
@@ -74,13 +74,13 @@ exports[`News スナップショット（News） 1`] = `
               </td>
             </tr>
             <tr
-              class="border-b border-gray-200"
+              class="border-b LightTheme"
             >
               <td
                 class="max-w-0 border-none py-5 pl-4 pr-3 text-sm sm:pl-0"
               >
                 <div
-                  class="text-gray-900"
+                  class="LightTheme"
                   style="font-size: 18px;"
                 >
                   RSSの不具合を修正しました。お手数ですが、新しいURLから再登録をお願いします。
@@ -104,13 +104,13 @@ exports[`News スナップショット（News） 1`] = `
               </td>
             </tr>
             <tr
-              class="border-b border-gray-200"
+              class="border-b LightTheme"
             >
               <td
                 class="max-w-0 border-none py-5 pl-4 pr-3 text-sm sm:pl-0"
               >
                 <div
-                  class="text-gray-900"
+                  class="LightTheme"
                   style="font-size: 18px;"
                 >
                   iOS版アプリ「リアル大学生：モバイル」がリリースされました。

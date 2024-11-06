@@ -7,7 +7,7 @@ exports[`SearchField スナップショット（SearchField） 1`] = `
     method="GET"
   >
     <input
-      class="search hover:border-blue-500"
+      class="search hover:border-blue-500 border LightTheme placeholder:text-gray-500"
       name="q"
       placeholder="検索"
       style="width: 100%; border-radius: 0;"
