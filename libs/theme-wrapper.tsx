@@ -7,7 +7,7 @@ export default function ThemeWrapper() {
   const { theme } = useTheme();
 
   useEffect(() => {
-    document.body.classList.toggle('DarkTheme-bg', theme === 'dark');
+    document.body.classList.toggle('DarkTheme', theme === 'dark');
   }, [theme]);
 
   return null;

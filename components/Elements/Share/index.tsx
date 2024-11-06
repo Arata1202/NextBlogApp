@@ -18,13 +18,17 @@ import {
 } from 'react-share';
 import { HandThumbUpIcon, RssIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 import { SiFeedly } from 'react-icons/si';
+import { useTheme } from 'next-themes';
 
 export default function Share() {
+  const { theme } = useTheme();
   return (
     <>
       <div className="mb-7">
         <div className="pt-3">
-          <h1 className={`text-2xl font-semibold flex justify-center mb-5`}>
+          <h1
+            className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+          >
             <HandThumbUpIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             シェアする
           </h1>
@@ -97,7 +101,9 @@ export default function Share() {
         </div>
         <div className="mt-2">
           <div className="pt-3">
-            <h1 className={`text-2xl font-semibold flex justify-center mb-5`}>
+            <h1
+              className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            >
               <UserPlusIcon className="h-8 w-8 mr-2" aria-hidden="true" />
               フォローする
             </h1>
