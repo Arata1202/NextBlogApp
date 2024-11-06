@@ -2,6 +2,7 @@
 
 import * as cheerio from 'cheerio';
 const hljs = require('highlight.js/lib/common');
+import { useTheme } from 'next-themes';
 import javascript from 'highlight.js/lib/languages/javascript';
 import php from 'highlight.js/lib/languages/php';
 import shell from 'highlight.js/lib/languages/shell';
@@ -130,6 +131,52 @@ function useExtractHeadings(contentBlocks: { rich_text2?: string }[]): Heading[]
 
 export default function Article({ data, articles }: Props) {
   const headings = useExtractHeadings(data.content_blocks);
+  const { theme } = useTheme();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted) {
+      const h2Elements = document.querySelectorAll('.ArticleContents h2');
+      const h3Elements = document.querySelectorAll('.ArticleContents h3');
+      const h4Elements = document.querySelectorAll('.ArticleContents h4');
+
+      h2Elements.forEach((h2) => {
+        if (theme === 'dark') {
+          h2.classList.add('bg-gray-500', 'text-white');
+          h2.classList.remove('bg-gray-300', 'text-gray-700');
+        } else {
+          h2.classList.add('bg-gray-300', 'text-gray-700');
+          h2.classList.remove('bg-gray-500', 'text-white');
+        }
+      });
+
+      h3Elements.forEach((h3) => {
+        if (theme === 'dark') {
+          h3.classList.add('border-gray-500', 'text-white');
+          h3.classList.remove('border-gray-300', 'text-gray-700');
+        } else {
+          h3.classList.add('border-gray-300', 'text-gray-700');
+          h3.classList.remove('border-gray-500', 'text-white');
+        }
+      });
+
+      h4Elements.forEach((h4) => {
+        if (theme === 'dark') {
+          h4.classList.add('border-gray-500', 'text-white');
+          h4.classList.remove('border-gray-300', 'text-gray-700');
+        } else {
+          h4.classList.add('border-gray-300', 'text-gray-700');
+          h4.classList.remove('border-gray-500', 'text-white');
+        }
+      });
+    }
+  }, [theme, isMounted]);
+
+  if (!isMounted) return null;
 
   return (
     <>
@@ -233,7 +280,7 @@ export default function Article({ data, articles }: Props) {
                           <div
                             className={`bubble-content ${block.bubble_isRight ? 'right' : 'left'}`}
                           >
-                            <p className="bubble-text">{block.bubble_text}</p>
+                            <p className="bubble-text text-gray-700">{block.bubble_text}</p>
                           </div>
                         </div>
                       </div>
@@ -265,7 +312,7 @@ export default function Article({ data, articles }: Props) {
                       </div>
                     )}
                     {block.box_merit && (
-                      <div className={`${styles.tab_merit_box} flex items-center`}>
+                      <div className={`${styles.tab_merit_box} flex items-center  text-gray-700`}>
                         <HandThumbUpIcon
                           className={`h-8 w-8 ${styles.tab_merit_box_icon}`}
                           aria-hidden="true"
@@ -274,7 +321,7 @@ export default function Article({ data, articles }: Props) {
                       </div>
                     )}
                     {block.box_demerit && (
-                      <div className={`${styles.tab_demerit_box} flex items-center`}>
+                      <div className={`${styles.tab_demerit_box} flex items-center  text-gray-700`}>
                         <HandThumbDownIcon
                           className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
                           aria-hidden="true"
@@ -283,7 +330,7 @@ export default function Article({ data, articles }: Props) {
                       </div>
                     )}
                     {block.box_point && (
-                      <div className={`${styles.tab_point_box} flex items-center`}>
+                      <div className={`${styles.tab_point_box} flex items-center  text-gray-700`}>
                         <LightBulbIcon
                           className={`h-8 w-8 ${styles.tab_point_box_icon}`}
                           aria-hidden="true"
@@ -292,7 +339,7 @@ export default function Article({ data, articles }: Props) {
                       </div>
                     )}
                     {block.box_common && (
-                      <div className={`${styles.tab_common_box} flex items-center`}>
+                      <div className={`${styles.tab_common_box} flex items-center  text-gray-700`}>
                         <InformationCircleIcon
                           className={`h-8 w-8 ${styles.tab_common_box_icon}`}
                           aria-hidden="true"
@@ -334,7 +381,7 @@ export default function Article({ data, articles }: Props) {
                                 block.bubble_isRight ? 'right' : 'left'
                               }`}
                             >
-                              <p className="bubble-text">{block.bubble_text}</p>
+                              <p className="bubble-text text-gray-700">{block.bubble_text}</p>
                             </div>
                           </div>
                         </div>
@@ -366,7 +413,7 @@ export default function Article({ data, articles }: Props) {
                         </div>
                       )}
                       {block.box_merit && (
-                        <div className={`${styles.tab_merit_box} flex items-center`}>
+                        <div className={`${styles.tab_merit_box} flex items-center  text-gray-700`}>
                           <HandThumbUpIcon
                             className={`h-8 w-8 ${styles.tab_merit_box_icon}`}
                             aria-hidden="true"
@@ -375,7 +422,9 @@ export default function Article({ data, articles }: Props) {
                         </div>
                       )}
                       {block.box_demerit && (
-                        <div className={`${styles.tab_demerit_box} flex items-center`}>
+                        <div
+                          className={`${styles.tab_demerit_box} flex items-center  text-gray-700`}
+                        >
                           <HandThumbDownIcon
                             className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
                             aria-hidden="true"
@@ -384,7 +433,7 @@ export default function Article({ data, articles }: Props) {
                         </div>
                       )}
                       {block.box_point && (
-                        <div className={`${styles.tab_point_box} flex items-center`}>
+                        <div className={`${styles.tab_point_box} flex items-center  text-gray-700`}>
                           <LightBulbIcon
                             className={`h-8 w-8 ${styles.tab_point_box_icon}`}
                             aria-hidden="true"
@@ -393,7 +442,9 @@ export default function Article({ data, articles }: Props) {
                         </div>
                       )}
                       {block.box_common && (
-                        <div className={`${styles.tab_common_box} flex items-center`}>
+                        <div
+                          className={`${styles.tab_common_box} flex items-center  text-gray-700`}
+                        >
                           <InformationCircleIcon
                             className={`h-8 w-8 ${styles.tab_common_box_icon}`}
                             aria-hidden="true"
