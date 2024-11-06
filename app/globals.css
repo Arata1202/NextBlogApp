@@ -11,11 +11,13 @@
   background-color: white;
   color: rgb(55 65 81);
   border-color: rgb(209 213 219);
+  --tw-ring-color: rgb(209 213 219);
 }
 .DarkTheme {
   background-color: #262626;
   color: white;
   border-color: rgb(107 114 128);
+  --tw-ring-color: rgb(107 114 128);
 }
 .d9d9d9 {
   background-color: #d9d9d9;
