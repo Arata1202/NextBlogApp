@@ -2,6 +2,7 @@
 
 import * as cheerio from 'cheerio';
 const hljs = require('highlight.js/lib/common');
+import { useTheme } from 'next-themes';
 import javascript from 'highlight.js/lib/languages/javascript';
 import php from 'highlight.js/lib/languages/php';
 import shell from 'highlight.js/lib/languages/shell';
@@ -82,7 +83,7 @@ type Props = {
   articles?: ArticleType[];
 };
 
-const formatRichText = (richText: string) => {
+const formatRichText = (richText: string, theme?: string) => {
   const $ = cheerio.load(richText);
   const highlight = (text: string, lang?: string) => {
     if (!lang) return hljs.highlightAuto(text);
@@ -98,6 +99,23 @@ const formatRichText = (richText: string) => {
     $(elm).html(res.value);
     $(elm).addClass('hljs');
   });
+
+  $('h2').each((_, elm) => {
+    $(elm).addClass(theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700');
+  });
+
+  $('h3').each((_, elm) => {
+    $(elm).addClass(
+      theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700',
+    );
+  });
+
+  $('h4').each((_, elm) => {
+    $(elm).addClass(
+      theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700',
+    );
+  });
+
   return $.html();
 };
 
@@ -130,6 +148,7 @@ function useExtractHeadings(contentBlocks: { rich_text2?: string }[]): Heading[]
 
 export default function Article({ data, articles }: Props) {
   const headings = useExtractHeadings(data.content_blocks);
+  const { theme } = useTheme();
 
   return (
     <>
@@ -242,7 +261,7 @@ export default function Article({ data, articles }: Props) {
                       <div
                         className={`${styles.content} ArticleContents`}
                         dangerouslySetInnerHTML={{
-                          __html: formatRichText(block.rich_text2).replace(
+                          __html: formatRichText(block.rich_text2, theme).replace(
                             /<img/g,
                             '<img loading="lazy"',
                           ),
@@ -343,7 +362,7 @@ export default function Article({ data, articles }: Props) {
                         <div
                           className={`${styles.content} ArticleContents`}
                           dangerouslySetInnerHTML={{
-                            __html: formatRichText(block.rich_text2).replace(
+                            __html: formatRichText(block.rich_text2, theme).replace(
                               /<img/g,
                               '<img loading="lazy"',
                             ),
