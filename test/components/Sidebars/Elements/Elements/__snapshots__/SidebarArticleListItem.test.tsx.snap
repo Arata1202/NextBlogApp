@@ -4,7 +4,7 @@ exports[`SidebarArticleListItem スナップショット（SidebarArticleListIte
 <DocumentFragment>
   <div>
     <ol
-      class="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+      class="ArticleListItem_list border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 LightTheme"
     >
       <li>
         <a

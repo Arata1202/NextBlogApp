@@ -6,7 +6,7 @@ exports[`ArticleListItem スナップショット(ArticleListItem) 1`] = `
     class="list"
   >
     <a
-      class="link p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+      class="link p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 LightTheme"
       href="/articles/1"
     >
       <picture>

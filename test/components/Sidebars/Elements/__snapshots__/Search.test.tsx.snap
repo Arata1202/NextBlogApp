@@ -3,7 +3,7 @@
 exports[`Search スナップショット（Search） 1`] = `
 <DocumentFragment>
   <div
-    class="bg-white pt-8 px-4 border border-gray-300 py-5"
+    class="pt-8 px-4 border py-5 LightTheme"
   >
     <h1
       class="profile text-2xl text-center font-semibold mb-5 flex justify-center"

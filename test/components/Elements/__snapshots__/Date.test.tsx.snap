@@ -3,17 +3,24 @@
 exports[`PublishedDate スナップショット（PublishedDate） 1`] = `
 <DocumentFragment>
   <span
-    class="date"
+    class="date LightTheme"
   >
-    <img
-      alt=""
-      data-nimg="1"
-      decoding="async"
-      height="16"
-      src="/clock.svg"
-      style="color: transparent;"
-      width="16"
-    />
+    <svg
+      aria-hidden="true"
+      class="h-5 w-5"
+      data-slot="icon"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
     2023年11月27日
   </span>
 </DocumentFragment>
