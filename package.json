@@ -12,9 +12,7 @@
     "prepare": "husky install",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json,css}'",
     "test": "jest",
-    "test:snapshot": "jest --updateSnapshot",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "test:snapshot": "jest --updateSnapshot"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -53,15 +51,7 @@
     "typescript": "^5.6.3"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^3.2.2",
     "@jest/types": "^29.6.3",
-    "@storybook/addon-essentials": "^8.4.1",
-    "@storybook/addon-interactions": "^8.4.1",
-    "@storybook/addon-onboarding": "^8.4.1",
-    "@storybook/blocks": "^8.4.1",
-    "@storybook/nextjs": "^8.4.1",
-    "@storybook/react": "^8.4.1",
-    "@storybook/test": "^8.4.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.2",
     "@testing-library/react": "^16.0.1",
@@ -71,7 +61,6 @@
     "@types/rss": "^0.0.32",
     "autoprefixer": "^10.4.20",
     "eslint-define-config": "^2.1.0",
-    "eslint-plugin-storybook": "^0.10.1",
     "highlight.js": "^11.10.0",
     "husky": "^9.1.6",
     "identity-obj-proxy": "^3.0.0",
@@ -82,7 +71,6 @@
     "next-sitemap": "^4.2.3",
     "next-themes": "^0.4.3",
     "rss": "^1.2.2",
-    "storybook": "^8.4.1",
     "tailwindcss": "^3.4.14",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2"
