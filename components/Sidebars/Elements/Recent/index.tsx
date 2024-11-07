@@ -1,3 +1,5 @@
+'use client';
+import { useTheme } from 'next-themes';
 import React from 'react';
 import SidebarArticleListItem from '../Elements/SidebarArticleListItem';
 import { Article } from '@/libs/microcms';
@@ -9,6 +11,7 @@ type Props = {
 };
 
 export default function Recent({ articles }: Props) {
+  const { theme } = useTheme();
   const sortedArticles = articles
     ?.slice()
     .sort((a, b) => {
@@ -19,7 +22,7 @@ export default function Recent({ articles }: Props) {
     .slice(0, 3);
 
   return (
-    <div className="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5">
+    <div className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
       <h1 className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}>
         <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
         最新の投稿

@@ -10,7 +10,7 @@ exports[`Pagination スナップショット（Pagination） 1`] = `
     >
       <span
         aria-current="page"
-        class="item current"
+        class="item bg-gray-300 text-gray-700"
       >
         1
       </span>
@@ -22,7 +22,7 @@ exports[`Pagination スナップショット（Pagination） 1`] = `
         href="/p/2"
       >
         <p
-          class="item"
+          class="hover:text-blue-500 item LightTheme"
         >
           2
         </p>
@@ -35,7 +35,7 @@ exports[`Pagination スナップショット（Pagination） 1`] = `
         href="/p/3"
       >
         <p
-          class="item"
+          class="hover:text-blue-500 item LightTheme"
         >
           3
         </p>
@@ -48,7 +48,7 @@ exports[`Pagination スナップショット（Pagination） 1`] = `
         href="/p/4"
       >
         <p
-          class="item"
+          class="hover:text-blue-500 item LightTheme"
         >
           4
         </p>
@@ -61,7 +61,7 @@ exports[`Pagination スナップショット（Pagination） 1`] = `
         href="/p/5"
       >
         <p
-          class="item"
+          class="hover:text-blue-500 item LightTheme"
         >
           5
         </p>
@@ -74,7 +74,7 @@ exports[`Pagination スナップショット（Pagination） 1`] = `
         href="/p/6"
       >
         <p
-          class="item"
+          class="hover:text-blue-500 item LightTheme"
         >
           6
         </p>
@@ -87,7 +87,7 @@ exports[`Pagination スナップショット（Pagination） 1`] = `
         href="/p/7"
       >
         <p
-          class="item"
+          class="hover:text-blue-500 item LightTheme"
         >
           7
         </p>
@@ -100,7 +100,7 @@ exports[`Pagination スナップショット（Pagination） 1`] = `
         href="/p/8"
       >
         <p
-          class="item"
+          class="hover:text-blue-500 item LightTheme"
         >
           8
         </p>
@@ -113,7 +113,7 @@ exports[`Pagination スナップショット（Pagination） 1`] = `
         href="/p/9"
       >
         <p
-          class="item"
+          class="hover:text-blue-500 item LightTheme"
         >
           9
         </p>
@@ -126,7 +126,7 @@ exports[`Pagination スナップショット（Pagination） 1`] = `
         href="/p/10"
       >
         <p
-          class="item"
+          class="hover:text-blue-500 item LightTheme"
         >
           10
         </p>

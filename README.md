@@ -19,9 +19,9 @@
 
 - https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1&node-type=canvas&t=zcqCjvUj22ccvYpV-11
 
-### Storybook （ダークモード開発中）
+<!-- ### Storybook （ダークモード開発中）
 
-- https://d39bs3pqaz25oq.cloudfront.net
+- https://d39bs3pqaz25oq.cloudfront.net -->
 <!--
 ## 開発方法
 
@@ -42,6 +42,7 @@ npm run build
 npm start
 ```
 -->
+
 ## 実装機能
 
 ### Google
@@ -76,7 +77,7 @@ npm start
 - PWA
   - メリットを感じられず、削除。
 - プッシュ通知
-  - モバイル限定として、Web 版からは削除済み
+  - モバイルアプリ限定として、Web 版からは削除。
 
 ### 固定ページ
 
@@ -107,7 +108,6 @@ npm start
 - Next.js
 - TypeScript
 - TailwindCSS
-  - TailwindUI
 - AWS Lambda
   - Docker
   - AWS Elastic Container Registry
@@ -120,6 +120,9 @@ npm start
   - pre-push
     - Jest
 - GitHub Actions
+  - Deploy Vercel
+  - Deploy AWS S3 + AWS CloudFront
+  - Deploy AWS Elastic Container Registry + AWS Lambda
 - Storybook
 - Docker （オプション）
   - Reverse Proxy
@@ -132,6 +135,7 @@ npm start
 - AWS Certificate Manager
 
 ### デザインツール
+
 - Canva
 - Figma
 

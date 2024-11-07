@@ -3,7 +3,7 @@
 exports[`Category スナップショット（Category） 1`] = `
 <DocumentFragment>
   <div
-    class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+    class="pt-8 px-4 border py-5 mt-5 LightTheme"
   >
     <h1
       class="profile text-2xl text-center font-semibold flex justify-center"
@@ -27,7 +27,7 @@ exports[`Category スナップショット（Category） 1`] = `
       role="tablist"
     >
       <a
-        class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        class="sidebarCategory text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 LightTheme"
         data-hs-tab="#tabs-with-card-1"
         href="/category/university"
         role="tab"
@@ -39,7 +39,7 @@ exports[`Category スナップショット（Category） 1`] = `
             class="grow"
           >
             <span
-              class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+              class="block text-lg font-semibold LightTheme"
             >
               <ul>
                 <li>
@@ -77,7 +77,7 @@ exports[`Category スナップショット（Category） 1`] = `
         </span>
       </a>
       <a
-        class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        class="sidebarCategory text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 LightTheme"
         data-hs-tab="#tabs-with-card-1"
         href="/category/programming"
         role="tab"
@@ -89,7 +89,7 @@ exports[`Category スナップショット（Category） 1`] = `
             class="grow"
           >
             <span
-              class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+              class="block text-lg font-semibold LightTheme"
             >
               <ul>
                 <li>
@@ -132,7 +132,7 @@ exports[`Category スナップショット（Category） 1`] = `
       role="tablist"
     >
       <a
-        class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        class="sidebarCategory text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 LightTheme"
         data-hs-tab="#tabs-with-card-1"
         href="/category/travel"
         role="tab"
@@ -144,7 +144,7 @@ exports[`Category スナップショット（Category） 1`] = `
             class="grow"
           >
             <span
-              class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+              class="block text-lg font-semibold LightTheme"
             >
               <ul>
                 <li>
@@ -185,7 +185,7 @@ exports[`Category スナップショット（Category） 1`] = `
         </span>
       </a>
       <a
-        class="sidebarCategory hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start p-4 md:p-3 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+        class="sidebarCategory text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 LightTheme"
         data-hs-tab="#tabs-with-card-1"
         href="/category/blog"
         role="tab"
@@ -197,7 +197,7 @@ exports[`Category スナップショット（Category） 1`] = `
             class="grow"
           >
             <span
-              class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"
+              class="block text-lg font-semibold LightTheme"
             >
               <ul>
                 <li>

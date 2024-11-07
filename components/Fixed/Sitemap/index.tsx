@@ -1,3 +1,5 @@
+'use client';
+import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import PublishedDate from '@/components/Elements/Date';
 import React from 'react';
@@ -13,6 +15,8 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
     month: '2-digit',
     day: '2-digit',
   });
+
+  const { theme } = useTheme();
 
   return (
     <>
@@ -30,7 +34,11 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                 </div>
                 <AdAlert />
                 <div className={`${styles.content} mt-10 mb-5`}>
-                  <h2>固定ページ</h2>
+                  <h2
+                    className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  >
+                    固定ページ
+                  </h2>
                   <ul>
                     <li>
                       <a href="/contact" className="text-blue-500 hover:text-blue-700">
@@ -68,7 +76,11 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </a>
                     </li>
                   </ul>
-                  <h2>カテゴリー</h2>
+                  <h2
+                    className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  >
+                    カテゴリー
+                  </h2>
                   <ul>
                     <li>
                       <a href="/category/programming" className="text-blue-500 hover:text-blue-700">
@@ -91,7 +103,11 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </a>
                     </li>
                   </ul>
-                  <h2>投稿一覧</h2>
+                  <h2
+                    className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  >
+                    投稿一覧
+                  </h2>
                   <ul>
                     {sidebarArticles.contents.map((article: any) => (
                       <li key={article.id}>

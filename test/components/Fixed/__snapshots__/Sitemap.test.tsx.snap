@@ -26,7 +26,9 @@ exports[`SitemapPage スナップショット（SitemapPage） 1`] = `
             <div
               class="content mt-10 mb-5"
             >
-              <h2>
+              <h2
+                class="bg-gray-300 text-gray-700"
+              >
                 固定ページ
               </h2>
               <ul>
@@ -87,7 +89,9 @@ exports[`SitemapPage スナップショット（SitemapPage） 1`] = `
                   </a>
                 </li>
               </ul>
-              <h2>
+              <h2
+                class="bg-gray-300 text-gray-700"
+              >
                 カテゴリー
               </h2>
               <ul>
@@ -124,7 +128,9 @@ exports[`SitemapPage スナップショット（SitemapPage） 1`] = `
                   </a>
                 </li>
               </ul>
-              <h2>
+              <h2
+                class="bg-gray-300 text-gray-700"
+              >
                 投稿一覧
               </h2>
               <ul>

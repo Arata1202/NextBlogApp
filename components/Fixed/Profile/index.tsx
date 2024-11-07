@@ -1,3 +1,5 @@
+'use client';
+import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import Image from 'next/image';
 import PublishedDate from '@/components/Elements/Date';
@@ -14,6 +16,8 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
     month: '2-digit',
     day: '2-digit',
   });
+
+  const { theme } = useTheme();
 
   return (
     <>
@@ -56,16 +60,28 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <br />
                   どうぞよろしくお願いいたします。
                 </p>
-                <h2>ブログ始めたきっかけ</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                >
+                  ブログ始めたきっかけ
+                </h2>
                 <p>
                   まだまだ大学3年生ですが、様々な経験をしてきました。社会人になる一歩手前ということもあり、挑戦できることの幅も増え、運転免許を取得したり、アルバイトを始めたり、将来の夢に向けて勉強したりなど、やらなければならない事がたくさん増えました。
                   <br />
                   <br />
                   そんな中、自分なりに解決法を探しながら生活してきました。それらの経験を無駄にせず、同じ気持ちを抱く大学生の方々に共有したいと考え、ブログを始めました。
                 </p>
-                <h2>プロフィール</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                >
+                  プロフィール
+                </h2>
                 <p>筆者の活動や趣味についてご紹介します。</p>
-                <h3>筆者について</h3>
+                <h3
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                >
+                  筆者について
+                </h3>
                 <ul>
                   <li>年齢｜21歳</li>
                   <li>在住｜千葉県</li>
@@ -73,19 +89,31 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <li>インターン｜Webエンジニア（長期）</li>
                   <li>趣味｜旅行、ドライブ、ゲーム、プログラミングなどなど</li>
                 </ul>
-                <h4>大学</h4>
+                <h4
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                >
+                  大学
+                </h4>
                 <p>
                   大学では経営学部のマーケティング学科に所属し、ゼミでは消費者行動の研究や企業の成長戦略について議論しています。
                 </p>
 
-                <h4>インターンシップ</h4>
+                <h4
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                >
+                  インターンシップ
+                </h4>
                 <p>
                   都内の企業でWebメディアやCMSの開発を行っています。また、外部企業からの案件も手掛けています。
                   <br />
                   <br />
                   使用している技術は、Vue.js、Laravel、Next.jsなどです。
                 </p>
-                <h4>旅行</h4>
+                <h4
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                >
+                  旅行
+                </h4>
                 <p>
                   とにかく旅行が大好きです。飛行機や電車、車などあらゆる手段を使って旅行しています。特に温泉地に行くのが好きなので、東北旅行なども好きだったりします。
                   <br />
@@ -100,18 +128,30 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     Instagram
                   </a>
                 </p>
-                <h4>ゲーム</h4>
+                <h4
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                >
+                  ゲーム
+                </h4>
                 <p>
                   最近はあまりしていませんが、ゲームも好きです。SwitchとゲーミングPCを持っており、休日にたまに遊んでいます。
                   <br />
                   <br />
                   FPSゲームが特に好きで、APEXやスプラトゥーンをよくプレイしています。
                 </p>
-                <h4>プログラミング</h4>
+                <h4
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                >
+                  プログラミング
+                </h4>
                 <p>
                   去年始めたプログラミングにすっかりハマり、趣味の一つになりました。このブログも自分で作成しました。
                 </p>
-                <h2>技術スタック</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                >
+                  技術スタック
+                </h2>
                 <p>筆者は以下の技術をよく使用しています。</p>
                 <ul>
                   <li>フロントエンド｜React, Next.js, Vue.js, TypeScript, TailwindCSS</li>
@@ -124,7 +164,11 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   インターンではVue.jsとLaravel、個人開発ではReactやNext.js,
                   PHPの使用頻度が高いです。
                 </p>
-                <h2>当ブログ（リアル大学生）の使用技術</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                >
+                  当ブログ（リアル大学生）の使用技術
+                </h2>
                 <p></p>
                 <p>当ブログ（リアル大学生）は以下の構成で、運営しています。</p>
                 <ul>
@@ -133,7 +177,11 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <li>ホスティング｜Vercel</li>
                   <li>バックエンド｜AWS Lambda</li>
                 </ul>
-                <h2>お問い合わせ</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                >
+                  お問い合わせ
+                </h2>
                 <p>
                   お問い合わせの際は、下記の窓口からお願いいたします。
                   <br />

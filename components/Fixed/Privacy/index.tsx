@@ -1,5 +1,5 @@
 'use client';
-
+import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import PublishedDate from '@/components/Elements/Date';
 import React from 'react';
@@ -15,6 +15,8 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
     month: '2-digit',
     day: '2-digit',
   });
+
+  const { theme } = useTheme();
 
   return (
     <>
@@ -33,19 +35,39 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                 <AdAlert />
               </div>
               <div className={`${styles.content} mt-10 mb-5`}>
-                <h2 id="introduction">個人情報取り扱いに関する基本方針</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  id="introduction"
+                >
+                  個人情報取り扱いに関する基本方針
+                </h2>
                 <p>
                   リアル大学生（以下、「本サービス」と言います。）では、ご利用頂くお客様の個人情報を適切に保護するため、個人情報の保護に関する法律、その他の関係法令を遵守すると共に、以下に定めるプライバシーポリシーに従って、個人情報を安全かつ適切に取り扱うことを宣言いたします。
                 </p>
-                <h2 id="definition">個人情報の定義</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  id="definition"
+                >
+                  個人情報の定義
+                </h2>
                 <p>
                   「個人情報」とは、個人情報保護法にいう「個人情報」を指すものとし、生存する個人に関する情報であって、当該情報に含まれる氏名、生年月日、住所、電話番号、連絡先その他の記述等により特定の個人を識別できる情報及び容貌、指紋、声紋にかかるデータ、及び健康保険証の保険者番号などの当該情報単体から特定の個人を識別できる情報（個人識別情報）を指します。
                 </p>
-                <h2 id="acquisition">個人情報の取得方法</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  id="acquisition"
+                >
+                  個人情報の取得方法
+                </h2>
                 <p>
                   本サービスはユーザーが利用登録をする際に氏名、住所、電話番号、メールアドレス、などの個人情報をお尋ねすることがあります。また、ユーザーと提携先などとの間でなされたユーザーの個人情報を含む取引記録や決済に関する情報を、本サービスの提携先（情報提供元、広告主、広告配信先などを含みます。以下、｢提携先｣といいます。）などから収集することがあります。
                 </p>
-                <h3 id="cookie">クッキー（Cookie）</h3>
+                <h3
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                  id="cookie"
+                >
+                  クッキー（Cookie）
+                </h3>
                 <p>
                   本サービスでは、アクセス解析サービス、各種アフィリエイトプログラム、広告配信サービスを利用しております。これらの広告配信業者は、ユーザーのご興味に応じた商品やサービスの広告を表示するため、ユーザーの本サービスおよび他サイトへのアクセスに関する情報Cookieを使用することがございます。
                   <br />
@@ -66,7 +88,12 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   </a>
                   にてご確認いただけます。
                 </p>
-                <h3 id="analytics">アクセス解析ツール</h3>
+                <h3
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                  id="analytics"
+                >
+                  アクセス解析ツール
+                </h3>
                 <p>
                   本サービスでは、Googleの提供するアクセス解析ツール『Google
                   Analytics』を使用しています。Google
@@ -94,7 +121,12 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   </a>
                   でご確認いただけます。
                 </p>
-                <h3 id="comment">コメントについて</h3>
+                <h3
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                  id="comment"
+                >
+                  コメントについて
+                </h3>
                 <p>
                   当ブログへのコメントを残す際に、IP アドレスを収集しています。
                   <br />
@@ -104,7 +136,12 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <br />
                   なお、全てのコメントは管理人が事前にその内容を確認し、承認した上での掲載となります。あらかじめご了承ください。
                 </p>
-                <h2 id="purpose">個人情報の利用目的</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  id="purpose"
+                >
+                  個人情報の利用目的
+                </h2>
                 <p>
                   本サービスが個人情報を収集・利用する目的は、以下のとおりです。
                   <br />
@@ -120,7 +157,12 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <br />
                   その他に、本サービスを不正・不当な目的で利用しようとするユーザーがいた場合、ユーザーの特定をし、ご利用をお断りするために利用します。
                 </p>
-                <h2 id="advertisement">本サービスが利用している広告サービス</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  id="advertisement"
+                >
+                  本サービスが利用している広告サービス
+                </h2>
                 <p>
                   本サービスは、以下の第三者の配信する広告サービスならびにアフィリエイトプログラムを利用しております。
                 </p>
@@ -131,9 +173,19 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                 <p>
                   これらのサービスにおいて取得・収集される情報については、各プログラムのプライバシーポリシーにてご確認ください。
                 </p>
-                <h3 id="amazon">Amazonアソシエイトプログラム</h3>
+                <h3
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                  id="amazon"
+                >
+                  Amazonアソシエイトプログラム
+                </h3>
                 <p>Amazonのアソシエイトとして、当メディアは適格販売により収入を得ています。</p>
-                <h3 id="google">Googleの広告サービス</h3>
+                <h3
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                  id="google"
+                >
+                  Googleの広告サービス
+                </h3>
                 <p>本サービスは、Googleの提供する以下の広告サービスを利用しています。</p>
                 <ul>
                   <li>Google AdSense</li>
@@ -155,7 +207,12 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     Googleポリシーと規約
                   </a>
                 </p>
-                <h2 id="management">個人情報の管理方法</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  id="management"
+                >
+                  個人情報の管理方法
+                </h2>
                 <p>
                   本サービスは第三者に皆さまの重要な情報を読み取られたり、改ざんされたりすることを防ぐために、SSLを使用しております。
                   <br />
@@ -163,18 +220,33 @@ const PrivacyPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   SSL(SecureSocketLayer)とはデータを暗号化して通信するセキュリティ機能です。
                   SSLで暗号化することによってお客さまの個人情報をハッカーやクラッカーから守り、安全に情報を送信することができます。
                 </p>
-                <h2 id="third-party">個人情報の第三者提供</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  id="third-party"
+                >
+                  個人情報の第三者提供
+                </h2>
                 <p>
                   本サービスは次に掲げる場合を除いて、あらかじめユーザーの同意を得ることなく第三者に個人情報を提供することはありません。
                   <br />
                   <br />
                   ただし、個人情報保護法その他の法令で認められる場合を除きます。
                 </p>
-                <h2 id="disclosure">個人情報の開示、訂正などの手続きについて</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  id="disclosure"
+                >
+                  個人情報の開示、訂正などの手続きについて
+                </h2>
                 <p>
                   ご本人からの個人情報の開示、訂正、追加、削除、利用停止のご希望の場合には、ご本人であることを確認させて頂いた上、速やかに対応させていただきます。
                 </p>
-                <h2 id="contact">個人情報の取扱いに関する相談や苦情の連絡先</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  id="contact"
+                >
+                  個人情報の取扱いに関する相談や苦情の連絡先
+                </h2>
                 <p>
                   本ポリシーに関するお問い合わせは、下記の窓口までお願いいたします。
                   <br />

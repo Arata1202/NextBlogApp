@@ -1,3 +1,5 @@
+'use client';
+import { useTheme } from 'next-themes';
 import React, { memo } from 'react';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
@@ -14,9 +16,13 @@ const SidebarArticleListItem = ({ article }: Props) => {
     window.location.href = `/articles/${article.id}`;
   };
 
+  const { theme } = useTheme();
+
   return (
     <div>
-      <ol className="ArticleListItem_list border mt-5 border-gray-300 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1">
+      <ol
+        className={`ArticleListItem_list border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+      >
         <li>
           <a href={`/articles/${article.id}`} className="sidebarPopularPost" onClick={handleClick}>
             <Image

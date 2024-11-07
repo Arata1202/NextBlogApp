@@ -2,14 +2,14 @@
 
 import * as cheerio from 'cheerio';
 const hljs = require('highlight.js/lib/common');
+import { useTheme } from 'next-themes';
 import javascript from 'highlight.js/lib/languages/javascript';
+import dockerfile from 'highlight.js/lib/languages/dockerfile';
 import php from 'highlight.js/lib/languages/php';
 import shell from 'highlight.js/lib/languages/shell';
 import python from 'highlight.js/lib/languages/python';
 import css from 'highlight.js/lib/languages/css';
-import go from 'highlight.js/lib/languages/go';
 import json from 'highlight.js/lib/languages/json';
-import java from 'highlight.js/lib/languages/java';
 import sql from 'highlight.js/lib/languages/sql';
 import typescript from 'highlight.js/lib/languages/typescript';
 import vim from 'highlight.js/lib/languages/vim';
@@ -64,9 +64,8 @@ hljs.registerLanguage('php', php);
 hljs.registerLanguage('shell', shell);
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('css', css);
-hljs.registerLanguage('go', go);
+hljs.registerLanguage('dockerfile', dockerfile);
 hljs.registerLanguage('json', json);
-hljs.registerLanguage('java', java);
 hljs.registerLanguage('sql', sql);
 hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('vim', vim);
@@ -82,7 +81,7 @@ type Props = {
   articles?: ArticleType[];
 };
 
-const formatRichText = (richText: string) => {
+const formatRichText = (richText: string, theme?: string) => {
   const $ = cheerio.load(richText);
   const highlight = (text: string, lang?: string) => {
     if (!lang) return hljs.highlightAuto(text);
@@ -98,6 +97,23 @@ const formatRichText = (richText: string) => {
     $(elm).html(res.value);
     $(elm).addClass('hljs');
   });
+
+  $('h2').each((_, elm) => {
+    $(elm).addClass(theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700');
+  });
+
+  $('h3').each((_, elm) => {
+    $(elm).addClass(
+      theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700',
+    );
+  });
+
+  $('h4').each((_, elm) => {
+    $(elm).addClass(
+      theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700',
+    );
+  });
+
   return $.html();
 };
 
@@ -130,6 +146,7 @@ function useExtractHeadings(contentBlocks: { rich_text2?: string }[]): Heading[]
 
 export default function Article({ data, articles }: Props) {
   const headings = useExtractHeadings(data.content_blocks);
+  const { theme } = useTheme();
 
   return (
     <>
@@ -233,7 +250,7 @@ export default function Article({ data, articles }: Props) {
                           <div
                             className={`bubble-content ${block.bubble_isRight ? 'right' : 'left'}`}
                           >
-                            <p className="bubble-text">{block.bubble_text}</p>
+                            <p className="bubble-text text-gray-700">{block.bubble_text}</p>
                           </div>
                         </div>
                       </div>
@@ -242,7 +259,7 @@ export default function Article({ data, articles }: Props) {
                       <div
                         className={`${styles.content} ArticleContents`}
                         dangerouslySetInnerHTML={{
-                          __html: formatRichText(block.rich_text2).replace(
+                          __html: formatRichText(block.rich_text2, theme).replace(
                             /<img/g,
                             '<img loading="lazy"',
                           ),
@@ -265,7 +282,7 @@ export default function Article({ data, articles }: Props) {
                       </div>
                     )}
                     {block.box_merit && (
-                      <div className={`${styles.tab_merit_box} flex items-center`}>
+                      <div className={`${styles.tab_merit_box} text-gray-700 flex items-center`}>
                         <HandThumbUpIcon
                           className={`h-8 w-8 ${styles.tab_merit_box_icon}`}
                           aria-hidden="true"
@@ -274,7 +291,7 @@ export default function Article({ data, articles }: Props) {
                       </div>
                     )}
                     {block.box_demerit && (
-                      <div className={`${styles.tab_demerit_box} flex items-center`}>
+                      <div className={`${styles.tab_demerit_box} text-gray-700 flex items-center`}>
                         <HandThumbDownIcon
                           className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
                           aria-hidden="true"
@@ -283,7 +300,7 @@ export default function Article({ data, articles }: Props) {
                       </div>
                     )}
                     {block.box_point && (
-                      <div className={`${styles.tab_point_box} flex items-center`}>
+                      <div className={`${styles.tab_point_box} text-gray-700 flex items-center`}>
                         <LightBulbIcon
                           className={`h-8 w-8 ${styles.tab_point_box_icon}`}
                           aria-hidden="true"
@@ -292,7 +309,7 @@ export default function Article({ data, articles }: Props) {
                       </div>
                     )}
                     {block.box_common && (
-                      <div className={`${styles.tab_common_box} flex items-center`}>
+                      <div className={`${styles.tab_common_box} text-gray-700 flex items-center`}>
                         <InformationCircleIcon
                           className={`h-8 w-8 ${styles.tab_common_box_icon}`}
                           aria-hidden="true"
@@ -334,7 +351,7 @@ export default function Article({ data, articles }: Props) {
                                 block.bubble_isRight ? 'right' : 'left'
                               }`}
                             >
-                              <p className="bubble-text">{block.bubble_text}</p>
+                              <p className="bubble-text text-gray-700">{block.bubble_text}</p>
                             </div>
                           </div>
                         </div>
@@ -343,7 +360,7 @@ export default function Article({ data, articles }: Props) {
                         <div
                           className={`${styles.content} ArticleContents`}
                           dangerouslySetInnerHTML={{
-                            __html: formatRichText(block.rich_text2).replace(
+                            __html: formatRichText(block.rich_text2, theme).replace(
                               /<img/g,
                               '<img loading="lazy"',
                             ),
@@ -366,7 +383,7 @@ export default function Article({ data, articles }: Props) {
                         </div>
                       )}
                       {block.box_merit && (
-                        <div className={`${styles.tab_merit_box} flex items-center`}>
+                        <div className={`${styles.tab_merit_box} text-gray-700 flex items-center`}>
                           <HandThumbUpIcon
                             className={`h-8 w-8 ${styles.tab_merit_box_icon}`}
                             aria-hidden="true"
@@ -375,7 +392,9 @@ export default function Article({ data, articles }: Props) {
                         </div>
                       )}
                       {block.box_demerit && (
-                        <div className={`${styles.tab_demerit_box} flex items-center`}>
+                        <div
+                          className={`${styles.tab_demerit_box} text-gray-700 flex items-center`}
+                        >
                           <HandThumbDownIcon
                             className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
                             aria-hidden="true"
@@ -384,7 +403,7 @@ export default function Article({ data, articles }: Props) {
                         </div>
                       )}
                       {block.box_point && (
-                        <div className={`${styles.tab_point_box} flex items-center`}>
+                        <div className={`${styles.tab_point_box} text-gray-700 flex items-center`}>
                           <LightBulbIcon
                             className={`h-8 w-8 ${styles.tab_point_box_icon}`}
                             aria-hidden="true"
@@ -393,7 +412,7 @@ export default function Article({ data, articles }: Props) {
                         </div>
                       )}
                       {block.box_common && (
-                        <div className={`${styles.tab_common_box} flex items-center`}>
+                        <div className={`${styles.tab_common_box} text-gray-700 flex items-center`}>
                           <InformationCircleIcon
                             className={`h-8 w-8 ${styles.tab_common_box_icon}`}
                             aria-hidden="true"

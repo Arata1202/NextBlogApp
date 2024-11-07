@@ -1,11 +1,18 @@
+'use client';
+import { useTheme } from 'next-themes';
 export default function MobileBanner() {
+  const { theme } = useTheme();
   return (
-    <div className="flex justify-center mt-20" style={{ backgroundColor: '#d9d9d9' }}>
+    <div className={`flex justify-center mt-20 ${theme === 'dark' ? 'bg-gray-500' : 'd9d9d9'}`}>
       <div style={{ position: 'relative', width: '700px' }}>
         <img
           loading="lazy"
           style={{ padding: '0 12px' }}
-          src="/images/blog/mobilebanner.png"
+          src={
+            theme === 'dark'
+              ? '/images/blog/mobilebanner-dark.png'
+              : '/images/blog/mobilebanner.png'
+          }
           alt=""
         />
         <div
@@ -21,7 +28,7 @@ export default function MobileBanner() {
           <a
             href="https://apps.apple.com/jp/app/リアル大学生-モバイル/id6590619103"
             target="_blank"
-            className="hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+            className="hover:opacity-60"
           >
             <img
               src="/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg"
@@ -33,7 +40,7 @@ export default function MobileBanner() {
           <a
             href="https://play.google.com/store/apps/details?id=com.realunivlog.flutterblogapp"
             target="_blank"
-            className="app-badge-link hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1"
+            className="app-badge-link hover:opacity-60"
             style={{ marginLeft: '10%' }}
           >
             <img

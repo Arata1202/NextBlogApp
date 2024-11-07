@@ -3,7 +3,7 @@
 exports[`Tag スナップショット（Tag） 1`] = `
 <DocumentFragment>
   <div
-    class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+    class="pt-8 px-4 border py-5 mt-5 LightTheme"
   >
     <h1
       class="profile text-2xl text-center font-semibold flex justify-center"
@@ -28,67 +28,67 @@ exports[`Tag スナップショット（Tag） 1`] = `
       class="mt-5 flex flex-wrap gap-2"
     >
       <a
-        class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+        class="inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 LightTheme"
         href="/tag/seo"
       >
         SEO対策
       </a>
       <a
-        class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+        class="inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 LightTheme"
         href="/tag/microcms"
       >
         MicroCMS
       </a>
       <a
-        class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+        class="inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 LightTheme"
         href="/tag/adsense"
       >
         Google AdSense
       </a>
       <a
-        class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+        class="inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 LightTheme"
         href="/tag/git"
       >
         Git
       </a>
       <a
-        class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+        class="inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 LightTheme"
         href="/tag/javascript"
       >
         JavaScript
       </a>
       <a
-        class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+        class="inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 LightTheme"
         href="/tag/finance"
       >
         金融
       </a>
       <a
-        class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+        class="inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 LightTheme"
         href="/tag/aws"
       >
         AWS
       </a>
       <a
-        class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+        class="inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 LightTheme"
         href="/tag/cook"
       >
         料理
       </a>
       <a
-        class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+        class="inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 LightTheme"
         href="/tag/appledeveloper"
       >
         Apple Developer
       </a>
       <a
-        class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+        class="inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 LightTheme"
         href="/tag/gadget"
       >
         ガジェット
       </a>
       <a
-        class="inline-block border border-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-900 mr-2 mb-2 hover:text-blue-500"
+        class="inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 LightTheme"
         href="/tag/flutter"
       >
         Flutter

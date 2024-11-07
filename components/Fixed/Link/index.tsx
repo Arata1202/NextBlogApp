@@ -1,5 +1,5 @@
 'use client';
-
+import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import PublishedDate from '@/components/Elements/Date';
 import React from 'react';
@@ -15,6 +15,8 @@ const LinkPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
     month: '2-digit',
     day: '2-digit',
   });
+
+  const { theme } = useTheme();
 
   return (
     <>
@@ -33,7 +35,12 @@ const LinkPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
                 <AdAlert />
               </div>
               <div className={`${styles.content} mt-10 mb-5`}>
-                <h2 id="link">リンクについて</h2>
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  id="link"
+                >
+                  リンクについて
+                </h2>
                 <p>
                   リアル大学生（以下、「本サービス」と言います。）は完全リンクフリーです。リンクを行う場合の本サービスへの許可や連絡は不要です。
                   <br />

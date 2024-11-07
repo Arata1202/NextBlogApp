@@ -5,10 +5,12 @@ import styles from './index.module.css';
 import Image from 'next/image';
 import { BlogTitle, copyRight, footerNavigation } from '@/section/dummy';
 import MobileBanner from '../../Layouts/MobileBanner';
+import { useTheme } from 'next-themes';
 
 export default function Footer() {
+  const { theme } = useTheme();
   return (
-    <footer className={`${styles.footer} w-full bg-white`}>
+    <footer className={`${styles.footer} w-full ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
       <MobileBanner />
       <h2 id="footer-heading" className="sr-only">
         Footer
@@ -20,9 +22,12 @@ export default function Footer() {
               {BlogTitle.map((item) => (
                 <Image
                   key={item.imageUrl}
+                  className="hover:scale-110 transition-transform"
                   width={165}
                   height={30}
-                  src={item.imageUrl}
+                  src={
+                    theme === 'dark' ? '/images/blog/title-dark.jpeg' : '/images/blog/title.webp'
+                  }
                   alt={item.imageAlt}
                 />
               ))}
@@ -33,7 +38,7 @@ export default function Footer() {
                   key={item.name}
                   target="blank"
                   href={item.href}
-                  className="text-gray-400 hover:text-blue-500"
+                  className={`hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                 >
                   <span className="sr-only">{item.name}</span>
                   <item.icon className="h-6 w-6" aria-hidden="true" />
@@ -44,7 +49,11 @@ export default function Footer() {
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div className="footerMenu">
-                <h1 className="text-sm font-semibold leading-6 text-gray-900">ブログについて</h1>
+                <h1
+                  className={`text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                >
+                  ブログについて
+                </h1>
                 <ul role="list" className="mt-6 space-y-4">
                   {footerNavigation.solutions.map((item) => (
                     <li key={item.name}>
@@ -54,7 +63,7 @@ export default function Footer() {
                           event.preventDefault();
                           window.location.href = item.href;
                         }}
-                        className="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                        className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       >
                         {item.name}
                       </a>
@@ -63,7 +72,11 @@ export default function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0 footerMenu">
-                <h1 className="text-sm font-semibold leading-6 text-gray-900">カテゴリー</h1>
+                <h1
+                  className={`text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                >
+                  カテゴリー
+                </h1>
                 <ul role="list" className="mt-6 space-y-4">
                   {footerNavigation.category.map((item) => (
                     <li key={item.name}>
@@ -73,7 +86,7 @@ export default function Footer() {
                           event.preventDefault();
                           window.location.href = item.href;
                         }}
-                        className="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                        className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       >
                         {item.name}
                       </a>
@@ -84,7 +97,11 @@ export default function Footer() {
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-8 footerMenu">
               <div>
-                <h1 className="text-sm font-semibold leading-6 text-gray-900">利用規約</h1>
+                <h1
+                  className={`text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                >
+                  利用規約
+                </h1>
                 <ul role="list" className="mt-6 space-y-4">
                   {footerNavigation.company.map((item) => (
                     <li key={item.name}>
@@ -94,7 +111,7 @@ export default function Footer() {
                           event.preventDefault();
                           window.location.href = item.href;
                         }}
-                        className="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                        className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       >
                         {item.name}
                       </a>
@@ -103,7 +120,11 @@ export default function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0 footerMenu">
-                <h1 className="text-sm font-semibold leading-6 text-gray-900">お問い合わせ</h1>
+                <h1
+                  className={`text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                >
+                  お問い合わせ
+                </h1>
                 <ul role="list" className="mt-6 space-y-4">
                   {footerNavigation.legal.map((item) => (
                     <li key={item.name}>
@@ -113,7 +134,7 @@ export default function Footer() {
                           event.preventDefault();
                           window.location.href = item.href;
                         }}
-                        className="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                        className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       >
                         {item.name}
                       </a>
@@ -124,9 +145,14 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
+        <div
+          className={`mt-16 border-t pt-8 sm:mt-20 lg:mt-24 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+        >
           {copyRight.map((item) => (
-            <h1 key={item.title} className={`text-xs leading-5 text-gray-500`}>
+            <h1
+              key={item.title}
+              className={`text-xs leading-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            >
               {item.title}
             </h1>
           ))}

@@ -6,6 +6,23 @@
 
 /* @import url('https://fonts.googleapis.com/css2?family=Briem+Hand:wght@900&family=Sedan+SC&family=Sora:wght@100..800&display=swap'); */
 
+/* テーマ */
+.LightTheme {
+  background-color: white;
+  color: rgb(55 65 81);
+  border-color: rgb(209 213 219);
+  --tw-ring-color: rgb(209 213 219);
+}
+.DarkTheme {
+  background-color: #262626;
+  color: white;
+  border-color: rgb(107 114 128);
+  --tw-ring-color: rgb(107 114 128);
+}
+.d9d9d9 {
+  background-color: #d9d9d9;
+}
+
 .google-auto-placed {
   max-width: 100% !important;
   overflow: hidden !important;
@@ -162,17 +179,17 @@ figure img {
 }
 
 h2 {
-  background-color: #f3f3f3;
+  /* background-color: #f3f3f3; */
   padding: 15px 15px 15px 15px;
 }
 h3 {
-  border: 1px solid lightgray;
+  border: 1px solid;
   padding: 5px 15px 5px 15px;
-  border-left: 5px solid lightgray;
+  border-left: 5px solid;
 }
 h4 {
-  border-top: 2px solid lightgray;
-  border-bottom: 2px solid lightgray;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
   padding: 5px 15px 5px 15px;
 }
 a u {
