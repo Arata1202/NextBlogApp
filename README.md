@@ -78,6 +78,7 @@ npm start
   - メリットを感じられず、削除。
 - プッシュ通知
   - モバイルアプリ限定として、Web 版からは削除。
+- ダークテーマ
 
 ### 固定ページ
 
@@ -123,7 +124,6 @@ npm start
   - Deploy Vercel
   - Deploy AWS S3 + AWS CloudFront
   - Deploy AWS Elastic Container Registry + AWS Lambda
-- Storybook
 - Docker （オプション）
   - Reverse Proxy
 
