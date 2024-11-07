@@ -7,7 +7,7 @@ exports[`Display スナップショット（Display) 1`] = `
     style="max-width: 100%; overflow: hidden;"
   >
     <p
-      class="text-center"
+      class="text-center LightTheme"
     >
       スポンサーリンク
     </p>

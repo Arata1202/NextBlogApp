@@ -162,6 +162,7 @@ pre {
 blockquote,
 q {
   quotes: none;
+  color: rgb(55 65 81);
   background:
     url('/images/plugin/icon_quote.svg') no-repeat 20px 10px,
     #eee;

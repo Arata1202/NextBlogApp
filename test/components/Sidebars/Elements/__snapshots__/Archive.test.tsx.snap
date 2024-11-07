@@ -3,7 +3,7 @@
 exports[`Archive スナップショット（Archive） 1`] = `
 <DocumentFragment>
   <div
-    class="bg-white pt-8 px-4 border border-gray-300 py-5 mt-5"
+    class="pt-8 px-4 border py-5 mt-5 LightTheme"
   >
     <h1
       class="profile text-2xl text-center font-semibold flex justify-center"
@@ -34,14 +34,14 @@ exports[`Archive スナップショット（Archive） 1`] = `
       <button
         aria-expanded="false"
         aria-haspopup="listbox"
-        class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        class="relative w-full cursor-default rounded-md py-1.5 pl-3 pr-10 text-left shadow-sm ring-1 ring-inset focus:outline-none focus:ring-2 hover:ring-blue-500 sm:text-sm sm:leading-6 LightTheme"
         data-headlessui-state=""
         id="headlessui-listbox-button-:r2:"
         style="height: 40px;"
         type="button"
       >
         <span
-          class="block truncate"
+          class="block truncate text-gray-500"
           style="font-size: 18px;"
         >
           アーカイブを選択
@@ -51,7 +51,7 @@ exports[`Archive スナップショット（Archive） 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="h-7 w-7 text-gray-400"
+            class="h-7 w-7 text-gray-300"
             data-slot="icon"
             fill="currentColor"
             viewBox="0 0 24 24"
