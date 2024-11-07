@@ -15,10 +15,26 @@ export default function ThemeSwitch() {
   }
 
   if (resolvedTheme === 'dark') {
-    return <SunIcon className="h-5 w-5 hover:text-blue-500" onClick={() => setTheme('light')} />;
+    return (
+      <SunIcon
+        className="h-5 w-5 hover:text-blue-500"
+        onClick={() => {
+          setTheme('light');
+          window.location.reload();
+        }}
+      />
+    );
   }
 
   if (resolvedTheme === 'light') {
-    return <MoonIcon className="h-5 w-5 hover:text-blue-500" onClick={() => setTheme('dark')} />;
+    return (
+      <MoonIcon
+        className="h-5 w-5 hover:text-blue-500"
+        onClick={() => {
+          setTheme('dark');
+          window.location.reload();
+        }}
+      />
+    );
   }
 }
