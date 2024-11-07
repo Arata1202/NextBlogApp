@@ -36,7 +36,7 @@ const Pagination: React.FC<Props> = React.memo(({ totalCount, current = 1, baseP
             </a>
           ) : (
             <span
-              className={`hover:text-blue-500 ${styles.item} ${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+              className={`${styles.item} ${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
               aria-current="page"
             >
               {p}
