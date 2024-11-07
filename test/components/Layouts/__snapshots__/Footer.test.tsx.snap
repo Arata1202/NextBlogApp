@@ -3,7 +3,7 @@
 exports[`Footer スナップショット（Footer） 1`] = `
 <DocumentFragment>
   <footer
-    class="footer w-full bg-white"
+    class="footer w-full LightTheme"
   >
     <h2
       class="sr-only"
@@ -26,6 +26,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
           >
             <img
               alt="ブログタイトル"
+              class="hover:scale-110 transition-transform"
               data-nimg="1"
               decoding="async"
               height="30"
@@ -40,7 +41,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
             class="flex space-x-6 underLogo"
           >
             <a
-              class="text-gray-400 hover:text-blue-500"
+              class="hover:text-blue-500 LightTheme"
               href="https://twitter.com/Aokumoblog"
               target="blank"
             >
@@ -61,7 +62,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
               </svg>
             </a>
             <a
-              class="text-gray-400 hover:text-blue-500"
+              class="hover:text-blue-500 LightTheme"
               href="https://www.instagram.com/ao_realstudent/?hl=ja"
               target="blank"
             >
@@ -84,7 +85,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
               </svg>
             </a>
             <a
-              class="text-gray-400 hover:text-blue-500"
+              class="hover:text-blue-500 LightTheme"
               href="https://github.com/Arata1202"
               target="blank"
             >
@@ -116,7 +117,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
               class="footerMenu"
             >
               <h1
-                class="text-sm font-semibold leading-6 text-gray-900"
+                class="text-sm font-semibold leading-6 LightTheme"
               >
                 ブログについて
               </h1>
@@ -126,7 +127,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
               >
                 <li>
                   <a
-                    class="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                    class="text-sm leading-6  hover:text-blue-500 LightTheme"
                     href="/profile"
                   >
                     プロフィール
@@ -134,7 +135,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
                 </li>
                 <li>
                   <a
-                    class="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                    class="text-sm leading-6  hover:text-blue-500 LightTheme"
                     href="/sitemap"
                   >
                     サイトマップ
@@ -146,7 +147,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
               class="mt-10 md:mt-0 footerMenu"
             >
               <h1
-                class="text-sm font-semibold leading-6 text-gray-900"
+                class="text-sm font-semibold leading-6 LightTheme"
               >
                 カテゴリー
               </h1>
@@ -156,7 +157,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
               >
                 <li>
                   <a
-                    class="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                    class="text-sm leading-6  hover:text-blue-500 LightTheme"
                     href="/category/university"
                   >
                     大学生活
@@ -164,7 +165,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
                 </li>
                 <li>
                   <a
-                    class="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                    class="text-sm leading-6  hover:text-blue-500 LightTheme"
                     href="/category/programming"
                   >
                     プログラミング
@@ -172,7 +173,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
                 </li>
                 <li>
                   <a
-                    class="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                    class="text-sm leading-6  hover:text-blue-500 LightTheme"
                     href="/category/travel"
                   >
                     旅行
@@ -180,7 +181,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
                 </li>
                 <li>
                   <a
-                    class="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                    class="text-sm leading-6  hover:text-blue-500 LightTheme"
                     href="/category/blog"
                   >
                     ブログ
@@ -194,7 +195,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
           >
             <div>
               <h1
-                class="text-sm font-semibold leading-6 text-gray-900"
+                class="text-sm font-semibold leading-6 LightTheme"
               >
                 利用規約
               </h1>
@@ -204,7 +205,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
               >
                 <li>
                   <a
-                    class="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                    class="text-sm leading-6  hover:text-blue-500 LightTheme"
                     href="/privacy"
                   >
                     プライバシーポリシー
@@ -212,7 +213,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
                 </li>
                 <li>
                   <a
-                    class="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                    class="text-sm leading-6  hover:text-blue-500 LightTheme"
                     href="/disclaimer"
                   >
                     免責事項
@@ -220,7 +221,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
                 </li>
                 <li>
                   <a
-                    class="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                    class="text-sm leading-6  hover:text-blue-500 LightTheme"
                     href="/copyright"
                   >
                     著作権
@@ -228,7 +229,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
                 </li>
                 <li>
                   <a
-                    class="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                    class="text-sm leading-6  hover:text-blue-500 LightTheme"
                     href="/link"
                   >
                     リンク
@@ -240,7 +241,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
               class="mt-10 md:mt-0 footerMenu"
             >
               <h1
-                class="text-sm font-semibold leading-6 text-gray-900"
+                class="text-sm font-semibold leading-6 LightTheme"
               >
                 お問い合わせ
               </h1>
@@ -250,7 +251,7 @@ exports[`Footer スナップショット（Footer） 1`] = `
               >
                 <li>
                   <a
-                    class="text-sm leading-6 text-gray-600 hover:text-blue-500"
+                    class="text-sm leading-6  hover:text-blue-500 LightTheme"
                     href="/contact"
                   >
                     お問い合わせ
@@ -262,10 +263,10 @@ exports[`Footer スナップショット（Footer） 1`] = `
         </div>
       </div>
       <div
-        class="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24"
+        class="mt-16 border-t pt-8 sm:mt-20 lg:mt-24 LightTheme"
       >
         <h1
-          class="text-xs leading-5 text-gray-500"
+          class="text-xs leading-5 LightTheme"
         >
           Copyright © 2024 リアル大学生 All Rights Reserved.
         </h1>

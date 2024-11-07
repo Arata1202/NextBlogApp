@@ -1,3 +1,5 @@
+'use client';
+import { useTheme } from 'next-themes';
 import React from 'react';
 import Image from 'next/image';
 import { memo } from 'react';
@@ -26,12 +28,14 @@ const ArticleListItem = ({ article }: Props) => {
     window.location.href = url;
   };
 
+  const { theme } = useTheme();
+
   return (
     <li className={styles.list}>
       <a
         onClick={(event) => handleNavigation(event, `/articles/${article.id}`)}
         href={`/articles/${article.id}`}
-        className={`${styles.link} p-2 border border-gray-300 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 cursor-pointer`}
+        className={`${styles.link} p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 cursor-pointer ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
         <picture>
           {isThumbnailAvailable && (

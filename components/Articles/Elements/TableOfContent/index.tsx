@@ -1,3 +1,5 @@
+'use client';
+import { useTheme } from 'next-themes';
 import React, { useMemo } from 'react';
 import { useEffect, useState } from 'react';
 
@@ -77,12 +79,14 @@ const TableOfContents: React.FC<TableOfContentsProps> = React.memo(({ headings }
     };
   }, [headings]);
 
+  const { theme } = useTheme();
+
   return (
     <div>
       <div className="flex justify-center">
         <nav
           aria-label="Table of contents"
-          className="tableOfContent w-1/2 border border-gray-300 p-4"
+          className={`tableOfContent w-1/2 border p-4 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
         >
           <h1 className="text-center font-bold text-lg">目次</h1>
           <ol className="mt-4 list-none pl-0">
@@ -92,6 +96,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = React.memo(({ headings }
                 style={{
                   marginLeft: heading.marginLeft,
                   backgroundColor: activeId === heading.id ? '#eaf4fc' : 'transparent',
+                  color: activeId === heading.id && theme === 'dark' ? 'black' : 'inherit',
                   transition: 'background-color 0.3s ease',
                 }}
               >

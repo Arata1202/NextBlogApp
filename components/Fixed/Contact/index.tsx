@@ -239,7 +239,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <button
                     type="submit"
                     disabled={!captchaValue}
-                    className={`block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-s border hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                    className={`block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-s border hover:border-blue-500 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                   >
                     送信
                   </button>

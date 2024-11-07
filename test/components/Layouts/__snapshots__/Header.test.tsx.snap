@@ -3,7 +3,7 @@
 exports[`Header スナップショット（Header） 1`] = `
 <DocumentFragment>
   <header
-    class="header fixed top-0 left-0 w-full bg-white z-30"
+    class="header fixed top-0 left-0 w-full z-30 LightTheme"
   >
     <nav
       aria-label="Global"
@@ -33,38 +33,45 @@ exports[`Header スナップショット（Header） 1`] = `
       <div
         class="flex lg:hidden"
       >
-        <button
-          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          type="button"
+        <div
+          class="flex"
         >
-          <span
-            class="sr-only"
+          <div
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-3 LightTheme"
+          />
+          <button
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 ml-1 LightTheme"
+            type="button"
           >
-            Open main menu
-          </span>
-          <svg
-            aria-hidden="true"
-            class="h-6 w-6"
-            data-slot="icon"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
+            <span
+              class="sr-only"
+            >
+              Open main menu
+            </span>
+            <svg
+              aria-hidden="true"
+              class="h-6 w-6"
+              data-slot="icon"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
       <div
         class="hidden lg:flex lg:gap-x-12"
       >
         <a
-          class="flex text-sm leading-6 text-gray-900 hover:text-blue-500"
+          class="flex text-sm leading-6 hover:text-blue-500 LightTheme"
           href="/"
         >
           <svg
@@ -85,7 +92,7 @@ exports[`Header スナップショット（Header） 1`] = `
           ホーム
         </a>
         <a
-          class="flex text-sm leading-6 text-gray-900 hover:text-blue-500"
+          class="flex text-sm leading-6 hover:text-blue-500 LightTheme"
           href="/profile"
         >
           <svg
@@ -105,7 +112,7 @@ exports[`Header スナップショット（Header） 1`] = `
           プロフィール
         </a>
         <a
-          class="flex text-sm leading-6 text-gray-900 hover:text-blue-500"
+          class="flex text-sm leading-6 hover:text-blue-500 LightTheme"
           href="/contact"
         >
           <svg
@@ -131,7 +138,7 @@ exports[`Header スナップショット（Header） 1`] = `
         >
           <button
             aria-expanded="false"
-            class="flex items-center text-sm font-medium text-gray-900 hover:text-blue-500 focus:outline-none"
+            class="flex items-center text-sm font-medium hover:text-blue-500 focus:outline-none LightTheme"
             data-headlessui-state=""
             id="headlessui-popover-button-:r2:"
             type="button"
@@ -151,7 +158,7 @@ exports[`Header スナップショット（Header） 1`] = `
             カテゴリー
             <svg
               aria-hidden="true"
-              class="ml-1 h-5 w-5 text-gray-400"
+              class="ml-1 h-5 w-5"
               data-slot="icon"
               fill="none"
               stroke="currentColor"
