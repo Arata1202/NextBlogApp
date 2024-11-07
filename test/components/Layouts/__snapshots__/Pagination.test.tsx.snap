@@ -10,7 +10,7 @@ exports[`Pagination スナップショット（Pagination） 1`] = `
     >
       <span
         aria-current="page"
-        class="hover:text-blue-500 item bg-gray-300 text-gray-700"
+        class="item bg-gray-300 text-gray-700"
       >
         1
       </span>

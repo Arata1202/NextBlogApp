@@ -53,6 +53,33 @@ exports[`News スナップショット（News） 1`] = `
                   class="LightTheme"
                   style="font-size: 18px;"
                 >
+                  ダークモードに対応しました。画面右上から切り替えることができます。
+                </div>
+                <div
+                  class="mt-1 truncate"
+                >
+                  <a
+                    class="text-blue-500 hover:text-blue-700"
+                    target="blank"
+                  />
+                </div>
+                <div
+                  class="mt-1 truncate text-gray-500"
+                >
+                  2024年11月7日
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="border-b LightTheme"
+            >
+              <td
+                class="max-w-0 border-none py-5 pl-4 pr-3 text-sm sm:pl-0"
+              >
+                <div
+                  class="LightTheme"
+                  style="font-size: 18px;"
+                >
                   Android版アプリ「リアル大学生：モバイル」がリリースされました。
                 </div>
                 <div
