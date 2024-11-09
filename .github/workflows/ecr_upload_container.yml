@@ -25,18 +25,18 @@ jobs:
 
       - name: Build and push PushNotification Docker image
         run: |
-          docker build -t ${{ secrets.FUNCTIONS_PUSHNOTIFICATION }} --platform linux/x86_64 functions/PushNotification/
-          docker tag ${{ secrets.FUNCTIONS_PUSHNOTIFICATION }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_PUSHNOTIFICATION }}:latest
-          docker push push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_PUSHNOTIFICATION }}:latest
+          docker build -t ${{ secrets.FUNCTIONS_PUSHNOTIFICATION }} --platform linux/x86_64 functions/PushNotification/ > /dev/null 2>&1
+          docker tag ${{ secrets.FUNCTIONS_PUSHNOTIFICATION }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_PUSHNOTIFICATION }}:latest > /dev/null 2>&1
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_PUSHNOTIFICATION }}:latest > /dev/null 2>&1
 
       - name: Build and push Recaptcha Docker image
         run: |
-          docker build -t ${{ secrets.FUNCTIONS_RECAPTCHA }} --platform linux/x86_64 functions/Recaptcha/
-          docker tag ${{ secrets.FUNCTIONS_RECAPTCHA }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_RECAPTCHA }}:latest
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_RECAPTCHA }}:latest
+          docker build -t ${{ secrets.FUNCTIONS_RECAPTCHA }} --platform linux/x86_64 functions/Recaptcha/ > /dev/null 2>&1
+          docker tag ${{ secrets.FUNCTIONS_RECAPTCHA }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_RECAPTCHA }}:latest > /dev/null 2>&1
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_RECAPTCHA }}:latest > /dev/null 2>&1
 
       - name: Build and push SendEmail Docker image
         run: |
-          docker build -t ${{ secrets.FUNCTIONS_EMAIL }} --platform linux/x86_64 functions/SendEmail/
-          docker tag ${{ secrets.FUNCTIONS_EMAIL }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_EMAIL }}:latest
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_EMAIL }}:latest
+          docker build -t ${{ secrets.FUNCTIONS_EMAIL }} --platform linux/x86_64 functions/SendEmail/ > /dev/null 2>&1
+          docker tag ${{ secrets.FUNCTIONS_EMAIL }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_EMAIL }}:latest > /dev/null 2>&1
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.FUNCTIONS_EMAIL }}:latest > /dev/null 2>&1

@@ -21,7 +21,7 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install > /dev/null 2>&1
 
       - name: Set environment variables
         run: |
@@ -29,18 +29,18 @@ jobs:
           echo "MICROCMS_API_KEY=${{ secrets.MICROCMS_API_KEY }}" >> $GITHUB_ENV
 
       - name: Generate XML files
-        run: npm run generate
+        run: npm run generate > /dev/null 2>&1
 
       - name: Install AWS CLI
-        run: sudo apt-get install awscli -y
+        run: sudo apt-get install awscli -y > /dev/null 2>&1
 
       - name: Upload XML files to S3
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws s3 cp ./public/sitemap-0.xml s3://${{ secrets.S3_BUCKET_NAME }}/sitemap-0.xml --region ${{ secrets.AWS_REGION }}
-          aws s3 cp ./public/rss.xml s3://${{ secrets.S3_BUCKET_NAME }}/rss.xml --region ${{ secrets.AWS_REGION }}
+          aws s3 cp ./public/sitemap-0.xml s3://${{ secrets.S3_BUCKET_NAME }}/sitemap-0.xml --region ${{ secrets.AWS_REGION }} > /dev/null 2>&1
+          aws s3 cp ./public/rss.xml s3://${{ secrets.S3_BUCKET_NAME }}/rss.xml --region ${{ secrets.AWS_REGION }} > /dev/null 2>&1
 
       - name: Invalidate CloudFront Cache
         env:
@@ -48,4 +48,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*" > /dev/null
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*" > /dev/null 2>&1
