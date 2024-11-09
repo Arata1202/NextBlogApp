@@ -231,7 +231,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                 {/* スパム */}
                 <ReCAPTCHA
                   ref={recaptchaRef}
-                  sitekey="6LcslaspAAAAAA15eqFJy4_vL856A7uu4ANjeqId"
+                  sitekey="6LfAlnkqAAAAAADYZtb9Xfr0ORZfmvU7IB3zVC_i"
                   onChange={onChange}
                   className="mt-3"
                 />
