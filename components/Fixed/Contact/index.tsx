@@ -63,14 +63,11 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
   const sendEmail = useCallback(() => {
     if (!formData) return;
 
-    fetch(
-      `${process.env.NEXT_PUBLIC_LAMBDA_EMAIL_ENDPOINT}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      },
-    )
+    fetch(`${process.env.NEXT_PUBLIC_LAMBDA_EMAIL_ENDPOINT}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.status === 'success') {
@@ -90,14 +87,11 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
   const handleConfirmSend = useCallback(() => {
     const verifyCaptcha = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_LAMBDA_RECAPTCHA_ENDPOINT}`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `g-recaptcha-response=${captchaValue}`,
-          },
-        );
+        const response = await fetch(`${process.env.NEXT_PUBLIC_LAMBDA_RECAPTCHA_ENDPOINT}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `g-recaptcha-response=${captchaValue}`,
+        });
         const data = await response.json();
         if (data.success) {
           sendEmail();

@@ -20,6 +20,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
+          FUNCTIONS_PUSHNOTIFICATION: ${{ secrets.FUNCTIONS_PUSHNOTIFICATION }}
 
       - name: Update Recaptcha Lambda function
         run: |
@@ -30,6 +31,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
+          FUNCTIONS_RECAPTCHA: ${{ secrets.FUNCTIONS_RECAPTCHA }}
 
       - name: Update SendEmail Lambda function
         run: |
@@ -40,3 +42,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
+          FUNCTIONS_EMAIL: ${{ secrets.FUNCTIONS_EMAIL }}
