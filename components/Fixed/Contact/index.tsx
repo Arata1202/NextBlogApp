@@ -89,8 +89,10 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_LAMBDA_RECAPTCHA_ENDPOINT}`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: `g-recaptcha-response=${captchaValue}`,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            'g-recaptcha-response': captchaValue,
+          }),
         });
         const data = await response.json();
         if (data.success) {
