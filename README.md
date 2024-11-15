@@ -1,6 +1,7 @@
 ## アーキテクチャ
 
 ※ VercelもGitHub Actions経由になりました。
+※ APIサーバーをAWSからVercelに変更しました。（Corsが不要でデバッグが容易なため）
 
 ![名称未設定ファイル drawio (3)](https://github.com/user-attachments/assets/76d95aef-dcbd-4235-918f-7b35df656f01)
 

@@ -1,7 +1,0 @@
-{
-    "name": "lambda-container-image-example",
-    "license": "MIT",
-    "dependencies": {
-        "nodemailer": "^6.9.14"
-    }
-}
