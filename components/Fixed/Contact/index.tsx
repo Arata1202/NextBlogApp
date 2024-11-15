@@ -286,21 +286,26 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                <Dialog.Panel
+                  className={`relative transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                >
                   <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <EnvelopeIcon className="h-6 w-6 text-indigo-600" aria-hidden="true" />
+                    <div
+                      className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10"
+                      style={{ backgroundColor: '#eaf4fc' }}
+                    >
+                      <EnvelopeIcon className="h-6 w-6 text-blue-500" aria-hidden="true" />
                     </div>
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title
                         as="h1"
-                        className="text-base font-semibold leading-6 text-gray-900"
+                        className={`text-base font-bold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       >
                         お問い合わせを送信しますか？
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          お問い合わせの内容は、ブログの運営者に送信されます。
+                        <p className={`text-sm text-gray-500`}>
+                          送信ボタンは一度だけ押してください。送信完了まで数秒かかることがあります。
                         </p>
                       </div>
                     </div>
@@ -308,7 +313,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                     <button
                       type="button"
-                      className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                      className={`mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       onClick={handleCancel}
                       ref={cancelButtonRef}
                     >
@@ -316,7 +321,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     </button>
                     <button
                       type="button"
-                      className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto"
+                      className="inline-flex w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
                       onClick={handleConfirmSend}
                     >
                       送信
@@ -344,14 +349,18 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 mt-16">
+            <div
+              className={`pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-opacity-5 mt-16 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            >
               <div className="p-4">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
                     <CheckCircleIcon className="h-6 w-6 text-green-400" aria-hidden="true" />
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
-                    <p className="text-sm font-medium text-gray-900">
+                    <p
+                      className={`text-sm font-medium ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                    >
                       お問い合わせありがとうございます
                     </p>
                     <p className="mt-1 text-sm text-gray-500">
@@ -361,7 +370,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <div className="ml-4 flex flex-shrink-0">
                     <button
                       type="button"
-                      className="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      className={`inline-flex rounded-md hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       onClick={() => {
                         setContactConfirmShow(false);
                       }}
