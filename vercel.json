@@ -1,24 +1,19 @@
 {
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/articles/cl94wuqshzzv",
-      "destination": "/404",
-      "statusCode": 404
+      "source": "/rss.xml",
+      "destination": "https://meta.realunivlog.com/rss.xml",
+      "statusCode": 301
     },
     {
-      "source": "/articles/zv90a9igtfz",
-      "destination": "/404",
-      "statusCode": 404
+      "source": "/sitemap-0.xml",
+      "destination": "https://meta.realunivlog.com/sitemap-0.xml",
+      "statusCode": 301
     },
     {
-      "source": "/articles/ywed2fzhh5du",
-      "destination": "/404",
-      "statusCode": 404
-    },
-    {
-      "source": "/shop",
-      "destination": "/404",
-      "statusCode": 404
+      "source": "/sitemap.xml",
+      "destination": "https://meta.realunivlog.com/sitemap.xml",
+      "statusCode": 301
     }
   ]
 }
