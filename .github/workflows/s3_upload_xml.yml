@@ -32,7 +32,7 @@ jobs:
         run: npm run generate > /dev/null 2>&1
 
       - name: Install AWS CLI
-        run: sudo apt-get install awscli -y > /dev/null 2>&1
+        uses: unfor19/install-aws-cli-action@v1 > /dev/null 2>&1
 
       - name: Upload XML files to S3
         env:
