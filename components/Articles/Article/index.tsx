@@ -1,7 +1,7 @@
 'use client';
 
 import * as cheerio from 'cheerio';
-const hljs = require('highlight.js/lib/common');
+import hljs from 'highlight.js/lib/common';
 import { useTheme } from 'next-themes';
 import javascript from 'highlight.js/lib/languages/javascript';
 import dockerfile from 'highlight.js/lib/languages/dockerfile';
@@ -87,7 +87,7 @@ const formatRichText = (richText: string, theme?: string) => {
     if (!lang) return hljs.highlightAuto(text);
     try {
       return hljs.highlight(text, { language: lang?.replace(/^language-/, '') || '' });
-    } catch (e) {
+    } catch {
       return hljs.highlightAuto(text);
     }
   };

@@ -3,7 +3,7 @@ import { HomeIcon, UserCircleIcon, EnvelopeIcon, FolderOpenIcon } from '@heroico
 import { IoAirplaneOutline } from 'react-icons/io5';
 import { BookOpenIcon, CommandLineIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
 
-interface IconProps extends React.SVGProps<SVGSVGElement> {}
+type IconProps = React.SVGProps<SVGSVGElement>;
 
 // ブログ情報
 export const BlogTitle = [
