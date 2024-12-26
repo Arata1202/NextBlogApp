@@ -30,7 +30,7 @@
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "dotenv": "^16.4.5",
-    "eslint": "^9.15.0",
+    "eslint": "^9.17.0",
     "eslint-config-next": "^15.0.3",
     "eslint-config-prettier": "^9.1.0",
     "microcms-js-sdk": "^3.1.2",
