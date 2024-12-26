@@ -1,24 +1,10 @@
 export const news = [
   {
-    id: 4,
-    name: 'ダークモードに対応しました。画面右上から切り替えることができます。',
-    description: '2024年11月7日',
-    // meta: 'Google Playからダウンロードする',
-    // url: 'https://play.google.com/store/apps/details?id=com.realunivlog.flutterblogapp',
-  },
-  {
-    id: 3,
+    id: 2,
     name: 'Android版アプリ「リアル大学生：モバイル」がリリースされました。',
     description: '2024年9月30日',
     meta: 'Google Playからダウンロードする',
     url: 'https://play.google.com/store/apps/details?id=com.realunivlog.flutterblogapp',
-  },
-  {
-    id: 2,
-    name: 'RSSの不具合を修正しました。お手数ですが、新しいURLから再登録をお願いします。',
-    description: '2024年9月30日',
-    meta: 'RSSを登録する',
-    url: 'https://meta.realunivlog.com/rss.xml',
   },
   {
     id: 1,
