@@ -6,8 +6,8 @@ on:
   push:
     branches:
       - master
-    repository_dispatch:
-      types: [update]
+  repository_dispatch:
+    types: [update]
 
 jobs:
   Deploy-Production:
