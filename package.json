@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
-    "@heroicons/react": "^2.1.5",
+    "@heroicons/react": "^2.2.0",
     "@types/cheerio": "^0.22.35",
     "@types/react-google-recaptcha": "^2.1.9",
     "cheerio": "^1.0.0",
