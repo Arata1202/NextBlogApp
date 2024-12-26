@@ -530,7 +530,7 @@ export default function Article({ data, articles }: Props) {
                   <div className="flex justify-center">
                     <a
                       aria-label="RSSフォローボタン"
-                      href="https://meta.realunivlog.com/rss.xml"
+                      href="https://realunivlog.com/rss.xml"
                       className="bg-orange-500 rounded-full p-2 m-1"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -539,7 +539,7 @@ export default function Article({ data, articles }: Props) {
                     </a>
                     <a
                       aria-label="Feedlyフォローボタン"
-                      href="https://feedly.com/i/subscription/feed/https://meta.realunivlog.com/rss.xml"
+                      href="https://feedly.com/i/subscription/feed/https://realunivlog.com/rss.xml"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-green-500 rounded-full p-2 m-1"
