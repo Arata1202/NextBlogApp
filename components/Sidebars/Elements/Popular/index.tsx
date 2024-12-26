@@ -12,7 +12,7 @@ export default function Popular() {
     <div className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
       <h1 className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}>
         <BoltIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-        人気の投稿
+        おすすめの投稿
       </h1>
       {PopularPost.map((item, index) => (
         <ol

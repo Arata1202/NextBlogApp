@@ -1,5 +1,12 @@
 export const news = [
   {
+    id: 3,
+    name: '就活生のための就活管理サービス「リクビジョン」がリリースされました。',
+    description: '2024年12月26日',
+    meta: 'リクビジョンにアクセスする',
+    url: 'https://rikuvision.realunivlog.com',
+  },
+  {
     id: 2,
     name: 'Android版アプリ「リアル大学生：モバイル」がリリースされました。',
     description: '2024年9月30日',

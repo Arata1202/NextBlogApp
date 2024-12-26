@@ -1,4 +1,5 @@
 export const archive = [
+  { year: '2024', month: '12', monthForPath: '12' },
   { year: '2024', month: '10', monthForPath: '10' },
   { year: '2024', month: '9', monthForPath: '09' },
   { year: '2024', month: '8', monthForPath: '08' },
