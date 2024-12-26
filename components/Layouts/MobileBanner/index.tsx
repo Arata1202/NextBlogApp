@@ -31,7 +31,7 @@ export default function MobileBanner() {
             className="hover:opacity-60"
           >
             <img
-              src="/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg"
+              src="/images/badge/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg"
               alt="Download on the App Store"
               style={{ height: '40px' }}
               className="app-badge"
@@ -44,7 +44,7 @@ export default function MobileBanner() {
             style={{ marginLeft: '10%' }}
           >
             <img
-              src="/GetItOnGooglePlay_Badge_Web_color_English.png"
+              src="/images/badge/GetItOnGooglePlay_Badge_Web_color_English.png"
               alt="Download on the Play Store"
               style={{ height: '40px' }}
               className="app-badge"
