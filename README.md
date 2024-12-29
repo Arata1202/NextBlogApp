@@ -1,160 +1,227 @@
-## アーキテクチャ
+<div id="top"></div>
 
-※ VercelもGitHub Actions経由になりました。
-※ APIサーバーをAWSからVercelに変更しました。（Corsが不要でデバッグが容易なため）
+## 使用技術
 
-![名称未設定ファイル drawio (3)](https://github.com/user-attachments/assets/76d95aef-dcbd-4235-918f-7b35df656f01)
+<!-- シールド一覧 -->
+<p style="display: inline">
+  <img src="https://img.shields.io/badge/-Next.js-000000.svg?logo=next.js&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Typescript-000000.svg?logo=typescript&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Tailwind CSS-000000.svg?logo=tailwindcss&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-MicroCMS-000000.svg?logo=&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Vercel-000000.svg?logo=vercel&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Github Actions-000000.svg?logo=githubactions&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Docker-000000.svg?logo=docker&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Nginx-000000.svg?logo=nginx&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Canva-000000.svg?logo=canva&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Figma-000000.svg?logo=figma&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Google AdSense-000000.svg?logo=googleadsense&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Google Analytics-000000.svg?logo=googleanalytics&style=for-the-badge">
+  <img src="https://img.shields.io/badge/-Google Search Console-000000.svg?logo=googlesearchconsole&style=for-the-badge">
+</p>
 
-## リンク集
+## 目次
 
-### ブログ
+1. [プロジェクトについて](#プロジェクトについて)
+2. [環境](#環境)
+3. [ディレクトリ構成](#ディレクトリ構成)
+4. [開発環境構築](#開発環境構築)
 
-- https://realunivlog.com
+## プロジェクト名
 
-### サイトマップ・RSS
+リアル大学生
 
-- https://meta.realunivlog.com/sitemap-0.xml
-- https://meta.realunivlog.com/rss.xml
+## プロジェクトについて
 
-### Figma
+大学生活やプログラミングに関する記事を公開している個人ブログ
 
-- https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1&node-type=canvas&t=zcqCjvUj22ccvYpV-11
+  <p align="left">
+    <br />
+    <a href="https://realunivlog.com"><strong>リアル大学生 »</strong></a>
+    <br />
+    <a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1&node-type=canvas&t=zcqCjvUj22ccvYpV-11"><strong>Figma »</strong></a>
+    <br />
+    <br />
 
-<!-- ### Storybook （ダークモード開発中）
+<p align="right">(<a href="#top">トップへ</a>)</p>
 
-- https://d39bs3pqaz25oq.cloudfront.net -->
-<!--
-## 開発方法
+## 環境
 
-まずは`.env.example`を`.env`に変更し、適切に設定する。
+<!-- 言語、フレームワーク、ミドルウェア、インフラの一覧とバージョンを記載 -->
 
-### 開発環境
+| 主要なパッケージ  | バージョン |
+| --------------------- | ---------- |
+| next               | 15.0.3     |
+| react               | 18.3.1     |
+| typescript               | 5.6.3     |
+| tailwindcss               | 3.4.15     |
+| microcms-js-sdk               | 3.1.2     |
+| husky               | 9.1.6     |
+| eslint               | 9.15.0     |
+| prettier               | 3.3.3     |
+
+その他のパッケージのバージョンは package.json を参照してください
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+## ディレクトリ構成
 
 ```
-npm install
-npm run dev
+❯ tree -a -I "node_modules|.next|.git|.pytest_cache|static" -L 2
+.
+├── .docker
+│   ├── js
+│   └── nginx
+├── .env
+├── .env.example
+├── .github
+│   └── workflows
+├── .gitignore
+├── .husky
+│   └── pre-commit
+├── .prettierignore
+├── .prettierrc
+├── .vscode
+│   ├── extensions.json
+│   └── settings.json
+├── LICENSE
+├── README.md
+├── app
+│   ├── api
+│   ├── archive
+│   ├── articles
+│   ├── category
+│   ├── contact
+│   ├── copyright
+│   ├── disclaimer
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── layout.module.css
+│   ├── layout.tsx
+│   ├── link
+│   ├── not-found.module.css
+│   ├── not-found.tsx
+│   ├── p
+│   ├── page.tsx
+│   ├── privacy
+│   ├── profile
+│   ├── search
+│   ├── sitemap
+│   └── tag
+├── components
+│   ├── Adsense
+│   ├── ArticleLists
+│   ├── Articles
+│   ├── Breadcrumbs
+│   ├── Categories
+│   ├── Elements
+│   ├── Fixed
+│   ├── Layouts
+│   ├── Sidebars
+│   └── Tags
+├── constants
+│   └── index.ts
+├── docker-compose.yml
+├── eslint.config.mjs
+├── libs
+│   ├── microcms.ts
+│   ├── theme-provider.tsx
+│   ├── theme-wrapper.tsx
+│   └── utils.ts
+├── next-sitemap.config.js
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── pnpm-lock.yaml
+├── postcss.config.mjs
+├── public
+│   ├── favicon.ico
+│   ├── images
+│   └── robots.txt
+├── rss.ts
+├── section
+│   ├── archive.tsx
+│   ├── dummy.tsx
+│   ├── news.tsx
+│   └── tag.tsx
+├── tailwind.config.ts
+└── tsconfig.json
 ```
 
-### 本番環境
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+## 開発環境構築
+
+### 開発環境の構築と起動
+
+.env ファイルを[環境変数の一覧](#環境変数の一覧)を元に作成
 
 ```
-npm install
-npm run build
-npm start
+MICROCMS_API_KEY=
+MICROCMS_SERVICE_DOMAIN=
+BASE_URL=
+GOOGLE_ANALYTICS_ID=
+GOOGLE_ADSENSE_ID=
+SEARCH_CONSOLE_ID=
+RECAPTCHA_SECRET_KEY=
+EMAIL_TO=
+EMAIL_FROM=
+SMTP_USER=
+SMTP_PASS=
 ```
--->
 
-## 実装機能
+.env ファイルを作成後、以下の方法で開発環境を起動
 
-### Google
+#### pnpmを使用する場合
 
-- Google Analytics
-- Google AdSense
-- Google Search Console
-- Google Recaptcha
+```
+pnpm install
+pnpm run dev
+```
 
-### サイトマップ
+#### Dockerを使用する場合
 
-- RSS
-- XML サイトマップ
-- HTML サイトマップ
+```
+docker compose up -d --build
+```
 
-### プラグイン
+### 動作確認
 
-- 目次
-- 吹き出し
-- タブボックス（メリット・デメリットなど）
-- アフィリエイト
-- マーカー
-- コードマーカー
-- コードブロック（ハイライト機能付き）
-- ぱんくずリスト
-- 関連記事
-- あわせて読みたい
-- シェアする
+http://localhost:3000 にアクセスできるか確認
+アクセスできたら成功
 
-### 拡張機能
+### コンテナの停止
 
-- PWA
-  - メリットを感じられず、削除。
-- プッシュ通知
-  - モバイルアプリ限定として、Web 版からは削除。
-- ダークテーマ
+以下のコマンドでコンテナを停止することができます
 
-### 固定ページ
+```
+docker compose down
+```
 
-- トップページ
-  - 最新記事
-  - 人気記事
-  - お知らせ
-- プロフィール
-- サイトマップ
-- お問い合わせ
-- プライバシーポリシー
-- 免責事項
-- 著作権について
-- リンクについて
+### 環境変数の一覧
 
-### 動的ページ
+| 変数名                 | 役割                                      |
+| ---------------------- | ----------------------------------------- |
+| MICROCMS_API_KEY    | MicroCMSのAPIキー |
+| MICROCMS_SERVICE_DOMAIN         | MicroCMSのサービスドメイン（サービスID）   |
+| BASE_URL             | 本番環境のベースURL         |
+| GOOGLE_ANALYTICS_ID         | Google AnalyticsのスクリプトID       |
+| GOOGLE_ADSENSE_ID             | Google AdSenseのスクリプトID         |
+| SEARCH_CONSOLE_ID             | Google Search ConsoleのスクリプトID       |
+| RECAPTCHA_SECRET_KEY             | Google reCAPTCHAのシークレットキー                 |
+| EMAIL_TO          | お問い合わせの送信先メールアドレス              |
+| EMAIL_FROM                  | お問い合わせの送信元メールアドレス                  |
+| SMTP_USER        | Googleアカウントのメールアドレス                  |
+| SMTP_PASS | Googleアカウントのアプリパスワード   |
 
-- カテゴリー
-- タグ
-- 記事ページ
-- アーカイブ
-- キーワードで探す
+### コマンド一覧
 
-## 技術構成
+| 主要なコマンド               | 実行する処理                                                            |
+| ------------------- | ----------------------------------------------------------------------- |
+| pnpm install        | `node_modules`のインストール |
+| pnpm run dev             | 開発環境の起動                                                          |
+| pnpm run build          | Next.jsのビルド、サイトマップとRSSフィードの生成                                                     |
+| pnpm run start           | ビルド済みNext.jsの起動                                                          |
+| docker compose up -d --build       | コンテナのビルドと起動                                                      |
+| docker compose down | コンテナの停止                                          |
 
-### ブログ
-
-- Next.js
-- TypeScript
-- TailwindCSS
-- AWS Lambda
-  - Docker
-  - AWS Elastic Container Registry
-- MicroCMS
-- Vercel
-- Husky
-  - pre-commit
-    - Prettier
-    - ESLint
-  - pre-push
-    - Jest
-- GitHub Actions
-  - Deploy Vercel
-  - Deploy AWS S3 + AWS CloudFront
-  - Deploy AWS Elastic Container Registry + AWS Lambda
-- Docker （オプション）
-  - Reverse Proxy
-
-### サイトマップ・RSS
-
-- AWS S3
-- AWS CloudFront
-- AWS Route53
-- AWS Certificate Manager
-
-### デザインツール
-
-- Canva
-- Figma
-
-## 料金 （月）
-
-- MicroCMS: Hobby （無料）
-- Vercel: Pro （約 3000 円）
-<!--
-
-## 今後実装したい機能・課題
-
-### 課題
-
-- 広告表示の関係で`Link`ではなく`window.location.href`を使用しているが、パフォーマンスが悪いので`Link`に変更したい。（Next.js の魅力を最大限に引き出す。）
-  - 結論、a タグで良い。（未実装）
-- Google AdSense を導入してから、全体的にパフォーマンスが落ちている。（ PageSpeedInsight ）
-  - 許容範囲ではある。
-
-### 機能
-
-- コードタグにコピーボタンの実装 -->
+<p align="right">(<a href="#top">トップへ</a>)</p>
