@@ -40,6 +40,10 @@
   margin-bottom: 0 !important;
 }
 
+.DialogButton {
+  margin-top: 0px;
+}
+
 .SidebarTableOfContens {
   position: sticky;
   top: 60px;
