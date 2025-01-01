@@ -158,7 +158,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         name="sei"
                         id="sei"
                         autoComplete="given-name"
-                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                        className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       />
                       {errors.sei && <p className="text-red-500">{errors.sei.message}</p>}
                     </div>
@@ -177,7 +177,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         name="mei"
                         id="mei"
                         autoComplete="family-name"
-                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                        className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       />
                       {errors.mei && <p className="text-red-500">{errors.mei.message}</p>}
                     </div>
@@ -202,7 +202,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         name="email"
                         id="email"
                         autoComplete="email"
-                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                        className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       />
                       {errors.email && <p className="text-red-500">{errors.email.message}</p>}
                     </div>
@@ -220,7 +220,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         name="message"
                         id="message"
                         rows={4}
-                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                        className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                         defaultValue={''}
                       />
                       {errors.message && <p className="text-red-500">{errors.message.message}</p>}
@@ -238,7 +238,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <button
                     type="submit"
                     disabled={!captchaValue}
-                    className={`block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-s border hover:border-blue-500 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                    className={`cursor-pointer block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-s border hover:border-2 hover:border-blue-500 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                   >
                     送信
                   </button>
