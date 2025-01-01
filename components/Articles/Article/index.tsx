@@ -459,7 +459,7 @@ export default function Article({ data, articles }: Props) {
                     aria-label="シェアボタン"
                     url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
-                    className="m-1"
+                    className="m-1 hover:opacity-60"
                   >
                     <TwitterIcon size={40} round={true} />
                   </TwitterShareButton>
@@ -468,7 +468,7 @@ export default function Article({ data, articles }: Props) {
                     aria-label="シェアボタン"
                     url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
-                    className="m-1"
+                    className="m-1 hover:opacity-60"
                   >
                     <FacebookIcon size={40} round={true} />
                   </FacebookShareButton>
@@ -477,7 +477,7 @@ export default function Article({ data, articles }: Props) {
                     aria-label="シェアボタン"
                     url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
-                    className="m-1"
+                    className="m-1 hover:opacity-60"
                   >
                     <LineIcon size={40} round={true} />
                   </LineShareButton>
@@ -486,7 +486,7 @@ export default function Article({ data, articles }: Props) {
                     aria-label="シェアボタン"
                     url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
-                    className="m-1"
+                    className="m-1 hover:opacity-60"
                   >
                     <HatenaIcon size={40} round={true} />
                   </HatenaShareButton>
@@ -496,7 +496,7 @@ export default function Article({ data, articles }: Props) {
                     url={`https://realunivlog.com/articles/${data.id}`}
                     media={data.thumbnail?.url || ''}
                     description={data.title}
-                    className="m-1"
+                    className="m-1 hover:opacity-60"
                   >
                     <PinterestIcon size={40} round={true} />
                   </PinterestShareButton>
@@ -505,7 +505,7 @@ export default function Article({ data, articles }: Props) {
                     aria-label="シェアボタン"
                     url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
-                    className="m-1"
+                    className="m-1 hover:opacity-60"
                   >
                     <RedditIcon size={40} round={true} />
                   </RedditShareButton>
@@ -515,7 +515,7 @@ export default function Article({ data, articles }: Props) {
                     url={`https://realunivlog.com/articles/${data.id}`}
                     title={data.title}
                     summary={data.description}
-                    className="m-1"
+                    className="m-1 hover:opacity-60"
                   >
                     <LinkedinIcon size={40} round={true} />
                   </LinkedinShareButton>
@@ -531,7 +531,7 @@ export default function Article({ data, articles }: Props) {
                     <a
                       aria-label="RSSフォローボタン"
                       href="https://realunivlog.com/rss.xml"
-                      className="bg-orange-500 rounded-full p-2 m-1"
+                      className="bg-orange-500 rounded-full p-2 m-1 hover:opacity-60"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -542,7 +542,7 @@ export default function Article({ data, articles }: Props) {
                       href="https://feedly.com/i/subscription/feed/https://realunivlog.com/rss.xml"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-green-500 rounded-full p-2 m-1"
+                      className="bg-green-500 rounded-full p-2 m-1 hover:opacity-60"
                     >
                       <SiFeedly className="h-6 w-6 text-white" aria-hidden="true" />
                     </a>
@@ -550,6 +550,7 @@ export default function Article({ data, articles }: Props) {
                   <div className="flex justify-center mt-5">
                     <a
                       href="https://blogmura.com/profiles/11190305/?p_cid=11190305&reader=11190305"
+                      className="hover:opacity-60"
                       target="_blank"
                     >
                       <img
@@ -564,7 +565,7 @@ export default function Article({ data, articles }: Props) {
                       href="https://blog.with2.net/link/?id=2117761"
                       title="人気ブログランキング"
                       target="_blank"
-                      className="ml-3"
+                      className="ml-3 hover:opacity-60"
                     >
                       <img
                         alt="人気ブログランキング"
@@ -577,7 +578,7 @@ export default function Article({ data, articles }: Props) {
                     <a
                       href="https://blogranking.fc2.com/in.php?id=1067087"
                       target="_blank"
-                      className="ml-3"
+                      className="ml-3 hover:opacity-60"
                     >
                       <img
                         loading="lazy"
