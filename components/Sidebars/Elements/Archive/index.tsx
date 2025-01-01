@@ -28,7 +28,7 @@ export default function Archive() {
         <div className="relative mt-5">
           <Listbox.Button
             style={{ height: '40px' }}
-            className={`relative w-full cursor-default rounded-md py-1.5 pl-3 pr-10 text-left shadow-sm ring-1 ring-inset focus:outline-none focus:ring-2 hover:ring-blue-500 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`relative w-full cursor-pointer rounded-md py-1.5 pl-3 pr-10 text-left shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-blue-500 focus:outline-none sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           >
             <span style={{ fontSize: '18px' }} className="block truncate text-gray-500">
               {selectedMonth
@@ -53,7 +53,7 @@ export default function Archive() {
                 key={index}
                 value={`${item.year}/${item.monthForPath}`}
                 className={() =>
-                  `relative cursor-default select-none py-2 pl-3 pr-9 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`
+                  `relative cursor-pointer select-none py-2 pl-3 pr-9 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`
                 }
               >
                 <span

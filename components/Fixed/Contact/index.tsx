@@ -38,11 +38,8 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
   } = useForm<FormData>();
 
   interface FormData {
-    sei: string;
-    mei: string;
+    title: string;
     email: string;
-    company: string;
-    tel: string;
     message: string;
   }
 
@@ -63,7 +60,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
   const sendEmail = useCallback(() => {
     if (!formData) return;
 
-    fetch(`${process.env.NEXT_PUBLIC_LAMBDA_EMAIL_ENDPOINT}`, {
+    fetch(`/api/sendemail`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
@@ -87,7 +84,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
   const handleConfirmSend = useCallback(() => {
     const verifyCaptcha = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_LAMBDA_RECAPTCHA_ENDPOINT}`, {
+        const response = await fetch(`/api/recaptcha`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -139,49 +136,10 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                 <AdAlert />
               </div>
               <p className="mt-5">
-                当ブログに関するご質問やお気づきの点がございましたら、お気軽にお問い合わせください。
-                お問い合わせから2～3日中にはご返信させていただきます。
+                本ブログに関するご質問やお気づきの点がございましたら、お気軽にお問い合わせください。
               </p>
               <form onSubmit={handleSubmit(onSubmit)} method="POST" className="pt-5 mb-5">
                 <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-                  <div className="sm:col-span-2">
-                    <label
-                      htmlFor="first-name"
-                      className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
-                    >
-                      氏名
-                    </label>
-                    <div className="mt-2.5">
-                      <input
-                        {...register('sei', { required: '※ 氏名を入力してください' })}
-                        type="text"
-                        name="sei"
-                        id="sei"
-                        autoComplete="given-name"
-                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                      />
-                      {errors.sei && <p className="text-red-500">{errors.sei.message}</p>}
-                    </div>
-                  </div>
-                  <div className="sm:col-span-2">
-                    <label
-                      htmlFor="last-name"
-                      className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
-                    >
-                      題名
-                    </label>
-                    <div className="mt-2.5">
-                      <input
-                        {...register('mei', { required: '※ 題名を入力してください' })}
-                        type="text"
-                        name="mei"
-                        id="mei"
-                        autoComplete="family-name"
-                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                      />
-                      {errors.mei && <p className="text-red-500">{errors.mei.message}</p>}
-                    </div>
-                  </div>
                   <div className="sm:col-span-2">
                     <label
                       htmlFor="email"
@@ -202,9 +160,28 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         name="email"
                         id="email"
                         autoComplete="email"
-                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                        className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       />
                       {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+                    </div>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="last-name"
+                      className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
+                    >
+                      件名
+                    </label>
+                    <div className="mt-2.5">
+                      <input
+                        {...register('title', { required: '※ 件名を入力してください' })}
+                        type="text"
+                        name="title"
+                        id="title"
+                        autoComplete="family-name"
+                        className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                      />
+                      {errors.title && <p className="text-red-500">{errors.title.message}</p>}
                     </div>
                   </div>
                   <div className="sm:col-span-2">
@@ -220,7 +197,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                         name="message"
                         id="message"
                         rows={4}
-                        className={`hover:border-blue-500 block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                        className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                         defaultValue={''}
                       />
                       {errors.message && <p className="text-red-500">{errors.message.message}</p>}
@@ -238,7 +215,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <button
                     type="submit"
                     disabled={!captchaValue}
-                    className={`block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-s border hover:border-blue-500 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                    className={`cursor-pointer block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-s border hover:border-2 hover:border-blue-500 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                   >
                     送信
                   </button>
@@ -287,7 +264,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
                 <Dialog.Panel
-                  className={`relative transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  className={`m-auto relative transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                 >
                   <div className="sm:flex sm:items-start">
                     <div
@@ -310,10 +287,10 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                       </div>
                     </div>
                   </div>
-                  <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                  <div className="mt-3 grid grid-flow-row-dense grid-cols-2 gap-3">
                     <button
                       type="button"
-                      className={`mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                      className={`DialogButton mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       onClick={handleCancel}
                       ref={cancelButtonRef}
                     >
@@ -321,7 +298,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     </button>
                     <button
                       type="button"
-                      className="inline-flex w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
+                      className="inline-flex w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 sm:ml-3 sm:w-auto"
                       onClick={handleConfirmSend}
                     >
                       送信
@@ -336,7 +313,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
       {/* 送信完了アラート */}
       <div
         aria-live="assertive"
-        className="confirmAlert pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6"
+        className="confirmAlert pointer-events-none fixed inset-0 flex items-start px-4 py-6 sm:items-start sm:p-6"
       >
         <div className="flex w-full flex-col items-center space-y-4 sm:items-end">
           <Transition
@@ -359,13 +336,11 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p
-                      className={`text-sm font-medium ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                      className={`text-sm font-semibold ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                     >
                       お問い合わせありがとうございます
                     </p>
-                    <p className="mt-1 text-sm text-gray-500">
-                      数日以内にご連絡いたしますので、しばらくお待ちください。
-                    </p>
+                    <p className="mt-1 text-sm text-gray-500">正常に処理が完了しました。</p>
                   </div>
                   <div className="ml-4 flex flex-shrink-0">
                     <button
