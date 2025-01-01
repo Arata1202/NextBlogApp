@@ -60,7 +60,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
   const sendEmail = useCallback(() => {
     if (!formData) return;
 
-    fetch(`${process.env.NEXT_PUBLIC_LAMBDA_EMAIL_ENDPOINT}`, {
+    fetch(`/api/sendemail`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
@@ -84,7 +84,7 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
   const handleConfirmSend = useCallback(() => {
     const verifyCaptcha = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_LAMBDA_RECAPTCHA_ENDPOINT}`, {
+        const response = await fetch(`/api/recaptcha`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
