@@ -29,8 +29,8 @@ export async function POST(req: Request) {
       subject: 'お問い合わせありがとうございます',
       html: `
         <p>以下の内容でお問い合わせを承りました。</p>
-        <p style='padding: 12px; border-left: 4px solid #d0d0d0;'>件名: ${title}</p>
         <p style='padding: 12px; border-left: 4px solid #d0d0d0;'>メールアドレス: ${email}</p>
+        <p style='padding: 12px; border-left: 4px solid #d0d0d0;'>件名: ${title}</p>
         <p style='padding: 12px; border-left: 4px solid #d0d0d0;'>お問い合わせ内容: ${message}</p>
       `,
     };

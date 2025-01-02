@@ -55,6 +55,13 @@
   max-height: 500px;
 }
 
+.text-16px {
+  font-size: 16px !important;
+}
+.text-14px {
+  font-size: 14px !important;
+}
+
 /* Tailwindのブレイクポイント */
 .pc {
   display: none;

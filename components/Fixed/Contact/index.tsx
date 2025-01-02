@@ -276,12 +276,12 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title
                         as="h1"
-                        className={`text-base font-bold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                        className={`text-16px font-bold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       >
                         お問い合わせを送信しますか？
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className={`text-sm text-gray-500`}>
+                        <p className={`text-14px text-gray-500`}>
                           送信ボタンは一度だけ押してください。送信完了まで数秒かかることがあります。
                         </p>
                       </div>
@@ -336,11 +336,11 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p
-                      className={`text-sm font-semibold ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                      className={`text-16px font-semibold ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                     >
                       お問い合わせありがとうございます
                     </p>
-                    <p className="mt-1 text-sm text-gray-500">正常に処理が完了しました。</p>
+                    <p className="mt-1 text-14px text-gray-500">正常に処理が完了しました。</p>
                   </div>
                   <div className="ml-4 flex flex-shrink-0">
                     <button
