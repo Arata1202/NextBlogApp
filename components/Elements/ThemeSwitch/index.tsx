@@ -17,7 +17,7 @@ export default function ThemeSwitch() {
   if (resolvedTheme === 'dark') {
     return (
       <SunIcon
-        className="h-5 w-5 hover:text-blue-500"
+        className="h-5 w-5 hover:text-blue-500 cursor-pointer"
         onClick={() => {
           setTheme('light');
           window.location.reload();
@@ -29,7 +29,7 @@ export default function ThemeSwitch() {
   if (resolvedTheme === 'light') {
     return (
       <MoonIcon
-        className="h-5 w-5 hover:text-blue-500"
+        className="h-5 w-5 hover:text-blue-500 cursor-pointer"
         onClick={() => {
           setTheme('dark');
           window.location.reload();
