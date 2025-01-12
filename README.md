@@ -1,6 +1,6 @@
 <div id="top"></div>
 
-![2](https://github.com/user-attachments/assets/c0070ab9-1367-4053-8eae-81041af0846f)
+![2](/public/images/readme/title.png)
 
 ## 目次
 
