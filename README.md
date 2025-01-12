@@ -1,5 +1,12 @@
 <div id="top"></div>
 
+<div align="right">
+  
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Arata1202/NextBlogApp/vercel_deploy.yml)
+![GitHub License](https://img.shields.io/github/license/Arata1202/NextBlogApp)
+
+</div>
+
 ![2](/public/images/readme/title.png)
 
 ## 目次
