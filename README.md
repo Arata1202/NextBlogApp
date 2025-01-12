@@ -1,66 +1,140 @@
-<div id="top"><h1>リアル大学生</h1></div>
+<div id="top"></div>
+
+![2](https://github.com/user-attachments/assets/c0070ab9-1367-4053-8eae-81041af0846f)
+
+## 目次
+- [リアル大学生](#top)
+  - [目次](#目次)
+  - [リンク一覧](#リンク一覧)
+  - [主な機能一覧](#主な機能一覧)
+  - [使用技術](#使用技術)
+  - [環境構築](#環境構築)
+    - [リポジトリのクローン](#リポジトリのクローン)
+    - [pnpmの場合](#pnpmの場合)
+      - [開発環境](#開発環境)
+      - [本番環境](#本番環境)
+    - [Dockerの場合](#Dockerの場合)
+  - [ディレクトリ構成](#ディレクトリ構成)
+  - [Gitの運用](#Gitの運用)
+    - [ブランチ](#ブランチ)
+    - [コミットメッセージの記法](#コミットメッセージの記法)
+
+## リンク一覧
+<ul><li><a href="https://realunivlog.com">リアル大学生</a></li></ul>
+<ul><li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1&node-type=canvas&t=zcqCjvUj22ccvYpV-11">Figma</a></li></ul>
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+## 主な機能一覧
+| 最新記事ページ |　カテゴリーページ |
+| ---- | ---- |
+| ![1](https://github.com/user-attachments/assets/60bcdca2-8cfd-4390-bff6-a0be3c68835d) | ![2](https://github.com/user-attachments/assets/5b0520f2-2ef9-4b0b-8e5a-d707359b9c29) |
+| 最新記事を一覧表示するページです。 | 特定のカテゴリーの記事を一覧表示するページです。 |
+| https://realunivlog.com | https://realunivlog.com/category/programming |
+
+| タグページ |　検索ページ |
+| ---- | ---- |
+| ![3](https://github.com/user-attachments/assets/be349d8b-a3d0-4ea4-8ffd-997a29353f11) | ![4](https://github.com/user-attachments/assets/3f920e1b-eba9-4062-9a18-807f187240eb) |
+| 特定のタグの記事を一覧表示するページです。 | 検索したキーワードの記事を一覧表示するページです。 |
+| https://realunivlog.com/tag/adsense | https://realunivlog.com/search?q=%E6%97%85%E8%A1%8C |
+
+| アーカイブページ |　記事ページ |
+| ---- | ---- |
+| ![5](https://github.com/user-attachments/assets/b2716027-65a5-42a2-b107-f9c867c9a736) | ![6](https://github.com/user-attachments/assets/e4f4ab61-667d-47c5-a22a-2c9479060332) |
+| 特定の年月の記事を一覧表示するページです。 | 記事を表示するページです。 |
+| https://realunivlog.com/archive/2024/10 | https://realunivlog.com/articles/qyjjrfa737bk |
+
+| お問い合わせページ |　サイトマップページ |
+| ---- | ---- |
+| ![7](https://github.com/user-attachments/assets/ee6aa294-0169-4663-86b7-4d54567b0e33) | ![10](https://github.com/user-attachments/assets/ac137186-d3f7-4de0-aa98-177cbb42f325) |
+| 管理者にお問い合わせするページです。 | HTML形式のサイトマップを表示するページです。 |
+| https://realunivlog.com/contact | https://realunivlog.com/sitemap |
+
+| サイトマップ・RSS |　ダークテーマ |
+| ---- | ---- |
+| ![9](https://github.com/user-attachments/assets/4ca995e6-27e7-4419-8d16-468f42248aa8) | ![8](https://github.com/user-attachments/assets/2740ce73-da97-423e-a795-25a7babfb415) |
+| XML形式のサイトマップとRSSを公開しています。 | ライトテーマとダークテーマを切り替えることができます。 |
+| https://realunivlog.com/sitemap-0.xml<br/>https://realunivlog.com/rss.xml | -　|
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
 
 ## 使用技術
 
-<!-- シールド一覧 -->
-<p style="display: inline">
-  <img src="https://img.shields.io/badge/-Next.js-000000.svg?logo=next.js&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-Typescript-000000.svg?logo=typescript&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-Tailwind CSS-000000.svg?logo=tailwindcss&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-MicroCMS-000000.svg?logo=&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-Vercel-000000.svg?logo=vercel&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-Github Actions-000000.svg?logo=githubactions&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-Docker-000000.svg?logo=docker&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-Nginx-000000.svg?logo=nginx&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-Canva-000000.svg?logo=canva&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-Figma-000000.svg?logo=figma&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-Google AdSense-000000.svg?logo=googleadsense&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-Google Analytics-000000.svg?logo=googleanalytics&style=for-the-badge">
-  <img src="https://img.shields.io/badge/-Google Search Console-000000.svg?logo=googlesearchconsole&style=for-the-badge">
-</p>
-
-## 目次
-
-1. [プロジェクトについて](#1-プロジェクトについて)
-2. [環境](#2-環境)
-3. [ディレクトリ構成](#3-ディレクトリ構成)
-4. [開発環境構築](#4-開発環境構築)
-4. [プレフィックス](#5-プレフィックス)
-
-## 1. プロジェクトについて
-
-大学生活やプログラミングに関する記事を公開している個人ブログ
-
-  <p align="left">
-    <br />
-    <a href="https://realunivlog.com"><strong>リアル大学生 »</strong></a>
-    <br />
-    <a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1&node-type=canvas&t=zcqCjvUj22ccvYpV-11"><strong>Figma »</strong></a>
-    <br />
-    <br />
+| Category          | Technology Stack                                     |
+| ----------------- | --------------------------------------------------   |
+| Frontend          | Next.js, TypeScript, Tailwind CSS                    |
+| Backend           | MicroCMS                                             |
+| Infrastructure    | Vercel                                               |
+| Environment setup | Docker, Nginx                                        |
+| CI/CD             | GitHub Actions                                       |
+| Design            | Figma, Canva                                         |
+| Google            | AdSense, Analytics, Search Console, reCAPTCHA        |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
-## 2. 環境
+## 環境構築
 
-<!-- 言語、フレームワーク、ミドルウェア、インフラの一覧とバージョンを記載 -->
+### リポジトリのクローン
 
-| 主要なパッケージ  | バージョン |
-| --------------------- | ---------- |
-| next               | 15.0.3     |
-| react               | 18.3.1     |
-| typescript               | 5.6.3     |
-| tailwindcss               | 3.4.15     |
-| microcms-js-sdk               | 3.1.2     |
-| husky               | 9.1.6     |
-| eslint               | 9.15.0     |
-| prettier               | 3.3.3     |
+```
+# リポジトリのクローン
+git clone git@github.com:Arata1202/NextBlogApp.git
+cd NextBlogApp
 
-その他のパッケージのバージョンは package.json を参照
+# .env.exampleから.envを作成
+mv .env.example .env
+
+# .envの編集
+vi .env
+```
+
+### pnpmの場合
+
+#### 開発環境
+
+```
+# node_modulesのインストール
+pnpm install
+
+# 開発サーバーの立ち上げ
+pnpm dev
+
+# ブラウザにアクセス
+http:localhost:3000
+```
+
+#### 本番環境
+
+```
+# node_modulesのインストール
+pnpm install
+
+# Next.jsのビルド
+pnpm build
+
+# ビルドしたNext.jsの起動
+pnpm start
+
+# ブラウザにアクセス
+http:localhost:3000
+```
+
+### Dockerの場合
+
+```
+# コンテナのビルドと起動
+docker compose up -d --build
+
+# ブラウザにアクセス
+http:localhost:3000
+
+# コンテナの停止
+docker compose down
+```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
-## 3. ディレクトリ構成
+## ディレクトリ構成
 
 ```
 ❯ tree -a -I "node_modules|.next|.git|.pytest_cache|static" -L 2
@@ -146,84 +220,19 @@
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
-## 4. 開発環境構築
+## Gitの運用
 
-### 開発環境の構築と起動
+### ブランチ
 
-.env ファイルを[環境変数一覧](#環境変数一覧)を元に作成
+Github-flowを使用する。
+masterとfeatureブランチで運用する。
 
-```
-MICROCMS_API_KEY=
-MICROCMS_SERVICE_DOMAIN=
-BASE_URL=
-GOOGLE_ANALYTICS_ID=
-GOOGLE_ADSENSE_ID=
-SEARCH_CONSOLE_ID=
-RECAPTCHA_SECRET_KEY=
-EMAIL_TO=
-EMAIL_FROM=
-SMTP_USER=
-SMTP_PASS=
-```
+| ブランチ名 |   役割   | 派生元 | マージ先 |
+| :--------: | :------: | :----: | :------: |
+|    master    | 本番環境 |   -    |    -     |
+| feature/\* | 機能開発 |  master  |   master   |
 
-.env ファイルを作成後、以下の方法で開発環境を起動
-
-#### pnpmを使用する場合
-
-```
-pnpm install
-pnpm run dev
-```
-
-#### Dockerを使用する場合
-
-```
-docker compose up -d --build
-```
-
-### 動作確認
-
-http://localhost:3000 にアクセスできるか確認
-アクセスできたら成功
-
-### コンテナの停止
-
-以下のコマンドでコンテナを停止
-
-```
-docker compose down
-```
-
-### 環境変数一覧
-
-| 変数名                 | 役割                                      |
-| ---------------------- | ----------------------------------------- |
-| MICROCMS_API_KEY    | MicroCMSのAPIキー |
-| MICROCMS_SERVICE_DOMAIN         | MicroCMSのサービスドメイン（サービスID）   |
-| BASE_URL             | 本番環境のベースURL         |
-| GOOGLE_ANALYTICS_ID         | Google AnalyticsのスクリプトID       |
-| GOOGLE_ADSENSE_ID             | Google AdSenseのスクリプトID         |
-| SEARCH_CONSOLE_ID             | Google Search ConsoleのスクリプトID       |
-| RECAPTCHA_SECRET_KEY             | Google reCAPTCHAのシークレットキー                 |
-| EMAIL_TO          | お問い合わせの送信先メールアドレス              |
-| EMAIL_FROM                  | お問い合わせの送信元メールアドレス                  |
-| SMTP_USER        | Googleアカウントのメールアドレス                  |
-| SMTP_PASS | Googleアカウントのアプリパスワード   |
-
-### コマンド一覧
-
-| 主要なコマンド               | 実行する処理                                                            |
-| ------------------- | ----------------------------------------------------------------------- |
-| pnpm install        | `node_modules`のインストール |
-| pnpm run dev             | 開発環境の起動                                                          |
-| pnpm run build          | Next.jsのビルド、サイトマップとRSSフィードの生成                                                     |
-| pnpm run start           | ビルド済みNext.jsの起動                                                          |
-| docker compose up -d --build       | コンテナのビルドと起動                                                      |
-| docker compose down | コンテナの停止                                          |
-
-<p align="right">(<a href="#top">トップへ</a>)</p>
-
-## 5. プレフィックス
+### コミットメッセージの記法
 
 ```
 fix: バグ修正
