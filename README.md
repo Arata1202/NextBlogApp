@@ -33,31 +33,26 @@
 | ---------------------------------- | ------------------------------------------------ |
 | ![1](/public/images/readme/1.png)  | ![2](/public/images/readme/2.png)                |
 | 最新記事を一覧表示するページです。 | 特定のカテゴリーの記事を一覧表示するページです。 |
-| https://realunivlog.com            | https://realunivlog.com/category/programming     |
 
 | タグページ                                 | 　検索ページ                                        |
 | ------------------------------------------ | --------------------------------------------------- |
 | ![3](/public/images/readme/3.png)          | ![4](/public/images/readme/4.png)                   |
 | 特定のタグの記事を一覧表示するページです。 | 検索したキーワードの記事を一覧表示するページです。  |
-| https://realunivlog.com/tag/adsense        | https://realunivlog.com/search?q=%E6%97%85%E8%A1%8C |
 
 | アーカイブページ                           | 　記事ページ                                  |
 | ------------------------------------------ | --------------------------------------------- |
 | ![5](/public/images/readme/5.png)          | ![6](/public/images/readme/6.png)             |
 | 特定の年月の記事を一覧表示するページです。 | 記事を表示するページです。                    |
-| https://realunivlog.com/archive/2024/10    | https://realunivlog.com/articles/qyjjrfa737bk |
 
 | お問い合わせページ                   | 　サイトマップページ                         |
 | ------------------------------------ | -------------------------------------------- |
 | ![7](/public/images/readme/7.png)    | ![10](/public/images/readme/10.png)          |
 | 管理者にお問い合わせするページです。 | HTML形式のサイトマップを表示するページです。 |
-| https://realunivlog.com/contact      | https://realunivlog.com/sitemap              |
 
 | サイトマップ・RSS                                                         | 　ダークテーマ                                         |
 | ------------------------------------------------------------------------- | ------------------------------------------------------ |
 | ![9](/public/images/readme/9.png)                                         | ![8](/public/images/readme/8.png)                      |
 | XML形式のサイトマップとRSSを公開しています。                              | ライトテーマとダークテーマを切り替えることができます。 |
-| https://realunivlog.com/sitemap-0.xml<br/>https://realunivlog.com/rss.xml | -　                                                    |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
