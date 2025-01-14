@@ -586,10 +586,10 @@ export default function Article({ data, articles }: Props) {
                       />
                     </a>
                   </div>
-                  <a href="https://www.buymeacoffee.com/aratadayook">
+                  <a href="https://www.buymeacoffee.com/realunivlog" target="_blank">
                     <img
                       className="mt-5 m-auto"
-                      src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=aratadayook&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
+                      src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=realunivlog&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
                     />
                   </a>
                 </div>
