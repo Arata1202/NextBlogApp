@@ -44,7 +44,7 @@ const ArticleList = ({ articles }: Props) => {
           </div> */}
           <ul className={`${styles.main}`}>
             <div>
-              {articles.slice(0, 3).map((article) => (
+              {articles.slice(0, 5).map((article) => (
                 <ArticleListItem key={article.id} article={article} />
               ))}
             </div>
@@ -52,7 +52,7 @@ const ArticleList = ({ articles }: Props) => {
               <Display slot="9947663897" />
             </div>
             <div>
-              {articles.slice(3).map((article) => (
+              {articles.slice(5).map((article) => (
                 <ArticleListItem key={article.id} article={article} />
               ))}
             </div>

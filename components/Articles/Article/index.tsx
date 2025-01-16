@@ -55,6 +55,7 @@ import {
   ChevronRightIcon,
   RssIcon,
   UserPlusIcon,
+  FireIcon,
 } from '@heroicons/react/24/solid';
 import { FolderIcon } from '@heroicons/react/24/outline';
 import { SiFeedly } from 'react-icons/si';
@@ -547,7 +548,15 @@ export default function Article({ data, articles }: Props) {
                       <SiFeedly className="h-6 w-6 text-white" aria-hidden="true" />
                     </a>
                   </div>
-                  <div className="flex justify-center mt-5">
+                </div>
+                <div className="mt-2">
+                  <div className="pt-3">
+                    <h1 className={`text-2xl font-semibold flex justify-center mb-5`}>
+                      <FireIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                      応援する
+                    </h1>
+                  </div>
+                  <div className="flex justify-center">
                     <a
                       href="https://blogmura.com/profiles/11190305/?p_cid=11190305&reader=11190305"
                       className="hover:opacity-60"
@@ -588,7 +597,9 @@ export default function Article({ data, articles }: Props) {
                   </div>
                   <a href="https://www.buymeacoffee.com/realunivlog" target="_blank">
                     <img
-                      className="mt-5 m-auto"
+                      width="160"
+                      className="mt-5 m-auto hover:opacity-60"
+                      loading="lazy"
                       src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=realunivlog&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
                     />
                   </a>

@@ -79,7 +79,8 @@ export default function ArticleSidebar({ articles, contentBlocks = [] }: Props) 
         {headings.length > 0 && <TableOfContents headings={headings} />}
         <a href="https://www.buymeacoffee.com/realunivlog" target="_blank">
           <img
-            className="mt-5 m-auto"
+            className="mt-5 m-auto hover:opacity-60"
+            loading="lazy"
             src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=realunivlog&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
           />
         </a>
