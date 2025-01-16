@@ -21,10 +21,13 @@ export default function FixedSidebar({ articles }: Props) {
       <div className="sidebar">
         <Search />
         <Profile />
+        <div className="FirstAd mt-5">
+          <Display slot="8452341403" />
+        </div>
         <Category />
         <Tag />
         <div className="FirstAd mt-5">
-          <Display slot="8452341403" />
+          <Display slot="9574685533" />
         </div>
         <Archive />
         <Popular />
