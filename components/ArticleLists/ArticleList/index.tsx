@@ -39,9 +39,9 @@ const ArticleList = ({ articles }: Props) => {
       <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
         {/* Main Content Area */}
         <div className="lg:col-span-2">
-          <div className="FirstAd">
+          {/* <div className="FirstAd">
             <Display slot="7197259627" />
-          </div>
+          </div> */}
           <ul className={`${styles.main}`}>
             <div>
               {articles.map((article) => (

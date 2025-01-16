@@ -4,7 +4,6 @@ import React from 'react';
 import Search from '../Elements/Search';
 import Profile from '../Elements/Profile';
 import Category from '../Elements/Category';
-import News from '../Elements/News';
 import Tag from '../Elements/Tag';
 import Archive from '../Elements/Archive';
 import Popular from '../Elements/Popular';
@@ -22,7 +21,6 @@ export default function FixedSidebar({ articles }: Props) {
       <div className="sidebar">
         <Search />
         <Profile />
-        <News />
         <Category />
         <Tag />
         <div className="FirstAd mt-5">

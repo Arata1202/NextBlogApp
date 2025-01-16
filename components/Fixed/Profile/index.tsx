@@ -27,9 +27,9 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
           <div className="lg:col-span-2">
             <div className="">
               <div className="space-y-5 lg:space-y-8">
-                <div className="FirstAd">
+                {/* <div className="FirstAd">
                   <Display slot="7197259627" />
-                </div>
+                </div> */}
                 <div className="includeBanner flex justify-end gap-x-5">
                   <PublishedDate date={formattedDate} />
                 </div>

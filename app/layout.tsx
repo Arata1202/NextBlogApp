@@ -70,7 +70,7 @@ export default async function RootLayout({ children }: Props) {
           type="image/png"
         />
         <link rel="apple-touch-icon" href="https://realunivlog.com/images/head/realstudent.png" />
-        <meta name="apple-itunes-app" content="app-id=6590619103" />
+        {/* <meta name="apple-itunes-app" content="app-id=6590619103" /> */}
         <meta
           name="msapplication-TileImage"
           content="https://realunivlog.com/images/head/realstudent512.png"

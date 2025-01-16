@@ -25,9 +25,9 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
           {/* Main Content Area */}
           <div className="lg:col-span-2">
             <div className="">
-              <div className="FirstAd">
+              {/* <div className="FirstAd">
                 <Display slot="7197259627" />
-              </div>
+              </div> */}
               <div className="space-y-5 lg:space-y-8">
                 <div className="includeBanner flex justify-end gap-x-5">
                   <PublishedDate date={formattedDate} />

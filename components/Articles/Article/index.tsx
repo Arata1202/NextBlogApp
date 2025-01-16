@@ -210,9 +210,9 @@ export default function Article({ data, articles }: Props) {
                     loading="eager"
                   />
                 </picture>
-                <div className="FirstAd">
+                {/* <div className="FirstAd">
                   <Display slot="7197259627" />
-                </div>
+                </div> */}
                 <div className={styles.date}>
                   <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
                   <CategoryList tags={data.tags} hasLink={true} />
