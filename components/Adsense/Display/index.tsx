@@ -35,7 +35,7 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
 
   return (
     <div
-      style={{ maxWidth: '100%', overflow: 'hidden' }}
+      style={{ maxWidth: '100%' }}
       className="FirstAd"
       key={pathname.replace(/\//g, '-') + '-' + slot}
     >
