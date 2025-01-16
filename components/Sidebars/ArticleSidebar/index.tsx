@@ -57,15 +57,6 @@ function useExtractHeadings(contentBlocks: ContentBlock[]): Heading[] {
 
 export default function ArticleSidebar({ articles, contentBlocks = [] }: Props) {
   const headings = useExtractHeadings(contentBlocks);
-  const [showTableOfContents, setShowTableOfContents] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowTableOfContents(true);
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
@@ -84,8 +75,8 @@ export default function ArticleSidebar({ articles, contentBlocks = [] }: Props) 
         <Popular />
         <Recent articles={articles} />
       </div>
-      <div className="SidebarTableOfContens mobile sticky top-0 z-10">
-        {showTableOfContents && headings.length > 0 && <TableOfContents headings={headings} />}
+      <div className="SidebarTableOfContens mobile">
+        {headings.length > 0 && <TableOfContents headings={headings} />}
         <a href="https://www.buymeacoffee.com/realunivlog" target="_blank">
           <img
             className="mt-5 m-auto"
