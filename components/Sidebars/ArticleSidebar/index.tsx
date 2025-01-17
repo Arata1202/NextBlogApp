@@ -57,44 +57,34 @@ function useExtractHeadings(contentBlocks: ContentBlock[]): Heading[] {
 
 export default function ArticleSidebar({ articles, contentBlocks = [] }: Props) {
   const headings = useExtractHeadings(contentBlocks);
-  const [showTOC, setShowTOC] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowTOC(true);
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
       <div className="sidebar">
         <Search />
         <Profile />
-        <div className="FirstAd mt-5">
+        <div className="FirstAd pc mt-5">
           <Display slot="8452341403" />
         </div>
         <Category />
         <Tag />
-        <div className="FirstAd mt-5">
+        <div className="FirstAd pc mt-5">
           <Display slot="9574685533" />
         </div>
         <Archive />
         <Popular />
         <Recent articles={articles} />
       </div>
-      {showTOC && (
-        <div className="SidebarTableOfContens mobile">
-          {headings.length > 0 && <TableOfContents headings={headings} />}
-          <a href="https://www.buymeacoffee.com/realunivlog" target="_blank">
-            <img
-              className="mt-5 m-auto hover:opacity-60"
-              loading="lazy"
-              src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=realunivlog&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
-            />
-          </a>
-        </div>
-      )}
+      <div className="SidebarTableOfContens mobile">
+        {headings.length > 0 && <TableOfContents headings={headings} />}
+        <a href="https://www.buymeacoffee.com/realunivlog" target="_blank">
+          <img
+            className="mt-5 m-auto hover:opacity-60"
+            loading="lazy"
+            src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=realunivlog&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
+          />
+        </a>
+      </div>
     </div>
   );
 }
