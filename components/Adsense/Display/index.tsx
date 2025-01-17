@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
+import { useGuardObserver } from '@/hooks/MutationObserver';
 
 const PUBLISHER_ID = '1705865999592590';
 
@@ -22,6 +23,7 @@ type DisplayProps = {
 const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: DisplayProps) => {
   let pathname = usePathname();
   pathname = pathname ? pathname : '';
+  useGuardObserver();
 
   useEffect(() => {
     try {
@@ -35,15 +37,15 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
 
   return (
     <div
-      style={{ maxWidth: '100%', overflow: 'hidden' }}
-      className="FirstAd"
+      style={{ maxWidth: '100%' }}
+      className="FirstAd mut-guard"
       key={pathname.replace(/\//g, '-') + '-' + slot}
     >
       <p className={`text-center ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
         スポンサーリンク
       </p>
       <ins
-        className="adsbygoogle"
+        className="adsbygoogle mut-guard"
         style={{ display: 'flex', justifyContent: 'center', width: '100%', ...style }}
         data-ad-client={`ca-pub-${PUBLISHER_ID}`}
         data-ad-slot={slot}

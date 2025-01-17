@@ -12,6 +12,7 @@ import Display from '../../Adsense/Display';
 import { Article } from '@/libs/microcms';
 import TableOfContents from '../../Articles/Elements/TableOfContent';
 import { useEffect, useState } from 'react';
+import { useGuardObserver } from '@/hooks/MutationObserver';
 
 type Props = {
   articles?: Article[];
@@ -57,18 +58,19 @@ function useExtractHeadings(contentBlocks: ContentBlock[]): Heading[] {
 
 export default function ArticleSidebar({ articles, contentBlocks = [] }: Props) {
   const headings = useExtractHeadings(contentBlocks);
+  useGuardObserver();
 
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
       <div className="sidebar">
         <Search />
         <Profile />
-        <div className="FirstAd pc mt-5">
+        <div className="FirstAd mt-5 mut-guard">
           <Display slot="8452341403" />
         </div>
         <Category />
         <Tag />
-        <div className="FirstAd pc mt-5">
+        <div className="FirstAd mt-5">
           <Display slot="9574685533" />
         </div>
         <Archive />
