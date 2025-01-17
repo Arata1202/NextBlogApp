@@ -61,7 +61,7 @@ export default function ArticleSidebar({ articles, contentBlocks = [] }: Props) 
   useGuardObserver();
 
   return (
-    <div className="lg:col-span-1 lg:w-full lg:h-full">
+    <div className="lg:col-span-1 lg:w-full lg:h-full mut-guard">
       <div className="sidebar">
         <Search />
         <Profile />
