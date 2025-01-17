@@ -12,7 +12,7 @@ import Display from '../../Adsense/Display';
 export default function TopSidebar() {
   return (
     <div className="lg:col-span-1 lg:w-full lg:h-full">
-      <div className="sidebar sticky top-0 start-0">
+      <div className="sidebar">
         <Search />
         <Profile />
         <div className="FirstAd mt-5">
