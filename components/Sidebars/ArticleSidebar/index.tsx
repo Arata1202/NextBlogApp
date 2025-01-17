@@ -63,12 +63,12 @@ export default function ArticleSidebar({ articles, contentBlocks = [] }: Props) 
       <div className="sidebar">
         <Search />
         <Profile />
-        <div className="FirstAd pc mt-5">
+        <div className="FirstAd mt-5">
           <Display slot="8452341403" />
         </div>
         <Category />
         <Tag />
-        <div className="FirstAd pc mt-5">
+        <div className="FirstAd mt-5">
           <Display slot="9574685533" />
         </div>
         <Archive />
