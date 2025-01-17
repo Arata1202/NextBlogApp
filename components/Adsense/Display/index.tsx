@@ -35,7 +35,7 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
 
   return (
     <div
-      style={{ maxWidth: '100%', overflow: 'hidden' }}
+      style={{ maxWidth: '100%', position: 'relative' }}
       className="FirstAd"
       key={pathname.replace(/\//g, '-') + '-' + slot}
     >
@@ -44,7 +44,7 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
       </p>
       <ins
         className="adsbygoogle"
-        style={{ display: 'flex', justifyContent: 'center', width: '100%', ...style }}
+        style={{ width: '100%', ...style }}
         data-ad-client={`ca-pub-${PUBLISHER_ID}`}
         data-ad-slot={slot}
         data-ad-format={format}
