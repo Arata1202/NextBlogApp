@@ -25,7 +25,7 @@
 
 .google-auto-placed {
   max-width: 100% !important;
-  overflow: hidden !important;
+  /* overflow: hidden !important; */
 }
 
 .onesignal-customlink-container {
