@@ -44,7 +44,7 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
       </p>
       <ins
         className="adsbygoogle"
-        style={{ width: '100%', ...style }}
+        style={{ display: 'block', width: '100%', ...style }}
         data-ad-client={`ca-pub-${PUBLISHER_ID}`}
         data-ad-slot={slot}
         data-ad-format={format}
