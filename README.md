@@ -198,6 +198,8 @@ docker compose down
 │   └── index.ts
 ├── docker-compose.yml
 ├── eslint.config.mjs
+├── hooks
+│   └── MutationObserver
 ├── libs
 │   ├── microcms.ts
 │   ├── theme-provider.tsx
@@ -217,7 +219,6 @@ docker compose down
 ├── section
 │   ├── archive.tsx
 │   ├── dummy.tsx
-│   ├── news.tsx
 │   └── tag.tsx
 ├── tailwind.config.ts
 └── tsconfig.json
