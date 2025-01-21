@@ -57,7 +57,7 @@ export default async function Page(props: Props) {
           </ol>
         </nav>
         <div className="flex items-center pb-2 pt-2 mt-5">
-          <MagnifyingGlassIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+          <MagnifyingGlassIcon className="h-8 w-8 mr-2 flex-shrink-0" aria-hidden="true" />
           <div className="whitespace-nowrap overflow-hidden">{`「${keyword}」の検索結果`}</div>
         </div>
       </h1>

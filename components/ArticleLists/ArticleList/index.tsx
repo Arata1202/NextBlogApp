@@ -43,19 +43,29 @@ const ArticleList = ({ articles }: Props) => {
             <Display slot="7197259627" />
           </div> */}
           <ul className={`${styles.main}`}>
-            <div>
-              {articles.slice(0, 5).map((article) => (
-                <ArticleListItem key={article.id} article={article} />
-              ))}
-            </div>
-            <div className="FirstAd mb-5">
-              <Display slot="9947663897" />
-            </div>
-            <div>
-              {articles.slice(5).map((article) => (
-                <ArticleListItem key={article.id} article={article} />
-              ))}
-            </div>
+            {articles.length < 10 ? (
+              <div>
+                {articles.map((article) => (
+                  <ArticleListItem key={article.id} article={article} />
+                ))}
+              </div>
+            ) : (
+              <>
+                <div>
+                  {articles.slice(0, 5).map((article) => (
+                    <ArticleListItem key={article.id} article={article} />
+                  ))}
+                </div>
+                <div className="FirstAd mb-5">
+                  <Display slot="9947663897" />
+                </div>
+                <div>
+                  {articles.slice(5).map((article) => (
+                    <ArticleListItem key={article.id} article={article} />
+                  ))}
+                </div>
+              </>
+            )}
           </ul>
           <div className="FirstAd">
             <Display slot="1831092739" />
