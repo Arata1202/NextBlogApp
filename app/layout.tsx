@@ -7,6 +7,7 @@ import Script from 'next/script';
 import { Adsense } from '@/components/Adsense/AdsenseScript';
 import { ThemeProvider } from '@/libs/theme-provider';
 import ThemeWrapper from '@/libs/theme-wrapper';
+import ScrollTopButton from '@/components/Layouts/ScrollToTop';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
@@ -90,6 +91,7 @@ export default async function RootLayout({ children }: Props) {
           <Header />
           <main className={styles.main}>{children}</main>
           <Footer />
+          <ScrollTopButton />
           <Adsense />
           <Script async strategy="afterInteractive" src="//www.instagram.com/embed.js" />
         </ThemeProvider>
