@@ -1,6 +1,6 @@
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import PrivacyPage from '@/components/Fixed/Privacy';
-import { InformationCircleIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { LockClosedIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import Display from '@/components/Adsense/Display';
@@ -53,7 +53,7 @@ export default async function Page() {
           </ol>
         </nav>
         <div className="flex items-center py-2 mt-5">
-          <InformationCircleIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+          <LockClosedIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           <h1 className="text-3xl font-bold lg:text-3xl">プライバシーポリシー</h1>
         </div>
       </h1>
