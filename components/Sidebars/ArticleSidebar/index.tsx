@@ -83,9 +83,15 @@ export default function ArticleSidebar({ articles, contentBlocks = [] }: Props) 
           <img
             className="mt-5 m-auto hover:opacity-60"
             loading="lazy"
-            src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=realunivlog&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
+            src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+            width="160"
           />
         </a>
+        <div className="text-center mt-4" style={{ fontSize: '12px' }}>
+          もしこの記事が役に立ったなら、
+          <br />
+          こちらから ☕ を一杯支援いただけると喜びます
+        </div>
       </div>
     </div>
   );
