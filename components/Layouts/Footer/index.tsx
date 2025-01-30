@@ -4,14 +4,14 @@ import React from 'react';
 import styles from './index.module.css';
 import Image from 'next/image';
 import { BlogTitle, copyRight, footerNavigation } from '@/section/dummy';
-import MobileBanner from '../../Layouts/MobileBanner';
 import { useTheme } from 'next-themes';
 
 export default function Footer() {
   const { theme } = useTheme();
   return (
-    <footer className={`${styles.footer} w-full ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
-      <MobileBanner />
+    <footer
+      className={`mt-10 ${styles.footer} w-full ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+    >
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
