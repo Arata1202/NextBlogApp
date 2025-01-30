@@ -51,7 +51,9 @@ export default async function Page(props: Props) {
   return (
     <>
       <Article data={data} articles={data2.contents} />
-      <Display slot="5969933704" />
+      <div className="mt-5">
+        <Display slot="5969933704" />
+      </div>
     </>
   );
 }

@@ -10,7 +10,7 @@ export default function Footer() {
   const { theme } = useTheme();
   return (
     <footer
-      className={`mt-10 ${styles.footer} w-full ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+      className={`mt-5 ${styles.footer} w-full ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
     >
       <h2 id="footer-heading" className="sr-only">
         Footer

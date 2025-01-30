@@ -61,7 +61,9 @@ export default async function Page() {
       <div className="pc">
         <FixedSidebar articles={data.contents} />
       </div>
-      <Display slot="5969933704" />
+      <div className="mt-5">
+        <Display slot="5969933704" />
+      </div>
     </>
   );
 }
