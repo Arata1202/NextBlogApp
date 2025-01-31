@@ -76,6 +76,7 @@
 | CI/CD             | GitHub Actions                                |
 | Design            | Figma, Canva                                  |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA |
+| etc.              | PWA, OneSignal, Pipedream                     |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -164,6 +165,7 @@ docker compose down
 ├── LICENSE
 ├── README.md
 ├── app
+│   ├── manifest.json
 │   ├── api
 │   ├── archive
 │   ├── articles
@@ -216,6 +218,7 @@ docker compose down
 ├── public
 │   ├── favicon.ico
 │   ├── images
+│   ├── OneSignalSDKWorker.js
 │   └── robots.txt
 ├── rss.ts
 ├── section
