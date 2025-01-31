@@ -39,6 +39,7 @@ type Props = {
 };
 
 export default async function RootLayout({ children }: Props) {
+  const onesignalAppId = process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID;
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
@@ -57,6 +58,20 @@ export default async function RootLayout({ children }: Props) {
           `,
           }}
         />
+        <Script
+          src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+          strategy="afterInteractive"
+        />
+        <Script id="onesignal-init" strategy="afterInteractive">
+          {`
+          window.OneSignalDeferred = window.OneSignalDeferred || [];
+          OneSignalDeferred.push(async function(OneSignal) {
+            await OneSignal.init({
+              appId: "${onesignalAppId}",
+            });
+          });
+        `}
+        </Script>
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
         {/* <link rel="manifest" href="/manifest.json" /> */}
         <link
