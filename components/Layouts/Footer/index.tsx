@@ -11,6 +11,7 @@ export default function Footer() {
   return (
     <footer
       className={`mt-5 ${styles.footer} w-full ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+      style={{ paddingBottom: `calc(40px + env(safe-area-inset-bottom))` }}
     >
       <h2 id="footer-heading" className="sr-only">
         Footer

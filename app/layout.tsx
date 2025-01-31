@@ -8,6 +8,13 @@ import { Adsense } from '@/components/Adsense/AdsenseScript';
 import { ThemeProvider } from '@/libs/theme-provider';
 import ThemeWrapper from '@/libs/theme-wrapper';
 import ScrollTopButton from '@/components/Layouts/ScrollToTop';
+import type { Viewport } from 'next';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
