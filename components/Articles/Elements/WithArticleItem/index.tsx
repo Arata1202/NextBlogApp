@@ -30,6 +30,14 @@ const ArticleListItem = ({ article }: Props) => {
 
   const { theme } = useTheme();
 
+  const isNextDayOrLater = (date1: string, date2: string) => {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    d1.setHours(0, 0, 0, 0);
+    d2.setHours(0, 0, 0, 0);
+    return d1 > d2;
+  };
+
   return (
     <li className={styles.list}>
       <a
@@ -58,8 +66,13 @@ const ArticleListItem = ({ article }: Props) => {
           <div className={styles.title}>{article.title}</div>
           <div className={styles.description}>{article.description}</div>
           <div className={styles.date}>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <PublishedDate date={article.publishedAt || article.createdAt} />
+            <PublishedDate date={article.publishedAt!} updatedAt={false} />
+            {article.updatedAt && isNextDayOrLater(article.updatedAt, article.publishedAt!) && (
+              <>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <PublishedDate date={article.updatedAt!} updatedAt={true} />
+              </>
+            )}
           </div>
         </div>
       </a>

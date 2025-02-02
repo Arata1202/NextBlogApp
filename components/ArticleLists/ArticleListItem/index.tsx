@@ -3,9 +3,9 @@ import React, { memo } from 'react';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import CategoryList from '../../Categories/CategoryList';
+// import CategoryList from '../../Categories/CategoryList';
 import PublishedDate from '../../Elements/Date';
-import { FolderIcon } from '@heroicons/react/24/outline';
+// import { FolderIcon } from '@heroicons/react/24/outline';
 import { useTheme } from 'next-themes';
 
 type Props = {
@@ -30,6 +30,14 @@ const ArticleListItem = ({ article }: Props) => {
   };
 
   const { theme } = useTheme();
+
+  const isNextDayOrLater = (date1: string, date2: string) => {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    d1.setHours(0, 0, 0, 0);
+    d2.setHours(0, 0, 0, 0);
+    return d1 > d2;
+  };
 
   return (
     <li className={styles.list}>
@@ -59,10 +67,15 @@ const ArticleListItem = ({ article }: Props) => {
           <div className={styles.title}>{article.title}</div>
           <div className={styles.description}>{article.description}</div>
           <div className={styles.date}>
-            <FolderIcon className="h-5 w-5 mr-2 mt-4" aria-hidden="true" />
-            <CategoryList tags={article.tags} hasLink={false} />
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <PublishedDate date={article.publishedAt || article.createdAt} />
+            {/* <FolderIcon className="h-5 w-5 mr-2 mt-4" aria-hidden="true" />
+            <CategoryList tags={article.tags} hasLink={false} /> */}
+            <PublishedDate date={article.publishedAt!} updatedAt={false} />
+            {article.updatedAt && isNextDayOrLater(article.updatedAt, article.publishedAt!) && (
+              <>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <PublishedDate date={article.updatedAt!} updatedAt={true} />
+              </>
+            )}
           </div>
         </div>
       </a>

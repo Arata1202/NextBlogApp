@@ -31,7 +31,7 @@ const ProfilePage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                   <Display slot="7197259627" />
                 </div> */}
                 <div className="includeBanner flex justify-end gap-x-5">
-                  <PublishedDate date={formattedDate} />
+                  <PublishedDate date={formattedDate} updatedAt={false} />
                 </div>
                 <AdAlert />
               </div>

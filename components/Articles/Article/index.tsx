@@ -23,8 +23,8 @@ import ArticleSidebar from '../../Sidebars/ArticleSidebar';
 import WithArticleItem from '../Elements/WithArticleItem';
 import { useEffect, useState } from 'react';
 import './article.css';
-import CategoryList from '../../Categories/CategoryList';
-import TagList from '../../Tags/TagList';
+// import CategoryList from '../../Categories/CategoryList';
+// import TagList from '../../Tags/TagList';
 import BreadcrumbsCategoryList from '../../Breadcrumbs/BreadcrumbsCategoryList';
 import AdAlert from '../Elements/AdAlert';
 import Display from '../../Adsense/Display';
@@ -45,7 +45,6 @@ import {
   LinkedinIcon,
 } from 'react-share';
 import {
-  ArrowPathIcon,
   HandThumbUpIcon,
   HandThumbDownIcon,
   LinkIcon,
@@ -57,7 +56,7 @@ import {
   UserPlusIcon,
   FireIcon,
 } from '@heroicons/react/24/solid';
-import { FolderIcon } from '@heroicons/react/24/outline';
+// import { FolderIcon } from '@heroicons/react/24/outline';
 import { SiFeedly } from 'react-icons/si';
 
 hljs.registerLanguage('javascript', javascript);
@@ -149,6 +148,14 @@ export default function Article({ data, articles }: Props) {
   const headings = useExtractHeadings(data.content_blocks);
   const { theme } = useTheme();
 
+  const isNextDayOrLater = (date1: string, date2: string) => {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    d1.setHours(0, 0, 0, 0);
+    d2.setHours(0, 0, 0, 0);
+    return d1 > d2;
+  };
+
   return (
     <>
       <div className="hiddenBlock categoryTitle max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
@@ -215,16 +222,23 @@ export default function Article({ data, articles }: Props) {
                   <Display slot="7197259627" />
                 </div> */}
                 <div className={styles.date}>
+                  <PublishedDate date={data.publishedAt!} updatedAt={false} />
+                  {data.updatedAt && isNextDayOrLater(data.updatedAt, data.publishedAt!) && (
+                    <>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      <PublishedDate date={data.updatedAt!} updatedAt={true} />
+                    </>
+                  )}
+                </div>
+                {/* <div className={styles.date}>
                   <FolderIcon className="h-5 w-5 mr-2 mt-3" aria-hidden="true" />
                   <CategoryList tags={data.tags} hasLink={true} />
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <PublishedDate date={data.publishedAt || data.createdAt} />
                 </div>
                 {data.tags2 && data.tags2.length > 0 && (
                   <div className={styles.date}>
                     <TagList tags={data.tags2} hasLink={true} />
                   </div>
-                )}
+                )} */}
                 <AdAlert />
                 {data.introduction_blocks.map((block, index) => (
                   <div key={index}>
@@ -432,7 +446,7 @@ export default function Article({ data, articles }: Props) {
                   <h1
                     className={`${styles.profile} text-2xl font-semibold flex justify-center pt-10`}
                   >
-                    <ArrowPathIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                    <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
                     関連記事
                   </h1>
                   <div className="mt-5">

@@ -30,7 +30,7 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
               </div> */}
               <div className="space-y-5 lg:space-y-8">
                 <div className="includeBanner flex justify-end gap-x-5">
-                  <PublishedDate date={formattedDate} />
+                  <PublishedDate date={formattedDate} updatedAt={false} />
                 </div>
                 <AdAlert />
                 <div className={`${styles.content} mt-10 mb-5`}>
