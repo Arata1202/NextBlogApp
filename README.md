@@ -70,13 +70,13 @@
 | Category          | Technology Stack                              |
 | ----------------- | --------------------------------------------- |
 | Frontend          | Next.js, TypeScript, Tailwind CSS             |
-| Backend           | MicroCMS                                      |
+| CMS               | MicroCMS                                      |
 | Infrastructure    | Vercel                                        |
 | Environment setup | Docker, Nginx                                 |
 | CI/CD             | GitHub Actions                                |
 | Design            | Figma, Canva                                  |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA |
-| etc.              | PWA, OneSignal, Pipedream                     |
+| etc.              | PWA, OneSignal, Pipedream, Sentry, Slack      |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -175,6 +175,7 @@ docker compose down
 │   ├── copyright
 │   ├── disclaimer
 │   ├── favicon.ico
+│   ├── global-error.tsx
 │   ├── globals.css
 │   ├── layout.module.css
 │   ├── layout.tsx
@@ -203,6 +204,7 @@ docker compose down
 │   └── index.ts
 ├── docker-compose.yml
 ├── eslint.config.mjs
+├── instrumentation.ts
 ├── hooks
 │   └── MutationObserver
 ├── libs
@@ -221,6 +223,9 @@ docker compose down
 │   ├── images
 │   ├── OneSignalSDKWorker.js
 │   └── robots.txt
+├── sentry.client.config.ts
+├── sentry.edge.config.ts
+├── sentry.server.config.ts
 ├── rss.ts
 ├── section
 │   ├── archive.tsx
