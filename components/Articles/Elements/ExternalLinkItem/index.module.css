@@ -6,7 +6,6 @@
 .date {
   display: flex;
   justify-content: right;
-  color: black;
 }
 
 .link {
@@ -21,7 +20,6 @@
 
 .description {
   font-size: 14.5px;
-  color: black;
 }
 
 .content {
@@ -32,7 +30,6 @@
   font-size: 1.3rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  color: black;
 }
 
 @media (max-width: 1023px) and (min-width: 641px) {
