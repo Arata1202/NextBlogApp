@@ -24,6 +24,8 @@ export default function ExternalLinkItem({ url }: ExternalLinkItemProps) {
     fetchMetadata();
   }, [url]);
 
+  if (!metaData) return null;
+
   return (
     <>
       <div className="flex mt-10">
@@ -45,8 +47,8 @@ export default function ExternalLinkItem({ url }: ExternalLinkItemProps) {
             height="300"
           />
           <div className={styles.content}>
-            <div className={styles.title}>{metaData?.title || 'No Title'}</div>
-            <div className={styles.description}>{metaData?.description || 'No Description'}</div>
+            <div className={styles.title}>{metaData?.title}</div>
+            <div className={styles.description}>{metaData?.description}</div>
           </div>
         </a>
       </li>
