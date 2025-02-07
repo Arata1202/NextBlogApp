@@ -49,6 +49,7 @@ import {
   HandThumbUpIcon,
   HandThumbDownIcon,
   LinkIcon,
+  ArrowTopRightOnSquareIcon,
   LightBulbIcon,
   InformationCircleIcon,
   HomeIcon,
@@ -297,7 +298,15 @@ export default function Article({ data, articles }: Props) {
                         <WithArticleItem article={block.articleLink3 as ArticleType} />
                       </div>
                     )}
-                    {block.external_link && <ExternalLinkItem url={block.external_link} />}
+                    {block.external_link && (
+                      <div>
+                        <div className="flex mt-10">
+                          <ArrowTopRightOnSquareIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+                          <h1 className="text-2xl font-semibold mb-5">外部リンク</h1>
+                        </div>
+                        <ExternalLinkItem url={block.external_link} />
+                      </div>
+                    )}
                     {block.box_merit && (
                       <div className={`${styles.tab_merit_box} text-gray-700 flex items-center`}>
                         <HandThumbUpIcon
@@ -399,7 +408,18 @@ export default function Article({ data, articles }: Props) {
                           <WithArticleItem article={block.articleLink3 as ArticleType} />
                         </div>
                       )}
-                      {block.external_link && <ExternalLinkItem url={block.external_link} />}
+                      {block.external_link && (
+                        <div>
+                          <div className="flex mt-10">
+                            <ArrowTopRightOnSquareIcon
+                              className="h-8 w-8 mr-2"
+                              aria-hidden="true"
+                            />
+                            <h1 className="text-2xl font-semibold mb-5">外部リンク</h1>
+                          </div>
+                          <ExternalLinkItem url={block.external_link} />
+                        </div>
+                      )}
                       {block.box_merit && (
                         <div className={`${styles.tab_merit_box} text-gray-700 flex items-center`}>
                           <HandThumbUpIcon
