@@ -27,7 +27,6 @@
     "@sentry/nextjs": "^8",
     "@types/cheerio": "^0.22.35",
     "@types/react-google-recaptcha": "^2.1.9",
-    "axios": "^1.7.9",
     "cheerio": "^1.0.0",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
