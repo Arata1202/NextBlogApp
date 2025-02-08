@@ -5,6 +5,7 @@
 .date {
   display: flex;
   justify-content: right;
+  margin-top: auto;
 }
 
 .link {
@@ -22,7 +23,9 @@
 }
 
 .content {
-  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
