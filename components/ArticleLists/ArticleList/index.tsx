@@ -1,34 +1,41 @@
 'use client';
+
 import React from 'react';
+import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
-import ArticleListItem from '../ArticleListItem';
 import styles from './index.module.css';
+import Display from '../../Adsense/Display';
+import ArticleListItem from '../ArticleListItem';
 import TopSidebar from '../../Sidebars/TopSidebar';
 import Share from '../../Elements/Share';
-import Display from '../../Adsense/Display';
-import { useTheme } from 'next-themes';
 
 type Props = {
-  articles?: Article[];
+  articles: Article[];
 };
 
-const ArticleList = ({ articles }: Props) => {
+export default function ArticleList({ articles }: Props) {
   const { theme } = useTheme();
+
   if (!articles || articles.length === 0) {
     return (
       <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto">
         <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
-          {/* Main Content Area */}
           <div className="lg:col-span-2">
-            <div className="text-center pt-7">
+            <div className="text-center py-7">
               <h1
-                className={`mt-4 text-3xl font-bold tracking-tight sm:text-5xl ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                className={`my-4 text-3xl font-bold tracking-tight sm:text-5xl ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
               >
                 記事はまだありません
               </h1>
             </div>
+            <div className="FirstAd">
+              <Display slot="1831092739" />
+            </div>
+            <Share />
           </div>
-          <TopSidebar />
+          <div className="mobile">
+            <TopSidebar />
+          </div>
         </div>
       </div>
     );
@@ -37,35 +44,21 @@ const ArticleList = ({ articles }: Props) => {
   return (
     <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto">
       <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
-        {/* Main Content Area */}
         <div className="lg:col-span-2">
-          {/* <div className="FirstAd">
-            <Display slot="7197259627" />
-          </div> */}
           <ul className={`${styles.main}`}>
-            {articles.length < 10 ? (
-              <div>
-                {articles.map((article) => (
-                  <ArticleListItem key={article.id} article={article} />
-                ))}
-              </div>
-            ) : (
-              <>
-                <div>
-                  {articles.slice(0, 5).map((article) => (
-                    <ArticleListItem key={article.id} article={article} />
-                  ))}
-                </div>
-                <div className="FirstAd mb-5">
-                  <Display slot="9947663897" />
-                </div>
-                <div>
-                  {articles.slice(5).map((article) => (
-                    <ArticleListItem key={article.id} article={article} />
-                  ))}
-                </div>
-              </>
-            )}
+            <div>
+              {articles.slice(0, 3).map((article) => (
+                <ArticleListItem key={article.id} article={article} />
+              ))}
+            </div>
+            <div className="FirstAd">
+              <Display slot="9947663897" />
+            </div>
+            <div className="mt-5">
+              {articles.slice(3).map((article) => (
+                <ArticleListItem key={article.id} article={article} />
+              ))}
+            </div>
           </ul>
           <div className="FirstAd">
             <Display slot="1831092739" />
@@ -78,5 +71,4 @@ const ArticleList = ({ articles }: Props) => {
       </div>
     </div>
   );
-};
-export default React.memo(ArticleList);
+}
