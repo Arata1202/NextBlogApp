@@ -12,19 +12,19 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
-  const tag = await getCategory(params.categoryId);
+  const category = await getCategory(params.categoryId);
 
   return {
-    title: `${tag.name}｜リアル大学生`,
-    description: `${tag.name}について解説するカテゴリーです。`,
+    title: `${category.name}｜リアル大学生`,
+    description: `${category.name}について解説するカテゴリーです。`,
     openGraph: {
-      title: `${tag.name}｜リアル大学生`,
-      description: `${tag.name}について解説するカテゴリーです。`,
+      title: `${category.name}｜リアル大学生`,
+      description: `${category.name}について解説するカテゴリーです。`,
       images: `https://realunivlog.com/images/thumbnail/7.webp`,
-      url: `https://realunivlog.com/category/${tag.id}`,
+      url: `https://realunivlog.com/category/${category.id}`,
     },
     alternates: {
-      canonical: `https://realunivlog.com/category/${tag.id}`,
+      canonical: `https://realunivlog.com/category/${category.id}`,
     },
   };
 }
@@ -34,7 +34,7 @@ export default async function TagsLayout(props: Props) {
 
   const { children } = props;
 
-  const tag = await getCategory(params.categoryId);
+  const category = await getCategory(params.categoryId);
 
   return (
     <>
@@ -53,10 +53,10 @@ export default async function TagsLayout(props: Props) {
                   aria-hidden="true"
                 />
                 <a
-                  href={`${tag.id}`}
+                  href={`${category.id}`}
                   className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
                 >
-                  {tag.name}
+                  {category.name}
                 </a>
               </div>
             </li>
@@ -64,7 +64,7 @@ export default async function TagsLayout(props: Props) {
         </nav>
         <div className="flex items-center pb-2 pt-2 mt-5">
           <FolderOpenIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-          <div>{tag.name}</div>
+          <div>{category.name}</div>
         </div>
       </h1>
       <>{children}</>
