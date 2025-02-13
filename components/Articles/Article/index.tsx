@@ -177,7 +177,7 @@ export default function Article({ data, articles }: Props) {
                         aria-hidden="true"
                       />
                       <div className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500">
-                        <BreadcrumbsCategoryList categories={data.categories} hasLink={true} />
+                        <BreadcrumbsCategoryList tags={data.tags} hasLink={true} />
                       </div>
                     </div>
                   </li>

@@ -1,21 +1,21 @@
-import { Category } from '@/libs/microcms';
+import { Tag } from '@/libs/microcms';
 import BreadcrumbsCategoryListItem from '../BreadcrumbsCategoryListItem';
 import styles from './index.module.css';
 
 type Props = {
-  categories?: Category[];
+  tags?: Tag[];
   hasLink?: boolean;
 };
 
-export default function PanTagList({ categories, hasLink = true }: Props) {
-  if (!categories) {
+export default function PanTagList({ tags, hasLink = true }: Props) {
+  if (!tags) {
     return null;
   }
   return (
     <ul className={styles.tags}>
-      {categories.map((category) => (
-        <li key={category.id}>
-          <BreadcrumbsCategoryListItem category={category} hasLink={hasLink} />
+      {tags.map((tag) => (
+        <li key={tag.id}>
+          <BreadcrumbsCategoryListItem tag={tag} hasLink={hasLink} />
         </li>
       ))}
     </ul>

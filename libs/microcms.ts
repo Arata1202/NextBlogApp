@@ -8,7 +8,7 @@ import type {
 import { notFound } from 'next/navigation';
 
 // カテゴリーの型定義
-export type Category = {
+export type Tag = {
   name: string;
 } & MicroCMSContentId &
   MicroCMSDate;
@@ -63,7 +63,7 @@ export type Blog = {
   title: string;
   description: string;
   thumbnail: MicroCMSImage;
-  categories?: Category[];
+  tags?: Tag[];
   tags2?: Tag2[];
   content_blocks: ContentBlock[];
   introduction_blocks: IntroductionBlock[];
@@ -113,7 +113,7 @@ export const getDetail = async (contentId: string, queries?: MicroCMSQueries) =>
 // カテゴリーの一覧を取得
 export const getCategoryList = async (queries?: MicroCMSQueries) => {
   const listData = await client
-    .getList<Category>({
+    .getList<Tag>({
       endpoint: 'tags',
       queries,
     })
@@ -137,7 +137,7 @@ export const getTagList = async (queries?: MicroCMSQueries) => {
 // カテゴリーの詳細を取得
 export const getCategory = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
-    .getListDetail<Category>({
+    .getListDetail<Tag>({
       endpoint: 'tags',
       contentId,
       queries,

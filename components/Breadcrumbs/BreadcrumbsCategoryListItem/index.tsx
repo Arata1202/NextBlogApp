@@ -1,18 +1,18 @@
-import { Category } from '@/libs/microcms';
+import { Tag } from '@/libs/microcms';
 import styles from './index.module.css';
 
 type Props = {
-  category: Category;
+  tag: Tag;
   hasLink?: boolean;
 };
 
-export default function PanTagListItem({ category, hasLink = true }: Props) {
+export default function PanTagListItem({ tag, hasLink = true }: Props) {
   if (hasLink) {
     return (
-      <a href={`/category/${category.id}`} className={styles.tag}>
-        <p className={styles.tag}>{category.name}</p>
+      <a href={`/category/${tag.id}`} className={styles.tag}>
+        <p className={styles.tag}>{tag.name}</p>
       </a>
     );
   }
-  return <span className={styles.tag}>{category.name}</span>;
+  return <span className={styles.tag}>{tag.name}</span>;
 }
