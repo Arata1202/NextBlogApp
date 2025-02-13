@@ -7,32 +7,23 @@ import Display from '@/components/Adsense/Display';
 
 type Props = {
   params: Promise<{
-    tagId: string;
-    current: string;
+    categoryId: string;
   }>;
-};
-
-export const metadata = {
-  robots: {
-    index: false,
-  },
 };
 
 export const revalidate = 60;
 
 export default async function Page(props: Props) {
   const params = await props.params;
-  const { tagId } = params;
-  const current = parseInt(params.current as string, 10);
+  const { categoryId } = params;
   const data = await getList({
     limit: LIMIT,
-    offset: LIMIT * (current - 1),
-    filters: `tags[contains]${tagId}`,
+    filters: `categories[contains]${categoryId}`,
   });
   return (
     <>
       <ArticleList articles={data.contents} />
-      <Pagination totalCount={data.totalCount} current={current} basePath={`/category/${tagId}`} />
+      <Pagination totalCount={data.totalCount} basePath={`/category/${categoryId}`} />
       <div className="pc">
         <TopSidebar />
       </div>

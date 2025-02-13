@@ -27,7 +27,7 @@ export default async function Page(props: Props) {
   const data = await getList({
     limit: LIMIT,
     offset: LIMIT * (current - 1),
-    filters: `tags2[contains]${tagId}`,
+    filters: `tags[contains]${tagId}`,
   });
   return (
     <>

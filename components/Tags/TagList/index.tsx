@@ -1,9 +1,9 @@
-import { Tag2 } from '@/libs/microcms';
+import { Tag } from '@/libs/microcms';
 import TagListItem from '../TagListItem';
 import styles from './index.module.css';
 
 type Props = {
-  tags?: Tag2[];
+  tags?: Tag[];
   hasLink?: boolean;
 };
 

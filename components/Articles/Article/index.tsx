@@ -117,16 +117,16 @@ const formatRichText = (richText: string, theme?: string) => {
   return $.html();
 };
 
-function useExtractHeadings(contentBlocks: { rich_text2?: string }[]): Heading[] {
+function useExtractHeadings(contentBlocks: { rich_text?: string }[]): Heading[] {
   const [headings, setHeadings] = useState<Heading[]>([]);
 
   useEffect(() => {
     const extractedHeadings: Heading[] = [];
 
     contentBlocks.forEach((block) => {
-      if (block.rich_text2) {
+      if (block.rich_text) {
         const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = block.rich_text2;
+        tempDiv.innerHTML = block.rich_text;
         const blockHeadings: Heading[] = Array.from(
           tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6'),
         ).map((el) => ({
@@ -177,7 +177,7 @@ export default function Article({ data, articles }: Props) {
                         aria-hidden="true"
                       />
                       <div className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500">
-                        <BreadcrumbsCategoryList tags={data.tags} hasLink={true} />
+                        <BreadcrumbsCategoryList categories={data.categories} hasLink={true} />
                       </div>
                     </div>
                   </li>
@@ -270,30 +270,30 @@ export default function Article({ data, articles }: Props) {
                         </div>
                       </div>
                     )}
-                    {block.rich_text2 && (
+                    {block.rich_text && (
                       <div
                         className={`${styles.content} ArticleContents`}
                         dangerouslySetInnerHTML={{
-                          __html: formatRichText(block.rich_text2, theme).replace(
+                          __html: formatRichText(block.rich_text, theme).replace(
                             /<img/g,
                             '<img loading="lazy"',
                           ),
                         }}
                       />
                     )}
-                    {block.custom_html2 && (
+                    {block.custom_html && (
                       <div
                         className={styles.content}
-                        dangerouslySetInnerHTML={{ __html: block.custom_html2 }}
+                        dangerouslySetInnerHTML={{ __html: block.custom_html }}
                       />
                     )}
-                    {block.articleLink3 && typeof block.articleLink3 !== 'string' && (
+                    {block.article_link && typeof block.article_link !== 'string' && (
                       <div>
                         <div className="flex mt-10">
                           <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
                           <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
                         </div>
-                        <WithArticleItem article={block.articleLink3 as ArticleType} />
+                        <WithArticleItem article={block.article_link as ArticleType} />
                       </div>
                     )}
                     {block.box_merit && (
@@ -338,7 +338,7 @@ export default function Article({ data, articles }: Props) {
                 <div>
                   {data.content_blocks.map((block, index) => (
                     <div key={index}>
-                      {block.adsense && <Display slot={block.adsense} />}
+                      {block.google_adsense && <Display slot={block.google_adsense} />}
                       {(block.bubble_name || block.bubble_text || block.bubble_image) && (
                         <div className="my-10">
                           <div
@@ -371,30 +371,30 @@ export default function Article({ data, articles }: Props) {
                           </div>
                         </div>
                       )}
-                      {block.rich_text2 && (
+                      {block.rich_text && (
                         <div
                           className={`${styles.content} ArticleContents`}
                           dangerouslySetInnerHTML={{
-                            __html: formatRichText(block.rich_text2, theme).replace(
+                            __html: formatRichText(block.rich_text, theme).replace(
                               /<img/g,
                               '<img loading="lazy"',
                             ),
                           }}
                         />
                       )}
-                      {block.custom_html2 && (
+                      {block.custom_html && (
                         <div
                           className={styles.content}
-                          dangerouslySetInnerHTML={{ __html: block.custom_html2 }}
+                          dangerouslySetInnerHTML={{ __html: block.custom_html }}
                         />
                       )}
-                      {block.articleLink3 && typeof block.articleLink3 !== 'string' && (
+                      {block.article_link && typeof block.article_link !== 'string' && (
                         <div>
                           <div className="flex mt-10">
                             <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
                             <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
                           </div>
-                          <WithArticleItem article={block.articleLink3 as ArticleType} />
+                          <WithArticleItem article={block.article_link as ArticleType} />
                         </div>
                       )}
                       {block.box_merit && (
@@ -452,9 +452,9 @@ export default function Article({ data, articles }: Props) {
                   <div className="mt-5">
                     {data.related_articles?.map((block, index) => (
                       <div key={index}>
-                        {block.articleLink3 && typeof block.articleLink3 !== 'string' && (
+                        {block.article_link && typeof block.article_link !== 'string' && (
                           <div>
-                            <WithArticleItem article={block.articleLink3 as ArticleType} />
+                            <WithArticleItem article={block.article_link as ArticleType} />
                           </div>
                         )}
                       </div>
