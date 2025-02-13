@@ -114,7 +114,7 @@ export const getDetail = async (contentId: string, queries?: MicroCMSQueries) =>
 export const getCategoryList = async (queries?: MicroCMSQueries) => {
   const listData = await client
     .getList<Category>({
-      endpoint: 'tags',
+      endpoint: 'categories',
       queries,
     })
     .catch(notFound);
@@ -138,7 +138,7 @@ export const getTagList = async (queries?: MicroCMSQueries) => {
 export const getCategory = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
     .getListDetail<Category>({
-      endpoint: 'tags',
+      endpoint: 'categories',
       contentId,
       queries,
     })
