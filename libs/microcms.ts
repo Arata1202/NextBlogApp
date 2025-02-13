@@ -28,9 +28,9 @@ export type Writer = {
   MicroCMSDate;
 
 export type IntroductionBlock = {
-  rich_text2?: string;
-  custom_html2?: string;
-  articleLink3?: string;
+  rich_text?: string;
+  custom_html?: string;
+  article_link?: string;
   bubble_image?: MicroCMSImage;
   bubble_name?: string;
   bubble_text?: string;
@@ -41,10 +41,10 @@ export type IntroductionBlock = {
   box_common?: string;
 };
 export type ContentBlock = {
-  adsense?: string;
-  rich_text2?: string;
-  custom_html2?: string;
-  articleLink3?: string;
+  google_adsense?: string;
+  rich_text?: string;
+  custom_html?: string;
+  article_link?: string;
   bubble_image?: MicroCMSImage;
   bubble_name?: string;
   bubble_text?: string;
@@ -55,7 +55,7 @@ export type ContentBlock = {
   box_common?: string;
 };
 export type RelatedArticle = {
-  articleLink3?: string;
+  article_link?: string;
 };
 
 // ブログの型定義
@@ -65,8 +65,8 @@ export type Blog = {
   thumbnail?: MicroCMSImage;
   categories?: Category[];
   tags?: Tag[];
-  content_blocks: ContentBlock[];
   introduction_blocks: IntroductionBlock[];
+  content_blocks: ContentBlock[];
   related_articles?: RelatedArticle[];
 };
 

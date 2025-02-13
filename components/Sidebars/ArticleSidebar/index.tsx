@@ -16,11 +16,11 @@ import { useGuardObserver } from '@/hooks/MutationObserver';
 
 type Props = {
   articles?: Article[];
-  contentBlocks?: { rich_text2?: string }[];
+  contentBlocks?: { rich_text?: string }[];
 };
 
 interface ContentBlock {
-  rich_text2?: string;
+  rich_text?: string;
 }
 
 interface Heading {
@@ -36,9 +36,9 @@ function useExtractHeadings(contentBlocks: ContentBlock[]): Heading[] {
     const extractedHeadings: Heading[] = [];
 
     contentBlocks.forEach((block) => {
-      if (block.rich_text2) {
+      if (block.rich_text) {
         const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = block.rich_text2;
+        tempDiv.innerHTML = block.rich_text;
         const blockHeadings = Array.from(tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6')).map(
           (el) => ({
             id: el.id,
