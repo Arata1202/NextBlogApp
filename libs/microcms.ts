@@ -64,7 +64,7 @@ export type Blog = {
   description: string;
   thumbnail?: MicroCMSImage;
   categories?: Category[];
-  tags2?: Tag[];
+  tags?: Tag[];
   content_blocks: ContentBlock[];
   introduction_blocks: IntroductionBlock[];
   related_articles?: RelatedArticle[];
@@ -126,7 +126,7 @@ export const getCategoryList = async (queries?: MicroCMSQueries) => {
 export const getTagList = async (queries?: MicroCMSQueries) => {
   const listData = await client
     .getList<Tag>({
-      endpoint: 'tags2',
+      endpoint: 'tags',
       queries,
     })
     .catch(notFound);
@@ -151,7 +151,7 @@ export const getCategory = async (contentId: string, queries?: MicroCMSQueries) 
 export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
     .getListDetail<Tag>({
-      endpoint: 'tags2',
+      endpoint: 'tags',
       contentId,
       queries,
     })
