@@ -62,7 +62,7 @@ export type RelatedArticle = {
 export type Blog = {
   title: string;
   description: string;
-  thumbnail?: MicroCMSImage;
+  thumbnail: MicroCMSImage;
   tags?: Tag[];
   tags2?: Tag2[];
   content_blocks: ContentBlock[];

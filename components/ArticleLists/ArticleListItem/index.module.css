@@ -1,33 +1,27 @@
 .list {
   margin-bottom: 20px;
 }
-
 .date {
   display: flex;
   justify-content: right;
   margin-top: auto;
 }
-
 .link {
   display: flex;
   gap: 10px;
 }
-
 .image {
   height: auto;
   max-width: 300px;
 }
-
 .description {
   font-size: 14.5px;
 }
-
 .content {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-
 .title {
   font-size: 1.3rem;
   font-weight: bold;
@@ -43,6 +37,7 @@
     max-width: 100%;
   }
 }
+
 @media (max-width: 1081px) and (min-width: 1023px) {
   .image {
     height: auto;
@@ -62,6 +57,7 @@
     max-width: 100%;
   }
 }
+
 @media (max-width: 640px) {
   .link {
     display: block;
@@ -72,16 +68,7 @@
     height: auto;
     margin-bottom: 1rem;
   }
-
   .title {
     font-size: 1.4rem;
   }
 }
-/* iPadPro用 */
-/* @media (min-width: 1024px) and (max-width: 1090px) {
-  .image {
-    width: 210%;
-    height: auto;
-    max-width: 210%;
-  }
-} */
