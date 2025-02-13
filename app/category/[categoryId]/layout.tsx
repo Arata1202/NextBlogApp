@@ -6,13 +6,13 @@ import { Metadata } from 'next';
 type Props = {
   children: React.ReactNode;
   params: Promise<{
-    tagId: string;
+    categoryId: string;
   }>;
 };
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
-  const tag = await getCategory(params.tagId);
+  const tag = await getCategory(params.categoryId);
 
   return {
     title: `${tag.name}｜リアル大学生`,
@@ -34,7 +34,7 @@ export default async function TagsLayout(props: Props) {
 
   const { children } = props;
 
-  const tag = await getCategory(params.tagId);
+  const tag = await getCategory(params.categoryId);
 
   return (
     <>
