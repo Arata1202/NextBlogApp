@@ -1,8 +1,8 @@
-import { Tag } from '@/libs/microcms';
+import { Category } from '@/libs/microcms';
 import styles from './index.module.css';
 
 type Props = {
-  tag: Tag;
+  tag: Category;
   hasLink?: boolean;
 };
 

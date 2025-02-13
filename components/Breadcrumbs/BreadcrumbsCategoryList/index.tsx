@@ -1,9 +1,9 @@
-import { Tag } from '@/libs/microcms';
+import { Category } from '@/libs/microcms';
 import BreadcrumbsCategoryListItem from '../BreadcrumbsCategoryListItem';
 import styles from './index.module.css';
 
 type Props = {
-  tags?: Tag[];
+  tags?: Category[];
   hasLink?: boolean;
 };
 
