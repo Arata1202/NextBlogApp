@@ -1,10 +1,10 @@
 import React from 'react';
-import { Tag2 } from '@/libs/microcms';
+import { Tag } from '@/libs/microcms';
 import styles from './index.module.css';
 import { HashtagIcon } from '@heroicons/react/24/outline';
 
 type Props = {
-  tag: Tag2;
+  tag: Tag;
   hasLink?: boolean;
 };
 

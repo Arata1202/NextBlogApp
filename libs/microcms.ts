@@ -14,7 +14,7 @@ export type Category = {
   MicroCMSDate;
 
 // タグの型定義
-export type Tag2 = {
+export type Tag = {
   name: string;
 } & MicroCMSContentId &
   MicroCMSDate;
@@ -64,7 +64,7 @@ export type Blog = {
   description: string;
   thumbnail?: MicroCMSImage;
   categories?: Category[];
-  tags2?: Tag2[];
+  tags2?: Tag[];
   content_blocks: ContentBlock[];
   introduction_blocks: IntroductionBlock[];
   related_articles?: RelatedArticle[];
@@ -125,7 +125,7 @@ export const getCategoryList = async (queries?: MicroCMSQueries) => {
 // タグの一覧を取得
 export const getTagList = async (queries?: MicroCMSQueries) => {
   const listData = await client
-    .getList<Tag2>({
+    .getList<Tag>({
       endpoint: 'tags2',
       queries,
     })
@@ -150,7 +150,7 @@ export const getCategory = async (contentId: string, queries?: MicroCMSQueries) 
 // タグの詳細を取得
 export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
-    .getListDetail<Tag2>({
+    .getListDetail<Tag>({
       endpoint: 'tags2',
       contentId,
       queries,
