@@ -63,7 +63,7 @@ export type Blog = {
   title: string;
   description: string;
   thumbnail?: MicroCMSImage;
-  tags?: Category[];
+  categories?: Category[];
   tags2?: Tag2[];
   content_blocks: ContentBlock[];
   introduction_blocks: IntroductionBlock[];
