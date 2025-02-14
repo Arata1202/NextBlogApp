@@ -54,7 +54,7 @@ export default function ArticleListItem({ article }: Props) {
               {article.updatedAt && isNextDayOrLater(article.updatedAt, article.publishedAt!) && (
                 <>
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <PublishedDate date={article.updatedAt!} updatedAt={true} />
+                  <PublishedDate date={article.updatedAt} updatedAt={true} />
                 </>
               )}
             </div>
