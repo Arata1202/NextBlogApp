@@ -6,13 +6,19 @@ type Props = {
   hasLink?: boolean;
 };
 
-export default function PanTagListItem({ category, hasLink = true }: Props) {
+export default function BreadcrumbsCategoryListItem({ category, hasLink = true }: Props) {
   if (hasLink) {
     return (
-      <a href={`/category/${category.id}`} className={styles.tag}>
-        <p className={styles.tag}>{category.name}</p>
-      </a>
+      <>
+        <a href={`/category/${category.id}`} className={styles.category}>
+          <p className={styles.category}>{category.name}</p>
+        </a>
+      </>
     );
   }
-  return <span className={styles.tag}>{category.name}</span>;
+  return (
+    <>
+      <p className={styles.category}>{category.name}</p>
+    </>
+  );
 }
