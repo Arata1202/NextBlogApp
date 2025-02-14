@@ -7,6 +7,19 @@ import type {
 } from 'microcms-js-sdk';
 import { notFound } from 'next/navigation';
 
+export type Blog = {
+  title: string;
+  description: string;
+  thumbnail: MicroCMSImage;
+  categories: Category[];
+  tags?: Tag[];
+  introduction_blocks: IntroductionBlock[];
+  content_blocks: ContentBlock[];
+  related_articles: RelatedArticle[];
+};
+
+export type Article = Blog & MicroCMSContentId & MicroCMSDate;
+
 export type Category = {
   name: string;
 } & MicroCMSContentId &
@@ -47,25 +60,13 @@ export type ContentBlock = {
 };
 
 export type RelatedArticle = {
-  article_link: string;
+  article_link?: string;
 };
-
-export type Blog = {
-  title: string;
-  description: string;
-  thumbnail: MicroCMSImage;
-  categories: Category[];
-  tags?: Tag[];
-  introduction_blocks: IntroductionBlock[];
-  content_blocks: ContentBlock[];
-  related_articles: RelatedArticle[];
-};
-
-export type Article = Blog & MicroCMSContentId & MicroCMSDate;
 
 if (!process.env.MICROCMS_SERVICE_DOMAIN) {
   throw new Error('MICROCMS_SERVICE_DOMAIN is required');
 }
+
 if (!process.env.MICROCMS_API_KEY) {
   throw new Error('MICROCMS_API_KEY is required');
 }
@@ -75,7 +76,6 @@ export const client = createClient({
   apiKey: process.env.MICROCMS_API_KEY,
 });
 
-// ブログ一覧を取得
 export const getList = async (queries?: MicroCMSQueries) => {
   const listData = await client
     .getList<Blog>({
@@ -87,7 +87,6 @@ export const getList = async (queries?: MicroCMSQueries) => {
   return listData;
 };
 
-// ブログの詳細を取得
 export const getDetail = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
     .getListDetail<Blog>({
@@ -100,7 +99,6 @@ export const getDetail = async (contentId: string, queries?: MicroCMSQueries) =>
   return detailData;
 };
 
-// カテゴリーの一覧を取得
 export const getCategoryList = async (queries?: MicroCMSQueries) => {
   const listData = await client
     .getList<Category>({
@@ -112,7 +110,6 @@ export const getCategoryList = async (queries?: MicroCMSQueries) => {
   return listData;
 };
 
-// カテゴリーの詳細を取得
 export const getCategory = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
     .getListDetail<Category>({
@@ -125,7 +122,6 @@ export const getCategory = async (contentId: string, queries?: MicroCMSQueries) 
   return detailData;
 };
 
-// タグの一覧を取得
 export const getTagList = async (queries?: MicroCMSQueries) => {
   const listData = await client
     .getList<Tag>({
@@ -137,7 +133,6 @@ export const getTagList = async (queries?: MicroCMSQueries) => {
   return listData;
 };
 
-// タグの詳細を取得
 export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
     .getListDetail<Tag>({
