@@ -138,18 +138,6 @@
   }
 } */
 
-@media (max-width: 1023px) and (min-width: 641px) {
-  .sidebarPopularPost {
-    display: flex !important;
-  }
-  .sidebarPopularPost img {
-    max-width: 300px !important;
-  }
-  .ArticleListItem_title {
-    font-size: 1.3rem !important;
-  }
-}
-
 @media (max-width: 640px) {
   .categoryTitle {
     padding-top: 65px !important;
