@@ -78,7 +78,7 @@ interface Heading {
 
 type Props = {
   data: ArticleType;
-  articles?: ArticleType[];
+  articles: ArticleType[];
 };
 
 const formatRichText = (richText: string, theme?: string) => {
