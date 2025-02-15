@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { Listbox } from '@headlessui/react';
 import { CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
@@ -9,17 +8,15 @@ import styles from './index.module.css';
 import { archive } from '@/section/archive';
 
 export default function Archive() {
-  const router = useRouter();
   const { theme } = useTheme();
 
   const [selectedMonth, setSelectedMonth] = useState('');
 
   const handleArchiveChange = (value: string) => {
-    if (value) {
-      setSelectedMonth(value);
-      router.push(`/archive/${value}`);
-    }
+    setSelectedMonth(value);
+    window.location.href = `/archive/${value}`;
   };
+
   return (
     <>
       <div
@@ -59,13 +56,7 @@ export default function Archive() {
                   value={`${item.year}/${item.monthForPath}`}
                   className={`relative cursor-pointer select-none py-2 pl-3 pr-9 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                 >
-                  <span
-                    className={`block truncate font-normal ${
-                      selectedMonth === `${item.year}/${item.monthForPath}` ? 'font-semibold' : ''
-                    }`}
-                  >
-                    {`${item.year}年${item.month}月`}
-                  </span>
+                  {`${item.year}年${item.month}月`}
                 </Listbox.Option>
               ))}
             </Listbox.Options>
