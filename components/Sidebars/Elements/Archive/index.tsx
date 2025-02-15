@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { Listbox } from '@headlessui/react';
 import { CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
@@ -8,14 +9,15 @@ import styles from './index.module.css';
 import { archive } from '@/section/archive';
 
 export default function Archive() {
+  const router = useRouter();
   const { theme } = useTheme();
 
   const [selectedMonth, setSelectedMonth] = useState('');
 
   const handleArchiveChange = (value: string) => {
     if (value) {
-      window.location.href = `/archive/${value}`;
-      setSelectedMonth('');
+      setSelectedMonth(value);
+      router.push(`/archive/${value}`);
     }
   };
   return (
