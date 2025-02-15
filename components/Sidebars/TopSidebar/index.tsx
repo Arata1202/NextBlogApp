@@ -1,18 +1,18 @@
 'use client';
 
 import React from 'react';
+import Display from '../../Adsense/Display';
 import Search from '../Elements/Search';
 import Profile from '../Elements/Profile';
 import Category from '../Elements/Category';
 import Tag from '../Elements/Tag';
 import Archive from '../Elements/Archive';
 import Popular from '../Elements/Popular';
-import Display from '../../Adsense/Display';
 
 export default function TopSidebar() {
   return (
-    <div className="lg:col-span-1 lg:w-full lg:h-full">
-      <div className="sidebar">
+    <>
+      <div className="lg:col-span-1 lg:w-full lg:h-full">
         <Search />
         <Profile />
         <div className="FirstAd mt-5">
@@ -26,6 +26,6 @@ export default function TopSidebar() {
         <Archive />
         <Popular />
       </div>
-    </div>
+    </>
   );
 }

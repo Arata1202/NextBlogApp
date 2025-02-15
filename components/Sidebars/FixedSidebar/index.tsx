@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import { Article } from '@/libs/microcms';
+import Display from '../../Adsense/Display';
 import Search from '../Elements/Search';
 import Profile from '../Elements/Profile';
 import Category from '../Elements/Category';
@@ -8,17 +10,15 @@ import Tag from '../Elements/Tag';
 import Archive from '../Elements/Archive';
 import Popular from '../Elements/Popular';
 import Recent from '../Elements/Recent';
-import { Article } from '@/libs/microcms';
-import Display from '../../Adsense/Display';
 
 type Props = {
-  articles?: Article[];
+  articles: Article[];
 };
 
 export default function FixedSidebar({ articles }: Props) {
   return (
-    <div className="lg:col-span-1 lg:w-full lg:h-full">
-      <div className="sidebar">
+    <>
+      <div className="lg:col-span-1 lg:w-full lg:h-full">
         <Search />
         <Profile />
         <div className="FirstAd mt-5">
@@ -33,6 +33,6 @@ export default function FixedSidebar({ articles }: Props) {
         <Popular />
         <Recent articles={articles} />
       </div>
-    </div>
+    </>
   );
 }
