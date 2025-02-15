@@ -1,23 +1,22 @@
 import { Tag } from '@/libs/microcms';
-import TagListItem from '../TagListItem';
 import styles from './index.module.css';
+import TagListItem from '../TagListItem';
 
 type Props = {
-  tags?: Tag[];
+  tags: Tag[];
   hasLink?: boolean;
 };
 
-export default function TagList2({ tags, hasLink = true }: Props) {
-  if (!tags) {
-    return null;
-  }
+export default function TagList({ tags, hasLink = true }: Props) {
   return (
-    <ul className={styles.tags}>
-      {tags.map((tag) => (
-        <li key={tag.id}>
-          <TagListItem tag={tag} hasLink={hasLink} />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className={styles.tags}>
+        {tags.map((tag) => (
+          <li key={tag.id}>
+            <TagListItem tag={tag} hasLink={hasLink} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
