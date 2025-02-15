@@ -10,7 +10,7 @@ export default function BreadcrumbsCategoryListItem({ category, hasLink = true }
   if (hasLink) {
     return (
       <>
-        <a href={`/category/${category.id}`} className={styles.category}>
+        <a href={`/category/${category.id}`}>
           <p className={styles.category}>{category.name}</p>
         </a>
       </>
