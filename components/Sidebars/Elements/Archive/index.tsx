@@ -22,10 +22,10 @@ export default function Archive() {
       <div
         className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
-        <h1 className={`text-2xl text-center font-semibold flex justify-center`}>
-          <CalendarDaysIcon className="h-8 w-8 mr-2" aria-hidden="true" />
+        <div className={`text-2xl text-center font-semibold flex justify-center`}>
+          <CalendarDaysIcon className="h-8 w-8 mr-2" />
           アーカイブ
-        </h1>
+        </div>
 
         <Listbox value={selectedMonth} onChange={handleArchiveChange}>
           <div className="relative mt-5">
@@ -42,7 +42,6 @@ export default function Archive() {
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronUpDownIcon
                   className={`h-7 w-7 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-300'}`}
-                  aria-hidden="true"
                 />
               </span>
             </Listbox.Button>

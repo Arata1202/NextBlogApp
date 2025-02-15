@@ -40,7 +40,7 @@ export default function Category() {
               className={`sidebarCategory text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <div className="flex justify-center">
-                <item.icon className="w-12 h-12" aria-hidden="true" />
+                <item.icon className="w-12 h-12" />
               </div>
               <div className="flex justify-center mt-2">
                 <div>{item.name}</div>

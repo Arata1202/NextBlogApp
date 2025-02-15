@@ -23,11 +23,11 @@ export default function ArticleList({ articles }: Props) {
           <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
             <div className="lg:col-span-2">
               <div className="text-center py-7">
-                <h1
+                <div
                   className={`my-4 text-3xl font-bold tracking-tight sm:text-5xl ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                 >
                   記事はまだありません
-                </h1>
+                </div>
               </div>
               <div className="FirstAd">
                 <Display slot="1831092739" />

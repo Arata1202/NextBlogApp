@@ -13,15 +13,15 @@ export default function TagListItem({ tag, hasLink = true }: Props) {
     return (
       <>
         <a href={`/tag/${tag.id}`}>
-          <HashtagIcon className="h-5 w-5 mt-1" aria-hidden="true" />
-          <p className={styles.tag}>{tag.name}</p>
+          <HashtagIcon className="h-5 w-5 mt-1" />
+          <div className={styles.tag}>{tag.name}</div>
         </a>
       </>
     );
   }
   return (
     <>
-      <p className={styles.tag}>{tag.name}</p>
+      <div className={styles.tag}>{tag.name}</div>
     </>
   );
 }

@@ -10,13 +10,13 @@ type Props = {
 export default function TagList({ tags, hasLink = true }: Props) {
   return (
     <>
-      <ul className={styles.tags}>
+      <div className={styles.tags}>
         {tags.map((tag) => (
-          <li key={tag.id}>
+          <div key={tag.id}>
             <TagListItem tag={tag} hasLink={hasLink} />
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </>
   );
 }

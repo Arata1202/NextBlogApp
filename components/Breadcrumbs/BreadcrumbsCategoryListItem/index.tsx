@@ -11,14 +11,14 @@ export default function BreadcrumbsCategoryListItem({ category, hasLink = true }
     return (
       <>
         <a href={`/category/${category.id}`}>
-          <p className={styles.category}>{category.name}</p>
+          <div className={styles.category}>{category.name}</div>
         </a>
       </>
     );
   }
   return (
     <>
-      <p className={styles.category}>{category.name}</p>
+      <div className={styles.category}>{category.name}</div>
     </>
   );
 }

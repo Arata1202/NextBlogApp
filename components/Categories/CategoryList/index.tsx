@@ -10,13 +10,13 @@ type Props = {
 export default function CategoryList({ categories, hasLink = true }: Props) {
   return (
     <>
-      <ul className={styles.categories}>
+      <div className={styles.categories}>
         {categories.map((category) => (
-          <li key={category.id}>
+          <div key={category.id}>
             <CategoryListItem category={category} hasLink={hasLink} />
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </>
   );
 }

@@ -10,13 +10,13 @@ type Props = {
 export default function BreadcrumbsCategoryList({ categories, hasLink = true }: Props) {
   return (
     <>
-      <ul className={styles.categories}>
+      <div className={styles.categories}>
         {categories.map((category) => (
-          <li key={category.id}>
+          <div key={category.id}>
             <BreadcrumbsCategoryListItem category={category} hasLink={hasLink} />
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </>
   );
 }
