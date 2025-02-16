@@ -20,7 +20,6 @@ export default function ThemeSwitch() {
         className="h-5 w-5 hover:text-blue-500 cursor-pointer"
         onClick={() => {
           setTheme('light');
-          window.location.reload();
         }}
       />
     );
@@ -32,7 +31,6 @@ export default function ThemeSwitch() {
         className="h-5 w-5 hover:text-blue-500 cursor-pointer"
         onClick={() => {
           setTheme('dark');
-          window.location.reload();
         }}
       />
     );
