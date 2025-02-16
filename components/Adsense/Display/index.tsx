@@ -26,11 +26,7 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
   useGuardObserver();
 
   useEffect(() => {
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (err) {
-      console.error(err);
-    }
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
   }, [pathname]);
 
   const { theme } = useTheme();
