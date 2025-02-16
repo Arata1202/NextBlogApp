@@ -103,10 +103,6 @@
 
 /* スマートフォン用 */
 @media (max-width: 768px) {
-  /* ページネーション */
-  .PaginationContainer {
-    margin-top: 0 !important;
-  }
   /* 目次 */
   .tableOfContent {
     width: 100%;
@@ -130,9 +126,6 @@
 @media (max-width: 640px) {
   .categoryTitle {
     padding-top: 65px !important;
-  }
-  .PaginationContainer {
-    margin-bottom: 1.75rem;
   }
   .FirstAd {
     min-height: 200px !important;
