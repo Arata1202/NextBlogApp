@@ -95,14 +95,6 @@ export const footerNavigation = {
 // プロフィール
 export const UserProfile = [
   {
-    // 肩書き
-    profileTitle: 'ブログ運営者',
-    // ユーザー名
-    profileName: 'あらた',
-    profileHref: '/profile',
-    // ユーザー写真
-    imageUrl: '/images/blog/face.webp',
-    imageAlt: '筆者のイメージ',
     // 紹介文
     profileIntroduction: [
       { sentence: '21歳' },
@@ -111,7 +103,7 @@ export const UserProfile = [
       { sentence: '経営学部 マーケティング学科' },
       { sentence: 'Webエンジニアインターンに参加中' },
       { sentence: 'インターン：Vue.js, Laravel' },
-      { sentence: '個人開発：React, Next.js, PHP' },
+      { sentence: '個人開発：Next.js' },
     ],
   },
 ];

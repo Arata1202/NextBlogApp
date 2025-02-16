@@ -1,17 +1,18 @@
 'use client';
-import { useTheme } from 'next-themes';
+
 import React from 'react';
-import SidebarArticleListItem from '../Elements/SidebarArticleListItem';
-import { Article } from '@/libs/microcms';
+import { useTheme } from 'next-themes';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
-import styles from './index.module.css';
+import { Article } from '@/libs/microcms';
+import SidebarArticleListItem from '../Elements/SidebarArticleListItem';
 
 type Props = {
-  articles?: Article[];
+  articles: Article[];
 };
 
 export default function Recent({ articles }: Props) {
   const { theme } = useTheme();
+
   const sortedArticles = articles
     ?.slice()
     .sort((a, b) => {
@@ -22,20 +23,18 @@ export default function Recent({ articles }: Props) {
     .slice(0, 3);
 
   return (
-    <div className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
-      <h1 className={`${styles.profile} text-2xl text-center font-semibold flex justify-center`}>
-        <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-        最新の投稿
-      </h1>
-      {sortedArticles && sortedArticles.length > 0 ? (
-        <div>
-          {sortedArticles.map((article) => (
-            <SidebarArticleListItem key={article.id} article={article} />
-          ))}
+    <>
+      <div
+        className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+      >
+        <div className={`text-2xl text-center font-semibold flex justify-center`}>
+          <BellAlertIcon className="h-8 w-8 mr-2" />
+          最新の投稿
         </div>
-      ) : (
-        <p className="text-center">新着記事はありません</p>
-      )}
-    </div>
+        {sortedArticles.map((article) => (
+          <SidebarArticleListItem key={article.id} article={article} />
+        ))}
+      </div>
+    </>
   );
 }

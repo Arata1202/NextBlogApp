@@ -3,8 +3,9 @@
 import React from 'react';
 import { useTheme } from 'next-themes';
 import { ChevronDoubleUpIcon } from '@heroicons/react/20/solid';
+import styles from './index.module.css';
 
-const ScrollTopButton: React.FC = () => {
+export default function ScrollTopButton() {
   const { theme } = useTheme();
 
   const scrollToTop = () => {
@@ -15,21 +16,13 @@ const ScrollTopButton: React.FC = () => {
   };
 
   return (
-    <button
-      onClick={scrollToTop}
-      className={`fixed z-50 flex items-center justify-center shadow hover:text-blue-500 border ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-      aria-label="Scroll to top"
-      style={{
-        transition: 'opacity 0.3s, visibility 0.3s',
-        width: '40px',
-        height: '40px',
-        bottom: `calc(10px + env(safe-area-inset-bottom))`,
-        right: '10px',
-      }}
-    >
-      <ChevronDoubleUpIcon aria-hidden="true" style={{ height: '25px', width: '25px' }} />
-    </button>
+    <>
+      <button
+        onClick={scrollToTop}
+        className={`${styles.button} fixed z-50 flex items-center justify-center shadow hover:text-blue-500 border ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+      >
+        <ChevronDoubleUpIcon className={styles.icon} />
+      </button>
+    </>
   );
-};
-
-export default ScrollTopButton;
+}

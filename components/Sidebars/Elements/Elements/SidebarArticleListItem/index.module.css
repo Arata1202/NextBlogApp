@@ -1,56 +1,14 @@
-.list {
-  margin-bottom: 20px;
-}
-
-.date {
-  display: flex;
-  justify-content: right;
-}
-
-.link {
-  display: flex;
-  gap: 100px;
-}
-
-.image {
-  width: 130%;
-  height: auto;
-  max-width: 130%;
-}
-
-.description {
-  font-size: 14.5px;
-}
-
-.content {
-  max-width: 490px;
-}
-
-.title {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-@media (max-width: 640px) {
+@media (max-width: 1023px) and (min-width: 641px) {
   .link {
-    display: block;
+    display: flex;
+    gap: 10px;
   }
+
   .image {
-    width: 100%;
-    height: auto;
-    margin-bottom: 1rem;
+    max-width: 300px;
   }
 
   .title {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 }
-/* iPadPro用 */
-/* @media (min-width: 1024px) and (max-width: 1090px) {
-  .image {
-    width: 210%;
-    height: auto;
-    max-width: 210%;
-  }
-} */

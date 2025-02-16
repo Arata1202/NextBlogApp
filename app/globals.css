@@ -103,21 +103,6 @@
 
 /* スマートフォン用 */
 @media (max-width: 768px) {
-  /* フッター */
-  .underLogo {
-    display: flex;
-    justify-content: center;
-  }
-  .footerMenu {
-    text-align: center;
-  }
-  .Footer_footer__hibhg {
-    margin-top: 10px;
-  }
-  /* ページネーション */
-  .PaginationContainer {
-    margin-top: 0 !important;
-  }
   /* 目次 */
   .tableOfContent {
     width: 100%;
@@ -138,24 +123,9 @@
   }
 } */
 
-@media (max-width: 1023px) and (min-width: 641px) {
-  .sidebarPopularPost {
-    display: flex !important;
-  }
-  .sidebarPopularPost img {
-    max-width: 300px !important;
-  }
-  .ArticleListItem_title {
-    font-size: 1.3rem !important;
-  }
-}
-
 @media (max-width: 640px) {
   .categoryTitle {
     padding-top: 65px !important;
-  }
-  .PaginationContainer {
-    margin-bottom: 1.75rem;
   }
   .FirstAd {
     min-height: 200px !important;

@@ -1,8 +1,9 @@
 'use client';
+
+import React from 'react';
 import { useTheme } from 'next-themes';
-import React, { useMemo } from 'react';
-import styles from './index.module.css';
 import { LIMIT } from '@/constants';
+import styles from './index.module.css';
 
 type Props = {
   totalCount: number;
@@ -11,43 +12,33 @@ type Props = {
   q?: string;
 };
 
-const Pagination: React.FC<Props> = React.memo(({ totalCount, current = 1, basePath = '', q }) => {
-  const pages = useMemo(() => {
-    return Array.from({ length: Math.ceil(totalCount / LIMIT) }, (_, i) => i + 1);
-  }, [totalCount]);
-
-  const getPageLink = (page: number) => {
-    return `${basePath}/p/${page}${q ? `?q=${q}` : ''}`;
-  };
-
+export default function Pagination({ totalCount, current = 1, basePath = '', q }: Props) {
   const { theme } = useTheme();
 
+  const pages = Array.from({ length: Math.ceil(totalCount / LIMIT) }).map((_, i) => i + 1);
+
   return (
-    <ul className={`${styles.container} PaginationContainer`}>
-      {pages.map((p) => (
-        <li className={styles.list} key={p}>
-          {current !== p ? (
-            <a href={getPageLink(p)}>
-              <p
-                className={`hover:text-blue-500 ${styles.item} ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+    <>
+      <ul className={styles.container}>
+        {pages.map((p) => (
+          <li className={styles.list} key={p}>
+            {current !== p ? (
+              <a
+                href={`${basePath}/p/${p}` + (q ? `?q=${q}` : '')}
+                className={`${styles.item} hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
               >
                 {p}
-              </p>
-            </a>
-          ) : (
-            <span
-              className={`${styles.item} ${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-              aria-current="page"
-            >
-              {p}
-            </span>
-          )}
-        </li>
-      ))}
-    </ul>
+              </a>
+            ) : (
+              <span
+                className={`${styles.item} ${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+              >
+                {p}
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </>
   );
-});
-
-Pagination.displayName = 'Pagination';
-
-export default Pagination;
+}

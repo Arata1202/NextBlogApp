@@ -39,15 +39,18 @@
     height: auto;
     max-width: 300px;
   }
+
   .content {
     max-width: 100%;
   }
 }
+
 @media (max-width: 1081px) and (min-width: 1023px) {
   .image {
     height: auto;
     max-width: 250px;
   }
+
   .content {
     max-width: 100%;
   }
@@ -58,14 +61,17 @@
     height: auto;
     max-width: 200px;
   }
+
   .content {
     max-width: 100%;
   }
 }
+
 @media (max-width: 640px) {
   .link {
     display: block;
   }
+
   .image {
     width: 100%;
     max-width: 100%;
@@ -77,11 +83,3 @@
     font-size: 1.4rem;
   }
 }
-/* iPadPro用 */
-/* @media (min-width: 1024px) and (max-width: 1090px) {
-  .image {
-    width: 210%;
-    height: auto;
-    max-width: 210%;
-  }
-} */
