@@ -1,18 +1,10 @@
 'use client';
 
-import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
-import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
 export default function ThemeSwitch() {
-  const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
-
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) {
-    return null;
-  }
 
   if (resolvedTheme === 'dark') {
     return (
