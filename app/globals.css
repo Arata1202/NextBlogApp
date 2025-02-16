@@ -103,17 +103,6 @@
 
 /* スマートフォン用 */
 @media (max-width: 768px) {
-  /* フッター */
-  .underLogo {
-    display: flex;
-    justify-content: center;
-  }
-  .footerMenu {
-    text-align: center;
-  }
-  .Footer_footer__hibhg {
-    margin-top: 10px;
-  }
   /* ページネーション */
   .PaginationContainer {
     margin-top: 0 !important;
