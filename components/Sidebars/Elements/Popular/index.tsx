@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { useTheme } from 'next-themes';
 import { BoltIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';

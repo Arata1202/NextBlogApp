@@ -1,4 +1,3 @@
-import React from 'react';
 import { getCategory } from '@/libs/microcms';
 import { FolderOpenIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { Metadata } from 'next';

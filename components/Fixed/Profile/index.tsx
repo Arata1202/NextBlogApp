@@ -3,7 +3,6 @@ import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import Image from 'next/image';
 import PublishedDate from '@/components/Elements/Date';
-import React from 'react';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import Share from '../../Elements/Share';
 import AdAlert from '../../Articles/Elements/AdAlert';

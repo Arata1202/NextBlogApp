@@ -1,6 +1,5 @@
 'use client';
 import { useTheme } from 'next-themes';
-import React from 'react';
 import Image from 'next/image';
 import { memo } from 'react';
 import { Article } from '@/libs/microcms';

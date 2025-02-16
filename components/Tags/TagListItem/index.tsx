@@ -1,4 +1,3 @@
-import React from 'react';
 import { HashtagIcon } from '@heroicons/react/24/outline';
 import { Tag } from '@/libs/microcms';
 import styles from './index.module.css';

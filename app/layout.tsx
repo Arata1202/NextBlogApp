@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from '@/components/Layouts/Header';
 import Footer from '@/components/Layouts/Footer';
 import './globals.css';

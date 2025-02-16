@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Article } from '@/libs/microcms';
 import Display from '../../Adsense/Display';
 import Search from '../Elements/Search';

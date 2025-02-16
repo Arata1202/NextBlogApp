@@ -1,4 +1,3 @@
-import React from 'react';
 import { HomeIcon, UserCircleIcon, EnvelopeIcon, FolderOpenIcon } from '@heroicons/react/24/solid';
 import { IoAirplaneOutline } from 'react-icons/io5';
 import { BookOpenIcon, CommandLineIcon, AcademicCapIcon } from '@heroicons/react/24/outline';

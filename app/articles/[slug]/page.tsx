@@ -1,4 +1,3 @@
-import React from 'react';
 import { Metadata } from 'next';
 import { getDetail, getList } from '@/libs/microcms';
 import Article from '@/components/Articles/Article';
