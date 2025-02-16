@@ -30,7 +30,7 @@ const LinkPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) => {
             <div className="">
               <div className="space-y-5 lg:space-y-8">
                 <div className="includeBanner flex justify-end gap-x-5">
-                  <PublishedDate date={formattedDate} updatedAt={false} />
+                  <PublishedDate date={formattedDate} />
                 </div>
                 <AdAlert />
               </div>

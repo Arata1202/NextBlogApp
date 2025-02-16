@@ -222,7 +222,7 @@ export default function Article({ data, articles }: Props) {
                   <Display slot="7197259627" />
                 </div> */}
                 <div className={styles.date}>
-                  <PublishedDate date={data.publishedAt!} updatedAt={false} />
+                  <PublishedDate date={data.publishedAt!} />
                   {data.updatedAt && isNextDayOrLater(data.updatedAt, data.publishedAt!) && (
                     <>
                       &nbsp;&nbsp;&nbsp;&nbsp;

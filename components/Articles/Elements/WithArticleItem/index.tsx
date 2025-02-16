@@ -66,7 +66,7 @@ const ArticleListItem = ({ article }: Props) => {
           <div className={styles.title}>{article.title}</div>
           <div className={styles.description}>{article.description}</div>
           <div className={styles.date}>
-            <PublishedDate date={article.publishedAt!} updatedAt={false} />
+            <PublishedDate date={article.publishedAt!} />
             {article.updatedAt && isNextDayOrLater(article.updatedAt, article.publishedAt!) && (
               <>
                 &nbsp;&nbsp;&nbsp;&nbsp;
