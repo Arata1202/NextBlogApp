@@ -20,7 +20,7 @@ import styles from './index.module.css';
 import Image from 'next/image';
 import TableOfContents from '../Elements/TableOfContent';
 import ArticleSidebar from '../../Sidebars/ArticleSidebar';
-import WithArticleItem from '../Elements/WithArticleItem';
+import ArticleListItem from '@/components/ArticleLists/ArticleListItem';
 import { useEffect, useState } from 'react';
 import './article.css';
 // import CategoryList from '../../Categories/CategoryList';
@@ -293,7 +293,7 @@ export default function Article({ data, articles }: Props) {
                           <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
                           <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
                         </div>
-                        <WithArticleItem article={block.article_link as ArticleType} />
+                        <ArticleListItem article={block.article_link as ArticleType} />
                       </div>
                     )}
                     {block.box_merit && (
@@ -394,7 +394,7 @@ export default function Article({ data, articles }: Props) {
                             <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
                             <h1 className="text-2xl font-semibold mb-5">あわせて読みたい</h1>
                           </div>
-                          <WithArticleItem article={block.article_link as ArticleType} />
+                          <ArticleListItem article={block.article_link as ArticleType} />
                         </div>
                       )}
                       {block.box_merit && (
@@ -454,7 +454,7 @@ export default function Article({ data, articles }: Props) {
                       <div key={index}>
                         {block.article_link && typeof block.article_link !== 'string' && (
                           <div>
-                            <WithArticleItem article={block.article_link as ArticleType} />
+                            <ArticleListItem article={block.article_link as ArticleType} />
                           </div>
                         )}
                       </div>
