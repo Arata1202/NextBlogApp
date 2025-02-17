@@ -4,22 +4,6 @@ import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import * as cheerio from 'cheerio';
 import {
-  TwitterShareButton,
-  TwitterIcon,
-  FacebookShareButton,
-  FacebookIcon,
-  LineShareButton,
-  LineIcon,
-  HatenaShareButton,
-  HatenaIcon,
-  PinterestShareButton,
-  PinterestIcon,
-  RedditShareButton,
-  RedditIcon,
-  LinkedinShareButton,
-  LinkedinIcon,
-} from 'react-share';
-import {
   HandThumbUpIcon,
   HandThumbDownIcon,
   LinkIcon,
@@ -27,11 +11,7 @@ import {
   InformationCircleIcon,
   HomeIcon,
   ChevronRightIcon,
-  RssIcon,
-  UserPlusIcon,
-  FireIcon,
 } from '@heroicons/react/24/solid';
-import { SiFeedly } from 'react-icons/si';
 import hljs from 'highlight.js/lib/common';
 import javascript from 'highlight.js/lib/languages/javascript';
 import dockerfile from 'highlight.js/lib/languages/dockerfile';
@@ -47,13 +27,14 @@ import 'highlight.js/styles/hybrid.css';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import './plugin.css';
+import Display from '../../Adsense/Display';
 import PublishedDate from '../../Elements/Date';
 import TableOfContents from '../Elements/TableOfContent';
 import ArticleSidebar from '../../Sidebars/ArticleSidebar';
 import ArticleListItem from '@/components/ArticleLists/ArticleListItem';
 import BreadcrumbsCategoryList from '../../Breadcrumbs/BreadcrumbsCategoryList';
 import AdAlert from '../Elements/AdAlert';
-import Display from '../../Adsense/Display';
+import Share from '@/components/Elements/Share';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
@@ -397,166 +378,7 @@ export default function ArticlePage({ data, articles }: Props) {
                   ))}
                 </div>
               </div>
-              <div style={{ paddingTop: '12px' }}>
-                <h1 className={`${styles.profile} text-2xl font-semibold flex justify-center mb-5`}>
-                  <HandThumbUpIcon className="h-8 w-8 mr-2" />
-                  シェアする
-                </h1>
-              </div>
-              <div className="flex justify-center">
-                <TwitterShareButton
-                  aria-label="シェアボタン"
-                  url={`https://realunivlog.com/articles/${data.id}`}
-                  title={data.title}
-                  className="m-1 hover:opacity-60"
-                >
-                  <TwitterIcon size={40} round={true} />
-                </TwitterShareButton>
-
-                <FacebookShareButton
-                  aria-label="シェアボタン"
-                  url={`https://realunivlog.com/articles/${data.id}`}
-                  title={data.title}
-                  className="m-1 hover:opacity-60"
-                >
-                  <FacebookIcon size={40} round={true} />
-                </FacebookShareButton>
-
-                <LineShareButton
-                  aria-label="シェアボタン"
-                  url={`https://realunivlog.com/articles/${data.id}`}
-                  title={data.title}
-                  className="m-1 hover:opacity-60"
-                >
-                  <LineIcon size={40} round={true} />
-                </LineShareButton>
-
-                <HatenaShareButton
-                  aria-label="シェアボタン"
-                  url={`https://realunivlog.com/articles/${data.id}`}
-                  title={data.title}
-                  className="m-1 hover:opacity-60"
-                >
-                  <HatenaIcon size={40} round={true} />
-                </HatenaShareButton>
-
-                <PinterestShareButton
-                  aria-label="シェアボタン"
-                  url={`https://realunivlog.com/articles/${data.id}`}
-                  media={data.thumbnail?.url || ''}
-                  description={data.title}
-                  className="m-1 hover:opacity-60"
-                >
-                  <PinterestIcon size={40} round={true} />
-                </PinterestShareButton>
-
-                <RedditShareButton
-                  aria-label="シェアボタン"
-                  url={`https://realunivlog.com/articles/${data.id}`}
-                  title={data.title}
-                  className="m-1 hover:opacity-60"
-                >
-                  <RedditIcon size={40} round={true} />
-                </RedditShareButton>
-
-                <LinkedinShareButton
-                  aria-label="シェアボタン"
-                  url={`https://realunivlog.com/articles/${data.id}`}
-                  title={data.title}
-                  summary={data.description}
-                  className="m-1 hover:opacity-60"
-                >
-                  <LinkedinIcon size={40} round={true} />
-                </LinkedinShareButton>
-              </div>
-              <div className="mt-2">
-                <div className="pt-3">
-                  <h1 className={`text-2xl font-semibold flex justify-center mb-5`}>
-                    <UserPlusIcon className="h-8 w-8 mr-2" />
-                    フォローする
-                  </h1>
-                </div>
-                <div className="flex justify-center">
-                  <a
-                    aria-label="RSSフォローボタン"
-                    href="https://realunivlog.com/rss.xml"
-                    className="bg-orange-500 rounded-full p-2 m-1 hover:opacity-60"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <RssIcon className="h-6 w-6 text-white" />
-                  </a>
-                  <a
-                    aria-label="Feedlyフォローボタン"
-                    href="https://feedly.com/i/subscription/feed/https://realunivlog.com/rss.xml"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-green-500 rounded-full p-2 m-1 hover:opacity-60"
-                  >
-                    <SiFeedly className="h-6 w-6 text-white" />
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
-                <div className="pt-3">
-                  <h1 className={`text-2xl font-semibold flex justify-center mb-5`}>
-                    <FireIcon className="h-8 w-8 mr-2" />
-                    応援する
-                  </h1>
-                </div>
-                <div className="flex justify-center">
-                  <a
-                    href="https://blogmura.com/profiles/11190305/?p_cid=11190305&reader=11190305"
-                    className="hover:opacity-60"
-                    target="_blank"
-                  >
-                    <img
-                      src="https://b.blogmura.com/banner-blogmura-reader-white-small.svg"
-                      loading="lazy"
-                      width="160"
-                      height="36"
-                      alt="リアル大学生 - にほんブログ村"
-                    />
-                  </a>
-                  <a
-                    href="https://blog.with2.net/link/?id=2117761"
-                    title="人気ブログランキング"
-                    target="_blank"
-                    className="ml-3 hover:opacity-60"
-                  >
-                    <img
-                      alt="人気ブログランキング"
-                      loading="lazy"
-                      width="93"
-                      height="36"
-                      src="https://blog.with2.net/img/banner/banner_22.gif"
-                    />
-                  </a>
-                  <a
-                    href="https://blogranking.fc2.com/in.php?id=1067087"
-                    target="_blank"
-                    className="ml-3 hover:opacity-60"
-                  >
-                    <img
-                      loading="lazy"
-                      src="https://static.fc2.com/blogranking/ranking_banner/a_02.gif"
-                    />
-                  </a>
-                </div>
-                <a href="https://www.buymeacoffee.com/realunivlog" target="_blank">
-                  <img
-                    width="160"
-                    className="mt-5 m-auto hover:opacity-60"
-                    loading="lazy"
-                    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-                  />
-                </a>
-                <div className="text-center mt-4" style={{ fontSize: '12px' }}>
-                  もしこの記事が役に立ったなら、
-                  <br />
-                  こちらから ☕ を一杯支援いただけると喜びます
-                </div>
-              </div>
+              <Share articleId={data.id} articleTitle={data.title} />
             </div>
           </div>
           <div className={styles.sidebar}>

@@ -17,12 +17,20 @@ import {
 } from 'react-share';
 import styles from './index.module.css';
 
-export default function Share() {
+type Props = {
+  articleId: string;
+  articleTitle: string;
+};
+
+export default function Share({ articleId, articleTitle }: Props) {
   const { theme } = useTheme();
 
-  const title = 'リアル大学生';
-  const url = 'https://realunivlog.com';
+  const title = articleTitle ? `${articleTitle}｜リアル大学生` : 'リアル大学生';
+  const url = articleId
+    ? `https://realunivlog.com/articles/${articleId}`
+    : 'https://realunivlog.com';
   const rss = 'https://realunivlog.com/rss.xml';
+  const BuyMeaCoffeeMessage = articleId && articleTitle ? 'この' : '';
 
   return (
     <>
@@ -143,7 +151,7 @@ export default function Share() {
             />
           </a>
           <div className={`${styles.BuyMeaCoffeeMessage} text-center mt-4`}>
-            もし記事が役に立ったなら、
+            もし{BuyMeaCoffeeMessage}記事が役に立ったなら、
             <br />
             こちらから ☕ を一杯支援いただけると喜びます
           </div>
