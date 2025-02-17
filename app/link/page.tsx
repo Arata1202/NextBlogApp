@@ -60,7 +60,7 @@ export default async function Page() {
           <h1 className="text-3xl font-bold lg:text-3xl">リンク</h1>
         </div>
       </h1>
-      <LinkPage sidebarArticles={data} />
+      <LinkPage articles={data.contents} />
       <div className="pc">
         <FixedSidebar articles={data.contents} />
       </div>

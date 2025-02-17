@@ -153,10 +153,6 @@
 figure img {
   margin: auto;
 }
-/* 記事トップの写真と、広告を使用していますバナー */
-.includeBanner {
-  margin-top: 0 !important;
-}
 
 h2 {
   /* background-color: #f3f3f3; */
