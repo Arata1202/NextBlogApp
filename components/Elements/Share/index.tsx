@@ -18,8 +18,8 @@ import {
 import styles from './index.module.css';
 
 type Props = {
-  articleId: string;
-  articleTitle: string;
+  articleId?: string;
+  articleTitle?: string;
 };
 
 export default function Share({ articleId, articleTitle }: Props) {
