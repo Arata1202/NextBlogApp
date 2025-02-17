@@ -46,7 +46,7 @@ import vim from 'highlight.js/lib/languages/vim';
 import 'highlight.js/styles/hybrid.css';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import './article.css';
+import './plugin.css';
 import PublishedDate from '../../Elements/Date';
 import TableOfContents from '../Elements/TableOfContent';
 import ArticleSidebar from '../../Sidebars/ArticleSidebar';
@@ -228,15 +228,13 @@ export default function ArticlePage({ data, articles }: Props) {
                               block.bubble_isRight ? 'right' : 'left'
                             }`}
                           >
-                            <div>
-                              <img
-                                src={block.bubble_image.url}
-                                width={75}
-                                height={75}
-                                alt="吹き出しのイメージ"
-                                className="bubble-image"
-                              />
-                            </div>
+                            <img
+                              src={block.bubble_image.url}
+                              alt="吹き出しのイメージ"
+                              width={75}
+                              height={75}
+                              className="bubble-image"
+                            />
                           </div>
                         )}
                         <div
@@ -249,7 +247,7 @@ export default function ArticlePage({ data, articles }: Props) {
                   )}
                   {block.rich_text && (
                     <div
-                      className={`${styles.content}`}
+                      className={styles.content}
                       dangerouslySetInnerHTML={{
                         __html: formatRichText(block.rich_text, theme).replace(
                           /<img/g,
@@ -312,15 +310,13 @@ export default function ArticlePage({ data, articles }: Props) {
                               block.bubble_isRight ? 'right' : 'left'
                             }`}
                           >
-                            <div>
-                              <img
-                                src={block.bubble_image.url}
-                                width={75}
-                                height={75}
-                                alt="吹き出しのイメージ"
-                                className="bubble-image"
-                              />
-                            </div>
+                            <img
+                              src={block.bubble_image.url}
+                              alt="吹き出しのイメージ"
+                              width={75}
+                              height={75}
+                              className="bubble-image"
+                            />
                           </div>
                         )}
                         <div
@@ -333,7 +329,7 @@ export default function ArticlePage({ data, articles }: Props) {
                   )}
                   {block.rich_text && (
                     <div
-                      className={`${styles.content}`}
+                      className={styles.content}
                       dangerouslySetInnerHTML={{
                         __html: formatRichText(block.rich_text, theme).replace(
                           /<img/g,
@@ -563,7 +559,7 @@ export default function ArticlePage({ data, articles }: Props) {
               </div>
             </div>
           </div>
-          <div className={`${styles.sidebar}`}>
+          <div className={styles.sidebar}>
             <ArticleSidebar articles={articles} contentBlocks={data.content_blocks} />
           </div>
         </div>
