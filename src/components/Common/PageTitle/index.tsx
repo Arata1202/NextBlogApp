@@ -4,6 +4,7 @@ import {
   EnvelopeIcon,
   DocumentTextIcon,
   ExclamationCircleIcon,
+  LinkIcon,
 } from '@heroicons/react/24/solid';
 import { Category } from '@/libs/microcms';
 
@@ -14,6 +15,7 @@ type Props = {
   contact?: boolean;
   copyright?: boolean;
   disclaimer?: boolean;
+  link?: boolean;
 };
 
 export default function PageTitle({
@@ -23,6 +25,7 @@ export default function PageTitle({
   contact,
   copyright,
   disclaimer,
+  link,
 }: Props) {
   return (
     <>
@@ -57,6 +60,12 @@ export default function PageTitle({
           <>
             <ExclamationCircleIcon className="h-8 w-8 mr-2" />
             <div>免責事項</div>
+          </>
+        )}
+        {link && (
+          <>
+            <LinkIcon className="h-8 w-8 mr-2" />
+            <div>リンク</div>
           </>
         )}
       </h1>
