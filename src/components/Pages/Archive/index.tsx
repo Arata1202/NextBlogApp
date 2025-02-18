@@ -25,13 +25,13 @@ export default function ArchivePage({
   return (
     <>
       <PageHeading year={year} month={month} />
-      <ArticleList articles={articles} />
+      <ArticleList articles={articles} allArticles={allArticles} />
       <Pagination
         totalCount={totalCount}
         current={current}
         basePath={`/archive/${year}/${month}`}
       />
-      <Sidebar articles={allArticles} mobile={true} />
+      <Sidebar allArticles={allArticles} mobile={true} />
       <div className="mt-5">
         <Display slot="5969933704" />
       </div>
