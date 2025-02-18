@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useGuardObserver } from '@/hooks/MutationObserver';
 
@@ -21,8 +20,6 @@ type DisplayProps = {
 };
 
 const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: DisplayProps) => {
-  let pathname = usePathname();
-  pathname = pathname ? pathname : '';
   useGuardObserver();
 
   useEffect(() => {
@@ -31,16 +28,12 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
     } catch (err) {
       console.error(err);
     }
-  }, [pathname]);
+  }, [slot]);
 
   const { theme } = useTheme();
 
   return (
-    <div
-      style={{ maxWidth: '100%' }}
-      className="FirstAd mut-guard"
-      key={pathname.replace(/\//g, '-') + '-' + slot}
-    >
+    <div style={{ maxWidth: '100%' }} className="FirstAd mut-guard" key={slot}>
       <p className={`text-center ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
         スポンサーリンク
       </p>
