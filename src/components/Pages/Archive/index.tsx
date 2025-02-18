@@ -11,9 +11,17 @@ type Props = {
   articles: Article[];
   totalCount: number;
   current?: number;
+  allArticles?: Article[];
 };
 
-export default function ArchivePage({ year, month, articles, totalCount, current }: Props) {
+export default function ArchivePage({
+  year,
+  month,
+  articles,
+  totalCount,
+  current,
+  allArticles,
+}: Props) {
   return (
     <>
       <PageHeading year={year} month={month} />
@@ -23,7 +31,7 @@ export default function ArchivePage({ year, month, articles, totalCount, current
         current={current}
         basePath={`/archive/${year}/${month}`}
       />
-      <Sidebar articles={articles} mobile={true} />
+      <Sidebar articles={allArticles} mobile={true} />
       <div className="mt-5">
         <Display slot="5969933704" />
       </div>

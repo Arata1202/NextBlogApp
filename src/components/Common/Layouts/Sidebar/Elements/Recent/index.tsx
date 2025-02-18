@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { Article } from '@/libs/microcms';
-import SidebarArticleListItem from '../Elements/SidebarArticleListItem';
+import styles from './index.module.css';
 
 type Props = {
   articles: Article[];
@@ -31,7 +31,17 @@ export default function Recent({ articles }: Props) {
           最新の投稿
         </div>
         {sortedArticles.map((article) => (
-          <SidebarArticleListItem key={article.id} article={article} />
+          <ul
+            key={article.id}
+            className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+          >
+            <li>
+              <a href={`/articles/${article.id}`} className={styles.link}>
+                <img src={article.thumbnail.url} alt="サムネイル" className={styles.image} />
+                <div className={`${styles.title} font-bold`}>{article.title}</div>
+              </a>
+            </li>
+          </ul>
         ))}
       </div>
     </>

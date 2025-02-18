@@ -1,4 +1,4 @@
-import { getList } from '@/libs/microcms';
+import { getList, getAllLists } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import ArchivePage from '@/components/Pages/Archive';
 
@@ -26,6 +26,8 @@ export default async function Page(props: Props) {
     offset: LIMIT * (current - 1),
     filters: `publishedAt[greater_than]${startDate}[and]publishedAt[less_than]${endDate}`,
   });
+  const allData = await getAllLists();
+
   return (
     <>
       <ArchivePage
@@ -34,6 +36,7 @@ export default async function Page(props: Props) {
         articles={data.contents}
         totalCount={data.totalCount}
         current={current}
+        allArticles={allData}
       />
     </>
   );
