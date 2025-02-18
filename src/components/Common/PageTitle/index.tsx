@@ -1,13 +1,14 @@
-import { CalendarDaysIcon, FolderOpenIcon } from '@heroicons/react/24/solid';
+import { CalendarDaysIcon, FolderOpenIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
 import { Category } from '@/libs/microcms';
 
 type Props = {
   year?: string;
   month?: string;
   category?: Category;
+  contact?: boolean;
 };
 
-export default function PageTitle({ year, month, category }: Props) {
+export default function PageTitle({ year, month, category, contact }: Props) {
   return (
     <>
       <h1 className="flex items-center pb-2 pt-2 mt-5">
@@ -23,6 +24,12 @@ export default function PageTitle({ year, month, category }: Props) {
           <>
             <FolderOpenIcon className="h-8 w-8 mr-2" />
             <div>{category.name}</div>
+          </>
+        )}
+        {contact && (
+          <>
+            <EnvelopeIcon className="h-8 w-8 mr-2" />
+            <div>お問い合わせ</div>
           </>
         )}
       </h1>

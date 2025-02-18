@@ -1,24 +1,17 @@
-import { getCategory } from '@/libs/microcms';
 import { Metadata } from 'next';
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{
-    categoryId: string;
-  }>;
 };
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const params = await props.params;
-  const category = await getCategory(params.categoryId);
-
+export async function generateMetadata(): Promise<Metadata> {
   const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
 
-  const title = `${category.name}｜${defaultTitle}`;
-  const description = `${category.name}について解説するカテゴリーです。`;
+  const title = `お問い合わせ｜${defaultTitle}`;
+  const description = `お問い合わせのフォームを記載しています。`;
   const images = `${defaultUrl}/images/thumbnail/7.webp`;
-  const url = `${defaultUrl}/category/${category.id}`;
+  const url = `${defaultUrl}/contact`;
 
   return {
     title: title,
@@ -35,7 +28,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   };
 }
 
-export default async function CategoryLayout(props: Props) {
+export default async function ContactLayout(props: Props) {
   const { children } = props;
 
   return <>{children}</>;

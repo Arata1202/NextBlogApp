@@ -5,9 +5,10 @@ type Props = {
   year?: string;
   month?: string;
   category?: Category;
+  contact?: boolean;
 };
 
-export default function BreadCrumb({ year, month, category }: Props) {
+export default function BreadCrumb({ year, month, category, contact }: Props) {
   return (
     <>
       <ul className="flex items-center space-x-4">
@@ -33,6 +34,14 @@ export default function BreadCrumb({ year, month, category }: Props) {
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 {category.name}
+              </a>
+            )}
+            {contact && (
+              <a
+                href={`/contact`}
+                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
+              >
+                お問い合わせ
               </a>
             )}
           </div>
