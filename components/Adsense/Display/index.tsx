@@ -14,11 +14,11 @@ declare global {
   }
 }
 
-type Props = {
+type DisplayProps = {
   slot: string;
 };
 
-const Display = ({ slot }: Props) => {
+export default function Display({ slot }: DisplayProps) {
   const { theme } = useTheme();
 
   useGuardObserver();
@@ -48,6 +48,4 @@ const Display = ({ slot }: Props) => {
       />
     </div>
   );
-};
-
-export default Display;
+}
