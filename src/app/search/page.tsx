@@ -1,6 +1,6 @@
 import { getList } from '@/libs/microcms';
 import ArticleList from '@/components/ArticleLists/ArticleList';
-import Pagination from '@/components/Layouts/Pagination';
+import Pagination from '@/components/Common/Pagination';
 import TopSidebar from '@/components/Sidebars/TopSidebar';
 import { MagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import Display from '@/components/Adsense/Display';
