@@ -3,6 +3,7 @@ import {
   FolderOpenIcon,
   EnvelopeIcon,
   DocumentTextIcon,
+  ExclamationCircleIcon,
 } from '@heroicons/react/24/solid';
 import { Category } from '@/libs/microcms';
 
@@ -12,9 +13,17 @@ type Props = {
   category?: Category;
   contact?: boolean;
   copyright?: boolean;
+  disclaimer?: boolean;
 };
 
-export default function PageTitle({ year, month, category, contact, copyright }: Props) {
+export default function PageTitle({
+  year,
+  month,
+  category,
+  contact,
+  copyright,
+  disclaimer,
+}: Props) {
   return (
     <>
       <h1 className="flex items-center pb-2 pt-2 mt-5">
@@ -42,6 +51,12 @@ export default function PageTitle({ year, month, category, contact, copyright }:
           <>
             <DocumentTextIcon className="h-8 w-8 mr-2" />
             <div>著作権</div>
+          </>
+        )}
+        {disclaimer && (
+          <>
+            <ExclamationCircleIcon className="h-8 w-8 mr-2" />
+            <div>免責事項</div>
           </>
         )}
       </h1>

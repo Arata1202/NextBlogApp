@@ -9,6 +9,7 @@ type Props = {
   category?: Category;
   contact?: boolean;
   copyright?: boolean;
+  disclaimer?: boolean;
 };
 
 export default function PageHeading({
@@ -17,6 +18,7 @@ export default function PageHeading({
   category,
   contact = false,
   copyright = false,
+  disclaimer = false,
 }: Props) {
   return (
     <>
@@ -29,6 +31,7 @@ export default function PageHeading({
           category={category}
           contact={contact}
           copyright={copyright}
+          disclaimer={disclaimer}
         />
         <PageTitle
           year={year}
@@ -36,6 +39,7 @@ export default function PageHeading({
           category={category}
           contact={contact}
           copyright={copyright}
+          disclaimer={disclaimer}
         />
       </div>
     </>
