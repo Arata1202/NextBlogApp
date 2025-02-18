@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import { BlogTitle, copyRight, footerNavigation } from '@/section/dummy';

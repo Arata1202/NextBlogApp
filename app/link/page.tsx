@@ -6,7 +6,7 @@ import { LIMIT } from '@/constants';
 import Display from '@/components/Adsense/Display';
 
 export const metadata = {
-  metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: 'リンク｜リアル大学生',
   description: 'リンクについてを記載しています。',
   openGraph: {
@@ -60,7 +60,7 @@ export default async function Page() {
           <h1 className="text-3xl font-bold lg:text-3xl">リンク</h1>
         </div>
       </h1>
-      <LinkPage sidebarArticles={data} />
+      <LinkPage articles={data.contents} />
       <div className="pc">
         <FixedSidebar articles={data.contents} />
       </div>

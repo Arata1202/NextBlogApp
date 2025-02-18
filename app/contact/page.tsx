@@ -6,7 +6,7 @@ import { LIMIT } from '@/constants';
 import Display from '@/components/Adsense/Display';
 
 export const metadata = {
-  metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: 'お問い合わせ｜リアル大学生',
   description: 'お問い合わせのフォームを記載しています。',
   openGraph: {

@@ -2,7 +2,6 @@
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import PublishedDate from '@/components/Elements/Date';
-import React from 'react';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import Share from '../../Elements/Share';
 import AdAlert from '../../Articles/Elements/AdAlert';
@@ -29,8 +28,8 @@ const SitemapPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
                 <Display slot="7197259627" />
               </div> */}
               <div className="space-y-5 lg:space-y-8">
-                <div className="includeBanner flex justify-end gap-x-5">
-                  <PublishedDate date={formattedDate} updatedAt={false} />
+                <div className="flex justify-end gap-x-5">
+                  <PublishedDate date={formattedDate} />
                 </div>
                 <AdAlert />
                 <div className={`${styles.content} mt-10 mb-5`}>

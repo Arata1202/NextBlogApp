@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { useTheme } from 'next-themes';
 import { LIMIT } from '@/constants';
 import styles from './index.module.css';

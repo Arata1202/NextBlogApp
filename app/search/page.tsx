@@ -6,7 +6,7 @@ import { MagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/reac
 import Display from '@/components/Adsense/Display';
 
 export const metadata = {
-  metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: 'リアル大学生',
   description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
   openGraph: {

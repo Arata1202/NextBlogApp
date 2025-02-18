@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { useTheme } from 'next-themes';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { Article } from '@/libs/microcms';

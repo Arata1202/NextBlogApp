@@ -1,6 +1,6 @@
 'use client';
 import { useTheme } from 'next-themes';
-import React, { useState, useEffect, useRef, useCallback, Fragment } from 'react';
+import { useState, useEffect, useRef, useCallback, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
@@ -129,9 +129,9 @@ const ContactPage: React.FC<{ sidebarArticles: any }> = ({ sidebarArticles }) =>
             </div> */}
             <div className="">
               <div className="space-y-5 lg:space-y-8">
-                <div className="includeBanner flex justify-end gap-x-5">
+                <div className="flex justify-end gap-x-5">
                   {/* <TagList tags={data.tags} /> */}
-                  <PublishedDate date={formattedDate} updatedAt={false} />
+                  <PublishedDate date={formattedDate} />
                 </div>
                 <AdAlert />
               </div>

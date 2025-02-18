@@ -1,6 +1,5 @@
 'use client';
 import { useTheme } from 'next-themes';
-import React from 'react';
 import styles from './index.module.css';
 
 export default function SearchField({ defaultQuery = '' }) {
