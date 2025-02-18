@@ -198,7 +198,7 @@ export default function ContactPage({ articles }: Props) {
               </div>
               <ReCAPTCHA
                 ref={recaptchaRef}
-                sitekey="6LdN0YAqAAAAAM8FOyfjJ1ETkxEPrshl-HApb6HB"
+                sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
                 onChange={onChange}
                 className="mt-3"
               />

@@ -1,7 +1,0 @@
-.tag {
-  border-radius: var(--border-radius);
-  font-weight: bold;
-  font-size: 15px !important;
-  white-space: nowrap;
-  display: flex;
-}
