@@ -378,7 +378,7 @@ export default function ArticlePage({ data, articles }: Props) {
                   ))}
                 </div>
               </div>
-              <Share articleId={data.id} articleTitle={data.title} />
+              <Share data={data} />
             </div>
           </div>
           <div className={styles.sidebar}>

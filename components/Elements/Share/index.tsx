@@ -15,22 +15,22 @@ import {
   PocketShareButton,
   PocketIcon,
 } from 'react-share';
+import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 
 type Props = {
-  articleId?: string;
-  articleTitle?: string;
+  data?: Article;
 };
 
-export default function Share({ articleId, articleTitle }: Props) {
+export default function Share({ data }: Props) {
   const { theme } = useTheme();
 
-  const title = articleTitle ? `${articleTitle}｜リアル大学生` : 'リアル大学生';
-  const url = articleId
-    ? `https://realunivlog.com/articles/${articleId}`
-    : 'https://realunivlog.com';
-  const rss = 'https://realunivlog.com/rss.xml';
-  const BuyMeaCoffeeMessage = articleId && articleTitle ? 'この' : '';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const title = data ? `${data.title}｜${baseTitle}` : `${baseTitle}`;
+  const url = data ? `${baseUrl}/articles/${data.id}` : `${baseUrl}`;
+  const rss = `${baseUrl}/rss.xml`;
+  const buyMeaCoffeeMessage = data?.id && data?.title ? 'この' : '';
 
   return (
     <>
@@ -109,7 +109,7 @@ export default function Share({ articleId, articleTitle }: Props) {
             >
               <img
                 src="https://b.blogmura.com/banner-blogmura-reader-white-small.svg"
-                alt="リアル大学生 - にほんブログ村"
+                alt="にほんブログ村"
                 loading="lazy"
                 width="160"
                 height="36"
@@ -151,7 +151,7 @@ export default function Share({ articleId, articleTitle }: Props) {
             />
           </a>
           <div className={`${styles.BuyMeaCoffeeMessage} text-center mt-4`}>
-            もし{BuyMeaCoffeeMessage}記事が役に立ったなら、
+            もし{buyMeaCoffeeMessage}記事が役に立ったなら、
             <br />
             こちらから ☕ を一杯支援いただけると喜びます
           </div>
