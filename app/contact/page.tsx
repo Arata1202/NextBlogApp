@@ -57,7 +57,7 @@ export default async function Page() {
           <h1 className="text-3xl font-bold lg:text-3xl">お問い合わせ</h1>
         </div>
       </h1>
-      <ContactPage sidebarArticles={data} />
+      <ContactPage articles={data.contents} />
       <div className="pc">
         <FixedSidebar articles={data.contents} />
       </div>
