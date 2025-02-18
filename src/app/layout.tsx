@@ -1,12 +1,12 @@
-import Header from '@/components/Layouts/Header';
-import Footer from '@/components/Layouts/Footer';
+import Header from '@/components/Common/Layouts/Header';
+import Footer from '@/components/Common/Layouts/Footer';
 import './globals.css';
 import styles from './layout.module.css';
 import Script from 'next/script';
 import { Adsense } from '@/components/Adsense/AdsenseScript';
 import { ThemeProvider } from '@/libs/theme-provider';
 import ThemeWrapper from '@/libs/theme-wrapper';
-import ScrollTopButton from '@/components/Layouts/ScrollToTop';
+import ScrollTopButton from '@/components/Common/Layouts/ScrollToTop';
 import type { Viewport } from 'next';
 
 export const viewport: Viewport = {

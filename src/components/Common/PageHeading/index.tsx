@@ -1,6 +1,6 @@
 import styles from './index.module.css';
-import PageTitle from './Elements/PageTitle';
-import BreadCrumb from './Elements/BreadCrumb';
+import PageTitle from '../PageTitle';
+import BreadCrumb from '../BreadCrumb';
 
 type Props = {
   year?: string;

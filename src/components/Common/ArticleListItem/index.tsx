@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import PublishedDate from '../../../../Elements/Date';
+import PublishedDate from '../../Elements/Date';
 
 type Props = {
   article: Article;

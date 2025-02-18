@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import Display from '../../Adsense/Display';
-import ArticleListItem from './Elements/ArticleListItem';
+import ArticleListItem from '../ArticleListItem';
 import Sidebar from '../Layouts/Sidebar';
 import Share from '../../Elements/Share';
 

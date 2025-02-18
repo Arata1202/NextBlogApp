@@ -6,7 +6,7 @@ import { Dialog, Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { FolderIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
-import ThemeSwitch from '@/components/Elements/ThemeSwitch';
+import ThemeSwitch from '@/components/Common/Layouts/ThemeSwitch';
 import { BlogTitle } from '@/section/dummy';
 import {
   headerNavigation,
