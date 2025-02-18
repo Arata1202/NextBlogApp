@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useGuardObserver } from '@/hooks/MutationObserver';
+import styles from './index.module.css';
 
 const PUBLISHER_ID = '1705865999592590';
 
@@ -15,14 +15,11 @@ declare global {
 
 type DisplayProps = {
   slot: string;
-  format?: string;
-  responsive?: string;
-  style?: any;
 };
 
-const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: DisplayProps) => {
-  let pathname = usePathname();
-  pathname = pathname ? pathname : '';
+export default function Display({ slot }: DisplayProps) {
+  const { theme } = useTheme();
+
   useGuardObserver();
 
   useEffect(() => {
@@ -31,29 +28,20 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
     } catch (err) {
       console.error(err);
     }
-  }, [pathname]);
-
-  const { theme } = useTheme();
+  }, []);
 
   return (
-    <div
-      style={{ maxWidth: '100%' }}
-      className="FirstAd mut-guard"
-      key={pathname.replace(/\//g, '-') + '-' + slot}
-    >
+    <div className={`${styles.unit} mut-guard`} key={slot}>
       <p className={`text-center ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
         スポンサーリンク
       </p>
       <ins
-        className="adsbygoogle mut-guard"
-        style={{ display: 'flex', justifyContent: 'center', width: '100%', ...style }}
+        className={`${styles.ins} mut-guard`}
         data-ad-client={`ca-pub-${PUBLISHER_ID}`}
         data-ad-slot={slot}
-        data-ad-format={format}
-        data-full-width-responsive={responsive}
+        data-ad-format="rectangle"
+        data-full-width-responsive="false"
       />
     </div>
   );
-};
-
-export default Display;
+}

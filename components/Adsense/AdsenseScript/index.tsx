@@ -7,7 +7,6 @@ export const Adsense = () => {
       src={process.env.GOOGLE_ADSENSE_ID}
       crossOrigin="anonymous"
       strategy="afterInteractive"
-      data-full-width-responsive="false"
     />
   );
 };

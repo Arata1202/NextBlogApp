@@ -1,0 +1,16 @@
+.unit {
+  max-width: 100%;
+  min-height: 280px;
+}
+
+.ins {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .unit {
+    min-height: 200px;
+  }
+}
