@@ -28,7 +28,7 @@ export default function Display({ slot }: DisplayProps) {
     } catch (err) {
       console.error(err);
     }
-  }, [slot]);
+  }, []);
 
   return (
     <div className={`${styles.unit} mut-guard`} key={slot}>
