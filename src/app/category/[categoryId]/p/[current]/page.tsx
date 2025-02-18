@@ -1,9 +1,6 @@
-import { getList } from '@/libs/microcms';
+import { getList, getCategory, getAllLists } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
-import Pagination from '@/components/Common/Pagination';
-import ArticleList from '@/components/ArticleLists/ArticleList';
-import TopSidebar from '@/components/Sidebars/TopSidebar';
-import Display from '@/components/Adsense/Display';
+import CategoryPage from '@/components/Pages/Category';
 
 type Props = {
   params: Promise<{
@@ -23,26 +20,26 @@ export const revalidate = 60;
 export default async function Page(props: Props) {
   const params = await props.params;
   const { categoryId } = params;
+
   const current = parseInt(params.current as string, 10);
+
   const data = await getList({
     limit: LIMIT,
     offset: LIMIT * (current - 1),
     filters: `categories[contains]${categoryId}`,
   });
+  const allData = await getAllLists();
+  const category = await getCategory(params.categoryId);
+
   return (
     <>
-      <ArticleList articles={data.contents} />
-      <Pagination
-        totalCount={data.totalCount}
+      <CategoryPage
+        articles={data.contents}
+        category={category}
         current={current}
-        basePath={`/category/${categoryId}`}
+        totalCount={data.totalCount}
+        allArticles={allData}
       />
-      <div className="pc">
-        <TopSidebar />
-      </div>
-      <div className="mt-5">
-        <Display slot="5969933704" />
-      </div>
     </>
   );
 }
