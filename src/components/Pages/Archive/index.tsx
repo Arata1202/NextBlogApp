@@ -1,7 +1,7 @@
 import { Article } from '@/libs/microcms';
 import Display from '@/components/Adsense/Display';
-import Pagination from '@/components/Layouts/Pagination';
-import ArticleList from '@/components/ArticleLists/ArticleList';
+import Pagination from '@/components/Common/Layouts/Pagination';
+import ArticleList from '@/components/Common/ArticleList';
 import PageHeading from '@/components/Common/Layouts/PageHeading';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 
