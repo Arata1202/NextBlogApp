@@ -6,9 +6,10 @@ type Props = {
   month?: string;
   category?: Category;
   contact?: boolean;
+  copyright?: boolean;
 };
 
-export default function BreadCrumb({ year, month, category, contact }: Props) {
+export default function BreadCrumb({ year, month, category, contact, copyright }: Props) {
   return (
     <>
       <ul className="flex items-center space-x-4">
@@ -42,6 +43,14 @@ export default function BreadCrumb({ year, month, category, contact }: Props) {
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 お問い合わせ
+              </a>
+            )}
+            {copyright && (
+              <a
+                href={`/copyright`}
+                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
+              >
+                著作権
               </a>
             )}
           </div>

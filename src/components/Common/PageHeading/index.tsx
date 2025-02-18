@@ -8,16 +8,35 @@ type Props = {
   month?: string;
   category?: Category;
   contact?: boolean;
+  copyright?: boolean;
 };
 
-export default function PageHeading({ year, month, category, contact = false }: Props) {
+export default function PageHeading({
+  year,
+  month,
+  category,
+  contact = false,
+  copyright = false,
+}: Props) {
   return (
     <>
       <div
         className={`${styles.container} text-3xl font-bold pt-5 max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2`}
       >
-        <BreadCrumb year={year} month={month} category={category} contact={contact} />
-        <PageTitle year={year} month={month} category={category} contact={contact} />
+        <BreadCrumb
+          year={year}
+          month={month}
+          category={category}
+          contact={contact}
+          copyright={copyright}
+        />
+        <PageTitle
+          year={year}
+          month={month}
+          category={category}
+          contact={contact}
+          copyright={copyright}
+        />
       </div>
     </>
   );
