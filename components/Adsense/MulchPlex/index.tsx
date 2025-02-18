@@ -2,8 +2,6 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
-import { useGuardObserver } from '@/hooks/MutationObserver';
 
 const PUBLISHER_ID = '1705865999592590';
 
@@ -13,17 +11,21 @@ declare global {
   }
 }
 
-type DisplayProps = {
+type MulchplexProps = {
   slot: string;
   format?: string;
   responsive?: string;
   style?: any;
 };
 
-const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: DisplayProps) => {
+const Mulchplex = ({
+  slot,
+  format = 'autorelaxed',
+  responsive = 'true',
+  style,
+}: MulchplexProps) => {
   let pathname = usePathname();
   pathname = pathname ? pathname : '';
-  useGuardObserver();
 
   useEffect(() => {
     try {
@@ -33,20 +35,16 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
     }
   }, [pathname]);
 
-  const { theme } = useTheme();
-
   return (
     <div
-      style={{ maxWidth: '100%' }}
-      className="FirstAd mut-guard"
+      style={{ maxWidth: '100%', overflow: 'hidden' }}
+      className="FirstAd"
       key={pathname.replace(/\//g, '-') + '-' + slot}
     >
-      <p className={`text-center ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
-        スポンサーリンク
-      </p>
+      <p className="text-center">スポンサーリンク</p>
       <ins
-        className="adsbygoogle mut-guard"
-        style={{ display: 'flex', justifyContent: 'center', width: '100%', ...style }}
+        className="adsbygoogle"
+        style={{ display: 'block', width: '100%', ...style }}
         data-ad-client={`ca-pub-${PUBLISHER_ID}`}
         data-ad-slot={slot}
         data-ad-format={format}
@@ -56,4 +54,4 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
   );
 };
 
-export default Display;
+export default Mulchplex;
