@@ -1,0 +1,14 @@
+@media (max-width: 1023px) and (min-width: 641px) {
+  .link {
+    display: flex;
+    gap: 10px;
+  }
+
+  .image {
+    max-width: 300px;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+}
