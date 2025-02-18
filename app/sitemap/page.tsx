@@ -1,11 +1,11 @@
-import { getList } from '@/libs/microcms';
+import { getAllLists, getAllCategoryLists } from '@/libs/microcms';
 import FixedSidebar from '@/components/Sidebars/FixedSidebar';
 import SitemapPage from '@/components/Fixed/Sitemap';
 import { DocumentMagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import Display from '@/components/Adsense/Display';
 
 export const metadata = {
-  metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: 'サイトマップ｜リアル大学生',
   description: '当ブログのサイトマップを記載しています。',
   openGraph: {
@@ -21,28 +21,9 @@ export const metadata = {
 
 export const revalidate = 60;
 
-async function fetchAllData(limit = 100): Promise<any[]> {
-  let offset = 0;
-  let allData: any[] = [];
-  let response;
-
-  try {
-    do {
-      response = await getList({ limit, offset, fields: 'id,title,thumbnail' });
-      if (response && response.contents) {
-        allData = [...allData, ...response.contents];
-      }
-      offset += limit;
-    } while (response && response.contents && response.contents.length === limit);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-
-  return allData;
-}
-
 export default async function Page() {
-  const data = await fetchAllData();
+  const data = await getAllLists();
+  const categories = await getAllCategoryLists();
 
   return (
     <>
@@ -75,7 +56,7 @@ export default async function Page() {
           <h1 className="text-3xl font-bold lg:text-3xl">サイトマップ</h1>
         </div>
       </h1>
-      <SitemapPage sidebarArticles={{ contents: data }} />
+      <SitemapPage articles={data} categories={categories} />
       <div className="pc">
         <FixedSidebar articles={data} />
       </div>

@@ -1,11 +1,3 @@
-.main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 100px;
-}
-
 /* タブボックス (メリット) */
 .tab_merit_box {
   padding: 10px;
@@ -14,14 +6,17 @@
   margin-bottom: 2.5rem;
   margin-top: 2.5rem;
 }
+
 .tab_merit_box ul {
   list-style: disc;
   margin-left: 50px;
 }
+
 .tab_merit_box_icon {
   color: #00d084;
   margin-left: 10px;
 }
+
 /* タブボックス (デメリット) */
 .tab_demerit_box {
   padding: 10px;
@@ -30,14 +25,17 @@
   margin-bottom: 2.5rem;
   margin-top: 2.5rem;
 }
+
 .tab_demerit_box ul {
   list-style: disc;
   margin-left: 50px;
 }
+
 .tab_demerit_box_icon {
   color: #ff7f7f;
   margin-left: 10px;
 }
+
 /* タブボックス (ポイント) */
 .tab_point_box {
   padding: 10px;
@@ -46,14 +44,17 @@
   margin-bottom: 2.5rem;
   margin-top: 2.5rem;
 }
+
 .tab_point_box ul {
   list-style: disc;
   margin-left: 50px;
 }
+
 .tab_point_box_icon {
   color: #ffd700;
   margin-left: 10px;
 }
+
 /* タブボックス (汎用) */
 .tab_common_box {
   padding: 10px;
@@ -62,79 +63,23 @@
   margin-bottom: 2.5rem;
   margin-top: 2.5rem;
 }
+
 .tab_common_box ul {
   list-style: disc;
   margin-left: 50px;
 }
+
 .tab_common_box_icon {
   color: #4682b4;
   margin-left: 10px;
 }
-@media (max-width: 768px) {
-  /* タブボックス (メリット) */
-  .tab_merit_box {
-    padding: 10px;
-    background-color: #ecffe9;
-    display: flex;
-    margin-bottom: 2.5rem;
-    margin-top: 2.5rem;
-  }
-  .tab_merit_box ul {
-    list-style: disc;
-    margin-left: 25px;
-  }
-  .tab_merit_box_icon {
-    color: #00d084;
-    margin-left: 5px;
-  }
-  /* タブボックス (デメリット) */
-  .tab_demerit_box {
-    padding: 10px;
-    background-color: #ffecec;
-    display: flex;
-    margin-bottom: 2.5rem;
-    margin-top: 2.5rem;
-  }
-  .tab_demerit_box ul {
-    list-style: disc;
-    margin-left: 25px;
-  }
-  .tab_demerit_box_icon {
-    color: #ff7f7f;
-    margin-left: 5px;
-  }
-  /* タブボックス (ポイント) */
-  .tab_point_box {
-    padding: 10px;
-    background-color: #fffacd;
-    display: flex;
-    margin-bottom: 2.5rem;
-    margin-top: 2.5rem;
-  }
-  .tab_point_box ul {
-    list-style: disc;
-    margin-left: 25px;
-  }
-  .tab_point_box_icon {
-    color: #ffd700;
-    margin-left: 5px;
-  }
-  /* タブボックス (汎用) */
-  .tab_common_box {
-    padding: 10px;
-    background-color: #eaf4fc;
-    display: flex;
-    margin-bottom: 2.5rem;
-    margin-top: 2.5rem;
-  }
-  .tab_common_box ul {
-    list-style: disc;
-    margin-left: 25px;
-  }
-  .tab_common_box_icon {
-    color: #4682b4;
-    margin-left: 5px;
-  }
+
+.container {
+  padding-top: 89px;
+}
+
+.sidebar {
+  margin-top: 100px;
 }
 
 .date {
@@ -151,39 +96,6 @@
   margin-top: 28px;
 }
 
-.description {
-  font-size: 0.9rem;
-  color: var(--color-text-sub);
-  margin: 24px 40px;
-  text-align: center;
-}
-
-.meta {
-  display: flex;
-  align-items: center;
-  margin-bottom: 64px;
-}
-
-.writer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-right: 40px;
-  border-right: 1px solid var(--color-border);
-  margin-right: 40px;
-}
-
-.writerIcon {
-  display: block;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-}
-
-.writerName {
-  margin-left: 16px;
-}
-
 .thumbnail {
   width: 960px;
   height: auto;
@@ -194,6 +106,7 @@
 .content {
   width: 100%;
 }
+
 .content iframe {
   width: 100%;
 }
@@ -290,6 +203,11 @@
 
 .content a {
   text-decoration: underline;
+  color: #3b82f6;
+}
+
+.content a:hover {
+  color: #2563eb;
 }
 
 .content > figure {
@@ -339,7 +257,95 @@
   padding: 1rem;
 }
 
+@media (max-width: 1024px) {
+  .sidebar {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  /* タブボックス (メリット) */
+  .tab_merit_box {
+    padding: 10px;
+    background-color: #ecffe9;
+    display: flex;
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .tab_merit_box ul {
+    list-style: disc;
+    margin-left: 25px;
+  }
+
+  .tab_merit_box_icon {
+    color: #00d084;
+    margin-left: 5px;
+  }
+
+  /* タブボックス (デメリット) */
+  .tab_demerit_box {
+    padding: 10px;
+    background-color: #ffecec;
+    display: flex;
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .tab_demerit_box ul {
+    list-style: disc;
+    margin-left: 25px;
+  }
+
+  .tab_demerit_box_icon {
+    color: #ff7f7f;
+    margin-left: 5px;
+  }
+
+  /* タブボックス (ポイント) */
+  .tab_point_box {
+    padding: 10px;
+    background-color: #fffacd;
+    display: flex;
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .tab_point_box ul {
+    list-style: disc;
+    margin-left: 25px;
+  }
+
+  .tab_point_box_icon {
+    color: #ffd700;
+    margin-left: 5px;
+  }
+
+  /* タブボックス (汎用) */
+  .tab_common_box {
+    padding: 10px;
+    background-color: #eaf4fc;
+    display: flex;
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .tab_common_box ul {
+    list-style: disc;
+    margin-left: 25px;
+  }
+
+  .tab_common_box_icon {
+    color: #4682b4;
+    margin-left: 5px;
+  }
+}
+
 @media (max-width: 640px) {
+  .container {
+    padding-top: 65px;
+  }
+
   .title {
     font-size: 1.5rem;
     margin-bottom: 20px;
@@ -350,28 +356,6 @@
     color: var(--color-text-sub);
     margin: 24px 0 40px;
     text-align: center;
-  }
-
-  .meta {
-    display: flex;
-    align-items: center;
-    margin-bottom: 40px;
-    font-size: 0.9rem;
-  }
-
-  .writer {
-    padding-right: 24px;
-    margin-right: 24px;
-  }
-
-  .writerIcon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-  }
-
-  .writerName {
-    margin-left: 16px;
   }
 
   .thumbnail {

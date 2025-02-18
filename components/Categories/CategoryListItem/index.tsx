@@ -1,4 +1,3 @@
-import React from 'react';
 import { Category } from '@/libs/microcms';
 import styles from './index.module.css';
 

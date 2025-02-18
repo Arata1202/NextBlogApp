@@ -76,6 +76,39 @@ export const client = createClient({
   apiKey: process.env.MICROCMS_API_KEY,
 });
 
+export const getAllLists = async (queries?: MicroCMSQueries) => {
+  const listData = await client
+    .getAllContents<Blog>({
+      endpoint: 'blog',
+      queries,
+    })
+    .catch(notFound);
+
+  return listData;
+};
+
+export const getAllCategoryLists = async (queries?: MicroCMSQueries) => {
+  const listData = await client
+    .getAllContents<Category>({
+      endpoint: 'categories',
+      queries,
+    })
+    .catch(notFound);
+
+  return listData;
+};
+
+export const getAllTagLists = async (queries?: MicroCMSQueries) => {
+  const listData = await client
+    .getAllContents<Tag>({
+      endpoint: 'tags',
+      queries,
+    })
+    .catch(notFound);
+
+  return listData;
+};
+
 export const getList = async (queries?: MicroCMSQueries) => {
   const listData = await client
     .getList<Blog>({

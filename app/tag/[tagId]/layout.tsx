@@ -1,4 +1,3 @@
-import React from 'react';
 import { getTag } from '@/libs/microcms';
 import { HomeIcon, ChevronRightIcon, HashtagIcon } from '@heroicons/react/24/solid';
 import { Metadata } from 'next';

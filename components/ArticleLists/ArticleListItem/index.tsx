@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
@@ -50,7 +49,7 @@ export default function ArticleListItem({ article }: Props) {
             <div className={styles.title}>{article.title}</div>
             <div className={styles.description}>{article.description}</div>
             <div className={styles.date}>
-              <PublishedDate date={article.publishedAt!} updatedAt={false} />
+              <PublishedDate date={article.publishedAt!} />
               {article.updatedAt && isNextDayOrLater(article.updatedAt, article.publishedAt!) && (
                 <>
                   &nbsp;&nbsp;&nbsp;&nbsp;
