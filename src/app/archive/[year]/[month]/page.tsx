@@ -1,9 +1,6 @@
 import { getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
-import Pagination from '@/components/Layouts/Pagination';
-import ArticleList from '@/components/ArticleLists/ArticleList';
-import TopSidebar from '@/components/Sidebars/TopSidebar';
-import Display from '@/components/Adsense/Display';
+import ArchivePage from '@/components/Pages/Archive';
 
 type Props = {
   params: Promise<{
@@ -28,14 +25,12 @@ export default async function Page(props: Props) {
 
   return (
     <>
-      <ArticleList articles={data.contents} />
-      <Pagination totalCount={data.totalCount} basePath={`/archive/${year}/${month}`} />
-      <div className="pc">
-        <TopSidebar />
-      </div>
-      <div className="mt-5">
-        <Display slot="5969933704" />
-      </div>
+      <ArchivePage
+        year={year}
+        month={month}
+        articles={data.contents}
+        totalCount={data.totalCount}
+      />
     </>
   );
 }
