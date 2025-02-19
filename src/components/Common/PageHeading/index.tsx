@@ -13,6 +13,7 @@ type Props = {
   link?: boolean;
   privacy?: boolean;
   profile?: boolean;
+  sitemap?: boolean;
 };
 
 export default function PageHeading({
@@ -25,6 +26,7 @@ export default function PageHeading({
   link = false,
   privacy = false,
   profile = false,
+  sitemap = false,
 }: Props) {
   return (
     <>
@@ -41,6 +43,7 @@ export default function PageHeading({
           link={link}
           privacy={privacy}
           profile={profile}
+          sitemap={sitemap}
         />
         <PageTitle
           year={year}
@@ -52,6 +55,7 @@ export default function PageHeading({
           link={link}
           privacy={privacy}
           profile={profile}
+          sitemap={sitemap}
         />
       </div>
     </>

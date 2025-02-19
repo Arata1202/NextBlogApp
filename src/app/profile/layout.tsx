@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function CopyrightLayout(props: Props) {
+export default async function ProfileLayout(props: Props) {
   const { children } = props;
 
   return <>{children}</>;

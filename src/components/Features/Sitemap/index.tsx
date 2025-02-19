@@ -5,7 +5,7 @@ import { Article, Category } from '@/libs/microcms';
 import styles from './index.module.css';
 import Display from '../../Adsense/Display';
 import PublishedDate from '@/components/Elements/Date';
-import FixedSidebar from '@/components/Sidebars/FixedSidebar';
+import Sidebar from '@/components/Common/Layouts/Sidebar';
 import Share from '../../Elements/Share';
 import AdAlert from '../../Articles/Elements/AdAlert';
 
@@ -14,7 +14,7 @@ type Props = {
   categories: Category[];
 };
 
-export default function SitemapPage({ articles, categories }: Props) {
+export default function Sitemap({ articles, categories }: Props) {
   const { theme } = useTheme();
 
   const dummyDate = new Date(2023, 10, 27);
@@ -102,9 +102,7 @@ export default function SitemapPage({ articles, categories }: Props) {
             </div>
             <Share />
           </div>
-          <div className="mobile">
-            <FixedSidebar articles={articles} />
-          </div>
+          <Sidebar allArticles={articles} mobile={false} />
         </div>
       </div>
     </>

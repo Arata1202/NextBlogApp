@@ -1,23 +1,5 @@
 import { getAllLists, getAllCategoryLists } from '@/libs/microcms';
-import FixedSidebar from '@/components/Sidebars/FixedSidebar';
-import SitemapPage from '@/components/Fixed/Sitemap';
-import { DocumentMagnifyingGlassIcon, HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import Display from '@/components/Adsense/Display';
-
-export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
-  title: 'サイトマップ｜リアル大学生',
-  description: '当ブログのサイトマップを記載しています。',
-  openGraph: {
-    title: 'サイトマップ｜リアル大学生',
-    description: '当ブログのサイトマップを記載しています。',
-    images: '/images/thumbnail/3.webp',
-    url: 'https://realunivlog.com/sitemap',
-  },
-  alternates: {
-    canonical: 'https://realunivlog.com/sitemap',
-  },
-};
+import SitemapPage from '@/components/Pages/Sitemap';
 
 export const revalidate = 60;
 
@@ -27,42 +9,7 @@ export default async function Page() {
 
   return (
     <>
-      <h1 className="categoryTitle text-3xl font-bold pt-5 max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
-        <nav className="flex" aria-label="Breadcrumb">
-          <ol role="list" className="flex items-center space-x-4">
-            <li>
-              <a href="/" className="flex text-gray-500 hover:text-blue-500">
-                <HomeIcon className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
-              </a>
-            </li>
-            <li>
-              <div className="flex items-center">
-                <ChevronRightIcon
-                  className="h-4 w-4 flex-shrink-0 text-gray-400"
-                  aria-hidden="true"
-                />
-                <a
-                  href="/sitemap"
-                  className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-                >
-                  サイトマップ
-                </a>
-              </div>
-            </li>
-          </ol>
-        </nav>
-        <div className="flex items-center py-2 mt-5">
-          <DocumentMagnifyingGlassIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-          <h1 className="text-3xl font-bold lg:text-3xl">サイトマップ</h1>
-        </div>
-      </h1>
       <SitemapPage articles={data} categories={categories} />
-      <div className="pc">
-        <FixedSidebar articles={data} />
-      </div>
-      <div className="mt-5">
-        <Display slot="5969933704" />
-      </div>
     </>
   );
 }
