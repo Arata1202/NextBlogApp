@@ -9,8 +9,6 @@ import {
   LinkIcon,
   LightBulbIcon,
   InformationCircleIcon,
-  HomeIcon,
-  ChevronRightIcon,
 } from '@heroicons/react/24/solid';
 import hljs from 'highlight.js/lib/common';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -31,12 +29,12 @@ import Display from '../../Adsense/Display';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import PublishedDate from '../../Elements/Date';
-import TableOfContents from '../Elements/TableOfContent';
+import TableOfContents from '@/components/Articles/Elements/TableOfContent';
 import ArticleSidebar from '../../Sidebars/ArticleSidebar';
 import ArticleCard from '@/components/Common/ArticleCard';
-import BreadcrumbsCategoryList from '../../Breadcrumbs/BreadcrumbsCategoryList';
-import AdAlert from '../Elements/AdAlert';
+import AdAlert from '@/components/Articles/Elements/AdAlert';
 import Share from '@/components/Elements/Share';
+import BreadCrumb from '@/components/Common/PageHeading/Elements/BreadCrumb';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
@@ -124,7 +122,7 @@ function useExtractHeadings(contentBlocks: { rich_text?: string }[]): Heading[] 
   return headings;
 }
 
-export default function ArticlePage({ data, articles }: Props) {
+export default function ArticleFeature({ data, articles }: Props) {
   const { theme } = useTheme();
 
   const headings = useExtractHeadings(data.content_blocks);
@@ -141,34 +139,7 @@ export default function ArticlePage({ data, articles }: Props) {
     <>
       <MainContainer article={true}>
         <ContentContainer>
-          <nav className="flex">
-            <ul className="flex items-center space-x-4">
-              <li>
-                <a href="/" className="flex text-gray-500 hover:text-blue-500">
-                  <HomeIcon className="h-4 w-4 flex-shrink-0" />
-                </a>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
-                  <div className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500">
-                    <BreadcrumbsCategoryList categories={data.categories} hasLink={true} />
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
-                  <a
-                    href={`${data.id}`}
-                    className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-                  >
-                    {data.title}
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </nav>
+          <BreadCrumb article={data} />
           <div className="space-y-5 lg:space-y-8">
             <h1 className={`${styles.title} text-3xl font-bold lg:text-3xl`}>{data.title}</h1>
             <picture className="w-full">

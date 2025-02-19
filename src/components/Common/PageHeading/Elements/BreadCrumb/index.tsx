@@ -1,9 +1,10 @@
 import { HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { Category } from '@/libs/microcms';
+import { Article, Category } from '@/libs/microcms';
 
 type Props = {
   year?: string;
   month?: string;
+  article?: Article;
   category?: Category;
   contact?: boolean;
   copyright?: boolean;
@@ -17,6 +18,7 @@ type Props = {
 export default function BreadCrumb({
   year,
   month,
+  article,
   category,
   contact,
   copyright,
@@ -34,6 +36,19 @@ export default function BreadCrumb({
             <HomeIcon className="h-4 w-4 flex-shrink-0" />
           </a>
         </li>
+        {article && (
+          <li>
+            <div className="flex items-center">
+              <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
+              <a
+                href={`/category/${article.categories[0].id}`}
+                className="whitespace-nowrap ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
+              >
+                {article.categories[0].name}
+              </a>
+            </div>
+          </li>
+        )}
         <li>
           <div className="flex items-center">
             <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
@@ -43,6 +58,14 @@ export default function BreadCrumb({
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 {year}月{parseInt(month || '')}月
+              </a>
+            )}
+            {article && (
+              <a
+                href={`${article.id}`}
+                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
+              >
+                {article.title}
               </a>
             )}
             {category && (
