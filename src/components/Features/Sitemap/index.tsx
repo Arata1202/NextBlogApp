@@ -4,6 +4,8 @@ import { useTheme } from 'next-themes';
 import { Article, Category } from '@/libs/microcms';
 import styles from './index.module.css';
 import Display from '../../Adsense/Display';
+import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
+import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import PublishedDate from '@/components/Elements/Date';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 import Share from '../../Elements/Share';
@@ -36,75 +38,73 @@ export default function Sitemap({ articles, categories }: Props) {
 
   return (
     <>
-      <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2">
-        <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
-          <div className="lg:col-span-2">
-            <div className="space-y-5 lg:space-y-8">
-              <div className="flex justify-end gap-x-5">
-                <PublishedDate date={formattedDate} />
-              </div>
-              <AdAlert />
-              <div className={`${styles.content} mt-10 mb-5`}>
-                <h2
-                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                >
-                  固定ページ
-                </h2>
-                <ul>
-                  {pages.map((page) => (
-                    <li key={page.name}>
-                      <a href={page.href} className="text-blue-500 hover:text-blue-700">
-                        {page.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-
-                <h2
-                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                >
-                  カテゴリー
-                </h2>
-                <ul>
-                  {categories.map((category) => (
-                    <li key={category.id}>
-                      <a
-                        href={`/category/${category.id}`}
-                        className="text-blue-500 hover:text-blue-700"
-                      >
-                        {category.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-
-                <h2
-                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                >
-                  投稿一覧
-                </h2>
-                <ul>
-                  {articles.map((article) => (
-                    <li key={article.id}>
-                      <a
-                        href={`/articles/${article.id}`}
-                        className="text-blue-500 hover:text-blue-700"
-                      >
-                        {article.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+      <MainContainer>
+        <ContentContainer>
+          <div className="space-y-5 lg:space-y-8">
+            <div className="flex justify-end gap-x-5">
+              <PublishedDate date={formattedDate} />
             </div>
-            <div className="FirstAd">
-              <Display slot="1831092739" />
+            <AdAlert />
+            <div className={`${styles.content} mt-10 mb-5`}>
+              <h2
+                className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+              >
+                固定ページ
+              </h2>
+              <ul>
+                {pages.map((page) => (
+                  <li key={page.name}>
+                    <a href={page.href} className="text-blue-500 hover:text-blue-700">
+                      {page.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              <h2
+                className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+              >
+                カテゴリー
+              </h2>
+              <ul>
+                {categories.map((category) => (
+                  <li key={category.id}>
+                    <a
+                      href={`/category/${category.id}`}
+                      className="text-blue-500 hover:text-blue-700"
+                    >
+                      {category.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              <h2
+                className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+              >
+                投稿一覧
+              </h2>
+              <ul>
+                {articles.map((article) => (
+                  <li key={article.id}>
+                    <a
+                      href={`/articles/${article.id}`}
+                      className="text-blue-500 hover:text-blue-700"
+                    >
+                      {article.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <Share />
           </div>
-          <Sidebar allArticles={articles} mobile={false} />
-        </div>
-      </div>
+          <div className="FirstAd">
+            <Display slot="1831092739" />
+          </div>
+          <Share />
+        </ContentContainer>
+        <Sidebar allArticles={articles} mobile={false} />
+      </MainContainer>
     </>
   );
 }

@@ -9,6 +9,8 @@ import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Article } from '@/libs/microcms';
 import Display from '../../Adsense/Display';
+import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
+import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 import Share from '../../Elements/Share';
 import AdAlert from '../../Articles/Elements/AdAlert';
@@ -121,105 +123,103 @@ export default function Contact({ articles }: Props) {
 
   return (
     <>
-      <div className="max-w-[85rem] sm:px-6 lg:px-8 mx-auto">
-        <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
-          <div className="lg:col-span-2">
-            <div className="space-y-5 lg:space-y-8">
-              <div className="flex justify-end gap-x-5">
-                <PublishedDate date={formattedDate} />
-              </div>
-              <AdAlert />
+      <MainContainer>
+        <ContentContainer>
+          <div className="space-y-5 lg:space-y-8">
+            <div className="flex justify-end gap-x-5">
+              <PublishedDate date={formattedDate} />
             </div>
-            <p className="mt-5">
-              本ブログに関するご質問やお気づきの点がございましたら、お気軽にお問い合わせください。
-            </p>
-            <form onSubmit={handleSubmit(onSubmit)} method="POST" className="pt-5 mb-5">
-              <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="email"
-                    className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
-                  >
-                    メールアドレス
-                  </label>
-                  <div className="mt-2.5">
-                    <input
-                      {...register('email', {
-                        required: '※ メールアドレスを入力してください',
-                        pattern: {
-                          value: /^\S+@\S+$/i,
-                          message: '※ 有効なメールアドレスを入力してください',
-                        },
-                      })}
-                      type="text"
-                      id="email"
-                      name="email"
-                      autoComplete="email"
-                      className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                    />
-                    {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-                  </div>
-                </div>
-                <div className="sm:col-span-2">
-                  <label
-                    className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
-                  >
-                    件名
-                  </label>
-                  <div className="mt-2.5">
-                    <input
-                      {...register('title', { required: '※ 件名を入力してください' })}
-                      type="text"
-                      id="title"
-                      name="title"
-                      autoComplete="title"
-                      className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                    />
-                    {errors.title && <p className="text-red-500">{errors.title.message}</p>}
-                  </div>
-                </div>
-                <div className="sm:col-span-2">
-                  <label
-                    className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
-                  >
-                    内容
-                  </label>
-                  <div className="mt-2.5">
-                    <textarea
-                      {...register('message', { required: '※ 内容を入力してください' })}
-                      id="message"
-                      name="message"
-                      rows={4}
-                      className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                    />
-                    {errors.message && <p className="text-red-500">{errors.message.message}</p>}
-                  </div>
-                </div>
-              </div>
-              <ReCAPTCHA
-                ref={recaptchaRef}
-                sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-                onChange={onChange}
-                className="mt-3"
-              />
-              <div className="mt-3">
-                <button
-                  type="submit"
-                  disabled={!captchaValue}
-                  className={`cursor-pointer block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-s border hover:border-2 hover:border-blue-500 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                >
-                  送信
-                </button>
-              </div>
-            </form>
-            <div className="FirstAd">
-              <Display slot="1831092739" />
-            </div>
-            <Share />
+            <AdAlert />
           </div>
-          <Sidebar allArticles={articles} mobile={false} />
-        </div>
-      </div>
+          <p className="mt-5">
+            本ブログに関するご質問やお気づきの点がございましたら、お気軽にお問い合わせください。
+          </p>
+          <form onSubmit={handleSubmit(onSubmit)} method="POST" className="pt-5 mb-5">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="email"
+                  className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
+                >
+                  メールアドレス
+                </label>
+                <div className="mt-2.5">
+                  <input
+                    {...register('email', {
+                      required: '※ メールアドレスを入力してください',
+                      pattern: {
+                        value: /^\S+@\S+$/i,
+                        message: '※ 有効なメールアドレスを入力してください',
+                      },
+                    })}
+                    type="text"
+                    id="email"
+                    name="email"
+                    autoComplete="email"
+                    className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  />
+                  {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label
+                  className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
+                >
+                  件名
+                </label>
+                <div className="mt-2.5">
+                  <input
+                    {...register('title', { required: '※ 件名を入力してください' })}
+                    type="text"
+                    id="title"
+                    name="title"
+                    autoComplete="title"
+                    className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  />
+                  {errors.title && <p className="text-red-500">{errors.title.message}</p>}
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label
+                  className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
+                >
+                  内容
+                </label>
+                <div className="mt-2.5">
+                  <textarea
+                    {...register('message', { required: '※ 内容を入力してください' })}
+                    id="message"
+                    name="message"
+                    rows={4}
+                    className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-2 focus:border-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  />
+                  {errors.message && <p className="text-red-500">{errors.message.message}</p>}
+                </div>
+              </div>
+            </div>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+              onChange={onChange}
+              className="mt-3"
+            />
+            <div className="mt-3">
+              <button
+                type="submit"
+                disabled={!captchaValue}
+                className={`cursor-pointer block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-s border hover:border-2 hover:border-blue-500 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              >
+                送信
+              </button>
+            </div>
+          </form>
+          <div className="FirstAd">
+            <Display slot="1831092739" />
+          </div>
+          <Share />
+        </ContentContainer>
+        <Sidebar allArticles={articles} mobile={false} />
+      </MainContainer>
 
       <Transition.Root show={open} as={Fragment}>
         <Dialog

@@ -28,6 +28,8 @@ import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import './plugin.css';
 import Display from '../../Adsense/Display';
+import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
+import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import PublishedDate from '../../Elements/Date';
 import TableOfContents from '../Elements/TableOfContent';
 import ArticleSidebar from '../../Sidebars/ArticleSidebar';
@@ -137,255 +139,249 @@ export default function ArticlePage({ data, articles }: Props) {
 
   return (
     <>
-      <div className={`${styles.container} max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2`}>
-        <div className="grid lg:grid-cols-3 gap-y-8 lg:gap-y-0 lg:gap-x-6">
-          <div className="lg:col-span-2">
-            <nav className="flex">
-              <ul className="flex items-center space-x-4">
-                <li>
-                  <a href="/" className="flex text-gray-500 hover:text-blue-500">
-                    <HomeIcon className="h-4 w-4 flex-shrink-0" />
+      <MainContainer article={true}>
+        <ContentContainer>
+          <nav className="flex">
+            <ul className="flex items-center space-x-4">
+              <li>
+                <a href="/" className="flex text-gray-500 hover:text-blue-500">
+                  <HomeIcon className="h-4 w-4 flex-shrink-0" />
+                </a>
+              </li>
+              <li>
+                <div className="flex items-center">
+                  <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
+                  <div className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500">
+                    <BreadcrumbsCategoryList categories={data.categories} hasLink={true} />
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="flex items-center">
+                  <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
+                  <a
+                    href={`${data.id}`}
+                    className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
+                  >
+                    {data.title}
                   </a>
-                </li>
-                <li>
-                  <div className="flex items-center">
-                    <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
-                    <div className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500">
-                      <BreadcrumbsCategoryList categories={data.categories} hasLink={true} />
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <div className="space-y-5 lg:space-y-8">
+            <h1 className={`${styles.title} text-3xl font-bold lg:text-3xl`}>{data.title}</h1>
+            <picture className="w-full">
+              <source
+                type="image/webp"
+                media="(max-width: 640px)"
+                srcSet={`${data.thumbnail.url}?fm=webp&w=414 1x, ${data.thumbnail.url}?fm=webp&w=414&dpr=2 2x`}
+              />
+              <source
+                type="image/webp"
+                srcSet={`${data.thumbnail.url}?fm=webp&fit=crop&w=960&h=504 1x, ${data.thumbnail.url}?fm=webp&fit=crop&w=960&h=504&dpr=2 2x`}
+              />
+              <img
+                src={data.thumbnail.url}
+                alt={data.title}
+                className={styles.thumbnail}
+                width={data.thumbnail.width}
+                height={data.thumbnail.height}
+              />
+            </picture>
+            <div className={styles.date}>
+              <PublishedDate date={data.publishedAt!} />
+              {data.updatedAt && isNextDayOrLater(data.updatedAt, data.publishedAt!) && (
+                <>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <PublishedDate date={data.updatedAt!} updatedAt={true} />
+                </>
+              )}
+            </div>
+            <AdAlert />
+            {data.introduction_blocks.map((block, index) => (
+              <div key={index}>
+                {block.bubble_text && block.bubble_image && (
+                  <div className="my-10">
+                    <div className={`speech-bubble ${block.bubble_isRight ? 'right' : 'left'}`}>
+                      {block.bubble_image && (
+                        <div
+                          className={`bubble-image-wrapper ${
+                            block.bubble_isRight ? 'right' : 'left'
+                          }`}
+                        >
+                          <img
+                            src={block.bubble_image.url}
+                            alt="吹き出しのイメージ"
+                            width={75}
+                            height={75}
+                            className="bubble-image"
+                          />
+                        </div>
+                      )}
+                      <div className={`bubble-content ${block.bubble_isRight ? 'right' : 'left'}`}>
+                        <p className="bubble-text text-gray-700">{block.bubble_text}</p>
+                      </div>
                     </div>
                   </div>
-                </li>
-                <li>
-                  <div className="flex items-center">
-                    <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
-                    <a
-                      href={`${data.id}`}
-                      className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-                    >
-                      {data.title}
-                    </a>
-                  </div>
-                </li>
-              </ul>
-            </nav>
-            <div className="space-y-5 lg:space-y-8">
-              <h1 className={`${styles.title} text-3xl font-bold lg:text-3xl`}>{data.title}</h1>
-              <picture className="w-full">
-                <source
-                  type="image/webp"
-                  media="(max-width: 640px)"
-                  srcSet={`${data.thumbnail.url}?fm=webp&w=414 1x, ${data.thumbnail.url}?fm=webp&w=414&dpr=2 2x`}
-                />
-                <source
-                  type="image/webp"
-                  srcSet={`${data.thumbnail.url}?fm=webp&fit=crop&w=960&h=504 1x, ${data.thumbnail.url}?fm=webp&fit=crop&w=960&h=504&dpr=2 2x`}
-                />
-                <img
-                  src={data.thumbnail.url}
-                  alt={data.title}
-                  className={styles.thumbnail}
-                  width={data.thumbnail.width}
-                  height={data.thumbnail.height}
-                />
-              </picture>
-              <div className={styles.date}>
-                <PublishedDate date={data.publishedAt!} />
-                {data.updatedAt && isNextDayOrLater(data.updatedAt, data.publishedAt!) && (
+                )}
+                {block.rich_text && (
+                  <div
+                    className={styles.content}
+                    dangerouslySetInnerHTML={{
+                      __html: formatRichText(block.rich_text, theme).replace(
+                        /<img/g,
+                        '<img loading="lazy"',
+                      ),
+                    }}
+                  />
+                )}
+                {block.custom_html && (
+                  <div
+                    className={styles.content}
+                    dangerouslySetInnerHTML={{ __html: block.custom_html }}
+                  />
+                )}
+                {block.article_link && typeof block.article_link !== 'string' && (
                   <>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <PublishedDate date={data.updatedAt!} updatedAt={true} />
+                    <div className="flex mt-10">
+                      <LinkIcon className="h-8 w-8 mr-2" />
+                      <div className="text-2xl font-semibold mb-5">あわせて読みたい</div>
+                    </div>
+                    <ArticleCard article={block.article_link} />
                   </>
                 )}
+                {block.box_merit && (
+                  <div className={`${styles.tab_merit_box} text-gray-700 flex items-center`}>
+                    <HandThumbUpIcon className={`h-8 w-8 ${styles.tab_merit_box_icon}`} />
+                    <div dangerouslySetInnerHTML={{ __html: block.box_merit }} />
+                  </div>
+                )}
+                {block.box_demerit && (
+                  <div className={`${styles.tab_demerit_box} text-gray-700 flex items-center`}>
+                    <HandThumbDownIcon className={`h-8 w-8 ${styles.tab_demerit_box_icon}`} />
+                    <div dangerouslySetInnerHTML={{ __html: block.box_demerit }} />
+                  </div>
+                )}
+                {block.box_point && (
+                  <div className={`${styles.tab_point_box} text-gray-700 flex items-center`}>
+                    <LightBulbIcon className={`h-8 w-8 ${styles.tab_point_box_icon}`} />
+                    <div dangerouslySetInnerHTML={{ __html: block.box_point }} />
+                  </div>
+                )}
+                {block.box_common && (
+                  <div className={`${styles.tab_common_box} text-gray-700 flex items-center`}>
+                    <InformationCircleIcon className={`h-8 w-8 ${styles.tab_common_box_icon}`} />
+                    <div dangerouslySetInnerHTML={{ __html: block.box_common }} />
+                  </div>
+                )}
               </div>
-              <AdAlert />
-              {data.introduction_blocks.map((block, index) => (
-                <div key={index}>
-                  {block.bubble_text && block.bubble_image && (
-                    <div className="my-10">
-                      <div className={`speech-bubble ${block.bubble_isRight ? 'right' : 'left'}`}>
-                        {block.bubble_image && (
-                          <div
-                            className={`bubble-image-wrapper ${
-                              block.bubble_isRight ? 'right' : 'left'
-                            }`}
-                          >
-                            <img
-                              src={block.bubble_image.url}
-                              alt="吹き出しのイメージ"
-                              width={75}
-                              height={75}
-                              className="bubble-image"
-                            />
-                          </div>
-                        )}
+            ))}
+            <>{headings.length > 0 && <TableOfContents headings={headings} />}</>
+            {data.content_blocks.map((block, index) => (
+              <div key={index}>
+                {block.google_adsense && <Display slot={block.google_adsense} />}
+                {block.bubble_text && block.bubble_image && (
+                  <div className="my-10">
+                    <div className={`speech-bubble ${block.bubble_isRight ? 'right' : 'left'}`}>
+                      {block.bubble_image && (
                         <div
-                          className={`bubble-content ${block.bubble_isRight ? 'right' : 'left'}`}
+                          className={`bubble-image-wrapper ${
+                            block.bubble_isRight ? 'right' : 'left'
+                          }`}
                         >
-                          <p className="bubble-text text-gray-700">{block.bubble_text}</p>
+                          <img
+                            src={block.bubble_image.url}
+                            alt="吹き出しのイメージ"
+                            width={75}
+                            height={75}
+                            className="bubble-image"
+                          />
                         </div>
-                      </div>
-                    </div>
-                  )}
-                  {block.rich_text && (
-                    <div
-                      className={styles.content}
-                      dangerouslySetInnerHTML={{
-                        __html: formatRichText(block.rich_text, theme).replace(
-                          /<img/g,
-                          '<img loading="lazy"',
-                        ),
-                      }}
-                    />
-                  )}
-                  {block.custom_html && (
-                    <div
-                      className={styles.content}
-                      dangerouslySetInnerHTML={{ __html: block.custom_html }}
-                    />
-                  )}
-                  {block.article_link && typeof block.article_link !== 'string' && (
-                    <>
-                      <div className="flex mt-10">
-                        <LinkIcon className="h-8 w-8 mr-2" />
-                        <div className="text-2xl font-semibold mb-5">あわせて読みたい</div>
-                      </div>
-                      <ArticleCard article={block.article_link} />
-                    </>
-                  )}
-                  {block.box_merit && (
-                    <div className={`${styles.tab_merit_box} text-gray-700 flex items-center`}>
-                      <HandThumbUpIcon className={`h-8 w-8 ${styles.tab_merit_box_icon}`} />
-                      <div dangerouslySetInnerHTML={{ __html: block.box_merit }} />
-                    </div>
-                  )}
-                  {block.box_demerit && (
-                    <div className={`${styles.tab_demerit_box} text-gray-700 flex items-center`}>
-                      <HandThumbDownIcon className={`h-8 w-8 ${styles.tab_demerit_box_icon}`} />
-                      <div dangerouslySetInnerHTML={{ __html: block.box_demerit }} />
-                    </div>
-                  )}
-                  {block.box_point && (
-                    <div className={`${styles.tab_point_box} text-gray-700 flex items-center`}>
-                      <LightBulbIcon className={`h-8 w-8 ${styles.tab_point_box_icon}`} />
-                      <div dangerouslySetInnerHTML={{ __html: block.box_point }} />
-                    </div>
-                  )}
-                  {block.box_common && (
-                    <div className={`${styles.tab_common_box} text-gray-700 flex items-center`}>
-                      <InformationCircleIcon className={`h-8 w-8 ${styles.tab_common_box_icon}`} />
-                      <div dangerouslySetInnerHTML={{ __html: block.box_common }} />
-                    </div>
-                  )}
-                </div>
-              ))}
-              <>{headings.length > 0 && <TableOfContents headings={headings} />}</>
-              {data.content_blocks.map((block, index) => (
-                <div key={index}>
-                  {block.google_adsense && <Display slot={block.google_adsense} />}
-                  {block.bubble_text && block.bubble_image && (
-                    <div className="my-10">
-                      <div className={`speech-bubble ${block.bubble_isRight ? 'right' : 'left'}`}>
-                        {block.bubble_image && (
-                          <div
-                            className={`bubble-image-wrapper ${
-                              block.bubble_isRight ? 'right' : 'left'
-                            }`}
-                          >
-                            <img
-                              src={block.bubble_image.url}
-                              alt="吹き出しのイメージ"
-                              width={75}
-                              height={75}
-                              className="bubble-image"
-                            />
-                          </div>
-                        )}
-                        <div
-                          className={`bubble-content ${block.bubble_isRight ? 'right' : 'left'}`}
-                        >
-                          <p className="bubble-text text-gray-700">{block.bubble_text}</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {block.rich_text && (
-                    <div
-                      className={styles.content}
-                      dangerouslySetInnerHTML={{
-                        __html: formatRichText(block.rich_text, theme).replace(
-                          /<img/g,
-                          '<img loading="lazy"',
-                        ),
-                      }}
-                    />
-                  )}
-                  {block.custom_html && (
-                    <div
-                      className={styles.content}
-                      dangerouslySetInnerHTML={{ __html: block.custom_html }}
-                    />
-                  )}
-                  {block.article_link && typeof block.article_link !== 'string' && (
-                    <>
-                      <div className="flex mt-10">
-                        <LinkIcon className="h-8 w-8 mr-2" />
-                        <div className="text-2xl font-semibold mb-5">あわせて読みたい</div>
-                      </div>
-                      <ArticleCard article={block.article_link} />
-                    </>
-                  )}
-                  {block.box_merit && (
-                    <div className={`${styles.tab_merit_box} text-gray-700 flex items-center`}>
-                      <HandThumbUpIcon className={`h-8 w-8 ${styles.tab_merit_box_icon}`} />
-                      <div dangerouslySetInnerHTML={{ __html: block.box_merit }} />
-                    </div>
-                  )}
-                  {block.box_demerit && (
-                    <div className={`${styles.tab_demerit_box} text-gray-700 flex items-center`}>
-                      <HandThumbDownIcon className={`h-8 w-8 ${styles.tab_demerit_box_icon}`} />
-                      <div dangerouslySetInnerHTML={{ __html: block.box_demerit }} />
-                    </div>
-                  )}
-                  {block.box_point && (
-                    <div className={`${styles.tab_point_box} text-gray-700 flex items-center`}>
-                      <LightBulbIcon className={`h-8 w-8 ${styles.tab_point_box_icon}`} />
-                      <div dangerouslySetInnerHTML={{ __html: block.box_point }} />
-                    </div>
-                  )}
-                  {block.box_common && (
-                    <div className={`${styles.tab_common_box} text-gray-700 flex items-center`}>
-                      <InformationCircleIcon className={`h-8 w-8 ${styles.tab_common_box_icon}`} />
-                      <div dangerouslySetInnerHTML={{ __html: block.box_common }} />
-                    </div>
-                  )}
-                </div>
-              ))}
-              <div className="FirstAd">
-                <Display slot="1831092739" />
-              </div>
-              <div className="mt-10">
-                <div className={`text-2xl font-semibold flex justify-center pt-10`}>
-                  <LinkIcon className="h-8 w-8 mr-2" />
-                  関連記事
-                </div>
-                <div className="mt-5">
-                  {data.related_articles.map((block, index) => (
-                    <div key={index}>
-                      {block.article_link && typeof block.article_link !== 'string' && (
-                        <ArticleCard article={block.article_link} />
                       )}
+                      <div className={`bubble-content ${block.bubble_isRight ? 'right' : 'left'}`}>
+                        <p className="bubble-text text-gray-700">{block.bubble_text}</p>
+                      </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
+                {block.rich_text && (
+                  <div
+                    className={styles.content}
+                    dangerouslySetInnerHTML={{
+                      __html: formatRichText(block.rich_text, theme).replace(
+                        /<img/g,
+                        '<img loading="lazy"',
+                      ),
+                    }}
+                  />
+                )}
+                {block.custom_html && (
+                  <div
+                    className={styles.content}
+                    dangerouslySetInnerHTML={{ __html: block.custom_html }}
+                  />
+                )}
+                {block.article_link && typeof block.article_link !== 'string' && (
+                  <>
+                    <div className="flex mt-10">
+                      <LinkIcon className="h-8 w-8 mr-2" />
+                      <div className="text-2xl font-semibold mb-5">あわせて読みたい</div>
+                    </div>
+                    <ArticleCard article={block.article_link} />
+                  </>
+                )}
+                {block.box_merit && (
+                  <div className={`${styles.tab_merit_box} text-gray-700 flex items-center`}>
+                    <HandThumbUpIcon className={`h-8 w-8 ${styles.tab_merit_box_icon}`} />
+                    <div dangerouslySetInnerHTML={{ __html: block.box_merit }} />
+                  </div>
+                )}
+                {block.box_demerit && (
+                  <div className={`${styles.tab_demerit_box} text-gray-700 flex items-center`}>
+                    <HandThumbDownIcon className={`h-8 w-8 ${styles.tab_demerit_box_icon}`} />
+                    <div dangerouslySetInnerHTML={{ __html: block.box_demerit }} />
+                  </div>
+                )}
+                {block.box_point && (
+                  <div className={`${styles.tab_point_box} text-gray-700 flex items-center`}>
+                    <LightBulbIcon className={`h-8 w-8 ${styles.tab_point_box_icon}`} />
+                    <div dangerouslySetInnerHTML={{ __html: block.box_point }} />
+                  </div>
+                )}
+                {block.box_common && (
+                  <div className={`${styles.tab_common_box} text-gray-700 flex items-center`}>
+                    <InformationCircleIcon className={`h-8 w-8 ${styles.tab_common_box_icon}`} />
+                    <div dangerouslySetInnerHTML={{ __html: block.box_common }} />
+                  </div>
+                )}
               </div>
-              <Share data={data} />
+            ))}
+            <div className="FirstAd">
+              <Display slot="1831092739" />
             </div>
+            <div className="mt-10">
+              <div className={`text-2xl font-semibold flex justify-center pt-10`}>
+                <LinkIcon className="h-8 w-8 mr-2" />
+                関連記事
+              </div>
+              <div className="mt-5">
+                {data.related_articles.map((block, index) => (
+                  <div key={index}>
+                    {block.article_link && typeof block.article_link !== 'string' && (
+                      <ArticleCard article={block.article_link} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <Share data={data} />
           </div>
-          <div className={styles.sidebar}>
-            <ArticleSidebar articles={articles} contentBlocks={data.content_blocks} />
-          </div>
+        </ContentContainer>
+        <div className={styles.sidebar}>
+          <ArticleSidebar articles={articles} contentBlocks={data.content_blocks} />
         </div>
-      </div>
+      </MainContainer>
     </>
   );
 }

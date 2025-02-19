@@ -74,10 +74,6 @@
   margin-left: 10px;
 }
 
-.container {
-  padding-top: 89px;
-}
-
 .sidebar {
   margin-top: 100px;
 }
@@ -342,10 +338,6 @@
 }
 
 @media (max-width: 640px) {
-  .container {
-    padding-top: 65px;
-  }
-
   .title {
     font-size: 1.5rem;
     margin-bottom: 20px;
