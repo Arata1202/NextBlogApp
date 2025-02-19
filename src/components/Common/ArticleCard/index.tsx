@@ -9,7 +9,7 @@ type Props = {
   article: Article;
 };
 
-export default function ArticleListItem({ article }: Props) {
+export default function ArticleCard({ article }: Props) {
   const { theme } = useTheme();
 
   const isNextDayOrLater = (date1: string, date2: string) => {

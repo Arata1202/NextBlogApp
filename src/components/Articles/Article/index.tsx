@@ -31,7 +31,7 @@ import Display from '../../Adsense/Display';
 import PublishedDate from '../../Elements/Date';
 import TableOfContents from '../Elements/TableOfContent';
 import ArticleSidebar from '../../Sidebars/ArticleSidebar';
-import ArticleListItem from '@/components/ArticleLists/ArticleListItem';
+import ArticleCard from '@/components/Common/ArticleCard';
 import BreadcrumbsCategoryList from '../../Breadcrumbs/BreadcrumbsCategoryList';
 import AdAlert from '../Elements/AdAlert';
 import Share from '@/components/Elements/Share';
@@ -249,7 +249,7 @@ export default function ArticlePage({ data, articles }: Props) {
                         <LinkIcon className="h-8 w-8 mr-2" />
                         <div className="text-2xl font-semibold mb-5">あわせて読みたい</div>
                       </div>
-                      <ArticleListItem article={block.article_link} />
+                      <ArticleCard article={block.article_link} />
                     </>
                   )}
                   {block.box_merit && (
@@ -331,7 +331,7 @@ export default function ArticlePage({ data, articles }: Props) {
                         <LinkIcon className="h-8 w-8 mr-2" />
                         <div className="text-2xl font-semibold mb-5">あわせて読みたい</div>
                       </div>
-                      <ArticleListItem article={block.article_link} />
+                      <ArticleCard article={block.article_link} />
                     </>
                   )}
                   {block.box_merit && (
@@ -372,7 +372,7 @@ export default function ArticlePage({ data, articles }: Props) {
                   {data.related_articles.map((block, index) => (
                     <div key={index}>
                       {block.article_link && typeof block.article_link !== 'string' && (
-                        <ArticleListItem article={block.article_link} />
+                        <ArticleCard article={block.article_link} />
                       )}
                     </div>
                   ))}

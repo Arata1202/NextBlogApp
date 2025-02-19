@@ -1,7 +1,7 @@
 import { Category } from '@/libs/microcms';
 import styles from './index.module.css';
-import PageTitle from '../PageTitle';
-import BreadCrumb from '../BreadCrumb';
+import PageTitle from './Elements/PageTitle';
+import BreadCrumb from './Elements/BreadCrumb';
 
 type Props = {
   year?: string;

@@ -1,5 +1,3 @@
-'use client';
-
 import { Article } from '@/libs/microcms';
 import Display from '@/components/Adsense/Display';
 import Disclaimer from '@/components/Features/Disclaimer';

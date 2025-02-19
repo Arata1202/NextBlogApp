@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import Display from '../../Adsense/Display';
-import ArticleListItem from '../ArticleListItem';
+import ArticleCard from '../ArticleCard';
 import Sidebar from '../Layouts/Sidebar';
 import Share from '../../Elements/Share';
 
@@ -34,7 +34,7 @@ export default function ArticleList({ articles, allArticles }: Props) {
               <ul className={styles.main}>
                 <div>
                   {articles.slice(0, 3).map((article) => (
-                    <ArticleListItem key={article.id} article={article} />
+                    <ArticleCard key={article.id} article={article} />
                   ))}
                 </div>
                 <div className="FirstAd">
@@ -42,7 +42,7 @@ export default function ArticleList({ articles, allArticles }: Props) {
                 </div>
                 <div className="mt-5">
                   {articles.slice(3).map((article) => (
-                    <ArticleListItem key={article.id} article={article} />
+                    <ArticleCard key={article.id} article={article} />
                   ))}
                 </div>
               </ul>
