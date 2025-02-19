@@ -12,6 +12,7 @@ type Props = {
   disclaimer?: boolean;
   link?: boolean;
   privacy?: boolean;
+  profile?: boolean;
 };
 
 export default function PageHeading({
@@ -23,6 +24,7 @@ export default function PageHeading({
   disclaimer = false,
   link = false,
   privacy = false,
+  profile = false,
 }: Props) {
   return (
     <>
@@ -38,6 +40,7 @@ export default function PageHeading({
           disclaimer={disclaimer}
           link={link}
           privacy={privacy}
+          profile={profile}
         />
         <PageTitle
           year={year}
@@ -48,6 +51,7 @@ export default function PageHeading({
           disclaimer={disclaimer}
           link={link}
           privacy={privacy}
+          profile={profile}
         />
       </div>
     </>

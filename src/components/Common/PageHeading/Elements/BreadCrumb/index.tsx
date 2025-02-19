@@ -10,6 +10,7 @@ type Props = {
   disclaimer?: boolean;
   link?: boolean;
   privacy?: boolean;
+  profile?: boolean;
 };
 
 export default function BreadCrumb({
@@ -21,6 +22,7 @@ export default function BreadCrumb({
   disclaimer,
   link,
   privacy,
+  profile,
 }: Props) {
   return (
     <>
@@ -87,6 +89,14 @@ export default function BreadCrumb({
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 プライバシーポリシー
+              </a>
+            )}
+            {profile && (
+              <a
+                href={`/profile`}
+                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
+              >
+                プロフィール
               </a>
             )}
           </div>
