@@ -5,6 +5,7 @@ import {
   DocumentTextIcon,
   ExclamationCircleIcon,
   LinkIcon,
+  LockClosedIcon,
 } from '@heroicons/react/24/solid';
 import { Category } from '@/libs/microcms';
 
@@ -16,6 +17,7 @@ type Props = {
   copyright?: boolean;
   disclaimer?: boolean;
   link?: boolean;
+  privacy?: boolean;
 };
 
 export default function PageTitle({
@@ -26,6 +28,7 @@ export default function PageTitle({
   copyright,
   disclaimer,
   link,
+  privacy,
 }: Props) {
   return (
     <>
@@ -66,6 +69,12 @@ export default function PageTitle({
           <>
             <LinkIcon className="h-8 w-8 mr-2" />
             <div>リンク</div>
+          </>
+        )}
+        {privacy && (
+          <>
+            <LockClosedIcon className="h-8 w-8 mr-2" />
+            <div>プライバシーポリシー</div>
           </>
         )}
       </h1>

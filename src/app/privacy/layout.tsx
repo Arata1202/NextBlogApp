@@ -8,10 +8,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
 
-  const title = `リンク｜${defaultTitle}`;
-  const description = `リンクについてを記載しています。`;
+  const title = `プライバシーポリシー｜${defaultTitle}`;
+  const description = `プライバシーポリシーを記載しています。`;
   const images = `${defaultUrl}/images/thumbnail/7.webp`;
-  const url = `${defaultUrl}/link`;
+  const url = `${defaultUrl}/privacy`;
 
   return {
     title: title,
@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function DisclaimerLayout(props: Props) {
+export default async function CopyrightLayout(props: Props) {
   const { children } = props;
 
   return <>{children}</>;

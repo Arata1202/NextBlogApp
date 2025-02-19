@@ -13,7 +13,7 @@ type Props = {
   articles: Article[];
 };
 
-export default function PrivacyPage({ articles }: Props) {
+export default function Privacy({ articles }: Props) {
   const { theme } = useTheme();
 
   const dummyDate = new Date(2023, 10, 27);
