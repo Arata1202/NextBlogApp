@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import PublishedDate from '../../Elements/Date';
+import SingleDate from '../SingleDate';
 
 type Props = {
   article: Article;
@@ -49,11 +49,11 @@ export default function ArticleCard({ article }: Props) {
             <div className={styles.title}>{article.title}</div>
             <div className={styles.description}>{article.description}</div>
             <div className={styles.date}>
-              <PublishedDate date={article.publishedAt!} />
+              <SingleDate date={article.publishedAt!} />
               {article.updatedAt && isNextDayOrLater(article.updatedAt, article.publishedAt!) && (
                 <>
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <PublishedDate date={article.updatedAt} updatedAt={true} />
+                  <SingleDate date={article.updatedAt} updatedAt={true} />
                 </>
               )}
             </div>

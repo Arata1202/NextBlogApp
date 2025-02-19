@@ -1,6 +1,6 @@
 import { useTheme } from 'next-themes';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import SearchField from '@/components/Elements/SearchField';
+import SearchField from '@/components/Common/SearchField';
 
 export default function Search() {
   const { theme } = useTheme();

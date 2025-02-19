@@ -10,7 +10,7 @@ type Props = {
   updatedAt?: boolean;
 };
 
-export default function PublishedDate({ date, updatedAt = false }: Props) {
+export default function SingleDate({ date, updatedAt = false }: Props) {
   const { theme } = useTheme();
 
   return (

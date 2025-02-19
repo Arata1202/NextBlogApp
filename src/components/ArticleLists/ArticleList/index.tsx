@@ -3,12 +3,12 @@
 import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import Display from '../../Adsense/Display';
+import Display from '../../Common/Adsense/Display';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import ArticleCard from '@/components/Common/ArticleCard';
 import TopSidebar from '../../Sidebars/TopSidebar';
-import Share from '../../Elements/Share';
+import Share from '../../Common/Share';
 
 type Props = {
   articles: Article[];

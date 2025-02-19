@@ -8,13 +8,13 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Article } from '@/libs/microcms';
-import Display from '../../Adsense/Display';
+import Display from '../../Common/Adsense/Display';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
-import Share from '../../Elements/Share';
-import AdAlert from '../../Articles/Elements/AdAlert';
-import PublishedDate from '@/components/Elements/Date';
+import Share from '../../Common/Share';
+import AdAlert from '../../Common/AdAlert';
+import SingleDate from '@/components/Common/SingleDate';
 
 type Props = {
   articles: Article[];
@@ -127,7 +127,7 @@ export default function ContactFeature({ articles }: Props) {
         <ContentContainer>
           <div className="space-y-5 lg:space-y-8">
             <div className="flex justify-end gap-x-5">
-              <PublishedDate date={formattedDate} />
+              <SingleDate date={formattedDate} />
             </div>
             <AdAlert />
           </div>

@@ -3,7 +3,7 @@ import Footer from '@/components/Common/Layouts/Footer';
 import './globals.css';
 import styles from './layout.module.css';
 import Script from 'next/script';
-import { Adsense } from '@/components/Adsense/AdsenseScript';
+import { Adsense } from '@/components/Common/Adsense/AdsenseScript';
 import { ThemeProvider } from '@/libs/theme-provider';
 import ThemeWrapper from '@/libs/theme-wrapper';
 import ScrollTopButton from '@/components/Common/Layouts/ScrollToTop';

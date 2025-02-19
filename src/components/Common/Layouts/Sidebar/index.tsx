@@ -2,7 +2,7 @@
 
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import Display from '../../../Adsense/Display';
+import Display from '../../Adsense/Display';
 import Search from './Elements/Search';
 import Profile from './Elements/Profile';
 import Category from './Elements/Category';

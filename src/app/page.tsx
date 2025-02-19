@@ -4,7 +4,7 @@ import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/ArticleLists/ArticleList';
 import TopSidebar from '@/components/Sidebars/TopSidebar';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
-import Display from '@/components/Adsense/Display';
+import Display from '@/components/Common/Adsense/Display';
 
 export const revalidate = 60;
 

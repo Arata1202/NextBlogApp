@@ -25,15 +25,15 @@ import 'highlight.js/styles/hybrid.css';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import './plugin.css';
-import Display from '../../Adsense/Display';
+import Display from '../../Common/Adsense/Display';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
-import PublishedDate from '../../Elements/Date';
-import TableOfContents from '@/components/Articles/Elements/TableOfContent';
+import SingleDate from '../../Common/SingleDate';
+import TableOfContents from '@/components/Common/TableOfContent';
 import ArticleSidebar from '../../Sidebars/ArticleSidebar';
 import ArticleCard from '@/components/Common/ArticleCard';
-import AdAlert from '@/components/Articles/Elements/AdAlert';
-import Share from '@/components/Elements/Share';
+import AdAlert from '@/components/Common/AdAlert';
+import Share from '@/components/Common/Share';
 import BreadCrumb from '@/components/Common/BreadCrumb';
 
 hljs.registerLanguage('javascript', javascript);
@@ -161,11 +161,11 @@ export default function ArticleFeature({ data, articles }: Props) {
               />
             </picture>
             <div className={styles.date}>
-              <PublishedDate date={data.publishedAt!} />
+              <SingleDate date={data.publishedAt!} />
               {data.updatedAt && isNextDayOrLater(data.updatedAt, data.publishedAt!) && (
                 <>
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <PublishedDate date={data.updatedAt!} updatedAt={true} />
+                  <SingleDate date={data.updatedAt!} updatedAt={true} />
                 </>
               )}
             </div>

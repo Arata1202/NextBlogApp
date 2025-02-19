@@ -1,5 +1,5 @@
 import { Article, Category } from '@/libs/microcms';
-import Display from '@/components/Adsense/Display';
+import Display from '@/components/Common/Adsense/Display';
 import SitemapFeature from '@/components/Features/Sitemap';
 import PageHeading from '@/components/Common/PageHeading';
 import Sidebar from '@/components/Common/Layouts/Sidebar';

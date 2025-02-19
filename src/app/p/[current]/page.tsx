@@ -4,7 +4,7 @@ import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/ArticleLists/ArticleList';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import TopSidebar from '@/components/Sidebars/TopSidebar';
-import Display from '@/components/Adsense/Display';
+import Display from '@/components/Common/Adsense/Display';
 
 type Props = {
   params: Promise<{

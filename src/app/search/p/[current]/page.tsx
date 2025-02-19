@@ -4,7 +4,7 @@ import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/ArticleLists/ArticleList';
 import TopSidebar from '@/components/Sidebars/TopSidebar';
 import { MagnifyingGlassIcon, ChevronRightIcon, HomeIcon } from '@heroicons/react/24/solid';
-import Display from '@/components/Adsense/Display';
+import Display from '@/components/Common/Adsense/Display';
 
 type Props = {
   params: Promise<{

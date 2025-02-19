@@ -1,6 +1,6 @@
 'use client';
 
-import Display from '../../Adsense/Display';
+import Display from '../../Common/Adsense/Display';
 import Search from '../Elements/Search';
 import Profile from '../Elements/Profile';
 import Category from '../Elements/Category';

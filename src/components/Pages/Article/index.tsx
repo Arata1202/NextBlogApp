@@ -1,5 +1,5 @@
 import { Article } from '@/libs/microcms';
-import Display from '@/components/Adsense/Display';
+import Display from '@/components/Common/Adsense/Display';
 import ArticleFeature from '@/components/Features/Article';
 
 type Props = {

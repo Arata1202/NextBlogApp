@@ -3,13 +3,13 @@
 import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import Display from '../../Adsense/Display';
+import Display from '../../Common/Adsense/Display';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
-import PublishedDate from '@/components/Elements/Date';
+import SingleDate from '@/components/Common/SingleDate';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
-import Share from '../../Elements/Share';
-import AdAlert from '../../Articles/Elements/AdAlert';
+import Share from '../../Common/Share';
+import AdAlert from '../../Common/AdAlert';
 
 type Props = {
   articles: Article[];
@@ -31,7 +31,7 @@ export default function DisclaimerFeature({ articles }: Props) {
         <ContentContainer>
           <div className="space-y-5 lg:space-y-8">
             <div className="flex justify-end gap-x-5">
-              <PublishedDate date={formattedDate} />
+              <SingleDate date={formattedDate} />
             </div>
             <AdAlert />
           </div>
