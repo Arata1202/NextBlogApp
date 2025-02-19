@@ -16,7 +16,7 @@ type Props = {
   categories: Category[];
 };
 
-export default function Sitemap({ articles, categories }: Props) {
+export default function SitemapFeature({ articles, categories }: Props) {
   const { theme } = useTheme();
 
   const dummyDate = new Date(2023, 10, 27);

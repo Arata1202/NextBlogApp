@@ -15,7 +15,7 @@ type Props = {
   articles: Article[];
 };
 
-export default function Privacy({ articles }: Props) {
+export default function PrivacyFeature({ articles }: Props) {
   const { theme } = useTheme();
 
   const dummyDate = new Date(2023, 10, 27);

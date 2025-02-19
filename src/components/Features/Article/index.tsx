@@ -34,7 +34,7 @@ import ArticleSidebar from '../../Sidebars/ArticleSidebar';
 import ArticleCard from '@/components/Common/ArticleCard';
 import AdAlert from '@/components/Articles/Elements/AdAlert';
 import Share from '@/components/Elements/Share';
-import BreadCrumb from '@/components/Common/PageHeading/Elements/BreadCrumb';
+import BreadCrumb from '@/components/Common/BreadCrumb';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);

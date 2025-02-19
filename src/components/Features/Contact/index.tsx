@@ -26,7 +26,7 @@ interface FormData {
   message: string;
 }
 
-export default function Contact({ articles }: Props) {
+export default function ContactFeature({ articles }: Props) {
   const { theme } = useTheme();
 
   const dummyDate = new Date(2023, 10, 27);

@@ -15,7 +15,7 @@ type Props = {
   articles: Article[];
 };
 
-export default function Disclaimer({ articles }: Props) {
+export default function DisclaimerFeature({ articles }: Props) {
   const { theme } = useTheme();
 
   const dummyDate = new Date(2023, 10, 27);
