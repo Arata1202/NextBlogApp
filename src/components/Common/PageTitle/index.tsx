@@ -9,14 +9,17 @@ import {
   LockClosedIcon,
   UserCircleIcon,
   DocumentMagnifyingGlassIcon,
+  BellAlertIcon,
 } from '@heroicons/react/24/solid';
 import { Category, Tag } from '@/libs/microcms';
+import styles from './index.module.css';
 
 type Props = {
   year?: string;
   month?: string;
   category?: Category;
   tag?: Tag;
+  home?: boolean;
   contact?: boolean;
   copyright?: boolean;
   disclaimer?: boolean;
@@ -31,6 +34,7 @@ export default function PageTitle({
   month,
   category,
   tag,
+  home,
   contact,
   copyright,
   disclaimer,
@@ -41,7 +45,9 @@ export default function PageTitle({
 }: Props) {
   return (
     <>
-      <h1 className="flex items-center pb-2 pt-2 mt-5">
+      <h1
+        className={`${(home && styles.home) || styles.withBreadCrumbs} flex items-center pb-2 pt-2`}
+      >
         {year && month && (
           <>
             <CalendarDaysIcon className="h-8 w-8 mr-2" />
@@ -60,6 +66,12 @@ export default function PageTitle({
           <>
             <HashtagIcon className="h-8 w-8 mr-2" />
             <div>{tag.name}</div>
+          </>
+        )}
+        {home && (
+          <>
+            <BellAlertIcon className="h-8 w-8 mr-2" />
+            <div>最新記事</div>
           </>
         )}
         {contact && (

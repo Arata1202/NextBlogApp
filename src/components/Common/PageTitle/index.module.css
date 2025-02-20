@@ -1,0 +1,13 @@
+.home {
+  margin-top: 2.5rem;
+}
+
+.withBreadCrumbs {
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 1023px) {
+  .home {
+    margin-top: 0;
+  }
+}

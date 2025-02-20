@@ -8,6 +8,7 @@ type Props = {
   month?: string;
   category?: Category;
   tag?: Tag;
+  home?: boolean;
   contact?: boolean;
   copyright?: boolean;
   disclaimer?: boolean;
@@ -22,6 +23,7 @@ export default function PageHeading({
   month,
   category,
   tag,
+  home = false,
   contact = false,
   copyright = false,
   disclaimer = false,
@@ -35,24 +37,27 @@ export default function PageHeading({
       <div
         className={`${styles.container} text-3xl font-bold pt-5 max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2`}
       >
-        <BreadCrumb
-          year={year}
-          month={month}
-          category={category}
-          tag={tag}
-          contact={contact}
-          copyright={copyright}
-          disclaimer={disclaimer}
-          link={link}
-          privacy={privacy}
-          profile={profile}
-          sitemap={sitemap}
-        />
+        {!home && (
+          <BreadCrumb
+            year={year}
+            month={month}
+            category={category}
+            tag={tag}
+            contact={contact}
+            copyright={copyright}
+            disclaimer={disclaimer}
+            link={link}
+            privacy={privacy}
+            profile={profile}
+            sitemap={sitemap}
+          />
+        )}
         <PageTitle
           year={year}
           month={month}
           category={category}
           tag={tag}
+          home={home}
           contact={contact}
           copyright={copyright}
           disclaimer={disclaimer}
