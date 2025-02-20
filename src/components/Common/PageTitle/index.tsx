@@ -10,6 +10,7 @@ import {
   UserCircleIcon,
   DocumentMagnifyingGlassIcon,
   BellAlertIcon,
+  MagnifyingGlassIcon,
 } from '@heroicons/react/24/solid';
 import { Category, Tag } from '@/libs/microcms';
 import styles from './index.module.css';
@@ -19,6 +20,7 @@ type Props = {
   month?: string;
   category?: Category;
   tag?: Tag;
+  keyword?: string;
   home?: boolean;
   contact?: boolean;
   copyright?: boolean;
@@ -34,6 +36,7 @@ export default function PageTitle({
   month,
   category,
   tag,
+  keyword,
   home,
   contact,
   copyright,
@@ -66,6 +69,12 @@ export default function PageTitle({
           <>
             <HashtagIcon className="h-8 w-8 mr-2" />
             <div>{tag.name}</div>
+          </>
+        )}
+        {keyword && (
+          <>
+            <MagnifyingGlassIcon className="h-8 w-8 mr-2" />
+            <div>{keyword}の検索結果</div>
           </>
         )}
         {home && (

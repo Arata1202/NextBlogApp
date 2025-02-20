@@ -8,6 +8,7 @@ type Props = {
   month?: string;
   category?: Category;
   tag?: Tag;
+  keyword?: string;
   home?: boolean;
   contact?: boolean;
   copyright?: boolean;
@@ -23,6 +24,7 @@ export default function PageHeading({
   month,
   category,
   tag,
+  keyword,
   home = false,
   contact = false,
   copyright = false,
@@ -43,6 +45,7 @@ export default function PageHeading({
             month={month}
             category={category}
             tag={tag}
+            keyword={keyword}
             contact={contact}
             copyright={copyright}
             disclaimer={disclaimer}
@@ -57,6 +60,7 @@ export default function PageHeading({
           month={month}
           category={category}
           tag={tag}
+          keyword={keyword}
           home={home}
           contact={contact}
           copyright={copyright}
