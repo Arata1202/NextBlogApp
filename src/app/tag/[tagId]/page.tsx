@@ -1,9 +1,6 @@
-import { getList } from '@/libs/microcms';
+import { getList, getTag, getAllLists } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
-import Pagination from '@/components/Common/Pagination';
-import ArticleList from '@/components/ArticleLists/ArticleList';
-import TopSidebar from '@/components/Sidebars/TopSidebar';
-import Display from '@/components/Common/Adsense/Display';
+import TagPage from '@/components/Pages/Tag';
 
 type Props = {
   params: Promise<{
@@ -16,20 +13,22 @@ export const revalidate = 60;
 export default async function Page(props: Props) {
   const params = await props.params;
   const { tagId } = params;
+
   const data = await getList({
     limit: LIMIT,
     filters: `tags[contains]${tagId}`,
   });
+  const allData = await getAllLists();
+  const tag = await getTag(params.tagId);
+
   return (
     <>
-      <ArticleList articles={data.contents} />
-      <Pagination totalCount={data.totalCount} basePath={`/tag/${tagId}`} />
-      <div className="pc">
-        <TopSidebar />
-      </div>
-      <div className="mt-5">
-        <Display slot="5969933704" />
-      </div>
+      <TagPage
+        articles={data.contents}
+        tag={tag}
+        totalCount={data.totalCount}
+        allArticles={allData}
+      />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import {
   CalendarDaysIcon,
   FolderOpenIcon,
+  HashtagIcon,
   EnvelopeIcon,
   DocumentTextIcon,
   ExclamationCircleIcon,
@@ -9,12 +10,13 @@ import {
   UserCircleIcon,
   DocumentMagnifyingGlassIcon,
 } from '@heroicons/react/24/solid';
-import { Category } from '@/libs/microcms';
+import { Category, Tag } from '@/libs/microcms';
 
 type Props = {
   year?: string;
   month?: string;
   category?: Category;
+  tag?: Tag;
   contact?: boolean;
   copyright?: boolean;
   disclaimer?: boolean;
@@ -28,6 +30,7 @@ export default function PageTitle({
   year,
   month,
   category,
+  tag,
   contact,
   copyright,
   disclaimer,
@@ -51,6 +54,12 @@ export default function PageTitle({
           <>
             <FolderOpenIcon className="h-8 w-8 mr-2" />
             <div>{category.name}</div>
+          </>
+        )}
+        {tag && (
+          <>
+            <HashtagIcon className="h-8 w-8 mr-2" />
+            <div>{tag.name}</div>
           </>
         )}
         {contact && (

@@ -1,4 +1,4 @@
-import { Category } from '@/libs/microcms';
+import { Category, Tag } from '@/libs/microcms';
 import styles from './index.module.css';
 import PageTitle from '../PageTitle';
 import BreadCrumb from '../BreadCrumb';
@@ -7,6 +7,7 @@ type Props = {
   year?: string;
   month?: string;
   category?: Category;
+  tag?: Tag;
   contact?: boolean;
   copyright?: boolean;
   disclaimer?: boolean;
@@ -20,6 +21,7 @@ export default function PageHeading({
   year,
   month,
   category,
+  tag,
   contact = false,
   copyright = false,
   disclaimer = false,
@@ -37,6 +39,7 @@ export default function PageHeading({
           year={year}
           month={month}
           category={category}
+          tag={tag}
           contact={contact}
           copyright={copyright}
           disclaimer={disclaimer}
@@ -49,6 +52,7 @@ export default function PageHeading({
           year={year}
           month={month}
           category={category}
+          tag={tag}
           contact={contact}
           copyright={copyright}
           disclaimer={disclaimer}

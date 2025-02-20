@@ -1,11 +1,12 @@
 import { HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { Article, Category } from '@/libs/microcms';
+import { Article, Category, Tag } from '@/libs/microcms';
 
 type Props = {
   year?: string;
   month?: string;
   article?: Article;
   category?: Category;
+  tag?: Tag;
   contact?: boolean;
   copyright?: boolean;
   disclaimer?: boolean;
@@ -20,6 +21,7 @@ export default function BreadCrumb({
   month,
   article,
   category,
+  tag,
   contact,
   copyright,
   disclaimer,
@@ -74,6 +76,14 @@ export default function BreadCrumb({
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 {category.name}
+              </a>
+            )}
+            {tag && (
+              <a
+                href={`/tag/${tag.id}`}
+                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
+              >
+                {tag.name}
               </a>
             )}
             {contact && (
