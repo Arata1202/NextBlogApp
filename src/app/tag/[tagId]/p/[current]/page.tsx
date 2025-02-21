@@ -1,5 +1,5 @@
-import { getList, getAllLists, getTag } from '@/libs/microcms';
-import { LIMIT } from '@/constants';
+import { getList, getTag } from '@/libs/microcms';
+import { LIMIT, RECENT_LIMIT } from '@/constants';
 import TagPage from '@/components/Pages/Tag';
 
 type Props = {
@@ -22,7 +22,9 @@ export default async function Page(props: Props) {
     offset: LIMIT * (current - 1),
     filters: `tags[contains]${tagId}`,
   });
-  const allData = await getAllLists();
+  const recentArticles = await getList({
+    limit: RECENT_LIMIT,
+  });
   const tag = await getTag(params.tagId);
 
   return (
@@ -32,7 +34,7 @@ export default async function Page(props: Props) {
         tag={tag}
         current={current}
         totalCount={data.totalCount}
-        allArticles={allData}
+        recentArticles={recentArticles.contents}
       />
     </>
   );

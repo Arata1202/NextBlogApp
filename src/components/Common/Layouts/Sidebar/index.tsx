@@ -12,11 +12,11 @@ import Popular from './Elements/Popular';
 import Recent from './Elements/Recent';
 
 type Props = {
-  allArticles?: Article[];
+  recentArticles?: Article[];
   mobile: boolean;
 };
 
-export default function Sidebar({ allArticles, mobile }: Props) {
+export default function Sidebar({ recentArticles, mobile }: Props) {
   return (
     <>
       <div
@@ -34,7 +34,7 @@ export default function Sidebar({ allArticles, mobile }: Props) {
         </div>
         <Archive />
         <Popular />
-        {allArticles && <Recent allArticles={allArticles} />}
+        {recentArticles && <Recent recentArticles={recentArticles} />}
       </div>
     </>
   );

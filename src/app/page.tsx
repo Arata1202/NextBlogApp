@@ -1,5 +1,5 @@
-import { getList, getAllLists } from '@/libs/microcms';
-import { LIMIT } from '@/constants';
+import { getList } from '@/libs/microcms';
+import { LIMIT, RECENT_LIMIT } from '@/constants';
 import HomePage from '@/components/Pages/Home';
 
 export const revalidate = 60;
@@ -8,11 +8,17 @@ export default async function Page() {
   const data = await getList({
     limit: LIMIT,
   });
-  const allData = await getAllLists();
+  const recentArticles = await getList({
+    limit: RECENT_LIMIT,
+  });
 
   return (
     <>
-      <HomePage articles={data.contents} totalCount={data.totalCount} allArticles={allData} />
+      <HomePage
+        articles={data.contents}
+        totalCount={data.totalCount}
+        recentArticles={recentArticles.contents}
+      />
     </>
   );
 }

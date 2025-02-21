@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
-import { getList, getAllLists } from '@/libs/microcms';
+import { getList } from '@/libs/microcms';
+import { RECENT_LIMIT } from '@/constants';
 import SearchPage from '@/components/Pages/Search';
 
 type Props = {
@@ -44,14 +45,16 @@ export default async function Page(props: Props) {
   const data = await getList({
     q: searchParams.q,
   });
-  const allData = await getAllLists();
+  const recentArticles = await getList({
+    limit: RECENT_LIMIT,
+  });
 
   return (
     <>
       <SearchPage
         articles={data.contents}
         totalCount={data.totalCount}
-        allArticles={allData}
+        recentArticles={recentArticles.contents}
         keyword={keyword}
       />
     </>

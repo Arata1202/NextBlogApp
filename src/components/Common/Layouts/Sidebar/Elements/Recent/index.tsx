@@ -6,13 +6,13 @@ import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 
 type Props = {
-  allArticles: Article[];
+  recentArticles: Article[];
 };
 
-export default function Recent({ allArticles }: Props) {
+export default function Recent({ recentArticles }: Props) {
   const { theme } = useTheme();
 
-  const sortedArticles = allArticles
+  const sortedArticles = recentArticles
     ?.slice()
     .sort((a, b) => {
       const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;

@@ -14,7 +14,7 @@ export default function SitemapPage({ articles, categories }: Props) {
     <>
       <PageHeading sitemap={true} />
       <SitemapFeature articles={articles} categories={categories} />
-      <Sidebar allArticles={articles} mobile={true} />
+      <Sidebar recentArticles={articles} mobile={true} />
       <div className="mt-5">
         <Display slot="5969933704" />
       </div>

@@ -10,22 +10,22 @@ type Props = {
   category: Category;
   current?: number;
   totalCount: number;
-  allArticles?: Article[];
+  recentArticles?: Article[];
 };
 
 export default function CategoryPage({
   articles,
   category,
   totalCount,
-  allArticles,
+  recentArticles,
   current,
 }: Props) {
   return (
     <>
       <PageHeading category={category} />
-      <ArticleList articles={articles} allArticles={allArticles} />
+      <ArticleList articles={articles} recentArticles={recentArticles} />
       <Pagination totalCount={totalCount} current={current} basePath={`/category/${category.id}`} />
-      <Sidebar allArticles={allArticles} mobile={true} />
+      <Sidebar recentArticles={recentArticles} mobile={true} />
       <div className="mt-5">
         <Display slot="5969933704" />
       </div>

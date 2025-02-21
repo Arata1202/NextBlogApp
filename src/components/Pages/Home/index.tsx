@@ -9,16 +9,16 @@ type Props = {
   articles: Article[];
   current?: number;
   totalCount: number;
-  allArticles?: Article[];
+  recentArticles?: Article[];
 };
 
-export default function HomePage({ articles, totalCount, allArticles, current }: Props) {
+export default function HomePage({ articles, totalCount, recentArticles, current }: Props) {
   return (
     <>
       <PageHeading home={true} />
-      <ArticleList articles={articles} allArticles={allArticles} />
+      <ArticleList articles={articles} recentArticles={recentArticles} />
       <Pagination totalCount={totalCount} current={current} />
-      <Sidebar allArticles={allArticles} mobile={true} />
+      <Sidebar recentArticles={recentArticles} mobile={true} />
       <div className="mt-5">
         <Display slot="5969933704" />
       </div>

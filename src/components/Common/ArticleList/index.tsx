@@ -12,10 +12,10 @@ import Share from '../Share';
 
 type Props = {
   articles: Article[];
-  allArticles?: Article[];
+  recentArticles?: Article[];
 };
 
-export default function ArticleList({ articles, allArticles }: Props) {
+export default function ArticleList({ articles, recentArticles }: Props) {
   const { theme } = useTheme();
 
   return (
@@ -53,7 +53,7 @@ export default function ArticleList({ articles, allArticles }: Props) {
           </div>
           <Share />
         </ContentContainer>
-        <Sidebar allArticles={allArticles} mobile={false} />
+        <Sidebar recentArticles={recentArticles} mobile={false} />
       </MainContainer>
     </>
   );

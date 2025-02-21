@@ -13,7 +13,7 @@ export default function ContactPage({ articles }: Props) {
     <>
       <PageHeading contact={true} />
       <ContactFeature articles={articles} />
-      <Sidebar allArticles={articles} mobile={true} />
+      <Sidebar recentArticles={articles} mobile={true} />
       <div className="mt-5">
         <Display slot="5969933704" />
       </div>

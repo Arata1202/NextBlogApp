@@ -10,16 +10,22 @@ type Props = {
   keyword?: string;
   current?: number;
   totalCount: number;
-  allArticles?: Article[];
+  recentArticles?: Article[];
 };
 
-export default function SearchPage({ articles, keyword, totalCount, allArticles, current }: Props) {
+export default function SearchPage({
+  articles,
+  keyword,
+  totalCount,
+  recentArticles,
+  current,
+}: Props) {
   return (
     <>
       <PageHeading keyword={keyword} />
-      <ArticleList articles={articles} allArticles={allArticles} />
+      <ArticleList articles={articles} recentArticles={recentArticles} />
       <Pagination totalCount={totalCount} current={current} basePath={`/search`} q={keyword} />
-      <Sidebar allArticles={allArticles} mobile={true} />
+      <Sidebar recentArticles={recentArticles} mobile={true} />
       <div className="mt-5">
         <Display slot="5969933704" />
       </div>

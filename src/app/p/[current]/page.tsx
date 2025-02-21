@@ -1,5 +1,5 @@
-import { getList, getAllLists } from '@/libs/microcms';
-import { LIMIT } from '@/constants';
+import { getList } from '@/libs/microcms';
+import { LIMIT, RECENT_LIMIT } from '@/constants';
 import HomePage from '@/components/Pages/Home';
 
 type Props = {
@@ -24,7 +24,9 @@ export default async function Page(props: Props) {
     limit: LIMIT,
     offset: LIMIT * (current - 1),
   });
-  const allData = await getAllLists();
+  const recentArticles = await getList({
+    limit: RECENT_LIMIT,
+  });
 
   return (
     <>
@@ -32,7 +34,7 @@ export default async function Page(props: Props) {
         articles={data.contents}
         totalCount={data.totalCount}
         current={current}
-        allArticles={allData}
+        recentArticles={recentArticles.contents}
       />
     </>
   );

@@ -10,16 +10,16 @@ type Props = {
   tag: Tag;
   current?: number;
   totalCount: number;
-  allArticles?: Article[];
+  recentArticles?: Article[];
 };
 
-export default function TagPage({ articles, tag, totalCount, allArticles, current }: Props) {
+export default function TagPage({ articles, tag, totalCount, recentArticles, current }: Props) {
   return (
     <>
       <PageHeading tag={tag} />
-      <ArticleList articles={articles} allArticles={allArticles} />
+      <ArticleList articles={articles} recentArticles={recentArticles} />
       <Pagination totalCount={totalCount} current={current} basePath={`/tag/${tag.id}`} />
-      <Sidebar allArticles={allArticles} mobile={true} />
+      <Sidebar recentArticles={recentArticles} mobile={true} />
       <div className="mt-5">
         <Display slot="5969933704" />
       </div>

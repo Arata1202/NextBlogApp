@@ -218,7 +218,7 @@ export default function ContactFeature({ articles }: Props) {
           </div>
           <Share />
         </ContentContainer>
-        <Sidebar allArticles={articles} mobile={false} />
+        <Sidebar recentArticles={articles} mobile={false} />
       </MainContainer>
 
       <Transition.Root show={open} as={Fragment}>
