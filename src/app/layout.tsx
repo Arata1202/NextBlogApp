@@ -1,13 +1,14 @@
-import Header from '@/components/Common/Layouts/Header';
-import Footer from '@/components/Common/Layouts/Footer';
+import { Metadata } from 'next';
+import type { Viewport } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import styles from './layout.module.css';
-import Script from 'next/script';
-import { Adsense } from '@/components/Common/Adsense/AdsenseScript';
 import { ThemeProvider } from '@/libs/theme-provider';
+import { Adsense } from '@/components/Common/Adsense/AdsenseScript';
 import ThemeWrapper from '@/libs/theme-wrapper';
+import Header from '@/components/Common/Layouts/Header';
+import Footer from '@/components/Common/Layouts/Footer';
 import ScrollTopButton from '@/components/Common/Layouts/ScrollToTop';
-import type { Viewport } from 'next';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -15,23 +16,29 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
-  title: 'リアル大学生',
-  description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
-  openGraph: {
-    title: 'リアル大学生',
-    description: '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。',
-    images: '/images/thumbnail/7.webp',
-    url: 'https://realunivlog.com',
-  },
-  alternates: {
-    canonical: 'https://realunivlog.com',
-  },
-  icons: {
-    icon: '/favicon.ico',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+
+  const title = `${defaultTitle}`;
+  const description = `大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。`;
+  const images = `${defaultUrl}/images/thumbnail/7.webp`;
+  const url = `${defaultUrl}`;
+
+  return {
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      images: images,
+      url: url,
+    },
+    alternates: {
+      canonical: url,
+    },
+  };
+}
 
 type Props = {
   children: React.ReactNode;
@@ -72,7 +79,7 @@ export default async function RootLayout({ children }: Props) {
         `}
         </Script>
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
-        {/* <link rel="manifest" href="/manifest.json" /> */}
+        <link rel="icon" href="/favicon.ico" />
         <link
           rel="icon"
           href="https://realunivlog.com/images/head/16.png"
@@ -92,7 +99,6 @@ export default async function RootLayout({ children }: Props) {
           type="image/png"
         />
         <link rel="apple-touch-icon" href="https://realunivlog.com/images/head/realstudent.png" />
-        {/* <meta name="apple-itunes-app" content="app-id=6590619103" /> */}
         <meta
           name="msapplication-TileImage"
           content="https://realunivlog.com/images/head/realstudent512.png"
