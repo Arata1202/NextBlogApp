@@ -8,6 +8,7 @@ import {
   LinkIcon,
   LockClosedIcon,
   UserCircleIcon,
+  DocumentMagnifyingGlassIcon,
   BellAlertIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/24/solid';
@@ -27,6 +28,7 @@ type Props = {
   link?: boolean;
   privacy?: boolean;
   profile?: boolean;
+  sitemap?: boolean;
 };
 
 export default function PageTitle({
@@ -42,6 +44,7 @@ export default function PageTitle({
   link,
   privacy,
   profile,
+  sitemap,
 }: Props) {
   return (
     <>
@@ -52,7 +55,7 @@ export default function PageTitle({
           <>
             <CalendarDaysIcon className="h-8 w-8 mr-2" />
             <div>
-              {year}年{parseInt(month)}月
+              {year}年{parseInt(month || '')}月
             </div>
           </>
         )}
@@ -114,6 +117,12 @@ export default function PageTitle({
           <>
             <UserCircleIcon className="h-8 w-8 mr-2" />
             <div>プロフィール</div>
+          </>
+        )}
+        {sitemap && (
+          <>
+            <DocumentMagnifyingGlassIcon className="h-8 w-8 mr-2" />
+            <div>サイトマップ</div>
           </>
         )}
       </h1>
