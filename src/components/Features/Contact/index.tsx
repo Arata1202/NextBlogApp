@@ -8,6 +8,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Article } from '@/libs/microcms';
+import styles from './index.module.css';
 import Display from '../../Common/Adsense/Display';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
@@ -264,12 +265,12 @@ export default function ContactFeature({ articles }: Props) {
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title
                         as="h1"
-                        className={`text-16px font-bold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                        className={`${styles.DialogTitle} font-bold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       >
                         お問い合わせを送信しますか？
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className={`text-14px text-gray-500`}>
+                        <p className={`${styles.DialogDescription} text-gray-500`}>
                           送信ボタンは一度だけ押してください。送信完了まで数秒かかることがあります。
                         </p>
                       </div>
@@ -278,7 +279,7 @@ export default function ContactFeature({ articles }: Props) {
                   <div className="mt-3 grid grid-flow-row-dense grid-cols-2 gap-3">
                     <button
                       type="button"
-                      className={`DialogButton mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                      className={`${styles.CancelButton} mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme hover:bg-gray-500' : 'LightTheme hover:bg-gray-50'}`}
                       onClick={handleCancel}
                       ref={cancelButtonRef}
                     >
@@ -299,7 +300,7 @@ export default function ContactFeature({ articles }: Props) {
         </Dialog>
       </Transition.Root>
 
-      <div className="confirmAlert pointer-events-none fixed inset-0 flex items-start px-4 py-6 sm:items-start sm:p-6">
+      <div className="pointer-events-none fixed inset-0 flex items-start px-4 py-6 sm:items-start sm:p-6">
         <div className="flex w-full flex-col items-center space-y-4 sm:items-end">
           <Transition
             show={show}
@@ -321,11 +322,13 @@ export default function ContactFeature({ articles }: Props) {
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p
-                      className={`text-16px font-semibold ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                      className={`${styles.DialogTitle} font-semibold ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                     >
                       お問い合わせありがとうございます
                     </p>
-                    <p className="mt-1 text-14px text-gray-500">正常に処理が完了しました。</p>
+                    <p className={`${styles.DialogDescription} mt-1 text-gray-500`}>
+                      正常に処理が完了しました。
+                    </p>
                   </div>
                   <div className="ml-4 flex flex-shrink-0">
                     <button

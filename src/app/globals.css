@@ -4,8 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @import url('https://fonts.googleapis.com/css2?family=Briem+Hand:wght@900&family=Sedan+SC&family=Sora:wght@100..800&display=swap'); */
-
 /* テーマ */
 .LightTheme {
   background-color: white;
@@ -13,34 +11,20 @@
   border-color: rgb(209 213 219);
   --tw-ring-color: rgb(209 213 219);
 }
+
 .DarkTheme {
   background-color: #262626;
   color: white;
   border-color: rgb(107 114 128);
   --tw-ring-color: rgb(107 114 128);
 }
-.d9d9d9 {
-  background-color: #d9d9d9;
-}
 
 .google-auto-placed {
   max-width: 100% !important;
 }
 
-.onesignal-customlink-container {
-  min-height: 0 !important;
-}
-
 .FirstAd {
   min-height: 280px !important;
-}
-
-.instagram-media {
-  margin-bottom: 0 !important;
-}
-
-.DialogButton {
-  margin-top: 0px;
 }
 
 .SidebarTableOfContents {
@@ -54,100 +38,22 @@
   max-height: 69vh;
 }
 
-.text-16px {
-  font-size: 16px !important;
-}
-.text-14px {
-  font-size: 14px !important;
-}
-
-/* Tailwindのブレイクポイント */
-.pc {
-  display: none;
-}
-@media (max-width: 1023px) {
-  .mobile {
-    display: none;
-  }
-  .pc {
-    display: block;
-  }
-
-  .scrollTop {
-    display: none;
-  }
-
-  .topTitle {
-    margin-top: 0;
-  }
-}
-
-.sidebarCategory {
-  width: 50%;
-}
-
-.categoryTitle {
-  padding-top: 89px !important;
-}
-
 .SidebarTableOfContents .tableOfContent {
   margin-top: 30px !important;
 }
 
-.AdAlert {
-  color: black;
-  text-shadow: 0 0 5px white;
-  background: -webkit-repeating-linear-gradient(-45deg, #f1f1f1, #f1f1f1 3px, #fff 3px, #fff 7px);
-  background: repeating-linear-gradient(-45deg, #f1f1f1, #f1f1f1 3px, #fff 3px, #fff 7px);
-}
-
 /* スマートフォン用 */
 @media (max-width: 768px) {
-  /* 目次 */
   .tableOfContent {
     width: 100%;
   }
-  /* .ArticleListItem_content__MW0IH {
-    max-width: 100% !important;
-  } */
-  /* カテゴリー変更タブ */
-  .tabItem {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
 }
 
-/* @media (min-width: 641px) and (max-width: 1023px) {
-  .sidebarArticleList {
-    display: flex !important;
-  }
-} */
-
 @media (max-width: 640px) {
-  .categoryTitle {
-    padding-top: 65px !important;
-  }
   .FirstAd {
     min-height: 200px !important;
   }
-  .app-badge {
-    height: 20px !important;
-  }
-  .app-badge-link {
-    left: 90px !important;
-  }
 }
-
-/* @media (max-width: 882px) and (min-width: 641px) {
-  .ArticleListItem_content__MW0IH {
-    max-width: 45% !important;
-  }
-}
-@media (max-width: 1322px) and (min-width: 882px) {
-  .ArticleListItem_content__MW0IH {
-    max-width: 45% !important;
-  }
-} */
 
 /* 記事内写真 */
 figure img {
@@ -155,7 +61,6 @@ figure img {
 }
 
 h2 {
-  /* background-color: #f3f3f3; */
   padding: 15px 15px 15px 15px;
 }
 h3 {
@@ -167,9 +72,6 @@ h4 {
   border-top: 2px solid;
   border-bottom: 2px solid;
   padding: 5px 15px 5px 15px;
-}
-a u {
-  color: royalblue;
 }
 
 :root {
@@ -197,14 +99,10 @@ a u {
 html,
 body {
   max-width: 100vw;
-  /* overflow-x: hidden; */
-  /* font-family: 'Sora', sans-serif !important; */
   font-family: inherit;
 }
 
 body {
-  /* font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', YuGothic, 'ヒラギノ角ゴ ProN W3',
-    Hiragino Kaku Gothic ProN, Arial, 'メイリオ', Meiryo, sans-serif; */
   font-family: 'Geist', sans-serif;
   color: var(--color-text-main);
   line-height: 1.8;
@@ -241,43 +139,3 @@ ul {
 li {
   font-size: 18px !important;
 }
-
-/* .categoryTitle {
-    padding-top: 0 !important;
-  } */
-/* .Date_date__Jlt7B {
-  justify-content: right;
-} */
-
-/* 検索 */
-/* .SearchField_search__ROj75 {
-  margin: 0 !important;
-} */
-/* .Article_thumbnail__5rpq1 {
-  margin-bottom: 0 !important;
-} */
-
-/* カテゴリーリストページ */
-/* .categoryTitle ul li span {
-  background-color: white;
-  padding: 0;
-  font-size: 30px;
-  border-radius: 0;
-  white-space: 0;
-} */
-
-/* サイドバー */
-/* .sidebar {
-  padding-left: 0 !important;
-} */
-
-/* タグリストページ */
-/* .tagTitle div div {
-  margin: 0;
-} */
-/* .tagTitle p {
-  margin: 0;
-} */
-/* .tagTitle {
-  margin-top: 100px !important;
-} */

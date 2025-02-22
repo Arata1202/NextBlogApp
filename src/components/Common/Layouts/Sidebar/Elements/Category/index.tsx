@@ -2,6 +2,7 @@
 
 import { useTheme } from 'next-themes';
 import { FolderIcon } from '@heroicons/react/24/solid';
+import styles from './index.module.css';
 import { CategoryList, CategoryList2 } from '@/section/dummy';
 
 export default function Category() {
@@ -21,7 +22,7 @@ export default function Category() {
             <a
               key={item.name}
               href={item.href}
-              className={`sidebarCategory text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`${styles.CategoryList} text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <div className="flex justify-center">
                 <item.icon className="w-12 h-12" />
@@ -37,7 +38,7 @@ export default function Category() {
             <a
               key={item.name}
               href={item.href}
-              className={`sidebarCategory text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`${styles.CategoryList} text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <div className="flex justify-center">
                 <item.icon className="w-12 h-12" />
