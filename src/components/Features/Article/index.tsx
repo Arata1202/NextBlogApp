@@ -30,7 +30,7 @@ import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import SingleDate from '../../Common/SingleDate';
 import TableOfContents from '@/components/Common/TableOfContent';
-import ArticleSidebar from '../../Sidebars/ArticleSidebar';
+import Sidebar from '@/components/Common/Layouts/Sidebar';
 import ArticleCard from '@/components/Common/ArticleCard';
 import AdAlert from '@/components/Common/AdAlert';
 import Share from '@/components/Common/Share';
@@ -349,9 +349,12 @@ export default function ArticleFeature({ data, articles }: Props) {
             <Share data={data} />
           </div>
         </ContentContainer>
-        <div className={styles.sidebar}>
-          <ArticleSidebar articles={articles} contentBlocks={data.content_blocks} />
-        </div>
+        <Sidebar
+          recentArticles={articles}
+          mobile={false}
+          article={true}
+          contentBlocks={data.content_blocks}
+        />
       </MainContainer>
     </>
   );

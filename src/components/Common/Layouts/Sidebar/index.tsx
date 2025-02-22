@@ -1,8 +1,11 @@
 'use client';
 
+import { useEffect, useState, useMemo } from 'react';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
+import { useGuardObserver } from '@/hooks/MutationObserver';
 import Display from '../../Adsense/Display';
+import TableOfContents from '../../TableOfContent';
 import Search from './Elements/Search';
 import Profile from './Elements/Profile';
 import Category from './Elements/Category';
@@ -14,27 +17,89 @@ import Recent from './Elements/Recent';
 type Props = {
   recentArticles?: Article[];
   mobile: boolean;
+  article?: boolean;
+  contentBlocks?: { rich_text?: string }[];
 };
 
-export default function Sidebar({ recentArticles, mobile }: Props) {
+interface ContentBlock {
+  rich_text?: string;
+}
+
+interface Heading {
+  id: string;
+  title: string;
+  level: number;
+}
+
+function useExtractHeadings(contentBlocks: ContentBlock[]): Heading[] {
+  const [headings, setHeadings] = useState<Heading[]>([]);
+
+  useEffect(() => {
+    const extractedHeadings: Heading[] = [];
+
+    contentBlocks.forEach((block) => {
+      if (block.rich_text) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = block.rich_text;
+        const blockHeadings = Array.from(tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6')).map(
+          (el) => ({
+            id: el.id,
+            title: el.textContent || '',
+            level: parseInt(el.tagName[1], 10),
+          }),
+        );
+        extractedHeadings.push(...blockHeadings);
+      }
+    });
+
+    setHeadings(extractedHeadings);
+  }, [contentBlocks]);
+
+  return headings;
+}
+
+export default function Sidebar({ recentArticles, mobile, article, contentBlocks }: Props) {
+  useGuardObserver();
+
+  const memoizedContentBlocks = useMemo(() => contentBlocks || [], [contentBlocks]);
+  const headings = useExtractHeadings(memoizedContentBlocks);
+
   return (
     <>
       <div
-        className={`${(mobile && styles.mobile) || styles.pc} lg:col-span-1 lg:w-full lg:h-full`}
+        className={`${(mobile && styles.mobile) || styles.pc} ${article && styles.article} lg:col-span-1 lg:w-full lg:h-full mut-guard`}
       >
         <Search />
         <Profile />
-        <div className="FirstAd mt-5">
+        <div className="FirstAd mt-5 mut-guard">
           <Display slot="8452341403" />
         </div>
         <Category />
         <Tag />
-        <div className="FirstAd mt-5">
+        <div className="FirstAd mt-5 mut-guard">
           <Display slot="9574685533" />
         </div>
         <Archive />
         <Popular />
         {recentArticles && <Recent recentArticles={recentArticles} />}
+        {headings.length > 0 && (
+          <div className={`${(mobile && styles.mobile) || styles.pc} SidebarTableOfContents`}>
+            <TableOfContents headings={headings} />
+            <a href="https://www.buymeacoffee.com/realunivlog" target="_blank">
+              <img
+                className="mt-5 m-auto hover:opacity-60"
+                loading="lazy"
+                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                width="160"
+              />
+            </a>
+            <div className={`${styles.BuyMeaCoffee} text-center mt-4`}>
+              もしこの記事が役に立ったなら、
+              <br />
+              こちらから ☕ を一杯支援いただけると喜びます
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
