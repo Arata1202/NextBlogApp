@@ -4,6 +4,7 @@
 
 .article {
   display: block !important;
+  margin-top: 100px;
 }
 
 .BuyMeaCoffee {
@@ -16,5 +17,8 @@
   }
   .mobile {
     display: block;
+  }
+  .article {
+    margin-top: 0;
   }
 }
