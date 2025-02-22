@@ -16,10 +16,12 @@ export default async function Page(props: Props) {
 
   const data = await getList({
     limit: LIMIT,
+    fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
     filters: `categories[contains]${categoryId}`,
   });
   const recentArticles = await getList({
     limit: RECENT_LIMIT,
+    fields: 'id,title,thumbnail',
   });
   const category = await getCategory(params.categoryId);
 

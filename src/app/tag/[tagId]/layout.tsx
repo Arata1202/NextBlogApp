@@ -1,5 +1,5 @@
-import { getTag } from '@/libs/microcms';
 import { Metadata } from 'next';
+import { getTag } from '@/libs/microcms';
 
 type Props = {
   children: React.ReactNode;

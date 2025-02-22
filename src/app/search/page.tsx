@@ -43,10 +43,12 @@ export default async function Page(props: Props) {
   const keyword = searchParams.q;
 
   const data = await getList({
+    fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
     q: searchParams.q,
   });
   const recentArticles = await getList({
     limit: RECENT_LIMIT,
+    fields: 'id,title,thumbnail',
   });
 
   return (

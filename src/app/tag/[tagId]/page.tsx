@@ -16,10 +16,12 @@ export default async function Page(props: Props) {
 
   const data = await getList({
     limit: LIMIT,
+    fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
     filters: `tags[contains]${tagId}`,
   });
   const recentArticles = await getList({
     limit: RECENT_LIMIT,
+    fields: 'id,title,thumbnail',
   });
   const tag = await getTag(params.tagId);
 

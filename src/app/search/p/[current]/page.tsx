@@ -43,18 +43,20 @@ export const revalidate = 60;
 
 export default async function Page(props: Props) {
   const searchParams = await props.searchParams;
-  const params = await props.params;
+  const keyword = searchParams.q;
 
+  const params = await props.params;
   const current = parseInt(params.current as string, 10);
 
-  const keyword = searchParams.q;
   const data = await getList({
     limit: LIMIT,
+    fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
     offset: LIMIT * (current - 1),
     q: searchParams.q,
   });
   const recentArticles = await getList({
     limit: RECENT_LIMIT,
+    fields: 'id,title,thumbnail',
   });
 
   return (
