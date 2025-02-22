@@ -23,7 +23,7 @@ export default async function Page(props: Props) {
     limit: RECENT_LIMIT,
     fields: 'id,title,thumbnail',
   });
-  const category = await getCategory(params.categoryId);
+  const category = await getCategory(params.categoryId, { fields: 'id,name' });
 
   return (
     <>

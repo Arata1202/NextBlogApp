@@ -10,7 +10,7 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
-  const category = await getCategory(params.categoryId);
+  const category = await getCategory(params.categoryId, { fields: 'id,name' });
 
   const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;

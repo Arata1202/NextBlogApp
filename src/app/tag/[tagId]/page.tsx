@@ -23,7 +23,7 @@ export default async function Page(props: Props) {
     limit: RECENT_LIMIT,
     fields: 'id,title,thumbnail',
   });
-  const tag = await getTag(params.tagId);
+  const tag = await getTag(params.tagId, { fields: 'id,name' });
 
   return (
     <>
