@@ -8,7 +8,11 @@ type Props = {
   }>;
 };
 
-export const revalidate = 60;
+export const generateStaticParams = async () => {
+  const categoryIds = ['programming', 'university', 'travel', 'blog'];
+
+  return categoryIds.map((categoryId) => ({ categoryId: categoryId.toString() }));
+};
 
 export default async function Page(props: Props) {
   const params = await props.params;

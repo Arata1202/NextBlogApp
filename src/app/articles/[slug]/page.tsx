@@ -1,4 +1,4 @@
-import { getDetail, getList } from '@/libs/microcms';
+import { getDetail, getList, getAllLists } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import ArticlePage from '@/components/Pages/Article';
 
@@ -8,7 +8,11 @@ type Props = {
   }>;
 };
 
-export const revalidate = 60;
+export const generateStaticParams = async () => {
+  const data = await getAllLists();
+
+  return data.map((slug) => ({ slug: slug.id }));
+};
 
 export default async function Page(props: Props) {
   const params = await props.params;

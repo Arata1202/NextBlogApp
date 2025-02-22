@@ -6,7 +6,6 @@ import styles from './index.module.css';
 import { useGuardObserver } from '@/hooks/MutationObserver';
 import Display from '../../Adsense/Display';
 import TableOfContents from '../../TableOfContent';
-import Search from './Elements/Search';
 import Profile from './Elements/Profile';
 import Category from './Elements/Category';
 import Tag from './Elements/Tag';
@@ -69,7 +68,6 @@ export default function Sidebar({ recentArticles, mobile, article, contentBlocks
       <div
         className={`${(mobile && styles.mobile) || styles.pc} ${article && styles.article} lg:col-span-1 lg:w-full lg:h-full mut-guard`}
       >
-        <Search />
         <Profile />
         <div className="FirstAd mt-5 mut-guard">
           <Display slot="8452341403" />

@@ -1,6 +1,7 @@
 import { getList } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants';
 import ArchivePage from '@/components/Pages/Archive';
+import { archive } from '@/section/archive';
 
 type Props = {
   params: Promise<{
@@ -9,7 +10,12 @@ type Props = {
   }>;
 };
 
-export const revalidate = 60;
+export const generateStaticParams = async () => {
+  return archive.map(({ year, monthForPath }) => ({
+    year,
+    month: monthForPath,
+  }));
+};
 
 export default async function Page(props: Props) {
   const params = await props.params;

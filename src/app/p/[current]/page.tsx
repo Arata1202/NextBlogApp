@@ -14,7 +14,17 @@ export const metadata = {
   },
 };
 
-export const revalidate = 60;
+export const generateStaticParams = async () => {
+  const data = await getList({
+    limit: 0,
+    fields: '',
+  });
+
+  const totalCount = data.totalCount;
+  const currents = Array.from({ length: totalCount }, (_, i) => i + 1);
+
+  return currents.map((current) => ({ current: current.toString() }));
+};
 
 export default async function Page(props: Props) {
   const params = await props.params;

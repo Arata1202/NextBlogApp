@@ -1,6 +1,7 @@
 import { getList, getTag } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants';
 import TagPage from '@/components/Pages/Tag';
+import { tags } from '@/section/tag';
 
 type Props = {
   params: Promise<{
@@ -8,7 +9,11 @@ type Props = {
   }>;
 };
 
-export const revalidate = 60;
+export const generateStaticParams = async () => {
+  return tags.map(({ link }) => ({
+    tagId: link.replace('/tag/', ''),
+  }));
+};
 
 export default async function Page(props: Props) {
   const params = await props.params;

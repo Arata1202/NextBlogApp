@@ -15,7 +15,28 @@ export const metadata = {
   },
 };
 
-export const revalidate = 60;
+export const generateStaticParams = async () => {
+  const categoryIds = ['programming', 'university', 'travel', 'blog'];
+  const results = await Promise.all(
+    categoryIds.map(async (categoryId) => {
+      const data = await getList({
+        limit: 0,
+        fields: '',
+        filters: `categories[contains]${categoryId}`,
+      });
+
+      const totalCount = data.totalCount;
+      const currents = Array.from({ length: totalCount }, (_, i) => i + 1);
+
+      return currents.map((current) => ({
+        categoryId,
+        current: current.toString(),
+      }));
+    }),
+  );
+
+  return results.flat();
+};
 
 export default async function Page(props: Props) {
   const params = await props.params;
@@ -37,6 +58,7 @@ export default async function Page(props: Props) {
 
   return (
     <>
+      {data.totalCount}
       <CategoryPage
         articles={data.contents}
         category={category}

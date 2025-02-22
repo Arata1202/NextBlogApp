@@ -10,9 +10,7 @@ export default function Profile() {
 
   return (
     <>
-      <div
-        className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-      >
+      <div className={`pt-8 px-4 border py-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
         <div className={`text-2xl text-center font-semibold pb-5 flex justify-center`}>
           <UserCircleIcon className="h-8 w-8 mr-2" />
           ブログ運営者

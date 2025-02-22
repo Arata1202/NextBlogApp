@@ -1,6 +1,7 @@
 import { getList } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants';
 import ArchivePage from '@/components/Pages/Archive';
+import { archive } from '@/section/archive';
 
 type Props = {
   params: Promise<{
@@ -10,7 +11,31 @@ type Props = {
   }>;
 };
 
-export const revalidate = 60;
+export const generateStaticParams = async () => {
+  const results = await Promise.all(
+    archive.map(async ({ year, monthForPath }) => {
+      const startDate = `${year}-${monthForPath}-01T00:00:00Z`;
+      const endDate = new Date(Number(year), Number(monthForPath), 1).toISOString();
+
+      const data = await getList({
+        limit: 0,
+        fields: '',
+        filters: `publishedAt[greater_than]${startDate}[and]publishedAt[less_than]${endDate}`,
+      });
+
+      const totalCount = data.totalCount;
+      const currents = Array.from({ length: totalCount }, (_, i) => i + 1);
+
+      return currents.map((current) => ({
+        year,
+        month: monthForPath,
+        current: current.toString(),
+      }));
+    }),
+  );
+
+  return results.flat();
+};
 
 export default async function Page(props: Props) {
   const params = await props.params;

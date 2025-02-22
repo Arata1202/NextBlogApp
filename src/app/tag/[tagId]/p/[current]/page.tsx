@@ -1,6 +1,7 @@
 import { getList, getTag } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants';
 import TagPage from '@/components/Pages/Tag';
+import { tags } from '@/section/tag';
 
 type Props = {
   params: Promise<{
@@ -9,7 +10,29 @@ type Props = {
   }>;
 };
 
-export const revalidate = 60;
+export const generateStaticParams = async () => {
+  const results = await Promise.all(
+    tags.map(async ({ link }) => {
+      const tagId = link.replace('/tag/', '');
+
+      const data = await getList({
+        limit: 0,
+        fields: '',
+        filters: `tags[contains]${tagId}`,
+      });
+
+      const totalCount = data.totalCount;
+      const currents = Array.from({ length: totalCount }, (_, i) => i + 1);
+
+      return currents.map((current) => ({
+        tagId,
+        current: current.toString(),
+      }));
+    }),
+  );
+
+  return results.flat();
+};
 
 export default async function Page(props: Props) {
   const params = await props.params;
