@@ -1,9 +1,6 @@
-import { getList } from '@/libs/microcms';
-import { LIMIT } from '@/constants';
-import Pagination from '@/components/Common/Pagination';
-import ArticleList from '@/components/ArticleLists/ArticleList';
-import TopSidebar from '@/components/Sidebars/TopSidebar';
-import Display from '@/components/Adsense/Display';
+import { getList, getCategory } from '@/libs/microcms';
+import { LIMIT, RECENT_LIMIT } from '@/constants';
+import CategoryPage from '@/components/Pages/Category';
 
 type Props = {
   params: Promise<{
@@ -16,20 +13,26 @@ export const revalidate = 60;
 export default async function Page(props: Props) {
   const params = await props.params;
   const { categoryId } = params;
+
   const data = await getList({
     limit: LIMIT,
+    fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
     filters: `categories[contains]${categoryId}`,
   });
+  const recentArticles = await getList({
+    limit: RECENT_LIMIT,
+    fields: 'id,title,thumbnail',
+  });
+  const category = await getCategory(params.categoryId);
+
   return (
     <>
-      <ArticleList articles={data.contents} />
-      <Pagination totalCount={data.totalCount} basePath={`/category/${categoryId}`} />
-      <div className="pc">
-        <TopSidebar />
-      </div>
-      <div className="mt-5">
-        <Display slot="5969933704" />
-      </div>
+      <CategoryPage
+        articles={data.contents}
+        category={category}
+        totalCount={data.totalCount}
+        recentArticles={recentArticles.contents}
+      />
     </>
   );
 }

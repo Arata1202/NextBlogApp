@@ -1,5 +1,5 @@
 import { Article } from '@/libs/microcms';
-import Display from '@/components/Adsense/Display';
+import Display from '@/components/Common/Adsense/Display';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
 import PageHeading from '@/components/Common/PageHeading';
@@ -11,7 +11,7 @@ type Props = {
   articles: Article[];
   totalCount: number;
   current?: number;
-  allArticles?: Article[];
+  recentArticles?: Article[];
 };
 
 export default function ArchivePage({
@@ -20,18 +20,18 @@ export default function ArchivePage({
   articles,
   totalCount,
   current,
-  allArticles,
+  recentArticles,
 }: Props) {
   return (
     <>
       <PageHeading year={year} month={month} />
-      <ArticleList articles={articles} allArticles={allArticles} />
+      <ArticleList articles={articles} recentArticles={recentArticles} />
       <Pagination
         totalCount={totalCount}
         current={current}
         basePath={`/archive/${year}/${month}`}
       />
-      <Sidebar allArticles={allArticles} mobile={true} />
+      <Sidebar recentArticles={recentArticles} mobile={true} />
       <div className="mt-5">
         <Display slot="5969933704" />
       </div>

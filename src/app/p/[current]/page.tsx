@@ -1,10 +1,6 @@
 import { getList } from '@/libs/microcms';
-import { LIMIT } from '@/constants';
-import Pagination from '@/components/Common/Pagination';
-import ArticleList from '@/components/ArticleLists/ArticleList';
-import { BellAlertIcon } from '@heroicons/react/24/solid';
-import TopSidebar from '@/components/Sidebars/TopSidebar';
-import Display from '@/components/Adsense/Display';
+import { LIMIT, RECENT_LIMIT } from '@/constants';
+import HomePage from '@/components/Pages/Home';
 
 type Props = {
   params: Promise<{
@@ -23,26 +19,25 @@ export const revalidate = 60;
 export default async function Page(props: Props) {
   const params = await props.params;
   const current = parseInt(params.current as string, 10);
+
   const data = await getList({
     limit: LIMIT,
+    fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
     offset: LIMIT * (current - 1),
   });
+  const recentArticles = await getList({
+    limit: RECENT_LIMIT,
+    fields: 'id,title,thumbnail',
+  });
+
   return (
     <>
-      <h1 className="categoryTitle text-3xl font-bold pt-5 pb-2 max-w-[85rem] sm:px-6 lg:px-8 mx-auto">
-        <div className="topTitle flex items-center pb-2 pt-2 mt-10">
-          <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
-          <div>最新記事</div>
-        </div>
-      </h1>
-      <ArticleList articles={data.contents} />
-      <Pagination totalCount={data.totalCount} current={current} />
-      <div className="pc">
-        <TopSidebar />
-      </div>
-      <div className="mt-5">
-        <Display slot="5969933704" />
-      </div>
+      <HomePage
+        articles={data.contents}
+        totalCount={data.totalCount}
+        current={current}
+        recentArticles={recentArticles.contents}
+      />
     </>
   );
 }
