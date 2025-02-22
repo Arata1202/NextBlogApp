@@ -32,11 +32,16 @@ export const categories = [
   { name: 'ブログ', href: '/category/blog', icon: FolderOpenIcon },
 ];
 export const mobileBottomNavigation = [
+  // { name: 'サイトマップ', href: '/sitemap', icon: DocumentMagnifyingGlassIcon },
+  // { name: 'プライバシーポリシー', href: '/privacy', icon: InformationCircleIcon },
   { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
 ];
 
 export const footerNavigation = {
-  solutions: [{ name: 'プロフィール', href: '/profile' }],
+  solutions: [
+    { name: 'プロフィール', href: '/profile' },
+    { name: 'サイトマップ', href: '/sitemap' },
+  ],
   category: [
     { name: '大学生活', href: '/category/university' },
     { name: 'プログラミング', href: '/category/programming' },
