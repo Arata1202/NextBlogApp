@@ -55,7 +55,7 @@ export default function PageTitle({
           <>
             <CalendarDaysIcon className="h-8 w-8 mr-2" />
             <div>
-              {year}年{parseInt(month || '')}月
+              {year}年{parseInt(month)}月
             </div>
           </>
         )}
