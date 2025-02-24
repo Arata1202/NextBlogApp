@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import { useGuardObserver } from '@/hooks/MutationObserver';
-import Display from '../../ThirdParties/GoogleAdSense/Display';
+import AdUnit from '../../ThirdParties/GoogleAdSense/AdUnit';
 import TableOfContents from '../../TableOfContent';
 import Profile from './Elements/Profile';
 import Category from './Elements/Category';
@@ -70,12 +70,12 @@ export default function Sidebar({ recentArticles, mobile, article, contentBlocks
       >
         <Profile />
         <div className="FirstAd mt-5 mut-guard">
-          <Display slot="8452341403" />
+          <AdUnit slot="8452341403" />
         </div>
         <Category />
         <Tag />
         <div className="FirstAd mt-5 mut-guard">
-          <Display slot="9574685533" />
+          <AdUnit slot="9574685533" />
         </div>
         <Archive />
         <Popular />

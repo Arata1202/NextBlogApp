@@ -3,7 +3,7 @@ import PageHeading from '@/components/Common/PageHeading';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
-import Display from '@/components/Common/ThirdParties/GoogleAdSense/Display';
+import AdUnit from '@/components/Common/ThirdParties/GoogleAdSense/AdUnit';
 
 type Props = {
   articles: Article[];
@@ -27,7 +27,7 @@ export default function CategoryPage({
       <Pagination totalCount={totalCount} current={current} basePath={`/category/${category.id}`} />
       <Sidebar recentArticles={recentArticles} mobile={true} />
       <div className="mt-5">
-        <Display slot="5969933704" />
+        <AdUnit slot="5969933704" />
       </div>
     </>
   );

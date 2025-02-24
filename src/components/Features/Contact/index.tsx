@@ -9,7 +9,7 @@ import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import Display from '@/components/Common/ThirdParties/GoogleAdSense/Display';
+import AdUnit from '@/components/Common/ThirdParties/GoogleAdSense/AdUnit';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
@@ -215,7 +215,7 @@ export default function ContactFeature({ articles }: Props) {
             </div>
           </form>
           <div className="FirstAd">
-            <Display slot="1831092739" />
+            <AdUnit slot="1831092739" />
           </div>
           <Share />
         </ContentContainer>

@@ -25,7 +25,7 @@ import 'highlight.js/styles/hybrid.css';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import './plugin.css';
-import Display from '@/components/Common/ThirdParties/GoogleAdSense/Display';
+import AdUnit from '@/components/Common/ThirdParties/GoogleAdSense/AdUnit';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import SingleDate from '../../Common/SingleDate';
@@ -251,7 +251,7 @@ export default function ArticleFeature({ data, articles }: Props) {
             <>{headings.length > 0 && <TableOfContents headings={headings} />}</>
             {data.content_blocks.map((block, index) => (
               <div key={index}>
-                {block.google_adsense && <Display slot={block.google_adsense} />}
+                {block.google_adsense && <AdUnit slot={block.google_adsense} />}
                 {block.bubble_text && block.bubble_image && (
                   <div className="my-10">
                     <div className={`speech-bubble ${block.bubble_isRight ? 'right' : 'left'}`}>
@@ -329,7 +329,7 @@ export default function ArticleFeature({ data, articles }: Props) {
               </div>
             ))}
             <div className="FirstAd">
-              <Display slot="1831092739" />
+              <AdUnit slot="1831092739" />
             </div>
             <div className="mt-10">
               <div className={`text-2xl font-semibold flex justify-center pt-10`}>

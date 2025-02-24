@@ -1,5 +1,5 @@
 import { Article } from '@/libs/microcms';
-import Display from '@/components/Common/ThirdParties/GoogleAdSense/Display';
+import AdUnit from '@/components/Common/ThirdParties/GoogleAdSense/AdUnit';
 import DisclaimerFeature from '@/components/Features/Disclaimer';
 import PageHeading from '@/components/Common/PageHeading';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
@@ -15,7 +15,7 @@ export default function DisclaimerPage({ articles }: Props) {
       <DisclaimerFeature articles={articles} />
       <Sidebar recentArticles={articles} mobile={true} />
       <div className="mt-5">
-        <Display slot="5969933704" />
+        <AdUnit slot="5969933704" />
       </div>
     </>
   );
