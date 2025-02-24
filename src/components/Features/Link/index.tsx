@@ -3,7 +3,7 @@
 import { Article } from '@/libs/microcms';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
-import Display from '../../Common/Adsense/Display';
+import DisplayAd from '@/components/Common/ ThirdParties/GoogleAdSense/Elements/AdUnit';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import SingleDate from '@/components/Common/SingleDate';
@@ -48,9 +48,7 @@ export default function LinkFeature({ articles }: Props) {
               ただし、インラインフレームの使用や画像の直リンクはご遠慮ください。
             </p>
           </div>
-          <div className="FirstAd">
-            <Display slot="1831092739" />
-          </div>
+          <DisplayAd slot="1831092739" />
           <Share />
         </ContentContainer>
         <Sidebar recentArticles={articles} mobile={false} />

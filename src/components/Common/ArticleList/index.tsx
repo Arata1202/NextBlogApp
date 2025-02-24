@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import Display from '../Adsense/Display';
+import DisplayAd from '../ ThirdParties/GoogleAdSense/Elements/AdUnit';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import ArticleCard from '../ArticleCard';
@@ -38,9 +38,7 @@ export default function ArticleList({ articles, recentArticles }: Props) {
                   <ArticleCard key={article.id} article={article} />
                 ))}
               </div>
-              <div className="FirstAd">
-                <Display slot="9947663897" />
-              </div>
+              <DisplayAd slot="9947663897" />
               <div className="mt-5">
                 {articles.slice(3).map((article) => (
                   <ArticleCard key={article.id} article={article} />
@@ -48,9 +46,7 @@ export default function ArticleList({ articles, recentArticles }: Props) {
               </div>
             </ul>
           )}
-          <div className="FirstAd">
-            <Display slot="1831092739" />
-          </div>
+          <DisplayAd slot="1831092739" />
           <Share />
         </ContentContainer>
         <Sidebar recentArticles={recentArticles} mobile={false} />
