@@ -13,14 +13,14 @@ declare global {
   }
 }
 
-type DisplayProps = {
+type Props = {
   slot: string;
   format?: string;
   responsive?: string;
   style?: any;
 };
 
-const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: DisplayProps) => {
+const AdUnit = ({ slot, format = 'rectangle', responsive = 'false', style }: Props) => {
   let pathname = usePathname();
   pathname = pathname ? pathname : '';
   useGuardObserver();
@@ -56,4 +56,4 @@ const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: Di
   );
 };
 
-export default Display;
+export default AdUnit;

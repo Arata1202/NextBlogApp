@@ -4,7 +4,7 @@ import Script from 'next/script';
 import './globals.css';
 import styles from './layout.module.css';
 import { ThemeProvider } from '@/libs/theme-provider';
-import { Adsense } from '@/components/Common/Adsense/AdsenseScript';
+import { GoogleAdSense } from '@/components/Common/ThirdParties/GoogleAdSense';
 import ThemeWrapper from '@/libs/theme-wrapper';
 import Header from '@/components/Common/Layouts/Header';
 import Footer from '@/components/Common/Layouts/Footer';
@@ -119,7 +119,7 @@ export default async function RootLayout({ children }: Props) {
           <main className={styles.main}>{children}</main>
           <Footer />
           <ScrollTopButton />
-          <Adsense />
+          <GoogleAdSense />
           <Script async strategy="afterInteractive" src="//www.instagram.com/embed.js" />
         </ThemeProvider>
       </body>

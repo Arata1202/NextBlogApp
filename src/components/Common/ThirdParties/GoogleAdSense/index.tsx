@@ -1,6 +1,6 @@
 import Script from 'next/script';
 
-export const Adsense = () => {
+export const GoogleAdSense = () => {
   return (
     <Script
       async
