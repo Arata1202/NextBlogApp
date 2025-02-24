@@ -20,7 +20,12 @@ type DisplayProps = {
   style?: any;
 };
 
-const AdUnit = ({ slot, format = 'rectangle', responsive = 'false', style }: DisplayProps) => {
+export default function AdUnit({
+  slot,
+  format = 'rectangle',
+  responsive = 'false',
+  style,
+}: DisplayProps) {
   let pathname = usePathname();
   pathname = pathname ? pathname : '';
   useGuardObserver();
@@ -54,6 +59,4 @@ const AdUnit = ({ slot, format = 'rectangle', responsive = 'false', style }: Dis
       />
     </div>
   );
-};
-
-export default AdUnit;
+}
