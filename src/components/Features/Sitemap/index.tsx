@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { Article, Category } from '@/libs/microcms';
 import styles from './index.module.css';
-import Display from '../../Common/ThirdParties/GoogleAdSense/Elements/AdUnit';
+import AdUnit from '@/components/Common/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import SingleDate from '@/components/Common/SingleDate';
@@ -98,9 +98,7 @@ export default function SitemapFeature({ articles, categories }: Props) {
               </ul>
             </div>
           </div>
-          <div className="FirstAd">
-            <Display slot="1831092739" />
-          </div>
+          <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
         <Sidebar recentArticles={articles} mobile={false} />

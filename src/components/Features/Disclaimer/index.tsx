@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import Display from '../../Common/ThirdParties/GoogleAdSense/Elements/AdUnit';
+import AdUnit from '@/components/Common/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import SingleDate from '@/components/Common/SingleDate';
@@ -51,9 +51,7 @@ export default function DisclaimerFeature({ articles }: Props) {
               本サービスに掲載された内容によって生じた損害等の一切の責任を負いかねますのでご了承ください。
             </p>
           </div>
-          <div className="FirstAd">
-            <Display slot="1831092739" />
-          </div>
+          <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
         <Sidebar recentArticles={articles} mobile={false} />

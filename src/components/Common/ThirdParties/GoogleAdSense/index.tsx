@@ -1,7 +1,7 @@
 import Script from 'next/script';
 
-export const GoogleAdSense = () => {
-  const publisherId = process.env.GOOGLE_ADSENSE_PUBLISHER_ID;
+export default function GoogleAdSense() {
+  const publisherId = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_PUBLISHER_ID;
   return (
     <Script
       async
@@ -10,4 +10,4 @@ export const GoogleAdSense = () => {
       strategy="afterInteractive"
     />
   );
-};
+}
