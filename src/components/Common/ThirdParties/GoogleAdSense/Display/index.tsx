@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useGuardObserver } from '@/hooks/MutationObserver';
 
-const publisherId = process.env.GOOGLE_ADSENSE_PUBLISHER_ID;
+const PUBLISHER_ID = '1705865999592590';
 
 declare global {
   interface Window {
@@ -20,12 +20,7 @@ type DisplayProps = {
   style?: any;
 };
 
-export default function AdUnit({
-  slot,
-  format = 'rectangle',
-  responsive = 'false',
-  style,
-}: DisplayProps) {
+const Display = ({ slot, format = 'rectangle', responsive = 'false', style }: DisplayProps) => {
   let pathname = usePathname();
   pathname = pathname ? pathname : '';
   useGuardObserver();
@@ -52,11 +47,13 @@ export default function AdUnit({
       <ins
         className="adsbygoogle mut-guard"
         style={{ display: 'flex', justifyContent: 'center', width: '100%', ...style }}
-        data-ad-client={`ca-pub-${publisherId}`}
+        data-ad-client={`ca-pub-${PUBLISHER_ID}`}
         data-ad-slot={slot}
         data-ad-format={format}
         data-full-width-responsive={responsive}
       />
     </div>
   );
-}
+};
+
+export default Display;

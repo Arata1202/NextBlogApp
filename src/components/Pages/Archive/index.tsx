@@ -1,5 +1,5 @@
 import { Article } from '@/libs/microcms';
-import AdUnit from '@/components/Common/ThirdParties/GoogleAdSense/AdUnit';
+import Display from '@/components/Common/ThirdParties/GoogleAdSense/Display';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
 import PageHeading from '@/components/Common/PageHeading';
@@ -33,7 +33,7 @@ export default function ArchivePage({
       />
       <Sidebar recentArticles={recentArticles} mobile={true} />
       <div className="mt-5">
-        <AdUnit slot="5969933704" />
+        <Display slot="5969933704" />
       </div>
     </>
   );

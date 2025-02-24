@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import AdUnit from '../ThirdParties/GoogleAdSense/AdUnit';
+import Display from '../ThirdParties/GoogleAdSense/Display';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import ArticleCard from '../ArticleCard';
@@ -39,7 +39,7 @@ export default function ArticleList({ articles, recentArticles }: Props) {
                 ))}
               </div>
               <div className="FirstAd">
-                <AdUnit slot="9947663897" />
+                <Display slot="9947663897" />
               </div>
               <div className="mt-5">
                 {articles.slice(3).map((article) => (
@@ -49,7 +49,7 @@ export default function ArticleList({ articles, recentArticles }: Props) {
             </ul>
           )}
           <div className="FirstAd">
-            <AdUnit slot="1831092739" />
+            <Display slot="1831092739" />
           </div>
           <Share />
         </ContentContainer>

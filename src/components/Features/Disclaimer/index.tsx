@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import AdUnit from '@/components/Common/ThirdParties/GoogleAdSense/AdUnit';
+import Display from '@/components/Common/ThirdParties/GoogleAdSense/Display';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import SingleDate from '@/components/Common/SingleDate';
@@ -52,7 +52,7 @@ export default function DisclaimerFeature({ articles }: Props) {
             </p>
           </div>
           <div className="FirstAd">
-            <AdUnit slot="1831092739" />
+            <Display slot="1831092739" />
           </div>
           <Share />
         </ContentContainer>

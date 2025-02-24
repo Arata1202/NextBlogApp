@@ -3,7 +3,7 @@ import PageHeading from '@/components/Common/PageHeading';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
-import AdUnit from '@/components/Common/ThirdParties/GoogleAdSense/AdUnit';
+import Display from '@/components/Common/ThirdParties/GoogleAdSense/Display';
 
 type Props = {
   articles: Article[];
@@ -21,7 +21,7 @@ export default function TagPage({ articles, tag, totalCount, recentArticles, cur
       <Pagination totalCount={totalCount} current={current} basePath={`/tag/${tag.id}`} />
       <Sidebar recentArticles={recentArticles} mobile={true} />
       <div className="mt-5">
-        <AdUnit slot="5969933704" />
+        <Display slot="5969933704" />
       </div>
     </>
   );
