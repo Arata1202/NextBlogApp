@@ -51,7 +51,7 @@ export default function DisplayAd({
           スポンサーリンク
         </p>
         <ins
-          className={`${styles.adUnit} mut-guard adsbygoogle`}
+          className={`${styles.adUnit} mut-guard`}
           data-ad-client={`ca-pub-${process.env.GOOGLE_ADSENSE_PUBLISHER_ID}`}
           data-ad-slot={slot}
           data-ad-format={format}
