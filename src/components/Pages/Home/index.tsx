@@ -3,7 +3,7 @@ import PageHeading from '@/components/Common/PageHeading';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
-import DisplayAd from '@/components/Common/ ThirdParties/GoogleAdSense/DisplayAd';
+import Display from '@/components/Common/Adsense/Display';
 
 type Props = {
   articles: Article[];
@@ -20,7 +20,7 @@ export default function HomePage({ articles, totalCount, recentArticles, current
       <Pagination totalCount={totalCount} current={current} />
       <Sidebar recentArticles={recentArticles} mobile={true} />
       <div className="mt-5">
-        <DisplayAd slot="5969933704" />
+        <Display slot="5969933704" />
       </div>
     </>
   );
