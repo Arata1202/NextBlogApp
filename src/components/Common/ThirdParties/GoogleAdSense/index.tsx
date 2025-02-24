@@ -1,6 +1,6 @@
 import Script from 'next/script';
 
-export const GoogleAdSense = () => {
+export default function GoogleAdSense() {
   return (
     <Script
       async
@@ -9,4 +9,4 @@ export const GoogleAdSense = () => {
       strategy="afterInteractive"
     />
   );
-};
+}
