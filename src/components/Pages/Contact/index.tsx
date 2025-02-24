@@ -1,5 +1,5 @@
 import { Article } from '@/libs/microcms';
-import AdUnit from '@/components/Common/ThirdParties/GoogleAdSense/Elements/AdUnit';
+import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import ContactFeature from '@/components/Features/Contact';
 import PageHeading from '@/components/Common/PageHeading';
 import Sidebar from '@/components/Common/Layouts/Sidebar';

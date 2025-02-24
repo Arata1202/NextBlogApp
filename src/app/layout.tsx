@@ -1,11 +1,14 @@
 import { Metadata } from 'next';
 import type { Viewport } from 'next';
-import Script from 'next/script';
 import './globals.css';
 import styles from './layout.module.css';
 import { ThemeProvider } from '@/libs/theme-provider';
-import GoogleAdSense from '@/components/Common/ThirdParties/GoogleAdSense';
 import ThemeWrapper from '@/libs/theme-wrapper';
+import GoogleSearchConsole from '@/components/ThirdParties/GoogleSearchConsole';
+import GoogleAdSense from '@/components/ThirdParties/GoogleAdSense';
+import GoogleAnalytics from '@/components/ThirdParties/GoogleAnalytics';
+import Instagram from '@/components/ThirdParties/Instagram';
+import OneSignal from '@/components/ThirdParties/OneSignal';
 import Header from '@/components/Common/Layouts/Header';
 import Footer from '@/components/Common/Layouts/Footer';
 import ScrollTopButton from '@/components/Common/Layouts/ScrollToTop';
@@ -45,39 +48,9 @@ type Props = {
 };
 
 export default async function RootLayout({ children }: Props) {
-  const onesignalAppId = process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID;
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
-        <Script async strategy="lazyOnload" src={process.env.GOOGLE_ANALYTICS_ID} />
-        <Script
-          id="google-analytics"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-LSE2CK3HZM', {
-              page_path: window.location.pathname,
-            });
-          `,
-          }}
-        />
-        <Script
-          src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
-          strategy="afterInteractive"
-        />
-        <Script id="onesignal-init" strategy="afterInteractive">
-          {`
-          window.OneSignalDeferred = window.OneSignalDeferred || [];
-          OneSignalDeferred.push(async function(OneSignal) {
-            await OneSignal.init({
-              appId: "${onesignalAppId}",
-            });
-          });
-        `}
-        </Script>
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
         <link rel="icon" href="/favicon.ico" />
         <link
@@ -110,7 +83,7 @@ export default async function RootLayout({ children }: Props) {
         <meta name="twitter:site" content="@Aokumoblog" />
         <meta property="og:site_name" content="リアル大学生" />
         <meta property="og:locale" content="ja_JP" />
-        <meta name="google-site-verification" content={process.env.SEARCH_CONSOLE_ID} />
+        <GoogleSearchConsole />
       </head>
       <body>
         <ThemeProvider defaultTheme="light">
@@ -120,7 +93,9 @@ export default async function RootLayout({ children }: Props) {
           <Footer />
           <ScrollTopButton />
           <GoogleAdSense />
-          <Script async strategy="afterInteractive" src="//www.instagram.com/embed.js" />
+          <GoogleAnalytics />
+          <Instagram />
+          <OneSignal />
         </ThemeProvider>
       </body>
     </html>
