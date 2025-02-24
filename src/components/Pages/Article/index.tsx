@@ -1,5 +1,5 @@
 import { Article } from '@/libs/microcms';
-import DisplayAd from '@/components/Common/ ThirdParties/GoogleAdSense/Elements/AdUnit';
+import Display from '@/components/Common/Adsense/Display';
 import ArticleFeature from '@/components/Features/Article';
 
 type Props = {
@@ -11,7 +11,9 @@ export default function ArticlePage({ article, articles }: Props) {
   return (
     <>
       <ArticleFeature data={article} articles={articles} />
-      <DisplayAd slot="5969933704" style={{ marginTop: '1.25rem' }} />
+      <div className="mt-5">
+        <Display slot="5969933704" />
+      </div>
     </>
   );
 }
