@@ -23,10 +23,6 @@
   max-width: 100% !important;
 }
 
-.FirstAd {
-  min-height: 280px !important;
-}
-
 .SidebarTableOfContents {
   position: sticky;
   top: 60px;
@@ -46,12 +42,6 @@
 @media (max-width: 768px) {
   .tableOfContent {
     width: 100%;
-  }
-}
-
-@media (max-width: 640px) {
-  .FirstAd {
-    min-height: 200px !important;
   }
 }
 
