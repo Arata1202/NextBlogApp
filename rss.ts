@@ -9,7 +9,7 @@ interface Article {
   title: string;
   description: string;
   publishedAt: string;
-  tags?: { name: string }[];
+  categories?: { name: string }[];
   thumbnail: { url: string };
 }
 
@@ -27,7 +27,7 @@ const getAllContents = async (endpoint: string): Promise<Article[]> => {
     while (true) {
       const res = await client.getList({
         endpoint,
-        queries: { offset, limit, fields: 'id,title,description,publishedAt,tags,thumbnail' },
+        queries: { offset, limit, fields: 'id,title,description,publishedAt,categories,thumbnail' },
       });
       if (res.contents.length === 0) break;
       allContents = allContents.concat(res.contents);
@@ -67,7 +67,7 @@ const generateRSSFeed = async () => {
         url: `https://realunivlog.com/articles/${article.id}`,
         author: 'あらた',
         date: article.publishedAt,
-        categories: article.tags ? article.tags.map((tag) => tag.name) : [],
+        categories: article.categories ? article.categories.map((category) => category.name) : [],
         enclosure: {
           url: article.thumbnail.url,
           type: 'image/jpg',
@@ -79,7 +79,7 @@ const generateRSSFeed = async () => {
   const xml = feed.xml({ indent: true });
 
   try {
-    const rssPath = path.join(__dirname, 'public', 'rss.xml');
+    const rssPath = path.join(__dirname, 'out', 'rss.xml');
     fs.mkdirSync(path.dirname(rssPath), { recursive: true });
     fs.writeFileSync(rssPath, xml);
     console.log('RSS feed generated successfully');
