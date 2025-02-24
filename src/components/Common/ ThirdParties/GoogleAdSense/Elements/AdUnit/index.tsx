@@ -19,7 +19,7 @@ type DisplayProps = {
   style?: object;
 };
 
-export default function DisplayAd({
+export default function AdUnit({
   slot,
   format = 'rectangle',
   responsive = 'false',
@@ -51,7 +51,8 @@ export default function DisplayAd({
           スポンサーリンク
         </p>
         <ins
-          className={`${styles.adUnit} mut-guard adsbygoogle`}
+          className="adsbygoogle mut-guard"
+          style={{ display: 'flex', justifyContent: 'center', width: '100%' }}
           data-ad-client={`ca-pub-${process.env.GOOGLE_ADSENSE_PUBLISHER_ID}`}
           data-ad-slot={slot}
           data-ad-format={format}
