@@ -3,7 +3,7 @@ import PageHeading from '@/components/Common/PageHeading';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
-import Display from '@/components/Common/ThirdParties/GoogleAdSense/Display';
+import Display from '@/components/Common/Adsense/Display';
 
 type Props = {
   articles: Article[];

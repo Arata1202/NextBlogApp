@@ -1,5 +1,5 @@
 import { Article } from '@/libs/microcms';
-import Display from '@/components/Common/ThirdParties/GoogleAdSense/Display';
+import Display from '@/components/Common/Adsense/Display';
 import CopyrightFeature from '@/components/Features/Copyright';
 import PageHeading from '@/components/Common/PageHeading';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
