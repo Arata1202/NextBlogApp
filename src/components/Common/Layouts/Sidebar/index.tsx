@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import { useGuardObserver } from '@/hooks/MutationObserver';
-import Display from '../../Adsense/Display';
+import Display from '../../ThirdParties/GoogleAdSense/Display';
 import TableOfContents from '../../TableOfContent';
 import Profile from './Elements/Profile';
 import Category from './Elements/Category';
