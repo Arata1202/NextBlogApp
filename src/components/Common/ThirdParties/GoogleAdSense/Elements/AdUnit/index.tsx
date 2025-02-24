@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useGuardObserver } from '@/hooks/MutationObserver';
-import styles from 'index.module.css';
+import styles from './index.module.css';
 
 const publisherId = process.env.GOOGLE_ADSENSE_PUBLISHER_ID;
 
