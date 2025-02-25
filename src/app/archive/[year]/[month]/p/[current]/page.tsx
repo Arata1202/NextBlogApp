@@ -13,9 +13,10 @@ type Props = {
 
 export const generateStaticParams = async () => {
   const results = await Promise.all(
-    archive.map(async ({ year, monthForPath }) => {
-      const startDate = `${year}-${monthForPath}-01T00:00:00Z`;
-      const endDate = new Date(Number(year), Number(monthForPath), 1).toISOString();
+    archive.map(async ({ year, month }) => {
+      const formattedMonth = month.padStart(2, '0');
+      const startDate = `${year}-${formattedMonth}-01T00:00:00Z`;
+      const endDate = new Date(Number(year), Number(formattedMonth), 1).toISOString();
 
       const data = await getList({
         limit: 0,
@@ -28,7 +29,7 @@ export const generateStaticParams = async () => {
 
       return currents.map((current) => ({
         year,
-        month: monthForPath,
+        month: formattedMonth,
         current: current.toString(),
       }));
     }),

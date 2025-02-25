@@ -52,7 +52,7 @@ export default function Archive() {
               {archive.map((item, index) => (
                 <Listbox.Option
                   key={index}
-                  value={`${item.year}/${item.monthForPath}`}
+                  value={`${item.year}/${item.month.padStart(2, '0')}`}
                   className={`relative cursor-pointer select-none py-2 pl-3 pr-9 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                 >
                   {`${item.year}年${item.month}月`}
