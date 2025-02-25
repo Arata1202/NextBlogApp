@@ -17,10 +17,10 @@ export default function Tag() {
           タグ
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
-          {tags.map((tag, index) => (
+          {tags.map((tag) => (
             <a
-              key={index}
-              href={tag.link}
+              key={tag.id}
+              href={`/tag/${tag.id}`}
               className={`inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 hover:border-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               {tag.name}
