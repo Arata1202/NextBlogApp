@@ -67,7 +67,7 @@ export default function ContactFeature({ articles }: Props) {
   const sendEmail = useCallback(() => {
     if (!formData) return;
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/realunivlog/v1/sendemail`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_SENDEMAIL_URL}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
@@ -89,16 +89,13 @@ export default function ContactFeature({ articles }: Props) {
   const handleConfirmSend = useCallback(() => {
     const verifyCaptcha = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/realunivlog/v1/recaptcha`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              'g-recaptcha-response': captchaValue,
-            }),
-          },
-        );
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_RECAPTCHA_URL}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            'g-recaptcha-response': captchaValue,
+          }),
+        });
         const data = await response.json();
         if (data.success) {
           sendEmail();
