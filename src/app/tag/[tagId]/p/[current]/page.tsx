@@ -12,8 +12,8 @@ type Props = {
 
 export const generateStaticParams = async () => {
   const results = await Promise.all(
-    tags.map(async ({ link }) => {
-      const tagId = link.replace('/tag/', '');
+    tags.map(async (tag) => {
+      const tagId = tag.id;
 
       const data = await getList({
         limit: 0,

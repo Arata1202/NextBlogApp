@@ -10,8 +10,8 @@ type Props = {
 };
 
 export const generateStaticParams = async () => {
-  return tags.map(({ link }) => ({
-    tagId: link.replace('/tag/', ''),
+  return tags.map((tag) => ({
+    tagId: tag.id,
   }));
 };
 

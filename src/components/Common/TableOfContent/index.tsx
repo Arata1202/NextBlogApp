@@ -2,6 +2,7 @@
 import { useTheme } from 'next-themes';
 import React, { useMemo } from 'react';
 import { useEffect, useState } from 'react';
+import './index.css';
 
 interface Heading {
   id: string;

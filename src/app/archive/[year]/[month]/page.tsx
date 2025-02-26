@@ -11,10 +11,13 @@ type Props = {
 };
 
 export const generateStaticParams = async () => {
-  return archive.map(({ year, monthForPath }) => ({
-    year,
-    month: monthForPath,
-  }));
+  return archive.map(({ year, month }) => {
+    const formattedMonth = month.padStart(2, '0');
+    return {
+      year,
+      month: formattedMonth,
+    };
+  });
 };
 
 export default async function Page(props: Props) {
