@@ -20,6 +20,7 @@ import css from 'highlight.js/lib/languages/css';
 import json from 'highlight.js/lib/languages/json';
 import sql from 'highlight.js/lib/languages/sql';
 import typescript from 'highlight.js/lib/languages/typescript';
+import dart from 'highlight.js/lib/languages/dart';
 import vim from 'highlight.js/lib/languages/vim';
 import 'highlight.js/styles/hybrid.css';
 import { Article } from '@/libs/microcms';
@@ -45,6 +46,7 @@ hljs.registerLanguage('dockerfile', dockerfile);
 hljs.registerLanguage('json', json);
 hljs.registerLanguage('sql', sql);
 hljs.registerLanguage('typescript', typescript);
+hljs.registerLanguage('dart', dart);
 hljs.registerLanguage('vim', vim);
 
 interface Heading {
