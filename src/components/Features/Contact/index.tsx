@@ -14,8 +14,7 @@ import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 import Share from '../../Common/Share';
-import AdAlert from '../../Common/AdAlert';
-import SingleDate from '@/components/Common/SingleDate';
+import FixedDateContainer from '@/components/Common/Layouts/Container/FIxedDateContainer';
 
 type Props = {
   articles: Article[];
@@ -30,12 +29,7 @@ interface FormData {
 export default function ContactFeature({ articles }: Props) {
   const { theme } = useTheme();
 
-  const dummyDate = new Date(2023, 10, 27);
-  const formattedDate = dummyDate.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
+  const date = new Date(2023, 10, 27);
 
   const [show, setContactConfirmShow] = useState(false);
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
@@ -126,12 +120,7 @@ export default function ContactFeature({ articles }: Props) {
     <>
       <MainContainer>
         <ContentContainer>
-          <div className="space-y-5 lg:space-y-8">
-            <div className="flex justify-end gap-x-5">
-              <SingleDate date={formattedDate} />
-            </div>
-            <AdAlert />
-          </div>
+          <FixedDateContainer date={date} />
           <p className="mt-5">
             本ブログに関するご質問やお気づきの点がございましたら、お気軽にお問い合わせください。
           </p>
