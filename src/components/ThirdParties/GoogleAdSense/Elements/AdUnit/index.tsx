@@ -30,15 +30,12 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
   useGuardObserver();
 
   useEffect(() => {
-    const isAlreadyExists = document.querySelector(`ins[data-ad-slot="${slot}"]`);
-    if (!isAlreadyExists) {
-      try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (err) {
-        console.error(err);
-      }
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (err) {
+      console.error(err);
     }
-  }, []);
+  }, [pathname]);
 
   return (
     <>
