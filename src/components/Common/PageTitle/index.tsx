@@ -8,7 +8,6 @@ import {
   LinkIcon,
   LockClosedIcon,
   UserCircleIcon,
-  DocumentMagnifyingGlassIcon,
   BellAlertIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/24/solid';

@@ -1,8 +1,7 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { FireIcon, HandThumbUpIcon, RssIcon, UserPlusIcon } from '@heroicons/react/24/solid';
-import { SiFeedly } from 'react-icons/si';
+import { FireIcon, HandThumbUpIcon } from '@heroicons/react/24/solid';
 import {
   TwitterShareButton,
   XIcon,
@@ -29,7 +28,6 @@ export default function Share({ data }: Props) {
   const baseTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
   const title = data ? `${data.title}｜${baseTitle}` : `${baseTitle}`;
   const url = data ? `${baseUrl}/articles/${data.id}` : `${baseUrl}`;
-  const rss = `${baseUrl}/rss.xml`;
   const buyMeaCoffeeMessage = data?.id && data?.title ? 'この' : '';
 
   return (
