@@ -67,31 +67,6 @@ export default function Share({ data }: Props) {
           <div
             className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           >
-            <UserPlusIcon className="h-8 w-8 mr-2" />
-            フォローする
-          </div>
-          <div className="flex justify-center">
-            <a
-              href={rss}
-              className="bg-orange-500 rounded-full p-2 m-1 hover:opacity-60"
-              target="_blank"
-            >
-              <RssIcon className="h-6 w-6 text-white" />
-            </a>
-            <a
-              href={`https://feedly.com/i/subscription/feed/${rss}`}
-              target="_blank"
-              className="bg-green-500 rounded-full p-2 m-1 hover:opacity-60"
-            >
-              <SiFeedly className="h-6 w-6 text-white" />
-            </a>
-          </div>
-        </div>
-
-        <div className="mt-5">
-          <div
-            className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-          >
             <FireIcon className="h-8 w-8 mr-2" />
             応援する
           </div>
