@@ -12,7 +12,7 @@ export default function DisclaimerPage({ articles }: Props) {
     <>
       <PageHeading disclaimer={true} />
       <DisclaimerFeature articles={articles} />
-      <AdUnit slot="5969933704" style={{ marginTop: '1.25rem', padding: '0 1.5rem' }} />
+      <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>
   );
 }
