@@ -16,6 +16,7 @@ import Recent from './Elements/Recent';
 type Props = {
   recentArticles?: Article[];
   contentBlocks?: { rich_text?: string }[];
+  article?: boolean;
 };
 
 interface ContentBlock {
@@ -55,7 +56,7 @@ function useExtractHeadings(contentBlocks: ContentBlock[]): Heading[] {
   return headings;
 }
 
-export default function Sidebar({ recentArticles, contentBlocks }: Props) {
+export default function Sidebar({ recentArticles, contentBlocks, article = false }: Props) {
   useGuardObserver();
 
   const memoizedContentBlocks = useMemo(() => contentBlocks || [], [contentBlocks]);
@@ -63,7 +64,7 @@ export default function Sidebar({ recentArticles, contentBlocks }: Props) {
 
   return (
     <>
-      <div className={`lg:col-span-1 lg:w-full lg:h-full mut-guard`}>
+      <div className={`${article && styles.article} lg:col-span-1 lg:w-full lg:h-full mut-guard`}>
         <Profile />
         <AdUnit slot="8452341403" style={{ marginTop: '1.25rem' }} />
         <Category />
