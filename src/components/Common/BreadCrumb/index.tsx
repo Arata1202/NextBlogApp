@@ -14,7 +14,6 @@ type Props = {
   link?: boolean;
   privacy?: boolean;
   profile?: boolean;
-  sitemap?: boolean;
 };
 
 export default function BreadCrumb({
@@ -30,7 +29,6 @@ export default function BreadCrumb({
   link,
   privacy,
   profile,
-  sitemap,
 }: Props) {
   return (
     <>
@@ -137,14 +135,6 @@ export default function BreadCrumb({
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 プロフィール
-              </a>
-            )}
-            {sitemap && (
-              <a
-                href={`/sitemap`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                サイトマップ
               </a>
             )}
           </div>
