@@ -35,7 +35,7 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
     } catch (err) {
       console.error(err);
     }
-  }, [slot]);
+  }, [pathname]);
 
   return (
     <>
