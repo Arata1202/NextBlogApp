@@ -24,7 +24,7 @@ export default function CategoryPage({
       <PageHeading category={category} />
       <ArticleList articles={articles} recentArticles={recentArticles} />
       <Pagination totalCount={totalCount} current={current} basePath={`/category/${category.id}`} />
-      <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
+      <AdUnit slot="5969933704" style={{ marginTop: '1.25rem', padding: '0 1.5rem' }} />
     </>
   );
 }

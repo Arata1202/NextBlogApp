@@ -13,7 +13,7 @@ export default function SitemapPage({ articles, categories }: Props) {
     <>
       <PageHeading sitemap={true} />
       <SitemapFeature articles={articles} categories={categories} />
-      <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
+      <AdUnit slot="5969933704" style={{ marginTop: '1.25rem', padding: '0 1.5rem' }} />
     </>
   );
 }

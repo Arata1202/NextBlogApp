@@ -18,7 +18,7 @@ export default function TagPage({ articles, tag, totalCount, recentArticles, cur
       <PageHeading tag={tag} />
       <ArticleList articles={articles} recentArticles={recentArticles} />
       <Pagination totalCount={totalCount} current={current} basePath={`/tag/${tag.id}`} />
-      <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
+      <AdUnit slot="5969933704" style={{ marginTop: '1.25rem', padding: '0 1.5rem' }} />
     </>
   );
 }
