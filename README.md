@@ -1,8 +1,7 @@
 <div id="top"></div>
 
 <div align="right">
-  
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Arata1202/NextBlogApp/vercel_deploy.yml)
+
 ![GitHub License](https://img.shields.io/github/license/Arata1202/NextBlogApp)
 
 </div>
@@ -17,11 +16,6 @@
   - [主な機能一覧](#主な機能一覧)
   - [使用技術](#使用技術)
   - [環境構築](#環境構築)
-    - [リポジトリのクローン](#リポジトリのクローン)
-    - [pnpmの場合](#pnpmの場合)
-      - [開発環境](#開発環境)
-      - [本番環境](#本番環境)
-    - [Dockerの場合](#Dockerの場合)
   - [ディレクトリ構成](#ディレクトリ構成)
   - [Gitの運用](#Gitの運用)
     - [ブランチ](#ブランチ)
@@ -43,46 +37,37 @@
 | ![1](/.docs/readme/images/1.png)   | ![2](/.docs/readme/images/2.png)                 |
 | 最新記事を一覧表示するページです。 | 特定のカテゴリーの記事を一覧表示するページです。 |
 
-| タグページ                                 | 　検索ページ                                       |
-| ------------------------------------------ | -------------------------------------------------- |
-| ![3](/.docs/readme/images/3.png)           | ![4](/.docs/readme/images/4.png)                   |
-| 特定のタグの記事を一覧表示するページです。 | 検索したキーワードの記事を一覧表示するページです。 |
+| タグページ                                 | お問い合わせページ                   |
+| ------------------------------------------ | ------------------------------------ |
+| ![3](/.docs/readme/images/3.png)           | ![7](/.docs/readme/images/7.png)     |
+| 特定のタグの記事を一覧表示するページです。 | 管理者にお問い合わせするページです。 |
 
 | アーカイブページ                           | 　記事ページ                     |
 | ------------------------------------------ | -------------------------------- |
 | ![5](/.docs/readme/images/5.png)           | ![6](/.docs/readme/images/6.png) |
 | 特定の年月の記事を一覧表示するページです。 | 記事を表示するページです。       |
 
-| お問い合わせページ                   | 　サイトマップページ                         |
-| ------------------------------------ | -------------------------------------------- |
-| ![7](/.docs/readme/images/7.png)     | ![10](/.docs/readme/images/10.png)           |
-| 管理者にお問い合わせするページです。 | HTML形式のサイトマップを表示するページです。 |
-
-| サイトマップ・RSS                            | 　ダークテーマ                                         |
-| -------------------------------------------- | ------------------------------------------------------ |
-| ![9](/.docs/readme/images/9.png)             | ![8](/.docs/readme/images/8.png)                       |
-| XML形式のサイトマップとRSSを公開しています。 | ライトテーマとダークテーマを切り替えることができます。 |
+| サイトマップ                            | 　ダークテーマ                                         |
+| --------------------------------------- | ------------------------------------------------------ |
+| ![9](/.docs/readme/images/9.png)        | ![8](/.docs/readme/images/8.png)                       |
+| XML形式のサイトマップを公開しています。 | ライトテーマとダークテーマを切り替えることができます。 |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
 ## 使用技術
 
-| Category          | Technology Stack                              |
-| ----------------- | --------------------------------------------- |
-| Frontend          | Next.js, TypeScript, Tailwind CSS             |
-| CMS               | MicroCMS                                      |
-| Infrastructure    | Vercel                                        |
-| Environment setup | Docker, Nginx                                 |
-| CI/CD             | GitHub Actions                                |
-| Design            | Figma, Canva                                  |
-| Google            | AdSense, Analytics, Search Console, reCAPTCHA |
-| etc.              | PWA, OneSignal, Pipedream, Sentry, Slack      |
+| Category       | Technology Stack                              |
+| -------------- | --------------------------------------------- |
+| Frontend       | Next.js, TypeScript, Tailwind CSS             |
+| CMS            | MicroCMS                                      |
+| Infrastructure | Cloudflare Pages                              |
+| Design         | Figma, Canva                                  |
+| Google         | AdSense, Analytics, Search Console, reCAPTCHA |
+| etc.           | PWA, OneSignal, Pipedream                     |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
 ## 環境構築
-
-### リポジトリのクローン
 
 ```
 # リポジトリのクローン
@@ -94,13 +79,10 @@ mv .env.example .env
 
 # .envの編集
 vi .env
-```
 
-### pnpmの場合
+# pnpmのインストール
+npm install -g pnpm
 
-#### 開発環境
-
-```
 # node_modulesのインストール
 pnpm install
 
@@ -111,53 +93,21 @@ pnpm dev
 http:localhost:3000
 ```
 
-#### 本番環境
-
-```
-# node_modulesのインストール
-pnpm install
-
-# Next.jsのビルド
-pnpm build
-
-# ビルドしたNext.jsの起動
-pnpm start
-
-# ブラウザにアクセス
-http:localhost:3000
-```
-
-### Dockerの場合
-
-```
-# コンテナのビルドと起動
-docker compose up -d --build
-
-# ブラウザにアクセス
-http:localhost:3000
-
-# コンテナの停止
-docker compose down
-```
-
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
 ## ディレクトリ構成
 
 ```
-❯ tree -a -I "node_modules|.next|.git|.pytest_cache|static" -L 2
+❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts" -L 3
 .
-├── .docker
-│   ├── js
-│   └── nginx
-├── .dockerignore
-├── .env
+├── .docs
+│   └── readme
+│       └── images
 ├── .env.example
-├── .github
-│   └── workflows
 ├── .gitignore
 ├── .husky
 │   └── pre-commit
+├── .nvmrc
 ├── .prettierignore
 ├── .prettierrc
 ├── .vscode
@@ -165,74 +115,69 @@ docker compose down
 │   └── settings.json
 ├── LICENSE
 ├── README.md
-├── app
-│   ├── manifest.json
-│   ├── api
-│   ├── archive
-│   ├── articles
-│   ├── category
-│   ├── contact
-│   ├── copyright
-│   ├── disclaimer
-│   ├── favicon.ico
-│   ├── global-error.tsx
-│   ├── globals.css
-│   ├── layout.module.css
-│   ├── layout.tsx
-│   ├── link
-│   ├── not-found.module.css
-│   ├── not-found.tsx
-│   ├── p
-│   ├── page.tsx
-│   ├── privacy
-│   ├── profile
-│   ├── search
-│   ├── sitemap
-│   └── tag
-├── components
-│   ├── Adsense
-│   ├── ArticleLists
-│   ├── Articles
-│   ├── Breadcrumbs
-│   ├── Categories
-│   ├── Elements
-│   ├── Fixed
-│   ├── Layouts
-│   ├── Sidebars
-│   └── Tags
-├── constants
-│   └── index.ts
-├── docker-compose.yml
 ├── eslint.config.mjs
-├── instrumentation.ts
-├── hooks
-│   └── MutationObserver
-├── libs
-│   ├── microcms.ts
-│   ├── theme-provider.tsx
-│   ├── theme-wrapper.tsx
-│   └── utils.ts
-├── next-sitemap.config.js
 ├── next.config.ts
 ├── package-lock.json
 ├── package.json
 ├── pnpm-lock.yaml
 ├── postcss.config.mjs
 ├── public
+│   ├── OneSignalSDKWorker.js
+│   ├── ads.txt
+│   ├── app-ads.txt
 │   ├── favicon.ico
 │   ├── images
-│   ├── OneSignalSDKWorker.js
+│   │   ├── blog
+│   │   ├── head
+│   │   ├── plugin
+│   │   ├── post
+│   │   ├── pwa
+│   │   └── thumbnail
 │   └── robots.txt
-├── sentry.client.config.ts
-├── sentry.edge.config.ts
-├── sentry.server.config.ts
-├── rss.ts
-├── section
-│   ├── archive.tsx
-│   ├── dummy.tsx
-│   └── tag.tsx
+├── src
+│   ├── app
+│   │   ├── archive
+│   │   ├── articles
+│   │   ├── category
+│   │   ├── contact
+│   │   ├── copyright
+│   │   ├── disclaimer
+│   │   ├── globals.css
+│   │   ├── layout.module.css
+│   │   ├── layout.tsx
+│   │   ├── link
+│   │   ├── manifest.json
+│   │   ├── not-found.module.css
+│   │   ├── not-found.tsx
+│   │   ├── p
+│   │   ├── page.tsx
+│   │   ├── privacy
+│   │   ├── profile
+│   │   ├── sitemap.ts
+│   │   └── tag
+│   ├── components
+│   │   ├── Common
+│   │   ├── Features
+│   │   ├── Pages
+│   │   └── ThirdParties
+│   ├── constants
+│   │   └── index.ts
+│   ├── hooks
+│   │   └── MutationObserver
+│   ├── libs
+│   │   ├── microcms.ts
+│   │   ├── theme-provider.tsx
+│   │   ├── theme-wrapper.tsx
+│   │   └── utils.ts
+│   └── section
+│       ├── archive.tsx
+│       ├── category.tsx
+│       ├── dummy.tsx
+│       └── tag.tsx
 ├── tailwind.config.ts
 └── tsconfig.json
+
+37 directories, 40 files
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
