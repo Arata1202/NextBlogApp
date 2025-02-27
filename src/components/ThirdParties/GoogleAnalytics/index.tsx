@@ -1,28 +1,6 @@
-import Script from 'next/script';
+import { GoogleAnalytics as GA4 } from '@next/third-parties/google';
 
 export default function GoogleAnalytics() {
   const gaId = process.env.GOOGLE_ANALYTICS_ID;
-  return (
-    <>
-      <Script
-        async
-        strategy="lazyOnload"
-        src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-      />
-      <Script
-        id="google-analytics"
-        strategy="lazyOnload"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${gaId}', {
-              page_path: window.location.pathname,
-            });
-          `,
-        }}
-      />
-    </>
-  );
+  return <GA4 gaId={gaId!} />;
 }
