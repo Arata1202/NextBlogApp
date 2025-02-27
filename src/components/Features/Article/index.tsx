@@ -349,12 +349,7 @@ export default function ArticleFeature({ data, articles }: Props) {
             <Share data={data} />
           </div>
         </ContentContainer>
-        <Sidebar
-          recentArticles={articles}
-          mobile={false}
-          article={true}
-          contentBlocks={data.content_blocks}
-        />
+        <Sidebar recentArticles={articles} contentBlocks={data.content_blocks} />
       </MainContainer>
     </>
   );

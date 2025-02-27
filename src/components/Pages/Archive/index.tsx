@@ -3,7 +3,6 @@ import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
 import PageHeading from '@/components/Common/PageHeading';
-import Sidebar from '@/components/Common/Layouts/Sidebar';
 
 type Props = {
   year: string;
@@ -31,7 +30,6 @@ export default function ArchivePage({
         current={current}
         basePath={`/archive/${year}/${month}`}
       />
-      <Sidebar recentArticles={recentArticles} mobile={true} />
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>
   );

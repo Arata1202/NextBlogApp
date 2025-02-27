@@ -49,7 +49,7 @@ export default function ArticleList({ articles, recentArticles }: Props) {
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
-        <Sidebar recentArticles={recentArticles} mobile={false} />
+        <Sidebar recentArticles={recentArticles} />
       </MainContainer>
     </>
   );

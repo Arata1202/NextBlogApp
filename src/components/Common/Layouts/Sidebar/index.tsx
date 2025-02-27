@@ -15,8 +15,6 @@ import Recent from './Elements/Recent';
 
 type Props = {
   recentArticles?: Article[];
-  mobile: boolean;
-  article?: boolean;
   contentBlocks?: { rich_text?: string }[];
 };
 
@@ -57,7 +55,7 @@ function useExtractHeadings(contentBlocks: ContentBlock[]): Heading[] {
   return headings;
 }
 
-export default function Sidebar({ recentArticles, mobile, article, contentBlocks }: Props) {
+export default function Sidebar({ recentArticles, contentBlocks }: Props) {
   useGuardObserver();
 
   const memoizedContentBlocks = useMemo(() => contentBlocks || [], [contentBlocks]);
@@ -65,9 +63,7 @@ export default function Sidebar({ recentArticles, mobile, article, contentBlocks
 
   return (
     <>
-      <div
-        className={`${(mobile && styles.mobile) || styles.pc} ${article && styles.article} lg:col-span-1 lg:w-full lg:h-full mut-guard`}
-      >
+      <div className={`lg:col-span-1 lg:w-full lg:h-full mut-guard`}>
         <Profile />
         <AdUnit slot="8452341403" style={{ marginTop: '1.25rem' }} />
         <Category />
@@ -77,7 +73,7 @@ export default function Sidebar({ recentArticles, mobile, article, contentBlocks
         <Popular />
         {recentArticles && <Recent recentArticles={recentArticles} />}
         {headings.length > 0 && (
-          <div className={`${(mobile && styles.mobile) || styles.pc} SidebarTableOfContents`}>
+          <div className={`${styles.pc} SidebarTableOfContents`}>
             <TableOfContents headings={headings} />
             <a href="https://www.buymeacoffee.com/realunivlog" target="_blank">
               <img

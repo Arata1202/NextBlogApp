@@ -57,7 +57,7 @@ export default function CopyrightFeature({ articles }: Props) {
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
-        <Sidebar recentArticles={articles} mobile={false} />
+        <Sidebar recentArticles={articles} />
       </MainContainer>
     </>
   );

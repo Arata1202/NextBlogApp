@@ -60,7 +60,6 @@ export default async function Page(props: Props) {
 
   return (
     <>
-      {data.totalCount}
       <CategoryPage
         articles={data.contents}
         category={category}

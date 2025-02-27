@@ -34,14 +34,12 @@ export default function Share({ data }: Props) {
 
   return (
     <>
-      <div className="mb-7">
-        <div className="pt-3">
-          <div
-            className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-          >
-            <HandThumbUpIcon className="h-8 w-8 mr-2" />
-            シェアする
-          </div>
+      <div className="mt-5">
+        <div
+          className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+        >
+          <HandThumbUpIcon className="h-8 w-8 mr-2" />
+          シェアする
         </div>
         <div className="flex justify-center flex-wrap">
           <TwitterShareButton url={url} title={title} className="m-1 hover:opacity-60">
@@ -65,14 +63,12 @@ export default function Share({ data }: Props) {
           </HatenaShareButton>
         </div>
 
-        <div className="mt-2">
-          <div className="pt-3">
-            <div
-              className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-            >
-              <UserPlusIcon className="h-8 w-8 mr-2" />
-              フォローする
-            </div>
+        <div className="mt-5">
+          <div
+            className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+          >
+            <UserPlusIcon className="h-8 w-8 mr-2" />
+            フォローする
           </div>
           <div className="flex justify-center">
             <a
@@ -92,14 +88,12 @@ export default function Share({ data }: Props) {
           </div>
         </div>
 
-        <div className="mt-2">
-          <div className="pt-3">
-            <div
-              className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-            >
-              <FireIcon className="h-8 w-8 mr-2" />
-              応援する
-            </div>
+        <div className="mt-5">
+          <div
+            className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+          >
+            <FireIcon className="h-8 w-8 mr-2" />
+            応援する
           </div>
           <div className="flex justify-center">
             <a
