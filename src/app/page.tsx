@@ -1,4 +1,4 @@
-import { getList } from '@/libs/microcms';
+import { getList } from '@/libs/Microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants/Limit';
 import HomePage from '@/components/Pages/Home';
 

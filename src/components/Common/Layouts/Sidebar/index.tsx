@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
-import { Article } from '@/libs/microcms';
+import { Article } from '@/libs/Microcms';
 import styles from './index.module.css';
 import { useGuardObserver } from '@/hooks/MutationObserver';
 import AdUnit from '../../../ThirdParties/GoogleAdSense/Elements/AdUnit';

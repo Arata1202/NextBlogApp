@@ -174,7 +174,7 @@ http:localhost:3000
 │   ├── hooks
 │   │   └── MutationObserver
 │   ├── libs
-│   │   └── microcms.ts
+│   │   └── Microcms
 │   └── utils
 │       └── FormatDate
 ├── tailwind.config.ts

@@ -1,4 +1,4 @@
-import { Article } from '@/libs/microcms';
+import { Article } from '@/libs/Microcms';
 import styles from './index.module.css';
 
 type Props = {

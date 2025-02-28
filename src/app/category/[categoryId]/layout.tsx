@@ -1,4 +1,4 @@
-import { getCategory } from '@/libs/microcms';
+import { getCategory } from '@/libs/Microcms';
 import { Metadata } from 'next';
 
 type Props = {

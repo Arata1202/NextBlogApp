@@ -23,7 +23,7 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import dart from 'highlight.js/lib/languages/dart';
 import vim from 'highlight.js/lib/languages/vim';
 import 'highlight.js/styles/hybrid.css';
-import { Article } from '@/libs/microcms';
+import { Article } from '@/libs/Microcms';
 import styles from './index.module.css';
 import './plugin.css';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';

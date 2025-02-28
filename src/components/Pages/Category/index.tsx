@@ -1,4 +1,4 @@
-import { Article, Category } from '@/libs/microcms';
+import { Article, Category } from '@/libs/Microcms';
 import PageHeading from '@/components/Common/PageHeading';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { getAllLists } from '@/libs/microcms';
+import { getAllLists } from '@/libs/Microcms';
 import { CategoryObject } from '@/constants/Blog/CategoryObject';
 
 export const dynamic = 'force-static';
