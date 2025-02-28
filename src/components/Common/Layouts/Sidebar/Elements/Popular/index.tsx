@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { BoltIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
-import { PopularPost } from '@/section/dummy';
+import { PopularPost } from '@/constants/Blog';
 
 export default function Popular() {
   const { theme } = useTheme();

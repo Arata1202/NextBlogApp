@@ -1,4 +1,4 @@
-export const categories = [
+export const CategoryObject = [
   { name: 'プログラミング', id: 'programming' },
   { name: '大学生活', id: 'university' },
   { name: '旅行', id: 'travel' },

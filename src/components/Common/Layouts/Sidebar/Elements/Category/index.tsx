@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { FolderIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
-import { CategoryList, CategoryList2 } from '@/section/dummy';
+import { CategoryList, CategoryList2 } from '@/constants/Blog';
 
 export default function Category() {
   const { theme } = useTheme();
