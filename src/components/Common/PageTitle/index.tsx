@@ -9,7 +9,6 @@ import {
   LockClosedIcon,
   UserCircleIcon,
   BellAlertIcon,
-  MagnifyingGlassIcon,
 } from '@heroicons/react/24/solid';
 import { Category, Tag } from '@/libs/microcms';
 import styles from './index.module.css';
@@ -19,7 +18,6 @@ type Props = {
   month?: string;
   category?: Category;
   tag?: Tag;
-  keyword?: string;
   home?: boolean;
   contact?: boolean;
   copyright?: boolean;
@@ -34,7 +32,6 @@ export default function PageTitle({
   month,
   category,
   tag,
-  keyword,
   home,
   contact,
   copyright,
@@ -51,69 +48,61 @@ export default function PageTitle({
         {year && month && (
           <>
             <CalendarDaysIcon className="h-8 w-8 mr-2" />
-            <div>
-              {year}年{parseInt(month)}月
-            </div>
+            {year}年{parseInt(month)}月
           </>
         )}
         {category && (
           <>
             <FolderOpenIcon className="h-8 w-8 mr-2" />
-            <div>{category.name}</div>
+            {category.name}
           </>
         )}
         {tag && (
           <>
             <HashtagIcon className="h-8 w-8 mr-2" />
-            <div>{tag.name}</div>
-          </>
-        )}
-        {keyword && (
-          <>
-            <MagnifyingGlassIcon className="h-8 w-8 mr-2" />
-            <div>{keyword}の検索結果</div>
+            {tag.name}
           </>
         )}
         {home && (
           <>
             <BellAlertIcon className="h-8 w-8 mr-2" />
-            <div>最新記事</div>
+            最新記事
           </>
         )}
         {contact && (
           <>
             <EnvelopeIcon className="h-8 w-8 mr-2" />
-            <div>お問い合わせ</div>
+            お問い合わせ
           </>
         )}
         {copyright && (
           <>
             <DocumentTextIcon className="h-8 w-8 mr-2" />
-            <div>著作権</div>
+            著作権
           </>
         )}
         {disclaimer && (
           <>
             <ExclamationCircleIcon className="h-8 w-8 mr-2" />
-            <div>免責事項</div>
+            免責事項
           </>
         )}
         {link && (
           <>
             <LinkIcon className="h-8 w-8 mr-2" />
-            <div>リンク</div>
+            リンク
           </>
         )}
         {privacy && (
           <>
             <LockClosedIcon className="h-8 w-8 mr-2" />
-            <div>プライバシーポリシー</div>
+            プライバシーポリシー
           </>
         )}
         {profile && (
           <>
             <UserCircleIcon className="h-8 w-8 mr-2" />
-            <div>プロフィール</div>
+            プロフィール
           </>
         )}
       </h1>

@@ -33,17 +33,13 @@ export default function ArticleList({ articles, recentArticles }: Props) {
           )}
           {articles.length > 0 && (
             <ul className={styles.main}>
-              <div>
-                {articles.slice(0, 3).map((article) => (
-                  <ArticleCard key={article.id} article={article} />
-                ))}
-              </div>
-              <AdUnit slot="9947663897" />
-              <div className="mt-5">
-                {articles.slice(3).map((article) => (
-                  <ArticleCard key={article.id} article={article} />
-                ))}
-              </div>
+              {articles.slice(0, 3).map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+              <AdUnit slot="9947663897" style={{ marginBottom: '1.25rem' }} />
+              {articles.slice(3).map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
             </ul>
           )}
           <AdUnit slot="1831092739" />

@@ -7,7 +7,6 @@ type Props = {
   article?: Article;
   category?: Category;
   tag?: Tag;
-  keyword?: string;
   contact?: boolean;
   copyright?: boolean;
   disclaimer?: boolean;
@@ -22,7 +21,6 @@ export default function BreadCrumb({
   article,
   category,
   tag,
-  keyword,
   contact,
   copyright,
   disclaimer,
@@ -85,9 +83,6 @@ export default function BreadCrumb({
               >
                 {tag.name}
               </a>
-            )}
-            {keyword && (
-              <a className="ml-4 text-sm font-medium text-gray-500">{keyword}の検索結果</a>
             )}
             {contact && (
               <a
