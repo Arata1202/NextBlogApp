@@ -29,7 +29,7 @@ import './plugin.css';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
-import SingleDate from '../../Common/SingleDate';
+import DoubleDate from '@/components/Common/DoubleDate';
 import TableOfContents from '@/components/Common/TableOfContent';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 import ArticleCard from '@/components/Common/ArticleCard';
@@ -129,14 +129,6 @@ export default function ArticleFeature({ data, articles }: Props) {
 
   const headings = useExtractHeadings(data.content_blocks);
 
-  const isNextDayOrLater = (date1: string, date2: string) => {
-    const d1 = new Date(date1);
-    const d2 = new Date(date2);
-    d1.setHours(0, 0, 0, 0);
-    d2.setHours(0, 0, 0, 0);
-    return d1 > d2;
-  };
-
   return (
     <>
       <MainContainer article={true}>
@@ -162,15 +154,7 @@ export default function ArticleFeature({ data, articles }: Props) {
                 height={data.thumbnail.height}
               />
             </picture>
-            <div className={styles.date}>
-              <SingleDate date={data.publishedAt!} />
-              {data.updatedAt && isNextDayOrLater(data.updatedAt, data.publishedAt!) && (
-                <>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <SingleDate date={data.updatedAt!} updatedAt={true} />
-                </>
-              )}
-            </div>
+            <DoubleDate article={data} articleMode={true} />
             <AdAlert />
             {data.introduction_blocks.map((block, index) => (
               <div key={index}>

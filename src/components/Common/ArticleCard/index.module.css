@@ -3,12 +3,6 @@
   list-style: none;
 }
 
-.date {
-  display: flex;
-  justify-content: right;
-  margin-top: auto;
-}
-
 .link {
   display: flex;
   gap: 10px;

@@ -1,0 +1,9 @@
+.date {
+  display: flex;
+  justify-content: right;
+  margin-top: auto;
+}
+
+.articleMode {
+  margin-top: 0px !important;
+}
