@@ -86,13 +86,6 @@
   margin-top: 28px;
 }
 
-.thumbnail {
-  width: 960px;
-  height: auto;
-  margin-bottom: 0px;
-  margin-top: 10px;
-}
-
 .content {
   width: 100%;
 }
@@ -342,11 +335,6 @@
     color: var(--color-text-sub);
     margin: 24px 0 40px;
     text-align: center;
-  }
-
-  .thumbnail {
-    width: 100%;
-    height: auto;
   }
 
   .content {

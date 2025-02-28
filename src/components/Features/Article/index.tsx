@@ -36,6 +36,7 @@ import ArticleCard from '@/components/Common/ArticleCard';
 import AdAlert from '@/components/Common/AdAlert';
 import Share from '@/components/Common/Share';
 import BreadCrumb from '@/components/Common/BreadCrumb';
+import WebpImage from '@/components/Common/Elements/WebpImage';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
@@ -136,24 +137,7 @@ export default function ArticleFeature({ data, articles }: Props) {
           <BreadCrumb article={data} />
           <div className="space-y-5 lg:space-y-8">
             <h1 className={`${styles.title} text-3xl font-bold lg:text-3xl`}>{data.title}</h1>
-            <picture className="w-full">
-              <source
-                type="image/webp"
-                media="(max-width: 640px)"
-                srcSet={`${data.thumbnail.url}?fm=webp&w=414 1x, ${data.thumbnail.url}?fm=webp&w=414&dpr=2 2x`}
-              />
-              <source
-                type="image/webp"
-                srcSet={`${data.thumbnail.url}?fm=webp&fit=crop&w=960&h=504 1x, ${data.thumbnail.url}?fm=webp&fit=crop&w=960&h=504&dpr=2 2x`}
-              />
-              <img
-                src={data.thumbnail.url}
-                alt={data.title}
-                className={styles.thumbnail}
-                width={data.thumbnail.width}
-                height={data.thumbnail.height}
-              />
-            </picture>
+            <WebpImage article={data} />
             <DoubleDate article={data} articleMode={true} />
             <AdAlert />
             {data.introduction_blocks.map((block, index) => (
