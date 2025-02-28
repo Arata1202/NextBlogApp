@@ -1,4 +1,4 @@
-export const ArchiveObject = [
+export const ArchiveArray = [
   { year: '2025', month: '2' },
   { year: '2025', month: '1' },
   { year: '2024', month: '12' },

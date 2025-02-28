@@ -1,6 +1,6 @@
 import { getList, getCategory } from '@/libs/Microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants/Limit';
-import { CategoryObject } from '@/constants/Blog/CategoryObject';
+import { CategoryArray } from '@/constants/Blog/CategoryArray';
 import CategoryPage from '@/components/Pages/Category';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const generateStaticParams = async () => {
-  return CategoryObject.map((category) => ({ categoryId: category.id }));
+  return CategoryArray.map((category) => ({ categoryId: category.id }));
 };
 
 export default async function Page(props: Props) {
