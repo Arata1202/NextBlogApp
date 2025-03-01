@@ -7,13 +7,13 @@ import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outli
 import { FolderIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import ThemeSwitch from '@/components/Common/Layouts/ThemeSwitch';
-import { BlogTitle } from '@/constants/Data';
+import { BlogTitle } from '@/constants/data';
 import {
   headerNavigation,
   mobileTopNavigation,
   mobileBottomNavigation,
   categories,
-} from '@/constants/Data';
+} from '@/constants/data';
 
 export default function Header() {
   const { theme } = useTheme();

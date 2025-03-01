@@ -2,7 +2,7 @@
 
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
-import { BlogTitle, copyRight, footerNavigation } from '@/constants/Data';
+import { BlogTitle, copyRight, footerNavigation } from '@/constants/data';
 
 export default function Footer() {
   const { theme } = useTheme();
