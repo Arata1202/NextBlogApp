@@ -1,7 +1,7 @@
 import { getList } from '@/libs/microcms';
-import { LIMIT, RECENT_LIMIT } from '@/constants/Limit';
+import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import ArchivePage from '@/components/Pages/Archive';
-import { ArchiveArray } from '@/constants/Blog/ArchiveArray';
+import { ARCHIVE_ARR } from '@/constants/archive';
 
 type Props = {
   params: Promise<{
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const generateStaticParams = async () => {
-  return ArchiveArray.map(({ year, month }) => {
+  return ARCHIVE_ARR.map(({ year, month }) => {
     const formattedMonth = month.padStart(2, '0');
     return {
       year,

@@ -1,7 +1,7 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { LIMIT } from '@/constants/Limit';
+import { LIMIT } from '@/constants/limit';
 import styles from './index.module.css';
 
 type Props = {

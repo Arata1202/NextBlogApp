@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getAllLists } from '@/libs/microcms';
-import { CategoryArray } from '@/constants/Blog/CategoryArray';
+import { CATEGORY_ARR } from '@/constants/category';
 
 export const dynamic = 'force-static';
 
@@ -57,7 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const categoryPages: MetadataRoute.Sitemap = CategoryArray.map((category) => {
+  const categoryPages: MetadataRoute.Sitemap = CATEGORY_ARR.map((category) => {
     return {
       url: `${url}/category/${category.id}`,
       lastModified: lastModified,

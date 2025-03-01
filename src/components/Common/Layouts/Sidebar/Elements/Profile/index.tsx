@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
-import { UserProfile, SocialIcon } from '@/constants/Blog';
+import { UserProfile, SocialIcon } from '@/constants/Data';
 
 export default function Profile() {
   const { theme } = useTheme();

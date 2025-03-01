@@ -1,7 +1,7 @@
 import { getList, getTag } from '@/libs/microcms';
-import { LIMIT, RECENT_LIMIT } from '@/constants/Limit';
+import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import TagPage from '@/components/Pages/Tag';
-import { TagArray } from '@/constants/Blog/TagArray';
+import { TAG_ARR } from '@/constants/tag';
 
 type Props = {
   params: Promise<{
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const generateStaticParams = async () => {
-  return TagArray.map((tag) => ({
+  return TAG_ARR.map((tag) => ({
     tagId: tag.id,
   }));
 };

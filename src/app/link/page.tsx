@@ -1,6 +1,6 @@
 import LinkPage from '@/components/Pages/Link';
 import { getList } from '@/libs/microcms';
-import { RECENT_LIMIT } from '@/constants/Limit';
+import { RECENT_LIMIT } from '@/constants/limit';
 
 export const revalidate = 60;
 

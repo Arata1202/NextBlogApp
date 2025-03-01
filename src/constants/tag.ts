@@ -1,4 +1,4 @@
-export const TagArray = [
+export const TAG_ARR = [
   { name: 'SEO対策', id: 'seo' },
   { name: 'MicroCMS', id: 'microcms' },
   { name: 'Google AdSense', id: 'adsense' },

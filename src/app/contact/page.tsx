@@ -1,5 +1,5 @@
 import { getList } from '@/libs/microcms';
-import { RECENT_LIMIT } from '@/constants/Limit';
+import { RECENT_LIMIT } from '@/constants/limit';
 import ContactPage from '@/components/Pages/Contact';
 
 export const revalidate = 60;

@@ -1,5 +1,5 @@
 import { getDetail, getList, getAllLists } from '@/libs/microcms';
-import { LIMIT } from '@/constants/Limit';
+import { LIMIT } from '@/constants/limit';
 import ArticlePage from '@/components/Pages/Article';
 
 type Props = {

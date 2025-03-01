@@ -1,5 +1,5 @@
 import { getList } from '@/libs/microcms';
-import { LIMIT, RECENT_LIMIT } from '@/constants/Limit';
+import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import HomePage from '@/components/Pages/Home';
 
 type Props = {

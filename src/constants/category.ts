@@ -1,4 +1,4 @@
-export const CategoryArray = [
+export const CATEGORY_ARR = [
   { name: 'プログラミング', id: 'programming' },
   { name: '大学生活', id: 'university' },
   { name: '旅行', id: 'travel' },

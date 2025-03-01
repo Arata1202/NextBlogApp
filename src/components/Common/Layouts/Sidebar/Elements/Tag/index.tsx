@@ -2,7 +2,7 @@
 
 import { useTheme } from 'next-themes';
 import { HashtagIcon } from '@heroicons/react/24/solid';
-import { TagArray } from '@/constants/Blog/TagArray';
+import { TAG_ARR } from '@/constants/tag';
 
 export default function Tag() {
   const { theme } = useTheme();
@@ -17,7 +17,7 @@ export default function Tag() {
           タグ
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
-          {TagArray.map((tag) => (
+          {TAG_ARR.map((tag) => (
             <a
               key={tag.id}
               href={`/tag/${tag.id}`}

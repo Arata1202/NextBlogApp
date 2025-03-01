@@ -1,6 +1,6 @@
 import { getList, getCategory } from '@/libs/microcms';
-import { LIMIT, RECENT_LIMIT } from '@/constants/Limit';
-import { CategoryArray } from '@/constants/Blog/CategoryArray';
+import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
+import { CATEGORY_ARR } from '@/constants/category';
 import CategoryPage from '@/components/Pages/Category';
 
 type Props = {
@@ -18,7 +18,7 @@ export const metadata = {
 
 export const generateStaticParams = async () => {
   const results = await Promise.all(
-    CategoryArray.map(async (category) => {
+    CATEGORY_ARR.map(async (category) => {
       const categoryId = category.id;
 
       const data = await getList({
