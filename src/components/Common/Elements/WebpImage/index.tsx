@@ -16,7 +16,7 @@ export default function WebpImage({ article, card = false }: Props) {
       />
       <source
         type="image/webp"
-        srcSet={`${article.thumbnail.url}?fm=webp&fit=crop&w=240&h=126 1x, ${article.thumbnail.url}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`}
+        srcSet={`${article.thumbnail.url}?fm=webp&fit=crop&w=${(card && '240') || '960'}&h=${(card && '126') || '504'} 1x, ${article.thumbnail.url}?fm=webp&fit=crop&w=${(card && '240') || '960'}&h=${(card && '126') || '504'}&dpr=2 2x`}
       />
       <img
         src={article.thumbnail.url}
