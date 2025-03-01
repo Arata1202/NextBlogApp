@@ -1,4 +1,4 @@
-import { Article } from '@/libs/Microcms';
+import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import SingleDate from '../SingleDate';
 

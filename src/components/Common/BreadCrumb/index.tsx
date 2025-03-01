@@ -1,5 +1,5 @@
 import { HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { Article, Category, Tag } from '@/libs/Microcms';
+import { Article, Category, Tag } from '@/libs/microcms';
 
 type Props = {
   year?: string;

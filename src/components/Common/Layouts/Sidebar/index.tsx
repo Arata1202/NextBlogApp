@@ -1,6 +1,6 @@
 'use client';
 
-import { Article } from '@/libs/Microcms';
+import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import { useMutationObserver } from '@/hooks/Common/useMutationObserver';
 import AdUnit from '../../../ThirdParties/GoogleAdSense/Elements/AdUnit';

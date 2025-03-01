@@ -1,4 +1,4 @@
-import { getList, getTag } from '@/libs/Microcms';
+import { getList, getTag } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants/Limit';
 import TagPage from '@/components/Pages/Tag';
 import { TagArray } from '@/constants/Blog/TagArray';

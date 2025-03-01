@@ -12,7 +12,7 @@ import {
   PocketShareButton,
   PocketIcon,
 } from 'react-share';
-import { Article } from '@/libs/Microcms';
+import { Article } from '@/libs/microcms';
 
 type Props = {
   data?: Article;

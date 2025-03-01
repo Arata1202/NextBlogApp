@@ -1,4 +1,4 @@
-import { Article } from '@/libs/Microcms';
+import { Article } from '@/libs/microcms';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import DisclaimerFeature from '@/components/Features/Disclaimer';
 import PageHeading from '@/components/Common/PageHeading';

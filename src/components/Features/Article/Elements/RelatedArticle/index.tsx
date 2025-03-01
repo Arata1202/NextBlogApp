@@ -1,5 +1,5 @@
 import { LinkIcon } from '@heroicons/react/20/solid';
-import { Article } from '@/libs/Microcms';
+import { Article } from '@/libs/microcms';
 import ArticleCard from '@/components/Common/ArticleCard';
 
 type Props = {

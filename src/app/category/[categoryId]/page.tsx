@@ -1,4 +1,4 @@
-import { getList, getCategory } from '@/libs/Microcms';
+import { getList, getCategory } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants/Limit';
 import { CategoryArray } from '@/constants/Blog/CategoryArray';
 import CategoryPage from '@/components/Pages/Category';

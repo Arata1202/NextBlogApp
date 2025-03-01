@@ -1,5 +1,5 @@
 import DisclaimerPage from '@/components/Pages/Disclaimer';
-import { getList } from '@/libs/Microcms';
+import { getList } from '@/libs/microcms';
 import { RECENT_LIMIT } from '@/constants/Limit';
 
 export const revalidate = 60;

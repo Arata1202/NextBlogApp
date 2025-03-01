@@ -1,6 +1,6 @@
 'use client';
 
-import { Article } from '@/libs/Microcms';
+import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
 import './plugin.css';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';

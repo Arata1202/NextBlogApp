@@ -1,4 +1,4 @@
-import { getList } from '@/libs/Microcms';
+import { getList } from '@/libs/microcms';
 import { RECENT_LIMIT } from '@/constants/Limit';
 import PrivacyPage from '@/components/Pages/Privacy';
 

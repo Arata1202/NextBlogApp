@@ -1,4 +1,4 @@
-import { ContentBlock } from '@/libs/Microcms';
+import { ContentBlock } from '@/libs/microcms';
 import styles from './index.module.css';
 
 type Props = {
