@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 import type { Viewport } from 'next';
-import './globals.css';
+import '../styles/globals.css';
 import styles from './layout.module.css';
-import { ThemeProvider } from '@/contexts/Theme/ThemeProvider';
-import ThemeWrapper from '@/contexts/Theme/ThemeWrapper';
+import { ThemeProvider } from '@/contexts/ThemeProvider';
+import ThemeWrapper from '@/contexts/ThemeWrapper';
 import GoogleSearchConsole from '@/components/ThirdParties/GoogleSearchConsole';
 import GoogleAdSense from '@/components/ThirdParties/GoogleAdSense';
 import GoogleAnalytics from '@/components/ThirdParties/GoogleAnalytics';

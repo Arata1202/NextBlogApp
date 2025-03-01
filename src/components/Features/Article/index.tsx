@@ -2,7 +2,7 @@
 
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import './plugin.css';
+import '../../../styles/plugin.css';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
