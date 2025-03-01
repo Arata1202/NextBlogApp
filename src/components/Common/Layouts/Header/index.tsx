@@ -41,7 +41,7 @@ export default function Header() {
             {mobileMenuOpen ? (
               <button
                 type="button"
-                className={`inline-flex items-center justify-center rounded-md p-2.5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                className={`inline-flex items-center justify-center rounded-md ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <XMarkIcon className="h-6 w-6" />
