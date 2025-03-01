@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Article } from '@/libs/Microcms';
 import styles from './index.module.css';
 import './plugin.css';
@@ -20,44 +19,12 @@ import RichText from './Elements/Plugins/RichText';
 import WantToRead from './Elements/Plugins/WantToRead';
 import TabBox from './Elements/Plugins/TabBox';
 import RelatedArticle from './Elements/RelatedArticle';
-
-interface Heading {
-  id: string;
-  title: string;
-  level: number;
-}
+import { useExtractHeadings } from '@/hooks/Article/useExtractHeadings';
 
 type Props = {
   data: Article;
   articles: Article[];
 };
-
-function useExtractHeadings(contentBlocks: { rich_text?: string }[]): Heading[] {
-  const [headings, setHeadings] = useState<Heading[]>([]);
-
-  useEffect(() => {
-    const extractedHeadings: Heading[] = [];
-
-    contentBlocks.forEach((block) => {
-      if (block.rich_text) {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = block.rich_text;
-        const blockHeadings: Heading[] = Array.from(
-          tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6'),
-        ).map((el) => ({
-          id: el.id,
-          title: el.textContent || '',
-          level: parseInt(el.tagName[1], 10),
-        }));
-        extractedHeadings.push(...blockHeadings);
-      }
-    });
-
-    setHeadings(extractedHeadings);
-  }, [contentBlocks]);
-
-  return headings;
-}
 
 export default function ArticleFeature({ data, articles }: Props) {
   const headings = useExtractHeadings(data.content_blocks);

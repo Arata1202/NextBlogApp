@@ -2,7 +2,7 @@
 
 import { Article } from '@/libs/Microcms';
 import styles from './index.module.css';
-import { useGuardObserver } from '@/hooks/MutationObserver';
+import { useMutationObserver } from '@/hooks/Common/useMutationObserver';
 import AdUnit from '../../../ThirdParties/GoogleAdSense/Elements/AdUnit';
 import Profile from './Elements/Profile';
 import Category from './Elements/Category';
@@ -19,7 +19,7 @@ type Props = {
 };
 
 export default function Sidebar({ recentArticles, contentBlocks, article = false }: Props) {
-  useGuardObserver();
+  useMutationObserver();
 
   return (
     <>

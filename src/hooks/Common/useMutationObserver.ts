@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export const useGuardObserver = () => {
+export const useMutationObserver = () => {
   useEffect(() => {
     const targets = document.querySelectorAll<HTMLElement>('.mut-guard');
     const observers: MutationObserver[] = [];

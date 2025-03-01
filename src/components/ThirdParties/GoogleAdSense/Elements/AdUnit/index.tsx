@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { useGuardObserver } from '@/hooks/MutationObserver';
+import { useMutationObserver } from '@/hooks/Common/useMutationObserver';
 import styles from './index.module.css';
 
 const publisherId = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_PUBLISHER_ID;
@@ -27,7 +27,7 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
 
   const { theme } = useTheme();
 
-  useGuardObserver();
+  useMutationObserver();
 
   useEffect(() => {
     try {
