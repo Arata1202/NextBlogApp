@@ -19,7 +19,7 @@ import RichText from './Elements/Plugins/RichText';
 import WantToRead from './Elements/Plugins/WantToRead';
 import TabBox from './Elements/Plugins/TabBox';
 import RelatedArticle from './Elements/RelatedArticle';
-import { useExtractHeadings } from '@/hooks/Article/useExtractHeadings';
+import { useExtractHeadings } from '@/hooks/useExtractHeadings';
 
 type Props = {
   data: Article;

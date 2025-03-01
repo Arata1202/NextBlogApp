@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { useMutationObserver } from '@/hooks/Common/useMutationObserver';
+import { useMutationObserver } from '@/hooks/useMutationObserver';
 import styles from './index.module.css';
 
 const publisherId = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_PUBLISHER_ID;

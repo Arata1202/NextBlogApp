@@ -2,7 +2,7 @@
 
 import { useTheme } from 'next-themes';
 import { ClockIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
-import { formatDate } from '@/utils/FormatDate';
+import { useFormatDate } from '@/hooks/useFormatDate';
 import styles from './index.module.css';
 
 type Props = {
@@ -19,7 +19,7 @@ export default function SingleDate({ date, updatedAt = false }: Props) {
         className={`${styles.date} ${updatedAt && styles.updatedAt} ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
         {updatedAt ? <ArrowPathIcon className="h-5 w-5" /> : <ClockIcon className="h-5 w-5" />}
-        {formatDate(date)}
+        {useFormatDate(date)}
       </span>
     </>
   );

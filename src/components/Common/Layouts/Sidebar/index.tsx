@@ -2,7 +2,7 @@
 
 import { Article } from '@/libs/microcms';
 import styles from './index.module.css';
-import { useMutationObserver } from '@/hooks/Common/useMutationObserver';
+import { useMutationObserver } from '@/hooks/useMutationObserver';
 import AdUnit from '../../../ThirdParties/GoogleAdSense/Elements/AdUnit';
 import Profile from './Elements/Profile';
 import Category from './Elements/Category';

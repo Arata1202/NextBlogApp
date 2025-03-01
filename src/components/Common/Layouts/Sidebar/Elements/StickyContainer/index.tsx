@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import styles from './index.module.css';
 import TableOfContents from '@/components/Common/TableOfContent';
 import BuyMeaCoffee from '@/components/Common/Share/Elements/Elements/BuyMeaCoffee';
-import { useExtractHeadings } from '@/hooks/Article/useExtractHeadings';
+import { useExtractHeadings } from '@/hooks/useExtractHeadings';
 
 type Props = {
   contentBlocks?: { rich_text?: string }[];
