@@ -7,7 +7,7 @@ import ContentContainer from '@/components/Common/Layouts/Container/ContentConta
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 import Share from '../../Common/Share';
 import Markdown from '@/components/Common/Markdown';
-import { DisclaimerContent } from '@/contents/Disclaimer';
+import { DisclaimerContent } from '@/contents/disclaimer';
 import FixedDateContainer from '@/components/Common/Layouts/Container/FIxedDateContainer';
 
 type Props = {
