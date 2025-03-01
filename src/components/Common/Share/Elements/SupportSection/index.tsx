@@ -58,15 +58,6 @@ export default function SupportSection({ data }: Props) {
           />
         </a>
       </div>
-      <a href="https://www.buymeacoffee.com/realunivlog" target="_blank">
-        <img
-          src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-          alt="BuyMeaCoffee"
-          loading="lazy"
-          width="160"
-          className="mt-5 m-auto hover:opacity-60"
-        />
-      </a>
       <BuyMeaCoffee data={data} />
     </div>
   );
