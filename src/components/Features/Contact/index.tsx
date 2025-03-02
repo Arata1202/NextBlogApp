@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { Article } from '@/libs/microcms';
+import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';

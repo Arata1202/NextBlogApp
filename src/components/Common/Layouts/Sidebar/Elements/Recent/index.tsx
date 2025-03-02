@@ -2,7 +2,7 @@
 
 import { useTheme } from 'next-themes';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
-import { Article } from '@/libs/microcms';
+import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 
 type Props = {

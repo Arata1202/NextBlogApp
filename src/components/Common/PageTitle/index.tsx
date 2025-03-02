@@ -10,7 +10,7 @@ import {
   UserCircleIcon,
   BellAlertIcon,
 } from '@heroicons/react/24/solid';
-import { Category, Tag } from '@/libs/microcms';
+import { Category, Tag } from '@/types/microcms';
 import styles from './index.module.css';
 
 type Props = {

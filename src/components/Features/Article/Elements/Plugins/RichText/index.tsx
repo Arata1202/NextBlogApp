@@ -1,6 +1,6 @@
 import { useTheme } from 'next-themes';
 import * as cheerio from 'cheerio';
-import { ContentBlock } from '@/libs/microcms';
+import { ContentBlock } from '@/types/microcms';
 import styles from './index.module.css';
 import hljs from 'highlight.js/lib/common';
 import javascript from 'highlight.js/lib/languages/javascript';

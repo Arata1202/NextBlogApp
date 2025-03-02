@@ -1,4 +1,4 @@
-import { Category, Tag } from '@/libs/microcms';
+import { Category, Tag } from '@/types/microcms';
 import styles from './index.module.css';
 import PageTitle from '../PageTitle';
 import BreadCrumb from '../BreadCrumb';

@@ -4,7 +4,7 @@ import {
   LightBulbIcon,
   InformationCircleIcon,
 } from '@heroicons/react/20/solid';
-import { ContentBlock } from '@/libs/microcms';
+import { ContentBlock } from '@/types/microcms';
 import styles from './index.module.css';
 
 type Props = {

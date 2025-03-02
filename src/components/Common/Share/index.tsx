@@ -1,6 +1,6 @@
 'use client';
 
-import { Article } from '@/libs/microcms';
+import { Article } from '@/types/microcms';
 import ShareSection from './Elements/ShareSection';
 import SupportSection from './Elements/SupportSection';
 

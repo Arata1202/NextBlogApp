@@ -1,7 +1,7 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { Article } from '@/libs/microcms';
+import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 import DoubleDate from '../DoubleDate';
 import WebpImage from '../Elements/WebpImage';

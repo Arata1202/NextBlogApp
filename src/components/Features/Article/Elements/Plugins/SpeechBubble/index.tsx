@@ -1,4 +1,4 @@
-import { ContentBlock } from '@/libs/microcms';
+import { ContentBlock } from '@/types/microcms';
 
 type Props = {
   block: ContentBlock;
