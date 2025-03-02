@@ -1,4 +1,4 @@
-export const PrivacyContent = `
+export const PRIVACY_CONTENT = `
 
 ## 個人情報取り扱いに関する基本方針
 

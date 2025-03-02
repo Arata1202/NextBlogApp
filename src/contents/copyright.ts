@@ -1,4 +1,4 @@
-export const CopyrightContent = `
+export const COPYRIGHT_CONTENT = `
 
 ## 著作権について
 

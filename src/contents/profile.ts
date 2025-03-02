@@ -1,4 +1,4 @@
-export const ProfileContent = `
+export const PROFILE_CONTENT = `
 
 初めまして、現役大学生のあらたと申します。
 

@@ -7,7 +7,7 @@ import ContentContainer from '@/components/Common/Layouts/Container/ContentConta
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 import Share from '../../Common/Share';
 import Markdown from '@/components/Common/Markdown';
-import { CopyrightContent } from '@/contents/copyright';
+import { COPYRIGHT_CONTENT } from '@/contents/copyright';
 import FixedDateContainer from '@/components/Common/Layouts/Container/FIxedDateContainer';
 
 type Props = {
@@ -22,7 +22,7 @@ export default function CopyrightFeature({ articles }: Props) {
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />
-          <Markdown content={CopyrightContent} />
+          <Markdown content={COPYRIGHT_CONTENT} />
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>

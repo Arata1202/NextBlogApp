@@ -1,4 +1,4 @@
-export const LinkContent = `
+export const LINK_CONTENT = `
 
 ## リンクについて
 

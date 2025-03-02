@@ -7,7 +7,7 @@ import ContentContainer from '@/components/Common/Layouts/Container/ContentConta
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 import Share from '../../Common/Share';
 import Markdown from '@/components/Common/Markdown';
-import { PrivacyContent } from '@/contents/privacy';
+import { PRIVACY_CONTENT } from '@/contents/privacy';
 import FixedDateContainer from '@/components/Common/Layouts/Container/FIxedDateContainer';
 
 type Props = {
@@ -22,7 +22,7 @@ export default function PrivacyFeature({ articles }: Props) {
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />
-          <Markdown content={PrivacyContent} />
+          <Markdown content={PRIVACY_CONTENT} />
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>

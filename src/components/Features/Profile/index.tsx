@@ -7,7 +7,7 @@ import ContentContainer from '@/components/Common/Layouts/Container/ContentConta
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 import Share from '../../Common/Share';
 import Markdown from '@/components/Common/Markdown';
-import { ProfileContent } from '@/contents/profile';
+import { PROFILE_CONTENT } from '@/contents/profile';
 import FixedDateContainer from '@/components/Common/Layouts/Container/FIxedDateContainer';
 
 type Props = {
@@ -22,7 +22,7 @@ export default function ProfileFeature({ articles }: Props) {
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />
-          <Markdown content={ProfileContent} profile={true} />
+          <Markdown content={PROFILE_CONTENT} profile={true} />
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>

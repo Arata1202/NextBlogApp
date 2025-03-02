@@ -1,4 +1,4 @@
-export const DisclaimerContent = `
+export const DISCLAIMER_CONTENT = `
 
 ## 免責事項
 
