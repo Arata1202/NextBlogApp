@@ -8,6 +8,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Article } from '@/types/microcms';
+import type { Form } from '@/types/form';
 import styles from './index.module.css';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
@@ -20,12 +21,6 @@ type Props = {
   articles: Article[];
 };
 
-interface FormData {
-  title: string;
-  email: string;
-  message: string;
-}
-
 export default function ContactFeature({ articles }: Props) {
   const { theme } = useTheme();
 
@@ -33,7 +28,7 @@ export default function ContactFeature({ articles }: Props) {
 
   const [show, setContactConfirmShow] = useState(false);
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
-  const [formData, setContactFormData] = useState<FormData | null>(null);
+  const [formData, setContactFormData] = useState<Form | null>(null);
   const [open, setContactDialogOpen] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
@@ -43,7 +38,7 @@ export default function ContactFeature({ articles }: Props) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormData>();
+  } = useForm<Form>();
 
   const resetCaptcha = useCallback(() => {
     recaptchaRef.current?.reset();
@@ -53,7 +48,7 @@ export default function ContactFeature({ articles }: Props) {
     setCaptchaValue(value);
   };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: Form) => {
     setContactFormData(data);
     setContactDialogOpen(true);
   };

@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-
-interface Heading {
-  id: string;
-  title: string;
-  level: number;
-}
+import { Heading } from '@/types/heading';
 
 export const useExtractHeadings = (contentBlocks: { rich_text?: string }[]): Heading[] => {
   const [headings, setHeadings] = useState<Heading[]>([]);

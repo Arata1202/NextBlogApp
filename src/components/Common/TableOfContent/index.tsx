@@ -1,20 +1,16 @@
 'use client';
+
 import { useTheme } from 'next-themes';
 import React, { useMemo } from 'react';
 import { useEffect, useState } from 'react';
+import { Heading } from '@/types/heading';
 import './index.css';
 
-interface Heading {
-  id: string;
-  title: string;
-  level: number;
-}
-
-interface TableOfContentsProps {
+type Props = {
   headings: Heading[];
-}
+};
 
-const TableOfContents: React.FC<TableOfContentsProps> = React.memo(({ headings }) => {
+const TableOfContents: React.FC<Props> = React.memo(({ headings }) => {
   const [activeId, setActiveId] = useState<string>('');
   const formattedHeadings = useMemo(() => {
     const headingNumbers: { [level: number]: number } = {};
