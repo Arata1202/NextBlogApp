@@ -32,6 +32,7 @@
     "eslint": "^9.21.0",
     "eslint-config-next": "^15.2.0",
     "eslint-config-prettier": "^10.0.2",
+    "feed": "^4.2.2",
     "microcms-js-sdk": "^3.1.2",
     "next": "^15.2.0",
     "preline": "^2.7.0",

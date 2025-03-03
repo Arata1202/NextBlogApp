@@ -2,8 +2,6 @@ import { getList } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import HomePage from '@/components/Pages/Home';
 
-export const revalidate = 60;
-
 export default async function Page() {
   const data = await getList({
     limit: LIMIT,

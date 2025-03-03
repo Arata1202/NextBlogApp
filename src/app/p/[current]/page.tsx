@@ -1,6 +1,7 @@
 import { getList } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import HomePage from '@/components/Pages/Home';
+import { generateRssFeed } from '@/libs/rss';
 
 type Props = {
   params: Promise<{
@@ -15,6 +16,8 @@ export const metadata = {
 };
 
 export const generateStaticParams = async () => {
+  generateRssFeed();
+
   const data = await getList({
     limit: 0,
     fields: '',
