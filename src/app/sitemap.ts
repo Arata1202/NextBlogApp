@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { getAllLists } from '@/libs/microcms';
 import { CATEGORY_ARR } from '@/constants/category';
+import { PAGE_ARR } from '@/constants/page';
 
 export const dynamic = 'force-static';
 
@@ -12,50 +13,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const changeFrequency = 'daily';
   const priority = 0.7;
 
-  const appPages: MetadataRoute.Sitemap = [
+  const topPage: MetadataRoute.Sitemap = [
     {
       url: `${url}`,
       lastModified: lastModified,
       changeFrequency: changeFrequency,
       priority: priority,
     },
-    {
-      url: `${url}/copyright`,
-      lastModified: lastModified,
-      changeFrequency: changeFrequency,
-      priority: priority,
-    },
-    {
-      url: `${url}/profile`,
-      lastModified: lastModified,
-      changeFrequency: changeFrequency,
-      priority: priority,
-    },
-    {
-      url: `${url}/privacy`,
-      lastModified: lastModified,
-      changeFrequency: changeFrequency,
-      priority: priority,
-    },
-    {
-      url: `${url}/contact`,
-      lastModified: lastModified,
-      changeFrequency: changeFrequency,
-      priority: priority,
-    },
-    {
-      url: `${url}/disclaimer`,
-      lastModified: lastModified,
-      changeFrequency: changeFrequency,
-      priority: priority,
-    },
-    {
-      url: `${url}/link`,
-      lastModified: lastModified,
-      changeFrequency: changeFrequency,
-      priority: priority,
-    },
   ];
+
+  const appPages: MetadataRoute.Sitemap = PAGE_ARR.map((page) => {
+    return {
+      url: `${url}/${page.path}`,
+      lastModified: lastModified,
+      changeFrequency: changeFrequency,
+      priority: priority,
+    };
+  });
 
   const categoryPages: MetadataRoute.Sitemap = CATEGORY_ARR.map((category) => {
     return {
@@ -75,5 +49,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     };
   });
 
-  return [...appPages, ...categoryPages, ...articlePages];
+  return [...topPage, ...appPages, ...categoryPages, ...articlePages];
 }

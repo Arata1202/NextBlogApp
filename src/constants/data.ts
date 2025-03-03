@@ -18,7 +18,10 @@ export const HEADER_NAVIGATION = [
 ];
 
 export const FOOTER_NAVIGATION = {
-  about: [{ name: 'プロフィール', path: '/profile' }],
+  about: [
+    { name: 'プロフィール', path: '/profile' },
+    { name: 'サイトマップ', path: '/sitemap-html' },
+  ],
   policy: [
     { name: 'プライバシーポリシー', path: '/privacy' },
     { name: '免責事項', path: '/disclaimer' },

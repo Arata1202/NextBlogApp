@@ -7,6 +7,7 @@ import {
   ExclamationCircleIcon,
   LinkIcon,
   LockClosedIcon,
+  DocumentMagnifyingGlassIcon,
   UserCircleIcon,
   BellAlertIcon,
 } from '@heroicons/react/24/solid';
@@ -25,6 +26,7 @@ type Props = {
   link?: boolean;
   privacy?: boolean;
   profile?: boolean;
+  sitemap?: boolean;
 };
 
 export default function PageTitle({
@@ -39,6 +41,7 @@ export default function PageTitle({
   link,
   privacy,
   profile,
+  sitemap,
 }: Props) {
   return (
     <>
@@ -103,6 +106,12 @@ export default function PageTitle({
           <>
             <UserCircleIcon className="h-8 w-8 mr-2" />
             プロフィール
+          </>
+        )}
+        {sitemap && (
+          <>
+            <DocumentMagnifyingGlassIcon className="h-8 w-8 mr-2" />
+            <div>サイトマップ</div>
           </>
         )}
       </h1>
