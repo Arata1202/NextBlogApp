@@ -1,6 +1,9 @@
 import { HomeIcon, UserCircleIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
 import { XIcon, InstagramIcon, GitHubIcon } from '@/components/Common/Elements/SocialIcon';
 
+export const DESCRIPTION =
+  '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。';
+
 export const BLOG_IMAGE = [
   {
     path: { light: '/images/blog/title.webp', dark: '/images/blog/title-dark.jpeg' },
@@ -43,11 +46,7 @@ export const SOCIAL_ICON = [
   },
 ];
 
-export const COPYRIGHT = [
-  {
-    title: 'Copyright © 2024 リアル大学生 All Rights Reserved.',
-  },
-];
+export const COPYRIGHT = 'Copyright © 2024 リアル大学生 All Rights Reserved.';
 
 export const PROFILE_NAME = 'あらた';
 

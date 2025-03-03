@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import type { Viewport } from 'next';
 import '../styles/globals.css';
 import styles from './layout.module.css';
+import { DESCRIPTION } from '@/constants/data';
 import { ThemeProvider } from '@/contexts/ThemeProvider';
 import ThemeWrapper from '@/contexts/ThemeWrapper';
 import GoogleSearchConsole from '@/components/ThirdParties/GoogleSearchConsole';
@@ -24,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
 
   const title = `${defaultTitle}`;
-  const description = `大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。`;
+  const description = DESCRIPTION;
   const images = `${defaultUrl}/images/thumbnail/7.webp`;
   const url = `${defaultUrl}`;
 

@@ -127,14 +127,9 @@ export default function Footer() {
           <div
             className={`mt-16 border-t pt-8 sm:mt-20 lg:mt-24 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           >
-            {COPYRIGHT.map((item) => (
-              <div
-                key={item.title}
-                className={`text-xs leading-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-              >
-                {item.title}
-              </div>
-            ))}
+            <div className={`text-xs leading-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
+              {COPYRIGHT}
+            </div>
           </div>
         </div>
       </footer>

@@ -1,7 +1,7 @@
 import { Feed } from 'feed';
 import fs from 'fs';
 import { getAllLists } from './microcms';
-import { COPYRIGHT } from '@/constants/data';
+import { COPYRIGHT, DESCRIPTION } from '@/constants/data';
 
 export const generateRssFeed = async () => {
   try {
@@ -9,9 +9,9 @@ export const generateRssFeed = async () => {
     const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
 
     const title = defaultTitle!;
-    const description = `大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。`;
+    const description = DESCRIPTION;
     const url = defaultUrl!;
-    const copyright = COPYRIGHT![0].title;
+    const copyright = COPYRIGHT;
 
     const feed = new Feed({
       id: url,
