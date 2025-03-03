@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { FolderIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
-import { CategoryList, CategoryList2 } from '@/constants/data';
+import { CATEGORY_ARR } from '@/constants/category';
 
 export default function Category() {
   const { theme } = useTheme();
@@ -18,10 +18,10 @@ export default function Category() {
           カテゴリー
         </div>
         <div className="flex gap-4 mt-5 md:mt-5">
-          {CategoryList.map((item) => (
+          {CATEGORY_ARR.slice(0, 2).map((item) => (
             <a
               key={item.name}
-              href={item.href}
+              href={`/category/${item.id}`}
               className={`${styles.CategoryList} text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <div className="flex justify-center">
@@ -34,10 +34,10 @@ export default function Category() {
           ))}
         </div>
         <div className="flex gap-4 mt-5 md:mt-5">
-          {CategoryList2.map((item) => (
+          {CATEGORY_ARR.slice(2, 4).map((item) => (
             <a
               key={item.name}
-              href={item.href}
+              href={`/category/${item.id}`}
               className={`${styles.CategoryList} text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <div className="flex justify-center">

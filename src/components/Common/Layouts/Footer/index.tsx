@@ -2,7 +2,8 @@
 
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
-import { BlogTitle, copyRight, footerNavigation } from '@/constants/data';
+import { BLOG_IMAGE, COPYRIGHT, FOOTER_NAVIGATION, SOCIAL_ICON } from '@/constants/data';
+import { CATEGORY_ARR } from '@/constants/category';
 
 export default function Footer() {
   const { theme } = useTheme();
@@ -16,13 +17,11 @@ export default function Footer() {
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
             <div className="space-y-8">
               <a href="/" className={styles.logo}>
-                {BlogTitle.map((item) => (
+                {BLOG_IMAGE.map((item) => (
                   <img
-                    key={item.imageUrl}
-                    src={
-                      theme === 'dark' ? '/images/blog/title-dark.jpeg' : '/images/blog/title.webp'
-                    }
-                    alt={item.imageAlt}
+                    key={item.alt}
+                    src={theme === 'dark' ? item.path.dark : item.path.light}
+                    alt={item.alt}
                     className="hover:scale-110 transition-transform"
                     width={165}
                     height={30}
@@ -30,10 +29,10 @@ export default function Footer() {
                 ))}
               </a>
               <div className={`${styles.logo} flex space-x-6`}>
-                {footerNavigation.social.map((item) => (
+                {SOCIAL_ICON.map((item) => (
                   <a
                     key={item.name}
-                    href={item.href}
+                    href={item.path}
                     target="blank"
                     className={`hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                   >
@@ -51,10 +50,10 @@ export default function Footer() {
                     ブログについて
                   </div>
                   <ul className="mt-6 space-y-4">
-                    {footerNavigation.solutions.map((item) => (
+                    {FOOTER_NAVIGATION.about.map((item) => (
                       <li key={item.name}>
                         <a
-                          href={item.href}
+                          href={item.path}
                           className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                         >
                           {item.name}
@@ -70,10 +69,10 @@ export default function Footer() {
                     カテゴリー
                   </div>
                   <ul className="mt-6 space-y-4">
-                    {footerNavigation.category.map((item) => (
+                    {CATEGORY_ARR.map((item) => (
                       <li key={item.name}>
                         <a
-                          href={item.href}
+                          href={`/category/${item.id}`}
                           className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                         >
                           {item.name}
@@ -91,10 +90,10 @@ export default function Footer() {
                     利用規約
                   </div>
                   <ul className="mt-6 space-y-4">
-                    {footerNavigation.company.map((item) => (
+                    {FOOTER_NAVIGATION.policy.map((item) => (
                       <li key={item.name}>
                         <a
-                          href={item.href}
+                          href={item.path}
                           className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                         >
                           {item.name}
@@ -110,10 +109,10 @@ export default function Footer() {
                     お問い合わせ
                   </div>
                   <ul className="mt-6 space-y-4">
-                    {footerNavigation.legal.map((item) => (
+                    {FOOTER_NAVIGATION.contact.map((item) => (
                       <li key={item.name}>
                         <a
-                          href={item.href}
+                          href={item.path}
                           className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                         >
                           {item.name}
@@ -128,7 +127,7 @@ export default function Footer() {
           <div
             className={`mt-16 border-t pt-8 sm:mt-20 lg:mt-24 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           >
-            {copyRight.map((item) => (
+            {COPYRIGHT.map((item) => (
               <div
                 key={item.title}
                 className={`text-xs leading-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}

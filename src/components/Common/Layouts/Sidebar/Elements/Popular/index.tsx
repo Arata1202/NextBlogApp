@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { BoltIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
-import { PopularPost } from '@/constants/data';
+import { POPULAR_POST } from '@/constants/data';
 
 export default function Popular() {
   const { theme } = useTheme();
@@ -17,7 +17,7 @@ export default function Popular() {
           <BoltIcon className="h-8 w-8 mr-2" />
           おすすめの投稿
         </div>
-        {PopularPost.map((item, index) => (
+        {POPULAR_POST.map((item, index) => (
           <ul
             key={item.postName}
             className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}

@@ -1,137 +1,74 @@
-import { HomeIcon, UserCircleIcon, EnvelopeIcon, FolderOpenIcon } from '@heroicons/react/24/solid';
-import { IoAirplaneOutline } from 'react-icons/io5';
-import { BookOpenIcon, CommandLineIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, UserCircleIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
 import { XIcon, InstagramIcon, GitHubIcon } from '@/components/Common/Elements/SocialIcon';
 
-// ブログ情報
-export const BlogTitle = [
+export const BLOG_IMAGE = [
   {
-    // ブログタイトル
-    imageUrl: '/images/blog/title.webp',
-    imageAlt: 'ブログタイトル',
+    path: { light: '/images/blog/title.webp', dark: '/images/blog/title-dark.jpeg' },
+    alt: 'タイトル',
   },
 ];
 
-// PC ヘッダーナビゲーション
-export const headerNavigation = [
-  { name: 'ホーム', href: '/', icon: HomeIcon },
-  { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
-  { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
+export const HEADER_NAVIGATION = [
+  { name: 'ホーム', path: '/', icon: HomeIcon },
+  { name: 'プロフィール', path: '/profile', icon: UserCircleIcon },
+  { name: 'お問い合わせ', path: '/contact', icon: EnvelopeIcon },
 ];
 
-// ハンバーガーメニュー
-export const mobileTopNavigation = [
-  { name: 'ホーム', href: '/', icon: HomeIcon },
-  { name: 'プロフィール', href: '/profile', icon: UserCircleIcon },
-];
-export const categories = [
-  { name: '大学生活', href: '/category/university', icon: FolderOpenIcon },
-  { name: 'プログラミング', href: '/category/programming', icon: FolderOpenIcon },
-  { name: '旅行', href: '/category/travel', icon: FolderOpenIcon },
-  { name: 'ブログ', href: '/category/blog', icon: FolderOpenIcon },
-];
-export const mobileBottomNavigation = [
-  { name: 'お問い合わせ', href: '/contact', icon: EnvelopeIcon },
-];
-
-export const footerNavigation = {
-  solutions: [{ name: 'プロフィール', href: '/profile' }],
-  category: [
-    { name: '大学生活', href: '/category/university' },
-    { name: 'プログラミング', href: '/category/programming' },
-    { name: '旅行', href: '/category/travel' },
-    { name: 'ブログ', href: '/category/blog' },
+export const FOOTER_NAVIGATION = {
+  about: [{ name: 'プロフィール', path: '/profile' }],
+  policy: [
+    { name: 'プライバシーポリシー', path: '/privacy' },
+    { name: '免責事項', path: '/disclaimer' },
+    { name: '著作権', path: '/copyright' },
+    { name: 'リンク', path: '/link' },
   ],
-  company: [
-    { name: 'プライバシーポリシー', href: '/privacy' },
-    { name: '免責事項', href: '/disclaimer' },
-    { name: '著作権', href: '/copyright' },
-    { name: 'リンク', href: '/link' },
-    // { name: '免責事項', href: '#' },
-  ],
-  legal: [{ name: 'お問い合わせ', href: '/contact' }],
-  social: [
-    {
-      name: 'X',
-      href: 'https://twitter.com/Aokumoblog',
-      icon: XIcon,
-    },
-    {
-      name: 'Instagram',
-      href: 'https://www.instagram.com/ao_realstudent/?hl=ja',
-      icon: InstagramIcon,
-    },
-    {
-      name: 'GitHub',
-      href: 'https://github.com/Arata1202',
-      icon: GitHubIcon,
-    },
-  ],
+  contact: [{ name: 'お問い合わせ', path: '/contact' }],
 };
 
-// プロフィール
-export const UserProfile = [
-  {
-    // 紹介文
-    profileIntroduction: [
-      { sentence: '21歳' },
-      { sentence: '千葉県在住' },
-      { sentence: '文系大学生｜26卒' },
-      { sentence: '経営学部 マーケティング学科' },
-      { sentence: 'Webエンジニアインターンに参加中' },
-      { sentence: 'インターン：Vue.js, Laravel' },
-      { sentence: '個人開発：Next.js' },
-    ],
-  },
-];
-
-// Twitter Instagram
-export const SocialIcon = [
+export const SOCIAL_ICON = [
   {
     name: 'X',
-    href: 'https://twitter.com/Aokumoblog',
+    path: 'https://twitter.com/Aokumoblog',
     icon: XIcon,
   },
   {
     name: 'Instagram',
-    href: 'https://www.instagram.com/ao_realstudent/?hl=ja',
+    path: 'https://www.instagram.com/ao_realstudent/?hl=ja',
     icon: InstagramIcon,
   },
   {
     name: 'GitHub',
-    href: 'https://github.com/Arata1202',
+    path: 'https://github.com/Arata1202',
     icon: GitHubIcon,
   },
 ];
 
-// カテゴリー サイドバー
-export const CategoryList = [
+export const COPYRIGHT = [
   {
-    name: '大学生活',
-    href: '/category/university',
-    icon: AcademicCapIcon,
-  },
-  {
-    name: 'プログラミング',
-    href: '/category/programming',
-    icon: CommandLineIcon,
-  },
-];
-export const CategoryList2 = [
-  {
-    name: '旅行',
-    href: '/category/travel',
-    icon: IoAirplaneOutline,
-  },
-  {
-    name: 'ブログ',
-    href: '/category/blog',
-    icon: BookOpenIcon,
+    title: 'Copyright © 2024 リアル大学生 All Rights Reserved.',
   },
 ];
 
-// おすすめの投稿
-export const PopularPost = [
+export const PROFILE_NAME = 'あらた';
+
+export const PROFILE_IMAGE = [
+  {
+    path: '/images/blog/face.webp',
+    alt: '筆者',
+  },
+];
+
+export const PROFILE_SENTENCE = [
+  { sentence: '21歳' },
+  { sentence: '千葉県在住' },
+  { sentence: '文系大学生｜26卒' },
+  { sentence: '経営学部 マーケティング学科' },
+  { sentence: 'Webエンジニアインターンに参加中' },
+  { sentence: 'インターン：Vue.js, Laravel' },
+  { sentence: '個人開発：Next.js' },
+];
+
+export const POPULAR_POST = [
   {
     postName:
       '【リクビジョン】就活生のための就活管理サービス、「リクビジョン」をリリースしました！',
@@ -150,12 +87,5 @@ export const PopularPost = [
     postHref: '/articles/university-student-real-personal-effects',
     imageHref: '/images/post/2.webp',
     imageAlt: 'サムネイル',
-  },
-];
-
-// コピーライト
-export const copyRight = [
-  {
-    title: 'Copyright © 2024 リアル大学生 All Rights Reserved.',
   },
 ];

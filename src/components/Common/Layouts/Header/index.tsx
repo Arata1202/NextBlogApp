@@ -4,16 +4,12 @@ import { Fragment, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import { FolderIcon } from '@heroicons/react/24/solid';
+import { FolderIcon, FolderOpenIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import ThemeSwitch from '@/components/Common/Layouts/ThemeSwitch';
-import { BlogTitle } from '@/constants/data';
-import {
-  headerNavigation,
-  mobileTopNavigation,
-  mobileBottomNavigation,
-  categories,
-} from '@/constants/data';
+import { BLOG_IMAGE } from '@/constants/data';
+import { HEADER_NAVIGATION } from '@/constants/data';
+import { CATEGORY_ARR } from '@/constants/category';
 
 export default function Header() {
   const { theme } = useTheme();
@@ -27,11 +23,11 @@ export default function Header() {
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
           <a href="/" className="-m-1.5 p-1.5 hover:scale-110 transition-transform">
-            {BlogTitle.map((item) => (
+            {BLOG_IMAGE.map((item) => (
               <img
-                key={item.imageUrl}
-                src={theme === 'dark' ? '/images/blog/title-dark.jpeg' : '/images/blog/title.webp'}
-                alt={item.imageAlt}
+                key={item.alt}
+                src={theme === 'dark' ? item.path.dark : item.path.light}
+                alt={item.alt}
                 width={165}
                 height={30}
               />
@@ -74,10 +70,10 @@ export default function Header() {
           </div>
 
           <div className="hidden lg:flex lg:gap-x-12 items-center">
-            {headerNavigation.map((item) => (
+            {HEADER_NAVIGATION.map((item) => (
               <a
                 key={item.name}
-                href={item.href}
+                href={item.path}
                 className={`flex text-sm leading-6 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
               >
                 <item.icon className="h-5 w-5 mr-2" />
@@ -105,13 +101,13 @@ export default function Header() {
                   className={`absolute z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-opacity-5 focus:outline-none  ${theme === 'dark' ? 'DarkTheme ring-gray-500' : 'LightTheme ring-gray-300'}`}
                 >
                   <div className="py-1">
-                    {categories.map((category) => (
+                    {CATEGORY_ARR.map((item) => (
                       <a
-                        key={category.name}
-                        href={category.href}
+                        key={item.name}
+                        href={`/category/${item.id}`}
                         className={`block px-4 py-2 text-sm hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                       >
-                        {category.name}
+                        {item.name}
                       </a>
                     ))}
                   </div>
@@ -173,14 +169,14 @@ export default function Header() {
                     Menu
                   </div>
                   <ul className="mt-5 space-y-6">
-                    {mobileTopNavigation.map((item) => (
+                    {HEADER_NAVIGATION.map((item) => (
                       <li key={item.name}>
-                        <a href={item.href}>
+                        <a href={item.path}>
                           <div
                             className={`flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                           >
                             <div>▶︎</div>
-                            <item.icon className="h-6 w-6 mr-2 ml-2" />
+                            <item.icon className="h-6 w-6 mx-2" />
                             {item.name}
                           </div>
                         </a>
@@ -190,30 +186,17 @@ export default function Header() {
                       className={`flex items-center py-1 text-base font-bold border-b  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                     >
                       <div>▶︎</div>
-                      <FolderIcon className="h-6 w-6 mr-2 ml-2" />
+                      <FolderIcon className="h-6 w-6 mx-2" />
                       カテゴリー
                     </div>
-                    {categories.map((item) => (
+                    {CATEGORY_ARR.map((item) => (
                       <li key={item.name}>
-                        <a href={item.href}>
+                        <a href={`/category/${item.id}`}>
                           <div
                             className={`ml-5 flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                           >
                             <div>{'>'}</div>
-                            <item.icon className="h-6 w-6 mr-2 ml-2" />
-                            {item.name}
-                          </div>
-                        </a>
-                      </li>
-                    ))}
-                    {mobileBottomNavigation.map((item) => (
-                      <li key={item.name}>
-                        <a href={item.href}>
-                          <div
-                            className={`flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                          >
-                            <div>▶︎</div>
-                            <item.icon className="h-6 w-6 mr-2 ml-2" />
+                            <FolderOpenIcon className="h-6 w-6 mx-2" />
                             {item.name}
                           </div>
                         </a>

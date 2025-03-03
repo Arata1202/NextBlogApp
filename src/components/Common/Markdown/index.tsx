@@ -2,6 +2,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
+import { PROFILE_IMAGE } from '@/constants/data';
 
 type Props = {
   content: string;
@@ -15,13 +16,16 @@ export default function Markdown({ content, profile = false }: Props) {
     <>
       {profile && (
         <div className="flex justify-center">
-          <img
-            src="/images/blog/face.webp"
-            alt="筆者のイメージ"
-            width={300}
-            height={300}
-            className="mt-10"
-          />
+          {PROFILE_IMAGE.map((item) => (
+            <img
+              key={item.path}
+              src={item.path}
+              alt={item.alt}
+              width={300}
+              height={300}
+              className="mt-10"
+            />
+          ))}
         </div>
       )}
       <div className={`${styles.content} mt-10 mb-5`}>
