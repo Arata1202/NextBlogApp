@@ -1,29 +1,24 @@
-import { useEffect, useState } from 'react';
+import * as cheerio from 'cheerio';
 import { Heading } from '@/types/heading';
 
 export const useExtractHeadings = (contentBlocks: { rich_text?: string }[]): Heading[] => {
-  const [headings, setHeadings] = useState<Heading[]>([]);
+  const extractedHeadings: Heading[] = [];
 
-  useEffect(() => {
-    const extractedHeadings: Heading[] = [];
+  contentBlocks.forEach((block) => {
+    if (block.rich_text) {
+      const $ = cheerio.load(block.rich_text);
+      const headingElements = $('h1, h2, h3, h4, h5');
 
-    contentBlocks.forEach((block) => {
-      if (block.rich_text) {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = block.rich_text;
-        const blockHeadings: Heading[] = Array.from(
-          tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6'),
-        ).map((el) => ({
-          id: el.id,
-          title: el.textContent || '',
-          level: parseInt(el.tagName[1], 10),
-        }));
-        extractedHeadings.push(...blockHeadings);
-      }
-    });
+      headingElements.each((_, element) => {
+        const el = $(element);
+        extractedHeadings.push({
+          id: el.attr('id') || '',
+          title: el.text() || '',
+          level: parseInt(el.prop('tagName').slice(1), 10),
+        });
+      });
+    }
+  });
 
-    setHeadings(extractedHeadings);
-  }, [contentBlocks]);
-
-  return headings;
+  return extractedHeadings;
 };
