@@ -1,0 +1,12 @@
+.sidebarToc {
+  margin-top: 30px !important;
+  width: 100%;
+  overflow-y: auto;
+  max-height: 69vh;
+}
+
+@media (max-width: 768px) {
+  .toc {
+    width: 100%;
+  }
+}

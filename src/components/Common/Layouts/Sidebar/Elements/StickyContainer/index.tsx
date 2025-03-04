@@ -14,8 +14,8 @@ export default function StickyContainer({ contentBlocks }: Props) {
   return (
     <>
       {headings.length > 0 && (
-        <div className={`${styles.pc} SidebarTableOfContents`}>
-          <TableOfContents headings={headings} />
+        <div className={`${styles.pc} ${styles.sidebar}`}>
+          <TableOfContents headings={headings} sidebar={true} />
           <BuyMeaCoffee sidebar={true} />
         </div>
       )}

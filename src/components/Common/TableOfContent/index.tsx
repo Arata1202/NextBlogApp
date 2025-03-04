@@ -4,13 +4,14 @@ import { useTheme } from 'next-themes';
 import React, { useMemo } from 'react';
 import { useEffect, useState } from 'react';
 import { Heading } from '@/types/heading';
-import './index.css';
+import styles from './index.module.css';
 
 type Props = {
   headings: Heading[];
+  sidebar?: boolean;
 };
 
-const TableOfContents: React.FC<Props> = React.memo(({ headings }) => {
+const TableOfContents: React.FC<Props> = React.memo(({ headings, sidebar = false }) => {
   const [activeId, setActiveId] = useState<string>('');
   const formattedHeadings = useMemo(() => {
     const headingNumbers: { [level: number]: number } = {};
@@ -79,40 +80,35 @@ const TableOfContents: React.FC<Props> = React.memo(({ headings }) => {
   const { theme } = useTheme();
 
   return (
-    <div>
-      <div className="flex justify-center">
-        <nav
-          aria-label="Table of contents"
-          className={`tableOfContent w-1/2 border p-4 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-        >
-          <h1 className="text-center font-bold text-lg">目次</h1>
-          <ol className="mt-4 list-none pl-0">
-            {formattedHeadings.map((heading) => (
-              <li
-                key={heading.id}
-                style={{
-                  marginLeft: heading.marginLeft,
-                  backgroundColor: activeId === heading.id ? '#eaf4fc' : 'transparent',
-                  color: activeId === heading.id && theme === 'dark' ? 'black' : 'inherit',
-                  transition: 'background-color 0.3s ease',
-                }}
+    <div className={`flex justify-center`}>
+      <nav
+        className={`${styles.toc} ${sidebar && styles.sidebarToc} w-1/2 border p-4 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+      >
+        <div className="text-center font-bold text-lg">目次</div>
+        <ol className="mt-4 list-none pl-0">
+          {formattedHeadings.map((heading) => (
+            <li
+              key={heading.id}
+              style={{
+                marginLeft: heading.marginLeft,
+                backgroundColor: activeId === heading.id ? '#eaf4fc' : 'transparent',
+                color: activeId === heading.id && theme === 'dark' ? 'black' : 'inherit',
+                transition: 'background-color 0.3s ease',
+              }}
+            >
+              <a
+                href={`#${heading.id}`}
+                onClick={(e) => handleClick(e, heading.id)}
+                className="hover:text-blue-500"
               >
-                <a
-                  href={`#${heading.id}`}
-                  onClick={(e) => handleClick(e, heading.id)}
-                  className="hover:text-blue-500"
-                >
-                  {heading.number} {heading.title}
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
-      </div>
+                {heading.number} {heading.title}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
     </div>
   );
 });
-
-TableOfContents.displayName = 'TableOfContents';
 
 export default TableOfContents;
