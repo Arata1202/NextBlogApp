@@ -30,11 +30,15 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
   useMutationObserver();
 
   useEffect(() => {
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (err) {
-      console.error(err);
-    }
+    const timer = setTimeout(() => {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (err) {
+        console.error(err);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   return (
