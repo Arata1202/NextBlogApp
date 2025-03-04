@@ -47,10 +47,10 @@
 | ![5](/.docs/readme/images/5.png)           | ![6](/.docs/readme/images/6.png) |
 | 特定の年月の記事を一覧表示するページです。 | 記事を表示するページです。       |
 
-| サイトマップ                            | 　ダークテーマ                                         |
-| --------------------------------------- | ------------------------------------------------------ |
-| ![9](/.docs/readme/images/9.png)        | ![8](/.docs/readme/images/8.png)                       |
-| XML形式のサイトマップを公開しています。 | ライトテーマとダークテーマを切り替えることができます。 |
+| サイトマップ・RSS                            | 　ダークテーマ                                         |
+| -------------------------------------------- | ------------------------------------------------------ |
+| ![9](/.docs/readme/images/9.png)             | ![8](/.docs/readme/images/8.png)                       |
+| XML形式のサイトマップとRSSを公開しています。 | ライトテーマとダークテーマを切り替えることができます。 |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -59,11 +59,13 @@
 | Category       | Technology Stack                              |
 | -------------- | --------------------------------------------- |
 | Frontend       | Next.js, TypeScript, Tailwind CSS             |
+| Backend        | Go, Vercel                                    |
 | CMS            | MicroCMS                                      |
 | Infrastructure | Cloudflare Pages                              |
+| CI/CD          | GitHub Actions                                |
 | Design         | Figma, Canva                                  |
 | Google         | AdSense, Analytics, Search Console, reCAPTCHA |
-| etc.           | PWA, OneSignal, Pipedream                     |
+| etc.           | PWA, OneSignal                                |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -74,11 +76,17 @@
 git clone git@github.com:Arata1202/NextBlogApp.git
 cd NextBlogApp
 
-# .env.exampleから.envを作成
+# .env.exampleから.envを作成（Next.js）
 mv .env.example .env
 
-# .envの編集
+# .envの編集（Next.js）
 vi .env
+
+# .env.exampleから.envを作成（Go）
+cd vercel && mv .env.example .env
+
+# .envの編集（Go）
+vi .env && cd ..
 
 # pnpmのインストール
 npm install -g pnpm
@@ -86,8 +94,11 @@ npm install -g pnpm
 # node_modulesのインストール
 pnpm install
 
-# 開発サーバーの立ち上げ
+# 開発サーバーの立ち上げ（Next.js）
 pnpm dev
+
+# 開発サーバーの立ち上げ（Go）
+cd vercel && vercel dev
 
 # ブラウザにアクセス
 http:localhost:3000
@@ -104,6 +115,9 @@ http:localhost:3000
 │   └── readme
 │       └── images
 ├── .env.example
+├── .github
+│   └── workflows
+│       └── vercel_deploy.yml
 ├── .gitignore
 ├── .husky
 │   └── pre-commit
@@ -178,16 +192,28 @@ http:localhost:3000
 │   │   ├── useExtractHeadings.ts
 │   │   └── useMutationObserver.ts
 │   ├── libs
-│   │   └── microcms.ts
+│   │   ├── microcms.ts
+│   │   └── rss.ts
 │   ├── styles
 │   │   ├── globals.css
 │   │   └── plugin.css
+│   ├── types
+│   │   ├── form.ts
+│   │   ├── heading.ts
+│   │   └── microcms.ts
 │   └── utils
 │       └── formatDate.ts
 ├── tailwind.config.ts
-└── tsconfig.json
+├── tsconfig.json
+└── vercel
+    ├── .env.example
+    ├── api
+    │   ├── recaptcha.go
+    │   └── sendemail.go
+    ├── go.mod
+    └── vercel.json
 
-48 directories, 37 files
+45 directories, 59 files
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
