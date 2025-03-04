@@ -136,7 +136,7 @@ export default function BreadCrumb({
             )}
             {sitemap && (
               <a
-                href={`/sitemap`}
+                href={`/sitemap-html`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 サイトマップ

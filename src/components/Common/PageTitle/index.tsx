@@ -111,7 +111,7 @@ export default function PageTitle({
         {sitemap && (
           <>
             <DocumentMagnifyingGlassIcon className="h-8 w-8 mr-2" />
-            <div>サイトマップ</div>
+            サイトマップ
           </>
         )}
       </h1>
