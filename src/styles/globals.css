@@ -18,6 +18,10 @@
   --tw-ring-color: rgb(107 114 128);
 }
 
+.iframely-embed {
+  margin-top: 32px !important;
+}
+
 h2 {
   padding: 15px 15px 15px 15px;
 }
@@ -35,9 +39,9 @@ h4 {
 }
 
 :root {
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono',
-    'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono',
-    'Courier New', monospace;
+  --font-mono:
+    ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
+    'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
   --color-text-main: #333;
   --color-text-sub: #999;
   --color-bg-main: #fff;
