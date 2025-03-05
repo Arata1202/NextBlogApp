@@ -3,6 +3,3 @@
 !api/*
 !api/*.go
 !go.mod
-!package.json
-!package-lock.json
-!pnpm-lock.yaml
