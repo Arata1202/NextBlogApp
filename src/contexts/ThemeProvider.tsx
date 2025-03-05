@@ -2,9 +2,9 @@
 
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import type { ThemeProviderProps } from 'next-themes';
-import { FC, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-export const ThemeProvider: FC<ThemeProviderProps> = (props) => {
+export default function ThemeProvider(props: ThemeProviderProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -16,4 +16,4 @@ export const ThemeProvider: FC<ThemeProviderProps> = (props) => {
   }
 
   return <NextThemesProvider {...props}>{props.children}</NextThemesProvider>;
-};
+}

@@ -3,7 +3,7 @@ import type { Viewport } from 'next';
 import '../styles/globals.css';
 import styles from './layout.module.css';
 import { DESCRIPTION } from '@/constants/data';
-import { ThemeProvider } from '@/contexts/ThemeProvider';
+import ThemeProvider from '@/contexts/ThemeProvider';
 import ThemeWrapper from '@/contexts/ThemeWrapper';
 import GoogleSearchConsole from '@/components/ThirdParties/GoogleSearchConsole';
 import GoogleAdSense from '@/components/ThirdParties/GoogleAdSense';
