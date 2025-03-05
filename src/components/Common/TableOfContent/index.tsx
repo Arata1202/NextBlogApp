@@ -1,45 +1,21 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import React, { useMemo } from 'react';
 import { useEffect, useState } from 'react';
 import { Heading } from '@/types/heading';
 import styles from './index.module.css';
+import { formatHeadings } from '@/utils/formatHeadings';
 
 type Props = {
   headings: Heading[];
   sidebar?: boolean;
 };
 
-const TableOfContents: React.FC<Props> = React.memo(({ headings, sidebar = false }) => {
-  const [activeId, setActiveId] = useState<string>('');
-  const formattedHeadings = useMemo(() => {
-    const headingNumbers: { [level: number]: number } = {};
-    return headings.map((heading) => {
-      if (!headingNumbers[heading.level]) {
-        headingNumbers[heading.level] = 1;
-      } else {
-        headingNumbers[heading.level]++;
-      }
+export default function TableOfContents({ headings, sidebar = false }: Props) {
+  const { theme } = useTheme();
+  const [activeId, setActiveId] = useState('');
 
-      const headingNumber = Object.keys(headingNumbers)
-        .filter((level) => parseInt(level) <= heading.level)
-        .map((level) => headingNumbers[parseInt(level)])
-        .join('.');
-
-      for (let i = heading.level + 1; i <= 5; i++) {
-        headingNumbers[i] = 0;
-      }
-
-      return {
-        id: heading.id,
-        title: heading.title,
-        level: heading.level,
-        number: headingNumber,
-        marginLeft: `${(heading.level - 1) * 20}px`,
-      };
-    });
-  }, [headings]);
+  const formattedHeadings = formatHeadings(headings);
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
     event.preventDefault();
@@ -58,12 +34,19 @@ const TableOfContents: React.FC<Props> = React.memo(({ headings, sidebar = false
         const element = document.getElementById(heading.id);
         if (element) {
           const rect = element.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom > 150) {
-            currentId = heading.id;
-          } else if (rect.top <= 150 && headings[index + 1]) {
-            const nextElement = document.getElementById(headings[index + 1].id);
-            if (nextElement && nextElement.getBoundingClientRect().top > 150) {
+          const isLastHeading = index === headings.length - 1;
+          if (isLastHeading) {
+            if (rect.top <= 110) {
               currentId = heading.id;
+            }
+          } else {
+            if (rect.top <= 110 && rect.bottom > 110) {
+              currentId = heading.id;
+            } else if (rect.top <= 110 && headings[index + 1]) {
+              const nextElement = document.getElementById(headings[index + 1].id);
+              if (nextElement && nextElement.getBoundingClientRect().top > 110) {
+                currentId = heading.id;
+              }
             }
           }
         }
@@ -75,13 +58,11 @@ const TableOfContents: React.FC<Props> = React.memo(({ headings, sidebar = false
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [headings]);
-
-  const { theme } = useTheme();
+  });
 
   return (
     <div className={`flex justify-center`}>
-      <nav
+      <div
         className={`${styles.toc} ${sidebar && styles.sidebarToc} w-1/2 border p-4 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
         <div className="text-center font-bold text-lg">目次</div>
@@ -106,9 +87,7 @@ const TableOfContents: React.FC<Props> = React.memo(({ headings, sidebar = false
             </li>
           ))}
         </ol>
-      </nav>
+      </div>
     </div>
   );
-});
-
-export default TableOfContents;
+}
