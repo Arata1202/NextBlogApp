@@ -76,17 +76,11 @@
 git clone git@github.com:Arata1202/NextBlogApp.git
 cd NextBlogApp
 
-# .env.exampleから.envを作成（Next.js）
+# .env.exampleから.envを作成
 mv .env.example .env
 
-# .envの編集（Next.js）
+# .envの編集
 vi .env
-
-# .env.exampleから.envを作成（Go）
-cd vercel && mv .env.example .env
-
-# .envの編集（Go）
-vi .env && cd ..
 
 # pnpmのインストール
 npm install -g pnpm
@@ -98,7 +92,7 @@ pnpm install
 pnpm dev
 
 # 開発サーバーの立ち上げ（Go）
-cd vercel && vercel dev
+vercel dev
 
 # ブラウザにアクセス
 http:localhost:3000
