@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 
@@ -11,7 +12,7 @@ export default function BuyMeaCoffee({ data, sidebar = false }: Props) {
 
   return (
     <>
-      <a href="https://www.buymeacoffee.com/realunivlog" target="_blank">
+      <Link href="https://www.buymeacoffee.com/realunivlog" target="_blank">
         <img
           src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
           alt="BuyMeaCoffee"
@@ -19,7 +20,7 @@ export default function BuyMeaCoffee({ data, sidebar = false }: Props) {
           width="160"
           className="mt-5 m-auto hover:opacity-60"
         />
-      </a>
+      </Link>
       <div className={`${styles.BuyMeaCoffeeMessage} text-center mt-4`}>
         もし{buyMeaCoffeeMessage}記事が役に立ったなら、
         <br />

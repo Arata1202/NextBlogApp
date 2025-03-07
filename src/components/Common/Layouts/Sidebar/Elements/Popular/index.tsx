@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { BoltIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
@@ -23,7 +24,7 @@ export default function Popular() {
             className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           >
             <li>
-              <a href={item.postHref} className={styles.link}>
+              <Link href={item.postHref} className={styles.link}>
                 <img
                   key={index}
                   src={item.imageHref}
@@ -31,7 +32,7 @@ export default function Popular() {
                   className={styles.image}
                 />
                 <div className={`${styles.title} font-bold`}>{item.postName}</div>
-              </a>
+              </Link>
             </li>
           </ul>
         ))}

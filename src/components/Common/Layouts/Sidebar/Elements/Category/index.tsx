@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { FolderIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
@@ -19,7 +20,7 @@ export default function Category() {
         </div>
         <div className="flex gap-4 mt-5 md:mt-5">
           {CATEGORY_ARR.slice(0, 2).map((item) => (
-            <a
+            <Link
               key={item.name}
               href={`/category/${item.id}`}
               className={`${styles.CategoryList} text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
@@ -30,12 +31,12 @@ export default function Category() {
               <div className="flex justify-center mt-2">
                 <div>{item.name}</div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
         <div className="flex gap-4 mt-5 md:mt-5">
           {CATEGORY_ARR.slice(2, 4).map((item) => (
-            <a
+            <Link
               key={item.name}
               href={`/category/${item.id}`}
               className={`${styles.CategoryList} text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
@@ -46,7 +47,7 @@ export default function Category() {
               <div className="flex justify-center mt-2">
                 <div>{item.name}</div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
