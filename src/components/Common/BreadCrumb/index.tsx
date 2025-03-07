@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { Article, Category, Tag } from '@/types/microcms';
 
@@ -35,20 +34,20 @@ export default function BreadCrumb({
     <>
       <ul className="flex items-center space-x-4">
         <li>
-          <Link href="/" className="flex text-gray-500 hover:text-blue-500">
+          <a href="/" className="flex text-gray-500 hover:text-blue-500">
             <HomeIcon className="h-4 w-4 flex-shrink-0" />
-          </Link>
+          </a>
         </li>
         {article && (
           <li>
             <div className="flex items-center">
               <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
-              <Link
+              <a
                 href={`/category/${article.categories[0].id}`}
                 className="whitespace-nowrap ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 {article.categories[0].name}
-              </Link>
+              </a>
             </div>
           </li>
         )}
@@ -56,92 +55,92 @@ export default function BreadCrumb({
           <div className="flex items-center">
             <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
             {year && month && (
-              <Link
+              <a
                 href={`/archive/${year}/${month}`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 {year}月{parseInt(month)}月
-              </Link>
+              </a>
             )}
             {article && (
-              <Link
+              <a
                 href={`${article.id}`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 {article.title}
-              </Link>
+              </a>
             )}
             {category && (
-              <Link
+              <a
                 href={`/category/${category.id}`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 {category.name}
-              </Link>
+              </a>
             )}
             {tag && (
-              <Link
+              <a
                 href={`/tag/${tag.id}`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 {tag.name}
-              </Link>
+              </a>
             )}
             {contact && (
-              <Link
+              <a
                 href={`/contact`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 お問い合わせ
-              </Link>
+              </a>
             )}
             {copyright && (
-              <Link
+              <a
                 href={`/copyright`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 著作権
-              </Link>
+              </a>
             )}
             {disclaimer && (
-              <Link
+              <a
                 href={`/disclaimer`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 免責事項
-              </Link>
+              </a>
             )}
             {link && (
-              <Link
+              <a
                 href={`/link`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 リンク
-              </Link>
+              </a>
             )}
             {privacy && (
-              <Link
+              <a
                 href={`/privacy`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 プライバシーポリシー
-              </Link>
+              </a>
             )}
             {profile && (
-              <Link
+              <a
                 href={`/profile`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 プロフィール
-              </Link>
+              </a>
             )}
             {sitemap && (
-              <Link
+              <a
                 href={`/sitemap-html`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 サイトマップ
-              </Link>
+              </a>
             )}
           </div>
         </li>

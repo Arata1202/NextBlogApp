@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Article, Category } from '@/types/microcms';
 import styles from './index.module.css';
@@ -37,9 +36,9 @@ export default function SitemapHtmlFeature({ articles, categories }: Props) {
               <ul>
                 {PAGE_ARR.map((page) => (
                   <li key={page.name}>
-                    <Link href={page.path} className="text-blue-500 hover:text-blue-700">
+                    <a href={page.path} className="text-blue-500 hover:text-blue-700">
                       {page.name}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -52,12 +51,12 @@ export default function SitemapHtmlFeature({ articles, categories }: Props) {
               <ul>
                 {categories.map((category) => (
                   <li key={category.id}>
-                    <Link
+                    <a
                       href={`/category/${category.id}`}
                       className="text-blue-500 hover:text-blue-700"
                     >
                       {category.name}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -70,12 +69,12 @@ export default function SitemapHtmlFeature({ articles, categories }: Props) {
               <ul>
                 {articles.map((article) => (
                   <li key={article.id}>
-                    <Link
+                    <a
                       href={`/articles/${article.id}`}
                       className="text-blue-500 hover:text-blue-700"
                     >
                       {article.title}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>

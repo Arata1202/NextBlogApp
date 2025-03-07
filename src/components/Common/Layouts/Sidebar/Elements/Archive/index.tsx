@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useTheme } from 'next-themes';
 import { Listbox } from '@headlessui/react';
@@ -10,13 +9,12 @@ import { ARCHIVE_ARR } from '@/constants/archive';
 
 export default function Archive() {
   const { theme } = useTheme();
-  const router = useRouter();
 
   const [selectedMonth, setSelectedMonth] = useState('');
 
   const handleArchiveChange = (value: string) => {
     setSelectedMonth(value);
-    router.push(`/archive/${value}`);
+    window.location.href = `/archive/${value}`;
   };
 
   return (

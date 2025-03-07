@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { Article } from '@/types/microcms';
@@ -37,10 +36,10 @@ export default function Recent({ recentArticles }: Props) {
             className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           >
             <li>
-              <Link href={`/articles/${article.id}`} className={styles.link}>
+              <a href={`/articles/${article.id}`} className={styles.link}>
                 <img src={article.thumbnail.url} alt="サムネイル" className={styles.image} />
                 <div className={`${styles.title} font-bold`}>{article.title}</div>
-              </Link>
+              </a>
             </li>
           </ul>
         ))}

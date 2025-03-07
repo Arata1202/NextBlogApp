@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import { BLOG_IMAGE, COPYRIGHT, FOOTER_NAVIGATION, SOCIAL_ICON } from '@/constants/data';
@@ -17,7 +16,7 @@ export default function Footer() {
         <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
             <div className="space-y-8">
-              <Link href="/" className={styles.logo}>
+              <a href="/" className={styles.logo}>
                 {BLOG_IMAGE.map((item) => (
                   <img
                     key={item.alt}
@@ -28,17 +27,17 @@ export default function Footer() {
                     height={30}
                   />
                 ))}
-              </Link>
+              </a>
               <div className={`${styles.logo} flex space-x-6`}>
                 {SOCIAL_ICON.map((item) => (
-                  <Link
+                  <a
                     key={item.name}
                     href={item.path}
                     target="blank"
                     className={`hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                   >
                     <item.icon className="h-6 w-6" />
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
@@ -53,12 +52,12 @@ export default function Footer() {
                   <ul className="mt-6 space-y-4">
                     {FOOTER_NAVIGATION.about.map((item) => (
                       <li key={item.name}>
-                        <Link
+                        <a
                           href={item.path}
                           className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                         >
                           {item.name}
-                        </Link>
+                        </a>
                       </li>
                     ))}
                   </ul>
@@ -72,12 +71,12 @@ export default function Footer() {
                   <ul className="mt-6 space-y-4">
                     {CATEGORY_ARR.map((item) => (
                       <li key={item.name}>
-                        <Link
+                        <a
                           href={`/category/${item.id}`}
                           className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                         >
                           {item.name}
-                        </Link>
+                        </a>
                       </li>
                     ))}
                   </ul>
@@ -93,12 +92,12 @@ export default function Footer() {
                   <ul className="mt-6 space-y-4">
                     {FOOTER_NAVIGATION.policy.map((item) => (
                       <li key={item.name}>
-                        <Link
+                        <a
                           href={item.path}
                           className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                         >
                           {item.name}
-                        </Link>
+                        </a>
                       </li>
                     ))}
                   </ul>
@@ -112,12 +111,12 @@ export default function Footer() {
                   <ul className="mt-6 space-y-4">
                     {FOOTER_NAVIGATION.contact.map((item) => (
                       <li key={item.name}>
-                        <Link
+                        <a
                           href={item.path}
                           className={`text-sm leading-6  hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                         >
                           {item.name}
-                        </Link>
+                        </a>
                       </li>
                     ))}
                   </ul>
