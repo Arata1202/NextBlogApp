@@ -11,6 +11,7 @@ import ThemeSwitch from '@/components/Common/Layouts/ThemeSwitch';
 import { BLOG_IMAGE } from '@/constants/data';
 import { HEADER_NAVIGATION } from '@/constants/data';
 import { CATEGORY_ARR } from '@/constants/category';
+import { GitHubIcon } from '../../Elements/SocialIcon';
 
 export default function Header() {
   const { theme } = useTheme();
@@ -50,9 +51,7 @@ export default function Header() {
                   target="_blank"
                   className="hover:text-blue-500 px-3"
                 >
-                  <svg fill="currentColor" viewBox="0 0 24 24" className="h-6 w-6">
-                    <path d="M12 0.297c-6.627 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387 0.6 0.111 0.82-0.261 0.82-0.577 0-0.285-0.011-1.04-0.017-2.042-3.338 0.724-4.042-1.611-4.042-1.611-0.546-1.387-1.333-1.757-1.333-1.757-1.089-0.745 0.083-0.729 0.083-0.729 1.205 0.084 1.839 1.236 1.839 1.236 1.07 1.835 2.807 1.304 3.492 0.997 0.108-0.775 0.418-1.305 0.762-1.605-2.665-0.303-5.467-1.333-5.467-5.931 0-1.31 0.469-2.381 1.236-3.221-0.123-0.303-0.536-1.523 0.117-3.176 0 0 1.008-0.323 3.301 1.23 0.957-0.266 1.983-0.398 3.005-0.403 1.02 0.005 2.047 0.137 3.006 0.403 2.292-1.553 3.299-1.23 3.299-1.23 0.655 1.653 0.242 2.873 0.119 3.176 0.769 0.84 1.235 1.911 1.235 3.221 0 4.609-2.805 5.625-5.476 5.922 0.43 0.371 0.814 1.103 0.814 2.222 0 1.606-0.014 2.896-0.014 3.287 0 0.32 0.217 0.694 0.825 0.576 4.765-1.589 8.199-6.085 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                  </svg>
+                  <GitHubIcon className="h-6 w-6" />
                 </Link>
                 <div
                   className={`inline-flex items-center justify-center rounded-md px-3 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
@@ -82,38 +81,45 @@ export default function Header() {
               </Link>
             ))}
             <Popover className="relative">
-              <Popover.Button
-                className={`flex items-center text-sm font-medium hover:text-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-              >
-                <FolderIcon className="h-5 w-5 mr-2" />
-                カテゴリー
-                <ChevronDownIcon className="h-5 w-5 ml-1" />
-              </Popover.Button>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-200"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
-              >
-                <Popover.Panel
-                  className={`absolute z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-opacity-5 focus:outline-none  ${theme === 'dark' ? 'DarkTheme ring-gray-500' : 'LightTheme ring-gray-300'}`}
-                >
-                  <div className="py-1">
-                    {CATEGORY_ARR.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={`/category/${item.id}`}
-                        className={`block px-4 py-2 text-sm hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                </Popover.Panel>
-              </Transition>
+              {({ close }) => (
+                <>
+                  <Popover.Button
+                    className={`flex items-center text-sm font-medium hover:text-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  >
+                    <FolderIcon className="h-5 w-5 mr-2" />
+                    カテゴリー
+                    <ChevronDownIcon className="h-5 w-5 ml-1" />
+                  </Popover.Button>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-200"
+                    enterFrom="opacity-0 translate-y-1"
+                    enterTo="opacity-100 translate-y-0"
+                    leave="transition ease-in duration-150"
+                    leaveFrom="opacity-100 translate-y-0"
+                    leaveTo="opacity-0 translate-y-1"
+                  >
+                    <Popover.Panel
+                      className={`absolute z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-opacity-5 focus:outline-none  ${theme === 'dark' ? 'DarkTheme ring-gray-500' : 'LightTheme ring-gray-300'}`}
+                    >
+                      <div className="py-1">
+                        {CATEGORY_ARR.map((item) => (
+                          <Link
+                            key={item.name}
+                            href={`/category/${item.id}`}
+                            className={`block px-4 py-2 text-sm hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                            onClick={() => {
+                              close();
+                            }}
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </Popover.Panel>
+                  </Transition>
+                </>
+              )}
             </Popover>
             <ThemeSwitch />
             <Link
@@ -121,9 +127,7 @@ export default function Header() {
               target="_blank"
               className="hover:text-blue-500"
             >
-              <svg fill="currentColor" viewBox="0 0 24 24" className="h-7 w-7">
-                <path d="M12 0.297c-6.627 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387 0.6 0.111 0.82-0.261 0.82-0.577 0-0.285-0.011-1.04-0.017-2.042-3.338 0.724-4.042-1.611-4.042-1.611-0.546-1.387-1.333-1.757-1.333-1.757-1.089-0.745 0.083-0.729 0.083-0.729 1.205 0.084 1.839 1.236 1.839 1.236 1.07 1.835 2.807 1.304 3.492 0.997 0.108-0.775 0.418-1.305 0.762-1.605-2.665-0.303-5.467-1.333-5.467-5.931 0-1.31 0.469-2.381 1.236-3.221-0.123-0.303-0.536-1.523 0.117-3.176 0 0 1.008-0.323 3.301 1.23 0.957-0.266 1.983-0.398 3.005-0.403 1.02 0.005 2.047 0.137 3.006 0.403 2.292-1.553 3.299-1.23 3.299-1.23 0.655 1.653 0.242 2.873 0.119 3.176 0.769 0.84 1.235 1.911 1.235 3.221 0 4.609-2.805 5.625-5.476 5.922 0.43 0.371 0.814 1.103 0.814 2.222 0 1.606-0.014 2.896-0.014 3.287 0 0.32 0.217 0.694 0.825 0.576 4.765-1.589 8.199-6.085 8.199-11.386 0-6.627-5.373-12-12-12z" />
-              </svg>
+              <GitHubIcon className="h-7 w-7" />
             </Link>
           </div>
         </nav>
@@ -175,6 +179,7 @@ export default function Header() {
                         <Link href={item.path}>
                           <div
                             className={`flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                            onClick={() => setMobileMenuOpen(false)}
                           >
                             <div>▶︎</div>
                             <item.icon className="h-6 w-6 mx-2" />
@@ -195,6 +200,7 @@ export default function Header() {
                         <Link href={`/category/${item.id}`}>
                           <div
                             className={`ml-5 flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                            onClick={() => setMobileMenuOpen(false)}
                           >
                             <div>{'>'}</div>
                             <FolderOpenIcon className="h-6 w-6 mx-2" />
