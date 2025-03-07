@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Article } from '@/types/microcms';
 import styles from './index.module.css';
@@ -16,7 +17,7 @@ export default function ArticleCard({ article }: Props) {
   return (
     <>
       <li className={styles.list}>
-        <a
+        <Link
           href={`/articles/${article.id}`}
           className={`${styles.link} p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
         >
@@ -26,7 +27,7 @@ export default function ArticleCard({ article }: Props) {
             <div className={styles.description}>{article.description}</div>
             <DoubleDate article={article} />
           </div>
-        </a>
+        </Link>
       </li>
     </>
   );
