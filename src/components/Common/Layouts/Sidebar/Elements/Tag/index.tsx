@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { HashtagIcon } from '@heroicons/react/24/solid';
 import { TAG_ARR } from '@/constants/tag';
@@ -18,13 +19,13 @@ export default function Tag() {
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
           {TAG_ARR.map((tag) => (
-            <a
+            <Link
               key={tag.id}
               href={`/tag/${tag.id}`}
               className={`inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 hover:border-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               {tag.name}
-            </a>
+            </Link>
           ))}
         </div>
       </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { Heading } from '@/types/heading';
@@ -77,13 +78,13 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
                 transition: 'background-color 0.3s ease',
               }}
             >
-              <a
+              <Link
                 href={`#${heading.id}`}
                 onClick={(e) => handleClick(e, heading.id)}
                 className="hover:text-blue-500"
               >
                 {heading.number} {heading.title}
-              </a>
+              </Link>
             </li>
           ))}
         </ol>

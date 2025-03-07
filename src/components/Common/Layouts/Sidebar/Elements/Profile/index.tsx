@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
@@ -31,13 +32,13 @@ export default function Profile() {
         <ul className="mt-6 flex justify-center gap-x-6">
           {SOCIAL_ICON.map((item) => (
             <li key={item.name}>
-              <a
+              <Link
                 target="blank"
                 href={item.path}
                 className={`hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
               >
                 <item.icon className="h-8 w-8" />
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
