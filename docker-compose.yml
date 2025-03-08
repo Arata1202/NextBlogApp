@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  js:
+    container_name: js
+    build:
+      context: .
+      dockerfile: ./.docker/js/Dockerfile
+    volumes:
+      - './:/var/www/html/js'
+      - '/var/www/html/js/node_modules'
+    working_dir: '/var/www/html/js'
+    ports:
+      - '3000:3000'
+    command: ['pnpm', 'dev']
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
