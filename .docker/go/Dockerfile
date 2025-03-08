@@ -10,4 +10,4 @@ COPY ./cmd/ ./cmd/
 
 EXPOSE 8080
 
-CMD ["go", "run", "./cmd/server.go"]
+CMD ["go", "run", "./cmd/main.go"]
