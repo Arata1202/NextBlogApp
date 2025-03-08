@@ -56,16 +56,17 @@
 
 ## 使用技術
 
-| Category       | Technology Stack                              |
-| -------------- | --------------------------------------------- |
-| Frontend       | Next.js, TypeScript, Tailwind CSS             |
-| Backend        | Go, Vercel                                    |
-| CMS            | MicroCMS                                      |
-| Infrastructure | Cloudflare Pages                              |
-| CI/CD          | GitHub Actions                                |
-| Design         | Figma, Canva                                  |
-| Google         | AdSense, Analytics, Search Console, reCAPTCHA |
-| etc.           | PWA, OneSignal                                |
+| Category          | Technology Stack                              |
+| ----------------- | --------------------------------------------- |
+| Frontend          | Next.js, TypeScript, Tailwind CSS             |
+| Backend           | Go                                            |
+| CMS               | MicroCMS                                      |
+| Infrastructure    | Cloudflare Pages, Vercel                      |
+| Environment setup | Docker                                        |
+| CI/CD             | GitHub Actions                                |
+| Design            | Figma, Canva                                  |
+| Google            | AdSense, Analytics, Search Console, reCAPTCHA |
+| etc.              | PWA, OneSignal                                |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -82,20 +83,14 @@ mv .env.example .env
 # .envの編集
 vi .env
 
-# pnpmのインストール
-npm install -g pnpm
-
-# node_modulesのインストール
-pnpm install
-
-# 開発サーバーの立ち上げ（Next.js）
-pnpm dev
-
-# 開発サーバーの立ち上げ（Go）
-vercel dev
+# コンテナのビルドと起動
+docker compose up -d --build
 
 # ブラウザにアクセス
 http:localhost:3000
+
+# コンテナの停止
+docker compose down
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
@@ -105,6 +100,11 @@ http:localhost:3000
 ```
 ❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts" -L 3
 .
+├── .docker
+│   ├── go
+│   │   └── Dockerfile
+│   └── js
+│       └── Dockerfile
 ├── .docs
 │   └── readme
 │       └── images
@@ -118,12 +118,20 @@ http:localhost:3000
 ├── .nvmrc
 ├── .prettierignore
 ├── .prettierrc
+├── .vercelignore
 ├── .vscode
 │   ├── extensions.json
 │   └── settings.json
 ├── LICENSE
 ├── README.md
+├── api
+│   ├── recaptcha.go
+│   └── sendemail.go
+├── cmd
+│   └── main.go
+├── docker-compose.yml
 ├── eslint.config.mjs
+├── go.mod
 ├── next.config.ts
 ├── package-lock.json
 ├── package.json
@@ -199,15 +207,9 @@ http:localhost:3000
 │       └── formatDate.ts
 ├── tailwind.config.ts
 ├── tsconfig.json
-└── vercel
-    ├── .env.example
-    ├── api
-    │   ├── recaptcha.go
-    │   └── sendemail.go
-    ├── go.mod
-    └── vercel.json
+└── vercel.json
 
-45 directories, 59 files
+48 directories, 65 files
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
