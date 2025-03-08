@@ -11,7 +11,7 @@ services:
     working_dir: '/var/www/html/js'
     ports:
       - '3000:3000'
-    command: ['pnpm', 'dev']
+    env_file: .env
     networks:
       - network
 
@@ -22,16 +22,10 @@ services:
       dockerfile: ./.docker/go/Dockerfile
     volumes:
       - './:/app'
+    working_dir: '/app'
     ports:
-      - '8080:8080'
-    environment:
-      - ORIGIN_URL=${ORIGIN_URL}
-      - EMAIL_TO=${EMAIL_TO}
-      - EMAIL_FROM=${EMAIL_FROM}
-      - SMTP_USER=${SMTP_USER}
-      - SMTP_PASS=${SMTP_PASS}
-      - BASE_TITLE=${BASE_TITLE}
-      - RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY}
+      - '8000:8000'
+    env_file: .env
     networks:
       - network
 
