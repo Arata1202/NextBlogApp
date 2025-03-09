@@ -70,12 +70,12 @@ export default function SitemapHtmlFeature({ articles, categories }: Props) {
               <ul>
                 {articles.map((article) => (
                   <li key={article.id}>
-                    <Link
+                    <a
                       href={`/articles/${article.id}`}
                       className="text-blue-500 hover:text-blue-700"
                     >
                       {article.title}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>

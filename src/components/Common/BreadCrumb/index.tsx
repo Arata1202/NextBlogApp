@@ -65,7 +65,7 @@ export default function BreadCrumb({
             )}
             {article && (
               <Link
-                href={`${article.id}`}
+                href={`/articles/${article.id}`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
                 {article.title}
