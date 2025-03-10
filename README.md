@@ -2,6 +2,7 @@
 
 <div align="right">
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Arata1202/NextBlogApp/vercel_deploy.yml)
 ![GitHub License](https://img.shields.io/github/license/Arata1202/NextBlogApp)
 
 </div>
@@ -98,8 +99,9 @@ docker compose down
 ## ディレクトリ構成
 
 ```
-❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts" -L 3
+❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts|tmp" -L 3
 .
+├── .air.toml
 ├── .docker
 │   ├── go
 │   │   └── Dockerfile
@@ -209,7 +211,7 @@ docker compose down
 ├── tsconfig.json
 └── vercel.json
 
-48 directories, 65 files
+49 directories, 67 files
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>

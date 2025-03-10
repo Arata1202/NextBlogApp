@@ -3,4 +3,3 @@
 !api/*
 !go.mod
 !vercel.json
-api/main.go
