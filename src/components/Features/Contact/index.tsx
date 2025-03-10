@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 import { useForm } from 'react-hook-form';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -26,11 +26,11 @@ export default function ContactFeature({ articles }: Props) {
   const date = new Date(2023, 10, 27);
 
   const [show, setContactConfirmShow] = useState(false);
-  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
-  const [formData, setContactFormData] = useState<Form | null>(null);
   const [open, setContactDialogOpen] = useState(false);
+  const cancelButtonRef = useRef(null);
+  const [formData, setContactFormData] = useState<Form | null>(null);
+  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
-  const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
   const {
     register,
@@ -38,10 +38,6 @@ export default function ContactFeature({ articles }: Props) {
     formState: { errors },
     reset,
   } = useForm<Form>();
-
-  const resetCaptcha = useCallback(() => {
-    recaptchaRef.current?.reset();
-  }, []);
 
   const onChange = (value: string | null) => {
     setCaptchaValue(value);
@@ -52,53 +48,41 @@ export default function ContactFeature({ articles }: Props) {
     setContactDialogOpen(true);
   };
 
-  const sendEmail = useCallback(() => {
-    if (!formData) return;
+  const handleRecaptcha = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_RECAPTCHA_URL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        'g-recaptcha-response': captchaValue,
+      }),
+    });
 
-    fetch(`${process.env.NEXT_PUBLIC_API_SENDEMAIL_URL}`, {
+    const data = await response.json();
+
+    if (data.success) {
+      handleSendEmail();
+    } else {
+      console.error(data.message);
+    }
+  };
+
+  const handleSendEmail = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_SENDEMAIL_URL}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === 'success') {
-          setContactConfirmShow(true);
-          reset();
-          resetCaptcha();
-          setContactDialogOpen(false);
-        } else {
-          setContactConfirmShow(false);
-        }
-      })
-      .catch((error) => console.error(error));
-  }, [formData, reset, resetCaptcha]);
+    });
 
-  const handleConfirmSend = useCallback(() => {
-    const verifyCaptcha = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_RECAPTCHA_URL}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            'g-recaptcha-response': captchaValue,
-          }),
-        });
-        const data = await response.json();
-        if (data.success) {
-          sendEmail();
-        } else {
-          console.error(data.message);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    verifyCaptcha();
-  }, [captchaValue, sendEmail]);
+    const data = await response.json();
 
-  const handleCancel = () => {
-    setContactDialogOpen(false);
+    if (data.success) {
+      setContactConfirmShow(true);
+      reset();
+      recaptchaRef.current?.reset();
+      setContactDialogOpen(false);
+    } else {
+      console.error(data.message);
+    }
   };
 
   useEffect(() => {
@@ -155,7 +139,6 @@ export default function ContactFeature({ articles }: Props) {
             <div className="mt-3">
               <button
                 type="submit"
-                disabled={!captchaValue}
                 className={`cursor-pointer block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-s border hover:border-2 hover:border-blue-500 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
               >
                 送信
@@ -173,8 +156,8 @@ export default function ContactFeature({ articles }: Props) {
         description="送信ボタンは一度だけ押してください。送信完了まで数秒かかることがあります。"
         cancelText="キャンセル"
         confirmText="送信"
-        onConfirm={handleConfirmSend}
-        onClose={handleCancel}
+        onConfirm={handleRecaptcha}
+        onClose={() => setContactDialogOpen(false)}
         open={open}
         cancelButtonRef={cancelButtonRef}
       />
