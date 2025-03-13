@@ -3,8 +3,8 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useTheme } from 'next-themes';
-import styles from './index.module.css';
 import { PROFILE_IMAGE } from '@/constants/data';
+import FixedContentContainer from '../Layouts/Container/FixedContentContainer';
 
 type Props = {
   content: string;
@@ -30,7 +30,7 @@ export default function Markdown({ content, profile = false }: Props) {
           ))}
         </div>
       )}
-      <div className={`${styles.content} mt-10 mb-5`}>
+      <FixedContentContainer>
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
@@ -59,7 +59,7 @@ export default function Markdown({ content, profile = false }: Props) {
         >
           {content}
         </ReactMarkdown>
-      </div>
+      </FixedContentContainer>
     </>
   );
 }

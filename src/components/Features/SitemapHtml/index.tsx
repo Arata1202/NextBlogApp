@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Article, Category } from '@/types/microcms';
-import styles from './index.module.css';
 import { PAGE_ARR } from '@/constants/page';
+import FixedContentContainer from '@/components/Common/Layouts/Container/FixedContentContainer';
 
 type Props = {
   articles: Article[];
@@ -16,7 +16,7 @@ export default function SitemapHtmlFeature({ articles, categories }: Props) {
 
   return (
     <>
-      <div className={`${styles.content} mt-10 mb-5`}>
+      <FixedContentContainer>
         <h2
           className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
         >
@@ -61,7 +61,7 @@ export default function SitemapHtmlFeature({ articles, categories }: Props) {
             </li>
           ))}
         </ul>
-      </div>
+      </FixedContentContainer>
     </>
   );
 }
