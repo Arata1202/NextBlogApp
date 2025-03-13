@@ -1,33 +1,10 @@
-'use client';
-
-import { Article } from '@/types/microcms';
-import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
-import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
-import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
-import Sidebar from '@/components/Common/Layouts/Sidebar';
-import Share from '../../Common/Share';
 import Markdown from '@/components/Common/Markdown';
 import { LINK_CONTENT } from '@/contents/link';
-import FixedDateContainer from '@/components/Common/Layouts/Container/FIxedDateContainer';
 
-type Props = {
-  articles: Article[];
-};
-
-export default function LinkFeature({ articles }: Props) {
-  const date = new Date(2023, 10, 27);
-
+export default function LinkFeature() {
   return (
     <>
-      <MainContainer>
-        <ContentContainer>
-          <FixedDateContainer date={date} />
-          <Markdown content={LINK_CONTENT} />
-          <AdUnit slot="1831092739" />
-          <Share />
-        </ContentContainer>
-        <Sidebar recentArticles={articles} />
-      </MainContainer>
+      <Markdown content={LINK_CONTENT} />
     </>
   );
 }

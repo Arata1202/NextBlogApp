@@ -9,8 +9,8 @@ type Props = {
 export default function RelatedArticle({ data }: Props) {
   return (
     <>
-      <div className="mt-10">
-        <div className={`text-2xl font-semibold flex justify-center pt-10`}>
+      <div className="mt-5">
+        <div className={`text-2xl font-semibold flex justify-center`}>
           <LinkIcon className="h-8 w-8 mr-2" />
           関連記事
         </div>

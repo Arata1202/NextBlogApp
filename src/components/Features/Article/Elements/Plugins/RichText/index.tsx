@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from 'next-themes';
 import { ContentBlock } from '@/types/microcms';
 import styles from './index.module.css';
