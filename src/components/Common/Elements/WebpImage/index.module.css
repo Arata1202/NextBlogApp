@@ -3,6 +3,11 @@
   max-width: 300px;
 }
 
+.recent {
+  height: auto;
+  max-width: 100%;
+}
+
 .thumbnail {
   width: 960px;
   height: auto;

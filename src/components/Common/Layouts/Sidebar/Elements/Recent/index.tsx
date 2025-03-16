@@ -4,6 +4,7 @@ import { useTheme } from 'next-themes';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { Article } from '@/types/microcms';
 import styles from './index.module.css';
+import WebpImage from '@/components/Common/Elements/WebpImage';
 
 type Props = {
   recentArticles: Article[];
@@ -37,7 +38,7 @@ export default function Recent({ recentArticles }: Props) {
           >
             <li>
               <a href={`/articles/${article.id}`} className={styles.link}>
-                <img src={article.thumbnail.url} alt="サムネイル" className={styles.image} />
+                <WebpImage article={article} recent={true} />
                 <div className={`${styles.title} font-bold`}>{article.title}</div>
               </a>
             </li>
