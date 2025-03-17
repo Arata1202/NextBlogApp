@@ -1,6 +1,7 @@
 import { Article } from '@/types/microcms';
+import { PRIVACY_CONTENT } from '@/contents/privacy';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
-import PrivacyFeature from '@/components/Features/Privacy';
+import Markdown from '@/components/Common/Markdown';
 import PageHeading from '@/components/Common/PageHeading';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
@@ -21,7 +22,7 @@ export default function PrivacyPage({ articles }: Props) {
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />
-          <PrivacyFeature />
+          <Markdown content={PRIVACY_CONTENT} />
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>

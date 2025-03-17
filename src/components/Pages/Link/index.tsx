@@ -1,6 +1,7 @@
 import { Article } from '@/types/microcms';
+import { LINK_CONTENT } from '@/contents/link';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
-import LinkFeature from '@/components/Features/Link';
+import Markdown from '@/components/Common/Markdown';
 import PageHeading from '@/components/Common/PageHeading';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
@@ -21,7 +22,7 @@ export default function LinkPage({ articles }: Props) {
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />
-          <LinkFeature />
+          <Markdown content={LINK_CONTENT} />
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>

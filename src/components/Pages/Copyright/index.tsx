@@ -1,6 +1,7 @@
 import { Article } from '@/types/microcms';
+import { COPYRIGHT_CONTENT } from '@/contents/copyright';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
-import CopyrightFeature from '@/components/Features/Copyright';
+import Markdown from '@/components/Common/Markdown';
 import PageHeading from '@/components/Common/PageHeading';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
@@ -21,7 +22,7 @@ export default function CopyrightPage({ articles }: Props) {
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />
-          <CopyrightFeature />
+          <Markdown content={COPYRIGHT_CONTENT} />
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>

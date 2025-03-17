@@ -7,6 +7,7 @@ import ContentContainer from '@/components/Common/Layouts/Container/ContentConta
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 import Share from '../../Common/Share';
 import FixedDateContainer from '@/components/Common/Layouts/Container/FIxedDateContainer';
+import FixedContentContainer from '@/components/Common/Layouts/Container/FixedContentContainer';
 
 type Props = {
   articles: Article[];
@@ -22,7 +23,9 @@ export default function SitemapHtmlPage({ articles, categories }: Props) {
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />
-          <SitemapHtmlFeature articles={articles} categories={categories} />
+          <FixedContentContainer>
+            <SitemapHtmlFeature articles={articles} categories={categories} />
+          </FixedContentContainer>
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>

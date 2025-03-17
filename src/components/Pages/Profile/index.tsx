@@ -1,6 +1,7 @@
 import { Article } from '@/types/microcms';
+import { PROFILE_CONTENT } from '@/contents/profile';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
-import ProfileFeature from '@/components/Features/Profile';
+import Markdown from '@/components/Common/Markdown';
 import PageHeading from '@/components/Common/PageHeading';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
@@ -21,7 +22,7 @@ export default function ProfilePage({ articles }: Props) {
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />
-          <ProfileFeature />
+          <Markdown content={PROFILE_CONTENT} profile={true} />
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>

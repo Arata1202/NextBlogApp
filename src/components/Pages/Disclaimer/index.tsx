@@ -1,6 +1,7 @@
 import { Article } from '@/types/microcms';
+import { DISCLAIMER_CONTENT } from '@/contents/disclaimer';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
-import DisclaimerFeature from '@/components/Features/Disclaimer';
+import Markdown from '@/components/Common/Markdown';
 import PageHeading from '@/components/Common/PageHeading';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
@@ -21,7 +22,7 @@ export default function DisclaimerPage({ articles }: Props) {
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />
-          <DisclaimerFeature />
+          <Markdown content={DISCLAIMER_CONTENT} />
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
