@@ -12,27 +12,26 @@ import Alert from './Elements/Alert';
 export default function ContactFeature() {
   const { theme } = useTheme();
 
-  const [show, setContactConfirmShow] = useState(false);
-  const [open, setContactDialogOpen] = useState(false);
-  const cancelButtonRef = useRef(null);
-  const [formData, setContactFormData] = useState<Form | null>(null);
+  const [confirmSendEmailModalOpen, setConfirmSendEmailModalOpen] = useState(false);
+  const [successSendEmailAlertOpen, setSuccessSendEmailAlertOpen] = useState(false);
+  const [formData, setFormData] = useState<Form | null>(null);
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const {
     register,
-    handleSubmit,
+    handleSubmit: onSubmit,
     formState: { errors },
     reset,
   } = useForm<Form>();
 
-  const onChange = (value: string | null) => {
-    setCaptchaValue(value);
+  const handleSubmit = (data: Form) => {
+    setFormData(data);
+    setConfirmSendEmailModalOpen(true);
   };
 
-  const onSubmit = (data: Form) => {
-    setContactFormData(data);
-    setContactDialogOpen(true);
+  const handleChangeCaptchaValue = (value: string | null) => {
+    setCaptchaValue(value);
   };
 
   const handleRecaptcha = async () => {
@@ -63,30 +62,30 @@ export default function ContactFeature() {
     const data = await response.json();
 
     if (data.success) {
-      setContactConfirmShow(true);
+      setSuccessSendEmailAlertOpen(true);
       reset();
       recaptchaRef.current?.reset();
-      setContactDialogOpen(false);
+      setConfirmSendEmailModalOpen(false);
     } else {
       console.error(data.message);
     }
   };
 
   useEffect(() => {
-    if (show) {
+    if (successSendEmailAlertOpen) {
       const timer = setTimeout(() => {
-        setContactConfirmShow(false);
+        setSuccessSendEmailAlertOpen(false);
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [show]);
+  }, [successSendEmailAlertOpen]);
 
   return (
     <>
       <p className="mt-5">
         本ブログに関するご質問やお気づきの点がございましたら、お気軽にお問い合わせください。
       </p>
-      <form onSubmit={handleSubmit(onSubmit)} method="POST" className="pt-5 mb-5">
+      <form onSubmit={onSubmit(handleSubmit)} method="POST" className="pt-5 mb-5">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <InputContainer
             label="メールアドレス"
@@ -117,7 +116,7 @@ export default function ContactFeature() {
         <ReCAPTCHA
           ref={recaptchaRef}
           sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-          onChange={onChange}
+          onChange={handleChangeCaptchaValue}
           className="mt-3"
         />
         <div className="mt-3">
@@ -131,21 +130,20 @@ export default function ContactFeature() {
       </form>
 
       <Modal
+        show={confirmSendEmailModalOpen}
         title="お問い合わせを送信しますか？"
         description="送信ボタンは一度だけ押してください。送信完了まで数秒かかることがあります。"
         cancelText="キャンセル"
         confirmText="送信"
         onConfirm={handleRecaptcha}
-        onClose={() => setContactDialogOpen(false)}
-        open={open}
-        cancelButtonRef={cancelButtonRef}
+        onClose={() => setConfirmSendEmailModalOpen(false)}
       />
 
       <Alert
-        show={show}
+        show={successSendEmailAlertOpen}
         title="お問い合わせありがとうございます"
         description="正常に処理が完了しました。"
-        onClose={() => setContactConfirmShow(false)}
+        onClose={() => setSuccessSendEmailAlertOpen(false)}
       />
     </>
   );
