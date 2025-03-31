@@ -67,7 +67,7 @@
 | CI/CD             | GitHub Actions                                |
 | Design            | Figma, Canva                                  |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA |
-| etc.              | PWA, OneSignal                                |
+| etc.              | PWA, OneSignal, Pipedream                     |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
