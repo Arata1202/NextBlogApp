@@ -1,4 +1,4 @@
-import { Article } from '@/types/microcms';
+import { Article, Tag } from '@/types/microcms';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import ArticleFeature from '@/components/Features/Article';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
@@ -11,9 +11,10 @@ type Props = {
   articles: Article[];
   article: Article;
   relatedArticles: Article[];
+  tags: Tag[];
 };
 
-export default function ArticlePage({ article, articles, relatedArticles }: Props) {
+export default function ArticlePage({ article, articles, relatedArticles, tags }: Props) {
   return (
     <>
       <MainContainer article={true}>
@@ -23,7 +24,12 @@ export default function ArticlePage({ article, articles, relatedArticles }: Prop
           <AdUnit slot="1831092739" />
           <Share data={article} />
         </ContentContainer>
-        <Sidebar recentArticles={articles} contentBlocks={article.content_blocks} article={true} />
+        <Sidebar
+          recentArticles={articles}
+          contentBlocks={article.content_blocks}
+          article={true}
+          tags={tags}
+        />
       </MainContainer>
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>

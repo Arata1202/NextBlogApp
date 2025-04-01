@@ -1,4 +1,4 @@
-import { getList } from '@/libs/microcms';
+import { getList, getAllTagLists } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import HomePage from '@/components/Pages/Home';
 import { generateRssFeed } from '@/libs/rss';
@@ -42,6 +42,9 @@ export default async function Page(props: Props) {
     limit: RECENT_LIMIT,
     fields: 'id,title,thumbnail',
   });
+  const tags = await getAllTagLists({
+    fields: 'id,name',
+  });
 
   return (
     <>
@@ -50,6 +53,7 @@ export default async function Page(props: Props) {
         totalCount={data.totalCount}
         current={current}
         recentArticles={recentArticles.contents}
+        tags={tags}
       />
     </>
   );

@@ -1,7 +1,7 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { Article } from '@/types/microcms';
+import { Article, Tag } from '@/types/microcms';
 import styles from './index.module.css';
 import AdUnit from '../../ThirdParties/GoogleAdSense/Elements/AdUnit';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
@@ -13,9 +13,10 @@ import Share from '../Share';
 type Props = {
   articles: Article[];
   recentArticles?: Article[];
+  tags: Tag[];
 };
 
-export default function ArticleList({ articles, recentArticles }: Props) {
+export default function ArticleList({ articles, recentArticles, tags }: Props) {
   const { theme } = useTheme();
 
   return (
@@ -45,7 +46,7 @@ export default function ArticleList({ articles, recentArticles }: Props) {
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
-        <Sidebar recentArticles={recentArticles} />
+        <Sidebar recentArticles={recentArticles} tags={tags} />
       </MainContainer>
     </>
   );

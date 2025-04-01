@@ -1,4 +1,4 @@
-import { getList } from '@/libs/microcms';
+import { getList, getAllTagLists } from '@/libs/microcms';
 import { RECENT_LIMIT } from '@/constants/limit';
 import ProfilePage from '@/components/Pages/Profile';
 
@@ -9,10 +9,13 @@ export default async function Page() {
     limit: RECENT_LIMIT,
     fields: 'id,title,thumbnail',
   });
+  const tags = await getAllTagLists({
+    fields: 'id,name',
+  });
 
   return (
     <>
-      <ProfilePage articles={data.contents} />
+      <ProfilePage articles={data.contents} tags={tags} />
     </>
   );
 }

@@ -3,9 +3,13 @@
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { HashtagIcon } from '@heroicons/react/24/solid';
-import { TAG_ARR } from '@/constants/tag';
+import { Tag as TagType } from '@/types/microcms';
 
-export default function Tag() {
+type Props = {
+  tags: TagType[];
+};
+
+export default function Tag({ tags }: Props) {
   const { theme } = useTheme();
 
   return (
@@ -18,7 +22,7 @@ export default function Tag() {
           タグ
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
-          {TAG_ARR.map((tag) => (
+          {tags.map((tag) => (
             <Link
               key={tag.id}
               href={`/tag/${tag.id}`}

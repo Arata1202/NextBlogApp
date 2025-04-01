@@ -10,13 +10,21 @@ type Props = {
   current?: number;
   totalCount: number;
   recentArticles?: Article[];
+  tags: Tag[];
 };
 
-export default function TagPage({ articles, tag, totalCount, recentArticles, current }: Props) {
+export default function TagPage({
+  articles,
+  tag,
+  totalCount,
+  recentArticles,
+  current,
+  tags,
+}: Props) {
   return (
     <>
       <PageHeading tag={tag} />
-      <ArticleList articles={articles} recentArticles={recentArticles} />
+      <ArticleList articles={articles} recentArticles={recentArticles} tags={tags} />
       <Pagination totalCount={totalCount} current={current} basePath={`/tag/${tag.id}`} />
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>

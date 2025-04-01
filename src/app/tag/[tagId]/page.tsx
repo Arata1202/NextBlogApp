@@ -1,7 +1,6 @@
-import { getList, getTag } from '@/libs/microcms';
+import { getList, getTag, getAllTagLists } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import TagPage from '@/components/Pages/Tag';
-import { TAG_ARR } from '@/constants/tag';
 
 type Props = {
   params: Promise<{
@@ -10,7 +9,11 @@ type Props = {
 };
 
 export const generateStaticParams = async () => {
-  return TAG_ARR.map((tag) => ({
+  const tags = await getAllTagLists({
+    fields: 'id',
+  });
+
+  return tags.map((tag) => ({
     tagId: tag.id,
   }));
 };
@@ -28,6 +31,9 @@ export default async function Page(props: Props) {
     limit: RECENT_LIMIT,
     fields: 'id,title,thumbnail',
   });
+  const tags = await getAllTagLists({
+    fields: 'id,name',
+  });
   const tag = await getTag(params.tagId, { fields: 'id,name' });
 
   return (
@@ -37,6 +43,7 @@ export default async function Page(props: Props) {
         tag={tag}
         totalCount={data.totalCount}
         recentArticles={recentArticles.contents}
+        tags={tags}
       />
     </>
   );

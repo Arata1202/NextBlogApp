@@ -1,6 +1,6 @@
 'use client';
 
-import { Article } from '@/types/microcms';
+import { Article, Tag as TagType } from '@/types/microcms';
 import styles from './index.module.css';
 import { useMutationObserver } from '@/hooks/useMutationObserver';
 import AdUnit from '../../../ThirdParties/GoogleAdSense/Elements/AdUnit';
@@ -16,9 +16,10 @@ type Props = {
   recentArticles?: Article[];
   contentBlocks?: { rich_text?: string }[];
   article?: boolean;
+  tags: TagType[];
 };
 
-export default function Sidebar({ recentArticles, contentBlocks, article = false }: Props) {
+export default function Sidebar({ recentArticles, contentBlocks, article = false, tags }: Props) {
   useMutationObserver();
 
   return (
@@ -27,7 +28,7 @@ export default function Sidebar({ recentArticles, contentBlocks, article = false
         <Profile />
         <AdUnit slot="8452341403" style={{ marginTop: '1.25rem' }} />
         <Category />
-        <Tag />
+        <Tag tags={tags} />
         <AdUnit slot="9574685533" style={{ marginTop: '1.25rem' }} />
         <Archive />
         <Popular />
