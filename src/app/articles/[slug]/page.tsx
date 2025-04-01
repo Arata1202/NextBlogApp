@@ -1,5 +1,5 @@
 import { getDetail, getList, getAllLists } from '@/libs/microcms';
-import { LIMIT } from '@/constants/limit';
+import { RECENT_LIMIT } from '@/constants/limit';
 import ArticlePage from '@/components/Pages/Article';
 
 type Props = {
@@ -19,13 +19,23 @@ export default async function Page(props: Props) {
 
   const data = await getDetail(params.slug);
   const articles = await getList({
-    limit: LIMIT,
+    limit: RECENT_LIMIT,
     fields: 'id,title,thumbnail',
+  });
+
+  const relatedArticles = await getList({
+    limit: RECENT_LIMIT,
+    fields: 'id,title,tags,description,thumbnail,publishedAt,updatedAt',
+    filters: `categories[contains]${data.categories[0].id},title[not_equals]${data.title}`,
   });
 
   return (
     <>
-      <ArticlePage articles={articles.contents} article={data} />
+      <ArticlePage
+        articles={articles.contents}
+        article={data}
+        relatedArticles={relatedArticles.contents}
+      />
     </>
   );
 }

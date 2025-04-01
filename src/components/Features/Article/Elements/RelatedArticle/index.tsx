@@ -3,10 +3,10 @@ import { Article } from '@/types/microcms';
 import ArticleCard from '@/components/Common/ArticleCard';
 
 type Props = {
-  data: Article;
+  relatedArticles: Article[];
 };
 
-export default function RelatedArticle({ data }: Props) {
+export default function RelatedArticle({ relatedArticles }: Props) {
   return (
     <>
       <div className="mt-5">
@@ -15,12 +15,8 @@ export default function RelatedArticle({ data }: Props) {
           関連記事
         </div>
         <div className="mt-5">
-          {data.related_articles.map((block, index) => (
-            <div key={index}>
-              {block.article_link && typeof block.article_link !== 'string' && (
-                <ArticleCard article={block.article_link} />
-              )}
-            </div>
+          {relatedArticles.map((item) => (
+            <ArticleCard key={item.id} article={item} />
           ))}
         </div>
       </div>

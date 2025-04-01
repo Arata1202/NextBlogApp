@@ -16,9 +16,10 @@ import { useExtractHeadings } from '@/hooks/useExtractHeadings';
 
 type Props = {
   data: Article;
+  relatedArticles: Article[];
 };
 
-export default function ArticleFeature({ data }: Props) {
+export default function ArticleFeature({ data, relatedArticles }: Props) {
   const headings = useExtractHeadings(data.content_blocks);
 
   return (
@@ -57,7 +58,7 @@ export default function ArticleFeature({ data }: Props) {
           {block.box_common && <TabBox block={block} common={true} />}
         </div>
       ))}
-      <RelatedArticle data={data} />
+      <RelatedArticle relatedArticles={relatedArticles} />
     </>
   );
 }

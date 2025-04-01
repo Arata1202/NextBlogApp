@@ -10,15 +10,16 @@ import Share from '@/components/Common/Share';
 type Props = {
   articles: Article[];
   article: Article;
+  relatedArticles: Article[];
 };
 
-export default function ArticlePage({ article, articles }: Props) {
+export default function ArticlePage({ article, articles, relatedArticles }: Props) {
   return (
     <>
       <MainContainer article={true}>
         <ContentContainer>
           <BreadCrumb article={article} />
-          <ArticleFeature data={article} />
+          <ArticleFeature data={article} relatedArticles={relatedArticles} />
           <AdUnit slot="1831092739" />
           <Share data={article} />
         </ContentContainer>
