@@ -9,7 +9,9 @@ type Props = {
 };
 
 export const generateStaticParams = async () => {
-  const data = await getAllLists();
+  const data = await getAllLists({
+    fields: 'id',
+  });
 
   return data.map((slug) => ({ slug: slug.id }));
 };

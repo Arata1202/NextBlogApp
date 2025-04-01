@@ -4,8 +4,12 @@ import SitemapHtmlPage from '@/components/Pages/SitemapHtml';
 export const revalidate = 60;
 
 export default async function Page() {
-  const data = await getAllLists();
-  const categories = await getAllCategoryLists();
+  const data = await getAllLists({
+    fields: 'id,title',
+  });
+  const categories = await getAllCategoryLists({
+    fields: 'id,name',
+  });
 
   return (
     <>

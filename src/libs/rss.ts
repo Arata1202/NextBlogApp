@@ -30,7 +30,9 @@ export const generateRssFeed = async () => {
       ttl: 60,
     });
 
-    const data = await getAllLists();
+    const data = await getAllLists({
+      fields: 'id,title,description,thumbnail,publishedAt',
+    });
 
     data.forEach((item) => {
       feed.addItem({

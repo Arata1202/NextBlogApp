@@ -6,7 +6,9 @@ import { PAGE_ARR } from '@/constants/page';
 export const dynamic = 'force-static';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const articles = await getAllLists();
+  const articles = await getAllLists({
+    fields: 'id,updatedAt',
+  });
 
   const url = process.env.NEXT_PUBLIC_BASE_URL;
   const lastModified = new Date();
