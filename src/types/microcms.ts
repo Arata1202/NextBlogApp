@@ -8,7 +8,6 @@ export type Blog = {
   tags?: Tag[];
   introduction_blocks: IntroductionBlock[];
   content_blocks: ContentBlock[];
-  related_articles: RelatedArticle[];
 };
 
 export type Article = Blog & MicroCMSContentId & MicroCMSDate;
@@ -50,8 +49,4 @@ export type ContentBlock = {
   box_demerit?: string;
   box_point?: string;
   box_common?: string;
-};
-
-export type RelatedArticle = {
-  article_link?: string;
 };
