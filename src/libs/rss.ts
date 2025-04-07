@@ -31,7 +31,7 @@ export const generateRssFeed = async () => {
     });
 
     const data = await getAllLists({
-      fields: 'id,title,description,thumbnail,publishedAt',
+      fields: 'id,title,description,categories,thumbnail,publishedAt',
     });
 
     data.forEach((item) => {
