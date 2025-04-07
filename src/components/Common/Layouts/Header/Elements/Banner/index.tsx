@@ -9,6 +9,7 @@ export default function Banner() {
           <a
             href="http://www.rentracks.jp/adx/r.html?idx=0.61256.344874.638.7876&dna=102958"
             target="_blank"
+            rel="nofollow noopener"
             className="flex"
           >
             <svg viewBox="0 0 2 2" className="mx-2 inline size-0.5 fill-current"></svg>
