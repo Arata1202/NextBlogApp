@@ -22,7 +22,7 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
     event.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      const yOffset = -100;
+      const yOffset = -130;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
@@ -37,15 +37,15 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
           const rect = element.getBoundingClientRect();
           const isLastHeading = index === headings.length - 1;
           if (isLastHeading) {
-            if (rect.top <= 110) {
+            if (rect.top <= 131) {
               currentId = heading.id;
             }
           } else {
-            if (rect.top <= 110 && rect.bottom > 110) {
+            if (rect.top <= 131 && rect.bottom > 131) {
               currentId = heading.id;
-            } else if (rect.top <= 110 && headings[index + 1]) {
+            } else if (rect.top <= 131 && headings[index + 1]) {
               const nextElement = document.getElementById(headings[index + 1].id);
-              if (nextElement && nextElement.getBoundingClientRect().top > 110) {
+              if (nextElement && nextElement.getBoundingClientRect().top > 131) {
                 currentId = heading.id;
               }
             }
