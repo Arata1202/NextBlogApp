@@ -34,12 +34,12 @@ export const FOOTER_NAVIGATION = {
 export const SOCIAL_ICON = [
   {
     name: 'X',
-    path: 'https://twitter.com/Aokumoblog',
+    path: 'https://twitter.com/realunivlog',
     icon: XIcon,
   },
   {
     name: 'Instagram',
-    path: 'https://www.instagram.com/ao_realstudent/?hl=ja',
+    path: 'https://www.instagram.com/realunivlog/?hl=ja',
     icon: InstagramIcon,
   },
   {
@@ -51,7 +51,7 @@ export const SOCIAL_ICON = [
 
 export const COPYRIGHT = 'Copyright © 2024 リアル大学生 All Rights Reserved.';
 
-export const PROFILE_NAME = 'あらた';
+export const PROFILE_NAME = 'Arata1202';
 
 export const PROFILE_IMAGE = [
   {
