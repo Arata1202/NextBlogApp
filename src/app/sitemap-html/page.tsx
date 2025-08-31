@@ -5,7 +5,7 @@ export const revalidate = 60;
 
 export default async function Page() {
   const data = await getAllLists({
-    fields: 'id,title',
+    fields: 'id,title,thumbnail',
   });
   const categories = await getAllCategoryLists({
     fields: 'id,name',
