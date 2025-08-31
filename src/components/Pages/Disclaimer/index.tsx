@@ -1,4 +1,5 @@
 import { Article, Tag } from '@/types/microcms';
+import { ArchiveItem } from '@/libs/archive';
 import { DISCLAIMER_CONTENT } from '@/contents/disclaimer';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import Markdown from '@/components/Common/Markdown';
@@ -12,9 +13,10 @@ import FixedDateContainer from '@/components/Common/Layouts/Container/FIxedDateC
 type Props = {
   articles: Article[];
   tags: Tag[];
+  archiveList: ArchiveItem[];
 };
 
-export default function DisclaimerPage({ articles, tags }: Props) {
+export default function DisclaimerPage({ articles, tags, archiveList }: Props) {
   const date = new Date(2023, 10, 27);
 
   return (
@@ -27,7 +29,7 @@ export default function DisclaimerPage({ articles, tags }: Props) {
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
-        <Sidebar recentArticles={articles} tags={tags} />
+        <Sidebar recentArticles={articles} tags={tags} archiveList={archiveList} />
       </MainContainer>
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>

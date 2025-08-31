@@ -1,7 +1,7 @@
 import { getList, getAllTagLists } from '@/libs/microcms';
+import { getArchiveStaticParams, getArchiveList } from '@/libs/archive';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import ArchivePage from '@/components/Pages/Archive';
-import { ARCHIVE_ARR } from '@/constants/archive';
 
 type Props = {
   params: Promise<{
@@ -11,13 +11,7 @@ type Props = {
 };
 
 export const generateStaticParams = async () => {
-  return ARCHIVE_ARR.map(({ year, month }) => {
-    const formattedMonth = month.padStart(2, '0');
-    return {
-      year,
-      month: formattedMonth,
-    };
-  });
+  return await getArchiveStaticParams();
 };
 
 export default async function Page(props: Props) {
@@ -39,6 +33,7 @@ export default async function Page(props: Props) {
   const tags = await getAllTagLists({
     fields: 'id,name',
   });
+  const archiveList = await getArchiveList();
 
   return (
     <>
@@ -49,6 +44,7 @@ export default async function Page(props: Props) {
         recentArticles={recentArticles.contents}
         totalCount={data.totalCount}
         tags={tags}
+        archiveList={archiveList}
       />
     </>
   );

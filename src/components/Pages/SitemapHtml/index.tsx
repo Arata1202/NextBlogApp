@@ -1,4 +1,5 @@
 import { Article, Category, Tag } from '@/types/microcms';
+import { ArchiveItem } from '@/libs/archive';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import SitemapHtmlFeature from '@/components/Features/SitemapHtml';
 import PageHeading from '@/components/Common/PageHeading';
@@ -13,9 +14,10 @@ type Props = {
   articles: Article[];
   categories: Category[];
   tags: Tag[];
+  archiveList: ArchiveItem[];
 };
 
-export default function SitemapHtmlPage({ articles, categories, tags }: Props) {
+export default function SitemapHtmlPage({ articles, categories, tags, archiveList }: Props) {
   const date = new Date(2023, 10, 27);
 
   return (
@@ -30,7 +32,7 @@ export default function SitemapHtmlPage({ articles, categories, tags }: Props) {
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
-        <Sidebar recentArticles={articles} tags={tags} />
+        <Sidebar recentArticles={articles} tags={tags} archiveList={archiveList} />
       </MainContainer>
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>

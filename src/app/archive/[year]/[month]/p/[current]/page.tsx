@@ -1,7 +1,7 @@
 import { getList, getAllTagLists } from '@/libs/microcms';
+import { getArchiveList, getArchiveStaticParams } from '@/libs/archive';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import ArchivePage from '@/components/Pages/Archive';
-import { ARCHIVE_ARR } from '@/constants/archive';
 
 type Props = {
   params: Promise<{
@@ -12,11 +12,12 @@ type Props = {
 };
 
 export const generateStaticParams = async () => {
+  const archiveParams = await getArchiveStaticParams();
+
   const results = await Promise.all(
-    ARCHIVE_ARR.map(async ({ year, month }) => {
-      const formattedMonth = month.padStart(2, '0');
-      const startDate = `${year}-${formattedMonth}-01T00:00:00Z`;
-      const endDate = new Date(Number(year), Number(formattedMonth), 1).toISOString();
+    archiveParams.map(async ({ year, month }) => {
+      const startDate = `${year}-${month}-01T00:00:00Z`;
+      const endDate = new Date(Number(year), Number(month), 1).toISOString();
 
       const data = await getList({
         limit: 0,
@@ -29,7 +30,7 @@ export const generateStaticParams = async () => {
 
       return currents.map((current) => ({
         year,
-        month: formattedMonth,
+        month: month,
         current: current.toString(),
       }));
     }),
@@ -60,6 +61,7 @@ export default async function Page(props: Props) {
   const tags = await getAllTagLists({
     fields: 'id,name',
   });
+  const archiveList = await getArchiveList();
 
   return (
     <>
@@ -71,6 +73,7 @@ export default async function Page(props: Props) {
         current={current}
         recentArticles={recentArticles.contents}
         tags={tags}
+        archiveList={archiveList}
       />
     </>
   );

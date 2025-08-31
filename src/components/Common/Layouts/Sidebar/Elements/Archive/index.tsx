@@ -6,9 +6,13 @@ import { useTheme } from 'next-themes';
 import { Listbox } from '@headlessui/react';
 import { CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
-import { ARCHIVE_ARR } from '@/constants/archive';
+import { ArchiveItem } from '@/libs/archive';
 
-export default function Archive() {
+type Props = {
+  archiveList: ArchiveItem[];
+};
+
+export default function Archive({ archiveList }: Props) {
   const { theme } = useTheme();
   const router = useRouter();
 
@@ -51,7 +55,7 @@ export default function Archive() {
             <Listbox.Options
               className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-opacity-5 focus:outline-none sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
-              {ARCHIVE_ARR.map((item, index) => (
+              {archiveList.map((item, index) => (
                 <Listbox.Option
                   key={index}
                   value={`${item.year}/${item.month.padStart(2, '0')}`}

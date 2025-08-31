@@ -1,4 +1,5 @@
 import { Article, Tag } from '@/types/microcms';
+import { ArchiveItem } from '@/libs/archive';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import ArticleFeature from '@/components/Features/Article';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
@@ -12,9 +13,16 @@ type Props = {
   article: Article;
   relatedArticles: Article[];
   tags: Tag[];
+  archiveList: ArchiveItem[];
 };
 
-export default function ArticlePage({ article, articles, relatedArticles, tags }: Props) {
+export default function ArticlePage({
+  article,
+  articles,
+  relatedArticles,
+  tags,
+  archiveList,
+}: Props) {
   return (
     <>
       <MainContainer article={true}>
@@ -29,6 +37,7 @@ export default function ArticlePage({ article, articles, relatedArticles, tags }
           contentBlocks={article.content_blocks}
           article={true}
           tags={tags}
+          archiveList={archiveList}
         />
       </MainContainer>
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />

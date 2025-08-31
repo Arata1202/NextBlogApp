@@ -1,4 +1,5 @@
 import { Article, Tag } from '@/types/microcms';
+import { ArchiveItem } from '@/libs/archive';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
@@ -12,6 +13,7 @@ type Props = {
   current?: number;
   recentArticles?: Article[];
   tags: Tag[];
+  archiveList: ArchiveItem[];
 };
 
 export default function ArchivePage({
@@ -22,11 +24,17 @@ export default function ArchivePage({
   current,
   recentArticles,
   tags,
+  archiveList,
 }: Props) {
   return (
     <>
       <PageHeading year={year} month={month} />
-      <ArticleList articles={articles} recentArticles={recentArticles} tags={tags} />
+      <ArticleList
+        articles={articles}
+        recentArticles={recentArticles}
+        tags={tags}
+        archiveList={archiveList}
+      />
       <Pagination
         totalCount={totalCount}
         current={current}
