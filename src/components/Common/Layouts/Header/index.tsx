@@ -11,7 +11,7 @@ import ThemeSwitch from '@/components/Common/Layouts/ThemeSwitch';
 import { BLOG_IMAGE } from '@/constants/data';
 import { HEADER_NAVIGATION } from '@/constants/data';
 import { CATEGORY_ARR } from '@/constants/category';
-import { GitHubIcon } from '../../Elements/SocialIcon';
+import { YouTubeIcon } from '../../Elements/SocialIcon';
 import Banner from './Elements/Banner';
 
 export default function Header() {
@@ -48,11 +48,11 @@ export default function Header() {
             ) : (
               <div className="flex">
                 <Link
-                  href="https://github.com/Arata1202/NextBlogApp"
+                  href="https://www.youtube.com/@realalexvlog"
                   target="_blank"
                   className="hover:text-blue-500 px-3"
                 >
-                  <GitHubIcon className="h-6 w-6" />
+                  <YouTubeIcon className="h-6 w-6" />
                 </Link>
                 <div
                   className={`inline-flex items-center justify-center rounded-md px-3 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
@@ -124,11 +124,11 @@ export default function Header() {
             </Popover>
             <ThemeSwitch />
             <Link
-              href="https://github.com/Arata1202/NextBlogApp"
+              href="https://www.youtube.com/@realalexvlog"
               target="_blank"
               className="hover:text-blue-500"
             >
-              <GitHubIcon className="h-7 w-7" />
+              <YouTubeIcon className="h-7 w-7" />
             </Link>
           </div>
         </nav>
