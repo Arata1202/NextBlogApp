@@ -55,7 +55,7 @@ export const PROFILE_NAME = 'Arata1202';
 
 export const PROFILE_IMAGE = [
   {
-    path: '/images/blog/face.jpeg',
+    path: '/images/blog/face.png',
     alt: '筆者',
   },
 ];
