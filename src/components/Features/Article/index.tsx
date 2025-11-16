@@ -29,7 +29,7 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
       <DoubleDate article={data} articleMode={true} />
       <AdAlert />
       {data.introduction_blocks.map((block, index) => (
-        <div key={index}>
+        <div className="mt-10" key={index}>
           {block.bubble_text && block.bubble_image && <SpeechBubble block={block} />}
           {block.rich_text && <RichText block={block} />}
           {block.custom_html && <CustomHtml block={block} />}
