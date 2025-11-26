@@ -23,7 +23,7 @@ export default function FollowSection() {
             <RssIcon className="h-6 w-6 text-white" />
           </Link>
           <Link
-            href={`https://feedly.com/i/subscription/feed/${url}/rss.xml`}
+            href={`https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Frealunivlog.com%2Frss.xml`}
             target="_blank"
             className="bg-green-500 rounded-full p-2 m-1"
           >
