@@ -1,5 +1,6 @@
 import { Article, Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
+import { YouTube } from '@/types/youtube';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import ContactFeature from '@/components/Features/Contact';
 import PageHeading from '@/components/Common/PageHeading';
@@ -13,9 +14,10 @@ type Props = {
   articles: Article[];
   tags: Tag[];
   archiveList: ArchiveItem[];
+  youtubeList: YouTube[];
 };
 
-export default function ContactPage({ articles, tags, archiveList }: Props) {
+export default function ContactPage({ articles, tags, archiveList, youtubeList }: Props) {
   const date = new Date(2023, 10, 27);
 
   return (
@@ -28,7 +30,12 @@ export default function ContactPage({ articles, tags, archiveList }: Props) {
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
-        <Sidebar recentArticles={articles} tags={tags} archiveList={archiveList} />
+        <Sidebar
+          recentArticles={articles}
+          tags={tags}
+          archiveList={archiveList}
+          youtubeList={youtubeList}
+        />
       </MainContainer>
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>

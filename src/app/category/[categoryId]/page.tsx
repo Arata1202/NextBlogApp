@@ -1,5 +1,6 @@
 import { getList, getCategory, getAllTagLists } from '@/libs/microcms';
 import { getArchiveList } from '@/libs/archive';
+import { getYouTubeList } from '@/libs/youtube';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import { CATEGORY_ARR } from '@/constants/category';
 import CategoryPage from '@/components/Pages/Category';
@@ -32,6 +33,7 @@ export default async function Page(props: Props) {
   });
   const category = await getCategory(params.categoryId, { fields: 'id,name' });
   const archiveList = await getArchiveList();
+  const youtubeList = await getYouTubeList();
 
   return (
     <>
@@ -42,6 +44,7 @@ export default async function Page(props: Props) {
         recentArticles={recentArticles.contents}
         tags={tags}
         archiveList={archiveList}
+        youtubeList={youtubeList}
       />
     </>
   );

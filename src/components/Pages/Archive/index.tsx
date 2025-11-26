@@ -1,5 +1,6 @@
 import { Article, Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
+import { YouTube } from '@/types/youtube';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
@@ -14,6 +15,7 @@ type Props = {
   recentArticles?: Article[];
   tags: Tag[];
   archiveList: ArchiveItem[];
+  youtubeList: YouTube[];
 };
 
 export default function ArchivePage({
@@ -25,6 +27,7 @@ export default function ArchivePage({
   recentArticles,
   tags,
   archiveList,
+  youtubeList,
 }: Props) {
   return (
     <>
@@ -34,6 +37,7 @@ export default function ArchivePage({
         recentArticles={recentArticles}
         tags={tags}
         archiveList={archiveList}
+        youtubeList={youtubeList}
       />
       <Pagination
         totalCount={totalCount}

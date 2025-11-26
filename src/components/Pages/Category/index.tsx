@@ -1,5 +1,6 @@
 import { Article, Category, Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
+import { YouTube } from '@/types/youtube';
 import PageHeading from '@/components/Common/PageHeading';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
@@ -13,6 +14,7 @@ type Props = {
   recentArticles?: Article[];
   tags: Tag[];
   archiveList: ArchiveItem[];
+  youtubeList: YouTube[];
 };
 
 export default function CategoryPage({
@@ -23,6 +25,7 @@ export default function CategoryPage({
   current,
   tags,
   archiveList,
+  youtubeList,
 }: Props) {
   return (
     <>
@@ -32,6 +35,7 @@ export default function CategoryPage({
         recentArticles={recentArticles}
         tags={tags}
         archiveList={archiveList}
+        youtubeList={youtubeList}
       />
       <Pagination totalCount={totalCount} current={current} basePath={`/category/${category.id}`} />
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
