@@ -1,6 +1,7 @@
 'use client';
 
 import { Article, Tag as TagType } from '@/types/microcms';
+import { YouTube } from '@/types/youtube';
 import { ArchiveItem } from '@/libs/archive';
 import styles from './index.module.css';
 import { useMutationObserver } from '@/hooks/useMutationObserver';
@@ -9,8 +10,9 @@ import Profile from './Elements/Profile';
 import Category from './Elements/Category';
 import Tag from './Elements/Tag';
 import Archive from './Elements/Archive';
-import Popular from './Elements/Popular';
+// import Popular from './Elements/Popular';
 import Recent from './Elements/Recent';
+import Video from './Elements/Video';
 import StickyContainer from './Elements/StickyContainer';
 
 type Props = {
@@ -19,6 +21,7 @@ type Props = {
   article?: boolean;
   tags: TagType[];
   archiveList: ArchiveItem[];
+  youtubeList?: YouTube[];
 };
 
 export default function Sidebar({
@@ -27,6 +30,7 @@ export default function Sidebar({
   article = false,
   tags,
   archiveList,
+  youtubeList,
 }: Props) {
   useMutationObserver();
 
@@ -39,7 +43,8 @@ export default function Sidebar({
         <Tag tags={tags} />
         <AdUnit slot="9574685533" style={{ marginTop: '1.25rem' }} />
         <Archive archiveList={archiveList} />
-        <Popular />
+        {/* <Popular /> */}
+        {youtubeList && <Video youtubeList={youtubeList} />}
         {recentArticles && <Recent recentArticles={recentArticles} />}
         <StickyContainer contentBlocks={contentBlocks} />
       </div>

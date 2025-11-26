@@ -69,25 +69,3 @@ export const PROFILE_SENTENCE = [
   { sentence: 'インターン：Vue.js, Laravel' },
   { sentence: '個人開発：Next.js' },
 ];
-
-export const POPULAR_POST = [
-  {
-    postName:
-      '【リクビジョン】就活生のための就活管理サービス、「リクビジョン」をリリースしました！',
-    postHref: '/articles/qyjjrfa737bk',
-    imageHref: '/images/post/21.png',
-    imageAlt: 'サムネイル',
-  },
-  {
-    postName: '【乳頭温泉郷】鶴の湯に宿泊！予約方法やアクセスについて解説',
-    postHref: '/articles/nyuto-hotspring-tsurunoyu-reservation-access',
-    imageHref: '/images/post/1.webp',
-    imageAlt: 'サムネイル',
-  },
-  {
-    postName: '【文系】大学生必見！大学でのリアルな持ち物を大公開【かばんの中身】',
-    postHref: '/articles/university-student-real-personal-effects',
-    imageHref: '/images/post/2.webp',
-    imageAlt: 'サムネイル',
-  },
-];
