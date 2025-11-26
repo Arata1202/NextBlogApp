@@ -61,11 +61,7 @@ export const PROFILE_IMAGE = [
 ];
 
 export const PROFILE_SENTENCE = [
-  { sentence: '21歳' },
-  { sentence: '千葉県在住' },
-  { sentence: '文系大学生｜26卒' },
-  { sentence: '経営学部 マーケティング学科' },
-  { sentence: 'Webエンジニアインターンに参加中' },
-  { sentence: 'インターン：Vue.js, Laravel' },
-  { sentence: '個人開発：Next.js' },
+  { sentence: '22歳' },
+  { sentence: '文系大学4年｜26卒' },
+  { sentence: 'Web系エンジニアに内定' },
 ];
