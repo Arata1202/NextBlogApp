@@ -7,6 +7,7 @@ import styles from './index.module.css';
 import { useMutationObserver } from '@/hooks/useMutationObserver';
 import AdUnit from '../../../ThirdParties/GoogleAdSense/Elements/AdUnit';
 import Profile from './Elements/Profile';
+import GitHubSponsors from './Elements/GitHubSponsors';
 import Category from './Elements/Category';
 import Tag from './Elements/Tag';
 import Archive from './Elements/Archive';
@@ -38,6 +39,7 @@ export default function Sidebar({
     <>
       <div className={`${article && styles.article} lg:col-span-1 lg:w-full lg:h-full mut-guard`}>
         <Profile />
+        <GitHubSponsors />
         <AdUnit slot="8452341403" style={{ marginTop: '1.25rem' }} />
         <Category />
         <Tag tags={tags} />
