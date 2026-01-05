@@ -20,13 +20,14 @@ type Props = {
 
 export default function ProfilePage({ articles, tags, archiveList, youtubeList }: Props) {
   const date = new Date(2023, 10, 27);
+  const updatedDate = new Date(2025, 12, 5);
 
   return (
     <>
       <PageHeading profile={true} />
       <MainContainer>
         <ContentContainer>
-          <FixedDateContainer date={date} />
+          <FixedDateContainer date={date} updatedDate={updatedDate} />
           <Markdown content={PROFILE_CONTENT} profile={true} />
           <AdUnit slot="1831092739" />
           <Share />
