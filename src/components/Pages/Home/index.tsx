@@ -4,6 +4,7 @@ import PageHeading from '@/components/Common/PageHeading';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
+import { UnifiedArticle } from '@/types/unified';
 
 type Props = {
   articles: Article[];
@@ -12,6 +13,7 @@ type Props = {
   recentArticles?: Article[];
   tags: Tag[];
   archiveList: ArchiveItem[];
+  mixedArticles?: UnifiedArticle[];
 };
 
 export default function HomePage({
@@ -21,12 +23,14 @@ export default function HomePage({
   current,
   tags,
   archiveList,
+  mixedArticles,
 }: Props) {
   return (
     <>
       <PageHeading home={true} />
       <ArticleList
         articles={articles}
+        mixedArticles={mixedArticles}
         recentArticles={recentArticles}
         tags={tags}
         archiveList={archiveList}
