@@ -11,6 +11,7 @@ export const PROFILE_CONTENT = `
 
 - [X](https://twitter.com/realunivlog)
 - [GitHub](https://github.com/Arata1202)
+- [Zenn](https://zenn.dev/realunivlog)
 
 ## リアル大学生（当サイト）の使用技術
 
