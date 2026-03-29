@@ -1,7 +1,6 @@
 import DisclaimerPage from '@/components/Pages/Disclaimer';
 import { getList, getAllTagLists } from '@/libs/microcms';
 import { getArchiveList } from '@/libs/archive';
-import { getYouTubeList } from '@/libs/youtube';
 import { RECENT_LIMIT } from '@/constants/limit';
 
 export const revalidate = 60;
@@ -15,16 +14,10 @@ export default async function Page() {
     fields: 'id,name',
   });
   const archiveList = await getArchiveList();
-  const youtubeList = await getYouTubeList();
 
   return (
     <>
-      <DisclaimerPage
-        articles={data.contents}
-        tags={tags}
-        archiveList={archiveList}
-        youtubeList={youtubeList}
-      />
+      <DisclaimerPage articles={data.contents} tags={tags} archiveList={archiveList} />
     </>
   );
 }

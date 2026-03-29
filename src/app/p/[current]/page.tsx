@@ -1,6 +1,5 @@
 import { getList, getAllTagLists } from '@/libs/microcms';
 import { getArchiveList } from '@/libs/archive';
-import { getYouTubeList } from '@/libs/youtube';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import HomePage from '@/components/Pages/Home';
 import { generateRssFeed } from '@/libs/rss';
@@ -48,7 +47,6 @@ export default async function Page(props: Props) {
     fields: 'id,name',
   });
   const archiveList = await getArchiveList();
-  const youtubeList = await getYouTubeList();
 
   return (
     <>
@@ -59,7 +57,6 @@ export default async function Page(props: Props) {
         recentArticles={recentArticles.contents}
         tags={tags}
         archiveList={archiveList}
-        youtubeList={youtubeList}
       />
     </>
   );

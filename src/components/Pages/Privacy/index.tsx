@@ -1,6 +1,5 @@
 import { Article, Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
-import { YouTube } from '@/types/youtube';
 import { PRIVACY_CONTENT } from '@/contents/privacy';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import Markdown from '@/components/Common/Markdown';
@@ -15,10 +14,9 @@ type Props = {
   articles: Article[];
   tags: Tag[];
   archiveList: ArchiveItem[];
-  youtubeList: YouTube[];
 };
 
-export default function PrivacyPage({ articles, tags, archiveList, youtubeList }: Props) {
+export default function PrivacyPage({ articles, tags, archiveList }: Props) {
   const date = new Date(2023, 10, 27);
 
   return (
@@ -31,12 +29,7 @@ export default function PrivacyPage({ articles, tags, archiveList, youtubeList }
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
-        <Sidebar
-          recentArticles={articles}
-          tags={tags}
-          archiveList={archiveList}
-          youtubeList={youtubeList}
-        />
+        <Sidebar recentArticles={articles} tags={tags} archiveList={archiveList} />
       </MainContainer>
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>
