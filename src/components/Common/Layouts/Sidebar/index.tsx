@@ -41,7 +41,7 @@ export default function Sidebar({
         <Tag tags={tags} />
         <AdUnit slot="9574685533" style={{ marginTop: '1.25rem' }} />
         <Archive archiveList={archiveList} />
-        <Popular />
+        {/* <Popular /> */}
         {recentArticles && <Recent recentArticles={recentArticles} />}
         <StickyContainer contentBlocks={contentBlocks} />
       </div>

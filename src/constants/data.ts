@@ -38,11 +38,6 @@ export const SOCIAL_ICON = [
     icon: XIcon,
   },
   {
-    name: 'Instagram',
-    path: 'https://www.instagram.com/realunivlog/?hl=ja',
-    icon: InstagramIcon,
-  },
-  {
     name: 'GitHub',
     path: 'https://github.com/Arata1202',
     icon: GitHubIcon,

@@ -10,7 +10,6 @@ export const PROFILE_CONTENT = `
 ## SNS
 
 - [X](https://twitter.com/realunivlog)
-- [YouTube](https://www.youtube.com/@realalexvlog)
 - [GitHub](https://github.com/Arata1202)
 
 ## リアル大学生（当サイト）の使用技術
