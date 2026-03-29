@@ -10,7 +10,6 @@ import GitHubSponsors from './Elements/GitHubSponsors';
 import Category from './Elements/Category';
 import Tag from './Elements/Tag';
 import Archive from './Elements/Archive';
-import Popular from './Elements/Popular';
 import Recent from './Elements/Recent';
 import StickyContainer from './Elements/StickyContainer';
 
@@ -41,7 +40,6 @@ export default function Sidebar({
         <Tag tags={tags} />
         <AdUnit slot="9574685533" style={{ marginTop: '1.25rem' }} />
         <Archive archiveList={archiveList} />
-        {/* <Popular /> */}
         {recentArticles && <Recent recentArticles={recentArticles} />}
         <StickyContainer contentBlocks={contentBlocks} />
       </div>

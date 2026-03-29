@@ -1,10 +1,5 @@
 import { HomeIcon, UserCircleIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
-import {
-  XIcon,
-  InstagramIcon,
-  GitHubIcon,
-  ZennIcon,
-} from '@/components/Common/Elements/SocialIcon';
+import { XIcon, GitHubIcon, ZennIcon } from '@/components/Common/Elements/SocialIcon';
 
 export const DESCRIPTION =
   '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。';
