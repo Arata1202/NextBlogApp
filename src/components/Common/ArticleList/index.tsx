@@ -2,7 +2,6 @@
 
 import { useTheme } from 'next-themes';
 import { Article, Tag } from '@/types/microcms';
-import { YouTube } from '@/types/youtube';
 import { ArchiveItem } from '@/libs/archive';
 import styles from './index.module.css';
 import AdUnit from '../../ThirdParties/GoogleAdSense/Elements/AdUnit';
@@ -17,16 +16,9 @@ type Props = {
   recentArticles?: Article[];
   tags: Tag[];
   archiveList: ArchiveItem[];
-  youtubeList: YouTube[];
 };
 
-export default function ArticleList({
-  articles,
-  recentArticles,
-  tags,
-  archiveList,
-  youtubeList,
-}: Props) {
+export default function ArticleList({ articles, recentArticles, tags, archiveList }: Props) {
   const { theme } = useTheme();
 
   return (
@@ -56,12 +48,7 @@ export default function ArticleList({
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
-        <Sidebar
-          recentArticles={recentArticles}
-          tags={tags}
-          archiveList={archiveList}
-          youtubeList={youtubeList}
-        />
+        <Sidebar recentArticles={recentArticles} tags={tags} archiveList={archiveList} />
       </MainContainer>
     </>
   );

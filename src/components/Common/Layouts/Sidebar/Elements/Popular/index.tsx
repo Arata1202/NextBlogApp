@@ -1,15 +1,11 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { YouTubeIcon } from '@/components/Common/Elements/SocialIcon';
-import { YouTube } from '@/types/youtube';
+import { BoltIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
+import { POPULAR_POST } from '@/constants/data';
 
-type Props = {
-  youtubeList: YouTube[];
-};
-
-export default function Video({ youtubeList }: Props) {
+export default function Popular() {
   const { theme } = useTheme();
 
   return (
@@ -18,18 +14,23 @@ export default function Video({ youtubeList }: Props) {
         className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
         <div className={`text-2xl text-center font-semibold flex justify-center`}>
-          <YouTubeIcon className="h-8 w-8 mr-2" />
-          YouTube
+          <BoltIcon className="h-8 w-8 mr-2" />
+          おすすめの投稿
         </div>
-        {youtubeList.map((item) => (
+        {POPULAR_POST.map((item, index) => (
           <ul
-            key={item.id}
+            key={item.postName}
             className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           >
             <li>
-              <a href={item.url} target="_blank" className={styles.link}>
-                <img src={item.thumbnailUrl} alt={item.title} className={styles.image} />
-                <div className={`${styles.title} font-bold`}>{item.title}</div>
+              <a href={item.postHref} className={styles.link}>
+                <img
+                  key={index}
+                  src={item.imageHref}
+                  alt={item.imageAlt}
+                  className={styles.image}
+                />
+                <div className={`${styles.title} font-bold`}>{item.postName}</div>
               </a>
             </li>
           </ul>
