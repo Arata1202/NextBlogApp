@@ -11,7 +11,7 @@ const extractFirstImage = (html: string) => {
 const extractText = (html: string) => {
   if (!html) return '';
   const $ = load(html);
-  return $.text().replace(/\s+/g, ' ').trim();
+  return $.root().text().replace(/\s+/g, ' ').trim();
 };
 
 const truncate = (text: string, max = 140) => {

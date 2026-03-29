@@ -30,13 +30,12 @@ export default function ArticleList({
 }: Props) {
   const { theme } = useTheme();
   const isMixed = Boolean(mixedArticles);
-  const displayArticles = mixedArticles ?? articles;
 
   return (
     <>
       <MainContainer>
         <ContentContainer>
-          {displayArticles.length === 0 && (
+          {!isMixed && articles.length === 0 && (
             <div className="text-center py-7">
               <div
                 className={`my-4 text-3xl font-bold tracking-tight sm:text-5xl ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
@@ -45,27 +44,35 @@ export default function ArticleList({
               </div>
             </div>
           )}
-          {displayArticles.length > 0 && (
+          {isMixed && mixedArticles && mixedArticles.length === 0 && (
+            <div className="text-center py-7">
+              <div
+                className={`my-4 text-3xl font-bold tracking-tight sm:text-5xl ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              >
+                記事はまだありません
+              </div>
+            </div>
+          )}
+          {!isMixed && articles.length > 0 && (
             <ul className={styles.main}>
-              {displayArticles
-                .slice(0, 3)
-                .map((article) =>
-                  isMixed ? (
-                    <UnifiedArticleCard key={article.id} article={article} />
-                  ) : (
-                    <ArticleCard key={article.id} article={article as Article} />
-                  ),
-                )}
+              {articles.slice(0, 3).map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
               <AdUnit slot="9947663897" style={{ marginBottom: '1.25rem' }} />
-              {displayArticles
-                .slice(3)
-                .map((article) =>
-                  isMixed ? (
-                    <UnifiedArticleCard key={article.id} article={article} />
-                  ) : (
-                    <ArticleCard key={article.id} article={article as Article} />
-                  ),
-                )}
+              {articles.slice(3).map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </ul>
+          )}
+          {isMixed && mixedArticles && mixedArticles.length > 0 && (
+            <ul className={styles.main}>
+              {mixedArticles.slice(0, 3).map((article) => (
+                <UnifiedArticleCard key={article.id} article={article} />
+              ))}
+              <AdUnit slot="9947663897" style={{ marginBottom: '1.25rem' }} />
+              {mixedArticles.slice(3).map((article) => (
+                <UnifiedArticleCard key={article.id} article={article} />
+              ))}
             </ul>
           )}
           <AdUnit slot="1831092739" />

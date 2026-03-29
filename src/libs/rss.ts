@@ -1,7 +1,9 @@
 import { Feed } from 'feed';
 import fs from 'fs';
 import { getAllLists } from './microcms';
+import { getZennFeed } from './zenn';
 import { COPYRIGHT, DESCRIPTION } from '@/constants/data';
+import { UnifiedArticle } from '@/types/unified';
 
 export const generateRssFeed = async () => {
   try {
@@ -34,16 +36,38 @@ export const generateRssFeed = async () => {
       fields: 'id,title,description,categories,thumbnail,publishedAt',
     });
 
-    data.forEach((item) => {
+    const blogItems: UnifiedArticle[] = data.map((item) => ({
+      id: `blog-${item.id}`,
+      title: item.title,
+      description: item.description,
+      publishedAt: item.publishedAt!,
+      thumbnailUrl: item.thumbnail?.url,
+      url: `${url}/articles/${item.id}`,
+      source: 'blog',
+    }));
+
+    const zennItems = await getZennFeed('realunivlog', 50);
+
+    const merged = [...blogItems, ...zennItems].sort(
+      (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+    );
+
+    merged.forEach((item) => {
       feed.addItem({
         title: item.title,
-        id: `${url}/articles/${item.id}`,
-        link: `${url}/articles/${item.id}`,
+        id: item.url,
+        link: item.url,
         description: item.description,
-        date: new Date(item.publishedAt!),
+        date: new Date(item.publishedAt),
         author: [{ name: title }],
-        category: item.categories.map((category) => ({ name: category.name })),
-        image: item.thumbnail.url,
+        ...(item.source === 'blog'
+          ? {
+              category: data
+                .find((d) => `blog-${d.id}` === item.id)
+                ?.categories.map((category) => ({ name: category.name })),
+            }
+          : {}),
+        image: item.thumbnailUrl,
       });
     });
 
