@@ -1,5 +1,6 @@
 import { Article, Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
+import { UnifiedArticle } from '@/types/unified';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
@@ -11,7 +12,7 @@ type Props = {
   articles: Article[];
   totalCount: number;
   current?: number;
-  recentArticles?: Article[];
+  recentArticles?: UnifiedArticle[];
   tags: Tag[];
   archiveList: ArchiveItem[];
 };

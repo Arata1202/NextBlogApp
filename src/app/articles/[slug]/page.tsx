@@ -2,6 +2,7 @@ import { getDetail, getList, getAllLists, getAllTagLists } from '@/libs/microcms
 import { getArchiveList } from '@/libs/archive';
 import { RECENT_LIMIT } from '@/constants/limit';
 import ArticlePage from '@/components/Pages/Article';
+import { getMixedRecentArticles } from '@/libs/recent';
 
 type Props = {
   params: Promise<{
@@ -21,10 +22,7 @@ export default async function Page(props: Props) {
   const params = await props.params;
 
   const data = await getDetail(params.slug);
-  const articles = await getList({
-    limit: RECENT_LIMIT,
-    fields: 'id,title,thumbnail',
-  });
+  const recentArticles = await getMixedRecentArticles();
   const relatedArticles = await getList({
     limit: RECENT_LIMIT,
     fields: 'id,title,tags,description,thumbnail,publishedAt,updatedAt',
@@ -38,7 +36,7 @@ export default async function Page(props: Props) {
   return (
     <>
       <ArticlePage
-        articles={articles.contents}
+        recentArticles={recentArticles}
         article={data}
         relatedArticles={relatedArticles.contents}
         tags={tags}

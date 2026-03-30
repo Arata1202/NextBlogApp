@@ -15,7 +15,7 @@ import { UnifiedArticle } from '@/types/unified';
 
 type Props = {
   articles: Article[];
-  recentArticles?: Article[];
+  recentArticles?: UnifiedArticle[];
   tags: Tag[];
   archiveList: ArchiveItem[];
   mixedArticles?: UnifiedArticle[];

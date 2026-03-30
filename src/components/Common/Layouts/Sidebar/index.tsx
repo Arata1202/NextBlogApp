@@ -1,7 +1,8 @@
 'use client';
 
-import { Article, Tag as TagType } from '@/types/microcms';
+import { Tag as TagType } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
+import { UnifiedArticle } from '@/types/unified';
 import styles from './index.module.css';
 import { useMutationObserver } from '@/hooks/useMutationObserver';
 import AdUnit from '../../../ThirdParties/GoogleAdSense/Elements/AdUnit';
@@ -13,7 +14,7 @@ import Recent from './Elements/Recent';
 import StickyContainer from './Elements/StickyContainer';
 
 type Props = {
-  recentArticles?: Article[];
+  recentArticles?: UnifiedArticle[];
   contentBlocks?: { rich_text?: string }[];
   article?: boolean;
   tags: TagType[];

@@ -1,5 +1,6 @@
-import { Article, Tag } from '@/types/microcms';
+import { Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
+import { UnifiedArticle } from '@/types/unified';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import ContactFeature from '@/components/Features/Contact';
 import PageHeading from '@/components/Common/PageHeading';
@@ -10,12 +11,12 @@ import Share from '../../Common/Share';
 import FixedDateContainer from '@/components/Common/Layouts/Container/FIxedDateContainer';
 
 type Props = {
-  articles: Article[];
+  recentArticles: UnifiedArticle[];
   tags: Tag[];
   archiveList: ArchiveItem[];
 };
 
-export default function ContactPage({ articles, tags, archiveList }: Props) {
+export default function ContactPage({ recentArticles, tags, archiveList }: Props) {
   const date = new Date(2023, 10, 27);
 
   return (
@@ -28,7 +29,7 @@ export default function ContactPage({ articles, tags, archiveList }: Props) {
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>
-        <Sidebar recentArticles={articles} tags={tags} archiveList={archiveList} />
+        <Sidebar recentArticles={recentArticles} tags={tags} archiveList={archiveList} />
       </MainContainer>
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>

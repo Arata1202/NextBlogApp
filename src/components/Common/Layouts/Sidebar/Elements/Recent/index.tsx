@@ -2,19 +2,18 @@
 
 import { useTheme } from 'next-themes';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
-import { Article } from '@/types/microcms';
+import { UnifiedArticle } from '@/types/unified';
 import styles from './index.module.css';
-import WebpImage from '@/components/Common/Elements/WebpImage';
 
 type Props = {
-  recentArticles: Article[];
+  recentArticles: UnifiedArticle[];
 };
 
 export default function Recent({ recentArticles }: Props) {
   const { theme } = useTheme();
 
   const sortedArticles = recentArticles
-    ?.slice()
+    .slice()
     .sort((a, b) => {
       const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
       const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
@@ -29,21 +28,37 @@ export default function Recent({ recentArticles }: Props) {
       >
         <div className={`text-2xl text-center font-semibold flex justify-center`}>
           <BellAlertIcon className="h-8 w-8 mr-2" />
-          最新の投稿
+          最新記事
         </div>
-        {sortedArticles.map((article) => (
-          <ul
-            key={article.id}
-            className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-          >
-            <li>
-              <a href={`/articles/${article.id}`} className={styles.link}>
-                <WebpImage article={article} recent={true} />
-                <div className={`${styles.title} font-bold`}>{article.title}</div>
-              </a>
-            </li>
-          </ul>
-        ))}
+        {sortedArticles.map((article) => {
+          const isExternal = article.source === 'zenn';
+          return (
+            <ul
+              key={article.id}
+              className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            >
+              <li>
+                <a
+                  href={article.url}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  className={styles.link}
+                >
+                  {article.thumbnailUrl && (
+                    <img
+                      src={article.thumbnailUrl}
+                      alt={article.title}
+                      className={styles.image}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                  <div className={`${styles.title} font-bold`}>{article.title}</div>
+                </a>
+              </li>
+            </ul>
+          );
+        })}
       </div>
     </>
   );

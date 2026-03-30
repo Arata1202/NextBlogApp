@@ -10,7 +10,7 @@ type Props = {
   articles: Article[];
   current?: number;
   totalCount: number;
-  recentArticles?: Article[];
+  recentArticles?: UnifiedArticle[];
   tags: Tag[];
   archiveList: ArchiveItem[];
   mixedArticles?: UnifiedArticle[];

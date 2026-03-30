@@ -1,7 +1,8 @@
 import { getList, getAllTagLists } from '@/libs/microcms';
 import { getArchiveStaticParams, getArchiveList } from '@/libs/archive';
-import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
+import { LIMIT } from '@/constants/limit';
 import ArchivePage from '@/components/Pages/Archive';
+import { getMixedRecentArticles } from '@/libs/recent';
 
 type Props = {
   params: Promise<{
@@ -26,10 +27,7 @@ export default async function Page(props: Props) {
     fields: 'id,title,description,publishedAt,updatedAt,thumbnail',
     filters: `publishedAt[greater_than]${startDate}[and]publishedAt[less_than]${endDate}`,
   });
-  const recentArticles = await getList({
-    limit: RECENT_LIMIT,
-    fields: 'id,title,thumbnail',
-  });
+  const recentArticles = await getMixedRecentArticles();
   const tags = await getAllTagLists({
     fields: 'id,name',
   });
@@ -41,7 +39,7 @@ export default async function Page(props: Props) {
         year={year}
         month={month}
         articles={data.contents}
-        recentArticles={recentArticles.contents}
+        recentArticles={recentArticles}
         totalCount={data.totalCount}
         tags={tags}
         archiveList={archiveList}

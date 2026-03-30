@@ -1,5 +1,6 @@
 import { Article, Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
+import { UnifiedArticle } from '@/types/unified';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import ArticleFeature from '@/components/Features/Article';
 import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
@@ -9,7 +10,7 @@ import BreadCrumb from '@/components/Common/BreadCrumb';
 import Share from '@/components/Common/Share';
 
 type Props = {
-  articles: Article[];
+  recentArticles: UnifiedArticle[];
   article: Article;
   relatedArticles: Article[];
   tags: Tag[];
@@ -18,7 +19,7 @@ type Props = {
 
 export default function ArticlePage({
   article,
-  articles,
+  recentArticles,
   relatedArticles,
   tags,
   archiveList,
@@ -33,7 +34,7 @@ export default function ArticlePage({
           <Share data={article} />
         </ContentContainer>
         <Sidebar
-          recentArticles={articles}
+          recentArticles={recentArticles}
           contentBlocks={article.content_blocks}
           article={true}
           tags={tags}
