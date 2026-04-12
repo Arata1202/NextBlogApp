@@ -59,6 +59,17 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: title,
+              url: url,
+            }),
+          }}
+        />
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" href={`${url}/images/head/16.png`} sizes="16x16" type="image/png" />
