@@ -17,7 +17,7 @@ export default function FollowSection() {
         <div className="flex justify-center">
           <Link
             href={`${url}/rss.xml`}
-            className="bg-orange-500 rounded-full p-2 m-1"
+            className="bg-orange-500 rounded-full p-2 m-1 hover:opacity-60"
             target="_blank"
           >
             <RssIcon className="h-6 w-6 text-white" />
@@ -25,7 +25,7 @@ export default function FollowSection() {
           <Link
             href={`https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Frealunivlog.com%2Frss.xml`}
             target="_blank"
-            className="bg-green-500 rounded-full p-2 m-1"
+            className="bg-green-500 rounded-full p-2 m-1 hover:opacity-60"
           >
             <SiFeedly className="h-6 w-6 text-white" />
           </Link>
