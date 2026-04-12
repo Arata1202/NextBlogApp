@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getDetail } from '@/libs/microcms';
-import { PROFILE_NAME } from '@/constants/data';
+import { PROFILE_NAME, SOCIAL_ICON } from '@/constants/data';
 
 type Props = {
   children: React.ReactNode;
@@ -59,6 +59,7 @@ export default async function ArticleLayout(props: Props) {
       '@type': 'Person',
       name: PROFILE_NAME,
       url: `${defaultUrl}/profile`,
+      sameAs: SOCIAL_ICON.map((icon) => icon.path),
     },
     publisher: {
       '@type': 'Organization',
