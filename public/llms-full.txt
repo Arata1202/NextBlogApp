@@ -1,0 +1,61 @@
+# リアル大学生 - 詳細情報
+
+> 大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。
+
+## サイト概要
+
+リアル大学生は、現役大学生であるArata1202が運営するブログです。
+プログラミング、大学生活、旅行、ブログ運営に関する記事を公開しています。
+記事はすべて実体験に基づいた一次情報を中心に構成されています。
+
+## 著者情報
+
+- 名前: Arata1202
+- プロフィール: https://realunivlog.com/profile
+- X (Twitter): https://twitter.com/realunivlog
+- GitHub: https://github.com/Arata1202
+- Zenn: https://zenn.dev/realunivlog
+
+## カテゴリ詳細
+
+### プログラミング
+URL: https://realunivlog.com/category/programming
+Next.js、React、TypeScript、Flutter などの Web・モバイル開発技術に関する記事。
+環境構築、エラー対処法、実装チュートリアルなど実践的な内容を掲載。
+
+### 大学生活
+URL: https://realunivlog.com/category/university
+大学生の持ち物、学生生活のリアルな体験談、就活情報などを掲載。
+
+### 旅行
+URL: https://realunivlog.com/category/travel
+国内旅行の体験記、温泉地の予約方法やアクセス情報などを掲載。
+
+### ブログ
+URL: https://realunivlog.com/category/blog
+ブログ運営のノウハウ、SEO、技術的な設定方法などを掲載。
+
+## コンテンツ形式
+
+- CMS: microCMS（ヘッドレスCMS）
+- フレームワーク: Next.js（静的サイト生成）
+- 記事形式: 構造化されたリッチテキスト、コードブロック、画像付き
+- 更新頻度: 不定期
+- フィード: RSS 2.0（https://realunivlog.com/rss.xml）
+
+## サイト構造
+
+- /: トップページ（最新記事一覧）
+- /articles/{id}: 個別記事
+- /category/{id}: カテゴリ別記事一覧
+- /tag/{id}: タグ別記事一覧
+- /archive/{year}/{month}: 月別アーカイブ
+- /profile: プロフィール
+- /contact: お問い合わせ
+- /privacy: プライバシーポリシー
+- /disclaimer: 免責事項
+- /copyright: 著作権情報
+- /link: リンクポリシー
+- /sitemap-html: HTMLサイトマップ
+- /sitemap.xml: XMLサイトマップ
+- /rss.xml: RSSフィード

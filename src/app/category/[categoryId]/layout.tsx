@@ -36,7 +36,37 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 }
 
 export default async function CategoryLayout(props: Props) {
+  const params = await props.params;
+  const category = await getCategory(params.categoryId, { fields: 'id,name' });
   const { children } = props;
 
-  return <>{children}</>;
+  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'ホーム',
+        item: defaultUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: category.name,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      {children}
+    </>
+  );
 }

@@ -1,0 +1,28 @@
+# リアル大学生
+
+> 大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。
+
+## サイト情報
+
+- 著者: Arata1202
+- URL: https://realunivlog.com
+- 言語: 日本語
+- RSS: https://realunivlog.com/rss.xml
+- サイトマップ: https://realunivlog.com/sitemap.xml
+
+## カテゴリ
+
+- [プログラミング](https://realunivlog.com/category/programming): プログラミングに関する技術記事・チュートリアル
+- [大学生活](https://realunivlog.com/category/university): 大学生活に関する情報・体験談
+- [旅行](https://realunivlog.com/category/travel): 旅行記・観光情報
+- [ブログ](https://realunivlog.com/category/blog): ブログ運営に関する記事
+
+## 主要ページ
+
+- [プロフィール](https://realunivlog.com/profile): 著者について
+- [お問い合わせ](https://realunivlog.com/contact): お問い合わせフォーム
+- [サイトマップ](https://realunivlog.com/sitemap-html): 全ページ一覧
+
+## 詳細版
+
+- [llms-full.txt](https://realunivlog.com/llms-full.txt): 詳細なサイト情報

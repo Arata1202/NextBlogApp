@@ -34,6 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: title,
     description: description,
     openGraph: {
+      type: 'website',
       title: title,
       description: description,
       images: images,
@@ -78,7 +79,6 @@ export default async function RootLayout({ children }: Props) {
         <link rel="apple-touch-icon" href={`${url}/images/head/realstudent.png`} />
         <meta name="msapplication-TileImage" content={`${url}/images/head/realstudent512.png`} />
         <meta name="msapplication-TileColor" content="#E0CBBA" />
-        <meta property="og:type" content="blog" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@Aokumoblog" />
         <meta name="twitter:site" content="@Aokumoblog" />

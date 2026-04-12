@@ -21,7 +21,7 @@ export default function WebpImage({ article, card = false, recent = false }: Pro
       />
       <img
         src={`${article.thumbnail?.url}?fm=webp&q=60&fit=crop&w=${(card && '240') || '960'}&h=${(card && '126') || '504'} 1x, ${article.thumbnail?.url}?fm=webp&q=60&fit=crop&w=${(card && '240') || '960'}&h=${(card && '126') || '504'}&dpr=2 2x`}
-        alt="サムネイル"
+        alt={article.title}
         className={(card && styles.image) || (recent && styles.recent) || styles.thumbnail}
         width={article.thumbnail?.width}
         height={article.thumbnail?.height}
