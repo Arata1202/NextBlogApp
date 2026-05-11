@@ -54,9 +54,7 @@ export default function ImageSlider({ block }: Props) {
         slidesToScroll={1}
         variableWidth={false}
         centerMode={false}
-        autoplay={isMultiple}
-        autoplaySpeed={4500}
-        pauseOnHover
+        autoplay={false}
         adaptiveHeight
         className={styles.slider}
       >
