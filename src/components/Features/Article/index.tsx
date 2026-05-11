@@ -11,6 +11,7 @@ import CustomHtml from './Elements/Plugins/CustomHtml';
 import RichText from './Elements/Plugins/RichText';
 import WantToRead from './Elements/Plugins/WantToRead';
 import TabBox from './Elements/Plugins/TabBox';
+import ImageSlider from './Elements/Plugins/ImageSlider';
 import RelatedArticle from './Elements/RelatedArticle';
 import { useExtractHeadings } from '@/hooks/useExtractHeadings';
 
@@ -33,6 +34,7 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
           {block.bubble_text && block.bubble_image && <SpeechBubble block={block} />}
           {block.rich_text && <RichText block={block} />}
           {block.custom_html && <CustomHtml block={block} />}
+          {block.image_slider && block.image_slider.length > 0 && <ImageSlider block={block} />}
           {block.article_link && typeof block.article_link !== 'string' && (
             <WantToRead block={block} />
           )}
@@ -49,6 +51,7 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
           {block.bubble_text && block.bubble_image && <SpeechBubble block={block} />}
           {block.rich_text && <RichText block={block} />}
           {block.custom_html && <CustomHtml block={block} />}
+          {block.image_slider && block.image_slider.length > 0 && <ImageSlider block={block} />}
           {block.article_link && typeof block.article_link !== 'string' && (
             <WantToRead block={block} />
           )}

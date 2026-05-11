@@ -25,6 +25,7 @@ export type Tag = {
 export type IntroductionBlock = {
   rich_text?: string;
   custom_html?: string;
+  image_slider?: MicroCMSImage[];
   article_link?: string;
   bubble_image?: MicroCMSImage;
   bubble_name?: string;
@@ -40,6 +41,7 @@ export type ContentBlock = {
   google_adsense?: string;
   rich_text?: string;
   custom_html?: string;
+  image_slider?: MicroCMSImage[];
   article_link?: string;
   bubble_image?: MicroCMSImage;
   bubble_name?: string;

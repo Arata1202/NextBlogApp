@@ -1,0 +1,139 @@
+.wrapper {
+  margin: 40px 0;
+  padding-bottom: 34px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.slider {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.slide {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.wrapper :global(.slick-slider) {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.wrapper :global(.slick-list),
+.wrapper :global(.slick-slide),
+.wrapper :global(.slick-slide > div) {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.wrapper :global(.slick-list) {
+  overflow: hidden;
+}
+
+.wrapper :global(.slick-slide > div) {
+  width: 100%;
+}
+
+.wrapper :global(.slick-prev),
+.wrapper :global(.slick-next) {
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+}
+
+.wrapper :global(.slick-prev) {
+  left: 12px;
+}
+
+.wrapper :global(.slick-next) {
+  right: 12px;
+}
+
+.wrapper :global(.slick-prev::before),
+.wrapper :global(.slick-next::before) {
+  color: rgb(107 114 128);
+  font-size: 32px;
+  opacity: 0.85;
+}
+
+.wrapper :global(.slick-dots) {
+  bottom: -30px;
+}
+
+.wrapper :global(.slick-dots li) {
+  width: 16px;
+  height: 16px;
+  margin: 0 2px;
+}
+
+.wrapper :global(.slick-dots li button::before) {
+  color: rgb(209 213 219);
+  font-size: 10px;
+  opacity: 1;
+}
+
+.wrapper :global(.slick-dots li.slick-active button::before) {
+  color: rgb(107 114 128);
+}
+
+@media (max-width: 640px) {
+  .wrapper {
+    margin: 32px 0;
+    padding-bottom: 30px;
+  }
+
+  .wrapper :global(.slick-list) {
+    overflow: hidden;
+  }
+
+  .wrapper :global(.slick-prev),
+  .wrapper :global(.slick-next) {
+    width: 28px;
+    height: 28px;
+  }
+
+  .wrapper :global(.slick-prev) {
+    left: 6px;
+  }
+
+  .wrapper :global(.slick-next) {
+    right: 6px;
+  }
+
+  .wrapper :global(.slick-prev::before),
+  .wrapper :global(.slick-next::before) {
+    font-size: 24px;
+  }
+
+  .wrapper :global(.slick-dots) {
+    bottom: -28px;
+  }
+
+  .wrapper :global(.slick-dots li) {
+    width: 14px;
+    height: 14px;
+    margin: 0 1px;
+  }
+
+  .wrapper :global(.slick-dots li button::before) {
+    font-size: 8px;
+  }
+}

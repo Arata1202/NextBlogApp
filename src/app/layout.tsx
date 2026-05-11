@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 import type { Viewport } from 'next';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import '../styles/globals.css';
 import styles from './layout.module.css';
 import { DESCRIPTION } from '@/constants/data';

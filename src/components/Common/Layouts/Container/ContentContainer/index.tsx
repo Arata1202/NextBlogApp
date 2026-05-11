@@ -3,5 +3,5 @@ type Props = {
 };
 
 export default function ContentContainer({ children }: Props) {
-  return <div className="lg:col-span-2">{children}</div>;
+  return <div className="min-w-0 lg:col-span-2">{children}</div>;
 }
