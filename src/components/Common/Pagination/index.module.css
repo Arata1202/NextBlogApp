@@ -2,29 +2,38 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
   padding: 24px;
   margin-top: 24px;
 }
 .list {
-  margin: 0 4px;
+  flex: 0 0 auto;
 }
 .item {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 36px;
-  height: 36px;
+  width: clamp(32px, 9vw, 36px);
+  height: clamp(32px, 9vw, 36px);
   border-radius: var(--border-radius);
+}
+.ellipsis {
+  color: var(--color-text-sub);
 }
 
 @media (max-width: 768px) {
   .container {
     margin-top: 0;
+    padding: 24px 16px;
   }
 }
 
 @media (max-width: 640px) {
   .container {
+    gap: 4px;
+    padding: 20px 8px;
     margin-bottom: 1.75rem;
   }
 }
