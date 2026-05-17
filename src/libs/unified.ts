@@ -8,6 +8,7 @@ export const mapBlogArticlesToUnified = (articles: Article[]): UnifiedArticle[] 
     description: item.description ?? '',
     publishedAt: item.publishedAt!,
     updatedAt: item.updatedAt,
+    thumbnail: item.thumbnail,
     thumbnailUrl: item.thumbnail?.url,
     url: `/articles/${item.id}`,
     source: 'blog',

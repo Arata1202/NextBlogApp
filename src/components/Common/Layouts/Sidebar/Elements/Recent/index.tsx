@@ -3,6 +3,7 @@
 import { useTheme } from 'next-themes';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { UnifiedArticle } from '@/types/unified';
+import WebpImage from '@/components/Common/Elements/WebpImage';
 import styles from './index.module.css';
 
 type Props = {
@@ -44,7 +45,10 @@ export default function Recent({ recentArticles }: Props) {
                   rel={isExternal ? 'noopener noreferrer' : undefined}
                   className={styles.link}
                 >
-                  {article.thumbnailUrl && (
+                  {article.source === 'blog' && article.thumbnail && (
+                    <WebpImage article={article} recent={true} />
+                  )}
+                  {article.source !== 'blog' && article.thumbnailUrl && (
                     <img
                       src={article.thumbnailUrl}
                       alt={article.title}

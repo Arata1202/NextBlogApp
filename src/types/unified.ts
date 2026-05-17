@@ -1,3 +1,5 @@
+import type { MicroCMSImage } from 'microcms-js-sdk';
+
 export type UnifiedArticleSource = 'blog' | 'zenn';
 
 export type UnifiedArticle = {
@@ -6,6 +8,7 @@ export type UnifiedArticle = {
   description: string;
   publishedAt: string;
   updatedAt?: string;
+  thumbnail?: MicroCMSImage;
   thumbnailUrl?: string;
   url: string;
   source: UnifiedArticleSource;

@@ -1,8 +1,11 @@
-import { Article } from '@/types/microcms';
+import type { MicroCMSImage } from 'microcms-js-sdk';
 import styles from './index.module.css';
 
 type Props = {
-  article: Article;
+  article: {
+    title: string;
+    thumbnail?: MicroCMSImage;
+  };
   card?: boolean;
   recent?: boolean;
 };

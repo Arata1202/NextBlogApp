@@ -5,6 +5,7 @@ import styles from '@/components/Common/ArticleCard/index.module.css';
 import { UnifiedArticle } from '@/types/unified';
 import SingleDate from '@/components/Common/SingleDate';
 import doubleDateStyles from '@/components/Common/DoubleDate/index.module.css';
+import WebpImage from '../Elements/WebpImage';
 
 type Props = {
   article: UnifiedArticle;
@@ -31,7 +32,10 @@ export default function UnifiedArticleCard({ article }: Props) {
         rel={isExternal ? 'noopener noreferrer' : undefined}
         className={`${styles.link} p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
-        {article.thumbnailUrl && (
+        {article.source === 'blog' && article.thumbnail && (
+          <WebpImage article={article} card={true} />
+        )}
+        {article.source !== 'blog' && article.thumbnailUrl && (
           <img
             className={styles.image}
             src={article.thumbnailUrl}
