@@ -26,7 +26,8 @@ export const generateStaticParams = async () => {
   });
 
   const totalCount = data.totalCount;
-  const currents = Array.from({ length: totalCount }, (_, i) => i + 1);
+  const totalPages = Math.ceil(totalCount / LIMIT);
+  const currents = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return currents.map((current) => ({ current: current.toString() }));
 };
