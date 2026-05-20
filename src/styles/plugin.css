@@ -141,6 +141,22 @@ pre {
   margin-top: 2rem;
 }
 
+/* もしもアフィリエイト簡単リンク */
+.easyLink-box,
+.easyLink-box p,
+.easyLink-box div {
+  color: #000;
+}
+
+.easyLink-box {
+  background-color: #fff;
+}
+
+.easyLink-box .easyLink-info-maker,
+.easyLink-box .easyLink-info-model {
+  color: #000;
+}
+
 /* 引用 */
 blockquote,
 q {
