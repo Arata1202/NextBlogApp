@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useRef, useState, type RefObject } from 'react';
 import { useTheme } from 'next-themes';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
@@ -14,8 +14,41 @@ import { CATEGORY_ARR } from '@/constants/category';
 import { GitHubIcon } from '../../Elements/SocialIcon';
 import Banner from './Elements/Banner';
 
+type CloseOnOutsideClickProps = {
+  enabled: boolean;
+  rootRef: RefObject<HTMLElement | null>;
+  onClose: () => void;
+};
+
+function CloseOnOutsideClick({ enabled, rootRef, onClose }: CloseOnOutsideClickProps) {
+  useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+
+      if (!(target instanceof Node) || rootRef.current?.contains(target)) {
+        return;
+      }
+
+      onClose();
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+    };
+  }, [enabled, onClose, rootRef]);
+
+  return null;
+}
+
 export default function Header() {
   const { theme } = useTheme();
+  const categoryPopoverRef = useRef<HTMLDivElement>(null);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -81,9 +114,14 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
-            <Popover className="relative">
-              {({ close }) => (
+            <Popover ref={categoryPopoverRef} className="relative">
+              {({ open, close }) => (
                 <>
+                  <CloseOnOutsideClick
+                    enabled={open}
+                    rootRef={categoryPopoverRef}
+                    onClose={close}
+                  />
                   <Popover.Button
                     className={`flex items-center text-sm font-medium hover:text-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                   >
@@ -144,7 +182,10 @@ export default function Header() {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-opacity-25" />
+              <div
+                className="fixed inset-0 bg-opacity-25"
+                onClick={() => setMobileMenuOpen(false)}
+              />
             </Transition.Child>
 
             <Transition.Child
