@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import styles from '@/components/Common/ArticleCard/index.module.css';
 import { UnifiedArticle } from '@/types/unified';
@@ -26,7 +27,7 @@ export default function UnifiedArticleCard({ article }: Props) {
 
   return (
     <li className={styles.list}>
-      <a
+      <Link
         href={article.url}
         target={isExternal ? '_blank' : undefined}
         rel={isExternal ? 'noopener noreferrer' : undefined}
@@ -53,7 +54,7 @@ export default function UnifiedArticleCard({ article }: Props) {
             {showUpdated && <SingleDate date={article.updatedAt!} updatedAt={true} />}
           </div>
         </div>
-      </a>
+      </Link>
     </li>
   );
 }

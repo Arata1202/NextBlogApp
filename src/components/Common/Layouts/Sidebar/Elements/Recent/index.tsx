@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { UnifiedArticle } from '@/types/unified';
@@ -33,32 +34,38 @@ export default function Recent({ recentArticles }: Props) {
         </div>
         {sortedArticles.map((article) => {
           const isExternal = article.source === 'zenn';
+          const articleContent = (
+            <>
+              {article.source === 'blog' && article.thumbnail && (
+                <WebpImage article={article} recent={true} />
+              )}
+              {article.source !== 'blog' && article.thumbnailUrl && (
+                <img
+                  src={article.thumbnailUrl}
+                  alt={article.title}
+                  className={styles.image}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+              <div className={`${styles.title} font-bold`}>{article.title}</div>
+            </>
+          );
+
           return (
             <ul
               key={article.id}
               className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <li>
-                <a
+                <Link
                   href={article.url}
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noopener noreferrer' : undefined}
                   className={styles.link}
                 >
-                  {article.source === 'blog' && article.thumbnail && (
-                    <WebpImage article={article} recent={true} />
-                  )}
-                  {article.source !== 'blog' && article.thumbnailUrl && (
-                    <img
-                      src={article.thumbnailUrl}
-                      alt={article.title}
-                      className={styles.image}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  )}
-                  <div className={`${styles.title} font-bold`}>{article.title}</div>
-                </a>
+                  {articleContent}
+                </Link>
               </li>
             </ul>
           );
