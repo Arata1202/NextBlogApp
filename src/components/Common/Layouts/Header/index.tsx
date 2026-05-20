@@ -1,11 +1,24 @@
 'use client';
 
 import Link from 'next/link';
-import { Fragment, useEffect, useRef, useState, type RefObject } from 'react';
+import { Fragment, useEffect, useRef, useState, type ElementType, type RefObject } from 'react';
 import { useTheme } from 'next-themes';
 import { Dialog, Popover, Transition } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import { FolderIcon, FolderOpenIcon } from '@heroicons/react/24/solid';
+import { IoAirplane } from 'react-icons/io5';
+import {
+  Bars3Icon,
+  XMarkIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+} from '@heroicons/react/24/outline';
+import {
+  AcademicCapIcon as AcademicCapSolidIcon,
+  BookOpenIcon as BookOpenSolidIcon,
+  BriefcaseIcon as BriefcaseSolidIcon,
+  CommandLineIcon as CommandLineSolidIcon,
+  FolderIcon,
+  SparklesIcon as SparklesSolidIcon,
+} from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import ThemeSwitch from '@/components/Common/Layouts/ThemeSwitch';
 import { BLOG_IMAGE } from '@/constants/data';
@@ -13,6 +26,17 @@ import { HEADER_NAVIGATION } from '@/constants/data';
 import { CATEGORY_ARR } from '@/constants/category';
 import { GitHubIcon } from '../../Elements/SocialIcon';
 import Banner from './Elements/Banner';
+
+type Category = (typeof CATEGORY_ARR)[number];
+
+const HEADER_CATEGORY_ICONS: Record<string, ElementType> = {
+  university: AcademicCapSolidIcon,
+  work: BriefcaseSolidIcon,
+  leisure: SparklesSolidIcon,
+  travel: IoAirplane,
+  programming: CommandLineSolidIcon,
+  blog: BookOpenSolidIcon,
+};
 
 type CloseOnOutsideClickProps = {
   enabled: boolean;
@@ -44,6 +68,17 @@ function CloseOnOutsideClick({ enabled, rootRef, onClose }: CloseOnOutsideClickP
   }, [enabled, onClose, rootRef]);
 
   return null;
+}
+
+type HeaderCategoryIconProps = {
+  category: Category;
+  className: string;
+};
+
+function HeaderCategoryIcon({ category, className }: HeaderCategoryIconProps) {
+  const Icon = HEADER_CATEGORY_ICONS[category.id] ?? category.icon;
+
+  return <Icon className={className} aria-hidden="true" />;
 }
 
 export default function Header() {
@@ -146,11 +181,12 @@ export default function Header() {
                           <Link
                             key={item.name}
                             href={`/category/${item.id}`}
-                            className={`block px-4 py-2 text-sm hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                            className={`flex items-center gap-2 px-4 py-2 text-sm hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                             onClick={() => {
                               close();
                             }}
                           >
+                            <HeaderCategoryIcon category={item} className="h-5 w-5 shrink-0" />
                             {item.name}
                           </Link>
                         ))}
@@ -223,20 +259,21 @@ export default function Header() {
                             className={`flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                             onClick={() => setMobileMenuOpen(false)}
                           >
-                            <div>▶︎</div>
+                            <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
                             <item.icon className="h-6 w-6 mx-2" />
                             {item.name}
                           </div>
                         </Link>
                       </li>
                     ))}
-                    <div
-                      className={`flex items-center py-1 text-base font-bold border-b  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                    >
-                      <div>▶︎</div>
-                      <FolderIcon className="h-6 w-6 mx-2" />
-                      カテゴリー
-                    </div>
+                    <li className="pt-2">
+                      <p
+                        className={`flex items-center gap-2 text-xs font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}
+                      >
+                        <FolderIcon className="h-4 w-4" aria-hidden="true" />
+                        カテゴリー
+                      </p>
+                    </li>
                     {CATEGORY_ARR.map((item) => (
                       <li key={item.name}>
                         <Link href={`/category/${item.id}`}>
@@ -244,8 +281,8 @@ export default function Header() {
                             className={`ml-5 flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                             onClick={() => setMobileMenuOpen(false)}
                           >
-                            <div>{'>'}</div>
-                            <FolderOpenIcon className="h-6 w-6 mx-2" />
+                            <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                            <HeaderCategoryIcon category={item} className="h-6 w-6 mx-2 shrink-0" />
                             {item.name}
                           </div>
                         </Link>
