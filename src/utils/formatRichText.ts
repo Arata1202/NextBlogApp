@@ -25,7 +25,7 @@ hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('dart', dart);
 hljs.registerLanguage('vim', vim);
 
-export const formatRichText = (richText: string, theme?: string) => {
+export const formatRichText = (richText: string) => {
   const $ = cheerio.load(richText);
   const highlight = (text: string, lang?: string) => {
     if (!lang) return hljs.highlightAuto(text);
@@ -41,22 +41,6 @@ export const formatRichText = (richText: string, theme?: string) => {
     const res = highlight($(elm).text(), lang);
     $(elm).html(res.value);
     $(elm).addClass('hljs');
-  });
-
-  $('h2').each((_, elm) => {
-    $(elm).addClass(theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700');
-  });
-
-  $('h3').each((_, elm) => {
-    $(elm).addClass(
-      theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700',
-    );
-  });
-
-  $('h4').each((_, elm) => {
-    $(elm).addClass(
-      theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700',
-    );
   });
 
   return $.html();

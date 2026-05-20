@@ -58,14 +58,20 @@ export default function Recent({ recentArticles }: Props) {
               className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <li>
-                <Link
-                  href={article.url}
-                  target={isExternal ? '_blank' : undefined}
-                  rel={isExternal ? 'noopener noreferrer' : undefined}
-                  className={styles.link}
-                >
-                  {articleContent}
-                </Link>
+                {isExternal ? (
+                  <a
+                    href={article.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.link}
+                  >
+                    {articleContent}
+                  </a>
+                ) : (
+                  <Link href={article.url} className={styles.link}>
+                    {articleContent}
+                  </Link>
+                )}
               </li>
             </ul>
           );

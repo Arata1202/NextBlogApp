@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useMemo, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { ContentBlock } from '@/types/microcms';
 import styles from './index.module.css';
 import { runCustomHtmlScripts } from './scripts';
+import { useIframelyEmbeds } from '@/hooks/useIframelyEmbeds';
 
 type Props = {
   block: ContentBlock;
@@ -12,10 +13,13 @@ type Props = {
 
 const SCRIPT_REPLAY_DELAY_MS = 100;
 
-export default function CustomHtml({ block }: Props) {
+function CustomHtml({ block }: Props) {
   const pathname = usePathname();
   const contentRef = useRef<HTMLDivElement>(null);
   const html = block.custom_html!;
+  const dangerouslySetInnerHTML = useMemo(() => ({ __html: html }), [html]);
+
+  useIframelyEmbeds(contentRef, html);
 
   useEffect(() => {
     const content = contentRef.current;
@@ -36,7 +40,11 @@ export default function CustomHtml({ block }: Props) {
       ref={contentRef}
       className={styles.content}
       data-custom-html
-      dangerouslySetInnerHTML={{ __html: html }}
+      dangerouslySetInnerHTML={dangerouslySetInnerHTML}
     />
   );
 }
+
+export default memo(CustomHtml, (prevProps, nextProps) => {
+  return prevProps.block.custom_html === nextProps.block.custom_html;
+});

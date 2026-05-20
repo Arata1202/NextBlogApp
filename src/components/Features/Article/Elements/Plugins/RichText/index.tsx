@@ -1,25 +1,35 @@
 'use client';
 
-import { useTheme } from 'next-themes';
+import { memo, useMemo, useRef } from 'react';
 import { ContentBlock } from '@/types/microcms';
 import styles from './index.module.css';
 import { formatRichText } from '@/utils/formatRichText';
+import { useIframelyEmbeds } from '@/hooks/useIframelyEmbeds';
 
 type Props = {
   block: ContentBlock;
 };
 
-export default function RichText({ block }: Props) {
-  const { theme } = useTheme();
+function RichText({ block }: Props) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const html = useMemo(() => {
+    return formatRichText(block.rich_text!).replace(/<img/g, '<img loading="lazy"');
+  }, [block.rich_text]);
+  const dangerouslySetInnerHTML = useMemo(() => ({ __html: html }), [html]);
+
+  useIframelyEmbeds(contentRef, html);
 
   return (
     <>
       <div
+        ref={contentRef}
         className={styles.content}
-        dangerouslySetInnerHTML={{
-          __html: formatRichText(block.rich_text!, theme).replace(/<img/g, '<img loading="lazy"'),
-        }}
+        dangerouslySetInnerHTML={dangerouslySetInnerHTML}
       />
     </>
   );
 }
+
+export default memo(RichText, (prevProps, nextProps) => {
+  return prevProps.block.rich_text === nextProps.block.rich_text;
+});

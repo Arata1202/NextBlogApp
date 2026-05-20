@@ -18,6 +18,8 @@
 }
 
 .content > h2 {
+  background-color: rgb(209 213 219);
+  color: rgb(55 65 81);
   font-size: 1.6rem;
   font-weight: bold;
   margin: 2.8em 0 1rem;
@@ -25,6 +27,8 @@
 }
 
 .content > h3 {
+  border-color: rgb(209 213 219);
+  color: rgb(55 65 81);
   font-size: 1.4rem;
   font-weight: bold;
   margin: 2.8rem 0 1rem;
@@ -32,6 +36,8 @@
 }
 
 .content > h4 {
+  border-color: rgb(209 213 219);
+  color: rgb(55 65 81);
   font-size: 1.2rem;
   font-weight: bold;
   margin: 2.8rem 0 1rem;
@@ -150,6 +156,17 @@
 .content > table td {
   text-align: left;
   padding: 1rem;
+}
+
+:global(body.DarkTheme) .content > h2 {
+  background-color: rgb(107 114 128);
+  color: white;
+}
+
+:global(body.DarkTheme) .content > h3,
+:global(body.DarkTheme) .content > h4 {
+  border-color: rgb(107 114 128);
+  color: white;
 }
 
 @media (max-width: 640px) {
