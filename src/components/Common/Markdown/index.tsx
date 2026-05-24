@@ -52,9 +52,19 @@ export default function Markdown({ content, profile = false }: Props) {
                 {...props}
               />
             ),
-            a: ({ ...props }) => (
-              <a className="text-blue-500 hover:text-blue-700" target="_blank" {...props} />
-            ),
+            a: ({ href, ...props }) => {
+              const isInternalLink = href?.startsWith('/');
+
+              return (
+                <a
+                  className="text-blue-500 hover:text-blue-700"
+                  href={href}
+                  target={isInternalLink ? undefined : '_blank'}
+                  rel={isInternalLink ? undefined : 'noopener noreferrer'}
+                  {...props}
+                />
+              );
+            },
           }}
         >
           {content}
