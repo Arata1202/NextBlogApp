@@ -39,9 +39,8 @@ export default async function CategoryLayout(props: Props) {
   const params = await props.params;
   const category = await getCategory(params.categoryId, { fields: 'id,name' });
   const { children } = props;
-
   const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
+  const categoryUrl = `${defaultUrl}/category/${category.id}`;
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -56,6 +55,7 @@ export default async function CategoryLayout(props: Props) {
         '@type': 'ListItem',
         position: 2,
         name: category.name,
+        item: categoryUrl,
       },
     ],
   };

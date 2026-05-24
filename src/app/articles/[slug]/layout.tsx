@@ -46,10 +46,13 @@ export default async function ArticleLayout(props: Props) {
 
   const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const articleUrl = `${defaultUrl}/articles/${data.id}`;
 
   const blogPostingJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
+    '@id': `${articleUrl}#blogposting`,
+    url: articleUrl,
     headline: data.title,
     description: data.description,
     image: data.thumbnail.url,
@@ -57,6 +60,7 @@ export default async function ArticleLayout(props: Props) {
     dateModified: data.updatedAt,
     author: {
       '@type': 'Person',
+      '@id': `${defaultUrl}/profile#person`,
       name: PROFILE_NAME,
       url: `${defaultUrl}/profile`,
       sameAs: SOCIAL_ICON.map((icon) => icon.path),
@@ -71,7 +75,7 @@ export default async function ArticleLayout(props: Props) {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${defaultUrl}/articles/${data.id}`,
+      '@id': articleUrl,
     },
   };
 
@@ -95,6 +99,7 @@ export default async function ArticleLayout(props: Props) {
         '@type': 'ListItem',
         position: 3,
         name: data.title,
+        item: articleUrl,
       },
     ],
   };
