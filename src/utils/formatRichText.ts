@@ -27,6 +27,21 @@ hljs.registerLanguage('dart', dart);
 hljs.registerLanguage('vim', vim);
 
 const RICH_TEXT_IMAGE_WIDTHS = [640, 960, 1200];
+export const ARTICLE_CONTENT_AD_MARKER = '<!--article-content-ad-->';
+
+type FormatRichTextOptions = {
+  insertAdsBeforeH2?: boolean;
+};
+
+const loadHtmlFragment = (html: string) => {
+  const load = cheerio.load as unknown as (
+    content: string,
+    options: null,
+    isDocument: boolean,
+  ) => ReturnType<typeof cheerio.load>;
+
+  return load(html, null, false);
+};
 
 const formatRichTextImages = ($: ReturnType<typeof cheerio.load>) => {
   $('img').each((_, elm) => {
@@ -54,8 +69,8 @@ const formatRichTextImages = ($: ReturnType<typeof cheerio.load>) => {
   });
 };
 
-export const formatRichText = (richText: string) => {
-  const $ = cheerio.load(richText);
+export const formatRichText = (richText: string, options: FormatRichTextOptions = {}) => {
+  const $ = loadHtmlFragment(richText);
   const highlight = (text: string, lang?: string) => {
     if (!lang) return hljs.highlightAuto(text);
     try {
@@ -73,6 +88,10 @@ export const formatRichText = (richText: string) => {
   });
 
   formatRichTextImages($);
+
+  if (options.insertAdsBeforeH2) {
+    $('h2').before(ARTICLE_CONTENT_AD_MARKER);
+  }
 
   return $.html();
 };
