@@ -71,8 +71,8 @@ export default async function RootLayout({ children }: Props) {
         <meta name="msapplication-TileImage" content={`${url}/images/head/realstudent512.png`} />
         <meta name="msapplication-TileColor" content="#E0CBBA" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:creator" content="@Aokumoblog" />
-        <meta name="twitter:site" content="@Aokumoblog" />
+        <meta name="twitter:creator" content="@realunivlog" />
+        <meta name="twitter:site" content="@realunivlog" />
         <meta property="og:site_name" content={title} />
         <meta property="og:locale" content="ja_JP" />
         <link rel="alternate" type="application/rss+xml" title={title} href={`${url}/rss.xml`} />
