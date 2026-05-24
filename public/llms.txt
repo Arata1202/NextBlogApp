@@ -1,28 +1,37 @@
 # リアル大学生
 
-> 大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。
+> 日本語の個人ブログです。大学生活、社会人生活、プログラミング、旅行、ブログ運営に関する実体験ベースの記事を公開しています。
 
-## サイト情報
-
-- 著者: Arata1202
-- URL: https://realunivlog.com
-- 言語: 日本語
+- Site: https://realunivlog.com
+- Language: ja
+- Author: Arata1202
 - RSS: https://realunivlog.com/rss.xml
-- サイトマップ: https://realunivlog.com/sitemap.xml
+- Sitemap: https://realunivlog.com/sitemap.xml
 
-## カテゴリ
+## Main Content
 
-- [プログラミング](https://realunivlog.com/category/programming): プログラミングに関する技術記事・チュートリアル
-- [大学生活](https://realunivlog.com/category/university): 大学生活に関する情報・体験談
-- [旅行](https://realunivlog.com/category/travel): 旅行記・観光情報
-- [ブログ](https://realunivlog.com/category/blog): ブログ運営に関する記事
+- [Programming](https://realunivlog.com/category/programming): プログラミング関連の記事一覧。Next.js、TypeScript、Flutter、開発メモ、エラー対処など。
+- [University Life](https://realunivlog.com/category/university): 大学生活に関する記事一覧。学生生活、持ち物、就活まわりなど。
+- [Work Life](https://realunivlog.com/category/work): 社会人生活に関する記事一覧。
+- [Travel](https://realunivlog.com/category/travel): 旅行・温泉・宿泊体験の記事一覧。
+- [Leisure](https://realunivlog.com/category/leisure): レジャー・おでかけ関連の記事一覧。
+- [Blog](https://realunivlog.com/category/blog): ブログ運営、SEO、サイト改善に関する記事一覧。
 
-## 主要ページ
+## Key Pages
 
-- [プロフィール](https://realunivlog.com/profile): 著者について
-- [お問い合わせ](https://realunivlog.com/contact): お問い合わせフォーム
-- [サイトマップ](https://realunivlog.com/sitemap-html): 全ページ一覧
+- [Home](https://realunivlog.com/): 最新記事一覧。
+- [Profile](https://realunivlog.com/profile): 運営者プロフィール。
+- [Contact](https://realunivlog.com/contact): お問い合わせページ。
+- [HTML Sitemap](https://realunivlog.com/sitemap-html): サイト内主要ページ一覧。
+- [RSS Feed](https://realunivlog.com/rss.xml): 最新記事のRSSフィード。
 
-## 詳細版
+## Policies
 
-- [llms-full.txt](https://realunivlog.com/llms-full.txt): 詳細なサイト情報
+- [Privacy Policy](https://realunivlog.com/privacy): 個人情報の取り扱い。
+- [Disclaimer](https://realunivlog.com/disclaimer): 免責事項。
+- [Copyright](https://realunivlog.com/copyright): 著作権について。
+- [Link Policy](https://realunivlog.com/link): リンクに関する方針。
+
+## Optional
+
+- [llms-full.txt](https://realunivlog.com/llms-full.txt): サイト概要、カテゴリ説明、URL構造を含む詳細版。

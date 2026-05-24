@@ -1,61 +1,73 @@
-# リアル大学生 - 詳細情報
+# リアル大学生
 
-> 大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。
+> 日本語の個人ブログです。大学生活、社会人生活、プログラミング、旅行、ブログ運営に関する実体験ベースの記事を公開しています。
 
-## サイト概要
+リアル大学生は、Arata1202が運営する個人ブログです。
+主に日本語で記事を公開しており、大学生活・社会人生活・プログラミング・旅行・ブログ運営に関する情報を扱います。
+体験ベースの記事、実用的なハウツー、個人開発やサイト運営に関する記録を中心としています。
 
-リアル大学生は、現役大学生であるArata1202が運営するブログです。
-プログラミング、大学生活、旅行、ブログ運営に関する記事を公開しています。
-記事はすべて実体験に基づいた一次情報を中心に構成されています。
+- Site: https://realunivlog.com
+- Language: ja-JP
+- Author: Arata1202
+- Profile: https://realunivlog.com/profile
+- RSS: https://realunivlog.com/rss.xml
+- XML Sitemap: https://realunivlog.com/sitemap.xml
+- HTML Sitemap: https://realunivlog.com/sitemap-html
 
-## 著者情報
+## Site Overview
 
-- 名前: Arata1202
-- プロフィール: https://realunivlog.com/profile
-- X (Twitter): https://twitter.com/realunivlog
-- GitHub: https://github.com/Arata1202
-- Zenn: https://zenn.dev/realunivlog
+- Site name: リアル大学生
+- Site type: 個人ブログ
+- Main topics: 大学生活 / 社会人生活 / プログラミング / 旅行 / ブログ運営
+- Content format: 記事、カテゴリ一覧、タグ一覧、月別アーカイブ、プロフィール、各種ポリシーページ
+- CMS: microCMS
+- Framework: Next.js
+- Feed: RSS 2.0
 
-## カテゴリ詳細
+## Author
 
-### プログラミング
-URL: https://realunivlog.com/category/programming
-Next.js、React、TypeScript、Flutter などの Web・モバイル開発技術に関する記事。
-環境構築、エラー対処法、実装チュートリアルなど実践的な内容を掲載。
+- [Profile](https://realunivlog.com/profile): 運営者プロフィールページ。
+- [GitHub](https://github.com/Arata1202): 個人開発・コード関連。
+- [Zenn](https://zenn.dev/realunivlog): 技術系発信。
+- [X](https://twitter.com/realunivlog): 更新情報や発信。
 
-### 大学生活
-URL: https://realunivlog.com/category/university
-大学生の持ち物、学生生活のリアルな体験談、就活情報などを掲載。
+## Main Sections
 
-### 旅行
-URL: https://realunivlog.com/category/travel
-国内旅行の体験記、温泉地の予約方法やアクセス情報などを掲載。
+- [Home](https://realunivlog.com/): 最新記事一覧ページ。
+- [Programming](https://realunivlog.com/category/programming): プログラミング関連の記事一覧。Next.js、TypeScript、Flutter、開発環境、エラー対処、実装メモなど。
+- [University Life](https://realunivlog.com/category/university): 大学生活に関する記事一覧。学生生活、持ち物、就活まわりなど。
+- [Work Life](https://realunivlog.com/category/work): 社会人生活に関する記事一覧。
+- [Travel](https://realunivlog.com/category/travel): 旅行、観光、温泉、宿泊体験の記事一覧。
+- [Leisure](https://realunivlog.com/category/leisure): レジャー・おでかけ関連の記事一覧。
+- [Blog](https://realunivlog.com/category/blog): ブログ運営、SEO、サイト改善、収益化、技術設定に関する記事一覧。
 
-### ブログ
-URL: https://realunivlog.com/category/blog
-ブログ運営のノウハウ、SEO、技術的な設定方法などを掲載。
+## URL Patterns
 
-## コンテンツ形式
+- [Article pages](https://realunivlog.com/articles): 個別記事は `/articles/{slug}` 配下。
+- [Category pages](https://realunivlog.com/category/programming): カテゴリ別一覧は `/category/{id}` 配下。
+- [Tag pages](https://realunivlog.com/tag): タグ別一覧は `/tag/{id}` 配下。
+- [Archive pages](https://realunivlog.com/archive): 月別アーカイブは `/archive/{year}/{month}` 配下。
+- [Profile](https://realunivlog.com/profile): プロフィールページ。
+- [Contact](https://realunivlog.com/contact): お問い合わせページ。
 
-- CMS: microCMS（ヘッドレスCMS）
-- フレームワーク: Next.js（静的サイト生成）
-- 記事形式: 構造化されたリッチテキスト、コードブロック、画像付き
-- 更新頻度: 不定期
-- フィード: RSS 2.0（https://realunivlog.com/rss.xml）
+## Policies and Reference Pages
 
-## サイト構造
+- [Privacy Policy](https://realunivlog.com/privacy): 個人情報の取り扱い。
+- [Disclaimer](https://realunivlog.com/disclaimer): 免責事項。
+- [Copyright](https://realunivlog.com/copyright): 著作権情報。
+- [Link Policy](https://realunivlog.com/link): リンクポリシー。
+- [HTML Sitemap](https://realunivlog.com/sitemap-html): 主要ページ一覧。
+- [RSS Feed](https://realunivlog.com/rss.xml): 最新記事フィード。
+- [XML Sitemap](https://realunivlog.com/sitemap.xml): 検索エンジン向けサイトマップ。
 
-- /: トップページ（最新記事一覧）
-- /articles/{id}: 個別記事
-- /category/{id}: カテゴリ別記事一覧
-- /tag/{id}: タグ別記事一覧
-- /archive/{year}/{month}: 月別アーカイブ
-- /profile: プロフィール
-- /contact: お問い合わせ
-- /privacy: プライバシーポリシー
-- /disclaimer: 免責事項
-- /copyright: 著作権情報
-- /link: リンクポリシー
-- /sitemap-html: HTMLサイトマップ
-- /sitemap.xml: XMLサイトマップ
-- /rss.xml: RSSフィード
+## Content Notes
+
+- 記事本文は日本語です。
+- コンテンツは、実体験ベースの記事と技術的な解説記事が混在します。
+- サイト名に「大学生」を含みますが、大学生活以外のカテゴリ（社会人生活、プログラミング、旅行、ブログ運営）も継続して扱います。
+- 記事一覧の把握にはカテゴリページ、最新記事確認にはトップページとRSSが有用です。
+
+## Optional
+
+- [Profile](https://realunivlog.com/profile): 運営者属性やプロフィール詳細を確認したい場合。
+- [HTML Sitemap](https://realunivlog.com/sitemap-html): サイト全体のページ構成を俯瞰したい場合。
