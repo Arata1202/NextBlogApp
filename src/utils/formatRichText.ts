@@ -31,6 +31,7 @@ export const ARTICLE_CONTENT_AD_MARKER = '<!--article-content-ad-->';
 
 type FormatRichTextOptions = {
   insertAdsBeforeH2?: boolean;
+  imageAltFallback?: string;
 };
 
 const loadHtmlFragment = (html: string) => {
@@ -43,13 +44,36 @@ const loadHtmlFragment = (html: string) => {
   return load(html, null, false);
 };
 
-const formatRichTextImages = ($: ReturnType<typeof cheerio.load>) => {
-  $('img').each((_, elm) => {
-    const image = $(elm);
+const formatRichTextImages = ($: ReturnType<typeof cheerio.load>, imageAltFallback?: string) => {
+  const altCountByText = new Map<string, number>();
+  let latestHeadingText = '';
+
+  $('h2, h3, h4, img').each((_, elm) => {
+    const element = $(elm);
+    const tagName = elm.tagName?.toLowerCase();
+
+    if (tagName !== 'img') {
+      latestHeadingText = element.text().replace(/\s+/g, ' ').trim();
+      return;
+    }
+
+    const image = element;
     const src = image.attr('src');
 
     if (!src) {
       return;
+    }
+
+    const currentAlt = image.attr('alt')?.trim();
+
+    if (!currentAlt) {
+      const altBaseText = (latestHeadingText || imageAltFallback || '').replace(/\s+/g, ' ').trim();
+
+      if (altBaseText) {
+        const count = (altCountByText.get(altBaseText) ?? 0) + 1;
+        altCountByText.set(altBaseText, count);
+        image.attr('alt', count === 1 ? `${altBaseText}の画像` : `${altBaseText}の画像 ${count}`);
+      }
     }
 
     if (isMicroCmsImageUrl(src)) {
@@ -87,7 +111,7 @@ export const formatRichText = (richText: string, options: FormatRichTextOptions 
     $(elm).addClass('hljs');
   });
 
-  formatRichTextImages($);
+  formatRichTextImages($, options.imageAltFallback);
 
   if (options.insertAdsBeforeH2) {
     $('h2').before(ARTICLE_CONTENT_AD_MARKER);

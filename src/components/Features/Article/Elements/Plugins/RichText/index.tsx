@@ -10,14 +10,18 @@ import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 type Props = {
   block: ContentBlock;
   adSlots?: string[];
+  articleTitle?: string;
 };
 
-function RichText({ block, adSlots = [] }: Props) {
+function RichText({ block, adSlots = [], articleTitle }: Props) {
   const contentRef = useRef<HTMLDivElement>(null);
   const shouldInsertAdsBeforeH2 = adSlots.length > 0;
   const html = useMemo(() => {
-    return formatRichText(block.rich_text!, { insertAdsBeforeH2: shouldInsertAdsBeforeH2 });
-  }, [block.rich_text, shouldInsertAdsBeforeH2]);
+    return formatRichText(block.rich_text!, {
+      insertAdsBeforeH2: shouldInsertAdsBeforeH2,
+      imageAltFallback: articleTitle,
+    });
+  }, [articleTitle, block.rich_text, shouldInsertAdsBeforeH2]);
   const htmlParts = useMemo(() => html.split(ARTICLE_CONTENT_AD_MARKER), [html]);
   const dangerouslySetInnerHTML = useMemo(() => ({ __html: html }), [html]);
 
@@ -52,6 +56,7 @@ function RichText({ block, adSlots = [] }: Props) {
 export default memo(RichText, (prevProps, nextProps) => {
   return (
     prevProps.block.rich_text === nextProps.block.rich_text &&
+    prevProps.articleTitle === nextProps.articleTitle &&
     (prevProps.adSlots ?? []).join(',') === (nextProps.adSlots ?? []).join(',')
   );
 });
