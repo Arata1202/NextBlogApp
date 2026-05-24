@@ -22,7 +22,7 @@ export default async function Page(props: Props) {
   const params = await props.params;
 
   const data = await getDetail(params.slug);
-  const recentArticles = await getMixedRecentArticles();
+  const recentArticles = await getMixedRecentArticles(RECENT_LIMIT + 1);
   const relatedArticles = await getList({
     limit: RECENT_LIMIT,
     fields: 'id,title,tags,description,thumbnail,publishedAt,updatedAt',

@@ -35,6 +35,7 @@ export default function ArticlePage({
         </ContentContainer>
         <Sidebar
           recentArticles={recentArticles}
+          currentArticleUrl={`/articles/${article.id}`}
           contentBlocks={article.content_blocks}
           article={true}
           tags={tags}

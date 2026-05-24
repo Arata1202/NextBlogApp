@@ -15,6 +15,7 @@ import StickyContainer from './Elements/StickyContainer';
 
 type Props = {
   recentArticles?: UnifiedArticle[];
+  currentArticleUrl?: string;
   contentBlocks?: { rich_text?: string }[];
   article?: boolean;
   tags: TagType[];
@@ -23,6 +24,7 @@ type Props = {
 
 export default function Sidebar({
   recentArticles,
+  currentArticleUrl,
   contentBlocks,
   article = false,
   tags,
@@ -39,7 +41,9 @@ export default function Sidebar({
         <Tag tags={tags} />
         <AdUnit slot="9574685533" style={{ marginTop: '1.25rem' }} />
         <Archive archiveList={archiveList} />
-        {recentArticles && <Recent recentArticles={recentArticles} />}
+        {recentArticles && (
+          <Recent recentArticles={recentArticles} currentArticleUrl={currentArticleUrl} />
+        )}
         <StickyContainer contentBlocks={contentBlocks} />
       </div>
     </>

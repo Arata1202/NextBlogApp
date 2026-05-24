@@ -9,13 +9,20 @@ import styles from './index.module.css';
 
 type Props = {
   recentArticles: UnifiedArticle[];
+  currentArticleUrl?: string;
 };
 
-export default function Recent({ recentArticles }: Props) {
+const normalizePath = (path?: string) => {
+  return path?.replace(/\/$/, '');
+};
+
+export default function Recent({ recentArticles, currentArticleUrl }: Props) {
   const { theme } = useTheme();
+  const normalizedCurrentArticleUrl = normalizePath(currentArticleUrl);
 
   const sortedArticles = recentArticles
     .slice()
+    .filter((article) => normalizePath(article.url) !== normalizedCurrentArticleUrl)
     .sort((a, b) => {
       const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
       const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
