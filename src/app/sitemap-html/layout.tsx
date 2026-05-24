@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = `サイトマップ｜${defaultTitle}`;
   const description = `当ブログのサイトマップを記載しています。`;
   const images = `${defaultUrl}/images/thumbnail/7.webp`;
-  const url = `${defaultUrl}/sitemap`;
+  const url = `${defaultUrl}/sitemap-html`;
 
   return {
     title: title,
