@@ -2,12 +2,16 @@
 
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import type { ThemeProviderProps } from 'next-themes';
-import { useIsClient } from '@/hooks/useIsClient';
+import { useState, useEffect } from 'react';
 
 export default function ThemeProvider(props: ThemeProviderProps) {
-  const isClient = useIsClient();
+  const [isMounted, setIsMounted] = useState(false);
 
-  if (!isClient) {
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
     return <div style={{ visibility: 'hidden' }}>{props.children}</div>;
   }
 

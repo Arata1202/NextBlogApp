@@ -1,8 +1,8 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import { ContentBlock, IntroductionBlock } from '@/types/microcms';
-import { useIsClient } from '@/hooks/useIsClient';
 import styles from './index.module.css';
 
 type Props = {
@@ -10,8 +10,12 @@ type Props = {
 };
 
 export default function ImageSlider({ block }: Props) {
-  const isClient = useIsClient();
+  const [isMounted, setIsMounted] = useState(false);
   const images = block.image_slider?.filter((image) => image.url) ?? [];
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   if (images.length === 0) {
     return null;
@@ -31,7 +35,7 @@ export default function ImageSlider({ block }: Props) {
     />
   );
 
-  if (!isMultiple || !isClient) {
+  if (!isMultiple || !isMounted) {
     return (
       <div className={styles.wrapper}>
         <div className={styles.slide}>{renderImage(images[0], 0)}</div>

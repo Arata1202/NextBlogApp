@@ -1,7 +1,7 @@
-import * as cheerio from 'cheerio';
 import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 import '../../../styles/plugin.css';
+import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import DoubleDate from '@/components/Common/DoubleDate';
 import TableOfContents from '@/components/Common/TableOfContent';
 import AdAlert from '@/components/Common/AdAlert';
@@ -20,40 +20,8 @@ type Props = {
   relatedArticles: Article[];
 };
 
-const ARTICLE_CONTENT_AD_SLOTS = [
-  '3862359702',
-  '4134656590',
-  '1508493258',
-  '7122329314',
-  '5809247647',
-  '6569248246',
-  '2630003238',
-  '8243839293',
-];
-
-const countH2Elements = (richText: string) => {
-  const $ = cheerio.load(richText);
-
-  return $('h2').length;
-};
-
 export default function ArticleFeature({ data, relatedArticles }: Props) {
   const headings = useExtractHeadings(data.content_blocks);
-  const contentBlockAdSlots = data.content_blocks.reduce(
-    (result, block) => {
-      const h2Count = block.rich_text ? countH2Elements(block.rich_text) : 0;
-      const adSlots = ARTICLE_CONTENT_AD_SLOTS.slice(
-        result.usedSlotCount,
-        result.usedSlotCount + h2Count,
-      );
-
-      return {
-        usedSlotCount: result.usedSlotCount + h2Count,
-        adSlotsByBlock: [...result.adSlotsByBlock, adSlots],
-      };
-    },
-    { usedSlotCount: 0, adSlotsByBlock: [] as string[][] },
-  ).adSlotsByBlock;
 
   return (
     <>
@@ -77,23 +45,22 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
         </div>
       ))}
       {headings.length > 0 && <TableOfContents headings={headings} />}
-      {data.content_blocks.map((block, index) => {
-        return (
-          <div key={index} className="mt-5">
-            {block.bubble_text && block.bubble_image && <SpeechBubble block={block} />}
-            {block.rich_text && <RichText block={block} adSlots={contentBlockAdSlots[index]} />}
-            {block.custom_html && <CustomHtml block={block} />}
-            {block.image_slider && block.image_slider.length > 0 && <ImageSlider block={block} />}
-            {block.article_link && typeof block.article_link !== 'string' && (
-              <WantToRead block={block} />
-            )}
-            {block.box_merit && <TabBox block={block} merit={true} />}
-            {block.box_demerit && <TabBox block={block} demerit={true} />}
-            {block.box_point && <TabBox block={block} point={true} />}
-            {block.box_common && <TabBox block={block} common={true} />}
-          </div>
-        );
-      })}
+      {data.content_blocks.map((block, index) => (
+        <div key={index} className="mt-5">
+          {block.google_adsense && <AdUnit slot={block.google_adsense} />}
+          {block.bubble_text && block.bubble_image && <SpeechBubble block={block} />}
+          {block.rich_text && <RichText block={block} />}
+          {block.custom_html && <CustomHtml block={block} />}
+          {block.image_slider && block.image_slider.length > 0 && <ImageSlider block={block} />}
+          {block.article_link && typeof block.article_link !== 'string' && (
+            <WantToRead block={block} />
+          )}
+          {block.box_merit && <TabBox block={block} merit={true} />}
+          {block.box_demerit && <TabBox block={block} demerit={true} />}
+          {block.box_point && <TabBox block={block} point={true} />}
+          {block.box_common && <TabBox block={block} common={true} />}
+        </div>
+      ))}
       <RelatedArticle relatedArticles={relatedArticles} />
     </>
   );
