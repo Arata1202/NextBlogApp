@@ -25,6 +25,9 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical: url,
     },
+    robots: {
+      index: false,
+    },
   };
 }
 
