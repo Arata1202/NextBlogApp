@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"html"
 	"log"
 	"net/http"
 	"net/smtp"
@@ -18,6 +19,10 @@ type EmailRequestBody struct {
 
 func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
 	baseTitle := os.Getenv("BASE_TITLE")
+	webUrl := os.Getenv("NEXT_PUBLIC_BASE_URL")
+	if webUrl == "" {
+		webUrl = os.Getenv("ORIGIN_URL")
+	}
 	from := fmt.Sprintf("\"%s\" <%s>", baseTitle, emailFrom)
 
 	var builder strings.Builder
@@ -28,9 +33,19 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 	builder.WriteString("Content-Type: text/html; charset=\"UTF-8\"\r\n")
 	builder.WriteString("\r\n")
 	builder.WriteString("<p>以下の内容でお問い合わせを承りました。</p>")
-	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>メールアドレス: %s</p>", userEmail))
-	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>件名: %s</p>", title))
-	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>お問い合わせ内容: %s</p>", message))
+	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>メールアドレス: %s</p>", html.EscapeString(userEmail)))
+	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>件名: %s</p>", html.EscapeString(title)))
+	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>お問い合わせ内容: %s</p>", strings.ReplaceAll(html.EscapeString(message), "\n", "<br>")))
+	builder.WriteString("<p style='margin-top: 24px;'>")
+	builder.WriteString("<span style='color: #111827;'>――――――――――</span><br>")
+	builder.WriteString(fmt.Sprintf("<span style='color: #111827;'>%s</span><br>", html.EscapeString(baseTitle)))
+	builder.WriteString("<span style='color: #111827;'>運営者: Arata1202</span><br>")
+	if webUrl != "" {
+		escapedWebUrl := html.EscapeString(webUrl)
+		builder.WriteString(fmt.Sprintf("<span style='color: #111827;'>Web: <a href='%s' style='color: #111827;'>%s</a></span><br>", escapedWebUrl, escapedWebUrl))
+	}
+	builder.WriteString(fmt.Sprintf("<span style='color: #111827;'>Email: %s</span><br>", html.EscapeString(emailFrom)))
+	builder.WriteString("<span style='color: #111827;'>――――――――――</span></p>")
 
 	msg := builder.String()
 

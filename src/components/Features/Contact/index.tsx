@@ -16,6 +16,7 @@ export default function ContactFeature() {
   const [successSendEmailAlertOpen, setSuccessSendEmailAlertOpen] = useState(false);
   const [formData, setFormData] = useState<Form | null>(null);
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
+  const [isSending, setIsSending] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const {
@@ -35,20 +36,30 @@ export default function ContactFeature() {
   };
 
   const handleRecaptcha = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_RECAPTCHA_URL}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        'g-recaptcha-response': captchaValue,
-      }),
-    });
+    if (isSending) {
+      return;
+    }
 
-    const data = await response.json();
+    setIsSending(true);
 
-    if (data.success) {
-      handleSendEmail();
-    } else {
-      console.error(data.message);
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_RECAPTCHA_URL}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          'g-recaptcha-response': captchaValue,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        await handleSendEmail();
+      } else {
+        console.error(data.message);
+      }
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -122,9 +133,10 @@ export default function ContactFeature() {
         <div className="mt-3">
           <button
             type="submit"
-            className={`cursor-pointer block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold shadow-s border hover:border-2 hover:border-blue-500 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            disabled={isSending}
+            className={`cursor-pointer block w-full rounded-md border px-3.5 py-2.5 text-center text-sm font-semibold shadow-s hover:border-blue-500 hover:text-blue-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:cursor-wait disabled:opacity-70 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           >
-            送信
+            {isSending ? '送信中...' : '送信'}
           </button>
         </div>
       </form>
@@ -134,9 +146,14 @@ export default function ContactFeature() {
         title="お問い合わせを送信しますか？"
         description="送信ボタンは一度だけ押してください。送信完了まで数秒かかることがあります。"
         cancelText="キャンセル"
-        confirmText="送信"
+        confirmText={isSending ? '送信中...' : '送信'}
+        isLoading={isSending}
         onConfirm={handleRecaptcha}
-        onClose={() => setConfirmSendEmailModalOpen(false)}
+        onClose={() => {
+          if (!isSending) {
+            setConfirmSendEmailModalOpen(false);
+          }
+        }}
       />
 
       <Alert

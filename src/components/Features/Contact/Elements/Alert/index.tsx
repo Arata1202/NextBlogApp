@@ -15,7 +15,7 @@ export default function Alert({ onClose, show, title, description }: Props) {
   const { theme } = useTheme();
 
   return (
-    <div className="pointer-events-none fixed inset-0 flex items-start px-4 py-6 sm:items-start sm:p-6">
+    <div className="pointer-events-none fixed inset-0 z-50 flex items-start px-4 py-6 sm:items-start sm:p-6">
       <div className="flex w-full flex-col items-center space-y-4 sm:items-end">
         <Transition
           show={show}
@@ -28,7 +28,7 @@ export default function Alert({ onClose, show, title, description }: Props) {
           leaveTo="opacity-0"
         >
           <div
-            className={`pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-opacity-5 mt-16 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-opacity-5 mt-24 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           >
             <div className="p-4">
               <div className="flex items-start">
