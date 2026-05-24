@@ -50,9 +50,8 @@ const formatRichTextImages = ($: ReturnType<typeof cheerio.load>, imageAltFallba
 
   $('h2, h3, h4, img').each((_, elm) => {
     const element = $(elm);
-    const tagName = elm.tagName?.toLowerCase();
 
-    if (tagName !== 'img') {
+    if (!element.is('img')) {
       latestHeadingText = element.text().replace(/\s+/g, ' ').trim();
       return;
     }
