@@ -13,7 +13,7 @@ type Props = {
 function RichText({ block }: Props) {
   const contentRef = useRef<HTMLDivElement>(null);
   const html = useMemo(() => {
-    return formatRichText(block.rich_text!).replace(/<img/g, '<img loading="lazy"');
+    return formatRichText(block.rich_text!);
   }, [block.rich_text]);
   const dangerouslySetInnerHTML = useMemo(() => ({ __html: html }), [html]);
 

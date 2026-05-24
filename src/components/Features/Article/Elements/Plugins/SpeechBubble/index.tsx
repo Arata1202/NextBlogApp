@@ -1,4 +1,5 @@
 import { ContentBlock } from '@/types/microcms';
+import { formatMicroCmsImageUrl } from '@/utils/formatMicroCmsImageUrl';
 
 type Props = {
   block: ContentBlock;
@@ -12,10 +13,15 @@ export default function SpeechBubble({ block }: Props) {
           {block.bubble_image && (
             <div className={`bubble-image-wrapper ${block.bubble_isRight ? 'right' : 'left'}`}>
               <img
-                src={block.bubble_image.url}
+                src={formatMicroCmsImageUrl(block.bubble_image.url, {
+                  width: 150,
+                  quality: 70,
+                  fit: 'crop',
+                })}
                 alt="吹き出しのイメージ"
                 width={75}
                 height={75}
+                loading="lazy"
                 className="bubble-image"
               />
             </div>
