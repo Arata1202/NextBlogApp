@@ -35,7 +35,7 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 	builder.WriteString("<p>以下の内容でお問い合わせを承りました。</p>")
 	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>メールアドレス: %s</p>", html.EscapeString(userEmail)))
 	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>件名: %s</p>", html.EscapeString(title)))
-	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>お問い合わせ内容: %s</p>", strings.ReplaceAll(html.EscapeString(message), "\n", "<br>")))
+	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>内容: %s</p>", strings.ReplaceAll(html.EscapeString(message), "\n", "<br>")))
 	builder.WriteString("<div style='margin-top: 24px; color: #111827; line-height: 1.7; word-break: break-word;'>")
 	builder.WriteString("<div style='height: 0; line-height: 0; font-size: 0; border-top: 2px solid #111827; margin-bottom: 12px;'>&nbsp;</div>")
 	builder.WriteString(fmt.Sprintf("<span style='color: #111827;'>%s</span><br>", html.EscapeString(baseTitle)))
