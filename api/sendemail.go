@@ -36,16 +36,17 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>メールアドレス: %s</p>", html.EscapeString(userEmail)))
 	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>件名: %s</p>", html.EscapeString(title)))
 	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>お問い合わせ内容: %s</p>", strings.ReplaceAll(html.EscapeString(message), "\n", "<br>")))
-	builder.WriteString("<p style='margin-top: 24px;'>")
-	builder.WriteString("<span style='color: #111827;'>――――――――――</span><br>")
+	builder.WriteString("<div style='margin-top: 24px; color: #111827; line-height: 1.7; word-break: break-word;'>")
+	builder.WriteString("<div style='height: 0; line-height: 0; font-size: 0; border-top: 2px solid #111827; margin-bottom: 12px;'>&nbsp;</div>")
 	builder.WriteString(fmt.Sprintf("<span style='color: #111827;'>%s</span><br>", html.EscapeString(baseTitle)))
 	builder.WriteString("<span style='color: #111827;'>運営者: Arata1202</span><br>")
 	if webUrl != "" {
 		escapedWebUrl := html.EscapeString(webUrl)
-		builder.WriteString(fmt.Sprintf("<span style='color: #111827;'>Web: <a href='%s' style='color: #111827;'>%s</a></span><br>", escapedWebUrl, escapedWebUrl))
+		builder.WriteString(fmt.Sprintf("<span style='color: #111827;'>Web: <a href='%s' style='color: #111827; text-decoration: none; word-break: break-all;'>%s</a></span><br>", escapedWebUrl, escapedWebUrl))
 	}
 	builder.WriteString(fmt.Sprintf("<span style='color: #111827;'>Email: %s</span><br>", html.EscapeString(emailFrom)))
-	builder.WriteString("<span style='color: #111827;'>――――――――――</span></p>")
+	builder.WriteString("<div style='height: 0; line-height: 0; font-size: 0; border-top: 2px solid #111827; margin-top: 12px;'>&nbsp;</div>")
+	builder.WriteString("</div>")
 
 	msg := builder.String()
 
