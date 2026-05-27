@@ -24,6 +24,7 @@ export default function SupportSection({ data }: Props) {
           href="https://blogmura.com/profiles/11190305/?p_cid=11190305&reader=11190305"
           className="hover:opacity-60"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <img
             src="https://b.blogmura.com/banner-blogmura-reader-white-small.svg"
@@ -37,6 +38,7 @@ export default function SupportSection({ data }: Props) {
           href="https://blog.with2.net/link/?id=2117761"
           title="人気ブログランキング"
           target="_blank"
+          rel="noopener noreferrer"
           className="ml-3 hover:opacity-60"
         >
           <img
@@ -50,6 +52,7 @@ export default function SupportSection({ data }: Props) {
         <Link
           href="https://blogranking.fc2.com/in.php?id=1067087"
           target="_blank"
+          rel="noopener noreferrer"
           className="ml-3 hover:opacity-60"
         >
           <img

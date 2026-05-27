@@ -20,6 +20,7 @@ export default function FollowSection() {
             href={rssUrl}
             className="bg-orange-500 rounded-full p-2 m-1 hover:opacity-60"
             target="_blank"
+            rel="noopener noreferrer"
             aria-label="RSSフィードを開く"
           >
             <RssIcon className="h-6 w-6 text-white" />
@@ -27,6 +28,7 @@ export default function FollowSection() {
           <Link
             href={feedlyUrl}
             target="_blank"
+            rel="noopener noreferrer"
             className="bg-green-500 rounded-full p-2 m-1 hover:opacity-60"
             aria-label="Feedlyでフォロー"
           >

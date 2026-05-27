@@ -61,4 +61,13 @@ describe('generateRssFeed', () => {
     expect(rss).toContain('<title><![CDATA[Blog A]]></title>');
     expect(rss).toContain('https://example.com/articles/blog-a');
   });
+
+  it('rejects and does not write a feed when article loading fails', async () => {
+    const { generateRssFeed } = await import('@/libs/rss');
+
+    microcmsMock.getAllLists.mockRejectedValue(new Error('microCMS failed'));
+
+    await expect(generateRssFeed()).rejects.toThrow('microCMS failed');
+    expect(fsMock.writeFileSync).not.toHaveBeenCalled();
+  });
 });

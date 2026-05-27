@@ -18,7 +18,7 @@ export const metadata = {
 };
 
 export const generateStaticParams = async () => {
-  generateRssFeed();
+  await generateRssFeed();
 
   const data = await getList({
     limit: 0,

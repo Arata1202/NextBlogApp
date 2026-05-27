@@ -28,7 +28,7 @@ describe('BreadCrumb', () => {
   it('renders archive, category, and tag destinations', () => {
     const { rerender } = render(<BreadCrumb year="2024" month="01" />);
 
-    expect(screen.getByRole('link', { name: '2024月1月' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: '2024年1月' })).toHaveAttribute(
       'href',
       '/archive/2024/01',
     );

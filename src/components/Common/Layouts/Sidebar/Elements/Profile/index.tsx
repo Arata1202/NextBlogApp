@@ -33,8 +33,9 @@ export default function Profile() {
           {SOCIAL_ICON.map((item) => (
             <li key={item.name}>
               <Link
-                target="blank"
                 href={item.path}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
               >
                 <item.icon className="h-8 w-8" />

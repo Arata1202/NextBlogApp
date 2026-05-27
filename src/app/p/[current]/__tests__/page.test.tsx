@@ -50,6 +50,7 @@ describe('paginated home app page', () => {
   it('generates static params from total article count', async () => {
     const { generateStaticParams } = await import('@/app/p/[current]/page');
 
+    rssMock.generateRssFeed.mockResolvedValue(undefined);
     microcmsMock.getList.mockResolvedValue(createListResponse([], { totalCount: 21 }));
 
     await expect(generateStaticParams()).resolves.toEqual([
@@ -59,6 +60,15 @@ describe('paginated home app page', () => {
     ]);
     expect(rssMock.generateRssFeed).toHaveBeenCalledTimes(1);
     expect(microcmsMock.getList).toHaveBeenCalledWith({ limit: 0, fields: '' });
+  });
+
+  it('fails static param generation when RSS generation fails', async () => {
+    const { generateStaticParams } = await import('@/app/p/[current]/page');
+
+    rssMock.generateRssFeed.mockRejectedValue(new Error('rss failed'));
+
+    await expect(generateStaticParams()).rejects.toThrow('rss failed');
+    expect(microcmsMock.getList).not.toHaveBeenCalled();
   });
 
   it('loads the requested page with the correct offset', async () => {

@@ -94,14 +94,16 @@ describe('Share components', () => {
   it('uses the configured base URL for RSS and Feedly follow links', () => {
     render(<FollowSection />);
 
-    expect(screen.getByRole('link', { name: 'RSSフィードを開く' })).toHaveAttribute(
-      'href',
-      'https://example.com/rss.xml',
-    );
-    expect(screen.getByRole('link', { name: 'Feedlyでフォロー' })).toHaveAttribute(
+    const rssLink = screen.getByRole('link', { name: 'RSSフィードを開く' });
+    const feedlyLink = screen.getByRole('link', { name: 'Feedlyでフォロー' });
+
+    expect(rssLink).toHaveAttribute('href', 'https://example.com/rss.xml');
+    expect(rssLink).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(feedlyLink).toHaveAttribute(
       'href',
       'https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fexample.com%2Frss.xml',
     );
+    expect(feedlyLink).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
   it('composes share, follow, and support sections for an article', () => {
@@ -129,10 +131,10 @@ describe('Share components', () => {
     const getMessage = () => container.querySelector('[class*="BuyMeaCoffeeMessage"]');
 
     expect(getMessage()).toHaveTextContent(/^もし記事/);
-    expect(screen.getByRole('link', { name: 'BuyMeaCoffee' })).toHaveAttribute(
-      'href',
-      'https://www.buymeacoffee.com/realunivlog',
-    );
+    const supportLink = screen.getByRole('link', { name: 'BuyMeaCoffee' });
+
+    expect(supportLink).toHaveAttribute('href', 'https://www.buymeacoffee.com/realunivlog');
+    expect(supportLink).toHaveAttribute('rel', 'noopener noreferrer');
 
     rerender(<BuyMeaCoffee data={createArticle({ id: 'article-a', title: 'Article A' })} />);
 

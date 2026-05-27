@@ -119,6 +119,7 @@ export default function Header() {
                 <Link
                   href="https://github.com/Arata1202/NextBlogApp"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-blue-500 px-3"
                 >
                   <GitHubIcon className="h-6 w-6" />
@@ -202,6 +203,7 @@ export default function Header() {
             <Link
               href="https://github.com/Arata1202/NextBlogApp"
               target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-blue-500"
             >
               <GitHubIcon className="h-7 w-7" />
