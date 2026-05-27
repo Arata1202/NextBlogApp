@@ -1,10 +1,11 @@
 import { useTheme } from 'next-themes';
+import type { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 type Props = {
   label: string;
   name: string;
-  registerResult: any;
-  errors: any;
+  registerResult: UseFormRegisterReturn;
+  errors?: FieldError;
   textarea?: boolean;
 };
 
@@ -20,6 +21,7 @@ export default function InputContainer({
   return (
     <div className="sm:col-span-2">
       <label
+        htmlFor={name}
         className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
       >
         {label}

@@ -1,11 +1,16 @@
 import { LinkIcon } from '@heroicons/react/20/solid';
 import ArticleCard from '@/components/Common/ArticleCard';
+import type { ContentBlock, IntroductionBlock } from '@/types/microcms';
 
 type Props = {
-  block: any;
+  block: ContentBlock | IntroductionBlock;
 };
 
 export default function WantToRead({ block }: Props) {
+  if (!block.article_link || typeof block.article_link === 'string') {
+    return null;
+  }
+
   return (
     <>
       <div className="flex mt-10">

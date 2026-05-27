@@ -26,7 +26,7 @@ export type IntroductionBlock = {
   rich_text?: string;
   custom_html?: string;
   image_slider?: MicroCMSImage[];
-  article_link?: string;
+  article_link?: string | Article;
   bubble_image?: MicroCMSImage;
   bubble_name?: string;
   bubble_text?: string;
@@ -42,7 +42,7 @@ export type ContentBlock = {
   rich_text?: string;
   custom_html?: string;
   image_slider?: MicroCMSImage[];
-  article_link?: string;
+  article_link?: string | Article;
   bubble_image?: MicroCMSImage;
   bubble_name?: string;
   bubble_text?: string;
