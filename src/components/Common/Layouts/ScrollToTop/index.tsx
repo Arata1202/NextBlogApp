@@ -17,6 +17,8 @@ export default function ScrollTopButton() {
   return (
     <>
       <button
+        type="button"
+        aria-label="ページ上部へ戻る"
         onClick={scrollToTop}
         className={`${styles.button} fixed z-50 flex items-center justify-center shadow hover:text-blue-500 border ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >

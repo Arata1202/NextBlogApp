@@ -35,23 +35,47 @@ export default function ShareSection({ data }: Props) {
         シェアする
       </div>
       <div className="flex justify-center flex-wrap">
-        <TwitterShareButton url={url} title={title} className="m-1 hover:opacity-60">
+        <TwitterShareButton
+          url={url}
+          title={title}
+          className="m-1 hover:opacity-60"
+          aria-label="Xでシェア"
+        >
           <XIcon size={40} round={true} />
         </TwitterShareButton>
 
-        <FacebookShareButton url={url} className="m-1 hover:opacity-60">
+        <FacebookShareButton
+          url={url}
+          className="m-1 hover:opacity-60"
+          aria-label="Facebookでシェア"
+        >
           <FacebookIcon size={40} round={true} />
         </FacebookShareButton>
 
-        <LineShareButton url={url} title={title} className="m-1 hover:opacity-60">
+        <LineShareButton
+          url={url}
+          title={title}
+          className="m-1 hover:opacity-60"
+          aria-label="LINEでシェア"
+        >
           <LineIcon size={40} round={true} />
         </LineShareButton>
 
-        <PocketShareButton url={url} title={title} className="m-1 hover:opacity-60">
+        <PocketShareButton
+          url={url}
+          title={title}
+          className="m-1 hover:opacity-60"
+          aria-label="Pocketに保存"
+        >
           <PocketIcon size={40} round={true} />
         </PocketShareButton>
 
-        <HatenaShareButton url={url} title={title} className="m-1 hover:opacity-60">
+        <HatenaShareButton
+          url={url}
+          title={title}
+          className="m-1 hover:opacity-60"
+          aria-label="はてなブックマークでシェア"
+        >
           <HatenaIcon size={40} round={true} />
         </HatenaShareButton>
       </div>

@@ -50,13 +50,19 @@ vi.mock('next/link', async () => {
   };
 });
 
-vi.mock('next-themes', () => ({
-  useTheme: () => ({
-    theme: 'light',
-    resolvedTheme: 'light',
-    setTheme: vi.fn(),
-  }),
-}));
+vi.mock('next-themes', async () => {
+  const React = await import('react');
+
+  return {
+    ThemeProvider: ({ children }: { children?: ReactNode }) =>
+      React.createElement(React.Fragment, null, children),
+    useTheme: () => ({
+      theme: 'light',
+      resolvedTheme: 'light',
+      setTheme: vi.fn(),
+    }),
+  };
+});
 
 vi.mock('next/navigation', () => ({
   usePathname: () => nextNavigationMock.pathname,

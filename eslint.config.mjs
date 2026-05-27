@@ -14,11 +14,9 @@ export default [
       '**/.next/',
       '**/out/',
       '**/public/',
-      '**/libs/',
       'next.config.ts',
       'tailwind.config.ts',
       'next-sitemap.config.js',
-      'rss.ts',
     ],
   },
   {
