@@ -36,7 +36,7 @@ export default function Archive({ archiveList }: Props) {
         <Listbox value={selectedMonth} onChange={handleArchiveChange}>
           <div className="relative mt-5">
             <Listbox.Button
-              className={`${styles.ListBox} relative w-full cursor-pointer rounded-md py-1.5 pl-3 pr-10 text-left shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-blue-500 focus:outline-none sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`${styles.ListBox} relative w-full cursor-pointer rounded-md py-1.5 pl-3 pr-10 text-left shadow-sm ring-1 ring-inset hover:ring-1 hover:ring-blue-500 focus:outline-none sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <span className={`${styles.ListBoxSelect} block truncate text-gray-500`}>
                 {selectedMonth
@@ -53,6 +53,7 @@ export default function Archive({ archiveList }: Props) {
             </Listbox.Button>
 
             <Listbox.Options
+              modal={false}
               className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-opacity-5 focus:outline-none sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               {archiveList.map((item, index) => (
