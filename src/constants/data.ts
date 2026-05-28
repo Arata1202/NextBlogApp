@@ -6,7 +6,7 @@ export const DESCRIPTION =
 
 export const BLOG_IMAGE = [
   {
-    path: { light: '/images/blog/title.webp', dark: '/images/blog/title-dark.jpeg' },
+    path: { light: '/images/blog/title.webp', dark: '/images/blog/title-dark.webp' },
     alt: 'タイトル',
   },
 ];
