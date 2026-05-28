@@ -1,5 +1,6 @@
 *
 !api
 !api/*
+api/*_test.go
 !go.mod
 !vercel.json
