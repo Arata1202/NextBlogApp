@@ -70,7 +70,7 @@ func TestSendEmail(t *testing.T) {
 		"https://example.com",
 	} {
 		if !strings.Contains(capturedMessage, want) {
-			t.Fatalf("message does not contain %q\nmessage:\n%s", want, capturedMessage)
+			t.Fatalf("message does not contain %q", want)
 		}
 	}
 }
@@ -177,7 +177,7 @@ func TestSendEmailHandlerSuccess(t *testing.T) {
 			t.Fatalf("smtpUser = %q, want %q", smtpUser, "smtp-user")
 		}
 		if smtpPass != "smtp-pass" {
-			t.Fatalf("smtpPass = %q, want %q", smtpPass, "smtp-pass")
+			t.Fatal("smtpPass was not forwarded correctly")
 		}
 		if userEmail != "user@example.com" {
 			t.Fatalf("userEmail = %q, want %q", userEmail, "user@example.com")

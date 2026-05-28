@@ -36,7 +36,7 @@ func TestVerifyRecaptcha(t *testing.T) {
 			}
 
 			if got := r.FormValue("secret"); got != "test-secret" {
-				t.Fatalf("secret = %q, want %q", got, "test-secret")
+				t.Fatal("secret form value was not forwarded correctly")
 			}
 
 			if got := r.FormValue("response"); got != "captcha-token" {
@@ -188,7 +188,7 @@ func TestRecaptchaHandlerSuccess(t *testing.T) {
 			t.Fatalf("response = %q, want %q", response, "captcha-token")
 		}
 		if secret != "test-secret" {
-			t.Fatalf("secret = %q, want %q", secret, "test-secret")
+			t.Fatal("secret was not forwarded correctly")
 		}
 
 		return true, nil
