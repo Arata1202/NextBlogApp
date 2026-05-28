@@ -16,6 +16,7 @@
   - [リンク一覧](#リンク一覧)
   - [主な機能一覧](#主な機能一覧)
   - [使用技術](#使用技術)
+  - [アーキテクチャ](#アーキテクチャ)
   - [環境構築](#環境構築)
   - [ディレクトリ構成](#ディレクトリ構成)
   - [Gitの運用](#Gitの運用)
@@ -67,7 +68,43 @@
 | CI/CD             | GitHub Actions                                |
 | Design            | Figma, Canva                                  |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA |
-| etc.              | PWA, OneSignal, Pipedream                     |
+| etc.              | PWA, OneSignal, Pipedream, Sentry             |
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+## アーキテクチャ
+
+```mermaid
+flowchart TB
+  developer[Developer] --> github[GitHub Repository]
+
+  subgraph ci[CI]
+    github --> actions[GitHub Actions]
+    actions --> quality[Lint / Typecheck / Test]
+  end
+
+  subgraph build[Static Build]
+    github --> pagesBuild[Cloudflare Pages Build<br/>pnpm build]
+    microcms[MicroCMS<br/>Blog / Category / Tag] --> pagesBuild
+    zenn[Zenn RSS] --> pagesBuild
+    pagesBuild --> generated[Static Output<br/>HTML / JS / CSS / RSS / sitemap]
+  end
+
+  generated --> pages[Cloudflare Pages<br/>out]
+  pages --> browser[User Browser]
+
+  subgraph runtime[Browser Runtime]
+    browser --> app[Next.js Client App]
+    app --> thirdParty[Google Analytics / AdSense<br/>OneSignal / Embedly / Instagram]
+    app -. Client errors .-> sentry[Sentry]
+  end
+
+  subgraph contact[Contact API]
+    app --> goApi[Vercel Go Functions<br/>/api/sendemail / /api/recaptcha]
+    goApi --> recaptcha[Google reCAPTCHA]
+    goApi --> smtp[SMTP / Gmail]
+  end
+```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -99,7 +136,7 @@ docker compose down
 ## ディレクトリ構成
 
 ```
-❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts|tmp" -L 3
+❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts|tmp|coverage|tsconfig.tsbuildinfo" -L 3
 .
 ├── .air.toml
 ├── .docker
@@ -107,16 +144,19 @@ docker compose down
 │   │   └── Dockerfile
 │   └── js
 │       └── Dockerfile
+├── .dockerignore
 ├── .docs
 │   └── readme
 │       └── images
 ├── .env.example
 ├── .github
 │   └── workflows
+│       ├── test.yml
 │       └── vercel_deploy.yml
 ├── .gitignore
 ├── .husky
 │   └── pre-commit
+├── .npmrc
 ├── .nvmrc
 ├── .prettierignore
 ├── .prettierrc
@@ -128,7 +168,9 @@ docker compose down
 ├── README.md
 ├── api
 │   ├── recaptcha.go
-│   └── sendemail.go
+│   ├── recaptcha_test.go
+│   ├── sendemail.go
+│   └── sendemail_test.go
 ├── cmd
 │   └── main.go
 ├── docker-compose.yml
@@ -150,15 +192,19 @@ docker compose down
 │   │   ├── post
 │   │   ├── pwa
 │   │   └── thumbnail
+│   ├── llms-full.txt
+│   ├── llms.txt
 │   └── robots.txt
 ├── src
 │   ├── app
+│   │   ├── __tests__
 │   │   ├── archive
 │   │   ├── articles
 │   │   ├── category
 │   │   ├── contact
 │   │   ├── copyright
 │   │   ├── disclaimer
+│   │   ├── global-error.tsx
 │   │   ├── layout.module.css
 │   │   ├── layout.tsx
 │   │   ├── link
@@ -169,6 +215,7 @@ docker compose down
 │   │   ├── page.tsx
 │   │   ├── privacy
 │   │   ├── profile
+│   │   ├── sitemap-html
 │   │   ├── sitemap.ts
 │   │   └── tag
 │   ├── components
@@ -177,11 +224,10 @@ docker compose down
 │   │   ├── Pages
 │   │   └── ThirdParties
 │   ├── constants
-│   │   ├── archive.ts
 │   │   ├── category.ts
 │   │   ├── data.ts
 │   │   ├── limit.ts
-│   │   └── tag.ts
+│   │   └── page.ts
 │   ├── contents
 │   │   ├── copyright.ts
 │   │   ├── disclaimer.ts
@@ -190,27 +236,46 @@ docker compose down
 │   │   └── profile.ts
 │   ├── contexts
 │   │   ├── ThemeProvider.tsx
-│   │   └── ThemeWrapper.tsx
+│   │   ├── ThemeWrapper.tsx
+│   │   └── __tests__
 │   ├── hooks
+│   │   ├── __tests__
 │   │   ├── useExtractHeadings.ts
+│   │   ├── useIframelyEmbeds.ts
+│   │   ├── useIsClient.ts
 │   │   └── useMutationObserver.ts
+│   ├── instrumentation-client.ts
 │   ├── libs
+│   │   ├── __tests__
+│   │   ├── archive.ts
 │   │   ├── microcms.ts
-│   │   └── rss.ts
+│   │   ├── recent.ts
+│   │   ├── rss.ts
+│   │   ├── unified.ts
+│   │   └── zenn.ts
 │   ├── styles
 │   │   ├── globals.css
 │   │   └── plugin.css
+│   ├── test
+│   │   ├── factories.ts
+│   │   └── setup.ts
 │   ├── types
 │   │   ├── form.ts
 │   │   ├── heading.ts
-│   │   └── microcms.ts
+│   │   ├── microcms.ts
+│   │   └── unified.ts
 │   └── utils
-│       └── formatDate.ts
+│       ├── __tests__
+│       ├── formatDate.ts
+│       ├── formatHeadings.ts
+│       ├── formatMicroCmsImageUrl.ts
+│       └── formatRichText.ts
 ├── tailwind.config.ts
 ├── tsconfig.json
-└── vercel.json
+├── vercel.json
+└── vitest.config.ts
 
-49 directories, 67 files
+54 directories, 83 files
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
