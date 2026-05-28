@@ -34,7 +34,8 @@ export default function Footer() {
                   <Link
                     key={item.name}
                     href={item.path}
-                    target="blank"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                   >
                     <item.icon className="h-6 w-6" />

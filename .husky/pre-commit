@@ -1,2 +1,9 @@
 node_modules/.bin/lint-staged
+
+STAGED_FILES="$(git diff --cached --name-only --diff-filter=ACMR | tr '\n' ' ')"
+
+if [ -n "$STAGED_FILES" ]; then
+  node_modules/.bin/vitest related --run --passWithNoTests $STAGED_FILES
+fi
+
 gitleaks protect --staged

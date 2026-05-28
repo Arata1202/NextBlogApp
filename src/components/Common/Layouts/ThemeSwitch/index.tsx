@@ -8,23 +8,31 @@ export default function ThemeSwitch() {
 
   if (resolvedTheme === 'dark') {
     return (
-      <SunIcon
-        className="h-5 w-5 hover:text-blue-500 cursor-pointer"
+      <button
+        type="button"
+        aria-label="ライトテーマに切り替え"
+        className="inline-flex h-5 w-5 items-center justify-center hover:text-blue-500 cursor-pointer"
         onClick={() => {
           setTheme('light');
         }}
-      />
+      >
+        <SunIcon className="h-5 w-5" />
+      </button>
     );
   }
 
   if (resolvedTheme === 'light') {
     return (
-      <MoonIcon
-        className="h-5 w-5 hover:text-blue-500 cursor-pointer"
+      <button
+        type="button"
+        aria-label="ダークテーマに切り替え"
+        className="inline-flex h-5 w-5 items-center justify-center hover:text-blue-500 cursor-pointer"
         onClick={() => {
           setTheme('dark');
         }}
-      />
+      >
+        <MoonIcon className="h-5 w-5" />
+      </button>
     );
   }
 }

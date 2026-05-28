@@ -60,7 +60,7 @@ export default function BreadCrumb({
                 href={`/archive/${year}/${month}`}
                 className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
               >
-                {year}月{parseInt(month)}月
+                {year}年{parseInt(month, 10)}月
               </Link>
             )}
             {article && (

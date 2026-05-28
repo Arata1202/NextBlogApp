@@ -108,6 +108,7 @@ export default function Header() {
             {mobileMenuOpen ? (
               <button
                 type="button"
+                aria-label="メニューを閉じる"
                 className={`inline-flex items-center justify-center rounded-md ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -118,6 +119,7 @@ export default function Header() {
                 <Link
                   href="https://github.com/Arata1202/NextBlogApp"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-blue-500 px-3"
                 >
                   <GitHubIcon className="h-6 w-6" />
@@ -129,6 +131,7 @@ export default function Header() {
                 </div>
                 <button
                   type="button"
+                  aria-label="メニューを開く"
                   className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 ml-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                   onClick={() => setMobileMenuOpen(true)}
                 >
@@ -200,6 +203,7 @@ export default function Header() {
             <Link
               href="https://github.com/Arata1202/NextBlogApp"
               target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-blue-500"
             >
               <GitHubIcon className="h-7 w-7" />
@@ -239,6 +243,7 @@ export default function Header() {
                 <div className="flex w-full flex-col p-5">
                   <button
                     type="button"
+                    aria-label="メニューを閉じる"
                     className="-ml-2 flex items-center justify-end p-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >

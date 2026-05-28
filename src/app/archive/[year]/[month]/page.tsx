@@ -20,7 +20,7 @@ export default async function Page(props: Props) {
   const { year, month } = params;
 
   const startDate = `${year}-${month}-01T00:00:00Z`;
-  const endDate = new Date(Number(year), Number(month), 1).toISOString();
+  const endDate = new Date(Date.UTC(Number(year), Number(month), 1)).toISOString();
 
   const data = await getList({
     limit: LIMIT,

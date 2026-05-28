@@ -135,7 +135,6 @@ docker compose down
 ├── eslint.config.mjs
 ├── go.mod
 ├── next.config.ts
-├── package-lock.json
 ├── package.json
 ├── pnpm-lock.yaml
 ├── postcss.config.mjs

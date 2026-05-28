@@ -26,7 +26,7 @@ export default function SitemapHtmlPage({
   tags,
   archiveList,
 }: Props) {
-  const date = new Date(2023, 10, 27);
+  const date = new Date('2023-11-27T00:00:00+09:00');
 
   return (
     <>

@@ -12,7 +12,11 @@ export default function BuyMeaCoffee({ data, sidebar = false }: Props) {
 
   return (
     <>
-      <Link href="https://www.buymeacoffee.com/realunivlog" target="_blank">
+      <Link
+        href="https://www.buymeacoffee.com/realunivlog"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img
           src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
           alt="BuyMeaCoffee"
