@@ -16,6 +16,7 @@ export default function ContactFeature() {
   const [successSendEmailAlertOpen, setSuccessSendEmailAlertOpen] = useState(false);
   const [formData, setFormData] = useState<Form | null>(null);
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState('');
   const [isSending, setIsSending] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
@@ -27,16 +28,25 @@ export default function ContactFeature() {
   } = useForm<Form>();
 
   const handleSubmit = (data: Form) => {
+    if (!captchaValue) {
+      setCaptchaError('※ reCAPTCHAを完了してください');
+      return;
+    }
+
     setFormData(data);
     setConfirmSendEmailModalOpen(true);
   };
 
   const handleChangeCaptchaValue = (value: string | null) => {
     setCaptchaValue(value);
+
+    if (value) {
+      setCaptchaError('');
+    }
   };
 
   const handleRecaptcha = async () => {
-    if (isSending) {
+    if (isSending || !captchaValue) {
       return;
     }
 
@@ -76,6 +86,8 @@ export default function ContactFeature() {
       setSuccessSendEmailAlertOpen(true);
       reset();
       recaptchaRef.current?.reset();
+      setCaptchaValue(null);
+      setCaptchaError('');
       setConfirmSendEmailModalOpen(false);
     } else {
       console.error(data.message);
@@ -130,6 +142,7 @@ export default function ContactFeature() {
           onChange={handleChangeCaptchaValue}
           className="mt-3"
         />
+        {captchaError && <p className="text-red-500">{captchaError}</p>}
         <div className="mt-3">
           <button
             type="submit"
