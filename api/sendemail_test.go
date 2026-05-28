@@ -12,6 +12,25 @@ import (
 	"testing"
 )
 
+func stubVerifyRecaptcha(t *testing.T, success bool, err error) {
+	t.Helper()
+
+	originalVerify := verifyRecaptchaFunc
+	verifyRecaptchaFunc = func(response, secret string) (bool, error) {
+		if response != "captcha-token" {
+			t.Fatalf("response = %q, want %q", response, "captcha-token")
+		}
+		if secret != "test-secret" {
+			t.Fatal("secret was not forwarded correctly")
+		}
+
+		return success, err
+	}
+	t.Cleanup(func() {
+		verifyRecaptchaFunc = originalVerify
+	})
+}
+
 func TestSendEmail(t *testing.T) {
 	t.Setenv("BASE_TITLE", "Real Univ Log")
 	t.Setenv("NEXT_PUBLIC_BASE_URL", "https://example.com")
@@ -79,6 +98,7 @@ func TestSendEmailHandlerOptions(t *testing.T) {
 	t.Setenv("ORIGIN_URL", "https://example.com")
 
 	req := httptest.NewRequest(http.MethodOptions, "/api/sendemail", nil)
+	req.Header.Set("Origin", "https://example.com")
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -89,6 +109,20 @@ func TestSendEmailHandlerOptions(t *testing.T) {
 
 	if got := rec.Header().Get("Access-Control-Allow-Origin"); got != "https://example.com" {
 		t.Fatalf("Access-Control-Allow-Origin = %q, want %q", got, "https://example.com")
+	}
+}
+
+func TestSendEmailHandlerForbiddenOrigin(t *testing.T) {
+	t.Setenv("ORIGIN_URL", "https://example.com")
+
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{}`))
+	req.Header.Set("Origin", "https://evil.example")
+	rec := httptest.NewRecorder()
+
+	SendEmailHandler(rec, req)
+
+	if rec.Code != http.StatusForbidden {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusForbidden)
 	}
 }
 
@@ -143,13 +177,63 @@ func TestSendEmailHandlerMissingRequiredFields(t *testing.T) {
 	}
 }
 
+func TestSendEmailHandlerMissingRecaptchaResponse(t *testing.T) {
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello"}`))
+	rec := httptest.NewRecorder()
+
+	SendEmailHandler(rec, req)
+
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusBadRequest)
+	}
+
+	var body map[string]string
+	if err := json.NewDecoder(rec.Body).Decode(&body); err != nil {
+		t.Fatalf("Decode() error = %v", err)
+	}
+
+	if body["status"] != "Missing reCAPTCHA response" {
+		t.Fatalf("status body = %q, want %q", body["status"], "Missing reCAPTCHA response")
+	}
+}
+
+func TestSendEmailHandlerRecaptchaVerificationFailure(t *testing.T) {
+	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
+	stubVerifyRecaptcha(t, false, nil)
+
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	rec := httptest.NewRecorder()
+
+	SendEmailHandler(rec, req)
+
+	if rec.Code != http.StatusForbidden {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusForbidden)
+	}
+}
+
+func TestSendEmailHandlerRecaptchaVerificationError(t *testing.T) {
+	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
+	stubVerifyRecaptcha(t, false, errors.New("network error"))
+
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	rec := httptest.NewRecorder()
+
+	SendEmailHandler(rec, req)
+
+	if rec.Code != http.StatusInternalServerError {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusInternalServerError)
+	}
+}
+
 func TestSendEmailHandlerMissingEnvironment(t *testing.T) {
+	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
 	t.Setenv("EMAIL_TO", "")
 	t.Setenv("EMAIL_FROM", "")
 	t.Setenv("SMTP_USER", "")
 	t.Setenv("SMTP_PASS", "")
+	stubVerifyRecaptcha(t, true, nil)
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -160,10 +244,12 @@ func TestSendEmailHandlerMissingEnvironment(t *testing.T) {
 }
 
 func TestSendEmailHandlerSuccess(t *testing.T) {
+	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
 	t.Setenv("EMAIL_TO", "owner@example.com")
 	t.Setenv("EMAIL_FROM", "from@example.com")
 	t.Setenv("SMTP_USER", "smtp-user")
 	t.Setenv("SMTP_PASS", "smtp-pass")
+	stubVerifyRecaptcha(t, true, nil)
 
 	originalSendEmail := sendEmailFunc
 	sendEmailFunc = func(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
@@ -195,7 +281,7 @@ func TestSendEmailHandlerSuccess(t *testing.T) {
 		sendEmailFunc = originalSendEmail
 	})
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -204,21 +290,23 @@ func TestSendEmailHandlerSuccess(t *testing.T) {
 		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
 	}
 
-	var body map[string]string
+	var body map[string]bool
 	if err := json.NewDecoder(rec.Body).Decode(&body); err != nil {
 		t.Fatalf("Decode() error = %v", err)
 	}
 
-	if body["success"] != "success" {
-		t.Fatalf("success = %q, want %q", body["success"], "success")
+	if !body["success"] {
+		t.Fatalf("success = %v, want true", body["success"])
 	}
 }
 
 func TestSendEmailHandlerSendError(t *testing.T) {
+	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
 	t.Setenv("EMAIL_TO", "owner@example.com")
 	t.Setenv("EMAIL_FROM", "from@example.com")
 	t.Setenv("SMTP_USER", "smtp-user")
 	t.Setenv("SMTP_PASS", "smtp-pass")
+	stubVerifyRecaptcha(t, true, nil)
 
 	originalSendEmail := sendEmailFunc
 	sendEmailFunc = func(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
@@ -228,7 +316,7 @@ func TestSendEmailHandlerSendError(t *testing.T) {
 		sendEmailFunc = originalSendEmail
 	})
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -244,9 +332,5 @@ func TestSendEmailHandlerSendError(t *testing.T) {
 
 	if body["status"] != "fail" {
 		t.Fatalf("status body = %q, want %q", body["status"], "fail")
-	}
-
-	if body["error"] != "smtp error" {
-		t.Fatalf("error body = %q, want %q", body["error"], "smtp error")
 	}
 }

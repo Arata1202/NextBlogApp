@@ -120,6 +120,7 @@ func TestRecaptchaHandlerOptions(t *testing.T) {
 	t.Setenv("ORIGIN_URL", "https://example.com")
 
 	req := httptest.NewRequest(http.MethodOptions, "/api/recaptcha", nil)
+	req.Header.Set("Origin", "https://example.com")
 	rec := httptest.NewRecorder()
 
 	RecaptchaHandler(rec, req)
@@ -130,6 +131,20 @@ func TestRecaptchaHandlerOptions(t *testing.T) {
 
 	if got := rec.Header().Get("Access-Control-Allow-Origin"); got != "https://example.com" {
 		t.Fatalf("Access-Control-Allow-Origin = %q, want %q", got, "https://example.com")
+	}
+}
+
+func TestRecaptchaHandlerForbiddenOrigin(t *testing.T) {
+	t.Setenv("ORIGIN_URL", "https://example.com")
+
+	req := httptest.NewRequest(http.MethodPost, "/api/recaptcha", bytes.NewBufferString(`{}`))
+	req.Header.Set("Origin", "https://evil.example")
+	rec := httptest.NewRecorder()
+
+	RecaptchaHandler(rec, req)
+
+	if rec.Code != http.StatusForbidden {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusForbidden)
 	}
 }
 

@@ -42,10 +42,9 @@ func verifyRecaptcha(response, secret string) (bool, error) {
 }
 
 func RecaptchaHandler(w http.ResponseWriter, r *http.Request) {
-	originUrl := os.Getenv("ORIGIN_URL")
-	w.Header().Set("Access-Control-Allow-Origin", originUrl)
-	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	if !setCORSHeaders(w, r) {
+		return
+	}
 
 	if r.Method == http.MethodOptions {
 		w.WriteHeader(http.StatusNoContent)

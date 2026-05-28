@@ -12,9 +12,10 @@ import (
 )
 
 type EmailRequestBody struct {
-	Title   string `json:"title"`
-	Email   string `json:"email"`
-	Message string `json:"message"`
+	Title             string `json:"title"`
+	Email             string `json:"email"`
+	Message           string `json:"message"`
+	RecaptchaResponse string `json:"g-recaptcha-response"`
 }
 
 var (
@@ -63,10 +64,10 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 }
 
 func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
-	originUrl := os.Getenv("ORIGIN_URL")
-	w.Header().Set("Access-Control-Allow-Origin", originUrl)
-	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	if !setCORSHeaders(w, r) {
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
 
 	if r.Method == http.MethodOptions {
 		w.WriteHeader(http.StatusNoContent)
@@ -95,6 +96,33 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if req.RecaptchaResponse == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"status": "Missing reCAPTCHA response"})
+		return
+	}
+
+	recaptchaSecret := os.Getenv("RECAPTCHA_SECRET_KEY")
+	if recaptchaSecret == "" {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{"status": "reCAPTCHA secret missing"})
+		return
+	}
+
+	verified, err := verifyRecaptchaFunc(req.RecaptchaResponse, recaptchaSecret)
+	if err != nil {
+		log.Printf("Failed to verify reCAPTCHA: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{"status": "reCAPTCHA verification failed"})
+		return
+	}
+
+	if !verified {
+		w.WriteHeader(http.StatusForbidden)
+		json.NewEncoder(w).Encode(map[string]string{"status": "reCAPTCHA verification failed"})
+		return
+	}
+
 	emailTo := os.Getenv("EMAIL_TO")
 	emailFrom := os.Getenv("EMAIL_FROM")
 	smtpUser := os.Getenv("SMTP_USER")
@@ -109,10 +137,10 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	if err := sendEmailFunc(emailTo, emailFrom, smtpUser, smtpPass, req.Email, req.Title, req.Message); err != nil {
 		log.Printf("Failed to send email: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(map[string]string{"status": "fail", "error": err.Error()})
+		json.NewEncoder(w).Encode(map[string]string{"status": "fail"})
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]string{"success": "success"})
+	json.NewEncoder(w).Encode(map[string]bool{"success": true})
 }

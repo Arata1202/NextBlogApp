@@ -45,18 +45,25 @@ export default function ContactFeature() {
     }
   };
 
-  const handleRecaptcha = async () => {
-    if (isSending || !captchaValue) {
+  const handleSendEmail = async () => {
+    if (isSending || !formData) {
+      return;
+    }
+
+    if (!captchaValue) {
+      setCaptchaError('※ reCAPTCHAを完了してください');
+      setConfirmSendEmailModalOpen(false);
       return;
     }
 
     setIsSending(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_RECAPTCHA_URL}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_SENDEMAIL_URL}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          ...formData,
           'g-recaptcha-response': captchaValue,
         }),
       });
@@ -64,33 +71,17 @@ export default function ContactFeature() {
       const data = await response.json();
 
       if (data.success) {
-        await handleSendEmail();
+        setSuccessSendEmailAlertOpen(true);
+        reset();
+        recaptchaRef.current?.reset();
+        setCaptchaValue(null);
+        setCaptchaError('');
+        setConfirmSendEmailModalOpen(false);
       } else {
-        console.error(data.message);
+        console.error(data.message ?? data.status);
       }
     } finally {
       setIsSending(false);
-    }
-  };
-
-  const handleSendEmail = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_SENDEMAIL_URL}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      setSuccessSendEmailAlertOpen(true);
-      reset();
-      recaptchaRef.current?.reset();
-      setCaptchaValue(null);
-      setCaptchaError('');
-      setConfirmSendEmailModalOpen(false);
-    } else {
-      console.error(data.message);
     }
   };
 
@@ -140,6 +131,7 @@ export default function ContactFeature() {
           ref={recaptchaRef}
           sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
           onChange={handleChangeCaptchaValue}
+          onExpired={() => setCaptchaValue(null)}
           className="mt-3"
         />
         {captchaError && <p className="text-red-500">{captchaError}</p>}
@@ -161,7 +153,7 @@ export default function ContactFeature() {
         cancelText="キャンセル"
         confirmText={isSending ? '送信中...' : '送信'}
         isLoading={isSending}
-        onConfirm={handleRecaptcha}
+        onConfirm={handleSendEmail}
         onClose={() => {
           if (!isSending) {
             setConfirmSendEmailModalOpen(false);

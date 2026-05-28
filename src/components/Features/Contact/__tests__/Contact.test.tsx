@@ -16,6 +16,7 @@ vi.mock('react-google-recaptcha', async () => {
 
   type RecaptchaProps = {
     onChange?: (value: string | null) => void;
+    onExpired?: () => void;
     className?: string;
   };
 
@@ -47,7 +48,6 @@ describe('ContactFeature', () => {
   beforeEach(() => {
     fetchMock.mockReset();
     recaptchaMock.reset.mockReset();
-    process.env.NEXT_PUBLIC_API_RECAPTCHA_URL = '/api/recaptcha';
     process.env.NEXT_PUBLIC_API_SENDEMAIL_URL = '/api/sendemail';
     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY = 'site-key';
     vi.stubGlobal('fetch', fetchMock);
@@ -102,13 +102,9 @@ describe('ContactFeature', () => {
 
   it('confirms captcha, sends the email, resets the form, and shows success alert', async () => {
     const user = userEvent.setup();
-    fetchMock
-      .mockResolvedValueOnce({
-        json: async () => ({ success: true }),
-      })
-      .mockResolvedValueOnce({
-        json: async () => ({ success: true }),
-      });
+    fetchMock.mockResolvedValueOnce({
+      json: async () => ({ success: true }),
+    });
 
     render(<ContactFeature />);
 
@@ -124,19 +120,10 @@ describe('ContactFeature', () => {
     await user.click(confirmButtons[confirmButtons.length - 1]);
 
     await waitFor(() => {
-      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    expect(fetchMock).toHaveBeenNthCalledWith(
-      1,
-      '/api/recaptcha',
-      expect.objectContaining({
-        method: 'POST',
-        body: JSON.stringify({ 'g-recaptcha-response': 'captcha-token' }),
-      }),
-    );
-    expect(fetchMock).toHaveBeenNthCalledWith(
-      2,
+    expect(fetchMock).toHaveBeenCalledWith(
       '/api/sendemail',
       expect.objectContaining({
         method: 'POST',
@@ -144,6 +131,7 @@ describe('ContactFeature', () => {
           email: 'test@example.com',
           title: 'Test subject',
           message: 'Test message',
+          'g-recaptcha-response': 'captcha-token',
         }),
       }),
     );
@@ -159,7 +147,7 @@ describe('ContactFeature', () => {
     const user = userEvent.setup();
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
     fetchMock.mockResolvedValueOnce({
-      json: async () => ({ success: false, message: 'captcha failed' }),
+      json: async () => ({ success: false, status: 'reCAPTCHA verification failed' }),
     });
 
     render(<ContactFeature />);
@@ -175,9 +163,14 @@ describe('ContactFeature', () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
     });
     expect(fetchMock).toHaveBeenCalledWith(
-      '/api/recaptcha',
+      '/api/sendemail',
       expect.objectContaining({
-        body: JSON.stringify({ 'g-recaptcha-response': 'captcha-token' }),
+        body: JSON.stringify({
+          email: 'test@example.com',
+          title: 'Test subject',
+          message: 'Test message',
+          'g-recaptcha-response': 'captcha-token',
+        }),
       }),
     );
     expect(screen.queryByText('お問い合わせありがとうございます')).not.toBeInTheDocument();
