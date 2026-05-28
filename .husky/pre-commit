@@ -6,4 +6,11 @@ if [ -n "$STAGED_FILES" ]; then
   node_modules/.bin/vitest related --run --passWithNoTests $STAGED_FILES
 fi
 
+if [ -z "$GOCACHE" ]; then
+  export GOCACHE="$(pwd)/tmp/go-build-cache"
+  mkdir -p "$GOCACHE"
+fi
+
+go test ./...
+
 gitleaks protect --staged

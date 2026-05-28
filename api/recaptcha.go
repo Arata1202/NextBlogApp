@@ -17,17 +17,18 @@ type RecaptchaResponse struct {
 	Success bool `json:"success"`
 }
 
+var (
+	recaptchaVerificationURL = "https://www.google.com/recaptcha/api/siteverify"
+	recaptchaHTTPClient      = &http.Client{Timeout: 10 * time.Second}
+	verifyRecaptchaFunc      = verifyRecaptcha
+)
+
 func verifyRecaptcha(response, secret string) (bool, error) {
-	verificationURL := "https://www.google.com/recaptcha/api/siteverify"
 	data := url.Values{}
 	data.Set("secret", secret)
 	data.Set("response", response)
 
-	client := http.Client{
-		Timeout: 10 * time.Second,
-	}
-
-	resp, err := client.PostForm(verificationURL, data)
+	resp, err := recaptchaHTTPClient.PostForm(recaptchaVerificationURL, data)
 	if err != nil {
 		return false, err
 	}
@@ -76,7 +77,7 @@ func RecaptchaHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	success, err := verifyRecaptcha(req.RecaptchaResponse, secret)
+	success, err := verifyRecaptchaFunc(req.RecaptchaResponse, secret)
 	if err != nil {
 		log.Printf("Failed to send reCAPTCHA verification request: %v", err)
 		http.Error(w, "Failed to send reCAPTCHA verification request", http.StatusInternalServerError)

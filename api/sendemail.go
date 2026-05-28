@@ -17,6 +17,11 @@ type EmailRequestBody struct {
 	Message string `json:"message"`
 }
 
+var (
+	sendEmailFunc = sendEmail
+	smtpSendMail  = smtp.SendMail
+)
+
 func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
 	baseTitle := os.Getenv("BASE_TITLE")
 	webUrl := os.Getenv("NEXT_PUBLIC_BASE_URL")
@@ -54,7 +59,7 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 	smtpPort := "587"
 	auth := smtp.PlainAuth("", smtpUser, smtpPass, smtpHost)
 
-	return smtp.SendMail(smtpHost+":"+smtpPort, auth, emailFrom, []string{emailTo, userEmail}, []byte(msg))
+	return smtpSendMail(smtpHost+":"+smtpPort, auth, emailFrom, []string{emailTo, userEmail}, []byte(msg))
 }
 
 func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
@@ -101,7 +106,7 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := sendEmail(emailTo, emailFrom, smtpUser, smtpPass, req.Email, req.Title, req.Message); err != nil {
+	if err := sendEmailFunc(emailTo, emailFrom, smtpUser, smtpPass, req.Email, req.Title, req.Message); err != nil {
 		log.Printf("Failed to send email: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(map[string]string{"status": "fail", "error": err.Error()})
