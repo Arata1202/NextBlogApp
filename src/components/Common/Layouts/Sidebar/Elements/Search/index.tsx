@@ -9,12 +9,20 @@ export default function Search() {
   const { theme } = useTheme();
   const router = useRouter();
   const [query, setQuery] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const trimmedQuery = query.trim();
-    router.push(trimmedQuery ? `/search?q=${encodeURIComponent(trimmedQuery)}` : '/search');
+
+    if (!trimmedQuery) {
+      setErrorMessage('※ キーワードを入力してください');
+      return;
+    }
+
+    setErrorMessage('');
+    router.push(`/search?q=${encodeURIComponent(trimmedQuery)}`);
   };
 
   return (
@@ -33,8 +41,15 @@ export default function Search() {
             id="sidebar-search"
             type="search"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              if (event.target.value.trim()) {
+                setErrorMessage('');
+              }
+            }}
             placeholder="キーワードを入力"
+            aria-invalid={Boolean(errorMessage)}
+            aria-describedby={errorMessage ? 'sidebar-search-error' : undefined}
             className={`min-w-0 flex-1 rounded-md border px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           />
           <button
@@ -45,6 +60,11 @@ export default function Search() {
             <MagnifyingGlassIcon className="h-5 w-5" />
           </button>
         </div>
+        {errorMessage && (
+          <p id="sidebar-search-error" className="text-red-500">
+            {errorMessage}
+          </p>
+        )}
       </form>
     </div>
   );

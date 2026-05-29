@@ -32,13 +32,14 @@ describe('Search', () => {
     expect(routerMock.push).toHaveBeenCalledWith('/search?q=React%20Query');
   });
 
-  it('navigates to the search page without q when the query is empty', async () => {
+  it('shows a validation message and does not navigate when the query is empty', async () => {
     const user = userEvent.setup();
 
     render(<Search />);
 
     await user.click(screen.getByRole('button', { name: '検索' }));
 
-    expect(routerMock.push).toHaveBeenCalledWith('/search');
+    expect(screen.getByText('※ キーワードを入力してください')).toBeInTheDocument();
+    expect(routerMock.push).not.toHaveBeenCalled();
   });
 });
