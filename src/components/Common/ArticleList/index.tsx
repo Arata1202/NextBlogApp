@@ -1,6 +1,7 @@
 'use client';
 
 import { useTheme } from 'next-themes';
+import { DocumentTextIcon } from '@heroicons/react/24/outline';
 import { Article, Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
 import styles from './index.module.css';
@@ -24,6 +25,17 @@ type Props = {
 };
 
 const skeletonItems = [0, 1, 2];
+
+function EmptyState({ message, theme }: { message: string; theme?: string }) {
+  const colorClassName = theme === 'dark' ? 'text-gray-300' : 'text-gray-500';
+
+  return (
+    <div className="py-10 text-center">
+      <DocumentTextIcon className="mx-auto mb-2 h-7 w-7 text-gray-400" aria-hidden="true" />
+      <p className={`text-sm font-medium ${colorClassName}`}>{message}</p>
+    </div>
+  );
+}
 
 export default function ArticleList({
   articles,
@@ -56,22 +68,10 @@ export default function ArticleList({
             </ul>
           )}
           {!isLoading && !isMixed && articles.length === 0 && (
-            <div className="text-center py-7">
-              <div
-                className={`my-4 text-3xl font-bold tracking-tight sm:text-5xl ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-              >
-                {emptyMessage}
-              </div>
-            </div>
+            <EmptyState message={emptyMessage} theme={theme} />
           )}
           {!isLoading && isMixed && mixedArticles && mixedArticles.length === 0 && (
-            <div className="text-center py-7">
-              <div
-                className={`my-4 text-3xl font-bold tracking-tight sm:text-5xl ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-              >
-                {emptyMessage}
-              </div>
-            </div>
+            <EmptyState message={emptyMessage} theme={theme} />
           )}
           {!isLoading && !isMixed && articles.length > 0 && (
             <ul className={styles.main}>
