@@ -16,6 +16,8 @@ type Props = {
   privacy?: boolean;
   profile?: boolean;
   sitemap?: boolean;
+  search?: boolean;
+  searchKeyword?: string;
 };
 
 export default function PageHeading({
@@ -31,6 +33,8 @@ export default function PageHeading({
   privacy = false,
   profile = false,
   sitemap = false,
+  search = false,
+  searchKeyword,
 }: Props) {
   return (
     <>
@@ -50,6 +54,8 @@ export default function PageHeading({
             privacy={privacy}
             profile={profile}
             sitemap={sitemap}
+            search={search}
+            searchKeyword={searchKeyword}
           />
         )}
         <PageTitle
@@ -65,6 +71,8 @@ export default function PageHeading({
           privacy={privacy}
           profile={profile}
           sitemap={sitemap}
+          search={search}
+          searchKeyword={searchKeyword}
         />
       </div>
     </>

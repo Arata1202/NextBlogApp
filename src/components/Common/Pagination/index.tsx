@@ -10,6 +10,7 @@ type Props = {
   current?: number;
   basePath?: string;
   q?: string;
+  useQueryPage?: boolean;
 };
 
 type PageItem = number | 'ellipsis-left' | 'ellipsis-right';
@@ -38,11 +39,30 @@ function getPageItems(totalPages: number, current: number): PageItem[] {
   return pages;
 }
 
-export default function Pagination({ totalCount, current = 1, basePath = '', q }: Props) {
+export default function Pagination({
+  totalCount,
+  current = 1,
+  basePath = '',
+  q,
+  useQueryPage = false,
+}: Props) {
   const { theme } = useTheme();
 
   const totalPages = Math.ceil(totalCount / LIMIT);
   const pages = getPageItems(totalPages, current);
+  const getHref = (page: number) => {
+    if (!useQueryPage) {
+      return `${basePath}/p/${page}` + (q ? `?q=${q}` : '');
+    }
+
+    const params = new URLSearchParams();
+    if (q) {
+      params.set('q', q);
+    }
+    params.set('page', String(page));
+
+    return `${basePath}?${params.toString()}`;
+  };
 
   return (
     <ul className={styles.container}>
@@ -51,7 +71,7 @@ export default function Pagination({ totalCount, current = 1, basePath = '', q }
           {typeof p === 'number' ? (
             current !== p ? (
               <Link
-                href={`${basePath}/p/${p}` + (q ? `?q=${q}` : '')}
+                href={getHref(p)}
                 className={`${styles.item} hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                 aria-label={`${p}ページ目へ移動`}
               >

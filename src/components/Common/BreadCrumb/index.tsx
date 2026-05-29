@@ -15,7 +15,17 @@ type Props = {
   privacy?: boolean;
   profile?: boolean;
   sitemap?: boolean;
+  search?: boolean;
+  searchKeyword?: string;
 };
+
+const currentPageClassName = 'ml-4 text-sm font-medium text-gray-500';
+
+const renderCurrentPage = (label: string) => (
+  <span className={currentPageClassName} aria-current="page">
+    {label}
+  </span>
+);
 
 export default function BreadCrumb({
   year,
@@ -30,7 +40,11 @@ export default function BreadCrumb({
   privacy,
   profile,
   sitemap,
+  search,
+  searchKeyword,
 }: Props) {
+  const searchLabel = `「${searchKeyword ?? ''}」の検索結果`;
+
   return (
     <>
       <ul className="flex items-center space-x-4">
@@ -55,94 +69,18 @@ export default function BreadCrumb({
         <li>
           <div className="flex items-center">
             <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
-            {year && month && (
-              <Link
-                href={`/archive/${year}/${month}`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                {year}年{parseInt(month, 10)}月
-              </Link>
-            )}
-            {article && (
-              <Link
-                href={`/articles/${article.id}`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                {article.title}
-              </Link>
-            )}
-            {category && (
-              <Link
-                href={`/category/${category.id}`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                {category.name}
-              </Link>
-            )}
-            {tag && (
-              <Link
-                href={`/tag/${tag.id}`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                {tag.name}
-              </Link>
-            )}
-            {contact && (
-              <Link
-                href={`/contact`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                お問い合わせ
-              </Link>
-            )}
-            {copyright && (
-              <Link
-                href={`/copyright`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                著作権
-              </Link>
-            )}
-            {disclaimer && (
-              <Link
-                href={`/disclaimer`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                免責事項
-              </Link>
-            )}
-            {link && (
-              <Link
-                href={`/link`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                リンク
-              </Link>
-            )}
-            {privacy && (
-              <Link
-                href={`/privacy`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                プライバシーポリシー
-              </Link>
-            )}
-            {profile && (
-              <Link
-                href={`/profile`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                プロフィール
-              </Link>
-            )}
-            {sitemap && (
-              <Link
-                href={`/sitemap-html`}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
-              >
-                サイトマップ
-              </Link>
-            )}
+            {year && month && renderCurrentPage(`${year}年${parseInt(month, 10)}月`)}
+            {article && renderCurrentPage(article.title)}
+            {category && renderCurrentPage(category.name)}
+            {tag && renderCurrentPage(tag.name)}
+            {contact && renderCurrentPage('お問い合わせ')}
+            {copyright && renderCurrentPage('著作権')}
+            {disclaimer && renderCurrentPage('免責事項')}
+            {link && renderCurrentPage('リンク')}
+            {privacy && renderCurrentPage('プライバシーポリシー')}
+            {profile && renderCurrentPage('プロフィール')}
+            {sitemap && renderCurrentPage('サイトマップ')}
+            {search && renderCurrentPage(searchLabel)}
           </div>
         </li>
       </ul>

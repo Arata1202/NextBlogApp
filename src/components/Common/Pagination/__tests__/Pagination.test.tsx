@@ -23,4 +23,15 @@ describe('Pagination', () => {
 
     expect(within(screen.getByRole('list')).queryAllByRole('listitem')).toHaveLength(0);
   });
+
+  it('renders query parameter pagination links', () => {
+    render(
+      <Pagination totalCount={100} current={1} basePath="/search" q="React Query" useQueryPage />,
+    );
+
+    expect(screen.getByRole('link', { name: '2ページ目へ移動' })).toHaveAttribute(
+      'href',
+      '/search?q=React+Query&page=2',
+    );
+  });
 });
