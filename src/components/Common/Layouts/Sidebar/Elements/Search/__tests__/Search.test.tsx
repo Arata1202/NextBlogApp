@@ -42,4 +42,21 @@ describe('Search', () => {
     expect(screen.getByText('※ キーワードを入力してください')).toBeInTheDocument();
     expect(routerMock.push).not.toHaveBeenCalled();
   });
+
+  it('focuses the search input with command k', () => {
+    render(<Search />);
+
+    const searchInput = screen.getByRole('searchbox', { name: '検索' });
+    const event = new KeyboardEvent('keydown', {
+      key: 'k',
+      metaKey: true,
+      bubbles: true,
+      cancelable: true,
+    });
+
+    window.dispatchEvent(event);
+
+    expect(searchInput).toHaveFocus();
+    expect(event.defaultPrevented).toBe(true);
+  });
 });

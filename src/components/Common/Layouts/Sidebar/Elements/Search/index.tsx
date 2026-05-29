@@ -1,16 +1,32 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useTheme } from 'next-themes';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 export default function Search() {
   const { theme } = useTheme();
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const errorMessageId = 'sidebar-search-error';
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!event.metaKey || event.key.toLowerCase() !== 'k') {
+        return;
+      }
+
+      event.preventDefault();
+      inputRef.current?.focus();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,6 +55,7 @@ export default function Search() {
         </label>
         <div className="flex gap-2">
           <input
+            ref={inputRef}
             id="sidebar-search"
             type="search"
             value={query}
