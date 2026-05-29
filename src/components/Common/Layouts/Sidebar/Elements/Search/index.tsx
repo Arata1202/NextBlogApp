@@ -4,6 +4,10 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useTheme } from 'next-themes';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import {
+  fieldControlClassName,
+  outlinedControlClassName,
+} from '@/components/Common/controlClassNames';
 
 export default function Search() {
   const { theme } = useTheme();
@@ -68,11 +72,11 @@ export default function Search() {
             placeholder="キーワードを入力"
             aria-invalid={Boolean(errorMessage)}
             aria-describedby={errorMessage ? errorMessageId : undefined}
-            className={`min-w-0 flex-1 rounded-md border px-3 py-2 text-base shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`${fieldControlClassName} h-10 min-w-0 flex-1 px-3 text-base sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           />
           <button
             type="submit"
-            className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border shadow-sm hover:border-blue-500 hover:text-blue-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`${outlinedControlClassName} inline-flex h-10 w-10 shrink-0 items-center justify-center ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             aria-label="検索"
           >
             <MagnifyingGlassIcon className="h-5 w-5" />

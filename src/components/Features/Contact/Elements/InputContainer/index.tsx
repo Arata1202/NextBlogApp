@@ -1,5 +1,6 @@
 import { useTheme } from 'next-themes';
 import type { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+import { fieldControlClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   label: string;
@@ -34,7 +35,7 @@ export default function InputContainer({
             id={name}
             name={name}
             autoComplete={name}
-            className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`${fieldControlClassName} block h-10 w-full px-3 text-base sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           />
         )}
         {textarea && (
@@ -43,7 +44,7 @@ export default function InputContainer({
             id={name}
             name={name}
             rows={4}
-            className={`block w-full rounded-md border py-2 pl-3 pr-3 sm:text-sm sm:leading-6 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`${fieldControlClassName} block w-full px-3 py-2 text-base sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           />
         )}
         {errors && <p className="text-red-500">{errors.message}</p>}

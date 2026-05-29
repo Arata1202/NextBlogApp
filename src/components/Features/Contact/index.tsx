@@ -8,6 +8,7 @@ import type { Form } from '@/types/form';
 import InputContainer from './Elements/InputContainer';
 import Modal from './Elements/Modal';
 import Alert from './Elements/Alert';
+import { outlinedControlClassName } from '@/components/Common/controlClassNames';
 
 export default function ContactFeature() {
   const { theme } = useTheme();
@@ -139,7 +140,7 @@ export default function ContactFeature() {
           <button
             type="submit"
             disabled={isSending}
-            className={`cursor-pointer block w-full rounded-md border px-3.5 py-2.5 text-center text-sm font-semibold shadow-s hover:border-blue-500 hover:text-blue-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:cursor-wait disabled:opacity-70 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`${outlinedControlClassName} block w-full cursor-pointer px-3.5 py-2.5 text-center text-sm font-semibold disabled:cursor-wait disabled:opacity-70 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           >
             {isSending ? '送信中...' : '送信'}
           </button>

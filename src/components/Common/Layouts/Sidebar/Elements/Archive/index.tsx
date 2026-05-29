@@ -7,6 +7,7 @@ import { Listbox } from '@headlessui/react';
 import { CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import { ArchiveItem } from '@/libs/archive';
+import { fieldControlClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   archiveList: ArchiveItem[];
@@ -36,7 +37,7 @@ export default function Archive({ archiveList }: Props) {
         <Listbox value={selectedMonth} onChange={handleArchiveChange}>
           <div className="relative mt-5">
             <Listbox.Button
-              className={`${styles.ListBox} relative w-full cursor-pointer rounded-md py-1.5 pl-3 pr-10 text-left shadow-sm ring-1 ring-inset hover:ring-1 hover:ring-blue-500 focus:outline-none sm:text-sm sm:leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`${fieldControlClassName} ${styles.ListBox} relative w-full cursor-pointer pl-3 pr-10 text-left text-base sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <span className={`${styles.ListBoxSelect} block truncate text-gray-500`}>
                 {selectedMonth
@@ -54,13 +55,15 @@ export default function Archive({ archiveList }: Props) {
 
             <Listbox.Options
               modal={false}
-              className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-opacity-5 focus:outline-none sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border py-1 text-base shadow-lg focus:outline-none sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               {archiveList.map((item, index) => (
                 <Listbox.Option
                   key={index}
                   value={`${item.year}/${item.month.padStart(2, '0')}`}
-                  className={`relative cursor-pointer select-none py-2 pl-3 pr-9 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  className={({ active }) =>
+                    `relative cursor-pointer select-none py-2 pl-3 pr-9 transition-colors duration-150 hover:text-blue-500 ${active ? 'text-blue-500' : ''} ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`
+                  }
                 >
                   {`${item.year}年${item.month}月`}
                 </Listbox.Option>

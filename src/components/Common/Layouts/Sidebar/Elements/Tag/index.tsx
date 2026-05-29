@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { HashtagIcon } from '@heroicons/react/24/solid';
 import { Tag as TagType } from '@/types/microcms';
+import { pillControlClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   tags: TagType[];
@@ -26,7 +27,7 @@ export default function Tag({ tags }: Props) {
             <Link
               key={tag.id}
               href={`/tag/${tag.id}`}
-              className={`inline-block border rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:text-blue-500 hover:border-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`${pillControlClassName} mr-2 mb-2 inline-block rounded-full px-3 py-1 text-sm font-semibold ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               {tag.name}
             </Link>
