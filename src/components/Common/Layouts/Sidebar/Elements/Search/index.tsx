@@ -10,6 +10,7 @@ export default function Search() {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const errorMessageId = 'sidebar-search-error';
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,7 +50,7 @@ export default function Search() {
             }}
             placeholder="キーワードを入力"
             aria-invalid={Boolean(errorMessage)}
-            aria-describedby={errorMessage ? 'sidebar-search-error' : undefined}
+            aria-describedby={errorMessage ? errorMessageId : undefined}
             className={`min-w-0 flex-1 rounded-md border px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           />
           <button
@@ -61,7 +62,7 @@ export default function Search() {
           </button>
         </div>
         {errorMessage && (
-          <p id="sidebar-search-error" className="text-red-500">
+          <p id={errorMessageId} className="text-red-500">
             {errorMessage}
           </p>
         )}
