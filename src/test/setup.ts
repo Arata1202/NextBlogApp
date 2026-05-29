@@ -67,5 +67,6 @@ vi.mock('next-themes', async () => {
 vi.mock('next/navigation', () => ({
   usePathname: () => nextNavigationMock.pathname,
   useRouter: () => nextNavigationMock,
+  useSearchParams: () => new URLSearchParams(globalThis.location?.search ?? ''),
   notFound: nextNavigationMock.notFound,
 }));

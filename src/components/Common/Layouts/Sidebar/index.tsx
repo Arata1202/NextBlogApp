@@ -6,6 +6,7 @@ import { UnifiedArticle } from '@/types/unified';
 import styles from './index.module.css';
 import { useMutationObserver } from '@/hooks/useMutationObserver';
 import AdUnit from '../../../ThirdParties/GoogleAdSense/Elements/AdUnit';
+import Search from './Elements/Search';
 import Profile from './Elements/Profile';
 import Category from './Elements/Category';
 import Tag from './Elements/Tag';
@@ -35,6 +36,7 @@ export default function Sidebar({
   return (
     <>
       <div className={`${article && styles.article} lg:col-span-1 lg:w-full lg:h-full mut-guard`}>
+        <Search />
         <Profile />
         <AdUnit slot="8452341403" style={{ marginTop: '1.25rem' }} />
         <Category />

@@ -10,6 +10,7 @@ import {
   DocumentMagnifyingGlassIcon,
   UserCircleIcon,
   BellAlertIcon,
+  MagnifyingGlassIcon,
 } from '@heroicons/react/24/solid';
 import { Category, Tag } from '@/types/microcms';
 import styles from './index.module.css';
@@ -27,6 +28,8 @@ type Props = {
   privacy?: boolean;
   profile?: boolean;
   sitemap?: boolean;
+  search?: boolean;
+  searchKeyword?: string;
 };
 
 export default function PageTitle({
@@ -42,7 +45,11 @@ export default function PageTitle({
   privacy,
   profile,
   sitemap,
+  search,
+  searchKeyword,
 }: Props) {
+  const searchTitle = `「${searchKeyword ?? ''}」の検索結果`;
+
   return (
     <>
       <h1
@@ -112,6 +119,12 @@ export default function PageTitle({
           <>
             <DocumentMagnifyingGlassIcon className="h-8 w-8 mr-2" />
             サイトマップ
+          </>
+        )}
+        {search && (
+          <>
+            <MagnifyingGlassIcon className="h-8 w-8 mr-2" />
+            {searchTitle}
           </>
         )}
       </h1>

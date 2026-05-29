@@ -46,6 +46,11 @@ describe('Sidebar', () => {
       />,
     );
 
+    const searchInput = screen.getByRole('searchbox', { name: '検索' });
+    const profileHeading = screen.getByText('ブログ運営者');
+    expect(searchInput.compareDocumentPosition(profileHeading)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
     expect(screen.getByText('カテゴリー')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'React' })).toHaveAttribute('href', '/tag/react');
     expect(screen.getByText('アーカイブ')).toBeInTheDocument();

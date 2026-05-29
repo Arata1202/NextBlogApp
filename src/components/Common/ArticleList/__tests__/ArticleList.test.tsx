@@ -40,6 +40,13 @@ describe('ArticleList', () => {
     expect(screen.getByTestId('share')).toBeInTheDocument();
   });
 
+  it('renders skeleton items while loading', () => {
+    render(<ArticleList articles={[]} tags={tags} archiveList={archiveList} isLoading />);
+
+    expect(screen.getAllByTestId('article-skeleton')).toHaveLength(3);
+    expect(screen.queryByText('記事はまだありません')).not.toBeInTheDocument();
+  });
+
   it('renders blog articles and inserts the list ad after the first three items', () => {
     render(
       <ArticleList

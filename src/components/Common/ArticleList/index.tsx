@@ -19,7 +19,11 @@ type Props = {
   tags: Tag[];
   archiveList: ArchiveItem[];
   mixedArticles?: UnifiedArticle[];
+  emptyMessage?: string;
+  isLoading?: boolean;
 };
+
+const skeletonItems = [0, 1, 2];
 
 export default function ArticleList({
   articles,
@@ -27,6 +31,8 @@ export default function ArticleList({
   tags,
   archiveList,
   mixedArticles,
+  emptyMessage = '記事はまだありません',
+  isLoading = false,
 }: Props) {
   const { theme } = useTheme();
   const isMixed = Boolean(mixedArticles);
@@ -35,25 +41,39 @@ export default function ArticleList({
     <>
       <MainContainer>
         <ContentContainer>
-          {!isMixed && articles.length === 0 && (
+          {isLoading && (
+            <ul className={styles.main} aria-label="記事を読み込み中">
+              {skeletonItems.map((item) => (
+                <li key={item} className={styles.skeletonList} data-testid="article-skeleton">
+                  <div className={styles.skeletonImage} />
+                  <div className={styles.skeletonContent}>
+                    <div className={styles.skeletonTitle} />
+                    <div className={styles.skeletonLine} />
+                    <div className={styles.skeletonLineShort} />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          {!isLoading && !isMixed && articles.length === 0 && (
             <div className="text-center py-7">
               <div
                 className={`my-4 text-3xl font-bold tracking-tight sm:text-5xl ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
               >
-                記事はまだありません
+                {emptyMessage}
               </div>
             </div>
           )}
-          {isMixed && mixedArticles && mixedArticles.length === 0 && (
+          {!isLoading && isMixed && mixedArticles && mixedArticles.length === 0 && (
             <div className="text-center py-7">
               <div
                 className={`my-4 text-3xl font-bold tracking-tight sm:text-5xl ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
               >
-                記事はまだありません
+                {emptyMessage}
               </div>
             </div>
           )}
-          {!isMixed && articles.length > 0 && (
+          {!isLoading && !isMixed && articles.length > 0 && (
             <ul className={styles.main}>
               {articles.slice(0, 3).map((article) => (
                 <ArticleCard key={article.id} article={article} />
@@ -64,7 +84,7 @@ export default function ArticleList({
               ))}
             </ul>
           )}
-          {isMixed && mixedArticles && mixedArticles.length > 0 && (
+          {!isLoading && isMixed && mixedArticles && mixedArticles.length > 0 && (
             <ul className={styles.main}>
               {mixedArticles.slice(0, 3).map((article) => (
                 <UnifiedArticleCard key={article.id} article={article} />

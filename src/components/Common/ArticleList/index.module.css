@@ -2,3 +2,92 @@
   margin-top: 0px;
   margin-left: 0px;
 }
+
+.skeletonList {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 0.5rem;
+  border: 1px solid rgba(156, 163, 175, 0.35);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.08),
+    0 4px 6px -4px rgba(0, 0, 0, 0.08);
+  list-style: none;
+}
+
+.skeletonImage,
+.skeletonTitle,
+.skeletonLine,
+.skeletonLineShort {
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(156, 163, 175, 0.22),
+    rgba(156, 163, 175, 0.4),
+    rgba(156, 163, 175, 0.22)
+  );
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.3s ease-in-out infinite;
+}
+
+.skeletonImage {
+  width: 300px;
+  aspect-ratio: 40 / 21;
+  flex-shrink: 0;
+}
+
+.skeletonContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.2rem;
+}
+
+.skeletonTitle {
+  width: 70%;
+  height: 1.65rem;
+}
+
+.skeletonLine {
+  width: 100%;
+  height: 0.9rem;
+}
+
+.skeletonLineShort {
+  width: 42%;
+  height: 0.9rem;
+}
+
+@keyframes skeletonPulse {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 1081px) and (min-width: 1023px) {
+  .skeletonImage {
+    width: 250px;
+  }
+}
+
+@media (max-width: 717px) and (min-width: 641px) {
+  .skeletonImage {
+    width: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  .skeletonList {
+    display: block;
+  }
+
+  .skeletonImage {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}

@@ -10,6 +10,7 @@ const pageMocks = vi.hoisted(() => ({
   copyright: vi.fn(),
   link: vi.fn(),
   sitemapHtml: vi.fn(),
+  search: vi.fn(),
 }));
 
 const microcmsMock = vi.hoisted(() => ({
@@ -50,6 +51,7 @@ vi.mock('@/components/Pages/Link', () => createPageMock('link', 'LinkPage mock')
 vi.mock('@/components/Pages/SitemapHtml', () =>
   createPageMock('sitemapHtml', 'SitemapHtmlPage mock'),
 );
+vi.mock('@/components/Pages/Search', () => createPageMock('search', 'SearchPage mock'));
 
 describe('fixed app pages', () => {
   const recentArticles = [createUnifiedArticle({ id: 'recent-a' })];
@@ -75,6 +77,7 @@ describe('fixed app pages', () => {
     ['disclaimer', '@/app/disclaimer/page', 'DisclaimerPage mock'],
     ['copyright', '@/app/copyright/page', 'CopyrightPage mock'],
     ['link', '@/app/link/page', 'LinkPage mock'],
+    ['search', '@/app/search/page', 'SearchPage mock'],
   ] as const)('loads shared sidebar data for the %s page', async (mockName, importPath, label) => {
     const Page = (await import(importPath)).default;
 

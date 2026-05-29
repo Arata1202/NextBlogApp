@@ -232,6 +232,7 @@ describe('app metadata', () => {
       'サイトマップ',
       '当ブログのサイトマップを記載しています。',
     ],
+    ['search', '@/app/search/layout', '検索結果', '検索結果を表示するページです。'],
   ] as const)(
     'generates fixed page metadata for /%s',
     async (route, importPath, titlePrefix, description) => {

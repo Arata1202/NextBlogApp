@@ -9,10 +9,10 @@ describe('PageHeading', () => {
       <PageHeading category={createCategory({ id: 'programming', name: 'プログラミング' })} />,
     );
 
-    expect(screen.getByRole('link', { name: 'プログラミング' })).toHaveAttribute(
-      'href',
-      '/category/programming',
-    );
+    expect(
+      screen.getByText('プログラミング', { selector: '[aria-current="page"]' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'プログラミング' })).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'プログラミング' })).toBeInTheDocument();
   });
 
@@ -21,5 +21,23 @@ describe('PageHeading', () => {
 
     expect(screen.getByRole('heading', { name: '最新記事' })).toBeInTheDocument();
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('renders the search heading and breadcrumb with an empty keyword', () => {
+    render(<PageHeading search />);
+
+    expect(
+      screen.getByText('「」の検索結果', { selector: '[aria-current="page"]' }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '「」の検索結果' })).toBeInTheDocument();
+  });
+
+  it('renders the search heading and breadcrumb with the keyword', () => {
+    render(<PageHeading search searchKeyword="React" />);
+
+    expect(
+      screen.getByText('「React」の検索結果', { selector: '[aria-current="page"]' }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '「React」の検索結果' })).toBeInTheDocument();
   });
 });
