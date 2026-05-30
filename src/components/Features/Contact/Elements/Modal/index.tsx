@@ -3,11 +3,6 @@ import { EnvelopeIcon } from '@heroicons/react/24/solid';
 import { Dialog, Transition } from '@headlessui/react';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
-import {
-  accentIconClassName,
-  interactiveFocusClassName,
-  primaryButtonClassName,
-} from '@/components/Common/controlClassNames';
 
 type Props = {
   title: string;
@@ -44,7 +39,10 @@ export default function Modal({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div
+            className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+            aria-hidden="true"
+          />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -65,17 +63,22 @@ export default function Modal({
                   <div
                     className={`${styles.Icon} mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10`}
                   >
-                    <EnvelopeIcon className={`h-6 w-6 ${accentIconClassName}`} aria-hidden="true" />
+                    <EnvelopeIcon className="h-6 w-6 text-blue-500" aria-hidden="true" />
                   </div>
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <Dialog.Title
-                      as="h2"
+                      as="h1"
                       className={`${styles.DialogTitle} font-bold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                     >
                       {title}
                     </Dialog.Title>
                     <div className="mt-2">
-                      <p className={`${styles.DialogDescription} text-gray-500`}>{description}</p>
+                      <Dialog.Description
+                        as="p"
+                        className={`${styles.DialogDescription} text-gray-500`}
+                      >
+                        {description}
+                      </Dialog.Description>
                     </div>
                   </div>
                 </div>
@@ -83,7 +86,7 @@ export default function Modal({
                   <button
                     type="button"
                     disabled={isLoading}
-                    className={`${interactiveFocusClassName} ${styles.CancelButton} mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme hover:bg-gray-500' : 'LightTheme hover:bg-gray-50'}`}
+                    className={`${styles.CancelButton} mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme hover:bg-gray-500' : 'LightTheme hover:bg-gray-50'}`}
                     onClick={onClose}
                   >
                     {cancelText}
@@ -91,7 +94,7 @@ export default function Modal({
                   <button
                     type="button"
                     disabled={isLoading}
-                    className={`${primaryButtonClassName} sm:ml-3 sm:w-auto`}
+                    className="inline-flex w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 disabled:cursor-wait disabled:opacity-70 sm:ml-3 sm:w-auto"
                     onClick={onConfirm}
                   >
                     {confirmText}

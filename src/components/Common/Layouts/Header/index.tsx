@@ -92,8 +92,9 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
   const headerLinkClassName = `flex text-sm leading-6 hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
-  const menuLinkClassName = `flex items-center py-1 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
-  const categoryMenuLinkClassName = `ml-5 flex items-center py-1 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
+  const menuLinkClassName = `flex items-center py-2.5 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
+  const categoryMenuLinkClassName = `ml-5 flex items-center py-2.5 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
+  const popoverMenuLinkClassName = `relative z-0 flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:text-blue-600 focus-visible:z-10 focus-visible:ring-inset ${interactiveFocusClassName} ${themeClassName}`;
   const githubLinkClassName = `rounded-md hover:text-blue-600 ${interactiveFocusClassName}`;
 
   return (
@@ -186,12 +187,12 @@ export default function Header() {
                     <Popover.Panel
                       className={`absolute z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-opacity-5 ${theme === 'dark' ? 'DarkTheme ring-gray-500' : 'LightTheme ring-gray-300'}`}
                     >
-                      <div className="py-1">
+                      <div className="p-1">
                         {CATEGORY_ARR.map((item) => (
                           <Link
                             key={item.name}
                             href={`/category/${item.id}`}
-                            className={`flex items-center gap-2 px-4 py-2 text-sm hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`}
+                            className={popoverMenuLinkClassName}
                             onClick={() => {
                               close();
                             }}
