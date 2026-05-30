@@ -3,6 +3,7 @@ import { Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
+import { iconControlClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   onClose: () => void;
@@ -29,11 +30,13 @@ export default function Alert({ onClose, show, title, description }: Props) {
         >
           <div
             className={`pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-opacity-5 mt-24 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            role="status"
+            aria-live="polite"
           >
             <div className="p-4">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <CheckCircleIcon className="h-6 w-6 text-green-400" />
+                  <CheckCircleIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
                 </div>
                 <div className="ml-3 w-0 flex-1 pt-0.5">
                   <p
@@ -46,10 +49,11 @@ export default function Alert({ onClose, show, title, description }: Props) {
                 <div className="ml-4 flex flex-shrink-0">
                   <button
                     type="button"
-                    className={`inline-flex rounded-md hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                    aria-label="通知を閉じる"
+                    className={`${iconControlClassName} inline-flex hover:text-blue-600 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                     onClick={onClose}
                   >
-                    <XMarkIcon className="h-5 w-5" />
+                    <XMarkIcon className="h-5 w-5" aria-hidden="true" />
                   </button>
                 </div>
               </div>

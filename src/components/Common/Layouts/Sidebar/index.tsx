@@ -35,7 +35,10 @@ export default function Sidebar({
 
   return (
     <>
-      <div className={`${article && styles.article} lg:col-span-1 lg:w-full lg:h-full mut-guard`}>
+      <aside
+        className={`${article && styles.article} lg:col-span-1 lg:w-full lg:h-full mut-guard`}
+        aria-label="サイドバー"
+      >
         <Search />
         <Profile />
         <AdUnit slot="8452341403" style={{ marginTop: '1.25rem' }} />
@@ -47,7 +50,7 @@ export default function Sidebar({
           <Recent recentArticles={recentArticles} currentArticleUrl={currentArticleUrl} />
         )}
         <StickyContainer contentBlocks={contentBlocks} />
-      </div>
+      </aside>
     </>
   );
 }

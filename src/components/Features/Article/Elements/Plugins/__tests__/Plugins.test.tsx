@@ -67,7 +67,7 @@ describe('Article plugins', () => {
   });
 
   it('renders speech bubble image with optimized microCMS parameters', () => {
-    render(
+    const { container } = render(
       <SpeechBubble
         block={{
           bubble_text: 'Hello',
@@ -82,10 +82,9 @@ describe('Article plugins', () => {
     );
 
     expect(screen.getByText('Hello')).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: '吹き出しのイメージ' })).toHaveAttribute(
-      'src',
-      expect.stringContaining('w=150'),
-    );
+    const image = container.querySelector('img');
+    expect(image).toHaveAttribute('alt', '');
+    expect(image).toHaveAttribute('src', expect.stringContaining('w=150'));
   });
 
   it('renders each tab box variant from its corresponding html field', () => {
@@ -110,8 +109,9 @@ describe('Article plugins', () => {
   });
 
   it('renders a single valid slider image without loading the carousel chrome', () => {
-    render(
+    const { container } = render(
       <ImageSlider
+        imageAltFallback="Article title"
         block={{
           image_slider: [
             {
@@ -125,10 +125,9 @@ describe('Article plugins', () => {
       />,
     );
 
-    expect(screen.getByRole('img', { name: 'スライダー画像 1' })).toHaveAttribute(
-      'loading',
-      'eager',
-    );
+    const image = container.querySelector('img');
+    expect(image).toHaveAttribute('alt', 'Article titleの画像');
+    expect(image).toHaveAttribute('loading', 'eager');
     expect(screen.queryByTestId('slider')).not.toBeInTheDocument();
   });
 

@@ -94,8 +94,8 @@ describe('Share components', () => {
   it('uses the configured base URL for RSS and Feedly follow links', () => {
     render(<FollowSection />);
 
-    const rssLink = screen.getByRole('link', { name: 'RSSフィードを開く' });
-    const feedlyLink = screen.getByRole('link', { name: 'Feedlyでフォロー' });
+    const rssLink = screen.getByRole('link', { name: 'RSSフィードを新しいタブで開く' });
+    const feedlyLink = screen.getByRole('link', { name: 'Feedlyを新しいタブで開く' });
 
     expect(rssLink).toHaveAttribute('href', 'https://example.com/rss.xml');
     expect(rssLink).toHaveAttribute('rel', 'noopener noreferrer');
@@ -131,7 +131,9 @@ describe('Share components', () => {
     const getMessage = () => container.querySelector('[class*="BuyMeaCoffeeMessage"]');
 
     expect(getMessage()).toHaveTextContent(/^もし記事/);
-    const supportLink = screen.getByRole('link', { name: 'BuyMeaCoffee' });
+    const supportLink = screen.getByRole('link', {
+      name: 'BuyMeaCoffeeを新しいタブで開く',
+    });
 
     expect(supportLink).toHaveAttribute('href', 'https://www.buymeacoffee.com/realunivlog');
     expect(supportLink).toHaveAttribute('rel', 'noopener noreferrer');

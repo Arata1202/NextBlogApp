@@ -12,7 +12,7 @@ export default function AdAlert() {
       <div
         className={`${styles.alert} flex justify-center text-center p-3 border ${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
       >
-        <BellIcon className="h-7 w-7 mr-2" />
+        <BellIcon className="h-7 w-7 mr-2" aria-hidden="true" />
         記事内に広告が含まれています。
       </div>
     </>

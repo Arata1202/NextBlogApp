@@ -7,9 +7,10 @@ import styles from './index.module.css';
 
 type Props = {
   block: ContentBlock | IntroductionBlock;
+  imageAltFallback?: string;
 };
 
-export default function ImageSlider({ block }: Props) {
+export default function ImageSlider({ block, imageAltFallback }: Props) {
   const isClient = useIsClient();
   const images = block.image_slider?.filter((image) => image.url) ?? [];
 
@@ -18,12 +19,21 @@ export default function ImageSlider({ block }: Props) {
   }
 
   const isMultiple = images.length > 1;
+  const getAlt = (index: number) => {
+    if (!imageAltFallback) {
+      return '';
+    }
+
+    return images.length === 1
+      ? `${imageAltFallback}の画像`
+      : `${imageAltFallback}の画像 ${index + 1}`;
+  };
   const renderImage = (image: (typeof images)[number], index: number) => (
     <img
       src={`${image.url}?fm=webp&q=70&fit=clip&w=960`}
       srcSet={`${image.url}?fm=webp&q=70&fit=clip&w=640 640w, ${image.url}?fm=webp&q=70&fit=clip&w=960 960w, ${image.url}?fm=webp&q=70&fit=clip&w=1200 1200w`}
       sizes="(max-width: 768px) 100vw, 960px"
-      alt={`スライダー画像 ${index + 1}`}
+      alt={getAlt(index)}
       width={image.width}
       height={image.height}
       loading={index === 0 ? 'eager' : 'lazy'}

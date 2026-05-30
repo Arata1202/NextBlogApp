@@ -18,7 +18,11 @@ export default function SingleDate({ date, updatedAt = false }: Props) {
       <span
         className={`${styles.date} ${updatedAt && styles.updatedAt} ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
-        {updatedAt ? <ArrowPathIcon className="h-5 w-5" /> : <ClockIcon className="h-5 w-5" />}
+        {updatedAt ? (
+          <ArrowPathIcon className="h-5 w-5" aria-hidden="true" />
+        ) : (
+          <ClockIcon className="h-5 w-5" aria-hidden="true" />
+        )}
         {formatDate(date)}
       </span>
     </>

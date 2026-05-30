@@ -21,7 +21,7 @@ describe('UnifiedArticleCard', () => {
   });
 
   it('renders external Zenn articles with safe link attributes', () => {
-    render(
+    const { container } = render(
       <UnifiedArticleCard
         article={createUnifiedArticle({
           source: 'zenn',
@@ -35,10 +35,9 @@ describe('UnifiedArticleCard', () => {
 
     expect(screen.getByRole('link')).toHaveAttribute('target', '_blank');
     expect(screen.getByRole('link')).toHaveAttribute('rel', 'noopener noreferrer');
-    expect(screen.getByRole('img', { name: 'Zenn title' })).toHaveAttribute(
-      'src',
-      'https://example.com/zenn.png',
-    );
+    const image = container.querySelector('img');
+    expect(image).toHaveAttribute('alt', '');
+    expect(image).toHaveAttribute('src', 'https://example.com/zenn.png');
   });
 
   it('renders the updated date only when it is a later day than publishedAt', () => {

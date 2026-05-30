@@ -3,6 +3,7 @@ import { EnvelopeIcon } from '@heroicons/react/24/solid';
 import { Dialog, Transition } from '@headlessui/react';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
+import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   title: string;
@@ -60,11 +61,11 @@ export default function Modal({
                   <div
                     className={`${styles.Icon} mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10`}
                   >
-                    <EnvelopeIcon className="h-6 w-6 text-blue-500" />
+                    <EnvelopeIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
                   </div>
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <Dialog.Title
-                      as="h1"
+                      as="h2"
                       className={`${styles.DialogTitle} font-bold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                     >
                       {title}
@@ -78,7 +79,7 @@ export default function Modal({
                   <button
                     type="button"
                     disabled={isLoading}
-                    className={`${styles.CancelButton} mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme hover:bg-gray-500' : 'LightTheme hover:bg-gray-50'}`}
+                    className={`${interactiveFocusClassName} ${styles.CancelButton} mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme hover:bg-gray-500' : 'LightTheme hover:bg-gray-50'}`}
                     onClick={onClose}
                   >
                     {cancelText}
@@ -86,7 +87,7 @@ export default function Modal({
                   <button
                     type="button"
                     disabled={isLoading}
-                    className="inline-flex w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 disabled:cursor-wait disabled:opacity-70 sm:ml-3 sm:w-auto"
+                    className={`${interactiveFocusClassName} inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 disabled:cursor-wait disabled:opacity-70 sm:ml-3 sm:w-auto`}
                     onClick={onConfirm}
                   >
                     {confirmText}

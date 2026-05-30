@@ -31,4 +31,48 @@ describe('Archive', () => {
     expect(routerMock.push).toHaveBeenCalledWith('/archive/2024/01');
     expect(screen.getByRole('button', { name: '2024年1月' })).toBeInTheDocument();
   });
+
+  it('can be focused with tab and operated from the keyboard', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Archive
+        archiveList={[
+          { year: '2024', month: '1' },
+          { year: '2024', month: '2' },
+        ]}
+      />,
+    );
+
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'アーカイブを選択' })).toHaveFocus();
+
+    await user.keyboard('{Enter}');
+    expect(screen.getByRole('option', { name: '2024年1月' })).toBeInTheDocument();
+
+    await user.keyboard('{ArrowDown}');
+    await user.keyboard('{ArrowDown}');
+    await user.keyboard('{Enter}');
+    expect(routerMock.push).toHaveBeenCalledWith('/archive/2024/02');
+  });
+
+  it('can move upward through options from the keyboard', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Archive
+        archiveList={[
+          { year: '2024', month: '1' },
+          { year: '2024', month: '2' },
+        ]}
+      />,
+    );
+
+    await user.tab();
+    await user.keyboard('{Enter}');
+    await user.keyboard('{ArrowUp}');
+    await user.keyboard('{Enter}');
+
+    expect(routerMock.push).toHaveBeenCalledWith('/archive/2024/02');
+  });
 });

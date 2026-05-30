@@ -20,6 +20,7 @@ export default function ContactFeature() {
   const [captchaError, setCaptchaError] = useState('');
   const [isSending, setIsSending] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const captchaErrorId = 'recaptcha-error';
 
   const {
     register,
@@ -128,14 +129,20 @@ export default function ContactFeature() {
             errors={errors.message}
           />
         </div>
-        <ReCAPTCHA
-          ref={recaptchaRef}
-          sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-          onChange={handleChangeCaptchaValue}
-          onExpired={() => setCaptchaValue(null)}
-          className="mt-3"
-        />
-        {captchaError && <p className="text-red-500">{captchaError}</p>}
+        <div role="group" aria-describedby={captchaError ? captchaErrorId : undefined}>
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+            onChange={handleChangeCaptchaValue}
+            onExpired={() => setCaptchaValue(null)}
+            className="mt-3"
+          />
+        </div>
+        {captchaError && (
+          <p id={captchaErrorId} className="text-red-700" role="alert">
+            {captchaError}
+          </p>
+        )}
         <div className="mt-3">
           <button
             type="submit"

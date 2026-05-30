@@ -29,25 +29,34 @@ export default function TabBox({
       >
         {merit && (
           <>
-            <HandThumbUpIcon className={`h-8 w-8 ${styles.tab_merit_box_icon}`} />
+            <HandThumbUpIcon
+              className={`h-8 w-8 ${styles.tab_merit_box_icon}`}
+              aria-hidden="true"
+            />
             <div dangerouslySetInnerHTML={{ __html: block.box_merit! }} />
           </>
         )}
         {demerit && (
           <>
-            <HandThumbDownIcon className={`h-8 w-8 ${styles.tab_demerit_box_icon}`} />
+            <HandThumbDownIcon
+              className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
+              aria-hidden="true"
+            />
             <div dangerouslySetInnerHTML={{ __html: block.box_demerit! }} />
           </>
         )}
         {point && (
           <>
-            <LightBulbIcon className={`h-8 w-8 ${styles.tab_point_box_icon}`} />
+            <LightBulbIcon className={`h-8 w-8 ${styles.tab_point_box_icon}`} aria-hidden="true" />
             <div dangerouslySetInnerHTML={{ __html: block.box_point! }} />
           </>
         )}
         {common && (
           <>
-            <InformationCircleIcon className={`h-8 w-8 ${styles.tab_common_box_icon}`} />
+            <InformationCircleIcon
+              className={`h-8 w-8 ${styles.tab_common_box_icon}`}
+              aria-hidden="true"
+            />
             <div dangerouslySetInnerHTML={{ __html: block.box_common! }} />
           </>
         )}

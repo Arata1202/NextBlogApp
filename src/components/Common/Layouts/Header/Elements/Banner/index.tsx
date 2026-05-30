@@ -18,7 +18,8 @@ export default function Banner() {
               aria-hidden="true"
             ></svg>
             筆者も使ったエンジニア就活サービス【レバテック】
-            <ArrowTopRightOnSquareIcon className="h-5 w-5 ml-1" />
+            <ArrowTopRightOnSquareIcon className="h-5 w-5 ml-1" aria-hidden="true" />
+            <span className="sr-only">新しいタブで開きます</span>
           </a>
         </div>
       </div>

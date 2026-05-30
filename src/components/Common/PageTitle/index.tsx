@@ -57,73 +57,73 @@ export default function PageTitle({
       >
         {year && month && (
           <>
-            <CalendarDaysIcon className="h-8 w-8 mr-2" />
+            <CalendarDaysIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             {year}年{parseInt(month)}月
           </>
         )}
         {category && (
           <>
-            <FolderOpenIcon className="h-8 w-8 mr-2" />
+            <FolderOpenIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             {category.name}
           </>
         )}
         {tag && (
           <>
-            <HashtagIcon className="h-8 w-8 mr-2" />
+            <HashtagIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             {tag.name}
           </>
         )}
         {home && (
           <>
-            <BellAlertIcon className="h-8 w-8 mr-2" />
+            <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             最新記事
           </>
         )}
         {contact && (
           <>
-            <EnvelopeIcon className="h-8 w-8 mr-2" />
+            <EnvelopeIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             お問い合わせ
           </>
         )}
         {copyright && (
           <>
-            <DocumentTextIcon className="h-8 w-8 mr-2" />
+            <DocumentTextIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             著作権
           </>
         )}
         {disclaimer && (
           <>
-            <ExclamationCircleIcon className="h-8 w-8 mr-2" />
+            <ExclamationCircleIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             免責事項
           </>
         )}
         {link && (
           <>
-            <LinkIcon className="h-8 w-8 mr-2" />
+            <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             リンク
           </>
         )}
         {privacy && (
           <>
-            <LockClosedIcon className="h-8 w-8 mr-2" />
+            <LockClosedIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             プライバシーポリシー
           </>
         )}
         {profile && (
           <>
-            <UserCircleIcon className="h-8 w-8 mr-2" />
+            <UserCircleIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             プロフィール
           </>
         )}
         {sitemap && (
           <>
-            <DocumentMagnifyingGlassIcon className="h-8 w-8 mr-2" />
+            <DocumentMagnifyingGlassIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             サイトマップ
           </>
         )}
         {search && (
           <>
-            <MagnifyingGlassIcon className="h-8 w-8 mr-2" />
+            <MagnifyingGlassIcon className="h-8 w-8 mr-2" aria-hidden="true" />
             {searchTitle}
           </>
         )}

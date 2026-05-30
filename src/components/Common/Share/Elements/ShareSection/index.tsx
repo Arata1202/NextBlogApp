@@ -13,6 +13,7 @@ import {
   PocketIcon,
 } from 'react-share';
 import { Article } from '@/types/microcms';
+import { roundIconControlClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   data?: Article;
@@ -31,52 +32,52 @@ export default function ShareSection({ data }: Props) {
       <div
         className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
-        <HandThumbUpIcon className="h-8 w-8 mr-2" />
+        <HandThumbUpIcon className="h-8 w-8 mr-2" aria-hidden="true" />
         シェアする
       </div>
       <div className="flex justify-center flex-wrap">
         <TwitterShareButton
           url={url}
           title={title}
-          className="m-1 hover:opacity-60"
+          className={`${roundIconControlClassName} m-1 hover:opacity-60`}
           aria-label="Xでシェア"
         >
-          <XIcon size={40} round={true} />
+          <XIcon size={40} round={true} aria-hidden="true" />
         </TwitterShareButton>
 
         <FacebookShareButton
           url={url}
-          className="m-1 hover:opacity-60"
+          className={`${roundIconControlClassName} m-1 hover:opacity-60`}
           aria-label="Facebookでシェア"
         >
-          <FacebookIcon size={40} round={true} />
+          <FacebookIcon size={40} round={true} aria-hidden="true" />
         </FacebookShareButton>
 
         <LineShareButton
           url={url}
           title={title}
-          className="m-1 hover:opacity-60"
+          className={`${roundIconControlClassName} m-1 hover:opacity-60`}
           aria-label="LINEでシェア"
         >
-          <LineIcon size={40} round={true} />
+          <LineIcon size={40} round={true} aria-hidden="true" />
         </LineShareButton>
 
         <PocketShareButton
           url={url}
           title={title}
-          className="m-1 hover:opacity-60"
+          className={`${roundIconControlClassName} m-1 hover:opacity-60`}
           aria-label="Pocketに保存"
         >
-          <PocketIcon size={40} round={true} />
+          <PocketIcon size={40} round={true} aria-hidden="true" />
         </PocketShareButton>
 
         <HatenaShareButton
           url={url}
           title={title}
-          className="m-1 hover:opacity-60"
+          className={`${roundIconControlClassName} m-1 hover:opacity-60`}
           aria-label="はてなブックマークでシェア"
         >
-          <HatenaIcon size={40} round={true} />
+          <HatenaIcon size={40} round={true} aria-hidden="true" />
         </HatenaShareButton>
       </div>
     </>

@@ -12,6 +12,10 @@ type Props = {
 
 export default function SitemapHtmlFeature({ articles, categories }: Props) {
   const { theme } = useTheme();
+  const linkClassName =
+    theme === 'dark'
+      ? 'text-blue-300 underline underline-offset-2 hover:text-blue-200'
+      : 'text-blue-700 underline underline-offset-2 hover:text-blue-800';
 
   return (
     <>
@@ -23,7 +27,7 @@ export default function SitemapHtmlFeature({ articles, categories }: Props) {
       <ul>
         {PAGE_ARR.map((page) => (
           <li key={page.name}>
-            <Link href={page.path} className="text-blue-500 hover:text-blue-700">
+            <Link href={page.path} className={linkClassName}>
               {page.name}
             </Link>
           </li>
@@ -38,7 +42,7 @@ export default function SitemapHtmlFeature({ articles, categories }: Props) {
       <ul>
         {categories.map((category) => (
           <li key={category.id}>
-            <Link href={`/category/${category.id}`} className="text-blue-500 hover:text-blue-700">
+            <Link href={`/category/${category.id}`} className={linkClassName}>
               {category.name}
             </Link>
           </li>
@@ -53,7 +57,7 @@ export default function SitemapHtmlFeature({ articles, categories }: Props) {
       <ul>
         {articles.map((article) => (
           <li key={article.id}>
-            <Link href={`/articles/${article.id}`} className="text-blue-500 hover:text-blue-700">
+            <Link href={`/articles/${article.id}`} className={linkClassName}>
               {article.title}
             </Link>
           </li>

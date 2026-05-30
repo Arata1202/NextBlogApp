@@ -18,7 +18,7 @@ export default function SpeechBubble({ block }: Props) {
                   quality: 70,
                   fit: 'crop',
                 })}
-                alt="吹き出しのイメージ"
+                alt=""
                 width={75}
                 height={75}
                 loading="lazy"

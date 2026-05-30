@@ -6,6 +6,7 @@ import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { UnifiedArticle } from '@/types/unified';
 import WebpImage from '@/components/Common/Elements/WebpImage';
 import styles from './index.module.css';
+import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   recentArticles: UnifiedArticle[];
@@ -19,6 +20,7 @@ const normalizePath = (path?: string) => {
 export default function Recent({ recentArticles, currentArticleUrl }: Props) {
   const { theme } = useTheme();
   const normalizedCurrentArticleUrl = normalizePath(currentArticleUrl);
+  const linkClassName = `${styles.link} block rounded-md ${interactiveFocusClassName}`;
 
   const sortedArticles = recentArticles
     .slice()
@@ -36,7 +38,7 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
         className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
         <div className={`text-2xl text-center font-semibold flex justify-center`}>
-          <BellAlertIcon className="h-8 w-8 mr-2" />
+          <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           最新記事
         </div>
         {sortedArticles.map((article) => {
@@ -49,7 +51,7 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
               {article.source !== 'blog' && article.thumbnailUrl && (
                 <img
                   src={article.thumbnailUrl}
-                  alt={article.title}
+                  alt=""
                   className={styles.image}
                   loading="lazy"
                   decoding="async"
@@ -62,7 +64,7 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
           return (
             <ul
               key={article.id}
-              className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`border mt-5 p-2 shadow-lg hover:shadow-xl focus-within:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 focus-within:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <li>
                 {isExternal ? (
@@ -70,12 +72,13 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
                     href={article.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={styles.link}
+                    className={linkClassName}
+                    aria-label={`${article.title}を新しいタブで開く`}
                   >
                     {articleContent}
                   </a>
                 ) : (
-                  <Link href={article.url} className={styles.link}>
+                  <Link href={article.url} className={linkClassName}>
                     {articleContent}
                   </Link>
                 )}

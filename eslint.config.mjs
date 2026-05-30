@@ -4,6 +4,7 @@ import nextPlugin from '@next/eslint-plugin-next';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import reactPlugin from 'eslint-plugin-react';
 import hooksPlugin from 'eslint-plugin-react-hooks';
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 
 export default [
   eslint.configs.recommended,
@@ -38,6 +39,7 @@ export default [
     },
     rules: hooksPlugin.configs.recommended.rules,
   },
+  jsxA11yPlugin.flatConfigs.recommended,
   {
     name: 'next/core-web-vitals',
     plugins: {
@@ -56,7 +58,6 @@ export default [
     rules: {
       '@next/next/no-html-link-for-pages': 'off',
       '@next/next/no-img-element': 'off',
-      'jsx-a11y/alt-text': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },

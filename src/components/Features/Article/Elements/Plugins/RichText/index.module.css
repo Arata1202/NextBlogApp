@@ -104,11 +104,22 @@
 
 .content a {
   text-decoration: underline;
-  color: #3b82f6;
+  text-underline-offset: 2px;
+  color: #1d4ed8;
 }
 
-.content a:hover {
-  color: #2563eb;
+.content a:hover,
+.content a:focus-visible {
+  color: #1e40af;
+}
+
+:global(body.DarkTheme) .content a {
+  color: #93c5fd;
+}
+
+:global(body.DarkTheme) .content a:hover,
+:global(body.DarkTheme) .content a:focus-visible {
+  color: #bfdbfe;
 }
 
 .content > figure {

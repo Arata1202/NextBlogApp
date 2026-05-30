@@ -5,7 +5,7 @@ import { createUnifiedArticle } from '@/test/factories';
 
 describe('Recent', () => {
   it('filters the current article, sorts by published date, limits to three, and keeps external links safe', () => {
-    render(
+    const { container } = render(
       <Recent
         currentArticleUrl="/articles/current/"
         recentArticles={[
@@ -56,9 +56,7 @@ describe('Recent', () => {
     expect(externalLink).toHaveAttribute('href', 'https://zenn.dev/user/articles/external');
     expect(externalLink).toHaveAttribute('target', '_blank');
     expect(externalLink).toHaveAttribute('rel', 'noopener noreferrer');
-    expect(screen.getByRole('img', { name: 'External article' })).toHaveAttribute(
-      'src',
-      'https://example.com/zenn.png',
-    );
+    const image = container.querySelector('img[src="https://example.com/zenn.png"]');
+    expect(image).toHaveAttribute('alt', '');
   });
 });

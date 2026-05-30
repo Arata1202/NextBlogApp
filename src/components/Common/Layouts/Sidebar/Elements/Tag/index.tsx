@@ -19,7 +19,7 @@ export default function Tag({ tags }: Props) {
         className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
         <div className={`text-2xl text-center font-semibold flex justify-center`}>
-          <HashtagIcon className="h-8 w-8 mr-2" />
+          <HashtagIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           タグ
         </div>
         <div className="mt-5 flex flex-wrap gap-2">

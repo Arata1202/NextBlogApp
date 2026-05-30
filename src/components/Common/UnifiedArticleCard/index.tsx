@@ -31,6 +31,7 @@ export default function UnifiedArticleCard({ article }: Props) {
         href={article.url}
         target={isExternal ? '_blank' : undefined}
         rel={isExternal ? 'noopener noreferrer' : undefined}
+        aria-label={isExternal ? `${article.title}を新しいタブで開く` : undefined}
         className={`${styles.link} p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
         {article.source === 'blog' && article.thumbnail && (
@@ -40,7 +41,7 @@ export default function UnifiedArticleCard({ article }: Props) {
           <img
             className={styles.image}
             src={article.thumbnailUrl}
-            alt={article.title}
+            alt=""
             loading="lazy"
             decoding="async"
             style={{ alignSelf: 'flex-start' }}

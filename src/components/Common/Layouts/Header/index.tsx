@@ -26,6 +26,10 @@ import { HEADER_NAVIGATION } from '@/constants/data';
 import { CATEGORY_ARR } from '@/constants/category';
 import { GitHubIcon } from '../../Elements/SocialIcon';
 import Banner from './Elements/Banner';
+import {
+  iconControlClassName,
+  interactiveFocusClassName,
+} from '@/components/Common/controlClassNames';
 
 type Category = (typeof CATEGORY_ARR)[number];
 
@@ -86,13 +90,19 @@ export default function Header() {
   const categoryPopoverRef = useRef<HTMLDivElement>(null);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
+  const headerLinkClassName = `flex text-sm leading-6 hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
+  const menuLinkClassName = `flex items-center py-1 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
+  const categoryMenuLinkClassName = `ml-5 flex items-center py-1 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
+  const githubLinkClassName = `rounded-md hover:text-blue-600 ${interactiveFocusClassName}`;
 
   return (
     <>
-      <header
-        className={`${styles.header} fixed top-0 left-0 w-full z-30 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-      >
-        <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
+      <header className={`${styles.header} fixed top-0 left-0 w-full z-30 ${themeClassName}`}>
+        <nav
+          className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+          aria-label="グローバルナビゲーション"
+        >
           <Link href="/" className="-m-1.5 p-1.5 hover:scale-110 transition-transform">
             {BLOG_IMAGE.map((item) => (
               <img
@@ -109,10 +119,10 @@ export default function Header() {
               <button
                 type="button"
                 aria-label="メニューを閉じる"
-                className={`inline-flex items-center justify-center rounded-md ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                className={`${iconControlClassName} inline-flex items-center justify-center ${themeClassName}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <XMarkIcon className="h-6 w-6" />
+                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               </button>
             ) : (
               <div className="flex">
@@ -120,22 +130,23 @@ export default function Header() {
                   href="https://github.com/Arata1202/NextBlogApp"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-blue-500 px-3"
+                  className={`${githubLinkClassName} px-3`}
+                  aria-label="GitHubリポジトリを新しいタブで開く"
                 >
-                  <GitHubIcon className="h-6 w-6" />
+                  <GitHubIcon className="h-6 w-6" aria-hidden="true" />
                 </Link>
                 <div
-                  className={`inline-flex items-center justify-center rounded-md px-3 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  className={`inline-flex items-center justify-center rounded-md px-3 ${themeClassName}`}
                 >
                   <ThemeSwitch />
                 </div>
                 <button
                   type="button"
                   aria-label="メニューを開く"
-                  className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 ml-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  className={`${iconControlClassName} -m-2.5 inline-flex items-center justify-center p-2.5 ml-1 ${themeClassName}`}
                   onClick={() => setMobileMenuOpen(true)}
                 >
-                  <Bars3Icon className="h-6 w-6" />
+                  <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>
             )}
@@ -143,12 +154,8 @@ export default function Header() {
 
           <div className="hidden lg:flex lg:gap-x-12 items-center">
             {HEADER_NAVIGATION.map((item) => (
-              <Link
-                key={item.name}
-                href={item.path}
-                className={`flex text-sm leading-6 hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-              >
-                <item.icon className="h-5 w-5 mr-2" />
+              <Link key={item.name} href={item.path} className={headerLinkClassName}>
+                <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
                 {item.name}
               </Link>
             ))}
@@ -161,11 +168,11 @@ export default function Header() {
                     onClose={close}
                   />
                   <Popover.Button
-                    className={`flex items-center text-sm font-medium hover:text-blue-500 focus:outline-none ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                    className={`flex items-center text-sm font-medium hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`}
                   >
-                    <FolderIcon className="h-5 w-5 mr-2" />
+                    <FolderIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                     カテゴリー
-                    <ChevronDownIcon className="h-5 w-5 ml-1" />
+                    <ChevronDownIcon className="h-5 w-5 ml-1" aria-hidden="true" />
                   </Popover.Button>
                   <Transition
                     as={Fragment}
@@ -177,14 +184,14 @@ export default function Header() {
                     leaveTo="opacity-0 translate-y-1"
                   >
                     <Popover.Panel
-                      className={`absolute z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-opacity-5 focus:outline-none  ${theme === 'dark' ? 'DarkTheme ring-gray-500' : 'LightTheme ring-gray-300'}`}
+                      className={`absolute z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-opacity-5 ${theme === 'dark' ? 'DarkTheme ring-gray-500' : 'LightTheme ring-gray-300'}`}
                     >
                       <div className="py-1">
                         {CATEGORY_ARR.map((item) => (
                           <Link
                             key={item.name}
                             href={`/category/${item.id}`}
-                            className={`flex items-center gap-2 px-4 py-2 text-sm hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                            className={`flex items-center gap-2 px-4 py-2 text-sm hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`}
                             onClick={() => {
                               close();
                             }}
@@ -204,9 +211,10 @@ export default function Header() {
               href="https://github.com/Arata1202/NextBlogApp"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-blue-500"
+              className={githubLinkClassName}
+              aria-label="GitHubリポジトリを新しいタブで開く"
             >
-              <GitHubIcon className="h-7 w-7" />
+              <GitHubIcon className="h-7 w-7" aria-hidden="true" />
             </Link>
           </div>
         </nav>
@@ -222,10 +230,7 @@ export default function Header() {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div
-                className="fixed inset-0 bg-opacity-25"
-                onClick={() => setMobileMenuOpen(false)}
-              />
+              <div className="fixed inset-0 bg-opacity-25" aria-hidden="true" />
             </Transition.Child>
 
             <Transition.Child
@@ -238,36 +243,33 @@ export default function Header() {
               leaveTo="translate-x-full"
             >
               <Dialog.Panel
-                className={`fixed inset-y-0 right-0 flex max-w-xs w-full shadow-xl  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                className={`fixed inset-y-0 right-0 flex max-w-xs w-full shadow-xl ${themeClassName}`}
               >
                 <div className="flex w-full flex-col p-5">
                   <button
                     type="button"
                     aria-label="メニューを閉じる"
-                    className="-ml-2 flex items-center justify-end p-2"
+                    className={`${iconControlClassName} -ml-2 flex items-center justify-end p-2`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <XMarkIcon
-                      className={`h-6 w-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                    />
+                    <XMarkIcon className={`h-6 w-6 ${themeClassName}`} aria-hidden="true" />
                   </button>
-                  <div
+                  <Dialog.Title
                     className={`text-center py-2 text-xl font-bold  ${theme === 'dark' ? 'bg-gray-500' : 'bg-gray-300'}`}
                   >
                     Menu
-                  </div>
+                  </Dialog.Title>
                   <ul className="mt-5 space-y-6">
                     {HEADER_NAVIGATION.map((item) => (
                       <li key={item.name}>
-                        <Link href={item.path}>
-                          <div
-                            className={`flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                            <item.icon className="h-6 w-6 mx-2" />
-                            {item.name}
-                          </div>
+                        <Link
+                          href={item.path}
+                          className={menuLinkClassName}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                          <item.icon className="h-6 w-6 mx-2" aria-hidden="true" />
+                          {item.name}
                         </Link>
                       </li>
                     ))}
@@ -281,15 +283,14 @@ export default function Header() {
                     </li>
                     {CATEGORY_ARR.map((item) => (
                       <li key={item.name}>
-                        <Link href={`/category/${item.id}`}>
-                          <div
-                            className={`ml-5 flex items-center py-1 text-base font-bold border-b hover:text-blue-500  ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                            <HeaderCategoryIcon category={item} className="h-6 w-6 mx-2 shrink-0" />
-                            {item.name}
-                          </div>
+                        <Link
+                          href={`/category/${item.id}`}
+                          className={categoryMenuLinkClassName}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                          <HeaderCategoryIcon category={item} className="h-6 w-6 mx-2 shrink-0" />
+                          {item.name}
                         </Link>
                       </li>
                     ))}

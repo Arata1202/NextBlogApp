@@ -8,15 +8,10 @@ describe('Markdown', () => {
 
     expect(screen.getByRole('link', { name: 'Internal' })).toHaveAttribute('href', '/profile');
     expect(screen.getByRole('link', { name: 'Internal' })).not.toHaveAttribute('target');
-    expect(screen.getByRole('link', { name: 'External' })).toHaveAttribute(
-      'href',
-      'https://example.com',
-    );
-    expect(screen.getByRole('link', { name: 'External' })).toHaveAttribute('target', '_blank');
-    expect(screen.getByRole('link', { name: 'External' })).toHaveAttribute(
-      'rel',
-      'noopener noreferrer',
-    );
+    const externalLink = screen.getByRole('link', { name: 'External 新しいタブで開きます' });
+    expect(externalLink).toHaveAttribute('href', 'https://example.com');
+    expect(externalLink).toHaveAttribute('target', '_blank');
+    expect(externalLink).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
   it('renders the profile image when profile mode is enabled', () => {

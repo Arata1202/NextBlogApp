@@ -87,8 +87,12 @@ a {
   text-decoration: none;
 }
 
-button:focus {
-  outline: none;
+a:focus-visible,
+button:focus-visible,
+[role='button']:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  border-radius: var(--border-radius);
 }
 
 p {
@@ -102,4 +106,15 @@ ul {
 
 li {
   font-size: 18px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
