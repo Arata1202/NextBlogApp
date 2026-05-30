@@ -22,37 +22,23 @@ type Props = {
 
 type HeadingIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
-const getPageHeadingIcon = (page: PageHeadingPage): HeadingIcon => {
-  switch (page.type) {
-    case 'archive':
-      return CalendarDaysIcon;
-    case 'category':
-      return FolderOpenIcon;
-    case 'tag':
-      return HashtagIcon;
-    case 'home':
-      return BellAlertIcon;
-    case 'contact':
-      return EnvelopeIcon;
-    case 'copyright':
-      return DocumentTextIcon;
-    case 'disclaimer':
-      return ExclamationCircleIcon;
-    case 'link':
-      return LinkIcon;
-    case 'privacy':
-      return LockClosedIcon;
-    case 'profile':
-      return UserCircleIcon;
-    case 'sitemap':
-      return DocumentMagnifyingGlassIcon;
-    case 'search':
-      return MagnifyingGlassIcon;
-  }
+const PAGE_HEADING_ICONS: Record<PageHeadingPage['type'], HeadingIcon> = {
+  archive: CalendarDaysIcon,
+  category: FolderOpenIcon,
+  tag: HashtagIcon,
+  home: BellAlertIcon,
+  contact: EnvelopeIcon,
+  copyright: DocumentTextIcon,
+  disclaimer: ExclamationCircleIcon,
+  link: LinkIcon,
+  privacy: LockClosedIcon,
+  profile: UserCircleIcon,
+  sitemap: DocumentMagnifyingGlassIcon,
+  search: MagnifyingGlassIcon,
 };
 
 export default function PageTitle({ page }: Props) {
-  const Icon = getPageHeadingIcon(page);
+  const Icon = PAGE_HEADING_ICONS[page.type];
 
   return (
     <>

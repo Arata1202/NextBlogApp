@@ -25,6 +25,22 @@ type SearchResponse = {
 
 type SearchStatus = 'idle' | 'loading' | 'success' | 'error';
 
+type SearchState = {
+  articles: Article[];
+  currentPage: number;
+  query: string;
+  status: SearchStatus;
+  totalCount: number;
+};
+
+const initialSearchState: SearchState = {
+  articles: [],
+  currentPage: 1,
+  query: '',
+  status: 'idle',
+  totalCount: 0,
+};
+
 const getCurrentPage = (page: string | null) => {
   const parsedPage = Number(page);
 
@@ -46,32 +62,36 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
   const searchParams = useSearchParams();
   const query = useMemo(() => searchParams.get('q')?.trim() ?? '', [searchParams]);
   const currentPage = useMemo(() => getCurrentPage(searchParams.get('page')), [searchParams]);
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [totalCount, setTotalCount] = useState(0);
-  const [status, setStatus] = useState<SearchStatus>('idle');
+  const [searchState, setSearchState] = useState<SearchState>(initialSearchState);
 
   useEffect(() => {
     if (!query) {
-      setArticles([]);
-      setTotalCount(0);
-      setStatus('idle');
-      return;
-    }
-
-    const endpoint = getApiSearchUrl();
-    if (!endpoint) {
-      setArticles([]);
-      setTotalCount(0);
-      setStatus('error');
       return;
     }
 
     const abortController = new AbortController();
 
     const searchArticles = async () => {
-      setArticles([]);
-      setTotalCount(0);
-      setStatus('loading');
+      const endpoint = getApiSearchUrl();
+
+      if (!endpoint) {
+        setSearchState({
+          articles: [],
+          currentPage,
+          query,
+          status: 'error',
+          totalCount: 0,
+        });
+        return;
+      }
+
+      setSearchState({
+        articles: [],
+        currentPage,
+        query,
+        status: 'loading',
+        totalCount: 0,
+      });
 
       try {
         const response = await fetch(getSearchUrl(endpoint, query, currentPage), {
@@ -89,17 +109,25 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
         const data = (await response.json()) as SearchResponse;
         const contents = Array.isArray(data.contents) ? data.contents : [];
 
-        setArticles(contents);
-        setTotalCount(typeof data.totalCount === 'number' ? data.totalCount : contents.length);
-        setStatus('success');
+        setSearchState({
+          articles: contents,
+          currentPage,
+          query,
+          status: 'success',
+          totalCount: typeof data.totalCount === 'number' ? data.totalCount : contents.length,
+        });
       } catch (error) {
         if (error instanceof DOMException && error.name === 'AbortError') {
           return;
         }
 
-        setArticles([]);
-        setTotalCount(0);
-        setStatus('error');
+        setSearchState({
+          articles: [],
+          currentPage,
+          query,
+          status: 'error',
+          totalCount: 0,
+        });
       }
     };
 
@@ -108,6 +136,11 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
     return () => abortController.abort();
   }, [query, currentPage]);
 
+  const hasCurrentSearchState =
+    Boolean(query) && searchState.query === query && searchState.currentPage === currentPage;
+  const articles = hasCurrentSearchState ? searchState.articles : [];
+  const totalCount = hasCurrentSearchState ? searchState.totalCount : 0;
+  const status = hasCurrentSearchState ? searchState.status : 'idle';
   const isLoading = Boolean(query) && (status === 'idle' || status === 'loading');
 
   const emptyMessage = '記事はまだありません';
