@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import RichText from '@/components/Features/Article/Elements/Plugins/RichText';
 import CustomHtml from '@/components/Features/Article/Elements/Plugins/CustomHtml';
@@ -64,6 +64,53 @@ describe('Article plugins', () => {
 
     expect(document.querySelector('script[data-custom-html-executed="true"]')).toBeInTheDocument();
     vi.useRealTimers();
+  });
+
+  it('adds target blank to custom html links without overwriting existing targets', async () => {
+    render(
+      <CustomHtml
+        block={{
+          custom_html: `
+            <a href="https://example.com">External link</a>
+            <a href="https://example.com/self" target="_self" rel="nofollow">Existing target</a>
+            <a href="#">Placeholder link</a>
+          `,
+        }}
+      />,
+    );
+
+    const externalLink = screen.getByRole('link', { name: 'External link' });
+    const existingTargetLink = screen.getByRole('link', { name: 'Existing target' });
+    const placeholderLink = screen.getByRole('link', { name: 'Placeholder link' });
+
+    await waitFor(() => {
+      expect(externalLink).toHaveAttribute('target', '_blank');
+      expect(externalLink).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+    expect(existingTargetLink).toHaveAttribute('target', '_self');
+    expect(existingTargetLink).toHaveAttribute('rel', 'nofollow');
+    expect(placeholderLink).not.toHaveAttribute('target');
+  });
+
+  it('adds target blank to custom html links inserted after mounting', async () => {
+    const { container } = render(
+      <CustomHtml
+        block={{
+          custom_html: '<div id="generated-link-target"></div>',
+        }}
+      />,
+    );
+    const customHtml = container.querySelector('[data-custom-html]');
+    const link = document.createElement('a');
+
+    link.href = 'https://example.com/product';
+    link.textContent = 'Generated link';
+    customHtml?.appendChild(link);
+
+    await waitFor(() => {
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    });
   });
 
   it('renders speech bubble image with optimized microCMS parameters', () => {
