@@ -16,7 +16,7 @@ export default function SupportSection({ data }: Props) {
       <div
         className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
-        <FireIcon className="h-8 w-8 mr-2" />
+        <FireIcon className="h-8 w-8 mr-2" aria-hidden="true" />
         応援する
       </div>
       <div className="flex justify-center">
@@ -25,6 +25,7 @@ export default function SupportSection({ data }: Props) {
           className="hover:opacity-60"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="にほんブログ村を新しいタブで開く"
         >
           <img
             src="https://b.blogmura.com/banner-blogmura-reader-white-small.svg"
@@ -40,6 +41,7 @@ export default function SupportSection({ data }: Props) {
           target="_blank"
           rel="noopener noreferrer"
           className="ml-3 hover:opacity-60"
+          aria-label="人気ブログランキングを新しいタブで開く"
         >
           <img
             src="https://blog.with2.net/img/banner/banner_22.gif"
@@ -54,6 +56,7 @@ export default function SupportSection({ data }: Props) {
           target="_blank"
           rel="noopener noreferrer"
           className="ml-3 hover:opacity-60"
+          aria-label="FC2ブログランキングを新しいタブで開く"
         >
           <img
             src="https://static.fc2.com/blogranking/ranking_banner/a_02.gif"

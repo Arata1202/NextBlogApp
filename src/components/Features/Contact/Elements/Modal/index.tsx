@@ -39,7 +39,10 @@ export default function Modal({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div
+            className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+            aria-hidden="true"
+          />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -60,7 +63,7 @@ export default function Modal({
                   <div
                     className={`${styles.Icon} mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10`}
                   >
-                    <EnvelopeIcon className="h-6 w-6 text-blue-500" />
+                    <EnvelopeIcon className="h-6 w-6 text-blue-500" aria-hidden="true" />
                   </div>
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <Dialog.Title
@@ -70,7 +73,12 @@ export default function Modal({
                       {title}
                     </Dialog.Title>
                     <div className="mt-2">
-                      <p className={`${styles.DialogDescription} text-gray-500`}>{description}</p>
+                      <Dialog.Description
+                        as="p"
+                        className={`${styles.DialogDescription} text-gray-500`}
+                      >
+                        {description}
+                      </Dialog.Description>
                     </div>
                   </div>
                 </div>

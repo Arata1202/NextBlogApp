@@ -18,6 +18,7 @@ export default function InputContainer({
   textarea = false,
 }: Props) {
   const { theme } = useTheme();
+  const errorId = `${name}-error`;
 
   return (
     <div className="sm:col-span-2">
@@ -35,6 +36,8 @@ export default function InputContainer({
             id={name}
             name={name}
             autoComplete={name}
+            aria-invalid={Boolean(errors)}
+            aria-describedby={errors ? errorId : undefined}
             className={`${fieldControlClassName} block h-10 w-full px-3 text-base sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           />
         )}
@@ -44,10 +47,16 @@ export default function InputContainer({
             id={name}
             name={name}
             rows={4}
+            aria-invalid={Boolean(errors)}
+            aria-describedby={errors ? errorId : undefined}
             className={`${fieldControlClassName} block w-full px-3 py-2 text-base sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           />
         )}
-        {errors && <p className="text-red-500">{errors.message}</p>}
+        {errors && (
+          <p id={errorId} className="text-red-700" role="alert">
+            {errors.message}
+          </p>
+        )}
       </div>
     </div>
   );

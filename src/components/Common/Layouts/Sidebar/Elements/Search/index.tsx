@@ -49,7 +49,7 @@ export default function Search() {
   return (
     <div className={`px-4 border py-5 mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
       <div className="text-2xl text-center font-semibold flex justify-center">
-        <MagnifyingGlassIcon className="h-8 w-8 mr-2" />
+        <MagnifyingGlassIcon className="h-8 w-8 mr-2" aria-hidden="true" />
         検索
       </div>
 
@@ -72,6 +72,7 @@ export default function Search() {
             placeholder="キーワードを入力"
             aria-invalid={Boolean(errorMessage)}
             aria-describedby={errorMessage ? errorMessageId : undefined}
+            aria-keyshortcuts="Meta+K"
             className={`${fieldControlClassName} h-10 min-w-0 flex-1 px-3 text-base sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
           />
           <button
@@ -79,11 +80,11 @@ export default function Search() {
             className={`${outlinedControlClassName} inline-flex h-10 w-10 shrink-0 items-center justify-center ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             aria-label="検索"
           >
-            <MagnifyingGlassIcon className="h-5 w-5" />
+            <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
         {errorMessage && (
-          <p id={errorMessageId} className="text-red-500">
+          <p id={errorMessageId} className="text-red-700" role="alert">
             {errorMessage}
           </p>
         )}

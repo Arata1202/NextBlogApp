@@ -72,6 +72,8 @@ const formatRichTextImages = ($: ReturnType<typeof cheerio.load>, imageAltFallba
         const count = (altCountByText.get(altBaseText) ?? 0) + 1;
         altCountByText.set(altBaseText, count);
         image.attr('alt', count === 1 ? `${altBaseText}の画像` : `${altBaseText}の画像 ${count}`);
+      } else {
+        image.attr('alt', '');
       }
     }
 

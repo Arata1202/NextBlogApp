@@ -65,33 +65,36 @@ export default function Pagination({
   };
 
   return (
-    <ul className={styles.container}>
-      {pages.map((p) => (
-        <li className={styles.list} key={p}>
-          {typeof p === 'number' ? (
-            current !== p ? (
-              <Link
-                href={getHref(p)}
-                className={`${styles.item} hover:text-blue-500 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                aria-label={`${p}ページ目へ移動`}
-              >
-                {p}
-              </Link>
+    <nav aria-label="ページネーション">
+      <ul className={styles.container}>
+        {pages.map((p) => (
+          <li className={styles.list} key={p}>
+            {typeof p === 'number' ? (
+              current !== p ? (
+                <Link
+                  href={getHref(p)}
+                  className={`${styles.item} hover:text-blue-600 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  aria-label={`${p}ページ目へ移動`}
+                >
+                  {p}
+                </Link>
+              ) : (
+                <span
+                  className={`${styles.item} ${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  aria-current="page"
+                  aria-label={`${p}ページ目`}
+                >
+                  {p}
+                </span>
+              )
             ) : (
-              <span
-                className={`${styles.item} ${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                aria-current="page"
-              >
-                {p}
+              <span className={`${styles.item} ${styles.ellipsis}`} aria-hidden="true">
+                ...
               </span>
-            )
-          ) : (
-            <span className={`${styles.item} ${styles.ellipsis}`} aria-hidden="true">
-              ...
-            </span>
-          )}
-        </li>
-      ))}
-    </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }

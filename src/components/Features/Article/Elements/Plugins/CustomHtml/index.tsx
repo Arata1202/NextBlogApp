@@ -4,6 +4,8 @@ import { memo, useEffect, useMemo, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { ContentBlock } from '@/types/microcms';
 import styles from './index.module.css';
+import { applyTargetBlankToLinks } from './links';
+import { setupMoshimoEasyLinkFallback, syncMoshimoEasyLinkArrows } from './moshimoEasyLinkFallback';
 import { runCustomHtmlScripts } from './scripts';
 import { useIframelyEmbeds } from '@/hooks/useIframelyEmbeds';
 
@@ -28,11 +30,36 @@ function CustomHtml({ block }: Props) {
       return;
     }
 
+    const syncCustomHtmlEnhancements = () => {
+      applyTargetBlankToLinks(content);
+      syncMoshimoEasyLinkArrows(content);
+    };
+
+    syncCustomHtmlEnhancements();
+
+    const cleanupMoshimoEasyLinkFallback = setupMoshimoEasyLinkFallback(content);
+
+    const observer = new MutationObserver(() => {
+      syncCustomHtmlEnhancements();
+    });
+
+    observer.observe(content, {
+      attributeFilter: ['class', 'href', 'rel', 'target'],
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+
     const timer = window.setTimeout(() => {
       runCustomHtmlScripts(content, html);
+      syncCustomHtmlEnhancements();
     }, SCRIPT_REPLAY_DELAY_MS);
 
-    return () => window.clearTimeout(timer);
+    return () => {
+      cleanupMoshimoEasyLinkFallback();
+      observer.disconnect();
+      window.clearTimeout(timer);
+    };
   }, [html, pathname]);
 
   return (

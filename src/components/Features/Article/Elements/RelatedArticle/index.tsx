@@ -11,7 +11,7 @@ export default function RelatedArticle({ relatedArticles }: Props) {
     <>
       <div className="mt-5">
         <div className={`text-2xl font-semibold flex justify-center`}>
-          <LinkIcon className="h-8 w-8 mr-2" />
+          <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           関連記事
         </div>
         <div className="mt-5">

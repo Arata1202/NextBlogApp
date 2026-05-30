@@ -46,20 +46,23 @@ export default function BreadCrumb({
   const searchLabel = `「${searchKeyword ?? ''}」の検索結果`;
 
   return (
-    <>
+    <nav aria-label="パンくず">
       <ul className="flex items-center space-x-4">
         <li>
-          <Link href="/" className="flex text-gray-500 hover:text-blue-500">
-            <HomeIcon className="h-4 w-4 flex-shrink-0" />
+          <Link href="/" className="flex text-gray-500 hover:text-blue-600" aria-label="ホーム">
+            <HomeIcon className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
           </Link>
         </li>
         {article && (
           <li>
             <div className="flex items-center">
-              <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
+              <ChevronRightIcon
+                className="h-4 w-4 flex-shrink-0 text-gray-400"
+                aria-hidden="true"
+              />
               <Link
                 href={`/category/${article.categories[0].id}`}
-                className="whitespace-nowrap ml-4 text-sm font-medium text-gray-500 hover:text-blue-500"
+                className="whitespace-nowrap ml-4 text-sm font-medium text-gray-500 hover:text-blue-600"
               >
                 {article.categories[0].name}
               </Link>
@@ -68,7 +71,7 @@ export default function BreadCrumb({
         )}
         <li>
           <div className="flex items-center">
-            <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
+            <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" aria-hidden="true" />
             {year && month && renderCurrentPage(`${year}年${parseInt(month, 10)}月`)}
             {article && renderCurrentPage(article.title)}
             {category && renderCurrentPage(category.name)}
@@ -84,6 +87,6 @@ export default function BreadCrumb({
           </div>
         </li>
       </ul>
-    </>
+    </nav>
   );
 }

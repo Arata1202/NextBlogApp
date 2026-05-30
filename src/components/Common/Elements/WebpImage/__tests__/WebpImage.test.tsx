@@ -23,16 +23,12 @@ describe('WebpImage', () => {
   });
 
   it('uses card dimensions when card mode is enabled', () => {
-    render(<WebpImage article={article} card />);
+    const { container } = render(<WebpImage article={article} card />);
+    const image = container.querySelector('img');
 
-    expect(screen.getByRole('img', { name: 'Article image' })).toHaveAttribute(
-      'src',
-      expect.stringContaining('w=240'),
-    );
-    expect(screen.getByRole('img', { name: 'Article image' })).toHaveAttribute(
-      'src',
-      expect.stringContaining('h=126'),
-    );
+    expect(image).toHaveAttribute('alt', '');
+    expect(image).toHaveAttribute('src', expect.stringContaining('w=240'));
+    expect(image).toHaveAttribute('src', expect.stringContaining('h=126'));
   });
 
   it('renders sources for webp candidates', () => {

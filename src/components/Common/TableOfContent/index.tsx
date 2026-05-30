@@ -24,7 +24,10 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
     if (element) {
       const yOffset = -130;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      const prefersReducedMotion =
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: y, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     }
   };
 
@@ -62,7 +65,7 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
   });
 
   return (
-    <div className={`flex justify-center`}>
+    <nav className={`flex justify-center`} aria-label="目次">
       <div
         className={`${styles.toc} ${sidebar && styles.sidebarToc} w-1/2 border p-4 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
@@ -81,7 +84,7 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
               <Link
                 href={`#${heading.id}`}
                 onClick={(e) => handleClick(e, heading.id)}
-                className="hover:text-blue-500"
+                className="hover:text-blue-600"
               >
                 {heading.number} {heading.title}
               </Link>
@@ -89,6 +92,6 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
           ))}
         </ol>
       </div>
-    </div>
+    </nav>
   );
 }

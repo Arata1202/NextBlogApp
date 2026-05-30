@@ -66,7 +66,9 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
           {block.bubble_text && block.bubble_image && <SpeechBubble block={block} />}
           {block.rich_text && <RichText block={block} articleTitle={data.title} />}
           {block.custom_html && <CustomHtml block={block} />}
-          {block.image_slider && block.image_slider.length > 0 && <ImageSlider block={block} />}
+          {block.image_slider && block.image_slider.length > 0 && (
+            <ImageSlider block={block} imageAltFallback={data.title} />
+          )}
           {block.article_link && typeof block.article_link !== 'string' && (
             <WantToRead block={block} />
           )}
@@ -89,7 +91,9 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
               />
             )}
             {block.custom_html && <CustomHtml block={block} />}
-            {block.image_slider && block.image_slider.length > 0 && <ImageSlider block={block} />}
+            {block.image_slider && block.image_slider.length > 0 && (
+              <ImageSlider block={block} imageAltFallback={data.title} />
+            )}
             {block.article_link && typeof block.article_link !== 'string' && (
               <WantToRead block={block} />
             )}
