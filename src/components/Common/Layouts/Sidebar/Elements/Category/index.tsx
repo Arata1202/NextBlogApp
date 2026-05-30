@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { useHydratedTheme } from '@/hooks/useHydratedTheme';
 import { FolderIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import { CATEGORY_ARR } from '@/constants/category';
 
 export default function Category() {
-  const { theme } = useTheme();
+  const { theme } = useHydratedTheme();
 
   return (
     <>

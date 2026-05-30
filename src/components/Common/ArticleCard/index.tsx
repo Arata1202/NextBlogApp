@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { useHydratedTheme } from '@/hooks/useHydratedTheme';
 import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 import DoubleDate from '../DoubleDate';
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function ArticleCard({ article }: Props) {
-  const { theme } = useTheme();
+  const { theme } = useHydratedTheme();
 
   return (
     <>

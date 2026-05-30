@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { useHydratedTheme } from '@/hooks/useHydratedTheme';
 import styles from '@/components/Common/ArticleCard/index.module.css';
 import { UnifiedArticle } from '@/types/unified';
 import SingleDate from '@/components/Common/SingleDate';
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function UnifiedArticleCard({ article }: Props) {
-  const { theme } = useTheme();
+  const { theme } = useHydratedTheme();
   const isExternal = article.source === 'zenn';
 
   const isNextDayOrLater = (date1: string, date2: string) => {

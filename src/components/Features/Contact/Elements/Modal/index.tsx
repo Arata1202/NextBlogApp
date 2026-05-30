@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { EnvelopeIcon } from '@heroicons/react/24/solid';
 import { Dialog, Transition } from '@headlessui/react';
-import { useTheme } from 'next-themes';
+import { useHydratedTheme } from '@/hooks/useHydratedTheme';
 import styles from './index.module.css';
 
 type Props = {
@@ -25,7 +25,7 @@ export default function Modal({
   confirmText,
   isLoading = false,
 }: Props) {
-  const { theme } = useTheme();
+  const { theme } = useHydratedTheme();
 
   return (
     <Transition.Root show={show} as={Fragment}>

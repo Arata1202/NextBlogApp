@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { useHydratedTheme } from '@/hooks/useHydratedTheme';
 import { useEffect, useState } from 'react';
 import { Heading } from '@/types/heading';
 import styles from './index.module.css';
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function TableOfContents({ headings, sidebar = false }: Props) {
-  const { theme } = useTheme();
+  const { theme } = useHydratedTheme();
   const [activeId, setActiveId] = useState('');
 
   const formattedHeadings = formatHeadings(headings);

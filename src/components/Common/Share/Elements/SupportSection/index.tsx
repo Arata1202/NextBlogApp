@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { useHydratedTheme } from '@/hooks/useHydratedTheme';
 import { FireIcon } from '@heroicons/react/24/solid';
 import { Article } from '@/types/microcms';
 import BuyMeaCoffee from '../Elements/BuyMeaCoffee';
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function SupportSection({ data }: Props) {
-  const { theme } = useTheme();
+  const { theme } = useHydratedTheme();
 
   return (
     <div className="mt-5">

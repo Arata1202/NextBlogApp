@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { useHydratedTheme } from '@/hooks/useHydratedTheme';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { UnifiedArticle } from '@/types/unified';
 import WebpImage from '@/components/Common/Elements/WebpImage';
@@ -18,7 +18,7 @@ const normalizePath = (path?: string) => {
 };
 
 export default function Recent({ recentArticles, currentArticleUrl }: Props) {
-  const { theme } = useTheme();
+  const { theme } = useHydratedTheme();
   const normalizedCurrentArticleUrl = normalizePath(currentArticleUrl);
   const linkClassName = `${styles.link} block rounded-md ${interactiveFocusClassName}`;
 

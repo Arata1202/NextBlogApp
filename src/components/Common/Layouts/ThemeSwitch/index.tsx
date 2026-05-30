@@ -1,11 +1,11 @@
 'use client';
 
-import { useTheme } from 'next-themes';
+import { useHydratedTheme } from '@/hooks/useHydratedTheme';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { iconControlClassName } from '@/components/Common/controlClassNames';
 
 export default function ThemeSwitch() {
-  const { setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useHydratedTheme();
 
   if (resolvedTheme === 'dark') {
     return (

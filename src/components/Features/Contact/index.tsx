@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useTheme } from 'next-themes';
+import { useHydratedTheme } from '@/hooks/useHydratedTheme';
 import { useForm } from 'react-hook-form';
 import ReCAPTCHA from 'react-google-recaptcha';
 import type { Form } from '@/types/form';
@@ -12,7 +12,7 @@ import { outlinedControlClassName } from '@/components/Common/controlClassNames'
 import { getApiSendEmailUrl, getRecaptchaSiteKey } from '@/config/publicEnv';
 
 export default function ContactFeature() {
-  const { theme } = useTheme();
+  const { theme } = useHydratedTheme();
   const apiSendEmailUrl = getApiSendEmailUrl();
   const recaptchaSiteKey = getRecaptchaSiteKey();
   const isFormConfigured = Boolean(apiSendEmailUrl && recaptchaSiteKey);

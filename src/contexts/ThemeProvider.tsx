@@ -2,14 +2,19 @@
 
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import type { ThemeProviderProps } from 'next-themes';
+import type { ReactNode } from 'react';
 import { useIsClient } from '@/hooks/useIsClient';
 
-export default function ThemeProvider(props: ThemeProviderProps) {
+function ThemeHydrationBoundary({ children }: { children: ReactNode }) {
   const isClient = useIsClient();
 
-  if (!isClient) {
-    return <div style={{ visibility: 'hidden' }}>{props.children}</div>;
-  }
+  return <div style={{ visibility: isClient ? 'visible' : 'hidden' }}>{children}</div>;
+}
 
-  return <NextThemesProvider {...props}>{props.children}</NextThemesProvider>;
+export default function ThemeProvider({ children, ...themeProviderProps }: ThemeProviderProps) {
+  return (
+    <NextThemesProvider {...themeProviderProps}>
+      <ThemeHydrationBoundary>{children}</ThemeHydrationBoundary>
+    </NextThemesProvider>
+  );
 }

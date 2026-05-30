@@ -1,11 +1,11 @@
 'use client';
 
-import { useTheme } from 'next-themes';
+import { useHydratedTheme } from '@/hooks/useHydratedTheme';
 import { BellIcon } from '@heroicons/react/24/outline';
 import styles from './index.module.css';
 
 export default function AdAlert() {
-  const { theme } = useTheme();
+  const { theme } = useHydratedTheme();
 
   return (
     <>

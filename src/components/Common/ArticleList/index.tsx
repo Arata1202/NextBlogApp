@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from 'next-themes';
+import { useHydratedTheme } from '@/hooks/useHydratedTheme';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
 import { Article, Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
@@ -46,7 +46,7 @@ export default function ArticleList({
   emptyMessage = '記事はまだありません',
   isLoading = false,
 }: Props) {
-  const { theme } = useTheme();
+  const { theme } = useHydratedTheme();
   const isMixed = Boolean(mixedArticles);
 
   return (
