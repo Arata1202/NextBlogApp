@@ -12,6 +12,22 @@ type Props = {
   profile?: boolean;
 };
 
+const opensInNewTab = (href?: string) => {
+  if (!href) {
+    return false;
+  }
+
+  const normalizedHref = href.trim().toLowerCase();
+
+  return (
+    normalizedHref !== '' &&
+    !normalizedHref.startsWith('/') &&
+    !normalizedHref.startsWith('#') &&
+    !normalizedHref.startsWith('mailto:') &&
+    !normalizedHref.startsWith('tel:')
+  );
+};
+
 export default function Markdown({ content, profile = false }: Props) {
   const { theme } = useTheme();
   const linkClassName = getTextLinkClassName(theme);
@@ -61,18 +77,18 @@ export default function Markdown({ content, profile = false }: Props) {
               </h4>
             ),
             a: ({ href, children, ...props }) => {
-              const isInternalLink = href?.startsWith('/');
+              const shouldOpenInNewTab = opensInNewTab(href);
 
               return (
                 <a
                   className={linkClassName}
                   href={href}
-                  target={isInternalLink ? undefined : '_blank'}
-                  rel={isInternalLink ? undefined : 'noopener noreferrer'}
+                  target={shouldOpenInNewTab ? '_blank' : undefined}
+                  rel={shouldOpenInNewTab ? 'noopener noreferrer' : undefined}
                   {...props}
                 >
                   {children}
-                  {!isInternalLink && <span className="sr-only">新しいタブで開きます</span>}
+                  {shouldOpenInNewTab && <span className="sr-only">新しいタブで開きます</span>}
                 </a>
               );
             },

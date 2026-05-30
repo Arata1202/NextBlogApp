@@ -22,8 +22,35 @@ vi.mock('react-slick', async () => {
   const React = await import('react');
 
   return {
-    default: ({ children }: { children: React.ReactNode }) =>
-      React.createElement('div', { 'data-testid': 'slider' }, children),
+    default: ({
+      children,
+      customPaging,
+      dots,
+      nextArrow,
+      prevArrow,
+    }: {
+      children: React.ReactNode;
+      customPaging?: (index: number) => React.ReactElement;
+      dots?: boolean;
+      nextArrow?: React.ReactElement;
+      prevArrow?: React.ReactElement;
+    }) =>
+      React.createElement(
+        'div',
+        { 'data-testid': 'slider' },
+        prevArrow,
+        children,
+        dots &&
+          customPaging &&
+          React.createElement(
+            'div',
+            { 'data-testid': 'slider-dots' },
+            Array.from({ length: React.Children.count(children) }, (_, index) =>
+              React.cloneElement(customPaging(index), { key: index }),
+            ),
+          ),
+        nextArrow,
+      ),
   };
 });
 
@@ -293,6 +320,42 @@ describe('Article plugins', () => {
     expect(image).toHaveAttribute('alt', 'Article titleの画像');
     expect(image).toHaveAttribute('loading', 'eager');
     expect(screen.queryByTestId('slider')).not.toBeInTheDocument();
+  });
+
+  it('renders accessible slider arrows for multiple images', () => {
+    render(
+      <ImageSlider
+        imageAltFallback="Article title"
+        block={{
+          image_slider: [
+            {
+              url: 'https://images.microcms-assets.io/assets/site/slide-1.png',
+              width: 960,
+              height: 540,
+            },
+            {
+              url: 'https://images.microcms-assets.io/assets/site/slide-2.png',
+              width: 960,
+              height: 540,
+            },
+          ],
+        }}
+      />,
+    );
+
+    expect(screen.getByTestId('slider')).toBeInTheDocument();
+    expect(
+      screen.getByRole('region', { name: 'Article titleの画像スライダー' }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '前の画像を表示' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '次の画像を表示' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '1枚目の画像を表示中' })).toHaveAttribute(
+      'aria-current',
+      'true',
+    );
+    expect(screen.getByRole('button', { name: '2枚目の画像を表示' })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: '1枚目 / 全2枚' })).toBeInTheDocument();
+    expect(screen.getByText('1枚目 / 全2枚')).toHaveAttribute('aria-live', 'polite');
   });
 
   it('renders related article links from the want-to-read plugin', () => {
