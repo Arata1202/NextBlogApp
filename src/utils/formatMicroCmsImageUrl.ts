@@ -10,7 +10,13 @@ export const isMicroCmsImageUrl = (src: string) => {
 
 export const formatMicroCmsImageUrl = (
   src: string,
-  options: { width?: number; quality?: number; fit?: 'clip' | 'crop' } = {},
+  options: {
+    width?: number;
+    height?: number;
+    quality?: number;
+    fit?: 'clip' | 'crop';
+    devicePixelRatio?: number;
+  } = {},
 ) => {
   try {
     const url = new URL(src);
@@ -25,6 +31,14 @@ export const formatMicroCmsImageUrl = (
 
     if (options.width) {
       url.searchParams.set('w', String(options.width));
+    }
+
+    if (options.height) {
+      url.searchParams.set('h', String(options.height));
+    }
+
+    if (options.devicePixelRatio) {
+      url.searchParams.set('dpr', String(options.devicePixelRatio));
     }
 
     return url.toString();

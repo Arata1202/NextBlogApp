@@ -37,12 +37,12 @@ func allowedOrigins() map[string]struct{} {
 	return origins
 }
 
-func setCORSHeaders(w http.ResponseWriter, r *http.Request) bool {
+func setCORSHeaders(w http.ResponseWriter, r *http.Request, allowMethods string) bool {
 	origins := allowedOrigins()
 	origin := r.Header.Get("Origin")
 
 	w.Header().Set("Vary", "Origin")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", allowMethods)
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 	if origin == "" {
@@ -82,7 +82,7 @@ func verifyRecaptcha(response, secret string) (bool, error) {
 }
 
 func RecaptchaHandler(w http.ResponseWriter, r *http.Request) {
-	if !setCORSHeaders(w, r) {
+	if !setCORSHeaders(w, r, "POST, OPTIONS") {
 		return
 	}
 

@@ -227,7 +227,7 @@ func projectSearchArticles(articles []map[string]interface{}) []map[string]inter
 }
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
-	if !setCORSHeaders(w, r) {
+	if !setCORSHeaders(w, r, "GET, OPTIONS") {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")

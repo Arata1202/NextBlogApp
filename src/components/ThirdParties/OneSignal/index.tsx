@@ -1,7 +1,13 @@
 import Script from 'next/script';
+import { getOneSignalAppId } from '@/config/serverEnv';
 
 export default function OneSignal() {
-  const onesignalAppId = process.env.ONESIGNAL_APP_ID;
+  const onesignalAppId = getOneSignalAppId();
+
+  if (!onesignalAppId) {
+    return null;
+  }
+
   return (
     <>
       <Script

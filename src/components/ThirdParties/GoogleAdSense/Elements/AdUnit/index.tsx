@@ -5,8 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useMutationObserver } from '@/hooks/useMutationObserver';
 import styles from './index.module.css';
-
-const publisherId = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_PUBLISHER_ID;
+import { getGoogleAdSensePublisherId } from '@/config/publicEnv';
 
 declare global {
   interface Window {
@@ -26,10 +25,15 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
   pathname = pathname ? pathname : '';
 
   const { theme } = useTheme();
+  const publisherId = getGoogleAdSensePublisherId();
 
   useMutationObserver();
 
   useEffect(() => {
+    if (!publisherId) {
+      return;
+    }
+
     const timer = setTimeout(() => {
       try {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -39,7 +43,11 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [pathname]);
+  }, [pathname, publisherId]);
+
+  if (!publisherId) {
+    return null;
+  }
 
   return (
     <>
