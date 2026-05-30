@@ -35,18 +35,20 @@ export default function Alert({ onClose, show, title, description }: Props) {
           >
             <div className="p-4">
               <div className="flex items-start">
-                <div className="flex-shrink-0">
+                <div className="flex h-6 flex-shrink-0 items-center">
                   <CheckCircleIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
                 </div>
-                <div className="ml-3 w-0 flex-1 pt-0.5">
-                  <p
-                    className={`${styles.DialogTitle} font-semibold ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-                  >
-                    {title}
-                  </p>
+                <div className="ml-3 w-0 flex-1">
+                  <div className="flex min-h-6 items-center">
+                    <p
+                      className={`${styles.DialogTitle} leading-6 font-semibold ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                    >
+                      {title}
+                    </p>
+                  </div>
                   <p className={`${styles.DialogDescription} mt-1 text-gray-500`}>{description}</p>
                 </div>
-                <div className="ml-4 flex flex-shrink-0">
+                <div className="ml-4 flex h-6 flex-shrink-0 items-center">
                   <button
                     type="button"
                     aria-label="通知を閉じる"
