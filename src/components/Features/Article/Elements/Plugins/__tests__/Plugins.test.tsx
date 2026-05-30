@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import RichText from '@/components/Features/Article/Elements/Plugins/RichText';
 import CustomHtml from '@/components/Features/Article/Elements/Plugins/CustomHtml';
@@ -110,6 +110,123 @@ describe('Article plugins', () => {
     await waitFor(() => {
       expect(link).toHaveAttribute('target', '_blank');
       expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+  });
+
+  it('moves Moshimo EasyLink images with fallback arrow controls', async () => {
+    render(
+      <CustomHtml
+        block={{
+          custom_html: `
+            <div class="easyLink-box">
+              <div class="easyLink-img">
+                <p class="easyLink-img-box">
+                  <span>
+                    <img
+                      class="easyLink-img-pht js-item-image"
+                      src="one.png"
+                      alt="one"
+                      data-testid="first-image"
+                    >
+                  </span>
+                  <span class="waiting">
+                    <img
+                      class="js-item-image"
+                      data-img_src="two.png"
+                      alt="two"
+                      data-testid="second-image"
+                    >
+                  </span>
+                  <a href="#" class="easyLink-arrow-left"><img src="left.png" alt=""></a>
+                  <a href="#" class="easyLink-arrow-right"><img src="right.png" alt=""></a>
+                </p>
+              </div>
+            </div>
+          `,
+        }}
+      />,
+    );
+
+    const leftArrow = await screen.findByRole('button', { name: '前の画像を表示' });
+    const rightArrow = screen.getByRole('button', { name: '次の画像を表示' });
+    const firstImage = screen.getByTestId('first-image');
+    const secondImage = screen.getByTestId('second-image');
+    const clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true });
+
+    rightArrow.dispatchEvent(clickEvent);
+
+    expect(clickEvent.defaultPrevented).toBe(true);
+    await waitFor(() => {
+      expect(firstImage).not.toHaveClass('easyLink-img-pht');
+      expect(firstImage).toHaveStyle({ display: 'none' });
+      expect(secondImage).toHaveClass('easyLink-img-pht');
+      expect(secondImage).toHaveAttribute('src', 'two.png');
+      expect(secondImage.style.display).toBe('unset');
+    });
+    expect(secondImage.parentElement).not.toHaveClass('waiting');
+
+    fireEvent.keyDown(leftArrow, { key: ' ' });
+
+    expect(firstImage).toHaveClass('easyLink-img-pht');
+    expect(firstImage.style.display).toBe('unset');
+    expect(secondImage).not.toHaveClass('easyLink-img-pht');
+    expect(secondImage).toHaveStyle({ display: 'none' });
+  });
+
+  it('does not double-move Moshimo EasyLink images when the official handler already moved them', async () => {
+    render(
+      <CustomHtml
+        block={{
+          custom_html: `
+            <div class="easyLink-box">
+              <div class="easyLink-img">
+                <p class="easyLink-img-box">
+                  <span>
+                    <img
+                      class="easyLink-img-pht js-item-image"
+                      src="one.png"
+                      alt="one"
+                      data-testid="first-image"
+                    >
+                  </span>
+                  <span class="waiting">
+                    <img
+                      class="js-item-image"
+                      data-img_src="two.png"
+                      alt="two"
+                      data-testid="second-image"
+                    >
+                  </span>
+                  <a href="#" class="easyLink-arrow-right">
+                    <img src="right.png" alt="" data-testid="right-arrow-image">
+                  </a>
+                </p>
+              </div>
+            </div>
+          `,
+        }}
+      />,
+    );
+
+    const rightArrowImage = screen.getByTestId('right-arrow-image');
+    const firstImage = screen.getByTestId('first-image');
+    const secondImage = screen.getByTestId('second-image');
+
+    rightArrowImage.addEventListener(
+      'click',
+      (event) => {
+        event.preventDefault();
+        firstImage.classList.remove('easyLink-img-pht');
+        secondImage.classList.add('easyLink-img-pht');
+      },
+      true,
+    );
+
+    rightArrowImage.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+    await waitFor(() => {
+      expect(firstImage).not.toHaveClass('easyLink-img-pht');
+      expect(secondImage).toHaveClass('easyLink-img-pht');
     });
   });
 
