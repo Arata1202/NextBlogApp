@@ -95,6 +95,7 @@ export default function Header() {
   const menuLinkClassName = `flex items-center py-2.5 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
   const categoryMenuLinkClassName = `ml-5 flex items-center py-2.5 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
   const popoverMenuLinkClassName = `relative z-0 flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:text-blue-600 focus-visible:z-10 focus-visible:ring-inset ${interactiveFocusClassName} ${themeClassName}`;
+  const mobileGithubLinkClassName = `${iconControlClassName} inline-flex h-11 w-11 items-center justify-center hover:text-blue-600 focus-visible:ring-inset ${themeClassName}`;
   const githubLinkClassName = `rounded-md hover:text-blue-600 ${interactiveFocusClassName}`;
 
   return (
@@ -131,7 +132,7 @@ export default function Header() {
                   href="https://github.com/Arata1202/NextBlogApp"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${githubLinkClassName} px-3`}
+                  className={mobileGithubLinkClassName}
                   aria-label="GitHubリポジトリを新しいタブで開く"
                 >
                   <GitHubIcon className="h-6 w-6" aria-hidden="true" />
