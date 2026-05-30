@@ -8,8 +8,8 @@ const articleListMock = vi.fn();
 const paginationMock = vi.fn();
 
 vi.mock('@/components/Common/PageHeading', () => ({
-  default: ({ searchKeyword }: { searchKeyword?: string }) => (
-    <div>{`「${searchKeyword ?? ''}」の検索結果`}</div>
+  default: ({ page }: { page: { type: 'search'; searchKeyword?: string } }) => (
+    <div>{`「${page.searchKeyword ?? ''}」の検索結果`}</div>
   ),
 }));
 

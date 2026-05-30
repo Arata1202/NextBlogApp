@@ -27,7 +27,7 @@ export default function TagPage({
 }: Props) {
   return (
     <>
-      <PageHeading tag={tag} />
+      <PageHeading page={{ type: 'tag', tag }} />
       <ArticleList
         articles={articles}
         recentArticles={recentArticles}

@@ -22,7 +22,7 @@ export default function LinkPage({ recentArticles, tags, archiveList }: Props) {
 
   return (
     <>
-      <PageHeading link={true} />
+      <PageHeading page={{ type: 'link' }} />
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />

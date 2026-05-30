@@ -23,7 +23,7 @@ export default function ProfilePage({ recentArticles, tags, archiveList }: Props
 
   return (
     <>
-      <PageHeading profile={true} />
+      <PageHeading page={{ type: 'profile' }} />
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} updatedDate={updatedDate} />

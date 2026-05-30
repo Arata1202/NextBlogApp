@@ -1,9 +1,8 @@
-import { getList, getCategory, getAllTagLists } from '@/libs/microcms';
-import { getArchiveList } from '@/libs/archive';
+import { getAllCategoryLists, getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants/limit';
-import { CATEGORY_ARR } from '@/constants/category';
 import CategoryPage from '@/components/Pages/Category';
-import { getMixedRecentArticles } from '@/libs/recent';
+import { getCategoryForPage } from '@/libs/microcmsPage';
+import { getSidebarData } from '@/libs/pageData';
 
 type Props = {
   params: Promise<{
@@ -12,24 +11,27 @@ type Props = {
 };
 
 export const generateStaticParams = async () => {
-  return CATEGORY_ARR.map((category) => ({ categoryId: category.id }));
+  const categories = await getAllCategoryLists({
+    fields: 'id',
+  });
+
+  return categories.map((category) => ({ categoryId: category.id }));
 };
 
 export default async function Page(props: Props) {
   const params = await props.params;
   const { categoryId } = params;
 
-  const data = await getList({
-    limit: LIMIT,
-    fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
-    filters: `categories[contains]${categoryId}`,
-  });
-  const recentArticles = await getMixedRecentArticles();
-  const tags = await getAllTagLists({
-    fields: 'id,name',
-  });
-  const category = await getCategory(params.categoryId, { fields: 'id,name' });
-  const archiveList = await getArchiveList();
+  const [data, category, sidebarData] = await Promise.all([
+    getList({
+      limit: LIMIT,
+      fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
+      filters: `categories[contains]${categoryId}`,
+    }),
+    getCategoryForPage(params.categoryId, { fields: 'id,name' }),
+    getSidebarData(),
+  ]);
+  const { recentArticles, tags, archiveList } = sidebarData;
 
   return (
     <>

@@ -22,7 +22,7 @@ export default function DisclaimerPage({ recentArticles, tags, archiveList }: Pr
 
   return (
     <>
-      <PageHeading disclaimer={true} />
+      <PageHeading page={{ type: 'disclaimer' }} />
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />

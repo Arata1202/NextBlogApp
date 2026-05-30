@@ -114,7 +114,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
 
   return (
     <>
-      <PageHeading search searchKeyword={query} />
+      <PageHeading page={{ type: 'search', searchKeyword: query }} />
       <ArticleList
         articles={articles}
         recentArticles={recentArticles}

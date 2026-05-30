@@ -1,22 +1,20 @@
-import { getAllLists, getAllCategoryLists, getAllTagLists } from '@/libs/microcms';
-import { getArchiveList } from '@/libs/archive';
+import { getAllLists, getAllCategoryLists } from '@/libs/microcms';
 import SitemapHtmlPage from '@/components/Pages/SitemapHtml';
-import { getMixedRecentArticles } from '@/libs/recent';
+import { getSidebarData } from '@/libs/pageData';
 
 export const revalidate = 60;
 
 export default async function Page() {
-  const data = await getAllLists({
-    fields: 'id,title,thumbnail',
-  });
-  const categories = await getAllCategoryLists({
-    fields: 'id,name',
-  });
-  const tags = await getAllTagLists({
-    fields: 'id,name',
-  });
-  const archiveList = await getArchiveList();
-  const recentArticles = await getMixedRecentArticles();
+  const [data, categories, sidebarData] = await Promise.all([
+    getAllLists({
+      fields: 'id,title,thumbnail',
+    }),
+    getAllCategoryLists({
+      fields: 'id,name',
+    }),
+    getSidebarData(),
+  ]);
+  const { recentArticles, tags, archiveList } = sidebarData;
 
   return (
     <>

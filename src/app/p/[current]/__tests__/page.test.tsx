@@ -18,14 +18,9 @@ const archiveMock = vi.hoisted(() => ({
 const recentMock = vi.hoisted(() => ({
   getMixedRecentArticles: vi.fn(),
 }));
-const rssMock = vi.hoisted(() => ({
-  generateRssFeed: vi.fn(),
-}));
-
 vi.mock('@/libs/microcms', () => microcmsMock);
 vi.mock('@/libs/archive', () => archiveMock);
 vi.mock('@/libs/recent', () => recentMock);
-vi.mock('@/libs/rss', () => rssMock);
 vi.mock('@/components/Pages/Home', async () => {
   const React = await import('react');
 
@@ -44,13 +39,11 @@ describe('paginated home app page', () => {
     microcmsMock.getAllTagLists.mockReset();
     archiveMock.getArchiveList.mockReset();
     recentMock.getMixedRecentArticles.mockReset();
-    rssMock.generateRssFeed.mockReset();
   });
 
   it('generates static params from total article count', async () => {
     const { generateStaticParams } = await import('@/app/p/[current]/page');
 
-    rssMock.generateRssFeed.mockResolvedValue(undefined);
     microcmsMock.getList.mockResolvedValue(createListResponse([], { totalCount: 21 }));
 
     await expect(generateStaticParams()).resolves.toEqual([
@@ -58,17 +51,15 @@ describe('paginated home app page', () => {
       { current: '2' },
       { current: '3' },
     ]);
-    expect(rssMock.generateRssFeed).toHaveBeenCalledTimes(1);
     expect(microcmsMock.getList).toHaveBeenCalledWith({ limit: 0, fields: '' });
   });
 
-  it('fails static param generation when RSS generation fails', async () => {
+  it('fails static param generation when article count loading fails', async () => {
     const { generateStaticParams } = await import('@/app/p/[current]/page');
 
-    rssMock.generateRssFeed.mockRejectedValue(new Error('rss failed'));
+    microcmsMock.getList.mockRejectedValue(new Error('microCMS failed'));
 
-    await expect(generateStaticParams()).rejects.toThrow('rss failed');
-    expect(microcmsMock.getList).not.toHaveBeenCalled();
+    await expect(generateStaticParams()).rejects.toThrow('microCMS failed');
   });
 
   it('loads the requested page with the correct offset', async () => {

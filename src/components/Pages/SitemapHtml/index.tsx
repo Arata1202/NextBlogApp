@@ -30,7 +30,7 @@ export default function SitemapHtmlPage({
 
   return (
     <>
-      <PageHeading sitemap={true} />
+      <PageHeading page={{ type: 'sitemap' }} />
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />

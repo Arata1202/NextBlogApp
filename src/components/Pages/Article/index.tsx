@@ -28,7 +28,7 @@ export default function ArticlePage({
     <>
       <MainContainer article={true}>
         <ContentContainer>
-          <BreadCrumb article={article} />
+          <BreadCrumb page={{ type: 'article', article }} />
           <ArticleFeature data={article} relatedArticles={relatedArticles} />
           <AdUnit slot="1831092739" />
           <Share data={article} />

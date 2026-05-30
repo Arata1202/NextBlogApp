@@ -29,7 +29,7 @@ export default function ArchivePage({
 }: Props) {
   return (
     <>
-      <PageHeading year={year} month={month} />
+      <PageHeading page={{ type: 'archive', year, month }} />
       <ArticleList
         articles={articles}
         recentArticles={recentArticles}

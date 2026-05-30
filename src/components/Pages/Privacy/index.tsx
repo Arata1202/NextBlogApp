@@ -22,7 +22,7 @@ export default function PrivacyPage({ recentArticles, tags, archiveList }: Props
 
   return (
     <>
-      <PageHeading privacy={true} />
+      <PageHeading page={{ type: 'privacy' }} />
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />

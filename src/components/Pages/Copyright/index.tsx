@@ -22,7 +22,7 @@ export default function CopyrightPage({ recentArticles, tags, archiveList }: Pro
 
   return (
     <>
-      <PageHeading copyright={true} />
+      <PageHeading page={{ type: 'copyright' }} />
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />

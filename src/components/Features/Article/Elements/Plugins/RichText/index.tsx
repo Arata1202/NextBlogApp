@@ -1,27 +1,19 @@
 'use client';
 
 import { memo, useMemo, useRef } from 'react';
-import { ContentBlock } from '@/types/microcms';
 import styles from './index.module.css';
-import { ARTICLE_CONTENT_AD_MARKER, formatRichText } from '@/utils/formatRichText';
 import { useIframelyEmbeds } from '@/hooks/useIframelyEmbeds';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
+import { ARTICLE_CONTENT_AD_MARKER } from '@/constants/articleContent';
 
 type Props = {
-  block: ContentBlock;
+  html: string;
   adSlots?: string[];
-  articleTitle?: string;
 };
 
-function RichText({ block, adSlots = [], articleTitle }: Props) {
+function RichText({ html, adSlots = [] }: Props) {
   const contentRef = useRef<HTMLDivElement>(null);
   const shouldInsertAdsBeforeH2 = adSlots.length > 0;
-  const html = useMemo(() => {
-    return formatRichText(block.rich_text!, {
-      insertAdsBeforeH2: shouldInsertAdsBeforeH2,
-      imageAltFallback: articleTitle,
-    });
-  }, [articleTitle, block.rich_text, shouldInsertAdsBeforeH2]);
   const htmlParts = useMemo(() => html.split(ARTICLE_CONTENT_AD_MARKER), [html]);
   const dangerouslySetInnerHTML = useMemo(() => ({ __html: html }), [html]);
 
@@ -55,8 +47,7 @@ function RichText({ block, adSlots = [], articleTitle }: Props) {
 
 export default memo(RichText, (prevProps, nextProps) => {
   return (
-    prevProps.block.rich_text === nextProps.block.rich_text &&
-    prevProps.articleTitle === nextProps.articleTitle &&
+    prevProps.html === nextProps.html &&
     (prevProps.adSlots ?? []).join(',') === (nextProps.adSlots ?? []).join(',')
   );
 });

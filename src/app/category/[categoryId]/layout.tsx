@@ -1,5 +1,5 @@
-import { getCategory } from '@/libs/microcms';
 import { Metadata } from 'next';
+import { getCategoryForPage } from '@/libs/microcmsPage';
 
 type Props = {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
-  const category = await getCategory(params.categoryId, { fields: 'id,name' });
+  const category = await getCategoryForPage(params.categoryId, { fields: 'id,name' });
 
   const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
@@ -37,7 +37,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default async function CategoryLayout(props: Props) {
   const params = await props.params;
-  const category = await getCategory(params.categoryId, { fields: 'id,name' });
+  const category = await getCategoryForPage(params.categoryId, { fields: 'id,name' });
   const { children } = props;
   const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const categoryUrl = `${defaultUrl}/category/${category.id}`;

@@ -1,3 +1,5 @@
+import { CUSTOM_HTML_SCRIPT_SRC_ATTRIBUTE } from '@/constants/customHtml';
+
 const CUSTOM_HTML_SELECTOR = '[data-custom-html]';
 const EXECUTED_SCRIPT_ATTRIBUTE = 'data-custom-html-executed';
 const MOSHIMO_SCRIPT_ID = 'msmaflink';
@@ -84,7 +86,7 @@ const extractMoshimoPayload = (scriptContent: string) => {
   return null;
 };
 
-const replaceWithExecutableScript = (script: HTMLScriptElement) => {
+const replaceWithExecutableScript = (script: HTMLScriptElement, src?: string) => {
   const parent = script.parentNode;
 
   if (!parent) {
@@ -94,14 +96,27 @@ const replaceWithExecutableScript = (script: HTMLScriptElement) => {
   const executableScript = document.createElement('script');
 
   Array.from(script.attributes).forEach((attribute) => {
+    if (
+      attribute.name === CUSTOM_HTML_SCRIPT_SRC_ATTRIBUTE ||
+      (src && attribute.name.toLowerCase() === 'type')
+    ) {
+      return;
+    }
+
     executableScript.setAttribute(attribute.name, attribute.value);
   });
 
-  if (executableScript.src) {
+  if (src) {
+    executableScript.src = src;
+  }
+
+  if (src || executableScript.src) {
     executableScript.async = false;
   }
 
-  executableScript.text = script.textContent ?? '';
+  if (!src) {
+    executableScript.text = script.textContent ?? '';
+  }
   const marker = document.createTextNode('');
 
   parent.insertBefore(marker, script);
@@ -116,11 +131,13 @@ const runGenericScripts = (content: HTMLElement) => {
   const scripts = content.querySelectorAll('script');
 
   scripts.forEach((script) => {
-    if (isMoshimoScript(script) || script.dataset.customHtmlExecuted === 'true') {
+    const scriptSrc = script.getAttribute(CUSTOM_HTML_SCRIPT_SRC_ATTRIBUTE) ?? script.src;
+
+    if (isMoshimoScript(script) || script.dataset.customHtmlExecuted === 'true' || !scriptSrc) {
       return;
     }
 
-    const executableScript = replaceWithExecutableScript(script);
+    const executableScript = replaceWithExecutableScript(script, scriptSrc);
     executableScript?.setAttribute(EXECUTED_SCRIPT_ATTRIBUTE, 'true');
   });
 };

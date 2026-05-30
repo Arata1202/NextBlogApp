@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -20,12 +21,21 @@ const (
 	microCMSSearchLimit     = 10
 	microCMSSearchLimitMax  = 50
 	microCMSSearchOffsetMax = 10000
+	microCMSSearchCacheTTL  = 5 * time.Minute
 )
 
 var (
 	microCMSSearchHTTPClient = &http.Client{Timeout: 10 * time.Second}
 	microCMSSearchAPIBaseURL = "https://%s.microcms.io/api/v1/blog"
 	htmlTagPattern           = regexp.MustCompile(`<[^>]*>`)
+	microCMSSearchNow        = time.Now
+	microCMSSearchCache      = struct {
+		sync.RWMutex
+		serviceDomain string
+		apiKey        string
+		articles      []map[string]interface{}
+		expiresAt     time.Time
+	}{}
 )
 
 type microCMSSearchListResponse struct {
@@ -177,6 +187,50 @@ func fetchMicroCMSSearchArticles(serviceDomain, apiKey string) ([]map[string]int
 	}
 }
 
+func cloneSearchArticles(articles []map[string]interface{}) []map[string]interface{} {
+	clonedArticles := make([]map[string]interface{}, len(articles))
+	copy(clonedArticles, articles)
+	return clonedArticles
+}
+
+func resetMicroCMSSearchCache() {
+	microCMSSearchCache.Lock()
+	defer microCMSSearchCache.Unlock()
+
+	microCMSSearchCache.serviceDomain = ""
+	microCMSSearchCache.apiKey = ""
+	microCMSSearchCache.articles = nil
+	microCMSSearchCache.expiresAt = time.Time{}
+}
+
+func cachedMicroCMSSearchArticles(serviceDomain, apiKey string) ([]map[string]interface{}, error) {
+	now := microCMSSearchNow()
+
+	microCMSSearchCache.RLock()
+	if microCMSSearchCache.serviceDomain == serviceDomain &&
+		microCMSSearchCache.apiKey == apiKey &&
+		now.Before(microCMSSearchCache.expiresAt) {
+		articles := cloneSearchArticles(microCMSSearchCache.articles)
+		microCMSSearchCache.RUnlock()
+		return articles, nil
+	}
+	microCMSSearchCache.RUnlock()
+
+	articles, err := fetchMicroCMSSearchArticles(serviceDomain, apiKey)
+	if err != nil {
+		return nil, err
+	}
+
+	microCMSSearchCache.Lock()
+	microCMSSearchCache.serviceDomain = serviceDomain
+	microCMSSearchCache.apiKey = apiKey
+	microCMSSearchCache.articles = cloneSearchArticles(articles)
+	microCMSSearchCache.expiresAt = now.Add(microCMSSearchCacheTTL)
+	microCMSSearchCache.Unlock()
+
+	return articles, nil
+}
+
 func filterSearchArticles(articles []map[string]interface{}, query string) []map[string]interface{} {
 	matchedArticles := []map[string]interface{}{}
 
@@ -258,7 +312,7 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 
 	limit := parseSearchInt(r.URL.Query().Get("limit"), microCMSSearchLimit, 1, microCMSSearchLimitMax)
 	offset := parseSearchInt(r.URL.Query().Get("offset"), 0, 0, microCMSSearchOffsetMax)
-	articles, err := fetchMicroCMSSearchArticles(serviceDomain, apiKey)
+	articles, err := cachedMicroCMSSearchArticles(serviceDomain, apiKey)
 	if err != nil {
 		log.Printf("Failed to request microCMS search: %v", err)
 		http.Error(w, `{"message":"failed to request search"}`, http.StatusBadGateway)

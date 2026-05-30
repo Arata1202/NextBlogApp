@@ -6,6 +6,7 @@ const categoryPageMock = vi.hoisted(() => vi.fn());
 const microcmsMock = vi.hoisted(() => ({
   getList: vi.fn(),
   getCategory: vi.fn(),
+  getAllCategoryLists: vi.fn(),
   getAllTagLists: vi.fn(),
 }));
 const archiveMock = vi.hoisted(() => ({
@@ -34,6 +35,7 @@ describe('category app page', () => {
     categoryPageMock.mockReset();
     microcmsMock.getList.mockReset();
     microcmsMock.getCategory.mockReset();
+    microcmsMock.getAllCategoryLists.mockReset();
     microcmsMock.getAllTagLists.mockReset();
     archiveMock.getArchiveList.mockReset();
     recentMock.getMixedRecentArticles.mockReset();
@@ -66,5 +68,20 @@ describe('category app page', () => {
         totalCount: 12,
       }),
     );
+  });
+
+  it('generates static params from microCMS categories', async () => {
+    const { generateStaticParams } = await import('@/app/category/[categoryId]/page');
+
+    microcmsMock.getAllCategoryLists.mockResolvedValue([
+      createCategory({ id: 'programming' }),
+      createCategory({ id: 'travel' }),
+    ]);
+
+    await expect(generateStaticParams()).resolves.toEqual([
+      { categoryId: 'programming' },
+      { categoryId: 'travel' },
+    ]);
+    expect(microcmsMock.getAllCategoryLists).toHaveBeenCalledWith({ fields: 'id' });
   });
 });

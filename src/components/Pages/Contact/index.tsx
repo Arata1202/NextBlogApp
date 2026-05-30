@@ -21,7 +21,7 @@ export default function ContactPage({ recentArticles, tags, archiveList }: Props
 
   return (
     <>
-      <PageHeading contact={true} />
+      <PageHeading page={{ type: 'contact' }} />
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />

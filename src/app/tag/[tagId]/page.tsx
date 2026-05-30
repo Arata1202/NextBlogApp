@@ -1,8 +1,8 @@
-import { getList, getTag, getAllTagLists } from '@/libs/microcms';
-import { getArchiveList } from '@/libs/archive';
+import { getList, getAllTagLists } from '@/libs/microcms';
 import { LIMIT } from '@/constants/limit';
 import TagPage from '@/components/Pages/Tag';
-import { getMixedRecentArticles } from '@/libs/recent';
+import { getTagForPage } from '@/libs/microcmsPage';
+import { getSidebarData } from '@/libs/pageData';
 
 type Props = {
   params: Promise<{
@@ -24,17 +24,16 @@ export default async function Page(props: Props) {
   const params = await props.params;
   const { tagId } = params;
 
-  const data = await getList({
-    limit: LIMIT,
-    fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
-    filters: `tags[contains]${tagId}`,
-  });
-  const recentArticles = await getMixedRecentArticles();
-  const tags = await getAllTagLists({
-    fields: 'id,name',
-  });
-  const tag = await getTag(params.tagId, { fields: 'id,name' });
-  const archiveList = await getArchiveList();
+  const [data, tag, sidebarData] = await Promise.all([
+    getList({
+      limit: LIMIT,
+      fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
+      filters: `tags[contains]${tagId}`,
+    }),
+    getTagForPage(params.tagId, { fields: 'id,name' }),
+    getSidebarData(),
+  ]);
+  const { recentArticles, tags, archiveList } = sidebarData;
 
   return (
     <>

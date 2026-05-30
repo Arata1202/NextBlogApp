@@ -115,12 +115,12 @@ describe('microcms client helpers', () => {
     });
   });
 
-  it('routes SDK failures through Next.js notFound', async () => {
+  it('propagates SDK failures to the caller', async () => {
     const { getList } = await import('@/libs/microcms');
 
     microcmsSdkMock.client.getList.mockRejectedValue(new Error('network error'));
 
-    await expect(getList()).rejects.toThrow('NEXT_NOT_FOUND');
+    await expect(getList()).rejects.toThrow('network error');
   });
 
   it('throws during module initialization when required credentials are missing', async () => {
