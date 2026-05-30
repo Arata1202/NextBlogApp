@@ -43,7 +43,7 @@ export default function BreadCrumb({
   search,
   searchKeyword,
 }: Props) {
-  const searchLabel = `「${searchKeyword ?? ''}」の検索結果`;
+  const searchLabel = searchKeyword ? `「${searchKeyword}」の検索結果` : '検索結果';
 
   return (
     <nav aria-label="パンくず">

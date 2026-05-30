@@ -13,7 +13,7 @@ describe('PageTitle', () => {
     [<PageTitle privacy />, 'プライバシーポリシー'],
     [<PageTitle profile />, 'プロフィール'],
     [<PageTitle sitemap />, 'サイトマップ'],
-    [<PageTitle search />, '「」の検索結果'],
+    [<PageTitle search />, '検索結果'],
     [<PageTitle search searchKeyword="React" />, '「React」の検索結果'],
     [<PageTitle year="2024" month="01" />, '2024年1月'],
     [<PageTitle category={createCategory({ name: 'プログラミング' })} />, 'プログラミング'],

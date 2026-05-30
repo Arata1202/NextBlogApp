@@ -26,10 +26,8 @@ describe('PageHeading', () => {
   it('renders the search heading and breadcrumb with an empty keyword', () => {
     render(<PageHeading search />);
 
-    expect(
-      screen.getByText('「」の検索結果', { selector: '[aria-current="page"]' }),
-    ).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: '「」の検索結果' })).toBeInTheDocument();
+    expect(screen.getByText('検索結果', { selector: '[aria-current="page"]' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '検索結果' })).toBeInTheDocument();
   });
 
   it('renders the search heading and breadcrumb with the keyword', () => {

@@ -56,8 +56,8 @@ describe('BreadCrumb', () => {
   it('renders the search result breadcrumb with an empty keyword as the current page', () => {
     render(<BreadCrumb search />);
 
-    expect(screen.getByText('「」の検索結果')).toHaveAttribute('aria-current', 'page');
-    expect(screen.queryByRole('link', { name: '「」の検索結果' })).not.toBeInTheDocument();
+    expect(screen.getByText('検索結果')).toHaveAttribute('aria-current', 'page');
+    expect(screen.queryByRole('link', { name: '検索結果' })).not.toBeInTheDocument();
   });
 
   it('renders the search result breadcrumb with the keyword as the current page', () => {

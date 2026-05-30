@@ -48,7 +48,7 @@ export default function PageTitle({
   search,
   searchKeyword,
 }: Props) {
-  const searchTitle = `「${searchKeyword ?? ''}」の検索結果`;
+  const searchTitle = searchKeyword ? `「${searchKeyword}」の検索結果` : '検索結果';
 
   return (
     <>
