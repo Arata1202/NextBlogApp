@@ -11,10 +11,16 @@ export const useExtractHeadings = (contentBlocks: { rich_text?: string }[]): Hea
 
       headingElements.each((_, element) => {
         const el = $(element);
+        const tagName = el.prop('tagName');
+
+        if (typeof tagName !== 'string') {
+          return;
+        }
+
         extractedHeadings.push({
           id: el.attr('id') || '',
           title: el.text() || '',
-          level: parseInt(el.prop('tagName').slice(1), 10),
+          level: parseInt(tagName.slice(1), 10),
         });
       });
     }
