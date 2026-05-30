@@ -8,7 +8,7 @@ import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 import Share from '../../Common/Share';
-import FixedDateContainer from '@/components/Common/Layouts/Container/FixedDateContainerTmp';
+import FixedDateContainer from '@/components/Common/Layouts/Container/FixedDateContainer';
 import FixedContentContainer from '@/components/Common/Layouts/Container/FixedContentContainer';
 
 type Props = {
