@@ -67,14 +67,14 @@ export default function Archive({ archiveList }: Props) {
 
             <Listbox.Options
               modal={false}
-              className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border py-1 text-base shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border py-1 text-base shadow-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-600 sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               {archiveList.map((item, index) => (
                 <Listbox.Option
                   key={index}
                   value={`${item.year}/${item.month.padStart(2, '0')}`}
                   className={({ active }) =>
-                    `relative cursor-pointer select-none py-2 pl-3 pr-9 transition-colors duration-150 hover:text-blue-600 ${active ? (theme === 'dark' ? '!text-blue-400' : '!text-blue-600') : ''} ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`
+                    `relative cursor-pointer select-none py-2 pl-3 pr-9 transition-colors duration-150 hover:text-blue-600 ${active ? (theme === 'dark' ? 'text-blue-400!' : 'text-blue-600!') : ''} ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`
                   }
                 >
                   {`${item.year}年${item.month}月`}

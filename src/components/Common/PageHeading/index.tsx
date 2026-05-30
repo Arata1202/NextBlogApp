@@ -11,7 +11,7 @@ export default function PageHeading({ page }: Props) {
   return (
     <>
       <div
-        className={`${styles.container} text-3xl font-bold pt-5 max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2`}
+        className={`${styles.container} text-3xl font-bold pt-5 max-w-340 sm:px-6 lg:px-8 mx-auto pb-2`}
       >
         {page.type !== 'home' && <BreadCrumb page={page} />}
         <PageTitle page={page} />

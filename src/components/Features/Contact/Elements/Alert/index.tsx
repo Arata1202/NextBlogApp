@@ -29,13 +29,13 @@ export default function Alert({ onClose, show, title, description }: Props) {
           leaveTo="opacity-0"
         >
           <div
-            className={`pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-opacity-5 mt-24 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-blue-500/5 mt-24 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             role="status"
             aria-live="polite"
           >
             <div className="p-4">
               <div className="flex items-start">
-                <div className="flex h-6 flex-shrink-0 items-center">
+                <div className="flex h-6 shrink-0 items-center">
                   <CheckCircleIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
                 </div>
                 <div className="ml-3 w-0 flex-1">
@@ -48,7 +48,7 @@ export default function Alert({ onClose, show, title, description }: Props) {
                   </div>
                   <p className={`${styles.DialogDescription} mt-1 text-gray-500`}>{description}</p>
                 </div>
-                <div className="ml-4 flex h-6 flex-shrink-0 items-center">
+                <div className="ml-4 flex h-6 shrink-0 items-center">
                   <button
                     type="button"
                     aria-label="通知を閉じる"

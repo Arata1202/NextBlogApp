@@ -186,7 +186,7 @@ export default function Header() {
                     leaveTo="opacity-0 translate-y-1"
                   >
                     <Popover.Panel
-                      className={`absolute z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-opacity-5 ${theme === 'dark' ? 'DarkTheme ring-gray-500' : 'LightTheme ring-gray-300'}`}
+                      className={`absolute z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ${theme === 'dark' ? 'DarkTheme ring-gray-500/5' : 'LightTheme ring-gray-300/5'}`}
                     >
                       <div className="p-1">
                         {CATEGORY_ARR.map((item) => (
@@ -232,7 +232,7 @@ export default function Header() {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-opacity-25" aria-hidden="true" />
+              <div className="fixed inset-0" aria-hidden="true" />
             </Transition.Child>
 
             <Transition.Child
