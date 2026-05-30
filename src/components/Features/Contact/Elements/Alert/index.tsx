@@ -29,7 +29,7 @@ export default function Alert({ onClose, show, title, description }: Props) {
           leaveTo="opacity-0"
         >
           <div
-            className={`pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-opacity-5 mt-24 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-opacity-5 mt-28 sm:mt-24 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             role="status"
             aria-live="polite"
           >
