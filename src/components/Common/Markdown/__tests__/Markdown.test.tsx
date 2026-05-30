@@ -12,7 +12,9 @@ describe('Markdown', () => {
     expect(screen.getByRole('link', { name: 'Internal' })).not.toHaveAttribute('target');
     expect(screen.getByRole('link', { name: 'Hash' })).not.toHaveAttribute('target');
     expect(screen.getByRole('link', { name: 'Email' })).not.toHaveAttribute('target');
-    const externalLink = screen.getByRole('link', { name: 'External 新しいタブで開きます' });
+    const externalLink = screen.getByRole('link', {
+      name: /External\s*新しいタブで開きます/,
+    });
     expect(externalLink).toHaveAttribute('href', 'https://example.com');
     expect(externalLink).toHaveAttribute('target', '_blank');
     expect(externalLink).toHaveAttribute('rel', 'noopener noreferrer');
