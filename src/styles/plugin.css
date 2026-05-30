@@ -153,14 +153,14 @@ pre {
 }
 
 .easyLink-box:focus-within {
-  outline: 3px solid #2563eb !important;
+  outline: 3px solid var(--color-focus-ring) !important;
   outline-offset: 4px !important;
   border-radius: 6px;
   box-shadow: 0 0 0 4px rgb(37 99 235 / 18%);
 }
 
 .easyLink-box :where(a[href], button, [role='button'], [tabindex]:not([tabindex='-1'])):focus-visible {
-  outline: 2px solid #2563eb !important;
+  outline: 2px solid var(--color-focus-ring) !important;
   outline-offset: 3px !important;
   border-radius: 4px;
   box-shadow: 0 0 0 3px rgb(37 99 235 / 18%);

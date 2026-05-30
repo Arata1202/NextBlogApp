@@ -14,3 +14,17 @@ export const roundIconControlClassName = `rounded-full focus-visible:rounded-ful
 
 export const pillControlClassName =
   'border transition-colors duration-150 hover:border-blue-600 hover:text-blue-600 focus-visible:rounded-full focus-visible:border-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600';
+
+export const textLinkClassName =
+  'text-blue-700 underline underline-offset-2 hover:text-blue-800 focus-visible:text-blue-800';
+
+export const darkTextLinkClassName =
+  'text-blue-300 underline underline-offset-2 hover:text-blue-200 focus-visible:text-blue-200';
+
+export const getTextLinkClassName = (theme?: string) => {
+  return theme === 'dark' ? darkTextLinkClassName : textLinkClassName;
+};
+
+export const accentIconClassName = 'text-blue-600';
+
+export const primaryButtonClassName = `${interactiveFocusClassName} inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 disabled:cursor-wait disabled:opacity-70`;

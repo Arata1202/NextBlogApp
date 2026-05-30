@@ -51,6 +51,11 @@ h4 {
   --color-border: #ddd;
   --color-border-light: #f3f3f3;
   --color-current: #eee;
+  --color-focus-ring: #2563eb;
+  --color-link: #1d4ed8;
+  --color-link-hover: #1e40af;
+  --color-link-dark: #93c5fd;
+  --color-link-dark-hover: #bfdbfe;
   --border-radius: 4px;
 }
 
@@ -90,7 +95,7 @@ a {
 a:focus-visible,
 button:focus-visible,
 [role='button']:focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
   border-radius: var(--border-radius);
 }

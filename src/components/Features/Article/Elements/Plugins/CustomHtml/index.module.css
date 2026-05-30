@@ -98,15 +98,22 @@
 
 .content a {
   text-decoration: underline;
-  color: #3b82f6;
+  text-underline-offset: 2px;
+  color: var(--color-link);
 }
 
-.content a:hover {
-  color: #2563eb;
-}
-
+.content a:hover,
 .content a:focus-visible {
-  color: #2563eb;
+  color: var(--color-link-hover);
+}
+
+:global(body.DarkTheme) .content a {
+  color: var(--color-link-dark);
+}
+
+:global(body.DarkTheme) .content a:hover,
+:global(body.DarkTheme) .content a:focus-visible {
+  color: var(--color-link-dark-hover);
 }
 
 .content
@@ -119,7 +126,7 @@
     [role='button'],
     [tabindex]:not([tabindex='-1'])
   ):focus-visible {
-  outline: 2px solid #2563eb !important;
+  outline: 2px solid var(--color-focus-ring) !important;
   outline-offset: 3px;
   border-radius: var(--border-radius);
   box-shadow: 0 0 0 3px rgb(37 99 235 / 18%);

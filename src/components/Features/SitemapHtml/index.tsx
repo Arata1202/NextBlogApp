@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Article, Category } from '@/types/microcms';
 import { PAGE_ARR } from '@/constants/page';
+import { getTextLinkClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   articles: Article[];
@@ -12,10 +13,7 @@ type Props = {
 
 export default function SitemapHtmlFeature({ articles, categories }: Props) {
   const { theme } = useTheme();
-  const linkClassName =
-    theme === 'dark'
-      ? 'text-blue-300 underline underline-offset-2 hover:text-blue-200'
-      : 'text-blue-700 underline underline-offset-2 hover:text-blue-800';
+  const linkClassName = getTextLinkClassName(theme);
 
   return (
     <>

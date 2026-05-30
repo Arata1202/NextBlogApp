@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm';
 import { useTheme } from 'next-themes';
 import { PROFILE_IMAGE } from '@/constants/data';
 import FixedContentContainer from '../Layouts/Container/FixedContentContainer';
+import { getTextLinkClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   content: string;
@@ -13,10 +14,7 @@ type Props = {
 
 export default function Markdown({ content, profile = false }: Props) {
   const { theme } = useTheme();
-  const linkClassName =
-    theme === 'dark'
-      ? 'text-blue-300 underline underline-offset-2 hover:text-blue-200'
-      : 'text-blue-700 underline underline-offset-2 hover:text-blue-800';
+  const linkClassName = getTextLinkClassName(theme);
 
   return (
     <>
