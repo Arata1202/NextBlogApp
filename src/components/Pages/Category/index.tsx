@@ -27,7 +27,7 @@ export default function CategoryPage({
 }: Props) {
   return (
     <>
-      <PageHeading category={category} />
+      <PageHeading page={{ type: 'category', category }} />
       <ArticleList
         articles={articles}
         recentArticles={recentArticles}

@@ -1,7 +1,13 @@
 import Script from 'next/script';
+import { getGoogleAdSensePublisherId } from '@/config/publicEnv';
 
 export default function GoogleAdSense() {
-  const publisherId = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_PUBLISHER_ID;
+  const publisherId = getGoogleAdSensePublisherId();
+
+  if (!publisherId) {
+    return null;
+  }
+
   return (
     <Script
       async

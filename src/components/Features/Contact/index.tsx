@@ -9,9 +9,13 @@ import InputContainer from './Elements/InputContainer';
 import Modal from './Elements/Modal';
 import Alert from './Elements/Alert';
 import { outlinedControlClassName } from '@/components/Common/controlClassNames';
+import { getApiSendEmailUrl, getRecaptchaSiteKey } from '@/config/publicEnv';
 
 export default function ContactFeature() {
   const { theme } = useTheme();
+  const apiSendEmailUrl = getApiSendEmailUrl();
+  const recaptchaSiteKey = getRecaptchaSiteKey();
+  const isFormConfigured = Boolean(apiSendEmailUrl && recaptchaSiteKey);
 
   const [confirmSendEmailModalOpen, setConfirmSendEmailModalOpen] = useState(false);
   const [successSendEmailAlertOpen, setSuccessSendEmailAlertOpen] = useState(false);
@@ -30,6 +34,11 @@ export default function ContactFeature() {
   } = useForm<Form>();
 
   const handleSubmit = (data: Form) => {
+    if (!isFormConfigured) {
+      setCaptchaError('※ お問い合わせフォームの設定が不足しています');
+      return;
+    }
+
     if (!captchaValue) {
       setCaptchaError('※ reCAPTCHAを完了してください');
       return;
@@ -48,7 +57,7 @@ export default function ContactFeature() {
   };
 
   const handleSendEmail = async () => {
-    if (isSending || !formData) {
+    if (isSending || !formData || !apiSendEmailUrl) {
       return;
     }
 
@@ -61,7 +70,7 @@ export default function ContactFeature() {
     setIsSending(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_SENDEMAIL_URL}`, {
+      const response = await fetch(apiSendEmailUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -130,13 +139,15 @@ export default function ContactFeature() {
           />
         </div>
         <div role="group" aria-describedby={captchaError ? captchaErrorId : undefined}>
-          <ReCAPTCHA
-            ref={recaptchaRef}
-            sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-            onChange={handleChangeCaptchaValue}
-            onExpired={() => setCaptchaValue(null)}
-            className="mt-3"
-          />
+          {recaptchaSiteKey && (
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={recaptchaSiteKey}
+              onChange={handleChangeCaptchaValue}
+              onExpired={() => setCaptchaValue(null)}
+              className="mt-3"
+            />
+          )}
         </div>
         {captchaError && (
           <p id={captchaErrorId} className="text-red-700" role="alert">

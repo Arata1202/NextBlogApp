@@ -6,6 +6,7 @@ const categoryPageMock = vi.hoisted(() => vi.fn());
 const microcmsMock = vi.hoisted(() => ({
   getList: vi.fn(),
   getCategory: vi.fn(),
+  getAllCategoryLists: vi.fn(),
   getAllTagLists: vi.fn(),
 }));
 const archiveMock = vi.hoisted(() => ({
@@ -34,6 +35,7 @@ describe('paginated category app page', () => {
     categoryPageMock.mockReset();
     microcmsMock.getList.mockReset();
     microcmsMock.getCategory.mockReset();
+    microcmsMock.getAllCategoryLists.mockReset();
     microcmsMock.getAllTagLists.mockReset();
     archiveMock.getArchiveList.mockReset();
     recentMock.getMixedRecentArticles.mockReset();
@@ -42,13 +44,18 @@ describe('paginated category app page', () => {
   it('generates static params for every category page', async () => {
     const { generateStaticParams } = await import('@/app/category/[categoryId]/p/[current]/page');
 
+    microcmsMock.getAllCategoryLists.mockResolvedValue([
+      createCategory({ id: 'programming' }),
+      createCategory({ id: 'travel' }),
+    ]);
     microcmsMock.getList.mockResolvedValue(createListResponse([], { totalCount: 21 }));
 
     const params = await generateStaticParams();
 
     expect(params).toContainEqual({ categoryId: 'programming', current: '1' });
     expect(params).toContainEqual({ categoryId: 'programming', current: '3' });
-    expect(params).toHaveLength(18);
+    expect(params).toHaveLength(6);
+    expect(microcmsMock.getAllCategoryLists).toHaveBeenCalledWith({ fields: 'id' });
   });
 
   it('loads category articles using current page offset', async () => {

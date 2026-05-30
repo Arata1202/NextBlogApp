@@ -6,7 +6,12 @@ import { createCategory } from '@/test/factories';
 describe('PageHeading', () => {
   it('renders breadcrumb and title for non-home pages', () => {
     render(
-      <PageHeading category={createCategory({ id: 'programming', name: 'プログラミング' })} />,
+      <PageHeading
+        page={{
+          type: 'category',
+          category: createCategory({ id: 'programming', name: 'プログラミング' }),
+        }}
+      />,
     );
 
     expect(
@@ -17,23 +22,21 @@ describe('PageHeading', () => {
   });
 
   it('omits breadcrumbs on the home heading', () => {
-    render(<PageHeading home />);
+    render(<PageHeading page={{ type: 'home' }} />);
 
     expect(screen.getByRole('heading', { name: '最新記事' })).toBeInTheDocument();
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
   it('renders the search heading and breadcrumb with an empty keyword', () => {
-    render(<PageHeading search />);
+    render(<PageHeading page={{ type: 'search' }} />);
 
-    expect(
-      screen.getByText('「」の検索結果', { selector: '[aria-current="page"]' }),
-    ).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: '「」の検索結果' })).toBeInTheDocument();
+    expect(screen.getByText('検索結果', { selector: '[aria-current="page"]' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '検索結果' })).toBeInTheDocument();
   });
 
   it('renders the search heading and breadcrumb with the keyword', () => {
-    render(<PageHeading search searchKeyword="React" />);
+    render(<PageHeading page={{ type: 'search', searchKeyword: 'React' }} />);
 
     expect(
       screen.getByText('「React」の検索結果', { selector: '[aria-current="page"]' }),

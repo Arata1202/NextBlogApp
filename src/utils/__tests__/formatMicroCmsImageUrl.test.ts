@@ -27,6 +27,18 @@ describe('formatMicroCmsImageUrl', () => {
     expect(url.searchParams.get('w')).toBe('960');
   });
 
+  it('adds optional height and device pixel ratio parameters', () => {
+    const result = formatMicroCmsImageUrl(
+      'https://images.microcms-assets.io/assets/site/image.png',
+      { width: 240, height: 126, devicePixelRatio: 2 },
+    );
+    const url = new URL(result);
+
+    expect(url.searchParams.get('w')).toBe('240');
+    expect(url.searchParams.get('h')).toBe('126');
+    expect(url.searchParams.get('dpr')).toBe('2');
+  });
+
   it('uses default quality and fit values', () => {
     const result = formatMicroCmsImageUrl(
       'https://images.microcms-assets.io/assets/site/image.png',

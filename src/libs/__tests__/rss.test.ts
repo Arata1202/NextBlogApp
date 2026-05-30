@@ -29,8 +29,8 @@ describe('generateRssFeed', () => {
     process.env.NEXT_PUBLIC_BASE_TITLE = 'Example Blog';
   });
 
-  it('writes an RSS feed containing blog and Zenn articles', async () => {
-    const { generateRssFeed } = await import('@/libs/rss');
+  it('generates an RSS feed containing blog and Zenn articles', async () => {
+    const { generateRssFeedXml } = await import('@/libs/rss');
 
     microcmsMock.getAllLists.mockResolvedValue([
       createArticle({
@@ -52,22 +52,39 @@ describe('generateRssFeed', () => {
       },
     ]);
 
-    await generateRssFeed();
+    const rss = await generateRssFeedXml();
 
-    expect(fsMock.writeFileSync).toHaveBeenCalledTimes(1);
-    const [path, rss] = fsMock.writeFileSync.mock.calls[0] as [string, string];
-    expect(path).toBe('./public/rss.xml');
+    expect(fsMock.writeFileSync).not.toHaveBeenCalled();
     expect(rss).toContain('<title><![CDATA[Zenn A]]></title>');
     expect(rss).toContain('<title><![CDATA[Blog A]]></title>');
     expect(rss).toContain('https://example.com/articles/blog-a');
   });
 
   it('rejects and does not write a feed when article loading fails', async () => {
-    const { generateRssFeed } = await import('@/libs/rss');
+    const { generateRssFeedXml } = await import('@/libs/rss');
 
     microcmsMock.getAllLists.mockRejectedValue(new Error('microCMS failed'));
 
-    await expect(generateRssFeed()).rejects.toThrow('microCMS failed');
+    await expect(generateRssFeedXml()).rejects.toThrow('microCMS failed');
     expect(fsMock.writeFileSync).not.toHaveBeenCalled();
+  });
+
+  it('writes the generated RSS feed for legacy script usage', async () => {
+    const { generateRssFeed } = await import('@/libs/rss');
+
+    microcmsMock.getAllLists.mockResolvedValue([
+      createArticle({
+        id: 'blog-a',
+        title: 'Blog A',
+        description: 'Blog description',
+        publishedAt: '2024-01-01T00:00:00.000Z',
+      }),
+    ]);
+    zennMock.getZennFeed.mockResolvedValue([]);
+
+    await generateRssFeed();
+
+    expect(fsMock.writeFileSync).toHaveBeenCalledTimes(1);
+    expect(fsMock.writeFileSync.mock.calls[0][0]).toBe('./public/rss.xml');
   });
 });

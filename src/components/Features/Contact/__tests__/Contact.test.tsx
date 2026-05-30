@@ -100,6 +100,25 @@ describe('ContactFeature', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it('does not open the confirmation modal when public form settings are missing', async () => {
+    const user = userEvent.setup();
+    delete process.env.NEXT_PUBLIC_API_SENDEMAIL_URL;
+    delete process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+    render(<ContactFeature />);
+
+    await user.type(screen.getByLabelText('メールアドレス'), 'test@example.com');
+    await user.type(screen.getByLabelText('件名'), 'Test subject');
+    await user.type(screen.getByLabelText('内容'), 'Test message');
+    await user.click(screen.getByRole('button', { name: '送信' }));
+
+    expect(
+      await screen.findByText('※ お問い合わせフォームの設定が不足しています'),
+    ).toBeInTheDocument();
+    expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
   it('confirms captcha, sends the email, resets the form, and shows success alert', async () => {
     const user = userEvent.setup();
     fetchMock.mockResolvedValueOnce({

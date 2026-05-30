@@ -1,16 +1,10 @@
-import { getAllTagLists } from '@/libs/microcms';
-import { getArchiveList } from '@/libs/archive';
 import PrivacyPage from '@/components/Pages/Privacy';
-import { getMixedRecentArticles } from '@/libs/recent';
+import { getSidebarData } from '@/libs/pageData';
 
 export const revalidate = 60;
 
 export default async function Page() {
-  const recentArticles = await getMixedRecentArticles();
-  const tags = await getAllTagLists({
-    fields: 'id,name',
-  });
-  const archiveList = await getArchiveList();
+  const { recentArticles, tags, archiveList } = await getSidebarData();
 
   return (
     <>

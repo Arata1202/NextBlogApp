@@ -1,79 +1,20 @@
-import { Category, Tag } from '@/types/microcms';
 import styles from './index.module.css';
 import PageTitle from '../PageTitle';
 import BreadCrumb from '../BreadCrumb';
+import type { PageHeadingPage } from '../pageHeadingModel';
 
 type Props = {
-  year?: string;
-  month?: string;
-  category?: Category;
-  tag?: Tag;
-  home?: boolean;
-  contact?: boolean;
-  copyright?: boolean;
-  disclaimer?: boolean;
-  link?: boolean;
-  privacy?: boolean;
-  profile?: boolean;
-  sitemap?: boolean;
-  search?: boolean;
-  searchKeyword?: string;
+  page: PageHeadingPage;
 };
 
-export default function PageHeading({
-  year,
-  month,
-  category,
-  tag,
-  home = false,
-  contact = false,
-  copyright = false,
-  disclaimer = false,
-  link = false,
-  privacy = false,
-  profile = false,
-  sitemap = false,
-  search = false,
-  searchKeyword,
-}: Props) {
+export default function PageHeading({ page }: Props) {
   return (
     <>
       <div
         className={`${styles.container} text-3xl font-bold pt-5 max-w-[85rem] sm:px-6 lg:px-8 mx-auto pb-2`}
       >
-        {!home && (
-          <BreadCrumb
-            year={year}
-            month={month}
-            category={category}
-            tag={tag}
-            contact={contact}
-            copyright={copyright}
-            disclaimer={disclaimer}
-            link={link}
-            privacy={privacy}
-            profile={profile}
-            sitemap={sitemap}
-            search={search}
-            searchKeyword={searchKeyword}
-          />
-        )}
-        <PageTitle
-          year={year}
-          month={month}
-          category={category}
-          tag={tag}
-          home={home}
-          contact={contact}
-          copyright={copyright}
-          disclaimer={disclaimer}
-          link={link}
-          privacy={privacy}
-          profile={profile}
-          sitemap={sitemap}
-          search={search}
-          searchKeyword={searchKeyword}
-        />
+        {page.type !== 'home' && <BreadCrumb page={page} />}
+        <PageTitle page={page} />
       </div>
     </>
   );

@@ -10,6 +10,7 @@ import PageHeading from '@/components/Common/PageHeading';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
+import { getApiSearchUrl } from '@/config/publicEnv';
 
 type Props = {
   recentArticles?: UnifiedArticle[];
@@ -57,7 +58,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
       return;
     }
 
-    const endpoint = process.env.NEXT_PUBLIC_API_SEARCH_URL;
+    const endpoint = getApiSearchUrl();
     if (!endpoint) {
       setArticles([]);
       setTotalCount(0);
@@ -113,7 +114,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
 
   return (
     <>
-      <PageHeading search searchKeyword={query} />
+      <PageHeading page={{ type: 'search', searchKeyword: query }} />
       <ArticleList
         articles={articles}
         recentArticles={recentArticles}

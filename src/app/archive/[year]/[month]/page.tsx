@@ -1,8 +1,8 @@
-import { getList, getAllTagLists } from '@/libs/microcms';
-import { getArchiveStaticParams, getArchiveList } from '@/libs/archive';
+import { getList } from '@/libs/microcms';
+import { getArchiveStaticParams } from '@/libs/archive';
 import { LIMIT } from '@/constants/limit';
 import ArchivePage from '@/components/Pages/Archive';
-import { getMixedRecentArticles } from '@/libs/recent';
+import { getSidebarData } from '@/libs/pageData';
 
 type Props = {
   params: Promise<{
@@ -22,16 +22,15 @@ export default async function Page(props: Props) {
   const startDate = `${year}-${month}-01T00:00:00Z`;
   const endDate = new Date(Date.UTC(Number(year), Number(month), 1)).toISOString();
 
-  const data = await getList({
-    limit: LIMIT,
-    fields: 'id,title,description,publishedAt,updatedAt,thumbnail',
-    filters: `publishedAt[greater_than]${startDate}[and]publishedAt[less_than]${endDate}`,
-  });
-  const recentArticles = await getMixedRecentArticles();
-  const tags = await getAllTagLists({
-    fields: 'id,name',
-  });
-  const archiveList = await getArchiveList();
+  const [data, sidebarData] = await Promise.all([
+    getList({
+      limit: LIMIT,
+      fields: 'id,title,description,publishedAt,updatedAt,thumbnail',
+      filters: `publishedAt[greater_than]${startDate}[and]publishedAt[less_than]${endDate}`,
+    }),
+    getSidebarData(),
+  ]);
+  const { recentArticles, tags, archiveList } = sidebarData;
 
   return (
     <>

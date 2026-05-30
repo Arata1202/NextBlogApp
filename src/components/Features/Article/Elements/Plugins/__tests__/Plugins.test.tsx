@@ -7,6 +7,7 @@ import TabBox from '@/components/Features/Article/Elements/Plugins/TabBox';
 import ImageSlider from '@/components/Features/Article/Elements/Plugins/ImageSlider';
 import WantToRead from '@/components/Features/Article/Elements/Plugins/WantToRead';
 import { createArticle } from '@/test/factories';
+import { sanitizeCustomHtml } from '@/utils/sanitizeCustomHtml';
 import type { ContentBlock } from '@/types/microcms';
 
 vi.mock('@/components/ThirdParties/GoogleAdSense/Elements/AdUnit', async () => {
@@ -54,15 +55,18 @@ vi.mock('react-slick', async () => {
   };
 });
 
+const renderCustomHtml = (html: string) => {
+  return render(<CustomHtml html={sanitizeCustomHtml(html)} />);
+};
+
 describe('Article plugins', () => {
   it('renders rich text and injects article ad units before h2 sections', () => {
     render(
       <RichText
-        block={{
-          rich_text: '<p>Lead</p><h2 id="first">First</h2><p>Body</p><h2 id="second">Second</h2>',
-        }}
+        html={
+          '<p>Lead</p><!--article-content-ad--><h2 id="first">First</h2><p>Body</p><!--article-content-ad--><h2 id="second">Second</h2>'
+        }
         adSlots={['slot-a', 'slot-b']}
-        articleTitle="Article title"
       />,
     );
 
@@ -74,37 +78,43 @@ describe('Article plugins', () => {
     ]);
   });
 
-  it('replays custom html scripts after mounting', () => {
+  it('does not replay arbitrary inline custom html scripts after mounting', () => {
     vi.useFakeTimers();
-    render(
-      <CustomHtml
-        block={{
-          custom_html:
-            '<div id="custom-target">Before</div><script>window.__customHtmlTest = true;</script>',
-        }}
-      />,
+    renderCustomHtml(
+      '<div id="custom-target">Before</div><script>window.__customHtmlTest = true;</script>',
     );
 
     act(() => {
       vi.advanceTimersByTime(100);
     });
 
-    expect(document.querySelector('script[data-custom-html-executed="true"]')).toBeInTheDocument();
+    expect(
+      document.querySelector('script[data-custom-html-executed="true"]'),
+    ).not.toBeInTheDocument();
     vi.useRealTimers();
   });
 
+  it('removes dangerous event attributes and javascript URLs from custom html', () => {
+    renderCustomHtml(
+      '<a href="javascript:alert(1)" onclick="alert(1)">Unsafe link</a><img src="javascript:alert(1)" onerror="alert(1)">',
+    );
+
+    const link = screen.getByText('Unsafe link').closest('a');
+    const image = document.querySelector('img');
+
+    expect(link).toBeInTheDocument();
+    expect(link).not.toHaveAttribute('href');
+    expect(link).not.toHaveAttribute('onclick');
+    expect(image).not.toHaveAttribute('src');
+    expect(image).not.toHaveAttribute('onerror');
+  });
+
   it('adds target blank to custom html links without overwriting existing targets', async () => {
-    render(
-      <CustomHtml
-        block={{
-          custom_html: `
+    renderCustomHtml(`
             <a href="https://example.com">External link</a>
             <a href="https://example.com/self" target="_self" rel="nofollow">Existing target</a>
             <a href="#">Placeholder link</a>
-          `,
-        }}
-      />,
-    );
+          `);
 
     const externalLink = screen.getByRole('link', { name: 'External link' });
     const existingTargetLink = screen.getByRole('link', { name: 'Existing target' });
@@ -120,13 +130,7 @@ describe('Article plugins', () => {
   });
 
   it('adds target blank to custom html links inserted after mounting', async () => {
-    const { container } = render(
-      <CustomHtml
-        block={{
-          custom_html: '<div id="generated-link-target"></div>',
-        }}
-      />,
-    );
+    const { container } = renderCustomHtml('<div id="generated-link-target"></div>');
     const customHtml = container.querySelector('[data-custom-html]');
     const link = document.createElement('a');
 
@@ -141,10 +145,7 @@ describe('Article plugins', () => {
   });
 
   it('moves Moshimo EasyLink images with fallback arrow controls', async () => {
-    render(
-      <CustomHtml
-        block={{
-          custom_html: `
+    renderCustomHtml(`
             <div class="easyLink-box">
               <div class="easyLink-img">
                 <p class="easyLink-img-box">
@@ -169,10 +170,7 @@ describe('Article plugins', () => {
                 </p>
               </div>
             </div>
-          `,
-        }}
-      />,
-    );
+          `);
 
     const leftArrow = await screen.findByRole('button', { name: '前の画像を表示' });
     const rightArrow = screen.getByRole('button', { name: '次の画像を表示' });
@@ -201,10 +199,7 @@ describe('Article plugins', () => {
   });
 
   it('does not double-move Moshimo EasyLink images when the official handler already moved them', async () => {
-    render(
-      <CustomHtml
-        block={{
-          custom_html: `
+    renderCustomHtml(`
             <div class="easyLink-box">
               <div class="easyLink-img">
                 <p class="easyLink-img-box">
@@ -230,10 +225,7 @@ describe('Article plugins', () => {
                 </p>
               </div>
             </div>
-          `,
-        }}
-      />,
-    );
+          `);
 
     const rightArrowImage = screen.getByTestId('right-arrow-image');
     const firstImage = screen.getByTestId('first-image');

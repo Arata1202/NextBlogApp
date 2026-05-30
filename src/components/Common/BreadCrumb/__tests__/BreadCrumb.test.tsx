@@ -7,11 +7,14 @@ describe('BreadCrumb', () => {
   it('renders the article category link and article as the current page', () => {
     render(
       <BreadCrumb
-        article={createArticle({
-          id: 'article-a',
-          title: 'Article A',
-          categories: [createCategory({ id: 'programming', name: 'プログラミング' })],
-        })}
+        page={{
+          type: 'article',
+          article: createArticle({
+            id: 'article-a',
+            title: 'Article A',
+            categories: [createCategory({ id: 'programming', name: 'プログラミング' })],
+          }),
+        }}
       />,
     );
 
@@ -24,16 +27,22 @@ describe('BreadCrumb', () => {
   });
 
   it('renders archive, category, and tag breadcrumbs as the current page', () => {
-    const { rerender } = render(<BreadCrumb year="2024" month="01" />);
+    const { rerender } = render(
+      <BreadCrumb page={{ type: 'archive', year: '2024', month: '01' }} />,
+    );
 
     expect(screen.getByText('2024年1月')).toHaveAttribute('aria-current', 'page');
     expect(screen.queryByRole('link', { name: '2024年1月' })).not.toBeInTheDocument();
 
-    rerender(<BreadCrumb category={createCategory({ id: 'work', name: '社会人生活' })} />);
+    rerender(
+      <BreadCrumb
+        page={{ type: 'category', category: createCategory({ id: 'work', name: '社会人生活' }) }}
+      />,
+    );
     expect(screen.getByText('社会人生活')).toHaveAttribute('aria-current', 'page');
     expect(screen.queryByRole('link', { name: '社会人生活' })).not.toBeInTheDocument();
 
-    rerender(<BreadCrumb tag={createTag({ id: 'react', name: 'React' })} />);
+    rerender(<BreadCrumb page={{ type: 'tag', tag: createTag({ id: 'react', name: 'React' }) }} />);
     expect(screen.getByText('React')).toHaveAttribute('aria-current', 'page');
     expect(screen.queryByRole('link', { name: 'React' })).not.toBeInTheDocument();
   });
@@ -47,21 +56,21 @@ describe('BreadCrumb', () => {
     ['profile', 'プロフィール'],
     ['sitemap', 'サイトマップ'],
   ] as const)('renders the %s fixed page breadcrumb as the current page', (prop, label) => {
-    render(<BreadCrumb {...{ [prop]: true }} />);
+    render(<BreadCrumb page={{ type: prop }} />);
 
     expect(screen.getByText(label)).toHaveAttribute('aria-current', 'page');
     expect(screen.queryByRole('link', { name: label })).not.toBeInTheDocument();
   });
 
   it('renders the search result breadcrumb with an empty keyword as the current page', () => {
-    render(<BreadCrumb search />);
+    render(<BreadCrumb page={{ type: 'search' }} />);
 
-    expect(screen.getByText('「」の検索結果')).toHaveAttribute('aria-current', 'page');
-    expect(screen.queryByRole('link', { name: '「」の検索結果' })).not.toBeInTheDocument();
+    expect(screen.getByText('検索結果')).toHaveAttribute('aria-current', 'page');
+    expect(screen.queryByRole('link', { name: '検索結果' })).not.toBeInTheDocument();
   });
 
   it('renders the search result breadcrumb with the keyword as the current page', () => {
-    render(<BreadCrumb search searchKeyword="React Hooks" />);
+    render(<BreadCrumb page={{ type: 'search', searchKeyword: 'React Hooks' }} />);
 
     expect(screen.getByText('「React Hooks」の検索結果')).toHaveAttribute('aria-current', 'page');
     expect(

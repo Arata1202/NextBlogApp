@@ -14,10 +14,10 @@ describe('runCustomHtmlScripts', () => {
     vi.useRealTimers();
   });
 
-  it('replaces generic custom HTML scripts with executable scripts once', () => {
+  it('replaces external custom HTML scripts with executable scripts once', () => {
     const content = document.createElement('div');
     content.dataset.customHtml = 'true';
-    content.innerHTML = '<script>window.__customHtmlScriptRan = true;</script>';
+    content.innerHTML = '<script src="https://example.com/custom-widget.js"></script>';
     document.body.appendChild(content);
 
     runCustomHtmlScripts(content, content.innerHTML);

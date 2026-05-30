@@ -1,21 +1,21 @@
-import { getList, getAllTagLists } from '@/libs/microcms';
-import { getArchiveList } from '@/libs/archive';
+import { getList } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import HomePage from '@/components/Pages/Home';
 import { getZennFeed } from '@/libs/zenn';
 import { mapBlogArticlesToUnified, mixUnifiedArticles } from '@/libs/unified';
 import { DESCRIPTION, PROFILE_NAME, SOCIAL_ICON } from '@/constants/data';
+import { getSidebarNavigationData } from '@/libs/pageData';
 
 export default async function Page() {
-  const data = await getList({
-    limit: LIMIT,
-    fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
-  });
-  const tags = await getAllTagLists({
-    fields: 'id,name',
-  });
-  const archiveList = await getArchiveList();
-  const zennArticles = await getZennFeed('realunivlog', LIMIT);
+  const [data, navigationData, zennArticles] = await Promise.all([
+    getList({
+      limit: LIMIT,
+      fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
+    }),
+    getSidebarNavigationData(),
+    getZennFeed('realunivlog', LIMIT),
+  ]);
+  const { tags, archiveList } = navigationData;
 
   const blogArticles = mapBlogArticlesToUnified(data.contents);
   const mixedArticles = mixUnifiedArticles(blogArticles, zennArticles, LIMIT);

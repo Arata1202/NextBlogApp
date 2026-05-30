@@ -14,6 +14,8 @@ import TabBox from './Elements/Plugins/TabBox';
 import ImageSlider from './Elements/Plugins/ImageSlider';
 import RelatedArticle from './Elements/RelatedArticle';
 import { useExtractHeadings } from '@/hooks/useExtractHeadings';
+import { formatRichText } from '@/utils/formatRichText';
+import { sanitizeCustomHtml } from '@/utils/sanitizeCustomHtml';
 
 type Props = {
   data: Article;
@@ -39,6 +41,15 @@ const countH2Elements = (richText: string) => {
 
 export default function ArticleFeature({ data, relatedArticles }: Props) {
   const headings = useExtractHeadings(data.content_blocks);
+  const introductionBlocks = data.introduction_blocks.map((block) => ({
+    block,
+    richTextHtml: block.rich_text
+      ? formatRichText(block.rich_text, {
+          imageAltFallback: data.title,
+        })
+      : undefined,
+    customHtml: block.custom_html ? sanitizeCustomHtml(block.custom_html) : undefined,
+  }));
   const contentBlockAdSlots = data.content_blocks.reduce(
     (result, block) => {
       const h2Count = block.rich_text ? countH2Elements(block.rich_text) : 0;
@@ -54,6 +65,16 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
     },
     { usedSlotCount: 0, adSlotsByBlock: [] as string[][] },
   ).adSlotsByBlock;
+  const contentBlocks = data.content_blocks.map((block, index) => ({
+    block,
+    richTextHtml: block.rich_text
+      ? formatRichText(block.rich_text, {
+          insertAdsBeforeH2: contentBlockAdSlots[index].length > 0,
+          imageAltFallback: data.title,
+        })
+      : undefined,
+    customHtml: block.custom_html ? sanitizeCustomHtml(block.custom_html) : undefined,
+  }));
 
   return (
     <>
@@ -61,11 +82,11 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
       <WebpImage article={data} />
       <DoubleDate article={data} articleMode={true} />
       <AdAlert />
-      {data.introduction_blocks.map((block, index) => (
+      {introductionBlocks.map(({ block, richTextHtml, customHtml }, index) => (
         <div className="mt-10" key={index}>
           {block.bubble_text && block.bubble_image && <SpeechBubble block={block} />}
-          {block.rich_text && <RichText block={block} articleTitle={data.title} />}
-          {block.custom_html && <CustomHtml block={block} />}
+          {richTextHtml && <RichText html={richTextHtml} />}
+          {customHtml && <CustomHtml html={customHtml} />}
           {block.image_slider && block.image_slider.length > 0 && (
             <ImageSlider block={block} imageAltFallback={data.title} />
           )}
@@ -79,18 +100,12 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
         </div>
       ))}
       {headings.length > 0 && <TableOfContents headings={headings} />}
-      {data.content_blocks.map((block, index) => {
+      {contentBlocks.map(({ block, richTextHtml, customHtml }, index) => {
         return (
           <div key={index} className="mt-5">
             {block.bubble_text && block.bubble_image && <SpeechBubble block={block} />}
-            {block.rich_text && (
-              <RichText
-                block={block}
-                adSlots={contentBlockAdSlots[index]}
-                articleTitle={data.title}
-              />
-            )}
-            {block.custom_html && <CustomHtml block={block} />}
+            {richTextHtml && <RichText html={richTextHtml} adSlots={contentBlockAdSlots[index]} />}
+            {customHtml && <CustomHtml html={customHtml} />}
             {block.image_slider && block.image_slider.length > 0 && (
               <ImageSlider block={block} imageAltFallback={data.title} />
             )}

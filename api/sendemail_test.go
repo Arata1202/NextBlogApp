@@ -110,6 +110,10 @@ func TestSendEmailHandlerOptions(t *testing.T) {
 	if got := rec.Header().Get("Access-Control-Allow-Origin"); got != "https://example.com" {
 		t.Fatalf("Access-Control-Allow-Origin = %q, want %q", got, "https://example.com")
 	}
+
+	if got := rec.Header().Get("Access-Control-Allow-Methods"); got != "POST, OPTIONS" {
+		t.Fatalf("Access-Control-Allow-Methods = %q, want %q", got, "POST, OPTIONS")
+	}
 }
 
 func TestSendEmailHandlerForbiddenOrigin(t *testing.T) {

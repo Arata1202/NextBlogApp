@@ -2,7 +2,6 @@
 
 import { memo, useEffect, useMemo, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { ContentBlock } from '@/types/microcms';
 import styles from './index.module.css';
 import { applyTargetBlankToLinks } from './links';
 import { setupMoshimoEasyLinkFallback, syncMoshimoEasyLinkArrows } from './moshimoEasyLinkFallback';
@@ -10,15 +9,14 @@ import { runCustomHtmlScripts } from './scripts';
 import { useIframelyEmbeds } from '@/hooks/useIframelyEmbeds';
 
 type Props = {
-  block: ContentBlock;
+  html: string;
 };
 
 const SCRIPT_REPLAY_DELAY_MS = 100;
 
-function CustomHtml({ block }: Props) {
+function CustomHtml({ html }: Props) {
   const pathname = usePathname();
   const contentRef = useRef<HTMLDivElement>(null);
-  const html = block.custom_html!;
   const dangerouslySetInnerHTML = useMemo(() => ({ __html: html }), [html]);
 
   useIframelyEmbeds(contentRef, html);
@@ -73,5 +71,5 @@ function CustomHtml({ block }: Props) {
 }
 
 export default memo(CustomHtml, (prevProps, nextProps) => {
-  return prevProps.block.custom_html === nextProps.block.custom_html;
+  return prevProps.html === nextProps.html;
 });

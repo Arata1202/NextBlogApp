@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { getDetail } from '@/libs/microcms';
 import { PROFILE_NAME, SOCIAL_ICON } from '@/constants/data';
+import { getArticleDetailForPage } from '@/libs/microcmsPage';
 
 type Props = {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
-  const data = await getDetail(params.slug);
+  const data = await getArticleDetailForPage(params.slug);
 
   const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
@@ -41,7 +41,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default async function ArticleLayout(props: Props) {
   const params = await props.params;
-  const data = await getDetail(params.slug);
+  const data = await getArticleDetailForPage(params.slug);
   const { children } = props;
 
   const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;

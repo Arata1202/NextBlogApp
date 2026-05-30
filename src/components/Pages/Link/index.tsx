@@ -9,7 +9,7 @@ import MainContainer from '@/components/Common/Layouts/Container/MainContainer';
 import ContentContainer from '@/components/Common/Layouts/Container/ContentContainer';
 import Sidebar from '@/components/Common/Layouts/Sidebar';
 import Share from '../../Common/Share';
-import FixedDateContainer from '@/components/Common/Layouts/Container/FIxedDateContainer';
+import FixedDateContainer from '@/components/Common/Layouts/Container/FixedDateContainer';
 
 type Props = {
   recentArticles: UnifiedArticle[];
@@ -22,7 +22,7 @@ export default function LinkPage({ recentArticles, tags, archiveList }: Props) {
 
   return (
     <>
-      <PageHeading link={true} />
+      <PageHeading page={{ type: 'link' }} />
       <MainContainer>
         <ContentContainer>
           <FixedDateContainer date={date} />

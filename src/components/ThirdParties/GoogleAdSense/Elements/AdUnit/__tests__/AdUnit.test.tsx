@@ -6,11 +6,13 @@ describe('AdUnit', () => {
   afterEach(() => {
     vi.useRealTimers();
     window.adsbygoogle = [];
+    delete process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_PUBLISHER_ID;
   });
 
   it('renders the configured ad slot and pushes to adsbygoogle after mount', () => {
     vi.useFakeTimers();
     window.adsbygoogle = [];
+    process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_PUBLISHER_ID = 'publisher-id';
 
     render(<AdUnit slot="slot-1" format="auto" responsive="true" />);
 
@@ -24,5 +26,11 @@ describe('AdUnit', () => {
     });
 
     expect(window.adsbygoogle).toHaveLength(1);
+  });
+
+  it('does not render an ad placeholder when the publisher id is missing', () => {
+    render(<AdUnit slot="slot-1" />);
+
+    expect(screen.queryByText('スポンサーリンク')).not.toBeInTheDocument();
   });
 });

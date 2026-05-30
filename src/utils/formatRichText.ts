@@ -13,6 +13,7 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import dart from 'highlight.js/lib/languages/dart';
 import vim from 'highlight.js/lib/languages/vim';
 import { formatMicroCmsImageUrl, isMicroCmsImageUrl } from './formatMicroCmsImageUrl';
+import { ARTICLE_CONTENT_AD_MARKER } from '@/constants/articleContent';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
@@ -27,7 +28,7 @@ hljs.registerLanguage('dart', dart);
 hljs.registerLanguage('vim', vim);
 
 const RICH_TEXT_IMAGE_WIDTHS = [640, 960, 1200];
-export const ARTICLE_CONTENT_AD_MARKER = '<!--article-content-ad-->';
+export { ARTICLE_CONTENT_AD_MARKER };
 
 type FormatRichTextOptions = {
   insertAdsBeforeH2?: boolean;

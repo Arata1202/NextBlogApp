@@ -27,7 +27,7 @@ export default function HomePage({
 }: Props) {
   return (
     <>
-      <PageHeading home={true} />
+      <PageHeading page={{ type: 'home' }} />
       <ArticleList
         articles={articles}
         mixedArticles={mixedArticles}

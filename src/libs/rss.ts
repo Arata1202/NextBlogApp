@@ -5,7 +5,7 @@ import { getZennFeed } from './zenn';
 import { COPYRIGHT, DESCRIPTION } from '@/constants/data';
 import { UnifiedArticle } from '@/types/unified';
 
-export const generateRssFeed = async () => {
+export const generateRssFeedXml = async () => {
   const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
 
@@ -70,5 +70,9 @@ export const generateRssFeed = async () => {
     });
   });
 
-  fs.writeFileSync('./public/rss.xml', feed.rss2());
+  return feed.rss2();
+};
+
+export const generateRssFeed = async () => {
+  fs.writeFileSync('./public/rss.xml', await generateRssFeedXml());
 };

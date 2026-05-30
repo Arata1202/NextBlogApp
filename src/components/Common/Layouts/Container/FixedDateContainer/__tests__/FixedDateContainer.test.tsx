@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import FixedDateContainer from '@/components/Common/Layouts/Container/FIxedDateContainer';
+import FixedDateContainer from '@/components/Common/Layouts/Container/FixedDateContainer';
 
 describe('FixedDateContainer', () => {
   it('renders published and updated dates with the ad disclosure', () => {

@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 )
 
 func compactJSON(input string) string {
@@ -81,6 +82,10 @@ func TestSearchHandlerOptions(t *testing.T) {
 	if got := rec.Header().Get("Access-Control-Allow-Origin"); got != "https://example.com" {
 		t.Fatalf("Access-Control-Allow-Origin = %q, want %q", got, "https://example.com")
 	}
+
+	if got := rec.Header().Get("Access-Control-Allow-Methods"); got != "GET, OPTIONS" {
+		t.Fatalf("Access-Control-Allow-Methods = %q, want %q", got, "GET, OPTIONS")
+	}
 }
 
 func TestSearchHandlerEmptyQuery(t *testing.T) {
@@ -99,6 +104,8 @@ func TestSearchHandlerEmptyQuery(t *testing.T) {
 }
 
 func TestSearchHandlerSuccess(t *testing.T) {
+	resetMicroCMSSearchCache()
+	t.Cleanup(resetMicroCMSSearchCache)
 	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
 	t.Setenv("MICROCMS_API_KEY", "api-key")
 
@@ -160,6 +167,74 @@ func TestSearchHandlerSuccess(t *testing.T) {
 
 	if got := compactJSON(rec.Body.String()); got != `{"contents":[{"description":"React description","id":"article-b","title":"Article B"},{"description":"Body match","id":"article-c","title":"Article C"}],"totalCount":3,"offset":1,"limit":2}` {
 		t.Fatalf("body = %q", got)
+	}
+}
+
+func TestSearchHandlerUsesCachedMicroCMSArticles(t *testing.T) {
+	resetMicroCMSSearchCache()
+	t.Cleanup(resetMicroCMSSearchCache)
+	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
+	t.Setenv("MICROCMS_API_KEY", "api-key")
+
+	originalClient := microCMSSearchHTTPClient
+	originalBaseURL := microCMSSearchAPIBaseURL
+	originalNow := microCMSSearchNow
+	now := time.Date(2026, time.May, 30, 12, 0, 0, 0, time.UTC)
+	microCMSSearchAPIBaseURL = "https://%s.microcms.test/api/v1/blog"
+	microCMSSearchNow = func() time.Time {
+		return now
+	}
+
+	requestCount := 0
+	microCMSSearchHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			requestCount++
+
+			return &http.Response{
+				StatusCode: http.StatusOK,
+				Header:     http.Header{"Content-Type": []string{"application/json"}},
+				Body: io.NopCloser(strings.NewReader(`{
+					"contents":[{"id":"article-a","title":"React cache","description":"Body"}],
+					"totalCount":1,
+					"offset":0,
+					"limit":100
+				}`)),
+			}, nil
+		}),
+	}
+	t.Cleanup(func() {
+		microCMSSearchHTTPClient = originalClient
+		microCMSSearchAPIBaseURL = originalBaseURL
+		microCMSSearchNow = originalNow
+	})
+
+	for _, rawURL := range []string{"/api/search?q=React", "/api/search?q=Body"} {
+		req := httptest.NewRequest(http.MethodGet, rawURL, nil)
+		rec := httptest.NewRecorder()
+
+		SearchHandler(rec, req)
+
+		if rec.Code != http.StatusOK {
+			t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
+		}
+	}
+
+	if requestCount != 1 {
+		t.Fatalf("microCMS request count = %d, want 1", requestCount)
+	}
+
+	now = now.Add(microCMSSearchCacheTTL + time.Second)
+	req := httptest.NewRequest(http.MethodGet, "/api/search?q=React", nil)
+	rec := httptest.NewRecorder()
+
+	SearchHandler(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
+	}
+
+	if requestCount != 2 {
+		t.Fatalf("microCMS request count after expiry = %d, want 2", requestCount)
 	}
 }
 
