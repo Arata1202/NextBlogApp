@@ -75,8 +75,8 @@ export default function ArticleList({
           )}
           {!isLoading && !isMixed && articles.length > 0 && (
             <ul className={styles.main}>
-              {articles.slice(0, 3).map((article) => (
-                <ArticleCard key={article.id} article={article} />
+              {articles.slice(0, 3).map((article, index) => (
+                <ArticleCard key={article.id} article={article} priority={index === 0} />
               ))}
               <AdUnit slot="9947663897" style={{ marginBottom: '1.25rem' }} />
               {articles.slice(3).map((article) => (
@@ -86,8 +86,8 @@ export default function ArticleList({
           )}
           {!isLoading && isMixed && mixedArticles && mixedArticles.length > 0 && (
             <ul className={styles.main}>
-              {mixedArticles.slice(0, 3).map((article) => (
-                <UnifiedArticleCard key={article.id} article={article} />
+              {mixedArticles.slice(0, 3).map((article, index) => (
+                <UnifiedArticleCard key={article.id} article={article} priority={index === 0} />
               ))}
               <AdUnit slot="9947663897" style={{ marginBottom: '1.25rem' }} />
               {mixedArticles.slice(3).map((article) => (

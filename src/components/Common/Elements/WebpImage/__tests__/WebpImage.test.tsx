@@ -33,6 +33,15 @@ describe('WebpImage', () => {
     expect(image).toHaveAttribute('src', expect.stringContaining('h=126'));
   });
 
+  it('marks priority images with a high fetch priority', () => {
+    render(<WebpImage article={article} priority />);
+
+    expect(screen.getByRole('img', { name: 'Article image' })).toHaveAttribute(
+      'fetchpriority',
+      'high',
+    );
+  });
+
   it('renders sources for webp candidates', () => {
     const { container } = render(<WebpImage article={article} />);
     const sources = container.querySelectorAll('source[type="image/webp"]');

@@ -9,9 +9,10 @@ import WebpImage from '../Elements/WebpImage';
 
 type Props = {
   article: Article;
+  priority?: boolean;
 };
 
-export default function ArticleCard({ article }: Props) {
+export default function ArticleCard({ article, priority = false }: Props) {
   const { theme } = useTheme();
 
   return (
@@ -21,7 +22,7 @@ export default function ArticleCard({ article }: Props) {
           href={`/articles/${article.id}`}
           className={`${styles.link} p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
         >
-          <WebpImage article={article} card={true} />
+          <WebpImage article={article} card={true} priority={priority} />
           <div className={styles.content}>
             <div className={styles.title}>{article.title}</div>
             <div className={styles.description}>{article.description}</div>

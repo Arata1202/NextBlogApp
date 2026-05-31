@@ -10,9 +10,10 @@ import WebpImage from '../Elements/WebpImage';
 
 type Props = {
   article: UnifiedArticle;
+  priority?: boolean;
 };
 
-export default function UnifiedArticleCard({ article }: Props) {
+export default function UnifiedArticleCard({ article, priority = false }: Props) {
   const { theme } = useTheme();
   const isExternal = article.source === 'zenn';
 
@@ -35,7 +36,7 @@ export default function UnifiedArticleCard({ article }: Props) {
         className={`${styles.link} p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
         {article.source === 'blog' && article.thumbnail && (
-          <WebpImage article={article} card={true} />
+          <WebpImage article={article} card={true} priority={priority} />
         )}
         {article.source !== 'blog' && article.thumbnailUrl && (
           <img
@@ -44,6 +45,7 @@ export default function UnifiedArticleCard({ article }: Props) {
             alt=""
             loading="lazy"
             decoding="async"
+            fetchPriority={priority ? 'high' : undefined}
             style={{ alignSelf: 'flex-start' }}
           />
         )}

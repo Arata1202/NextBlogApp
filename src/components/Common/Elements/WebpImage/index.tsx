@@ -9,9 +9,15 @@ type Props = {
   };
   card?: boolean;
   recent?: boolean;
+  priority?: boolean;
 };
 
-export default function WebpImage({ article, card = false, recent = false }: Props) {
+export default function WebpImage({
+  article,
+  card = false,
+  recent = false,
+  priority = false,
+}: Props) {
   if (!article.thumbnail?.url) {
     return null;
   }
@@ -44,6 +50,7 @@ export default function WebpImage({ article, card = false, recent = false }: Pro
         className={(card && styles.image) || (recent && styles.recent) || styles.thumbnail}
         width={article.thumbnail?.width}
         height={article.thumbnail?.height}
+        fetchPriority={priority ? 'high' : undefined}
       />
     </picture>
   );
