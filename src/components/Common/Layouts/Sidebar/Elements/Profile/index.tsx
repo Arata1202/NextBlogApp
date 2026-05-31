@@ -24,6 +24,8 @@ export default function Profile() {
             key={item.path}
             src={item.path}
             alt={item.alt}
+            width={224}
+            height={224}
           />
         ))}
         <div

@@ -62,6 +62,8 @@ export default function SupportSection({ data }: Props) {
             src="https://static.fc2.com/blogranking/ranking_banner/a_02.gif"
             alt="FC2ブログランキング"
             loading="lazy"
+            width="92"
+            height="34"
           />
         </Link>
       </div>
