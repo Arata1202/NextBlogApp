@@ -9,7 +9,7 @@ type Props = {
 export default function FixedDateContainer({ date, updatedDate }: Props) {
   return (
     <div className="space-y-5 lg:space-y-8">
-      <div className="flex justify-end">
+      <div className="flex justify-end mb-0">
         <SingleDate date={date.toISOString()} />
         {updatedDate && <SingleDate date={updatedDate.toISOString()} updatedAt={true} />}
       </div>
