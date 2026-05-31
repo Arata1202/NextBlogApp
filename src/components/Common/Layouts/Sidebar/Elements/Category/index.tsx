@@ -23,7 +23,7 @@ export default function Category() {
             <Link
               key={item.name}
               href={`/category/${item.id}`}
-              className={`${styles.CategoryList} text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`${styles.CategoryList} text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <div className="flex justify-center">
                 <item.icon className="w-12 h-12" aria-hidden="true" />

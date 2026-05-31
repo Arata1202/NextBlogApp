@@ -32,7 +32,7 @@ export default function UnifiedArticleCard({ article }: Props) {
         target={isExternal ? '_blank' : undefined}
         rel={isExternal ? 'noopener noreferrer' : undefined}
         aria-label={isExternal ? `${article.title}を新しいタブで開く` : undefined}
-        className={`${styles.link} p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+        className={`${styles.link} p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
       >
         {article.source === 'blog' && article.thumbnail && (
           <WebpImage article={article} card={true} />

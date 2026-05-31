@@ -64,7 +64,7 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
           return (
             <ul
               key={article.id}
-              className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               <li>
                 {isExternal ? (

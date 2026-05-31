@@ -19,7 +19,7 @@ export default function ArticleCard({ article }: Props) {
       <li className={styles.list}>
         <Link
           href={`/articles/${article.id}`}
-          className={`${styles.link} p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 transform hover:-translate-y-1 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+          className={`${styles.link} p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
         >
           <WebpImage article={article} card={true} />
           <div className={styles.content}>
