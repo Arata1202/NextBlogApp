@@ -1,7 +1,32 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import Header from '@/components/Common/Layouts/Header';
+
+function mockMobileViewport() {
+  const originalMatchMedia = window.matchMedia;
+
+  Object.defineProperty(window, 'matchMedia', {
+    configurable: true,
+    value: vi.fn().mockImplementation(() => ({
+      matches: true,
+      media: '(max-width: 1023px)',
+      onchange: null,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  });
+
+  return () => {
+    Object.defineProperty(window, 'matchMedia', {
+      configurable: true,
+      value: originalMatchMedia,
+    });
+  };
+}
 
 describe('Header', () => {
   it('opens and closes the mobile menu through accessible controls', async () => {
@@ -26,20 +51,7 @@ describe('Header', () => {
   });
 
   it('clears restored mobile logo focus after pointer navigation while preserving keyboard focus', async () => {
-    const originalMatchMedia = window.matchMedia;
-    Object.defineProperty(window, 'matchMedia', {
-      configurable: true,
-      value: vi.fn().mockImplementation(() => ({
-        matches: true,
-        media: '(max-width: 1023px)',
-        onchange: null,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-        addListener: vi.fn(),
-        removeListener: vi.fn(),
-        dispatchEvent: vi.fn(),
-      })),
-    });
+    const restoreMatchMedia = mockMobileViewport();
 
     try {
       render(<Header />);
@@ -61,10 +73,33 @@ describe('Header', () => {
 
       expect(logoLink).toHaveFocus();
     } finally {
-      Object.defineProperty(window, 'matchMedia', {
-        configurable: true,
-        value: originalMatchMedia,
+      restoreMatchMedia();
+    }
+  });
+
+  it('clears logo focus restored after closing the mobile menu with pointer input', async () => {
+    const restoreMatchMedia = mockMobileViewport();
+
+    try {
+      render(<Header />);
+
+      const logoLink = screen.getByRole('link', { name: 'リアル大学生' });
+
+      logoLink.focus();
+      expect(logoLink).toHaveFocus();
+
+      fireEvent.click(screen.getByRole('button', { name: 'メニューを開く' }));
+      const closeButtons = screen.getAllByRole('button', { name: 'メニューを閉じる' });
+      fireEvent.click(closeButtons[closeButtons.length - 1]);
+
+      logoLink.focus();
+      expect(logoLink).toHaveFocus();
+
+      await waitFor(() => {
+        expect(logoLink).not.toHaveFocus();
       });
+    } finally {
+      restoreMatchMedia();
     }
   });
 });

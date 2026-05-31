@@ -96,7 +96,7 @@ function HeaderCategoryIcon({ category, className }: HeaderCategoryIconProps) {
 
 const MOBILE_HEADER_MEDIA_QUERY = '(max-width: 1023px)';
 
-function useBlurRestoredMobileLogoFocus(
+function useMobileLogoFocusGuard(
   logoLinkRef: RefObject<HTMLAnchorElement | null>,
   pathname: string,
 ) {
@@ -114,6 +114,10 @@ function useBlurRestoredMobileLogoFocus(
 
     logoLinkRef.current?.blur();
   }, [logoLinkRef]);
+
+  const queueBlurRestoredMobileLogoFocus = useCallback(() => {
+    window.setTimeout(blurRestoredMobileLogoFocus, 0);
+  }, [blurRestoredMobileLogoFocus]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -145,6 +149,11 @@ function useBlurRestoredMobileLogoFocus(
       window.removeEventListener('pageshow', blurRestoredMobileLogoFocus);
     };
   }, [blurRestoredMobileLogoFocus]);
+
+  return {
+    blurRestoredMobileLogoFocus,
+    queueBlurRestoredMobileLogoFocus,
+  };
 }
 
 export default function Header() {
@@ -162,7 +171,20 @@ export default function Header() {
   const githubLinkClassName = `rounded-md hover:text-blue-600 ${interactiveFocusClassName}`;
   const mobileGithubLinkClassName = `${compactIconControlClassName} hover:text-blue-600`;
 
-  useBlurRestoredMobileLogoFocus(logoLinkRef, pathname);
+  const { blurRestoredMobileLogoFocus, queueBlurRestoredMobileLogoFocus } = useMobileLogoFocusGuard(
+    logoLinkRef,
+    pathname,
+  );
+
+  const openMobileMenu = useCallback(() => {
+    blurRestoredMobileLogoFocus();
+    setMobileMenuOpen(true);
+  }, [blurRestoredMobileLogoFocus]);
+
+  const closeMobileMenu = useCallback(() => {
+    setMobileMenuOpen(false);
+    queueBlurRestoredMobileLogoFocus();
+  }, [queueBlurRestoredMobileLogoFocus]);
 
   return (
     <>
@@ -192,7 +214,7 @@ export default function Header() {
                 type="button"
                 aria-label="メニューを閉じる"
                 className={`${compactIconControlClassName} cursor-pointer ${themeClassName}`}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
               >
                 <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               </button>
@@ -219,7 +241,7 @@ export default function Header() {
                     type="button"
                     aria-label="メニューを開く"
                     className={`${compactIconControlClassName} cursor-pointer ${themeClassName}`}
-                    onClick={() => setMobileMenuOpen(true)}
+                    onClick={openMobileMenu}
                   >
                     <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                   </button>
@@ -295,8 +317,12 @@ export default function Header() {
           </div>
         </nav>
 
-        <Transition.Root show={mobileMenuOpen} as={Fragment}>
-          <Dialog as="div" className="relative lg:hidden z-50" onClose={setMobileMenuOpen}>
+        <Transition.Root
+          show={mobileMenuOpen}
+          as={Fragment}
+          afterLeave={queueBlurRestoredMobileLogoFocus}
+        >
+          <Dialog as="div" className="relative lg:hidden z-50" onClose={closeMobileMenu}>
             <Transition.Child
               as={Fragment}
               enter="ease-in-out duration-300"
@@ -327,7 +353,7 @@ export default function Header() {
                       type="button"
                       aria-label="メニューを閉じる"
                       className={`${compactIconControlClassName} cursor-pointer`}
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={closeMobileMenu}
                     >
                       <XMarkIcon className={`h-6 w-6 ${themeClassName}`} aria-hidden="true" />
                     </button>
@@ -343,7 +369,7 @@ export default function Header() {
                         <Link
                           href={item.path}
                           className={menuLinkClassName}
-                          onClick={() => setMobileMenuOpen(false)}
+                          onClick={closeMobileMenu}
                         >
                           <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
                           <item.icon className="h-6 w-6 mx-2" aria-hidden="true" />
@@ -364,7 +390,7 @@ export default function Header() {
                         <Link
                           href={`/category/${item.id}`}
                           className={categoryMenuLinkClassName}
-                          onClick={() => setMobileMenuOpen(false)}
+                          onClick={closeMobileMenu}
                         >
                           <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
                           <HeaderCategoryIcon category={item} className="h-6 w-6 mx-2 shrink-0" />
