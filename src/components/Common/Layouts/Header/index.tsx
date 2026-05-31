@@ -94,9 +94,9 @@ export default function Header() {
   const headerLinkClassName = `flex text-sm leading-6 hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
   const menuLinkClassName = `flex items-center py-1 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
   const categoryMenuLinkClassName = `ml-5 flex items-center py-1 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
-  const popoverMenuLinkClassName = `relative z-0 flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:text-blue-600 focus-visible:z-10 focus-visible:ring-inset ${interactiveFocusClassName} ${themeClassName}`;
+  const popoverMenuLinkClassName = `relative z-0 flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:text-blue-600 focus-visible:z-10 ${interactiveFocusClassName} ${themeClassName}`;
   const githubLinkClassName = `rounded-md hover:text-blue-600 ${interactiveFocusClassName}`;
-  const mobileGithubLinkClassName = `${githubLinkClassName} px-3 focus-visible:ring-inset`;
+  const mobileGithubLinkClassName = `${githubLinkClassName} px-3`;
 
   return (
     <>

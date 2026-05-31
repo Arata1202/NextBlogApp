@@ -152,11 +152,29 @@ pre {
   background-color: #fff;
 }
 
-.easyLink-box :where(a[href], button, [role='button'], [tabindex]:not([tabindex='-1'])):focus-visible {
-  outline: 2px solid var(--color-focus-ring) !important;
-  outline-offset: 3px !important;
-  border-radius: 4px;
-  box-shadow: 0 0 0 3px rgb(37 99 235 / 18%);
+.easyLink-box a[href]:focus,
+.easyLink-box button:focus,
+.easyLink-box [role='button']:focus,
+.easyLink-box [tabindex]:not([tabindex='-1']):focus {
+  outline: var(--focus-ring-width, 2px) solid var(--color-focus-ring, #2563eb) !important;
+  outline-offset: var(--focus-ring-offset, 2px) !important;
+}
+
+@supports selector(:focus-visible) {
+  .easyLink-box a[href]:focus:not(:focus-visible),
+  .easyLink-box button:focus:not(:focus-visible),
+  .easyLink-box [role='button']:focus:not(:focus-visible),
+  .easyLink-box [tabindex]:not([tabindex='-1']):focus:not(:focus-visible) {
+    outline: none !important;
+  }
+
+  .easyLink-box a[href]:focus-visible,
+  .easyLink-box button:focus-visible,
+  .easyLink-box [role='button']:focus-visible,
+  .easyLink-box [tabindex]:not([tabindex='-1']):focus-visible {
+    outline: var(--focus-ring-width, 2px) solid var(--color-focus-ring, #2563eb) !important;
+    outline-offset: var(--focus-ring-offset, 2px) !important;
+  }
 }
 
 .easyLink-box .easyLink-info-maker,

@@ -92,16 +92,6 @@
   right: 12px !important;
 }
 
-.arrow:focus-visible {
-  outline: 2px solid var(--color-focus-ring) !important;
-  outline-offset: 3px;
-}
-
-.wrapper :global(.slick-dots li button:focus-visible) {
-  outline: 2px solid var(--color-focus-ring) !important;
-  outline-offset: 3px;
-}
-
 .wrapper :global(.slick-dots) {
   bottom: -30px;
 }
@@ -136,6 +126,25 @@
 .wrapper :global(.slick-dots li button:hover::before) {
   color: var(--color-focus-ring) !important;
   opacity: 1 !important;
+}
+
+.arrow:focus,
+.wrapper :global(.slick-dots li button:focus) {
+  outline: var(--focus-ring-width, 2px) solid var(--color-focus-ring, #2563eb) !important;
+  outline-offset: var(--focus-ring-offset, 2px) !important;
+}
+
+@supports selector(:focus-visible) {
+  .arrow:focus:not(:focus-visible),
+  .wrapper :global(.slick-dots li button:focus:not(:focus-visible)) {
+    outline: none !important;
+  }
+
+  .arrow:focus-visible,
+  .wrapper :global(.slick-dots li button:focus-visible) {
+    outline: var(--focus-ring-width, 2px) solid var(--color-focus-ring, #2563eb) !important;
+    outline-offset: var(--focus-ring-offset, 2px) !important;
+  }
 }
 
 @media (max-width: 640px) {

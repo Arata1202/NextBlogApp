@@ -73,6 +73,8 @@ layer(base);
     --color-link-dark: #93c5fd;
     --color-link-dark-hover: #bfdbfe;
     --border-radius: 4px;
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
   }
 
   * {
@@ -108,12 +110,18 @@ layer(base);
     text-decoration: none;
   }
 
-  a:focus-visible,
-  button:focus-visible,
-  [role='button']:focus-visible {
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: 2px;
-    border-radius: var(--border-radius);
+  :where(
+    a[href],
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [role='button'],
+    [tabindex]:not([tabindex='-1'])
+  ):focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
   }
 
   p {

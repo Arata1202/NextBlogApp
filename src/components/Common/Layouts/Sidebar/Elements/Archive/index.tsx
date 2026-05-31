@@ -67,7 +67,7 @@ export default function Archive({ archiveList }: Props) {
 
             <Listbox.Options
               modal={false}
-              className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border py-1 text-base shadow-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-600 sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border py-1 text-base shadow-lg sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             >
               {archiveList.map((item, index) => (
                 <Listbox.Option

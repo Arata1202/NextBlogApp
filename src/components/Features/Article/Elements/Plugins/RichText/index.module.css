@@ -108,8 +108,7 @@
   color: var(--color-link);
 }
 
-.content a:hover,
-.content a:focus-visible {
+.content a:hover {
   color: var(--color-link-hover);
 }
 
@@ -117,8 +116,7 @@
   color: var(--color-link-dark);
 }
 
-:global(body.DarkTheme) .content a:hover,
-:global(body.DarkTheme) .content a:focus-visible {
+:global(body.DarkTheme) .content a:hover {
   color: var(--color-link-dark-hover);
 }
 
