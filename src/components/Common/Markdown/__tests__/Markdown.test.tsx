@@ -25,7 +25,7 @@ describe('Markdown', () => {
 
     expect(screen.getByRole('img', { name: '筆者' })).toHaveAttribute(
       'src',
-      '/images/blog/face.png',
+      '/images/blog/face.webp',
     );
   });
 
