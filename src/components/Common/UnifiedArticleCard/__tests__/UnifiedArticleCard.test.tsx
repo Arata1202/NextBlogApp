@@ -38,6 +38,8 @@ describe('UnifiedArticleCard', () => {
     const image = container.querySelector('img');
     expect(image).toHaveAttribute('alt', '');
     expect(image).toHaveAttribute('src', 'https://example.com/zenn.png');
+    expect(image).toHaveAttribute('width', '1200');
+    expect(image).toHaveAttribute('height', '630');
   });
 
   it('renders the updated date only when it is a later day than publishedAt', () => {
