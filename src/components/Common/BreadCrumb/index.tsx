@@ -1,20 +1,35 @@
 import Link from 'next/link';
 import { HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import SearchResultLabelSkeleton from '../SearchResultLabelSkeleton';
 import { getPageHeadingLabel, type BreadCrumbPage } from '../pageHeadingModel';
 
 type Props = {
   page: BreadCrumbPage;
+  isLoading?: boolean;
 };
 
 const currentPageClassName = 'ml-4 text-sm font-medium text-gray-500';
 
-const renderCurrentPage = (label: string) => (
-  <span className={currentPageClassName} aria-current="page">
-    {label}
+const renderCurrentPage = (label: string, isLoading: boolean) => (
+  <span
+    className={currentPageClassName}
+    aria-current="page"
+    aria-label={isLoading ? '現在のページを読み込み中' : undefined}
+  >
+    {isLoading ? (
+      <span
+        className="inline-block h-4 w-28 animate-pulse rounded bg-gray-300/70 align-middle"
+        aria-hidden="true"
+      />
+    ) : (
+      label
+    )}
   </span>
 );
 
-export default function BreadCrumb({ page }: Props) {
+export default function BreadCrumb({ page, isLoading = false }: Props) {
+  const isSearchLoading = page.type === 'search' && isLoading;
+
   return (
     <nav aria-label="パンくず">
       <ul className="flex items-center space-x-4">
@@ -39,7 +54,17 @@ export default function BreadCrumb({ page }: Props) {
         <li>
           <div className="flex items-center">
             <ChevronRightIcon className="h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" />
-            {renderCurrentPage(getPageHeadingLabel(page))}
+            {isSearchLoading ? (
+              <span
+                className={currentPageClassName}
+                aria-current="page"
+                aria-label="現在のページを読み込み中"
+              >
+                <SearchResultLabelSkeleton variant="breadcrumb" />
+              </span>
+            ) : (
+              renderCurrentPage(getPageHeadingLabel(page), isLoading)
+            )}
           </div>
         </li>
       </ul>

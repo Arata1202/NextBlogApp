@@ -16,12 +16,13 @@ async function getSearchPageData() {
 function SearchPageShell({ recentArticles, tags, archiveList }: SearchPageShellProps) {
   return (
     <>
-      <PageHeading page={{ type: 'search' }} />
+      <PageHeading page={{ type: 'search' }} isLoading />
       <ArticleList
         articles={[]}
         recentArticles={recentArticles}
         tags={tags}
         archiveList={archiveList}
+        isLoading
       />
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>

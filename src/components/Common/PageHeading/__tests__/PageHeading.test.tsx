@@ -43,4 +43,15 @@ describe('PageHeading', () => {
     ).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '「React」の検索結果' })).toBeInTheDocument();
   });
+
+  it('renders only the breadcrumb and title labels as skeletons while loading', () => {
+    render(<PageHeading page={{ type: 'search', searchKeyword: 'React' }} isLoading />);
+
+    expect(screen.getByRole('link', { name: 'ホーム' })).toBeInTheDocument();
+    expect(screen.getByLabelText('現在のページを読み込み中')).toHaveTextContent('「」の検索結果');
+    expect(screen.getByRole('heading', { name: 'ページタイトルを読み込み中' })).toHaveTextContent(
+      '「」の検索結果',
+    );
+    expect(screen.queryByText('「React」の検索結果')).not.toBeInTheDocument();
+  });
 });

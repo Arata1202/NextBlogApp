@@ -4,13 +4,22 @@ import SearchPage from '@/components/Pages/Search';
 import { createArticle, createTag, createUnifiedArticle } from '@/test/factories';
 
 const fetchMock = vi.fn();
+const pageHeadingMock = vi.fn();
 const articleListMock = vi.fn();
 const paginationMock = vi.fn();
 
 vi.mock('@/components/Common/PageHeading', () => ({
-  default: ({ page }: { page: { type: 'search'; searchKeyword?: string } }) => (
-    <div>{`「${page.searchKeyword ?? ''}」の検索結果`}</div>
-  ),
+  default: ({
+    page,
+    isLoading,
+  }: {
+    page: { type: 'search'; searchKeyword?: string };
+    isLoading?: boolean;
+  }) => {
+    pageHeadingMock({ page, isLoading });
+
+    return <div>{isLoading ? 'heading-loading' : `「${page.searchKeyword ?? ''}」の検索結果`}</div>;
+  },
 }));
 
 vi.mock('@/components/Common/ArticleList', () => ({
@@ -26,7 +35,7 @@ vi.mock('@/components/Common/ArticleList', () => ({
         {props.articles.map((article) => (
           <div key={article.title}>{article.title}</div>
         ))}
-        {props.articles.length === 0 && <div>{props.emptyMessage}</div>}
+        {!props.isLoading && props.articles.length === 0 && <div>{props.emptyMessage}</div>}
       </div>
     );
   },
@@ -50,6 +59,7 @@ describe('SearchPage', () => {
     window.history.pushState({}, '', '/search');
     vi.stubGlobal('fetch', fetchMock);
     fetchMock.mockReset();
+    pageHeadingMock.mockReset();
     articleListMock.mockReset();
     paginationMock.mockReset();
   });
@@ -111,6 +121,13 @@ describe('SearchPage', () => {
         }),
       ),
     );
+    expect(pageHeadingMock).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        isLoading: undefined,
+      }),
+    );
+    expect(screen.getByText('「React」の検索結果')).toBeInTheDocument();
+    expect(screen.queryByText('記事はまだありません')).not.toBeInTheDocument();
     expect(screen.queryByText('検索中...')).not.toBeInTheDocument();
   });
 
