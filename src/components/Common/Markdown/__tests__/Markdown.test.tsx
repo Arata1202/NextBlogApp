@@ -28,4 +28,11 @@ describe('Markdown', () => {
       '/images/blog/face.png',
     );
   });
+
+  it('applies provided ids to markdown headings', () => {
+    render(<Markdown content={'## Intro\n\n### Details'} headingIds={['intro', 'details']} />);
+
+    expect(screen.getByRole('heading', { name: 'Intro' })).toHaveAttribute('id', 'intro');
+    expect(screen.getByRole('heading', { name: 'Details' })).toHaveAttribute('id', 'details');
+  });
 });

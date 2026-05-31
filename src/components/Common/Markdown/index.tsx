@@ -3,13 +3,24 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useTheme } from 'next-themes';
+import { useMemo } from 'react';
 import { PROFILE_IMAGE } from '@/constants/data';
 import FixedContentContainer from '../Layouts/Container/FixedContentContainer';
 import { getTextLinkClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   content: string;
+  headingIds?: string[];
   profile?: boolean;
+};
+
+type MarkdownAstNode = {
+  type?: string;
+  depth?: number;
+  data?: {
+    hProperties?: Record<string, unknown>;
+  };
+  children?: MarkdownAstNode[];
 };
 
 const opensInNewTab = (href?: string) => {
@@ -28,9 +39,43 @@ const opensInNewTab = (href?: string) => {
   );
 };
 
-export default function Markdown({ content, profile = false }: Props) {
+const createHeadingIdPlugin = (headingIds: string[]) => () => (tree: MarkdownAstNode) => {
+  let index = 0;
+
+  const visit = (node: MarkdownAstNode) => {
+    if (
+      node.type === 'heading' &&
+      typeof node.depth === 'number' &&
+      node.depth >= 2 &&
+      node.depth <= 5
+    ) {
+      const id = headingIds[index];
+      index += 1;
+
+      if (id) {
+        node.data = {
+          ...node.data,
+          hProperties: {
+            ...node.data?.hProperties,
+            id,
+          },
+        };
+      }
+    }
+
+    node.children?.forEach(visit);
+  };
+
+  visit(tree);
+};
+
+export default function Markdown({ content, headingIds, profile = false }: Props) {
   const { theme } = useTheme();
   const linkClassName = getTextLinkClassName(theme);
+  const remarkPlugins = useMemo(
+    () => (headingIds ? [remarkGfm, createHeadingIdPlugin(headingIds)] : [remarkGfm]),
+    [headingIds],
+  );
 
   return (
     <>
@@ -50,33 +95,47 @@ export default function Markdown({ content, profile = false }: Props) {
       )}
       <FixedContentContainer>
         <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
+          remarkPlugins={remarkPlugins}
           components={{
-            h2: ({ children, ...props }) => (
-              <h2
-                className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                {...props}
-              >
-                {children}
-              </h2>
-            ),
-            h3: ({ children, ...props }) => (
-              <h3
-                className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
-                {...props}
-              >
-                {children}
-              </h3>
-            ),
-            h4: ({ children, ...props }) => (
-              <h4
-                className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
-                {...props}
-              >
-                {children}
-              </h4>
-            ),
-            a: ({ href, children, ...props }) => {
+            h2: ({ children, node, ...props }) => {
+              void node;
+
+              return (
+                <h2
+                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  {...props}
+                >
+                  {children}
+                </h2>
+              );
+            },
+            h3: ({ children, node, ...props }) => {
+              void node;
+
+              return (
+                <h3
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                  {...props}
+                >
+                  {children}
+                </h3>
+              );
+            },
+            h4: ({ children, node, ...props }) => {
+              void node;
+
+              return (
+                <h4
+                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
+                  {...props}
+                >
+                  {children}
+                </h4>
+              );
+            },
+            a: ({ href, children, node, ...props }) => {
+              void node;
+
               const shouldOpenInNewTab = opensInNewTab(href);
 
               return (
