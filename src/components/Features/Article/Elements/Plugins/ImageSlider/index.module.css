@@ -78,8 +78,7 @@
   pointer-events: none;
 }
 
-.arrow:hover,
-.arrow:focus-visible {
+.arrow:hover {
   border-color: var(--color-focus-ring) !important;
   color: var(--color-focus-ring) !important;
   background: #fff !important;
@@ -96,13 +95,11 @@
 .arrow:focus-visible {
   outline: 2px solid var(--color-focus-ring) !important;
   outline-offset: 3px;
-  box-shadow: none !important;
 }
 
 .wrapper :global(.slick-dots li button:focus-visible) {
   outline: 2px solid var(--color-focus-ring) !important;
   outline-offset: 3px;
-  box-shadow: none !important;
 }
 
 .wrapper :global(.slick-dots) {
@@ -136,8 +133,7 @@
   opacity: 1 !important;
 }
 
-.wrapper :global(.slick-dots li button:hover::before),
-.wrapper :global(.slick-dots li button:focus-visible::before) {
+.wrapper :global(.slick-dots li button:hover::before) {
   color: var(--color-focus-ring) !important;
   opacity: 1 !important;
 }
