@@ -28,7 +28,6 @@ import { GitHubIcon } from '../../Elements/SocialIcon';
 import Banner from './Elements/Banner';
 import {
   compactIconControlClassName,
-  iconControlClassName,
   interactiveFocusClassName,
 } from '@/components/Common/controlClassNames';
 
@@ -97,7 +96,7 @@ export default function Header() {
   const categoryMenuLinkClassName = `ml-5 flex items-center py-1 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
   const popoverMenuLinkClassName = `relative z-0 flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:text-blue-600 focus-visible:z-10 ${interactiveFocusClassName} ${themeClassName}`;
   const githubLinkClassName = `rounded-md hover:text-blue-600 ${interactiveFocusClassName}`;
-  const mobileGithubLinkClassName = `${githubLinkClassName} px-3`;
+  const mobileGithubLinkClassName = `${compactIconControlClassName} hover:text-blue-600`;
 
   return (
     <>
@@ -122,35 +121,39 @@ export default function Header() {
               <button
                 type="button"
                 aria-label="メニューを閉じる"
-                className={`${compactIconControlClassName} ${themeClassName}`}
+                className={`${compactIconControlClassName} cursor-pointer ${themeClassName}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               </button>
             ) : (
               <div className="flex">
-                <Link
-                  href="https://github.com/Arata1202/NextBlogApp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={mobileGithubLinkClassName}
-                  aria-label="GitHubリポジトリを新しいタブで開く"
-                >
-                  <GitHubIcon className="h-6 w-6" aria-hidden="true" />
-                </Link>
+                <div className={`inline-flex items-center justify-center px-3 ${themeClassName}`}>
+                  <Link
+                    href="https://github.com/Arata1202/NextBlogApp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={mobileGithubLinkClassName}
+                    aria-label="GitHubリポジトリを新しいタブで開く"
+                  >
+                    <GitHubIcon className="h-6 w-6" aria-hidden="true" />
+                  </Link>
+                </div>
                 <div
                   className={`inline-flex items-center justify-center rounded-md px-3 ${themeClassName}`}
                 >
                   <ThemeSwitch />
                 </div>
-                <button
-                  type="button"
-                  aria-label="メニューを開く"
-                  className={`${iconControlClassName} -m-2.5 inline-flex items-center justify-center p-2.5 ml-1 ${themeClassName}`}
-                  onClick={() => setMobileMenuOpen(true)}
-                >
-                  <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-                </button>
+                <div className="-m-2.5 ml-1 flex items-center justify-center p-2.5">
+                  <button
+                    type="button"
+                    aria-label="メニューを開く"
+                    className={`${compactIconControlClassName} cursor-pointer ${themeClassName}`}
+                    onClick={() => setMobileMenuOpen(true)}
+                  >
+                    <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -249,14 +252,16 @@ export default function Header() {
                 className={`fixed inset-y-0 right-0 flex max-w-xs w-full shadow-xl ${themeClassName}`}
               >
                 <div className="flex w-full flex-col p-5">
-                  <button
-                    type="button"
-                    aria-label="メニューを閉じる"
-                    className={`${iconControlClassName} -ml-2 flex items-center justify-end p-2`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <XMarkIcon className={`h-6 w-6 ${themeClassName}`} aria-hidden="true" />
-                  </button>
+                  <div className="-ml-2 flex justify-end p-2">
+                    <button
+                      type="button"
+                      aria-label="メニューを閉じる"
+                      className={`${compactIconControlClassName} cursor-pointer`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <XMarkIcon className={`h-6 w-6 ${themeClassName}`} aria-hidden="true" />
+                    </button>
+                  </div>
                   <Dialog.Title
                     className={`text-center py-2 text-xl font-bold  ${theme === 'dark' ? 'bg-gray-500' : 'bg-gray-300'}`}
                   >

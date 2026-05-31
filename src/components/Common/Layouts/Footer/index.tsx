@@ -17,21 +17,23 @@ export default function Footer() {
         <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
             <div className="space-y-8">
-              <Link
-                href="/"
-                className={`${styles.logo} inline-flex rounded-md p-1.5 hover:scale-110 ${interactiveFocusClassName}`}
-                aria-label="ホームへ戻る"
-              >
-                {BLOG_IMAGE.map((item) => (
-                  <img
-                    key={item.alt}
-                    src={theme === 'dark' ? item.path.dark : item.path.light}
-                    alt={item.alt}
-                    width={165}
-                    height={30}
-                  />
-                ))}
-              </Link>
+              <div className={styles.logo}>
+                <Link
+                  href="/"
+                  className={`inline-flex rounded-md p-1.5 hover:scale-110 ${interactiveFocusClassName}`}
+                  aria-label="ホームへ戻る"
+                >
+                  {BLOG_IMAGE.map((item) => (
+                    <img
+                      key={item.alt}
+                      src={theme === 'dark' ? item.path.dark : item.path.light}
+                      alt={item.alt}
+                      width={165}
+                      height={30}
+                    />
+                  ))}
+                </Link>
+              </div>
               <div className={`${styles.logo} flex space-x-6`}>
                 {SOCIAL_ICON.map((item) => (
                   <Link
