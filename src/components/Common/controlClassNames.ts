@@ -8,6 +8,8 @@ export const outlinedControlClassName = `rounded-md border shadow-xs hover:text-
 
 export const iconControlClassName = `rounded-md ${interactiveFocusClassName}`;
 
+export const compactIconControlClassName = `inline-flex h-6 w-6 items-center justify-center ${iconControlClassName}`;
+
 export const roundIconControlClassName = `rounded-full ${interactiveFocusClassName}`;
 
 export const pillControlClassName =

@@ -21,7 +21,7 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
   const { theme } = useTheme();
   const normalizedCurrentArticleUrl = normalizePath(currentArticleUrl);
   const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
-  const linkClassName = `${styles.link} block rounded-md border p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 ${interactiveFocusClassName} ${themeClassName}`;
+  const linkClassName = `${styles.link} block border p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 ${interactiveFocusClassName} ${themeClassName}`;
 
   const sortedArticles = recentArticles
     .slice()

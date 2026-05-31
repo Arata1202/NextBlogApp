@@ -160,6 +160,11 @@ pre {
   outline-offset: var(--focus-ring-offset, 2px) !important;
 }
 
+.easyLink-box .easyLink-arrow-left:focus,
+.easyLink-box .easyLink-arrow-right:focus {
+  border-radius: 9999px !important;
+}
+
 @supports selector(:focus-visible) {
   .easyLink-box a[href]:focus:not(:focus-visible),
   .easyLink-box button:focus:not(:focus-visible),
@@ -174,6 +179,11 @@ pre {
   .easyLink-box [tabindex]:not([tabindex='-1']):focus-visible {
     outline: var(--focus-ring-width, 2px) solid var(--color-focus-ring, #2563eb) !important;
     outline-offset: var(--focus-ring-offset, 2px) !important;
+  }
+
+  .easyLink-box .easyLink-arrow-left:focus-visible,
+  .easyLink-box .easyLink-arrow-right:focus-visible {
+    border-radius: 9999px !important;
   }
 }
 

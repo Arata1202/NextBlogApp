@@ -3,7 +3,7 @@ import { Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
-import { iconControlClassName } from '@/components/Common/controlClassNames';
+import { compactIconControlClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   onClose: () => void;
@@ -52,7 +52,7 @@ export default function Alert({ onClose, show, title, description }: Props) {
                   <button
                     type="button"
                     aria-label="通知を閉じる"
-                    className={`${iconControlClassName} inline-flex hover:text-blue-600 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                    className={`${compactIconControlClassName} hover:text-blue-600 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                     onClick={onClose}
                   >
                     <XMarkIcon className="h-5 w-5" aria-hidden="true" />

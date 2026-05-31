@@ -27,6 +27,7 @@ import { CATEGORY_ARR } from '@/constants/category';
 import { GitHubIcon } from '../../Elements/SocialIcon';
 import Banner from './Elements/Banner';
 import {
+  compactIconControlClassName,
   iconControlClassName,
   interactiveFocusClassName,
 } from '@/components/Common/controlClassNames';
@@ -121,7 +122,7 @@ export default function Header() {
               <button
                 type="button"
                 aria-label="メニューを閉じる"
-                className={`${iconControlClassName} inline-flex items-center justify-center ${themeClassName}`}
+                className={`${compactIconControlClassName} ${themeClassName}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <XMarkIcon className="h-6 w-6" aria-hidden="true" />
