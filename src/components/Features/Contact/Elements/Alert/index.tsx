@@ -52,7 +52,7 @@ export default function Alert({ onClose, show, title, description }: Props) {
                   <button
                     type="button"
                     aria-label="通知を閉じる"
-                    className={`${compactIconControlClassName} hover:text-blue-600 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                    className={`${compactIconControlClassName} cursor-pointer hover:text-blue-600 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
                     onClick={onClose}
                   >
                     <XMarkIcon className="h-5 w-5" aria-hidden="true" />
