@@ -1,4 +1,4 @@
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import { HandThumbUpIcon } from '@heroicons/react/24/solid';
 import {
   TwitterShareButton,
@@ -20,7 +20,7 @@ type Props = {
 };
 
 export default function ShareSection({ data }: Props) {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const baseTitle = process.env.NEXT_PUBLIC_BASE_TITLE;

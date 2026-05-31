@@ -2,7 +2,7 @@
 
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import { PROFILE_IMAGE } from '@/constants/data';
 import FixedContentContainer from '../Layouts/Container/FixedContentContainer';
 import { getTextLinkClassName } from '@/components/Common/controlClassNames';
@@ -29,7 +29,7 @@ const opensInNewTab = (href?: string) => {
 };
 
 export default function Markdown({ content, profile = false }: Props) {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
   const linkClassName = getTextLinkClassName(theme);
 
   return (

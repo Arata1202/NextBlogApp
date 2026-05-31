@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import { LIMIT } from '@/constants/limit';
 import styles from './index.module.css';
 
@@ -46,7 +46,7 @@ export default function Pagination({
   q,
   useQueryPage = false,
 }: Props) {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
 
   const totalPages = Math.ceil(totalCount / LIMIT);
   const pages = getPageItems(totalPages, current);

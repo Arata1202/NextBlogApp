@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import { Article, Category } from '@/types/microcms';
 import { PAGE_ARR } from '@/constants/page';
 import { getTextLinkClassName } from '@/components/Common/controlClassNames';
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function SitemapHtmlFeature({ articles, categories }: Props) {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
   const linkClassName = getTextLinkClassName(theme);
 
   return (

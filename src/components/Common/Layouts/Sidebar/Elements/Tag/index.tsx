@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import { HashtagIcon } from '@heroicons/react/24/solid';
 import { Tag as TagType } from '@/types/microcms';
 import { pillControlClassName } from '@/components/Common/controlClassNames';
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function Tag({ tags }: Props) {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
 
   return (
     <>

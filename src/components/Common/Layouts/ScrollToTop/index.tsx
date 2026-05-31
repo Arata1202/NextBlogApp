@@ -1,12 +1,12 @@
 'use client';
 
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import { ChevronDoubleUpIcon } from '@heroicons/react/20/solid';
 import styles from './index.module.css';
 import { iconControlClassName } from '@/components/Common/controlClassNames';
 
 export default function ScrollTopButton() {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
 
   const scrollToTop = () => {
     const prefersReducedMotion =

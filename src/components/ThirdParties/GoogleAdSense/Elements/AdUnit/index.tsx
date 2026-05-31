@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import { useMutationObserver } from '@/hooks/useMutationObserver';
 import styles from './index.module.css';
 import { getGoogleAdSensePublisherId } from '@/config/publicEnv';
@@ -24,7 +24,7 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
   let pathname = usePathname();
   pathname = pathname ? pathname : '';
 
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
   const publisherId = getGoogleAdSensePublisherId();
 
   useMutationObserver();

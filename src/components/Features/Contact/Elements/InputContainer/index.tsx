@@ -1,4 +1,4 @@
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import type { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import { fieldControlClassName } from '@/components/Common/controlClassNames';
 
@@ -17,7 +17,7 @@ export default function InputContainer({
   errors,
   textarea = false,
 }: Props) {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
   const errorId = `${name}-error`;
 
   return (

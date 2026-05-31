@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Fragment, useEffect, useRef, useState, type ElementType, type RefObject } from 'react';
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import { IoAirplane } from 'react-icons/io5';
 import {
@@ -86,7 +86,7 @@ function HeaderCategoryIcon({ category, className }: HeaderCategoryIconProps) {
 }
 
 export default function Header() {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
   const categoryPopoverRef = useRef<HTMLDivElement>(null);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

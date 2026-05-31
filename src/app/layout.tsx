@@ -79,11 +79,7 @@ export default async function RootLayout({ children }: Props) {
         <GoogleSearchConsole />
       </head>
       <body>
-        <ThemeProvider
-          defaultTheme="light"
-          attribute="class"
-          value={{ light: 'LightTheme', dark: 'DarkTheme' }}
-        >
+        <ThemeProvider defaultTheme="light">
           <ThemeWrapper />
           <a
             href="#main-content"

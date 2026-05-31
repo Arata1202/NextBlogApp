@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import { iconControlClassName } from '@/components/Common/controlClassNames';
 
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function Alert({ onClose, show, title, description }: Props) {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
 
   return (
     <div className="pointer-events-none fixed inset-0 z-50 flex items-start px-4 py-6 sm:items-start sm:p-6">

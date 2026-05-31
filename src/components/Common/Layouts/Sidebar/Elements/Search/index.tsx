@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import {
   fieldControlClassName,
@@ -10,7 +10,7 @@ import {
 } from '@/components/Common/controlClassNames';
 
 export default function Search() {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState('');

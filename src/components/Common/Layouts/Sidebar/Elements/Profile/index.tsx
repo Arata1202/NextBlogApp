@@ -1,14 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import { PROFILE_SENTENCE, PROFILE_NAME, PROFILE_IMAGE, SOCIAL_ICON } from '@/constants/data';
 import { iconControlClassName } from '@/components/Common/controlClassNames';
 
 export default function Profile() {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
   const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
 
   return (

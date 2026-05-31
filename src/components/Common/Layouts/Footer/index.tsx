@@ -1,14 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import { BLOG_IMAGE, COPYRIGHT, FOOTER_NAVIGATION, SOCIAL_ICON } from '@/constants/data';
 import { CATEGORY_ARR } from '@/constants/category';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
 
 export default function Footer() {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
   const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
 
   return (

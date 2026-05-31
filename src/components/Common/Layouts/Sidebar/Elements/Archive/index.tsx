@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, type KeyboardEvent } from 'react';
-import { useHydratedTheme } from '@/hooks/useHydratedTheme';
+import { useTheme } from 'next-themes';
 import { Listbox } from '@headlessui/react';
 import { CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function Archive({ archiveList }: Props) {
-  const { theme } = useHydratedTheme();
+  const { theme } = useTheme();
   const router = useRouter();
 
   const [selectedMonth, setSelectedMonth] = useState('');
