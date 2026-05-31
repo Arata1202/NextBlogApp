@@ -1,7 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { Fragment, useEffect, useRef, useState, type ElementType, type RefObject } from 'react';
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ElementType,
+  type RefObject,
+} from 'react';
+import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import { IoAirplane } from 'react-icons/io5';
@@ -85,9 +94,64 @@ function HeaderCategoryIcon({ category, className }: HeaderCategoryIconProps) {
   return <Icon className={className} aria-hidden="true" />;
 }
 
+const MOBILE_HEADER_MEDIA_QUERY = '(max-width: 1023px)';
+
+function useBlurRestoredMobileLogoFocus(
+  logoLinkRef: RefObject<HTMLAnchorElement | null>,
+  pathname: string,
+) {
+  const lastInputWasKeyboardRef = useRef(false);
+
+  const blurRestoredMobileLogoFocus = useCallback(() => {
+    if (
+      lastInputWasKeyboardRef.current ||
+      typeof window.matchMedia !== 'function' ||
+      !window.matchMedia(MOBILE_HEADER_MEDIA_QUERY).matches ||
+      document.activeElement !== logoLinkRef.current
+    ) {
+      return;
+    }
+
+    logoLinkRef.current?.blur();
+  }, [logoLinkRef]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Tab') {
+        lastInputWasKeyboardRef.current = true;
+      }
+    };
+    const handlePointerDown = () => {
+      lastInputWasKeyboardRef.current = false;
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('pointerdown', handlePointerDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('pointerdown', handlePointerDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    blurRestoredMobileLogoFocus();
+  }, [blurRestoredMobileLogoFocus, pathname]);
+
+  useEffect(() => {
+    window.addEventListener('pageshow', blurRestoredMobileLogoFocus);
+
+    return () => {
+      window.removeEventListener('pageshow', blurRestoredMobileLogoFocus);
+    };
+  }, [blurRestoredMobileLogoFocus]);
+}
+
 export default function Header() {
   const { theme } = useTheme();
+  const pathname = usePathname();
   const categoryPopoverRef = useRef<HTMLDivElement>(null);
+  const logoLinkRef = useRef<HTMLAnchorElement>(null);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
@@ -98,6 +162,8 @@ export default function Header() {
   const githubLinkClassName = `rounded-md hover:text-blue-600 ${interactiveFocusClassName}`;
   const mobileGithubLinkClassName = `${compactIconControlClassName} hover:text-blue-600`;
 
+  useBlurRestoredMobileLogoFocus(logoLinkRef, pathname);
+
   return (
     <>
       <header className={`${styles.header} fixed top-0 left-0 w-full z-30 ${themeClassName}`}>
@@ -105,7 +171,11 @@ export default function Header() {
           className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
           aria-label="グローバルナビゲーション"
         >
-          <Link href="/" className="-m-1.5 p-1.5 hover:scale-110 transition-transform">
+          <Link
+            ref={logoLinkRef}
+            href="/"
+            className="-m-1.5 p-1.5 hover:scale-110 transition-transform"
+          >
             {BLOG_IMAGE.map((item) => (
               <img
                 key={item.alt}

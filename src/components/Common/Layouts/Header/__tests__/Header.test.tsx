@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import Header from '@/components/Common/Layouts/Header';
 
 describe('Header', () => {
@@ -23,5 +23,48 @@ describe('Header', () => {
     await waitFor(() => {
       expect(screen.queryByText('Menu')).not.toBeInTheDocument();
     });
+  });
+
+  it('clears restored mobile logo focus after pointer navigation while preserving keyboard focus', async () => {
+    const originalMatchMedia = window.matchMedia;
+    Object.defineProperty(window, 'matchMedia', {
+      configurable: true,
+      value: vi.fn().mockImplementation(() => ({
+        matches: true,
+        media: '(max-width: 1023px)',
+        onchange: null,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
+
+    try {
+      render(<Header />);
+
+      const logoLink = screen.getByRole('link', { name: 'リアル大学生' });
+
+      logoLink.focus();
+      expect(logoLink).toHaveFocus();
+
+      window.dispatchEvent(new Event('pageshow'));
+
+      await waitFor(() => {
+        expect(logoLink).not.toHaveFocus();
+      });
+
+      logoLink.focus();
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab' }));
+      window.dispatchEvent(new Event('pageshow'));
+
+      expect(logoLink).toHaveFocus();
+    } finally {
+      Object.defineProperty(window, 'matchMedia', {
+        configurable: true,
+        value: originalMatchMedia,
+      });
+    }
   });
 });

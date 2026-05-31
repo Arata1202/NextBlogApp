@@ -19,7 +19,11 @@ describe('ScrollTopButton', () => {
 
     render(<ScrollTopButton />);
 
-    await user.click(screen.getByRole('button', { name: 'ページ上部へ戻る' }));
+    const button = screen.getByRole('button', { name: 'ページ上部へ戻る' });
+
+    expect(button).toHaveClass('cursor-pointer');
+
+    await user.click(button);
 
     expect(scrollToMock).toHaveBeenCalledWith({
       top: 0,
