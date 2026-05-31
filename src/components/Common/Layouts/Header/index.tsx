@@ -170,7 +170,7 @@ export default function Header() {
                     onClose={close}
                   />
                   <Popover.Button
-                    className={`flex items-center text-sm font-medium hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`}
+                    className={`flex cursor-pointer items-center text-sm font-medium hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`}
                   >
                     <FolderIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                     カテゴリー
