@@ -124,6 +124,21 @@ layer(base);
     outline-offset: var(--focus-ring-offset);
   }
 
+  @supports selector(:focus-visible) {
+    :where(
+      a[href],
+      button,
+      input,
+      select,
+      textarea,
+      summary,
+      [role='button'],
+      [tabindex]:not([tabindex='-1'])
+    ):focus:not(:focus-visible) {
+      outline: none;
+    }
+  }
+
   p {
     font-size: 18px !important;
   }
