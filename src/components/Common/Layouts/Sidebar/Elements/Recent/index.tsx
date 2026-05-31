@@ -20,7 +20,8 @@ const normalizePath = (path?: string) => {
 export default function Recent({ recentArticles, currentArticleUrl }: Props) {
   const { theme } = useTheme();
   const normalizedCurrentArticleUrl = normalizePath(currentArticleUrl);
-  const linkClassName = `${styles.link} block rounded-md ${interactiveFocusClassName}`;
+  const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
+  const linkClassName = `${styles.link} block rounded-md border p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 ${interactiveFocusClassName} ${themeClassName}`;
 
   const sortedArticles = recentArticles
     .slice()
@@ -34,39 +35,34 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
 
   return (
     <>
-      <div
-        className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-      >
+      <div className={`pt-8 px-4 border py-5 mt-5 ${themeClassName}`}>
         <div className={`text-2xl text-center font-semibold flex justify-center`}>
           <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           最新記事
         </div>
-        {sortedArticles.map((article) => {
-          const isExternal = article.source === 'zenn';
-          const articleContent = (
-            <>
-              {article.source === 'blog' && article.thumbnail && (
-                <WebpImage article={article} recent={true} />
-              )}
-              {article.source !== 'blog' && article.thumbnailUrl && (
-                <img
-                  src={article.thumbnailUrl}
-                  alt=""
-                  className={styles.image}
-                  loading="lazy"
-                  decoding="async"
-                />
-              )}
-              <div className={`${styles.title} font-bold`}>{article.title}</div>
-            </>
-          );
+        <ul className="mt-5 space-y-5">
+          {sortedArticles.map((article) => {
+            const isExternal = article.source === 'zenn';
+            const articleContent = (
+              <>
+                {article.source === 'blog' && article.thumbnail && (
+                  <WebpImage article={article} recent={true} />
+                )}
+                {article.source !== 'blog' && article.thumbnailUrl && (
+                  <img
+                    src={article.thumbnailUrl}
+                    alt=""
+                    className={styles.image}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <div className={`${styles.title} font-bold`}>{article.title}</div>
+              </>
+            );
 
-          return (
-            <ul
-              key={article.id}
-              className={`border mt-5 p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-            >
-              <li>
+            return (
+              <li key={article.id}>
                 {isExternal ? (
                   <a
                     href={article.url}
@@ -83,9 +79,9 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
                   </Link>
                 )}
               </li>
-            </ul>
-          );
-        })}
+            );
+          })}
+        </ul>
       </div>
     </>
   );
