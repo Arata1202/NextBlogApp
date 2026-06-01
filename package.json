@@ -13,24 +13,29 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:e2e": "node scripts/e2e/build.mjs",
     "start": "pnpm dlx serve@latest out",
-    "lint": "eslint src vitest.config.ts",
-    "lint:fix": "eslint src vitest.config.ts --fix",
+    "lint": "eslint src e2e scripts playwright.config.ts vitest.config.mts",
+    "lint:fix": "eslint src e2e scripts playwright.config.ts vitest.config.mts --fix",
     "typecheck": "tsc --noEmit",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report",
     "prepare": "husky install",
-    "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json,css}'"
+    "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,mts,json,css,mjs}'"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "*.{js,jsx,ts,tsx,mjs,mts}": [
       "eslint --fix",
       "prettier --write"
     ]
   },
   "engines": {
-    "node": ">=18.x"
+    "node": "24.16.0"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
@@ -59,6 +64,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@next/eslint-plugin-next": "^16.2.6",
+    "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
