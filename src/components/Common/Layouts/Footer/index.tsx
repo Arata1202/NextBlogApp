@@ -36,7 +36,7 @@ export default function Footer() {
               </div>
               <div className={`${styles.logo} flex space-x-6`}>
                 {SOCIAL_ICON.map((item) => (
-                  <Link
+                  <a
                     key={item.name}
                     href={item.path}
                     target="_blank"
@@ -45,7 +45,7 @@ export default function Footer() {
                     aria-label={`${item.name}を新しいタブで開く`}
                   >
                     <item.icon className="h-6 w-6" aria-hidden="true" />
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>

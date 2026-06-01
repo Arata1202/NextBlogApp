@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { FireIcon } from '@heroicons/react/24/solid';
 import { Article } from '@/types/microcms';
@@ -20,7 +19,7 @@ export default function SupportSection({ data }: Props) {
         応援する
       </div>
       <div className="flex justify-center">
-        <Link
+        <a
           href="https://blogmura.com/profiles/11190305/?p_cid=11190305&reader=11190305"
           className="hover:opacity-60"
           target="_blank"
@@ -34,8 +33,8 @@ export default function SupportSection({ data }: Props) {
             width="160"
             height="36"
           />
-        </Link>
-        <Link
+        </a>
+        <a
           href="https://blog.with2.net/link/?id=2117761"
           title="人気ブログランキング"
           target="_blank"
@@ -50,8 +49,8 @@ export default function SupportSection({ data }: Props) {
             width="93"
             height="36"
           />
-        </Link>
-        <Link
+        </a>
+        <a
           href="https://blogranking.fc2.com/in.php?id=1067087"
           target="_blank"
           rel="noopener noreferrer"
@@ -65,7 +64,7 @@ export default function SupportSection({ data }: Props) {
             width="92"
             height="34"
           />
-        </Link>
+        </a>
       </div>
       <BuyMeaCoffee data={data} />
     </div>

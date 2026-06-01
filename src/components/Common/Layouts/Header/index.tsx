@@ -129,7 +129,7 @@ export default function Header() {
             ) : (
               <div className="flex">
                 <div className={`inline-flex items-center justify-center px-3 ${themeClassName}`}>
-                  <Link
+                  <a
                     href="https://github.com/Arata1202/NextBlogApp"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -137,7 +137,7 @@ export default function Header() {
                     aria-label="GitHubリポジトリを新しいタブで開く"
                   >
                     <GitHubIcon className="h-6 w-6" aria-hidden="true" />
-                  </Link>
+                  </a>
                 </div>
                 <div
                   className={`inline-flex items-center justify-center rounded-md px-3 ${themeClassName}`}
@@ -213,7 +213,7 @@ export default function Header() {
               )}
             </Popover>
             <ThemeSwitch />
-            <Link
+            <a
               href="https://github.com/Arata1202/NextBlogApp"
               target="_blank"
               rel="noopener noreferrer"
@@ -221,7 +221,7 @@ export default function Header() {
               aria-label="GitHubリポジトリを新しいタブで開く"
             >
               <GitHubIcon className="h-7 w-7" aria-hidden="true" />
-            </Link>
+            </a>
           </div>
         </nav>
 

@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
@@ -13,7 +12,7 @@ export default function BuyMeaCoffee({ data, sidebar = false }: Props) {
 
   return (
     <>
-      <Link
+      <a
         href="https://www.buymeacoffee.com/realunivlog"
         target="_blank"
         rel="noopener noreferrer"
@@ -26,7 +25,7 @@ export default function BuyMeaCoffee({ data, sidebar = false }: Props) {
           loading="lazy"
           width="160"
         />
-      </Link>
+      </a>
       <div className={`${styles.BuyMeaCoffeeMessage} text-center mt-4`}>
         もし{buyMeaCoffeeMessage}記事が役に立ったなら、
         <br />
