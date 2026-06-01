@@ -18,6 +18,7 @@
   - [使用技術](#使用技術)
   - [アーキテクチャ](#アーキテクチャ)
   - [環境構築](#環境構築)
+  - [テスト](#テスト)
   - [ディレクトリ構成](#ディレクトリ構成)
   - [Gitの運用](#Gitの運用)
     - [ブランチ](#ブランチ)
@@ -133,10 +134,39 @@ docker compose down
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
+## テスト
+
+```
+# Lint / 型チェック / ユニットテスト
+pnpm lint
+pnpm typecheck
+pnpm test:run
+
+# Playwright のブラウザをインストール
+pnpm exec playwright install chromium
+
+# E2E用の固定データで静的ビルド
+pnpm build:e2e
+
+# E2Eテスト
+pnpm test:e2e
+
+# 既存のローカルサーバーを再利用してE2Eテストを実行
+PLAYWRIGHT_REUSE_SERVER=1 pnpm test:e2e
+
+# E2Eテストをブラウザ表示ありで実行
+pnpm test:e2e:headed
+
+# E2Eレポートを表示
+pnpm test:e2e:report
+```
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
 ## ディレクトリ構成
 
 ```
-❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts|tmp|coverage|tsconfig.tsbuildinfo" -L 3
+❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts|tmp|coverage|tsconfig.tsbuildinfo|playwright-report|test-results|.pnpm-store" -L 3
 .
 ├── .air.toml
 ├── .docker
@@ -174,10 +204,24 @@ docker compose down
 ├── cmd
 │   └── main.go
 ├── docker-compose.yml
+├── e2e
+│   ├── contact.spec.ts
+│   ├── feeds.spec.ts
+│   ├── fixtures
+│   │   ├── content.d.mts
+│   │   └── content.mjs
+│   ├── navigation.spec.ts
+│   ├── responsive.spec.ts
+│   ├── search.spec.ts
+│   ├── smoke.spec.ts
+│   ├── support
+│   │   └── app.ts
+│   └── theme.spec.ts
 ├── eslint.config.mjs
 ├── go.mod
 ├── next.config.ts
 ├── package.json
+├── playwright.config.ts
 ├── pnpm-lock.yaml
 ├── postcss.config.mjs
 ├── public
@@ -195,6 +239,11 @@ docker compose down
 │   ├── llms-full.txt
 │   ├── llms.txt
 │   └── robots.txt
+├── scripts
+│   └── e2e
+│       ├── build.mjs
+│       ├── mock-fetch.mjs
+│       └── serve-static.mjs
 ├── src
 │   ├── app
 │   │   ├── __tests__
@@ -273,9 +322,9 @@ docker compose down
 ├── tailwind.config.ts
 ├── tsconfig.json
 ├── vercel.json
-└── vitest.config.ts
+└── vitest.config.mts
 
-54 directories, 83 files
+62 directories, 108 files
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>

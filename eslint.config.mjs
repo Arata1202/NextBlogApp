@@ -39,6 +39,20 @@ export default [
     },
     rules: hooksPlugin.configs.recommended.rules,
   },
+  {
+    name: 'e2e/javascript-globals',
+    files: ['e2e/**/*.mjs', 'scripts/**/*.mjs'],
+    languageOptions: {
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+        Request: 'readonly',
+        Response: 'readonly',
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
+      },
+    },
+  },
   jsxA11yPlugin.flatConfigs.recommended,
   {
     name: 'next/core-web-vitals',
