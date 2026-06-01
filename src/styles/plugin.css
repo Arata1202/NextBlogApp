@@ -156,6 +156,7 @@ pre {
 .easyLink-box button:focus,
 .easyLink-box [role='button']:focus,
 .easyLink-box [tabindex]:not([tabindex='-1']):focus {
+  transition: none !important;
   outline: var(--focus-ring-width, 2px) solid var(--color-focus-ring, #2563eb) !important;
   outline-offset: var(--focus-ring-offset, 2px) !important;
 }
@@ -177,6 +178,7 @@ pre {
   .easyLink-box button:focus-visible,
   .easyLink-box [role='button']:focus-visible,
   .easyLink-box [tabindex]:not([tabindex='-1']):focus-visible {
+    transition: none !important;
     outline: var(--focus-ring-width, 2px) solid var(--color-focus-ring, #2563eb) !important;
     outline-offset: var(--focus-ring-offset, 2px) !important;
   }
