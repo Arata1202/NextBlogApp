@@ -97,6 +97,9 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 	smtpPort := "587"
 	auth := smtp.PlainAuth("", smtpUser, smtpPass, smtpHost)
 
+	// The contact form content is intentionally included in this HTML email.
+	// Header/envelope addresses are parsed with net/mail, and body fields are HTML-escaped above.
+	// codeql[go/email-injection]
 	return smtpSendMail(smtpHost+":"+smtpPort, auth, from.Address, recipients, []byte(msg))
 }
 

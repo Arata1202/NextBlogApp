@@ -116,6 +116,8 @@ const showMoshimoEasyLinkImage = (images: HTMLImageElement[], activeIndex: numbe
       const imageSrc = image.getAttribute('data-img_src');
 
       if (imageSrc && hasSafeUrlProtocol(imageSrc, SAFE_RESOURCE_PROTOCOLS)) {
+        // Moshimo lazy images require copying the validated data-img_src value into src.
+        // codeql[js/xss-through-dom]
         image.setAttribute('src', imageSrc);
         image.removeAttribute('data-img_src');
       } else if (imageSrc) {
