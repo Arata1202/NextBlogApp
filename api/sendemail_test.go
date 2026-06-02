@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/smtp"
@@ -276,6 +277,75 @@ func TestSendEmailHandlerMissingRecaptchaResponse(t *testing.T) {
 
 	if body["status"] != "Missing reCAPTCHA response" {
 		t.Fatalf("status body = %q, want %q", body["status"], "Missing reCAPTCHA response")
+	}
+}
+
+func TestSendEmailHandlerRejectsInvalidRequestFields(t *testing.T) {
+	tests := []struct {
+		name string
+		body string
+	}{
+		{
+			name: "invalid email address",
+			body: `{"email":"not-an-email","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+		},
+		{
+			name: "email control characters",
+			body: `{"email":"user@example.com\r\nBcc: attacker@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+		},
+		{
+			name: "title control characters",
+			body: `{"email":"user@example.com","title":"Test\r\nBcc: attacker@example.com","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+		},
+		{
+			name: "message control characters",
+			body: `{"email":"user@example.com","title":"Test","message":"Hello\u0000","g-recaptcha-response":"captcha-token"}`,
+		},
+		{
+			name: "title too long",
+			body: fmt.Sprintf(
+				`{"email":"user@example.com","title":"%s","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+				strings.Repeat("a", maxTitleLength+1),
+			),
+		},
+		{
+			name: "message too long",
+			body: fmt.Sprintf(
+				`{"email":"user@example.com","title":"Test","message":"%s","g-recaptcha-response":"captcha-token"}`,
+				strings.Repeat("a", maxMessageLength+1),
+			),
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			originalVerify := verifyRecaptchaFunc
+			verifyRecaptchaFunc = func(response, secret string) (bool, error) {
+				t.Fatal("verifyRecaptchaFunc should not be called for invalid request fields")
+				return false, nil
+			}
+			t.Cleanup(func() {
+				verifyRecaptchaFunc = originalVerify
+			})
+
+			req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(tt.body))
+			rec := httptest.NewRecorder()
+
+			SendEmailHandler(rec, req)
+
+			if rec.Code != http.StatusBadRequest {
+				t.Fatalf("status = %d, want %d", rec.Code, http.StatusBadRequest)
+			}
+
+			var body map[string]string
+			if err := json.NewDecoder(rec.Body).Decode(&body); err != nil {
+				t.Fatalf("Decode() error = %v", err)
+			}
+
+			if body["status"] != "Invalid request fields" {
+				t.Fatalf("status body = %q, want %q", body["status"], "Invalid request fields")
+			}
+		})
 	}
 }
 

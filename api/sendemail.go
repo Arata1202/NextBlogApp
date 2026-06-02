@@ -11,6 +11,7 @@ import (
 	"os"
 	"strings"
 	"unicode"
+	"unicode/utf8"
 )
 
 type EmailRequestBody struct {
@@ -23,6 +24,12 @@ type EmailRequestBody struct {
 var (
 	sendEmailFunc = sendEmail
 	smtpSendMail  = smtp.SendMail
+)
+
+const (
+	maxEmailLength   = 254
+	maxTitleLength   = 200
+	maxMessageLength = 5000
 )
 
 func formatHeaderAddress(address string) (mail.Address, error) {
@@ -73,6 +80,55 @@ func sanitizeEmailBodyContent(value string) string {
 
 func sanitizeEmailPayload(value string) string {
 	return strings.ReplaceAll(sanitizeEmailBodyContent(value), "\n", "\r\n")
+}
+
+func containsDisallowedEmailContentCharacters(value string, allowLineBreaks bool) bool {
+	if !utf8.ValidString(value) {
+		return true
+	}
+
+	for _, r := range value {
+		if unicode.IsPrint(r) || r == '\t' || (allowLineBreaks && r == '\n') {
+			continue
+		}
+
+		return true
+	}
+
+	return false
+}
+
+func validateEmailRequestInput(req EmailRequestBody) error {
+	trimmedEmail := strings.TrimSpace(req.Email)
+	if len(trimmedEmail) > maxEmailLength {
+		return fmt.Errorf("email is too long")
+	}
+	if containsDisallowedEmailContentCharacters(trimmedEmail, false) {
+		return fmt.Errorf("email contains disallowed characters")
+	}
+	parsedAddress, err := mail.ParseAddress(trimmedEmail)
+	if err != nil {
+		return fmt.Errorf("invalid email address: %w", err)
+	}
+	if parsedAddress.Address != trimmedEmail {
+		return fmt.Errorf("email must be an addr-spec")
+	}
+
+	if utf8.RuneCountInString(req.Title) > maxTitleLength {
+		return fmt.Errorf("title is too long")
+	}
+	if containsDisallowedEmailContentCharacters(req.Title, false) {
+		return fmt.Errorf("title contains disallowed characters")
+	}
+
+	if utf8.RuneCountInString(req.Message) > maxMessageLength {
+		return fmt.Errorf("message is too long")
+	}
+	if containsDisallowedEmailContentCharacters(req.Message, true) {
+		return fmt.Errorf("message contains disallowed characters")
+	}
+
+	return nil
 }
 
 func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
@@ -166,6 +222,12 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	if req.Email == "" || req.Title == "" || req.Message == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(map[string]string{"status": "Missing required fields"})
+		return
+	}
+
+	if err := validateEmailRequestInput(req); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"status": "Invalid request fields"})
 		return
 	}
 
