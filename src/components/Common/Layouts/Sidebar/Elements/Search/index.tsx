@@ -77,7 +77,7 @@ export default function Search() {
           />
           <button
             type="submit"
-            className={`${outlinedControlClassName} inline-flex h-10 w-10 shrink-0 items-center justify-center ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`${outlinedControlClassName} inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
             aria-label="検索"
           >
             <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />
