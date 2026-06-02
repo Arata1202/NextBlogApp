@@ -98,34 +98,38 @@ func containsDisallowedEmailContentCharacters(value string, allowLineBreaks bool
 	return false
 }
 
-func validateEmailRequestInput(req EmailRequestBody) error {
-	trimmedEmail := strings.TrimSpace(req.Email)
-	if len(trimmedEmail) > maxEmailLength {
+func validateEmailTextField(name, value string, maxLength int, allowLineBreaks bool) error {
+	if utf8.RuneCountInString(value) > maxLength {
+		return fmt.Errorf("%s is too long", name)
+	}
+	if containsDisallowedEmailContentCharacters(value, allowLineBreaks) {
+		return fmt.Errorf("%s contains disallowed characters", name)
+	}
+
+	return nil
+}
+
+func validateEmailRequestInput(req *EmailRequestBody) error {
+	req.Email = strings.TrimSpace(req.Email)
+	if len(req.Email) > maxEmailLength {
 		return fmt.Errorf("email is too long")
 	}
-	if containsDisallowedEmailContentCharacters(trimmedEmail, false) {
+	if containsDisallowedEmailContentCharacters(req.Email, false) {
 		return fmt.Errorf("email contains disallowed characters")
 	}
-	parsedAddress, err := mail.ParseAddress(trimmedEmail)
+	parsedAddress, err := mail.ParseAddress(req.Email)
 	if err != nil {
 		return fmt.Errorf("invalid email address: %w", err)
 	}
-	if parsedAddress.Address != trimmedEmail {
+	if parsedAddress.Address != req.Email {
 		return fmt.Errorf("email must be an addr-spec")
 	}
 
-	if utf8.RuneCountInString(req.Title) > maxTitleLength {
-		return fmt.Errorf("title is too long")
+	if err := validateEmailTextField("title", req.Title, maxTitleLength, false); err != nil {
+		return err
 	}
-	if containsDisallowedEmailContentCharacters(req.Title, false) {
-		return fmt.Errorf("title contains disallowed characters")
-	}
-
-	if utf8.RuneCountInString(req.Message) > maxMessageLength {
-		return fmt.Errorf("message is too long")
-	}
-	if containsDisallowedEmailContentCharacters(req.Message, true) {
-		return fmt.Errorf("message contains disallowed characters")
+	if err := validateEmailTextField("message", req.Message, maxMessageLength, true); err != nil {
+		return err
 	}
 
 	return nil
@@ -225,7 +229,7 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := validateEmailRequestInput(req); err != nil {
+	if err := validateEmailRequestInput(&req); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(map[string]string{"status": "Invalid request fields"})
 		return

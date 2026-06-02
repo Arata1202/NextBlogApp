@@ -452,6 +452,36 @@ func TestSendEmailHandlerSuccess(t *testing.T) {
 	}
 }
 
+func TestSendEmailHandlerTrimsEmailBeforeSending(t *testing.T) {
+	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
+	t.Setenv("EMAIL_TO", "owner@example.com")
+	t.Setenv("EMAIL_FROM", "from@example.com")
+	t.Setenv("SMTP_USER", "smtp-user")
+	t.Setenv("SMTP_PASS", "smtp-pass")
+	stubVerifyRecaptcha(t, true, nil)
+
+	originalSendEmail := sendEmailFunc
+	sendEmailFunc = func(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
+		if userEmail != "user@example.com" {
+			t.Fatalf("userEmail = %q, want %q", userEmail, "user@example.com")
+		}
+
+		return nil
+	}
+	t.Cleanup(func() {
+		sendEmailFunc = originalSendEmail
+	})
+
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":" user@example.com ","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	rec := httptest.NewRecorder()
+
+	SendEmailHandler(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
+	}
+}
+
 func TestSendEmailHandlerSendError(t *testing.T) {
 	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
 	t.Setenv("EMAIL_TO", "owner@example.com")
