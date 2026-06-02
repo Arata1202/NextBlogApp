@@ -71,6 +71,10 @@ func sanitizeEmailBodyContent(value string) string {
 	return sanitizeEmailContent(value, true)
 }
 
+func sanitizeEmailPayload(value string) string {
+	return strings.ReplaceAll(sanitizeEmailBodyContent(value), "\n", "\r\n")
+}
+
 func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
 	baseTitle := os.Getenv("BASE_TITLE")
 	webUrl := os.Getenv("NEXT_PUBLIC_BASE_URL")
@@ -123,7 +127,7 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 	builder.WriteString("<div style='height: 0; line-height: 0; font-size: 0; border-top: 2px solid #d0d0d0; margin-top: 12px;'>&nbsp;</div>")
 	builder.WriteString("</div>")
 
-	msg := builder.String()
+	msg := sanitizeEmailPayload(builder.String())
 
 	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"
