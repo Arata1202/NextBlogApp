@@ -1,5 +1,6 @@
 'use client';
 
+import * as Sentry from '@sentry/nextjs';
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Article, Tag } from '@/types/microcms';
@@ -120,6 +121,16 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
         if (error instanceof DOMException && error.name === 'AbortError') {
           return;
         }
+
+        Sentry.captureException(error, {
+          tags: {
+            feature: 'search',
+          },
+          extra: {
+            currentPage,
+            query,
+          },
+        });
 
         setSearchState({
           articles: [],

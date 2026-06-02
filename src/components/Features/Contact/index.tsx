@@ -1,5 +1,6 @@
 'use client';
 
+import * as Sentry from '@sentry/nextjs';
 import { useState, useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 import { useForm } from 'react-hook-form';
@@ -89,8 +90,20 @@ export default function ContactFeature() {
         setCaptchaError('');
         setConfirmSendEmailModalOpen(false);
       } else {
-        console.error(data.message ?? data.status);
+        const message = data.message ?? data.status ?? 'Contact request failed';
+
+        Sentry.captureException(new Error(String(message)), {
+          tags: {
+            feature: 'contact',
+          },
+        });
       }
+    } catch (error) {
+      Sentry.captureException(error, {
+        tags: {
+          feature: 'contact',
+        },
+      });
     } finally {
       setIsSending(false);
     }
