@@ -1,4 +1,4 @@
-FROM node:24.16.0-alpine
+FROM node:26.3.0-alpine
 
 WORKDIR /var/www/html/js
 
