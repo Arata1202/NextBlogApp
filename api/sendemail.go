@@ -6,6 +6,7 @@ import (
 	"html"
 	"log"
 	"net/http"
+	"net/mail"
 	"net/smtp"
 	"os"
 	"strings"
@@ -23,17 +24,53 @@ var (
 	smtpSendMail  = smtp.SendMail
 )
 
+func formatHeaderAddress(address string) (mail.Address, error) {
+	parsedAddress, err := mail.ParseAddress(strings.TrimSpace(address))
+	if err != nil {
+		return mail.Address{}, err
+	}
+
+	return mail.Address{Address: parsedAddress.Address}, nil
+}
+
+func formatNamedHeaderAddress(name, address string) (mail.Address, error) {
+	parsedAddress, err := formatHeaderAddress(address)
+	if err != nil {
+		return mail.Address{}, err
+	}
+
+	parsedAddress.Name = strings.Join(strings.Fields(name), " ")
+	return parsedAddress, nil
+}
+
 func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
 	baseTitle := os.Getenv("BASE_TITLE")
 	webUrl := os.Getenv("NEXT_PUBLIC_BASE_URL")
 	if webUrl == "" {
 		webUrl = os.Getenv("ORIGIN_URL")
 	}
-	from := fmt.Sprintf("\"%s\" <%s>", baseTitle, emailFrom)
+
+	from, err := formatNamedHeaderAddress(baseTitle, emailFrom)
+	if err != nil {
+		return fmt.Errorf("invalid sender address: %w", err)
+	}
+
+	ownerAddress, err := formatHeaderAddress(emailTo)
+	if err != nil {
+		return fmt.Errorf("invalid owner address: %w", err)
+	}
+
+	userAddress, err := formatHeaderAddress(userEmail)
+	if err != nil {
+		return fmt.Errorf("invalid user address: %w", err)
+	}
+
+	toHeader := strings.Join([]string{ownerAddress.String(), userAddress.String()}, ", ")
+	recipients := []string{ownerAddress.Address, userAddress.Address}
 
 	var builder strings.Builder
-	builder.WriteString(fmt.Sprintf("From: %s\r\n", from))
-	builder.WriteString(fmt.Sprintf("To: %s,%s\r\n", emailTo, userEmail))
+	builder.WriteString(fmt.Sprintf("From: %s\r\n", from.String()))
+	builder.WriteString(fmt.Sprintf("To: %s\r\n", toHeader))
 	builder.WriteString("Subject: お問い合わせありがとうございます\r\n")
 	builder.WriteString("MIME-Version: 1.0\r\n")
 	builder.WriteString("Content-Type: text/html; charset=\"UTF-8\"\r\n")
@@ -60,7 +97,7 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 	smtpPort := "587"
 	auth := smtp.PlainAuth("", smtpUser, smtpPass, smtpHost)
 
-	return smtpSendMail(smtpHost+":"+smtpPort, auth, emailFrom, []string{emailTo, userEmail}, []byte(msg))
+	return smtpSendMail(smtpHost+":"+smtpPort, auth, from.Address, recipients, []byte(msg))
 }
 
 func SendEmailHandler(w http.ResponseWriter, r *http.Request) {

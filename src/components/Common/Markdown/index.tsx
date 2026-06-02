@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 import { PROFILE_IMAGE } from '@/constants/data';
 import FixedContentContainer from '../Layouts/Container/FixedContentContainer';
 import { getTextLinkClassName } from '@/components/Common/controlClassNames';
+import { SAFE_RESOURCE_PROTOCOLS, parseUrl } from '@/utils/urlSafety';
 
 type Props = {
   content: string;
@@ -23,19 +24,20 @@ type MarkdownAstNode = {
   children?: MarkdownAstNode[];
 };
 
+const MARKDOWN_LINK_BASE = 'https://example.invalid/';
+const MARKDOWN_LINK_BASE_URL = new URL(MARKDOWN_LINK_BASE);
+
 const opensInNewTab = (href?: string) => {
   if (!href) {
     return false;
   }
 
-  const normalizedHref = href.trim().toLowerCase();
+  const url = parseUrl(href, MARKDOWN_LINK_BASE);
 
   return (
-    normalizedHref !== '' &&
-    !normalizedHref.startsWith('/') &&
-    !normalizedHref.startsWith('#') &&
-    !normalizedHref.startsWith('mailto:') &&
-    !normalizedHref.startsWith('tel:')
+    Boolean(url) &&
+    SAFE_RESOURCE_PROTOCOLS.has(url?.protocol ?? '') &&
+    url?.origin !== MARKDOWN_LINK_BASE_URL.origin
   );
 };
 

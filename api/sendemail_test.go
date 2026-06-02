@@ -81,7 +81,7 @@ func TestSendEmail(t *testing.T) {
 
 	for _, want := range []string{
 		`From: "Real Univ Log" <from@example.com>`,
-		"To: owner@example.com,user@example.com",
+		"To: <owner@example.com>, <user@example.com>",
 		"Subject: お問い合わせありがとうございます",
 		"メールアドレス: user@example.com",
 		"件名: &lt;Test subject&gt;",
@@ -91,6 +91,32 @@ func TestSendEmail(t *testing.T) {
 		if !strings.Contains(capturedMessage, want) {
 			t.Fatalf("message does not contain %q", want)
 		}
+	}
+}
+
+func TestSendEmailRejectsHeaderInjection(t *testing.T) {
+	t.Setenv("BASE_TITLE", "Real Univ Log")
+
+	originalSendMail := smtpSendMail
+	smtpSendMail = func(addr string, auth smtp.Auth, from string, to []string, msg []byte) error {
+		t.Fatal("smtpSendMail should not be called for invalid recipient headers")
+		return nil
+	}
+	t.Cleanup(func() {
+		smtpSendMail = originalSendMail
+	})
+
+	err := sendEmail(
+		"owner@example.com",
+		"from@example.com",
+		"smtp-user",
+		"smtp-pass",
+		"user@example.com\r\nBcc: attacker@example.com",
+		"Subject",
+		"Message",
+	)
+	if err == nil {
+		t.Fatal("sendEmail() error = nil, want invalid address error")
 	}
 }
 

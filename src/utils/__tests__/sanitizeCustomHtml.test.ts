@@ -2,14 +2,23 @@ import { describe, expect, it } from 'vitest';
 import { sanitizeCustomHtml } from '@/utils/sanitizeCustomHtml';
 
 describe('sanitizeCustomHtml', () => {
-  it('removes dangerous attributes and javascript URLs', () => {
+  it('removes dangerous attributes and unsafe URL schemes', () => {
     const html = sanitizeCustomHtml(
-      '<a href="javascript:alert(1)" onclick="alert(1)">Unsafe link</a><img src="javascript:alert(1)" onerror="alert(1)">',
+      [
+        '<a href="javascript:alert(1)" onclick="alert(1)">Unsafe link</a>',
+        '<a href="vbscript:alert(1)">VBScript link</a>',
+        '<a href="data:text/html,<script>alert(1)</script>">Data link</a>',
+        '<img src="data:image/svg+xml,<svg onload=alert(1)>" onerror="alert(1)">',
+      ].join(''),
     );
 
     expect(html).toContain('<a>Unsafe link</a>');
+    expect(html).toContain('<a>VBScript link</a>');
+    expect(html).toContain('<a>Data link</a>');
     expect(html).toContain('<img>');
     expect(html).not.toContain('javascript:');
+    expect(html).not.toContain('vbscript:');
+    expect(html).not.toContain('data:');
     expect(html).not.toContain('onclick');
     expect(html).not.toContain('onerror');
   });
@@ -32,5 +41,14 @@ describe('sanitizeCustomHtml', () => {
     expect(html).toContain('type="application/json"');
     expect(html).toContain('data-custom-html-script-src="https://example.com/widget.js"');
     expect(html).not.toContain('<script src=');
+  });
+
+  it('removes scripts with unsafe src schemes', () => {
+    const html = sanitizeCustomHtml(
+      '<script src="data:text/html,<script>alert(1)</script>"></script>',
+    );
+
+    expect(html).not.toContain('data-custom-html-script-src');
+    expect(html).not.toContain('data:text/html');
   });
 });

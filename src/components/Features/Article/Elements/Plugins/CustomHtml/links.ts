@@ -1,15 +1,22 @@
+import { parseUrl } from '@/utils/urlSafety';
+
 const SAFE_TARGET_BLANK_REL_VALUES = ['noopener', 'noreferrer'];
+const SAME_PAGE_FRAGMENT_BASE = 'https://example.invalid/';
+const EXCLUDED_TARGET_BLANK_PROTOCOLS = new Set(['mailto:', 'tel:']);
 
 const shouldOpenInNewTab = (href: string) => {
   const trimmedHref = href.trim();
-  const lowerHref = trimmedHref.toLowerCase();
+  const url = parseUrl(trimmedHref, SAME_PAGE_FRAGMENT_BASE);
 
   return (
-    trimmedHref !== '' &&
-    !trimmedHref.startsWith('#') &&
-    !lowerHref.startsWith('javascript:') &&
-    !lowerHref.startsWith('mailto:') &&
-    !lowerHref.startsWith('tel:')
+    trimmedHref.charAt(0) !== '#' &&
+    Boolean(url) &&
+    !(
+      url?.origin === new URL(SAME_PAGE_FRAGMENT_BASE).origin &&
+      url.pathname === '/' &&
+      url.hash
+    ) &&
+    !EXCLUDED_TARGET_BLANK_PROTOCOLS.has(url?.protocol ?? '')
   );
 };
 

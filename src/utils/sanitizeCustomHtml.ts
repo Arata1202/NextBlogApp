@@ -3,6 +3,7 @@ import {
   CUSTOM_HTML_MOSHIMO_SCRIPT_ATTRIBUTE,
   CUSTOM_HTML_SCRIPT_SRC_ATTRIBUTE,
 } from '@/constants/customHtml';
+import { SAFE_RESOURCE_PROTOCOLS, hasSafeUrlProtocol } from '@/utils/urlSafety';
 
 const URL_ATTRIBUTES = new Set(['href', 'src', 'xlink:href']);
 const INERT_SCRIPT_TYPE = 'application/json';
@@ -19,16 +20,8 @@ const loadHtmlFragment = (html: string) => {
   return load(html, null, false);
 };
 
-const isDangerousUrl = (value: string) => {
-  const normalizedValue = value.trim().toLowerCase();
-
-  return (
-    normalizedValue.startsWith('javascript:') ||
-    normalizedValue.startsWith('vbscript:') ||
-    normalizedValue.startsWith('data:text/html') ||
-    normalizedValue.startsWith('data:image/svg+xml')
-  );
-};
+const isSafeHtmlAttributeUrl = (value: string) => hasSafeUrlProtocol(value);
+const isSafeScriptSrc = (value: string) => hasSafeUrlProtocol(value, SAFE_RESOURCE_PROTOCOLS);
 
 const isMoshimoEasyLinkScript = (src: string | undefined, text: string) => {
   return (
@@ -53,7 +46,7 @@ export const sanitizeCustomHtml = (html: string) => {
         return;
       }
 
-      if (URL_ATTRIBUTES.has(normalizedAttributeName) && isDangerousUrl(attributeValue)) {
+      if (URL_ATTRIBUTES.has(normalizedAttributeName) && !isSafeHtmlAttributeUrl(attributeValue)) {
         target.removeAttr(attributeName);
       }
     });
@@ -72,7 +65,7 @@ export const sanitizeCustomHtml = (html: string) => {
       return;
     }
 
-    if (src && !isDangerousUrl(src)) {
+    if (src && isSafeScriptSrc(src)) {
       Object.keys(script.attr() ?? {}).forEach((attributeName) => {
         script.removeAttr(attributeName);
       });

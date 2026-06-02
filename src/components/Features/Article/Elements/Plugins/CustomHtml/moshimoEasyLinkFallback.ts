@@ -1,3 +1,5 @@
+import { SAFE_RESOURCE_PROTOCOLS, hasSafeUrlProtocol } from '@/utils/urlSafety';
+
 const EASY_LINK_ARROW_SELECTOR = '.easyLink-arrow-left, .easyLink-arrow-right';
 
 type MoshimoEasyLinkState = {
@@ -113,8 +115,10 @@ const showMoshimoEasyLinkImage = (images: HTMLImageElement[], activeIndex: numbe
     if (isActive) {
       const imageSrc = image.getAttribute('data-img_src');
 
-      if (imageSrc) {
+      if (imageSrc && hasSafeUrlProtocol(imageSrc, SAFE_RESOURCE_PROTOCOLS)) {
         image.setAttribute('src', imageSrc);
+        image.removeAttribute('data-img_src');
+      } else if (imageSrc) {
         image.removeAttribute('data-img_src');
       }
 
