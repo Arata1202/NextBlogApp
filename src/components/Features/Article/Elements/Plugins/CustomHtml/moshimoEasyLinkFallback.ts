@@ -1,4 +1,4 @@
-import { SAFE_RESOURCE_PROTOCOLS, hasSafeUrlProtocol } from '@/utils/urlSafety';
+import { SAFE_RESOURCE_PROTOCOLS } from '@/utils/urlSafety';
 
 const EASY_LINK_ARROW_SELECTOR = '.easyLink-arrow-left, .easyLink-arrow-right';
 
@@ -115,12 +115,17 @@ const showMoshimoEasyLinkImage = (images: HTMLImageElement[], activeIndex: numbe
     if (isActive) {
       const imageSrc = image.getAttribute('data-img_src');
 
-      if (imageSrc && hasSafeUrlProtocol(imageSrc, SAFE_RESOURCE_PROTOCOLS)) {
-        // Moshimo lazy images require copying the validated data-img_src value into src.
-        // codeql[js/xss-through-dom]
-        image.setAttribute('src', imageSrc);
-        image.removeAttribute('data-img_src');
-      } else if (imageSrc) {
+      if (imageSrc) {
+        try {
+          const parsedUrl = new URL(imageSrc, window.location.href);
+
+          if (SAFE_RESOURCE_PROTOCOLS.has(parsedUrl.protocol)) {
+            image.src = parsedUrl.href;
+          }
+        } catch {
+          // Keep unsafe or malformed lazy image URLs unloaded.
+        }
+
         image.removeAttribute('data-img_src');
       }
 

@@ -94,6 +94,58 @@ func TestSendEmail(t *testing.T) {
 	}
 }
 
+func TestSendEmailSanitizesContentBeforeBuildingBody(t *testing.T) {
+	t.Setenv("BASE_TITLE", "Real Univ Log")
+	t.Setenv("NEXT_PUBLIC_BASE_URL", "")
+	t.Setenv("ORIGIN_URL", "")
+
+	var capturedMessage string
+
+	originalSendMail := smtpSendMail
+	smtpSendMail = func(addr string, auth smtp.Auth, from string, to []string, msg []byte) error {
+		capturedMessage = string(msg)
+		return nil
+	}
+	t.Cleanup(func() {
+		smtpSendMail = originalSendMail
+	})
+
+	err := sendEmail(
+		"owner@example.com",
+		"from@example.com",
+		"smtp-user",
+		"smtp-pass",
+		"user@example.com",
+		"Title\r\nBcc: attacker@example.com\x00",
+		"Line 1\r\nLine 2\x00\u0085<script>alert('x')</script>",
+	)
+	if err != nil {
+		t.Fatalf("sendEmail() error = %v", err)
+	}
+
+	messageParts := strings.SplitN(capturedMessage, "\r\n\r\n", 2)
+	if len(messageParts) != 2 {
+		t.Fatal("message body separator was not found")
+	}
+
+	body := messageParts[1]
+
+	for _, unexpected := range []string{"\r", "\x00", "\u0085"} {
+		if strings.Contains(body, unexpected) {
+			t.Fatalf("body contains unsafe content %q: %q", unexpected, body)
+		}
+	}
+
+	for _, want := range []string{
+		"件名: Title Bcc: attacker@example.com",
+		"内容: Line 1<br>Line 2&lt;script&gt;alert(&#39;x&#39;)&lt;/script&gt;",
+	} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("body does not contain %q: %q", want, body)
+		}
+	}
+}
+
 func TestSendEmailRejectsHeaderInjection(t *testing.T) {
 	t.Setenv("BASE_TITLE", "Real Univ Log")
 

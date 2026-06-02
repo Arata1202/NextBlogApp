@@ -185,7 +185,7 @@ describe('Article plugins', () => {
       expect(firstImage).not.toHaveClass('easyLink-img-pht');
       expect(firstImage).toHaveStyle({ display: 'none' });
       expect(secondImage).toHaveClass('easyLink-img-pht');
-      expect(secondImage).toHaveAttribute('src', 'two.png');
+      expect(secondImage).toHaveAttribute('src', new URL('two.png', window.location.href).href);
       expect(secondImage.style.display).toBe('unset');
     });
     expect(secondImage.parentElement).not.toHaveClass('waiting');

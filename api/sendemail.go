@@ -10,6 +10,7 @@ import (
 	"net/smtp"
 	"os"
 	"strings"
+	"unicode"
 )
 
 type EmailRequestBody struct {
@@ -43,6 +44,33 @@ func formatNamedHeaderAddress(name, address string) (mail.Address, error) {
 	return parsedAddress, nil
 }
 
+func sanitizeEmailContent(value string, keepLineBreaks bool) string {
+	lineBreakReplacement := " "
+	if keepLineBreaks {
+		lineBreakReplacement = "\n"
+	}
+
+	normalizedValue := strings.ReplaceAll(value, "\r\n", lineBreakReplacement)
+	normalizedValue = strings.ReplaceAll(normalizedValue, "\r", lineBreakReplacement)
+	normalizedValue = strings.ReplaceAll(normalizedValue, "\n", lineBreakReplacement)
+
+	return strings.Map(func(r rune) rune {
+		if unicode.IsControl(r) && r != '\t' && !(keepLineBreaks && r == '\n') {
+			return -1
+		}
+
+		return r
+	}, normalizedValue)
+}
+
+func sanitizeEmailLineContent(value string) string {
+	return sanitizeEmailContent(value, false)
+}
+
+func sanitizeEmailBodyContent(value string) string {
+	return sanitizeEmailContent(value, true)
+}
+
 func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
 	baseTitle := os.Getenv("BASE_TITLE")
 	webUrl := os.Getenv("NEXT_PUBLIC_BASE_URL")
@@ -68,6 +96,10 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 	toHeader := strings.Join([]string{ownerAddress.String(), userAddress.String()}, ", ")
 	recipients := []string{ownerAddress.Address, userAddress.Address}
 
+	sanitizedUserEmail := sanitizeEmailLineContent(userEmail)
+	sanitizedTitle := sanitizeEmailLineContent(title)
+	sanitizedMessage := sanitizeEmailBodyContent(message)
+
 	var builder strings.Builder
 	builder.WriteString(fmt.Sprintf("From: %s\r\n", from.String()))
 	builder.WriteString(fmt.Sprintf("To: %s\r\n", toHeader))
@@ -76,9 +108,9 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 	builder.WriteString("Content-Type: text/html; charset=\"UTF-8\"\r\n")
 	builder.WriteString("\r\n")
 	builder.WriteString("<p>以下の内容でお問い合わせを承りました。</p>")
-	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>メールアドレス: %s</p>", html.EscapeString(userEmail)))
-	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>件名: %s</p>", html.EscapeString(title)))
-	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>内容: %s</p>", strings.ReplaceAll(html.EscapeString(message), "\n", "<br>")))
+	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>メールアドレス: %s</p>", html.EscapeString(sanitizedUserEmail)))
+	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>件名: %s</p>", html.EscapeString(sanitizedTitle)))
+	builder.WriteString(fmt.Sprintf("<p style='padding: 12px; border-left: 4px solid #d0d0d0;'>内容: %s</p>", strings.ReplaceAll(html.EscapeString(sanitizedMessage), "\n", "<br>")))
 	builder.WriteString("<div style='margin-top: 24px; color: #111827; line-height: 1.7; word-break: break-word;'>")
 	builder.WriteString("<div style='height: 0; line-height: 0; font-size: 0; border-top: 2px solid #d0d0d0; margin-bottom: 12px;'>&nbsp;</div>")
 	builder.WriteString(fmt.Sprintf("<span style='color: #111827;'>%s</span><br>", html.EscapeString(baseTitle)))
@@ -97,9 +129,6 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 	smtpPort := "587"
 	auth := smtp.PlainAuth("", smtpUser, smtpPass, smtpHost)
 
-	// The contact form content is intentionally included in this HTML email.
-	// Header/envelope addresses are parsed with net/mail, and body fields are HTML-escaped above.
-	// codeql[go/email-injection]
 	return smtpSendMail(smtpHost+":"+smtpPort, auth, from.Address, recipients, []byte(msg))
 }
 
