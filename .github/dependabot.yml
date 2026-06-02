@@ -4,11 +4,33 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+    groups:
+      dependencies:
+        patterns:
+          - '*'
   - package-ecosystem: 'gomod'
     directory: '/'
     schedule:
-      interval: 'weekly'
+      interval: 'monthly'
+    groups:
+      dependencies:
+        patterns:
+          - '*'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
+    groups:
+      dependencies:
+        patterns:
+          - '*'
+  - package-ecosystem: 'docker'
+    directories:
+      - '/.docker/js'
+      - '/.docker/go'
+    schedule:
+      interval: 'monthly'
+    groups:
+      docker-images:
+        patterns:
+          - '*'
