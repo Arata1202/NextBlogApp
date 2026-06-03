@@ -61,7 +61,7 @@
   padding: 16px;
 }
 
-.content div[data-filename]::before {
+.content div[data-filename]:not([data-code-filename-mounted])::before {
   display: inline-block;
   background-color: var(--color-bg-sub);
   color: rgb(55 65 81);

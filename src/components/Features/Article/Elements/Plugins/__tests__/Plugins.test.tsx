@@ -60,6 +60,59 @@ const renderCustomHtml = (html: string) => {
 };
 
 describe('Article plugins', () => {
+  it('copies rich text code block content from the icon button', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText },
+    });
+
+    render(<RichText html="<pre><code>const value = 1;</code></pre>" />);
+
+    const wrapButton = await screen.findByRole('button', { name: 'コードを折り返す' });
+
+    expect(wrapButton).toHaveAttribute('aria-pressed', 'false');
+
+    fireEvent.click(wrapButton);
+
+    expect(
+      screen.getByRole('button', {
+        name: 'コードの折り返しを解除',
+      }),
+    ).toHaveAttribute('aria-pressed', 'true');
+
+    fireEvent.click(await screen.findByRole('button', { name: 'コードをコピー' }));
+
+    await waitFor(() => {
+      expect(writeText).toHaveBeenCalledWith('const value = 1;');
+    });
+    expect(await screen.findByRole('button', { name: 'コピー済み' })).toBeInTheDocument();
+  });
+
+  it('shows rich text code block filenames in the toolbar', async () => {
+    render(
+      <RichText html='<div data-filename="app.ts"><pre><code>const value = 1;</code></pre></div>' />,
+    );
+
+    expect(await screen.findByText('app.ts')).toBeInTheDocument();
+    expect(screen.queryByText('TypeScript')).not.toBeInTheDocument();
+    expect(document.querySelector('[data-filename="app.ts"]')).toHaveAttribute(
+      'data-code-filename-mounted',
+    );
+  });
+
+  it('adds copy controls to custom html code blocks', async () => {
+    renderCustomHtml('<pre><code>custom code</code></pre>');
+
+    expect(await screen.findByRole('button', { name: 'コードをコピー' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', {
+        name: 'コードを折り返す',
+      }),
+    ).toHaveAttribute('aria-pressed', 'false');
+  });
+
   it('renders rich text and injects article ad units before h2 sections', () => {
     render(
       <RichText

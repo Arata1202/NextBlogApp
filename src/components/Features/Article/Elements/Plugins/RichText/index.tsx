@@ -3,6 +3,7 @@
 import { memo, useMemo, useRef } from 'react';
 import styles from './index.module.css';
 import { useIframelyEmbeds } from '@/hooks/useIframelyEmbeds';
+import { useCodeBlockCopyButtons } from '@/hooks/useCodeBlockCopyButtons';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import { ARTICLE_CONTENT_AD_MARKER } from '@/constants/articleContent';
 
@@ -18,6 +19,7 @@ function RichText({ html, adSlots = [] }: Props) {
   const dangerouslySetInnerHTML = useMemo(() => ({ __html: html }), [html]);
 
   useIframelyEmbeds(contentRef, html);
+  useCodeBlockCopyButtons(contentRef, html);
 
   if (shouldInsertAdsBeforeH2 && htmlParts.length > 1) {
     return (

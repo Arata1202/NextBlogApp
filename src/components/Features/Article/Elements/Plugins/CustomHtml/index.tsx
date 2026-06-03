@@ -7,6 +7,7 @@ import { applyTargetBlankToLinks } from './links';
 import { setupMoshimoEasyLinkFallback, syncMoshimoEasyLinkArrows } from './moshimoEasyLinkFallback';
 import { runCustomHtmlScripts } from './scripts';
 import { useIframelyEmbeds } from '@/hooks/useIframelyEmbeds';
+import { useCodeBlockCopyButtons } from '@/hooks/useCodeBlockCopyButtons';
 
 type Props = {
   html: string;
@@ -20,6 +21,7 @@ function CustomHtml({ html }: Props) {
   const dangerouslySetInnerHTML = useMemo(() => ({ __html: html }), [html]);
 
   useIframelyEmbeds(contentRef, html);
+  useCodeBlockCopyButtons(contentRef, html);
 
   useEffect(() => {
     const content = contentRef.current;

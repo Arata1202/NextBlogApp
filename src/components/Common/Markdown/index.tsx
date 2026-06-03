@@ -6,6 +6,7 @@ import { useTheme } from 'next-themes';
 import { useMemo } from 'react';
 import { PROFILE_IMAGE } from '@/constants/data';
 import FixedContentContainer from '../Layouts/Container/FixedContentContainer';
+import CodeBlock from '@/components/Common/CodeBlock';
 import { getTextLinkClassName } from '@/components/Common/controlClassNames';
 import { SAFE_RESOURCE_PROTOCOLS, parseUrl } from '@/utils/urlSafety';
 
@@ -152,6 +153,11 @@ export default function Markdown({ content, headingIds, profile = false }: Props
                   {shouldOpenInNewTab && <span className="sr-only">新しいタブで開きます</span>}
                 </a>
               );
+            },
+            pre: ({ children, node, ...props }) => {
+              void node;
+
+              return <CodeBlock {...props}>{children}</CodeBlock>;
             },
           }}
         >
