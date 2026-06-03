@@ -78,10 +78,6 @@ func sanitizeEmailBodyContent(value string) string {
 	return sanitizeEmailContent(value, true)
 }
 
-func sanitizeEmailPayload(value string) string {
-	return strings.ReplaceAll(sanitizeEmailBodyContent(value), "\n", "\r\n")
-}
-
 func containsDisallowedEmailContentCharacters(value string, allowLineBreaks bool) bool {
 	if !utf8.ValidString(value) {
 		return true
@@ -187,7 +183,7 @@ func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message
 	builder.WriteString("<div style='height: 0; line-height: 0; font-size: 0; border-top: 2px solid #d0d0d0; margin-top: 12px;'>&nbsp;</div>")
 	builder.WriteString("</div>")
 
-	msg := sanitizeEmailPayload(builder.String())
+	msg := builder.String()
 
 	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"
