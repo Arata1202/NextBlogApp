@@ -78,7 +78,6 @@ export default function CodeBlockToolbar({
           className={styles.copyButton}
           aria-label={wrapLabel}
           aria-pressed={wrapped}
-          title={wrapLabel}
           data-active={String(wrapped)}
           data-tooltip={wrapLabel}
           onClick={() => onWrappedChange(!wrapped)}
@@ -89,7 +88,6 @@ export default function CodeBlockToolbar({
           type="button"
           className={styles.copyButton}
           aria-label={label}
-          title={label}
           data-state={copyState}
           data-tooltip={label}
           onClick={handleClick}

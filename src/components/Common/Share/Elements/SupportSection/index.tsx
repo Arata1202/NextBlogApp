@@ -36,7 +36,6 @@ export default function SupportSection({ data }: Props) {
         </a>
         <a
           href="https://blog.with2.net/link/?id=2117761"
-          title="人気ブログランキング"
           target="_blank"
           rel="noopener noreferrer"
           className="ml-3 hover:opacity-60"
