@@ -30,7 +30,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: 50px;
+  min-height: 51px;
   padding: 5px 10px 5px 14px;
   border-bottom: 1px solid #30363d;
   background-color: var(--color-bg-code);
@@ -59,31 +59,48 @@
 .actions {
   display: inline-flex;
   flex-shrink: 0;
+  align-items: center;
   gap: 6px;
+  block-size: 40px;
 }
 
 .copyButton {
+  appearance: none;
+  -webkit-appearance: none;
   position: relative;
   display: inline-flex;
+  flex: 0 0 40px;
   align-items: center;
   justify-content: center;
   inline-size: 40px;
   block-size: 40px;
   border: 0;
   border-radius: 6px;
+  margin: 0;
+  padding: 0;
   background-color: transparent;
   color: var(--color-text-code);
   cursor: pointer;
+  font: inherit;
+  line-height: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
   transition:
     background-color 150ms ease,
     color 150ms ease;
 }
 
-.copyButton:hover,
 .copyButton[data-state='copied'],
 .copyButton[data-active='true'] {
   background-color: #30363d;
   color: white;
+}
+
+.copyButton:active {
+  background-color: #30363d;
+  color: white;
+  transform: none;
 }
 
 .copyButton[data-state='failed'] {
@@ -116,23 +133,26 @@
     transform 150ms ease;
 }
 
-.copyButton:focus-visible::after {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .copyButton:focus-visible {
   outline: var(--focus-ring-width) solid var(--color-focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
 
 .icon {
+  display: block;
+  flex: 0 0 20px;
   inline-size: 20px;
   block-size: 20px;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .copyButton:hover::after {
+  .copyButton:hover {
+    background-color: #30363d;
+    color: white;
+  }
+
+  .copyButton:hover::after,
+  .copyButton:focus-visible::after {
     opacity: 1;
     transform: translateY(0);
   }
