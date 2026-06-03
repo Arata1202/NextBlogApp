@@ -20,6 +20,7 @@ export default function ContactFeature() {
 
   const [confirmSendEmailModalOpen, setConfirmSendEmailModalOpen] = useState(false);
   const [successSendEmailAlertOpen, setSuccessSendEmailAlertOpen] = useState(false);
+  const [failureSendEmailAlertOpen, setFailureSendEmailAlertOpen] = useState(false);
   const [formData, setFormData] = useState<Form | null>(null);
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const [captchaError, setCaptchaError] = useState('');
@@ -84,6 +85,7 @@ export default function ContactFeature() {
 
       if (data.success) {
         setSuccessSendEmailAlertOpen(true);
+        setFailureSendEmailAlertOpen(false);
         reset();
         recaptchaRef.current?.reset();
         setCaptchaValue(null);
@@ -97,6 +99,9 @@ export default function ContactFeature() {
             feature: 'contact',
           },
         });
+        setSuccessSendEmailAlertOpen(false);
+        setFailureSendEmailAlertOpen(true);
+        setConfirmSendEmailModalOpen(false);
       }
     } catch (error) {
       Sentry.captureException(error, {
@@ -104,19 +109,23 @@ export default function ContactFeature() {
           feature: 'contact',
         },
       });
+      setSuccessSendEmailAlertOpen(false);
+      setFailureSendEmailAlertOpen(true);
+      setConfirmSendEmailModalOpen(false);
     } finally {
       setIsSending(false);
     }
   };
 
   useEffect(() => {
-    if (successSendEmailAlertOpen) {
+    if (successSendEmailAlertOpen || failureSendEmailAlertOpen) {
       const timer = setTimeout(() => {
         setSuccessSendEmailAlertOpen(false);
+        setFailureSendEmailAlertOpen(false);
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [successSendEmailAlertOpen]);
+  }, [successSendEmailAlertOpen, failureSendEmailAlertOpen]);
 
   return (
     <>
@@ -198,6 +207,13 @@ export default function ContactFeature() {
         title="お問い合わせありがとうございます"
         description="正常に処理が完了しました。"
         onClose={() => setSuccessSendEmailAlertOpen(false)}
+      />
+      <Alert
+        show={failureSendEmailAlertOpen}
+        title="送信に失敗しました"
+        description="時間をおいて再度お試しください。"
+        variant="error"
+        onClose={() => setFailureSendEmailAlertOpen(false)}
       />
     </>
   );

@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { Transition } from '@headlessui/react';
-import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import { compactIconControlClassName } from '@/components/Common/controlClassNames';
@@ -10,10 +10,15 @@ type Props = {
   show: boolean;
   title: string;
   description: string;
+  variant?: 'success' | 'error';
 };
 
-export default function Alert({ onClose, show, title, description }: Props) {
+export default function Alert({ onClose, show, title, description, variant = 'success' }: Props) {
   const { theme } = useTheme();
+  const Icon = variant === 'error' ? ExclamationCircleIcon : CheckCircleIcon;
+  const iconClassName = variant === 'error' ? 'h-6 w-6 text-red-600' : 'h-6 w-6 text-green-600';
+  const role = variant === 'error' ? 'alert' : 'status';
+  const ariaLive = variant === 'error' ? 'assertive' : 'polite';
 
   return (
     <div className="pointer-events-none fixed inset-0 z-50 flex items-start px-4 py-6 sm:items-start sm:p-6">
@@ -30,13 +35,13 @@ export default function Alert({ onClose, show, title, description }: Props) {
         >
           <div
             className={`pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-blue-500/5 mt-24 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-            role="status"
-            aria-live="polite"
+            role={role}
+            aria-live={ariaLive}
           >
             <div className="p-4">
               <div className="flex items-start">
                 <div className="flex h-6 shrink-0 items-center">
-                  <CheckCircleIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                  <Icon className={iconClassName} aria-hidden="true" />
                 </div>
                 <div className="ml-3 w-0 flex-1">
                   <div className="flex min-h-6 items-center">

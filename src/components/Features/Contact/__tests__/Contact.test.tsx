@@ -7,6 +7,12 @@ const recaptchaMock = vi.hoisted(() => ({
   reset: vi.fn(),
 }));
 
+const sentryMock = vi.hoisted(() => ({
+  captureException: vi.fn(),
+}));
+
+vi.mock('@sentry/nextjs', () => sentryMock);
+
 vi.mock('react-google-recaptcha', async () => {
   const React = await import('react');
 
@@ -48,6 +54,7 @@ describe('ContactFeature', () => {
   beforeEach(() => {
     fetchMock.mockReset();
     recaptchaMock.reset.mockReset();
+    sentryMock.captureException.mockReset();
     process.env.NEXT_PUBLIC_API_SENDEMAIL_URL = '/api/sendemail';
     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY = 'site-key';
     vi.stubGlobal('fetch', fetchMock);
@@ -162,9 +169,8 @@ describe('ContactFeature', () => {
     });
   });
 
-  it('does not send email when captcha verification fails', async () => {
+  it('shows a failure alert when the API reports a send failure', async () => {
     const user = userEvent.setup();
-    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
     fetchMock.mockResolvedValueOnce({
       json: async () => ({ success: false, status: 'reCAPTCHA verification failed' }),
     });
@@ -193,8 +199,39 @@ describe('ContactFeature', () => {
       }),
     );
     expect(screen.queryByText('お問い合わせありがとうございます')).not.toBeInTheDocument();
+    expect(await screen.findByText('送信に失敗しました')).toBeInTheDocument();
+    expect(screen.getByText('時間をおいて再度お試しください。')).toBeInTheDocument();
+    expect(screen.getByRole('alert')).toHaveTextContent('送信に失敗しました');
     expect(recaptchaMock.reset).not.toHaveBeenCalled();
+    expect(sentryMock.captureException).toHaveBeenCalledTimes(1);
 
-    consoleError.mockRestore();
+    await waitFor(() => {
+      expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
+    });
+  });
+
+  it('shows a failure alert when the email request fails', async () => {
+    const user = userEvent.setup();
+    fetchMock.mockRejectedValueOnce(new Error('Network error'));
+
+    render(<ContactFeature />);
+
+    await user.type(screen.getByLabelText('メールアドレス'), 'test@example.com');
+    await user.type(screen.getByLabelText('件名'), 'Test subject');
+    await user.type(screen.getByLabelText('内容'), 'Test message');
+    await user.click(screen.getByRole('button', { name: 'reCAPTCHA' }));
+    await user.click(screen.getByRole('button', { name: '送信' }));
+    await user.click((await screen.findAllByRole('button', { name: '送信' })).at(-1)!);
+
+    expect(await screen.findByText('送信に失敗しました')).toBeInTheDocument();
+    expect(screen.getByText('時間をおいて再度お試しください。')).toBeInTheDocument();
+    expect(screen.getByRole('alert')).toHaveTextContent('送信に失敗しました');
+    expect(screen.queryByText('お問い合わせありがとうございます')).not.toBeInTheDocument();
+    expect(recaptchaMock.reset).not.toHaveBeenCalled();
+    expect(sentryMock.captureException).toHaveBeenCalledTimes(1);
+
+    await waitFor(() => {
+      expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
+    });
   });
 });
