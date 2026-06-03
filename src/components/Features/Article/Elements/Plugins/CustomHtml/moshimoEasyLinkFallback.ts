@@ -157,6 +157,16 @@ const moveMoshimoEasyLinkImage = (arrow: HTMLAnchorElement) => {
   return true;
 };
 
+const syncMoshimoEasyLinkImageState = (arrow: HTMLAnchorElement) => {
+  const images = getMoshimoEasyLinkImages(arrow);
+
+  if (images.length <= 1) {
+    return;
+  }
+
+  showMoshimoEasyLinkImage(images, getActiveMoshimoEasyLinkImageIndex(images));
+};
+
 const getMoshimoEasyLinkArrow = (content: HTMLElement, target: EventTarget | null) => {
   if (!(target instanceof Element)) {
     return null;
@@ -184,9 +194,16 @@ export const setupMoshimoEasyLinkFallback = (content: HTMLElement) => {
     event.preventDefault();
 
     window.setTimeout(() => {
-      if (content.contains(arrow) && !didMoshimoEasyLinkMove(startState)) {
-        moveMoshimoEasyLinkImage(arrow);
+      if (!content.contains(arrow)) {
+        return;
       }
+
+      if (didMoshimoEasyLinkMove(startState)) {
+        syncMoshimoEasyLinkImageState(arrow);
+        return;
+      }
+
+      moveMoshimoEasyLinkImage(arrow);
     }, 0);
   };
 
