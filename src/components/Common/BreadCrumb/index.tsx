@@ -8,7 +8,11 @@ type Props = {
   isLoading?: boolean;
 };
 
-const currentPageClassName = 'ml-4 text-sm font-medium text-gray-500';
+const breadcrumbItemClassName = 'min-w-0';
+const breadcrumbCurrentItemClassName = `${breadcrumbItemClassName} flex-1`;
+const breadcrumbSegmentClassName = 'flex min-w-0 items-center';
+const currentPageClassName =
+  'ml-4 min-w-0 flex-1 text-sm font-medium text-gray-500 [overflow-wrap:anywhere]';
 
 const renderCurrentPage = (label: string, isLoading: boolean) => (
   <span
@@ -32,15 +36,15 @@ export default function BreadCrumb({ page, isLoading = false }: Props) {
 
   return (
     <nav aria-label="パンくず">
-      <ul className="flex items-center space-x-4">
-        <li>
+      <ul className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
+        <li className={breadcrumbItemClassName}>
           <Link href="/" className="flex text-gray-500 hover:text-blue-600" aria-label="ホーム">
             <HomeIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
           </Link>
         </li>
         {page.type === 'article' && (
-          <li>
-            <div className="flex items-center">
+          <li className={breadcrumbItemClassName}>
+            <div className={breadcrumbSegmentClassName}>
               <ChevronRightIcon className="h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" />
               <Link
                 href={`/category/${page.article.categories[0].id}`}
@@ -51,8 +55,8 @@ export default function BreadCrumb({ page, isLoading = false }: Props) {
             </div>
           </li>
         )}
-        <li>
-          <div className="flex items-center">
+        <li className={breadcrumbCurrentItemClassName}>
+          <div className={breadcrumbSegmentClassName}>
             <ChevronRightIcon className="h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" />
             {isSearchLoading ? (
               <span
