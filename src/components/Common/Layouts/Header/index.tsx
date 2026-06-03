@@ -113,6 +113,7 @@ export default function Header() {
                 alt={item.alt}
                 width={165}
                 height={30}
+                className="block h-[30px] w-[165px] object-contain"
               />
             ))}
           </Link>

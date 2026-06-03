@@ -4,6 +4,16 @@ import { describe, expect, it } from 'vitest';
 import Header from '@/components/Common/Layouts/Header';
 
 describe('Header', () => {
+  it('keeps the logo layout size stable', () => {
+    render(<Header />);
+
+    expect(screen.getByRole('img', { name: 'リアル大学生' })).toHaveClass(
+      'h-[30px]',
+      'w-[165px]',
+      'object-contain',
+    );
+  });
+
   it('opens and closes the mobile menu through accessible controls', async () => {
     const user = userEvent.setup();
 
