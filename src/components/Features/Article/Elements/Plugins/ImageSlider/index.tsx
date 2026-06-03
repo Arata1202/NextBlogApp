@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import Slider, { type CustomArrowProps } from 'react-slick';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { ContentBlock, IntroductionBlock } from '@/types/microcms';
@@ -19,13 +19,20 @@ type SliderArrowProps = CustomArrowProps & {
 function SliderArrow({ className, direction, onClick, style }: SliderArrowProps) {
   const Icon = direction === 'previous' ? ChevronLeftIcon : ChevronRightIcon;
   const directionClassName = direction === 'previous' ? styles.previousArrow : styles.nextArrow;
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    onClick?.(event);
+
+    if (event.detail > 0) {
+      event.currentTarget.blur();
+    }
+  };
 
   return (
     <button
       type="button"
       className={`${className ?? ''} ${styles.arrow} ${directionClassName}`}
       style={style}
-      onClick={onClick}
+      onClick={handleClick}
       aria-label={direction === 'previous' ? '前の画像を表示' : '次の画像を表示'}
     >
       <Icon className={styles.arrowIcon} aria-hidden="true" />

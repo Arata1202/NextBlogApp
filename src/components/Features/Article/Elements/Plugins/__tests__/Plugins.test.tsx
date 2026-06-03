@@ -392,8 +392,21 @@ describe('Article plugins', () => {
     expect(
       screen.getByRole('region', { name: 'Article titleの画像スライダー' }),
     ).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '前の画像を表示' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '次の画像を表示' })).toBeInTheDocument();
+    const previousArrow = screen.getByRole('button', { name: '前の画像を表示' });
+    const nextArrow = screen.getByRole('button', { name: '次の画像を表示' });
+
+    expect(previousArrow).toBeInTheDocument();
+    expect(nextArrow).toBeInTheDocument();
+
+    nextArrow.focus();
+    expect(nextArrow).toHaveFocus();
+    fireEvent.click(nextArrow, { detail: 1 });
+    expect(nextArrow).not.toHaveFocus();
+
+    previousArrow.focus();
+    fireEvent.click(previousArrow, { detail: 0 });
+    expect(previousArrow).toHaveFocus();
+
     expect(screen.getByRole('button', { name: '1枚目の画像を表示中' })).toHaveAttribute(
       'aria-current',
       'true',

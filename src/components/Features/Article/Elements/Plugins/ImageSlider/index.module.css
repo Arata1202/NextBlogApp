@@ -78,12 +78,6 @@
   pointer-events: none;
 }
 
-.arrow:hover {
-  border-color: var(--color-focus-ring) !important;
-  color: var(--color-focus-ring) !important;
-  background: #fff !important;
-}
-
 .previousArrow {
   left: 12px !important;
 }
@@ -123,28 +117,36 @@
   opacity: 1 !important;
 }
 
-.wrapper :global(.slick-dots li button:hover::before) {
-  color: var(--color-focus-ring) !important;
-  opacity: 1 !important;
-}
-
 .arrow:focus,
 .wrapper :global(.slick-dots li button:focus) {
-  outline: var(--focus-ring-width, 2px) solid var(--color-focus-ring, #2563eb) !important;
-  outline-offset: var(--focus-ring-offset, 2px) !important;
+  outline: none !important;
 }
 
-@supports selector(:focus-visible) {
-  .arrow:focus:not(:focus-visible),
-  .wrapper :global(.slick-dots li button:focus:not(:focus-visible)) {
-    outline: none !important;
+@media (hover: hover) and (pointer: fine) {
+  .arrow:hover {
+    border-color: var(--color-focus-ring) !important;
+    color: var(--color-focus-ring) !important;
+    background: #fff !important;
   }
 
-  .arrow:focus-visible,
-  .wrapper :global(.slick-dots li button:focus-visible) {
+  .wrapper :global(.slick-dots li button:hover::before) {
+    color: var(--color-focus-ring) !important;
+    opacity: 1 !important;
+  }
+}
+
+@supports not selector(:focus-visible) {
+  .arrow:focus,
+  .wrapper :global(.slick-dots li button:focus) {
     outline: var(--focus-ring-width, 2px) solid var(--color-focus-ring, #2563eb) !important;
     outline-offset: var(--focus-ring-offset, 2px) !important;
   }
+}
+
+.arrow:focus-visible,
+.wrapper :global(.slick-dots li button:focus-visible) {
+  outline: var(--focus-ring-width, 2px) solid var(--color-focus-ring, #2563eb) !important;
+  outline-offset: var(--focus-ring-offset, 2px) !important;
 }
 
 @media (max-width: 640px) {
