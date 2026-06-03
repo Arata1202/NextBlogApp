@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-import 'highlight.js/styles/hybrid.css';
+import 'highlight.js/styles/github-dark.css';
 import hljs from 'highlight.js/lib/common';
 import javascript from 'highlight.js/lib/languages/javascript';
 import dockerfile from 'highlight.js/lib/languages/dockerfile';

@@ -52,10 +52,13 @@
 
 .content > pre {
   overflow-x: auto;
+  background-color: var(--color-bg-code);
+  color: var(--color-text-code);
 }
 
 .content pre > code {
   background-color: var(--color-bg-code);
+  color: var(--color-text-code);
   display: block;
   overflow-x: auto;
   padding: 16px;
