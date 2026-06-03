@@ -114,7 +114,6 @@
     transform 150ms ease;
 }
 
-.copyButton:hover::after,
 .copyButton:focus-visible::after {
   opacity: 1;
   transform: translateY(0);
@@ -128,4 +127,11 @@
 .icon {
   inline-size: 20px;
   block-size: 20px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .copyButton:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
