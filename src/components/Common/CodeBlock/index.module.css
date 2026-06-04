@@ -68,12 +68,13 @@
   appearance: none;
   -webkit-appearance: none;
   position: relative;
-  display: inline-flex;
+  display: grid;
   flex: 0 0 40px;
-  align-items: center;
-  justify-content: center;
+  place-items: center;
   inline-size: 40px;
   block-size: 40px;
+  min-inline-size: 40px;
+  min-block-size: 40px;
   border: 0;
   border-radius: 6px;
   margin: 0;
@@ -83,6 +84,7 @@
   cursor: pointer;
   font: inherit;
   line-height: 0;
+  vertical-align: top;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   user-select: none;
@@ -138,11 +140,21 @@
   outline-offset: var(--focus-ring-offset);
 }
 
+.iconFrame {
+  display: grid;
+  place-items: center;
+  inline-size: 20px;
+  block-size: 20px;
+  line-height: 0;
+  pointer-events: none;
+}
+
 .icon {
   display: block;
   flex: 0 0 20px;
   inline-size: 20px;
   block-size: 20px;
+  grid-area: 1 / 1;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -155,5 +167,11 @@
   .copyButton:focus-visible::after {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .copyButton::after {
+    content: none;
   }
 }

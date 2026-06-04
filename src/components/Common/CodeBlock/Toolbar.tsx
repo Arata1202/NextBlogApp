@@ -82,7 +82,9 @@ export default function CodeBlockToolbar({
           data-tooltip={wrapLabel}
           onClick={() => onWrappedChange(!wrapped)}
         >
-          <ArrowUturnLeftIcon className={styles.icon} aria-hidden="true" />
+          <span className={styles.iconFrame} aria-hidden="true">
+            <ArrowUturnLeftIcon className={styles.icon} />
+          </span>
         </button>
         <button
           type="button"
@@ -92,7 +94,9 @@ export default function CodeBlockToolbar({
           data-tooltip={label}
           onClick={handleClick}
         >
-          <Icon className={styles.icon} aria-hidden="true" />
+          <span className={styles.iconFrame} aria-hidden="true">
+            <Icon className={styles.icon} />
+          </span>
         </button>
       </div>
       <span className="sr-only" aria-live="polite">
