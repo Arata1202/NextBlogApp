@@ -17,15 +17,15 @@ export const PROFILE_CONTENT = `
 
 リアル大学生（当サイト）は以下の構成で、運営しています。
 
-- Frontend｜Next.js, TypeScript, TailwindCSS
-- Backend｜Go
-- CMS｜MicroCMS
+- Frontend｜Next.js, React, TypeScript, Tailwind CSS
+- Backend｜Go, Vercel Functions
+- CMS｜microCMS, Zenn RSS
 - Infrastructure｜Cloudflare Pages, Vercel
 - Environment setup｜Docker
-- CI/CD｜GitHub Actions
+- CI/CD｜GitHub Actions, CodeQL, Dependabot
 - Design｜Figma, Canva
 - Google｜AdSense, Analytics, Search Console, reCAPTCHA
-- etc.｜PWA, OneSignal, Pipedream
+- etc.｜PWA, OneSignal, Pipedream, Sentry
 
 ## お問い合わせ
 

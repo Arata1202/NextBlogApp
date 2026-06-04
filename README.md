@@ -61,12 +61,12 @@
 
 | Category          | Technology Stack                              |
 | ----------------- | --------------------------------------------- |
-| Frontend          | Next.js, TypeScript, Tailwind CSS             |
-| Backend           | Go                                            |
-| CMS               | MicroCMS                                      |
+| Frontend          | Next.js, React, TypeScript, Tailwind CSS      |
+| Backend           | Go, Vercel Functions                          |
+| CMS               | microCMS, Zenn RSS                            |
 | Infrastructure    | Cloudflare Pages, Vercel                      |
 | Environment setup | Docker                                        |
-| CI/CD             | GitHub Actions                                |
+| CI/CD             | GitHub Actions, CodeQL, Dependabot            |
 | Design            | Figma, Canva                                  |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA |
 | etc.              | PWA, OneSignal, Pipedream, Sentry             |
@@ -81,12 +81,12 @@ flowchart TB
 
   subgraph ci[CI]
     github --> actions[GitHub Actions]
-    actions --> quality[Lint / Typecheck / Test]
+    actions --> quality[Lint / Typecheck / Test / CodeQL]
   end
 
   subgraph build[Static Build]
     github --> pagesBuild[Cloudflare Pages Build<br/>pnpm build]
-    microcms[MicroCMS<br/>Blog / Category / Tag] --> pagesBuild
+    microcms[microCMS<br/>Blog / Category / Tag] --> pagesBuild
     zenn[Zenn RSS] --> pagesBuild
     pagesBuild --> generated[Static Output<br/>HTML / JS / CSS / RSS / sitemap]
   end
@@ -100,10 +100,12 @@ flowchart TB
     app -. Client errors .-> sentry[Sentry]
   end
 
-  subgraph contact[Contact API]
-    app --> goApi[Vercel Go Functions<br/>/api/sendemail / /api/recaptcha]
-    goApi --> recaptcha[Google reCAPTCHA]
-    goApi --> smtp[SMTP / Gmail]
+  subgraph runtimeApi[Runtime APIs]
+    app --> searchApi[Vercel Go Function<br/>/api/search]
+    searchApi --> microcmsSearch[microCMS Search]
+    app --> contactApi[Vercel Go Functions<br/>/api/sendemail / /api/recaptcha]
+    contactApi --> recaptcha[Google reCAPTCHA]
+    contactApi --> smtp[SMTP / Gmail]
   end
 ```
 
@@ -180,7 +182,9 @@ pnpm test:e2e:report
 │       └── images
 ├── .env.example
 ├── .github
+│   ├── dependabot.yml
 │   └── workflows
+│       ├── codeql.yml
 │       ├── test.yml
 │       └── vercel_deploy.yml
 ├── .gitignore
@@ -199,6 +203,8 @@ pnpm test:e2e:report
 ├── api
 │   ├── recaptcha.go
 │   ├── recaptcha_test.go
+│   ├── search.go
+│   ├── search_test.go
 │   ├── sendemail.go
 │   └── sendemail_test.go
 ├── cmd
@@ -264,6 +270,8 @@ pnpm test:e2e:report
 │   │   ├── page.tsx
 │   │   ├── privacy
 │   │   ├── profile
+│   │   ├── rss.xml
+│   │   ├── search
 │   │   ├── sitemap-html
 │   │   ├── sitemap.ts
 │   │   └── tag
@@ -272,8 +280,13 @@ pnpm test:e2e:report
 │   │   ├── Features
 │   │   ├── Pages
 │   │   └── ThirdParties
+│   ├── config
+│   │   ├── publicEnv.ts
+│   │   └── serverEnv.ts
 │   ├── constants
+│   │   ├── articleContent.ts
 │   │   ├── category.ts
+│   │   ├── customHtml.ts
 │   │   ├── data.ts
 │   │   ├── limit.ts
 │   │   └── page.ts
@@ -289,6 +302,7 @@ pnpm test:e2e:report
 │   │   └── __tests__
 │   ├── hooks
 │   │   ├── __tests__
+│   │   ├── useCodeBlockCopyButtons.tsx
 │   │   ├── useExtractHeadings.ts
 │   │   ├── useIframelyEmbeds.ts
 │   │   ├── useIsClient.ts
@@ -298,6 +312,8 @@ pnpm test:e2e:report
 │   │   ├── __tests__
 │   │   ├── archive.ts
 │   │   ├── microcms.ts
+│   │   ├── microcmsPage.ts
+│   │   ├── pageData.ts
 │   │   ├── recent.ts
 │   │   ├── rss.ts
 │   │   ├── unified.ts
@@ -312,19 +328,22 @@ pnpm test:e2e:report
 │   │   ├── form.ts
 │   │   ├── heading.ts
 │   │   ├── microcms.ts
+│   │   ├── react-dom-client.d.ts
 │   │   └── unified.ts
 │   └── utils
 │       ├── __tests__
 │       ├── formatDate.ts
 │       ├── formatHeadings.ts
 │       ├── formatMicroCmsImageUrl.ts
-│       └── formatRichText.ts
-├── tailwind.config.ts
+│       ├── formatRichText.ts
+│       ├── markdownHeadings.ts
+│       ├── sanitizeCustomHtml.ts
+│       └── urlSafety.ts
 ├── tsconfig.json
 ├── vercel.json
 └── vitest.config.mts
 
-62 directories, 108 files
+62 directories, 111 files
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
