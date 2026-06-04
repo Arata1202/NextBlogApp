@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type MouseEvent } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import Slider, { type CustomArrowProps } from 'react-slick';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { ContentBlock, IntroductionBlock } from '@/types/microcms';
@@ -42,14 +42,45 @@ function SliderArrow({ className, direction, onClick, style }: SliderArrowProps)
 
 export default function ImageSlider({ block, imageAltFallback }: Props) {
   const isClient = useIsClient();
+  const sliderRootRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const images = block.image_slider?.filter((image) => image.url) ?? [];
+  const isMultiple = images.length > 1;
+
+  useEffect(() => {
+    const sliderRoot = sliderRootRef.current;
+
+    if (!sliderRoot || !isMultiple || !isClient) {
+      return;
+    }
+
+    const disableGeneratedFocus = () => {
+      sliderRoot.querySelectorAll<HTMLElement>('.slick-slide[tabindex]').forEach((slide) => {
+        slide.removeAttribute('tabindex');
+      });
+      sliderRoot.querySelectorAll<HTMLImageElement>(`.${styles.image}`).forEach((image) => {
+        image.onclick = null;
+      });
+    };
+    const mutationObserver = new MutationObserver(disableGeneratedFocus);
+
+    disableGeneratedFocus();
+    mutationObserver.observe(sliderRoot, {
+      attributeFilter: ['tabindex'],
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      mutationObserver.disconnect();
+    };
+  }, [images.length, isClient, isMultiple]);
 
   if (images.length === 0) {
     return null;
   }
 
-  const isMultiple = images.length > 1;
   const sliderLabel = imageAltFallback ? `${imageAltFallback}の画像スライダー` : '画像スライダー';
   const getAlt = (index: number) => {
     if (!imageAltFallback) {
@@ -70,12 +101,14 @@ export default function ImageSlider({ block, imageAltFallback }: Props) {
       height={image.height}
       loading={index === 0 ? 'eager' : 'lazy'}
       className={styles.image}
+      tabIndex={-1}
+      draggable={false}
     />
   );
 
   if (!isMultiple || !isClient) {
     return (
-      <div className={styles.wrapper}>
+      <div ref={sliderRootRef} className={styles.wrapper}>
         <div className={styles.slide}>{renderImage(images[0], 0)}</div>
       </div>
     );
@@ -83,6 +116,7 @@ export default function ImageSlider({ block, imageAltFallback }: Props) {
 
   return (
     <div
+      ref={sliderRootRef}
       className={styles.wrapper}
       role="region"
       aria-roledescription="carousel"

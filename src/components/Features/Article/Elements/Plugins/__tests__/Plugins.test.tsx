@@ -21,6 +21,10 @@ vi.mock('@/components/ThirdParties/GoogleAdSense/Elements/AdUnit', async () => {
 
 vi.mock('react-slick', async () => {
   const React = await import('react');
+  type SliderChildProps = {
+    className?: string;
+    tabIndex?: number | string;
+  };
 
   return {
     default: ({
@@ -35,23 +39,35 @@ vi.mock('react-slick', async () => {
       dots?: boolean;
       nextArrow?: React.ReactElement;
       prevArrow?: React.ReactElement;
-    }) =>
-      React.createElement(
+    }) => {
+      const slides = React.Children.map(children, (child) => {
+        if (!React.isValidElement<SliderChildProps>(child)) {
+          return child;
+        }
+
+        return React.cloneElement(child, {
+          className: `${child.props.className ?? ''} slick-slide`,
+          tabIndex: '-1',
+        });
+      });
+
+      return React.createElement(
         'div',
         { 'data-testid': 'slider' },
         prevArrow,
-        children,
+        slides,
         dots &&
           customPaging &&
           React.createElement(
             'div',
             { 'data-testid': 'slider-dots' },
-            Array.from({ length: React.Children.count(children) }, (_, index) =>
+            Array.from({ length: React.Children.count(slides) }, (_, index) =>
               React.cloneElement(customPaging(index), { key: index }),
             ),
           ),
         nextArrow,
-      ),
+      );
+    },
   };
 });
 
@@ -414,6 +430,41 @@ describe('Article plugins', () => {
     expect(screen.getByRole('button', { name: '2枚目の画像を表示' })).toBeInTheDocument();
     expect(screen.getByRole('group', { name: '1枚目 / 全2枚' })).toBeInTheDocument();
     expect(screen.getByText('1枚目 / 全2枚')).toHaveAttribute('aria-live', 'polite');
+  });
+
+  it('removes generated focus targets from slider images and slides', async () => {
+    render(
+      <ImageSlider
+        imageAltFallback="Article title"
+        block={{
+          image_slider: [
+            {
+              url: 'https://images.microcms-assets.io/assets/site/slide-1.png',
+              width: 960,
+              height: 540,
+            },
+            {
+              url: 'https://images.microcms-assets.io/assets/site/slide-2.png',
+              width: 960,
+              height: 540,
+            },
+          ],
+        }}
+      />,
+    );
+
+    const image = screen.getByAltText('Article titleの画像 1');
+    const slide = screen.getByRole('group', { name: '1枚目 / 全2枚' });
+
+    expect(image).toHaveAttribute('tabindex', '-1');
+    expect(image).toHaveAttribute('draggable', 'false');
+    expect(slide).toHaveClass('slick-slide');
+    expect(slide).not.toHaveAttribute('tabindex');
+
+    slide.setAttribute('tabindex', '-1');
+    await waitFor(() => {
+      expect(slide).not.toHaveAttribute('tabindex');
+    });
   });
 
   it('renders related article links from the want-to-read plugin', () => {
