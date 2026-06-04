@@ -13,13 +13,11 @@
   color: var(--color-text-code);
 }
 
-.wrapped,
 .wrapped > code {
   white-space: pre-wrap !important;
   word-break: break-word;
 }
 
-.unwrapped,
 .unwrapped > code {
   white-space: pre !important;
   word-break: normal;
@@ -34,6 +32,8 @@
   padding: 5px 10px 5px 14px;
   border-bottom: 1px solid #30363d;
   background-color: var(--color-bg-code);
+  white-space: normal;
+  word-break: normal;
 }
 
 .meta {
