@@ -1,5 +1,6 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { useTheme } from 'next-themes';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
 import { Article, Tag } from '@/types/microcms';
@@ -22,6 +23,7 @@ type Props = {
   mixedArticles?: UnifiedArticle[];
   emptyMessage?: string;
   isLoading?: boolean;
+  stackedPagination?: ReactNode;
 };
 
 const skeletonItems = [0, 1, 2];
@@ -45,6 +47,7 @@ export default function ArticleList({
   mixedArticles,
   emptyMessage = '記事はまだありません',
   isLoading = false,
+  stackedPagination,
 }: Props) {
   const { theme } = useTheme();
   const isMixed = Boolean(mixedArticles);
@@ -95,6 +98,7 @@ export default function ArticleList({
               ))}
             </ul>
           )}
+          {stackedPagination && <div className={styles.stackedPagination}>{stackedPagination}</div>}
           <AdUnit slot="1831092739" />
           <Share />
         </ContentContainer>

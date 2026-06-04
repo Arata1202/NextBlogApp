@@ -69,6 +69,29 @@ describe('ArticleList', () => {
     ]);
   });
 
+  it('renders stacked pagination before the bottom ad and share controls', () => {
+    render(
+      <ArticleList
+        articles={[createArticle({ id: 'a', title: 'Article A' })]}
+        tags={tags}
+        archiveList={archiveList}
+        stackedPagination={<nav aria-label="縦積みページネーション">stacked pagination</nav>}
+      />,
+    );
+
+    const pagination = screen.getByRole('navigation', { name: '縦積みページネーション' });
+    const bottomAd = screen
+      .getAllByTestId('ad-unit')
+      .find((ad) => ad.getAttribute('data-slot') === '1831092739');
+    const share = screen.getByTestId('share');
+
+    expect(bottomAd).toBeInTheDocument();
+    expect(pagination.compareDocumentPosition(bottomAd as HTMLElement)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    expect(pagination.compareDocumentPosition(share)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+  });
+
   it('uses mixed unified articles when they are provided', () => {
     render(
       <ArticleList

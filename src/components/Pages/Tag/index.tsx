@@ -33,8 +33,16 @@ export default function TagPage({
         recentArticles={recentArticles}
         tags={tags}
         archiveList={archiveList}
+        stackedPagination={
+          <Pagination totalCount={totalCount} current={current} basePath={`/tag/${tag.id}`} />
+        }
       />
-      <Pagination totalCount={totalCount} current={current} basePath={`/tag/${tag.id}`} />
+      <Pagination
+        totalCount={totalCount}
+        current={current}
+        basePath={`/tag/${tag.id}`}
+        hideWhenStacked
+      />
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>
   );

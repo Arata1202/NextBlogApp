@@ -33,8 +33,20 @@ export default function CategoryPage({
         recentArticles={recentArticles}
         tags={tags}
         archiveList={archiveList}
+        stackedPagination={
+          <Pagination
+            totalCount={totalCount}
+            current={current}
+            basePath={`/category/${category.id}`}
+          />
+        }
       />
-      <Pagination totalCount={totalCount} current={current} basePath={`/category/${category.id}`} />
+      <Pagination
+        totalCount={totalCount}
+        current={current}
+        basePath={`/category/${category.id}`}
+        hideWhenStacked
+      />
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>
   );

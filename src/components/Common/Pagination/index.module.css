@@ -22,10 +22,23 @@
 .ellipsis {
   color: var(--color-text-sub);
 }
+.hideWhenStacked {
+  display: block;
+}
+
+@media (max-width: 1023px) {
+  .hideWhenStacked {
+    display: none;
+  }
+
+  .container {
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+}
 
 @media (max-width: 768px) {
   .container {
-    margin-top: 0;
     padding: 24px 16px;
   }
 }
@@ -34,6 +47,5 @@
   .container {
     gap: 4px;
     padding: 20px 8px;
-    margin-bottom: 1.75rem;
   }
 }

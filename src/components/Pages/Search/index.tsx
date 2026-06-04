@@ -166,6 +166,15 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
         archiveList={archiveList}
         emptyMessage={emptyMessage}
         isLoading={isLoading}
+        stackedPagination={
+          <Pagination
+            totalCount={totalCount}
+            current={currentPage}
+            basePath="/search"
+            q={query}
+            useQueryPage
+          />
+        }
       />
       <Pagination
         totalCount={totalCount}
@@ -173,6 +182,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
         basePath="/search"
         q={query}
         useQueryPage
+        hideWhenStacked
       />
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>

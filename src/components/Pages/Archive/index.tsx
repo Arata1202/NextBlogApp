@@ -35,11 +35,19 @@ export default function ArchivePage({
         recentArticles={recentArticles}
         tags={tags}
         archiveList={archiveList}
+        stackedPagination={
+          <Pagination
+            totalCount={totalCount}
+            current={current}
+            basePath={`/archive/${year}/${month}`}
+          />
+        }
       />
       <Pagination
         totalCount={totalCount}
         current={current}
         basePath={`/archive/${year}/${month}`}
+        hideWhenStacked
       />
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>

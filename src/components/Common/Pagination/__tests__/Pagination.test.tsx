@@ -34,4 +34,12 @@ describe('Pagination', () => {
       '/search?q=React+Query&page=2',
     );
   });
+
+  it('can hide the outer pagination when the layout is stacked', () => {
+    render(<Pagination totalCount={100} current={1} hideWhenStacked />);
+
+    expect(screen.getByRole('navigation', { name: 'ページネーション' }).className).toContain(
+      'hideWhenStacked',
+    );
+  });
 });

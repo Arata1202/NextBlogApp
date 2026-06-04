@@ -34,8 +34,9 @@ export default function HomePage({
         recentArticles={recentArticles}
         tags={tags}
         archiveList={archiveList}
+        stackedPagination={<Pagination totalCount={totalCount} current={current} />}
       />
-      <Pagination totalCount={totalCount} current={current} />
+      <Pagination totalCount={totalCount} current={current} hideWhenStacked />
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
     </>
   );

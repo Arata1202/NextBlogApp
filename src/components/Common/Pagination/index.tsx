@@ -9,6 +9,7 @@ type Props = {
   totalCount: number;
   current?: number;
   basePath?: string;
+  hideWhenStacked?: boolean;
   q?: string;
   useQueryPage?: boolean;
 };
@@ -43,6 +44,7 @@ export default function Pagination({
   totalCount,
   current = 1,
   basePath = '',
+  hideWhenStacked = false,
   q,
   useQueryPage = false,
 }: Props) {
@@ -63,9 +65,10 @@ export default function Pagination({
 
     return `${basePath}?${params.toString()}`;
   };
+  const navClassName = hideWhenStacked ? styles.hideWhenStacked : undefined;
 
   return (
-    <nav aria-label="ページネーション">
+    <nav className={navClassName} aria-label="ページネーション">
       <ul className={styles.container}>
         {pages.map((p) => (
           <li className={styles.list} key={p}>
