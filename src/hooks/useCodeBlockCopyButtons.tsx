@@ -5,11 +5,14 @@ import { CodeBlockToolbar, codeBlockStyles } from '@/components/Common/CodeBlock
 const ENHANCED_ATTRIBUTE = 'data-code-copy-enhanced';
 const FILENAME_MOUNTED_ATTRIBUTE = 'data-code-filename-mounted';
 const MOUNT_ATTRIBUTE = 'data-code-copy-button-mount';
+const WRAPPER_ATTRIBUTE = 'data-code-copy-wrapper';
 
 type EnhancedCodeBlock = {
+  filenameContainer: HTMLElement | null;
   mount: HTMLDivElement;
   pre: HTMLPreElement;
   root: Root;
+  wrapper: HTMLDivElement;
 };
 
 export const useCodeBlockCopyButtons = (
@@ -38,6 +41,14 @@ export const useCodeBlockCopyButtons = (
       );
     };
 
+    const getFilenameContainer = (pre: HTMLPreElement) => {
+      if (pre.hasAttribute('data-filename')) {
+        return pre;
+      }
+
+      return pre.parentElement?.hasAttribute('data-filename') ? pre.parentElement : null;
+    };
+
     const enhanceCodeBlock = (pre: HTMLPreElement) => {
       if (pre.getAttribute(ENHANCED_ATTRIBUTE) === 'true') {
         return;
@@ -50,9 +61,17 @@ export const useCodeBlockCopyButtons = (
       }
 
       const mount = document.createElement('div');
+      const parent = pre.parentElement;
+
+      if (!parent) {
+        return;
+      }
+
       const root = createRoot(mount);
       let wrapped = false;
       const filename = getFilename(pre);
+      const filenameContainer = getFilenameContainer(pre);
+      const wrapper = document.createElement('div');
 
       const renderControls = () => {
         root.render(
@@ -70,13 +89,17 @@ export const useCodeBlockCopyButtons = (
       };
 
       mount.setAttribute(MOUNT_ATTRIBUTE, 'true');
+      wrapper.setAttribute(WRAPPER_ATTRIBUTE, 'true');
+      wrapper.classList.add(codeBlockStyles.codeBlockFrame);
       pre.setAttribute(ENHANCED_ATTRIBUTE, 'true');
-      pre.parentElement?.toggleAttribute(FILENAME_MOUNTED_ATTRIBUTE, Boolean(filename));
+      filenameContainer?.toggleAttribute(FILENAME_MOUNTED_ATTRIBUTE, Boolean(filename));
       pre.classList.add(codeBlockStyles.codeBlock);
       updateWrapState(pre, wrapped);
-      pre.insertBefore(mount, pre.firstChild);
+      parent.insertBefore(wrapper, pre);
+      wrapper.appendChild(mount);
+      wrapper.appendChild(pre);
       renderControls();
-      enhancedCodeBlocks.push({ mount, pre, root });
+      enhancedCodeBlocks.push({ filenameContainer, mount, pre, root, wrapper });
     };
 
     const enhanceCodeBlocks = () => {
@@ -96,11 +119,13 @@ export const useCodeBlockCopyButtons = (
 
     return () => {
       observer.disconnect();
-      enhancedCodeBlocks.forEach(({ mount, pre, root }) => {
+      enhancedCodeBlocks.forEach(({ filenameContainer, mount, pre, root, wrapper }) => {
         root.unmount();
         mount.remove();
+        wrapper.parentElement?.insertBefore(pre, wrapper);
+        wrapper.remove();
         pre.removeAttribute(ENHANCED_ATTRIBUTE);
-        pre.parentElement?.removeAttribute(FILENAME_MOUNTED_ATTRIBUTE);
+        filenameContainer?.removeAttribute(FILENAME_MOUNTED_ATTRIBUTE);
         pre.classList.remove(
           codeBlockStyles.codeBlock,
           codeBlockStyles.wrapped,

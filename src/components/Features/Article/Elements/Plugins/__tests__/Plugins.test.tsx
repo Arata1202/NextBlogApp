@@ -87,8 +87,15 @@ describe('Article plugins', () => {
     render(<RichText html="<pre><code>const value = 1;</code></pre>" />);
 
     const wrapButton = await screen.findByRole('button', { name: 'コードを折り返す' });
+    const toolbar = screen.getByRole('toolbar', { name: 'コードブロック操作' });
+    const wrapper = document.querySelector('[data-code-copy-wrapper="true"]');
+    const pre = wrapper?.querySelector('pre');
 
     expect(wrapButton).toHaveAttribute('aria-pressed', 'false');
+    expect(wrapper).toBeInTheDocument();
+    expect(pre).toBeInTheDocument();
+    expect(toolbar.closest('pre')).toBeNull();
+    expect(wrapper).toContainElement(toolbar);
 
     fireEvent.click(wrapButton);
 
@@ -122,6 +129,8 @@ describe('Article plugins', () => {
     renderCustomHtml('<pre><code>custom code</code></pre>');
 
     expect(await screen.findByRole('button', { name: 'コードをコピー' })).toBeInTheDocument();
+    expect(screen.getByRole('toolbar', { name: 'コードブロック操作' }).closest('pre')).toBeNull();
+    expect(document.querySelector('[data-code-copy-wrapper="true"]')).toBeInTheDocument();
     expect(
       screen.getByRole('button', {
         name: 'コードを折り返す',

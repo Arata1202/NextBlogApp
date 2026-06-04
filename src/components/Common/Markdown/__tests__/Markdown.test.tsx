@@ -11,13 +11,18 @@ describe('Markdown', () => {
       value: { writeText },
     });
 
-    render(<Markdown content={'```ts\nconst value = 1;\n```'} />);
+    const { container } = render(<Markdown content={'```ts\nconst value = 1;\n```'} />);
 
     expect(screen.queryByText('TypeScript')).not.toBeInTheDocument();
 
     const wrapButton = screen.getByRole('button', { name: 'コードを折り返す' });
+    const toolbar = screen.getByRole('toolbar', { name: 'コードブロック操作' });
+    const pre = container.querySelector('pre');
 
     expect(wrapButton).toHaveAttribute('aria-pressed', 'false');
+    expect(pre).toBeInTheDocument();
+    expect(toolbar.closest('pre')).toBeNull();
+    expect(pre?.parentElement).toContainElement(toolbar);
 
     fireEvent.click(wrapButton);
 

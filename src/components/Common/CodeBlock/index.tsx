@@ -27,14 +27,16 @@ export default function CodeBlock({ children, className, ...props }: Props) {
   const wrapClassName = wrapped ? styles.wrapped : styles.unwrapped;
 
   return (
-    <pre className={`${styles.codeBlock} ${wrapClassName} ${className ?? ''}`.trim()} {...props}>
+    <div className={styles.codeBlockFrame}>
       <CodeBlockToolbar
         getCodeText={() => getReactNodeText(children)}
         wrapped={wrapped}
         onWrappedChange={setWrapped}
       />
-      {children}
-    </pre>
+      <pre className={`${styles.codeBlock} ${wrapClassName} ${className ?? ''}`.trim()} {...props}>
+        {children}
+      </pre>
+    </div>
   );
 }
 
