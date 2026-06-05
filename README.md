@@ -102,7 +102,7 @@ flowchart TB
 
   subgraph vercelFunctions[Vercel Functions]
     app --> searchApi[Vercel Go Function<br/>/api/search]
-    searchApi --> microcmsBlogContentApi[microCMS<br/>Content API (blog)]
+    searchApi --> microcmsBlogContentApi[microCMS<br/>Blog Content API]
     app --> sendEmailApi[Vercel Go Function<br/>/api/sendemail]
     app --> recaptchaApi[Vercel Go Function<br/>/api/recaptcha]
     sendEmailApi --> smtp[SMTP / Gmail]
