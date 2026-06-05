@@ -25,7 +25,7 @@ export const PROFILE_CONTENT = `
 - CI/CD｜GitHub Actions, CodeQL, Dependabot
 - Design｜Figma, Canva
 - Google｜AdSense, Analytics, Search Console, reCAPTCHA
-- etc.｜PWA, OneSignal, Pipedream, Sentry
+- Integrations｜PWA, OneSignal, Pipedream, Sentry
 
 ## お問い合わせ
 

@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"NextBlogApp/api"
+	cronapi "NextBlogApp/api/cron"
 )
 
 func main() {
@@ -18,6 +19,7 @@ func main() {
 	http.HandleFunc("/api/recaptcha", api.RecaptchaHandler)
 	http.HandleFunc("/api/sendemail", api.SendEmailHandler)
 	http.HandleFunc("/api/search", api.SearchHandler)
+	http.HandleFunc("/api/cron/linkchecker", cronapi.LinkCheckerHandler)
 
 	fmt.Printf("Server is running on port %s\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))

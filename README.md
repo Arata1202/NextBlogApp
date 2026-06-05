@@ -69,7 +69,7 @@
 | CI/CD             | GitHub Actions, CodeQL, Dependabot            |
 | Design            | Figma, Canva                                  |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA |
-| etc.              | PWA, OneSignal, Pipedream, Sentry             |
+| Integrations      | PWA, OneSignal, Pipedream, Sentry             |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -100,12 +100,16 @@ flowchart TB
     app -. Client errors .-> sentry[Sentry]
   end
 
-  subgraph runtimeApi[Runtime APIs]
+  subgraph vercelFunctions[Vercel Functions]
     app --> searchApi[Vercel Go Function<br/>/api/search]
-    searchApi --> microcmsSearch[microCMS Search]
-    app --> contactApi[Vercel Go Functions<br/>/api/sendemail / /api/recaptcha]
-    contactApi --> recaptcha[Google reCAPTCHA]
-    contactApi --> smtp[SMTP / Gmail]
+    searchApi --> microcmsBlogContentApi[microCMS<br/>Content API (blog)]
+    app --> sendEmailApi[Vercel Go Function<br/>/api/sendemail]
+    app --> recaptchaApi[Vercel Go Function<br/>/api/recaptcha]
+    sendEmailApi --> smtp[SMTP / Gmail]
+    recaptchaApi --> recaptcha[Google reCAPTCHA]
+    cron[Vercel Cron<br/>/api/cron/linkchecker] --> linkcheckerApi[Vercel Go Function<br/>Link Checker]
+    linkcheckerApi --> microcmsBlogContentApi
+    linkcheckerApi --> smtp
   end
 ```
 
@@ -201,6 +205,9 @@ pnpm test:e2e:report
 ├── LICENSE
 ├── README.md
 ├── api
+│   ├── cron
+│   │   ├── linkchecker.go
+│   │   └── linkchecker_test.go
 │   ├── recaptcha.go
 │   ├── recaptcha_test.go
 │   ├── search.go
@@ -365,13 +372,13 @@ masterとfeatureブランチで運用する。
 ```
 fix: バグ修正
 feat: 新機能追加
-update: 機能更新
-change: 仕様変更
 perf: パフォーマンス改善
 refactor: コードのリファクタリング
 docs: ドキュメントのみの変更
 style: コードのフォーマットに関する変更
 test: テストコードの変更
+build: ビルドシステムや依存関係の変更
+ci: CI/CD設定の変更
 revert: 変更の取り消し
 chore: その他の変更
 ```

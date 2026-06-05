@@ -133,10 +133,7 @@ func validateEmailRequestInput(req *EmailRequestBody) error {
 
 func sendEmail(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
 	baseTitle := os.Getenv("BASE_TITLE")
-	webUrl := os.Getenv("NEXT_PUBLIC_BASE_URL")
-	if webUrl == "" {
-		webUrl = os.Getenv("ORIGIN_URL")
-	}
+	webUrl := os.Getenv("BASE_URL")
 
 	from, err := formatNamedHeaderAddress(baseTitle, emailFrom)
 	if err != nil {

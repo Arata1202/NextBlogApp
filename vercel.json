@@ -3,5 +3,16 @@
     "env": {
       "GO_BUILD_FLAGS": "-ldflags '-s -w'"
     }
-  }
+  },
+  "functions": {
+    "api/cron/linkchecker.go": {
+      "maxDuration": 60
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/linkchecker",
+      "schedule": "0 22 * * *"
+    }
+  ]
 }

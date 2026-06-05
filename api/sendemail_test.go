@@ -34,7 +34,7 @@ func stubVerifyRecaptcha(t *testing.T, success bool, err error) {
 
 func TestSendEmail(t *testing.T) {
 	t.Setenv("BASE_TITLE", "Real Univ Log")
-	t.Setenv("NEXT_PUBLIC_BASE_URL", "https://example.com")
+	t.Setenv("BASE_URL", "https://example.com")
 	t.Setenv("ORIGIN_URL", "")
 
 	var capturedAddr string
@@ -97,7 +97,7 @@ func TestSendEmail(t *testing.T) {
 
 func TestSendEmailSanitizesContentBeforeBuildingBody(t *testing.T) {
 	t.Setenv("BASE_TITLE", "Real Univ Log")
-	t.Setenv("NEXT_PUBLIC_BASE_URL", "")
+	t.Setenv("BASE_URL", "")
 	t.Setenv("ORIGIN_URL", "")
 
 	var capturedMessage string
