@@ -1,7 +1,7 @@
 *
-!api/
-!api/**/
-!api/**/*.go
+!api
+!api/**
+api/*_test.go
 api/**/*_test.go
 !go.mod
 !vercel.json
