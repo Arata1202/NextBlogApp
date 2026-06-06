@@ -123,6 +123,58 @@ func TestFetchMicroCMSBackupArticlesReducesLimitWhenResponseIsTooLarge(t *testin
 	}
 }
 
+func TestFetchMicroCMSBackupArticlesFetchesEveryPage(t *testing.T) {
+	originalClient := microCMSBackupHTTPClient
+	originalBaseURL := microCMSBackupAPIBaseURL
+
+	microCMSBackupAPIBaseURL = "https://%s.microcms.test/api/v1/blog"
+
+	requestOffsets := []string{}
+	microCMSBackupHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			requestOffsets = append(requestOffsets, r.URL.Query().Get("offset"))
+
+			switch r.URL.Query().Get("offset") {
+			case "0":
+				return responseWithBody(http.StatusOK, `{
+					"contents": [{"id": "article-a"}, {"id": "article-b"}],
+					"totalCount": 3,
+					"offset": 0,
+					"limit": 20
+				}`), nil
+			case "2":
+				return responseWithBody(http.StatusOK, `{
+					"contents": [{"id": "article-c"}],
+					"totalCount": 3,
+					"offset": 2,
+					"limit": 20
+				}`), nil
+			default:
+				t.Fatalf("unexpected offset = %q", r.URL.Query().Get("offset"))
+				return nil, nil
+			}
+		}),
+	}
+
+	t.Cleanup(func() {
+		microCMSBackupHTTPClient = originalClient
+		microCMSBackupAPIBaseURL = originalBaseURL
+	})
+
+	articles, err := fetchMicroCMSBackupArticles(t.Context(), "example", "api-key")
+	if err != nil {
+		t.Fatalf("fetchMicroCMSBackupArticles() error = %v", err)
+	}
+
+	if len(articles) != 3 {
+		t.Fatalf("articles length = %d, want 3", len(articles))
+	}
+
+	if strings.Join(requestOffsets, ",") != "0,2" {
+		t.Fatalf("request offsets = %v, want [0 2]", requestOffsets)
+	}
+}
+
 func TestWriteMicroCMSBackupCSV(t *testing.T) {
 	articles := []map[string]interface{}{
 		{
