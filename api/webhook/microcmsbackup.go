@@ -21,7 +21,6 @@ import (
 )
 
 const (
-	microCMSBackupFields         = "id,title,description,categories,tags,thumbnail,introduction_blocks,content_blocks,related_articles,publishedAt,updatedAt"
 	microCMSBackupFetchLimit     = 100
 	microCMSBackupRunTimeout     = 50 * time.Second
 	microCMSBackupRequestTimeout = 15 * time.Second
@@ -76,6 +75,20 @@ func closeMicroCMSBackupResponseBody(resp *http.Response) {
 	_ = resp.Body.Close()
 }
 
+func microCMSBackupResponseBodySnippet(resp *http.Response) string {
+	if resp == nil || resp.Body == nil {
+		return ""
+	}
+
+	body, err := io.ReadAll(io.LimitReader(resp.Body, 2048))
+	_ = resp.Body.Close()
+	if err != nil {
+		return ""
+	}
+
+	return strings.TrimSpace(string(body))
+}
+
 func microCMSBackupStringValue(value interface{}) string {
 	text, ok := value.(string)
 	if !ok {
@@ -95,8 +108,37 @@ func microCMSBackupFirstString(values ...string) string {
 	return ""
 }
 
+func normalizeMicroCMSServiceDomain(value string) (string, error) {
+	serviceDomain := strings.TrimSpace(value)
+	if serviceDomain == "" {
+		return "", errors.New("MICROCMS_SERVICE_DOMAIN environment variable is required")
+	}
+
+	if strings.Contains(serviceDomain, "://") {
+		parsedURL, err := url.Parse(serviceDomain)
+		if err != nil || parsedURL.Host == "" {
+			return "", errors.New("MICROCMS_SERVICE_DOMAIN must be a microCMS service domain")
+		}
+		serviceDomain = parsedURL.Host
+	} else if slashIndex := strings.IndexAny(serviceDomain, "/\\"); slashIndex >= 0 {
+		serviceDomain = serviceDomain[:slashIndex]
+	}
+
+	serviceDomain = strings.TrimSuffix(serviceDomain, ".microcms.io")
+	if serviceDomain == "" || strings.ContainsAny(serviceDomain, "/\\") {
+		return "", errors.New("MICROCMS_SERVICE_DOMAIN must be a microCMS service domain")
+	}
+
+	return serviceDomain, nil
+}
+
 func buildMicroCMSBackupRequest(ctx context.Context, serviceDomain, apiKey string, limit, offset int) (*http.Request, error) {
-	apiURL, err := url.Parse(fmt.Sprintf(microCMSBackupAPIBaseURL, strings.TrimSpace(serviceDomain)))
+	normalizedServiceDomain, err := normalizeMicroCMSServiceDomain(serviceDomain)
+	if err != nil {
+		return nil, err
+	}
+
+	apiURL, err := url.Parse(fmt.Sprintf(microCMSBackupAPIBaseURL, normalizedServiceDomain))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +146,6 @@ func buildMicroCMSBackupRequest(ctx context.Context, serviceDomain, apiKey strin
 	params := apiURL.Query()
 	params.Set("limit", strconv.Itoa(limit))
 	params.Set("offset", strconv.Itoa(offset))
-	params.Set("fields", microCMSBackupFields)
 	apiURL.RawQuery = params.Encode()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, apiURL.String(), nil)
@@ -133,7 +174,10 @@ func fetchMicroCMSBackupArticles(ctx context.Context, serviceDomain, apiKey stri
 		}
 
 		if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
-			closeMicroCMSBackupResponseBody(resp)
+			bodySnippet := microCMSBackupResponseBodySnippet(resp)
+			if bodySnippet != "" {
+				return nil, fmt.Errorf("microCMS backup returned status %d: %s", resp.StatusCode, bodySnippet)
+			}
 			return nil, fmt.Errorf("microCMS backup returned status %d", resp.StatusCode)
 		}
 
@@ -412,12 +456,16 @@ func uploadMicroCMSBackupToS3(ctx context.Context, config s3BackupConfig, creden
 	if err != nil {
 		return err
 	}
-	defer closeMicroCMSBackupResponseBody(resp)
 
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
+		bodySnippet := microCMSBackupResponseBodySnippet(resp)
+		if bodySnippet != "" {
+			return fmt.Errorf("S3 returned status %d: %s", resp.StatusCode, bodySnippet)
+		}
 		return fmt.Errorf("S3 returned status %d", resp.StatusCode)
 	}
 
+	closeMicroCMSBackupResponseBody(resp)
 	return nil
 }
 

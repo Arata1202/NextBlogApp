@@ -46,12 +46,30 @@ func TestBuildMicroCMSBackupRequest(t *testing.T) {
 		t.Fatalf("method = %s, want GET", req.Method)
 	}
 
-	if req.URL.String() != "https://example.microcms.io/api/v1/blog?fields=id%2Ctitle%2Cdescription%2Ccategories%2Ctags%2Cthumbnail%2Cintroduction_blocks%2Ccontent_blocks%2Crelated_articles%2CpublishedAt%2CupdatedAt&limit=10&offset=20" {
+	if req.URL.String() != "https://example.microcms.io/api/v1/blog?limit=10&offset=20" {
 		t.Fatalf("url = %q", req.URL.String())
 	}
 
 	if got := req.Header.Get("X-MICROCMS-API-KEY"); got != "api-key" {
 		t.Fatalf("X-MICROCMS-API-KEY = %q, want %q", got, "api-key")
+	}
+}
+
+func TestBuildMicroCMSBackupRequestNormalizesServiceDomain(t *testing.T) {
+	for _, serviceDomain := range []string{
+		"example.microcms.io",
+		"https://example.microcms.io/api/v1",
+	} {
+		t.Run(serviceDomain, func(t *testing.T) {
+			req, err := buildMicroCMSBackupRequest(t.Context(), serviceDomain, "api-key", 10, 20)
+			if err != nil {
+				t.Fatalf("buildMicroCMSBackupRequest() error = %v", err)
+			}
+
+			if req.URL.String() != "https://example.microcms.io/api/v1/blog?limit=10&offset=20" {
+				t.Fatalf("url = %q", req.URL.String())
+			}
+		})
 	}
 }
 
