@@ -7,6 +7,9 @@
   "functions": {
     "api/cron/linkchecker.go": {
       "maxDuration": 60
+    },
+    "api/webhook/microcmsbackup.go": {
+      "maxDuration": 60
     }
   },
   "crons": [

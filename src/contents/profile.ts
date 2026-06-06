@@ -20,10 +20,10 @@ export const PROFILE_CONTENT = `
 - Frontend｜Next.js, React, TypeScript, Tailwind CSS
 - Backend｜Go, Vercel Functions
 - CMS｜microCMS, Zenn RSS
-- Infrastructure｜Cloudflare Pages, Vercel
+- Infrastructure｜Cloudflare Pages, Vercel, Amazon S3, Terraform
 - Environment setup｜Docker
 - CI/CD｜GitHub Actions, CodeQL, Dependabot
-- Design｜Figma, Canva
+- Design｜Canva
 - Google｜AdSense, Analytics, Search Console, reCAPTCHA
 - Integrations｜PWA, OneSignal, Pipedream, Sentry
 

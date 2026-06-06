@@ -18,6 +18,7 @@
   - [使用技術](#使用技術)
   - [アーキテクチャ](#アーキテクチャ)
   - [環境構築](#環境構築)
+  - [Terraform](#terraform)
   - [テスト](#テスト)
   - [ディレクトリ構成](#ディレクトリ構成)
   - [Gitの運用](#Gitの運用)
@@ -59,17 +60,17 @@
 
 ## 使用技術
 
-| Category          | Technology Stack                              |
-| ----------------- | --------------------------------------------- |
-| Frontend          | Next.js, React, TypeScript, Tailwind CSS      |
-| Backend           | Go, Vercel Functions                          |
-| CMS               | microCMS, Zenn RSS                            |
-| Infrastructure    | Cloudflare Pages, Vercel                      |
-| Environment setup | Docker                                        |
-| CI/CD             | GitHub Actions, CodeQL, Dependabot            |
-| Design            | Figma, Canva                                  |
-| Google            | AdSense, Analytics, Search Console, reCAPTCHA |
-| Integrations      | PWA, OneSignal, Pipedream, Sentry             |
+| Category          | Technology Stack                               |
+| ----------------- | ---------------------------------------------- |
+| Frontend          | Next.js, React, TypeScript, Tailwind CSS       |
+| Backend           | Go, Vercel Functions                           |
+| CMS               | microCMS, Zenn RSS                             |
+| Infrastructure    | Cloudflare Pages, Vercel, Amazon S3, Terraform |
+| Environment setup | Docker                                         |
+| CI/CD             | GitHub Actions, CodeQL, Dependabot             |
+| Design            | Canva                                          |
+| Google            | AdSense, Analytics, Search Console, reCAPTCHA  |
+| Integrations      | PWA, OneSignal, Pipedream, Sentry              |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -110,6 +111,9 @@ flowchart TB
     cron[Vercel Cron<br/>/api/cron/linkchecker] --> linkcheckerApi[Vercel Go Function<br/>Link Checker]
     linkcheckerApi --> microcmsBlogContentApi
     linkcheckerApi --> smtp
+    microcmsWebhook[microCMS<br/>Content Webhook] --> microcmsbackupApi[Vercel Go Function<br/>/api/webhook/microcmsbackup]
+    microcmsbackupApi --> microcmsBlogContentApi
+    microcmsbackupApi --> s3[AWS S3<br/>microCMS Backup CSV]
   end
 ```
 
@@ -136,6 +140,30 @@ http:localhost:3000
 
 # コンテナの停止
 docker compose down
+```
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+## Terraform
+
+```
+# Terraformディレクトリへ移動
+cd terraform
+
+# terraform.tfvars.exampleからterraform.tfvarsを作成
+cp terraform.tfvars.example terraform.tfvars
+
+# terraform.tfvarsの編集
+vi terraform.tfvars
+
+# Terraformの初期化
+terraform init
+
+# 変更内容の確認
+terraform plan
+
+# AWSリソースの作成・更新
+terraform apply
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
@@ -213,7 +241,10 @@ pnpm test:e2e:report
 │   ├── search.go
 │   ├── search_test.go
 │   ├── sendemail.go
-│   └── sendemail_test.go
+│   ├── sendemail_test.go
+│   └── webhook
+│       ├── microcmsbackup.go
+│       └── microcmsbackup_test.go
 ├── cmd
 │   └── main.go
 ├── docker-compose.yml
@@ -257,6 +288,18 @@ pnpm test:e2e:report
 │       ├── build.mjs
 │       ├── mock-fetch.mjs
 │       └── serve-static.mjs
+├── terraform
+│   ├── iam
+│   │   ├── iam.tf
+│   │   └── variables.tf
+│   ├── s3
+│   │   ├── s3.tf
+│   │   └── variables.tf
+│   ├── main.tf
+│   ├── module.tf
+│   ├── terraform.tfvars.example
+│   ├── variables.tf
+│   └── .terraform.lock.hcl
 ├── src
 │   ├── app
 │   │   ├── __tests__
