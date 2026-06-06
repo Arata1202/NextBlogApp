@@ -306,6 +306,109 @@ func TestBuildS3PutObjectRequestSignsRequest(t *testing.T) {
 	}
 }
 
+func TestBuildS3PutObjectRequestSignsConditionalHeaders(t *testing.T) {
+	now := time.Date(2026, 6, 5, 22, 8, 9, 0, time.UTC)
+	body := []byte(`{"status":"pending"}`)
+	headers := http.Header{}
+	headers.Set("If-None-Match", "*")
+
+	req, err := buildS3PutObjectRequestWithHeaders(
+		context.Background(),
+		s3BackupConfig{BucketName: "backup-bucket", Region: "ap-northeast-1"},
+		awsCredentials{AccessKeyID: "AKIAEXAMPLE", SecretAccessKey: "secret"},
+		"onesignal/notifications/blog/article-a.json",
+		body,
+		s3JSONContentType,
+		headers,
+		now,
+	)
+	if err != nil {
+		t.Fatalf("buildS3PutObjectRequestWithHeaders() error = %v", err)
+	}
+
+	if got := req.Header.Get("If-None-Match"); got != "*" {
+		t.Fatalf("If-None-Match = %q, want *", got)
+	}
+	if got := req.Header.Get("Content-Type"); got != s3JSONContentType {
+		t.Fatalf("Content-Type = %q, want %q", got, s3JSONContentType)
+	}
+
+	authorization := req.Header.Get("Authorization")
+	for _, want := range []string{
+		"SignedHeaders=content-type;host;if-none-match;x-amz-content-sha256;x-amz-date",
+		"Signature=",
+	} {
+		if !strings.Contains(authorization, want) {
+			t.Fatalf("Authorization = %q, want it to contain %q", authorization, want)
+		}
+	}
+}
+
+func TestIsMicroCMSFirstPublishWebhook(t *testing.T) {
+	for _, testCase := range []struct {
+		name    string
+		payload microCMSWebhookPayload
+		want    bool
+	}{
+		{
+			name: "new published content",
+			payload: microCMSWebhookPayload{
+				API:  "blog",
+				ID:   "article-a",
+				Type: "new",
+				Contents: &microCMSWebhookPayloadState{
+					New: &microCMSWebhookContentState{Status: []string{"PUBLISH"}},
+				},
+			},
+			want: true,
+		},
+		{
+			name: "draft to published content",
+			payload: microCMSWebhookPayload{
+				API:  "blog",
+				ID:   "article-a",
+				Type: "edit",
+				Contents: &microCMSWebhookPayloadState{
+					Old: &microCMSWebhookContentState{Status: []string{"DRAFT"}},
+					New: &microCMSWebhookContentState{Status: []string{"PUBLISH"}},
+				},
+			},
+			want: true,
+		},
+		{
+			name: "published content update",
+			payload: microCMSWebhookPayload{
+				API:  "blog",
+				ID:   "article-a",
+				Type: "edit",
+				Contents: &microCMSWebhookPayloadState{
+					Old: &microCMSWebhookContentState{Status: []string{"PUBLISH"}},
+					New: &microCMSWebhookContentState{Status: []string{"PUBLISH"}},
+				},
+			},
+			want: false,
+		},
+		{
+			name: "non blog api",
+			payload: microCMSWebhookPayload{
+				API:  "categories",
+				ID:   "category-a",
+				Type: "new",
+				Contents: &microCMSWebhookPayloadState{
+					New: &microCMSWebhookContentState{Status: []string{"PUBLISH"}},
+				},
+			},
+			want: false,
+		},
+	} {
+		t.Run(testCase.name, func(t *testing.T) {
+			if got := isMicroCMSFirstPublishWebhook(testCase.payload); got != testCase.want {
+				t.Fatalf("isMicroCMSFirstPublishWebhook() = %t, want %t", got, testCase.want)
+			}
+		})
+	}
+}
+
 func TestMicroCMSBackupHandlerUnauthorized(t *testing.T) {
 	t.Setenv("MICROCMS_WEBHOOK_SECRET", "secret")
 
@@ -427,5 +530,233 @@ func TestMicroCMSBackupHandlerSuccess(t *testing.T) {
 		if !strings.Contains(capturedS3Body, want) {
 			t.Fatalf("S3 body does not contain %q: %s", want, capturedS3Body)
 		}
+	}
+}
+
+func TestMicroCMSBackupHandlerSendsOneSignalOnFirstPublish(t *testing.T) {
+	t.Setenv("MICROCMS_WEBHOOK_SECRET", "webhook-secret")
+	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
+	t.Setenv("MICROCMS_API_KEY", "api-key")
+	t.Setenv("AWS_ACCESS_KEY_ID", "AKIAEXAMPLE")
+	t.Setenv("AWS_SECRET_ACCESS_KEY", "secret")
+	t.Setenv("AWS_DEFAULT_REGION", "ap-northeast-1")
+	t.Setenv("BUCKET_NAME", "backup-bucket")
+	t.Setenv("ONESIGNAL_APP_ID", "onesignal-app-id")
+	t.Setenv("ONESIGNAL_REST_API_KEY", "onesignal-rest-api-key")
+	t.Setenv("BASE_URL", "https://example.com")
+	t.Setenv("BASE_TITLE", "Example Blog")
+
+	originalClient := microCMSBackupHTTPClient
+	originalBaseURL := microCMSBackupAPIBaseURL
+	originalNow := microCMSBackupNow
+
+	microCMSBackupAPIBaseURL = "https://%s.microcms.test/api/v1/blog"
+	microCMSBackupNow = func() time.Time {
+		return time.Date(2026, 6, 5, 22, 8, 9, 0, time.UTC)
+	}
+
+	backupPutCount := 0
+	pendingMarkerPutCount := 0
+	sentMarkerPutCount := 0
+	oneSignalRequestCount := 0
+	microCMSBackupHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			switch r.URL.Host {
+			case "example.microcms.test":
+				return responseWithBody(http.StatusOK, `{
+					"contents": [
+						{
+							"id": "article-a",
+							"title": "Article A",
+							"description": "Description A",
+							"categories": [{"id": "category-a"}],
+							"tags": [{"id": "tag-a"}],
+							"thumbnail": {"url": "https://images.example/thumbnail.png"},
+							"introduction_blocks": [{"fieldId": "rich_text", "rich_text": "<p>Intro</p>"}],
+							"content_blocks": [{"fieldId": "rich_text", "rich_text": "<p>Body</p>"}],
+							"related_articles": []
+						}
+					],
+					"totalCount": 1,
+					"offset": 0,
+					"limit": 20
+				}`), nil
+			case "backup-bucket.s3.ap-northeast-1.amazonaws.com":
+				body, err := io.ReadAll(r.Body)
+				if err != nil {
+					t.Fatalf("read S3 body error = %v", err)
+				}
+
+				switch r.URL.EscapedPath() {
+				case "/backups/microcms/blog/2026/06/06/microcmsblogbackup-20260606T070809JST.csv":
+					backupPutCount++
+					if !strings.Contains(string(body), "Article A") {
+						t.Fatalf("backup body = %s", string(body))
+					}
+				case "/onesignal/notifications/blog/article-a.json":
+					if r.Header.Get("If-None-Match") == "*" {
+						pendingMarkerPutCount++
+						if !strings.Contains(string(body), `"status":"pending"`) {
+							t.Fatalf("pending marker body = %s", string(body))
+						}
+					} else {
+						sentMarkerPutCount++
+						if !strings.Contains(string(body), `"status":"sent"`) || !strings.Contains(string(body), `"oneSignalNotificationId":"notification-a"`) {
+							t.Fatalf("sent marker body = %s", string(body))
+						}
+					}
+				default:
+					t.Fatalf("unexpected S3 path = %q", r.URL.EscapedPath())
+				}
+				return responseWithBody(http.StatusOK, ""), nil
+			case "api.onesignal.com":
+				oneSignalRequestCount++
+				if r.Method != http.MethodPost {
+					t.Fatalf("OneSignal method = %s, want POST", r.Method)
+				}
+				if got := r.Header.Get("Authorization"); got != "Key onesignal-rest-api-key" {
+					t.Fatalf("OneSignal Authorization = %q", got)
+				}
+
+				var body map[string]interface{}
+				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+					t.Fatalf("OneSignal request json error = %v", err)
+				}
+				if body["app_id"] != "onesignal-app-id" {
+					t.Fatalf("OneSignal app_id = %#v", body["app_id"])
+				}
+				if body["url"] != "https://example.com/articles/article-a" {
+					t.Fatalf("OneSignal url = %#v", body["url"])
+				}
+				headings, ok := body["headings"].(map[string]interface{})
+				if !ok || headings["ja"] != "新しい記事" {
+					t.Fatalf("OneSignal headings = %#v", body["headings"])
+				}
+				contents, ok := body["contents"].(map[string]interface{})
+				if !ok || contents["ja"] != "「Article A」を公開しました" {
+					t.Fatalf("OneSignal contents = %#v", body["contents"])
+				}
+				return responseWithBody(http.StatusOK, `{"id":"notification-a"}`), nil
+			default:
+				t.Fatalf("unexpected host = %q", r.URL.Host)
+				return nil, nil
+			}
+		}),
+	}
+
+	t.Cleanup(func() {
+		microCMSBackupHTTPClient = originalClient
+		microCMSBackupAPIBaseURL = originalBaseURL
+		microCMSBackupNow = originalNow
+	})
+
+	webhookBody := []byte(`{
+		"service": "example",
+		"api": "blog",
+		"id": "article-a",
+		"type": "edit",
+		"contents": {
+			"old": {"status": ["DRAFT"], "publishValue": null, "draftValue": {"title": "Article A"}},
+			"new": {"status": ["PUBLISH"], "publishValue": {"title": "Article A"}, "draftValue": null}
+		}
+	}`)
+	req := httptest.NewRequest(http.MethodPost, "/api/webhook/microcmsbackup", bytes.NewReader(webhookBody))
+	req.Header.Set("x-microcms-signature", expectedMicroCMSWebhookSignature(webhookBody, "webhook-secret"))
+	rec := httptest.NewRecorder()
+
+	MicroCMSBackupHandler(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want %d; body = %s", rec.Code, http.StatusOK, rec.Body.String())
+	}
+	for name, got := range map[string]int{
+		"backupPutCount":        backupPutCount,
+		"pendingMarkerPutCount": pendingMarkerPutCount,
+		"sentMarkerPutCount":    sentMarkerPutCount,
+		"oneSignalRequestCount": oneSignalRequestCount,
+	} {
+		if got != 1 {
+			t.Fatalf("%s = %d, want 1", name, got)
+		}
+	}
+
+	gotBody := compactJSON(rec.Body.String())
+	for _, want := range []string{
+		`"oneSignalNotificationSent":true`,
+		`"oneSignalMarkerKey":"onesignal/notifications/blog/article-a.json"`,
+		`"oneSignalNotificationId":"notification-a"`,
+	} {
+		if !strings.Contains(gotBody, want) {
+			t.Fatalf("body = %s, want it to contain %s", gotBody, want)
+		}
+	}
+}
+
+func TestNotifyMicroCMSFirstPublishSkipsWhenMarkerAlreadyExists(t *testing.T) {
+	t.Setenv("ONESIGNAL_APP_ID", "onesignal-app-id")
+	t.Setenv("ONESIGNAL_REST_API_KEY", "onesignal-rest-api-key")
+	t.Setenv("BASE_URL", "https://example.com")
+	t.Setenv("BASE_TITLE", "Example Blog")
+
+	originalClient := microCMSBackupHTTPClient
+	originalNow := microCMSBackupNow
+
+	microCMSBackupNow = func() time.Time {
+		return time.Date(2026, 6, 5, 22, 8, 9, 0, time.UTC)
+	}
+
+	oneSignalRequestCount := 0
+	microCMSBackupHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			switch r.URL.Host {
+			case "backup-bucket.s3.ap-northeast-1.amazonaws.com":
+				if r.Header.Get("If-None-Match") != "*" {
+					t.Fatalf("If-None-Match = %q, want *", r.Header.Get("If-None-Match"))
+				}
+				return responseWithBody(http.StatusPreconditionFailed, ""), nil
+			case "api.onesignal.com":
+				oneSignalRequestCount++
+				return responseWithBody(http.StatusOK, `{"id":"notification-a"}`), nil
+			default:
+				t.Fatalf("unexpected host = %q", r.URL.Host)
+				return nil, nil
+			}
+		}),
+	}
+
+	t.Cleanup(func() {
+		microCMSBackupHTTPClient = originalClient
+		microCMSBackupNow = originalNow
+	})
+
+	payload := microCMSWebhookPayload{
+		API:  "blog",
+		ID:   "article-a",
+		Type: "new",
+		Contents: &microCMSWebhookPayloadState{
+			New: &microCMSWebhookContentState{
+				Status:       []string{"PUBLISH"},
+				PublishValue: map[string]interface{}{"title": "Article A"},
+			},
+		},
+	}
+	result, err := notifyMicroCMSFirstPublishWithOneSignal(
+		t.Context(),
+		s3BackupConfig{BucketName: "backup-bucket", Region: "ap-northeast-1"},
+		awsCredentials{AccessKeyID: "AKIAEXAMPLE", SecretAccessKey: "secret"},
+		payload,
+		microCMSBackupNow(),
+	)
+	if err != nil {
+		t.Fatalf("notifyMicroCMSFirstPublishWithOneSignal() error = %v", err)
+	}
+	if result.Sent {
+		t.Fatal("result.Sent = true, want false")
+	}
+	if result.MarkerKey != "onesignal/notifications/blog/article-a.json" {
+		t.Fatalf("MarkerKey = %q", result.MarkerKey)
+	}
+	if oneSignalRequestCount != 0 {
+		t.Fatalf("oneSignalRequestCount = %d, want 0", oneSignalRequestCount)
 	}
 }

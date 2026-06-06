@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -27,12 +28,16 @@ const (
 	microCMSBackupRunTimeout        = 50 * time.Second
 	microCMSBackupRequestTimeout    = 15 * time.Second
 	microCMSBackupContentType       = "text/csv; charset=utf-8"
+	s3JSONContentType               = "application/json; charset=utf-8"
+	oneSignalAPIURL                 = "https://api.onesignal.com/notifications"
+	oneSignalIncludedSegment        = "Subscribed Users"
 )
 
 var (
 	microCMSBackupHTTPClient = &http.Client{Timeout: microCMSBackupRequestTimeout}
 	microCMSBackupAPIBaseURL = "https://%s.microcms.io/api/v1/blog"
 	microCMSBackupNow        = time.Now
+	errS3ObjectAlreadyExists = errors.New("s3 object already exists")
 )
 
 type microCMSBackupListResponse struct {
@@ -53,11 +58,46 @@ type s3BackupConfig struct {
 }
 
 type microCMSBackupResponse struct {
-	Success      bool   `json:"success"`
-	ArticleCount int    `json:"articleCount"`
-	BucketName   string `json:"bucketName"`
-	ObjectKey    string `json:"objectKey"`
-	SizeBytes    int    `json:"sizeBytes"`
+	Success                   bool   `json:"success"`
+	ArticleCount              int    `json:"articleCount"`
+	BucketName                string `json:"bucketName"`
+	ObjectKey                 string `json:"objectKey"`
+	SizeBytes                 int    `json:"sizeBytes"`
+	OneSignalNotificationSent bool   `json:"oneSignalNotificationSent"`
+	OneSignalMarkerKey        string `json:"oneSignalMarkerKey,omitempty"`
+	OneSignalNotificationID   string `json:"oneSignalNotificationId,omitempty"`
+}
+
+type microCMSWebhookPayload struct {
+	Service  string                       `json:"service"`
+	API      string                       `json:"api"`
+	ID       string                       `json:"id"`
+	Type     string                       `json:"type"`
+	Contents *microCMSWebhookPayloadState `json:"contents"`
+}
+
+type microCMSWebhookPayloadState struct {
+	Old *microCMSWebhookContentState `json:"old"`
+	New *microCMSWebhookContentState `json:"new"`
+}
+
+type microCMSWebhookContentState struct {
+	Status       []string               `json:"status"`
+	PublishValue map[string]interface{} `json:"publishValue"`
+	DraftValue   map[string]interface{} `json:"draftValue"`
+}
+
+type oneSignalConfig struct {
+	AppID      string
+	RESTAPIKey string
+	BaseURL    string
+	BaseTitle  string
+}
+
+type oneSignalNotificationResult struct {
+	Sent           bool
+	MarkerKey      string
+	NotificationID string
 }
 
 func writeMicroCMSBackupJSON(w http.ResponseWriter, statusCode int, response interface{}) {
@@ -108,6 +148,52 @@ func microCMSBackupFirstString(values ...string) string {
 	}
 
 	return ""
+}
+
+func microCMSWebhookStatusIncludes(state *microCMSWebhookContentState, status string) bool {
+	if state == nil {
+		return false
+	}
+
+	for _, currentStatus := range state.Status {
+		if strings.EqualFold(currentStatus, status) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func isMicroCMSFirstPublishWebhook(payload microCMSWebhookPayload) bool {
+	if payload.API != "blog" || strings.TrimSpace(payload.ID) == "" || payload.Type == "delete" || payload.Contents == nil {
+		return false
+	}
+
+	oldPublished := microCMSWebhookStatusIncludes(payload.Contents.Old, "PUBLISH")
+	newPublished := microCMSWebhookStatusIncludes(payload.Contents.New, "PUBLISH")
+
+	return !oldPublished && newPublished
+}
+
+func microCMSWebhookPublishedValue(payload microCMSWebhookPayload) map[string]interface{} {
+	if payload.Contents == nil || payload.Contents.New == nil {
+		return nil
+	}
+
+	if payload.Contents.New.PublishValue != nil {
+		return payload.Contents.New.PublishValue
+	}
+
+	return payload.Contents.New.DraftValue
+}
+
+func microCMSWebhookArticleTitle(payload microCMSWebhookPayload) string {
+	publishedValue := microCMSWebhookPublishedValue(payload)
+	if publishedValue == nil {
+		return ""
+	}
+
+	return strings.TrimSpace(microCMSBackupStringValue(publishedValue["title"]))
 }
 
 func normalizeMicroCMSServiceDomain(value string) (string, error) {
@@ -414,20 +500,48 @@ func awsSigningKey(secretAccessKey, dateStamp, region, service string) []byte {
 	return hmacSHA256(dateRegionServiceKey, "aws4_request")
 }
 
+func normalizeAWSHeaderValue(value string) string {
+	return strings.Join(strings.Fields(value), " ")
+}
+
+func canonicalS3Headers(req *http.Request) (string, string) {
+	headerValues := map[string]string{
+		"host": req.URL.Host,
+	}
+
+	for name, values := range req.Header {
+		if len(values) == 0 {
+			continue
+		}
+		headerValues[strings.ToLower(name)] = normalizeAWSHeaderValue(strings.Join(values, ","))
+	}
+
+	headerNames := make([]string, 0, len(headerValues))
+	for name := range headerValues {
+		headerNames = append(headerNames, name)
+	}
+	sort.Strings(headerNames)
+
+	canonicalHeaders := strings.Builder{}
+	for _, name := range headerNames {
+		canonicalHeaders.WriteString(name)
+		canonicalHeaders.WriteString(":")
+		canonicalHeaders.WriteString(headerValues[name])
+		canonicalHeaders.WriteString("\n")
+	}
+
+	return canonicalHeaders.String(), strings.Join(headerNames, ";")
+}
+
 func signS3PutObjectRequest(req *http.Request, credentials awsCredentials, region string, body []byte, now time.Time) {
 	amzDate := now.UTC().Format("20060102T150405Z")
 	dateStamp := now.UTC().Format("20060102")
 	payloadHash := sha256Hex(body)
 
-	req.Header.Set("Content-Type", microCMSBackupContentType)
 	req.Header.Set("X-Amz-Content-Sha256", payloadHash)
 	req.Header.Set("X-Amz-Date", amzDate)
 
-	canonicalHeaders := "content-type:" + microCMSBackupContentType + "\n" +
-		"host:" + req.URL.Host + "\n" +
-		"x-amz-content-sha256:" + payloadHash + "\n" +
-		"x-amz-date:" + amzDate + "\n"
-	signedHeaders := "content-type;host;x-amz-content-sha256;x-amz-date"
+	canonicalHeaders, signedHeaders := canonicalS3Headers(req)
 
 	canonicalRequest := strings.Join([]string{
 		req.Method,
@@ -460,37 +574,235 @@ func signS3PutObjectRequest(req *http.Request, credentials awsCredentials, regio
 }
 
 func buildS3PutObjectRequest(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, body []byte, now time.Time) (*http.Request, error) {
+	return buildS3PutObjectRequestWithHeaders(ctx, config, credentials, objectKey, body, microCMSBackupContentType, nil, now)
+}
+
+func buildS3PutObjectRequestWithHeaders(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, body []byte, contentType string, headers http.Header, now time.Time) (*http.Request, error) {
 	endpoint := fmt.Sprintf("https://%s.s3.%s.amazonaws.com%s", config.BucketName, config.Region, s3ObjectPath(objectKey))
 	req, err := http.NewRequestWithContext(ctx, http.MethodPut, endpoint, bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}
 
+	req.Header.Set("Content-Type", contentType)
+	for name, values := range headers {
+		for _, value := range values {
+			req.Header.Add(name, value)
+		}
+	}
 	signS3PutObjectRequest(req, credentials, config.Region, body, now)
 	return req, nil
 }
 
-func uploadMicroCMSBackupToS3(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, body []byte, now time.Time) error {
-	req, err := buildS3PutObjectRequest(ctx, config, credentials, objectKey, body, now)
+func putS3Object(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, body []byte, contentType string, headers http.Header, now time.Time) (int, error) {
+	req, err := buildS3PutObjectRequestWithHeaders(ctx, config, credentials, objectKey, body, contentType, headers, now)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	resp, err := microCMSBackupHTTPClient.Do(req)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
 		bodySnippet := microCMSBackupResponseBodySnippet(resp)
 		if bodySnippet != "" {
-			return fmt.Errorf("S3 returned status %d: %s", resp.StatusCode, bodySnippet)
+			return resp.StatusCode, fmt.Errorf("S3 returned status %d: %s", resp.StatusCode, bodySnippet)
 		}
-		return fmt.Errorf("S3 returned status %d", resp.StatusCode)
+		return resp.StatusCode, fmt.Errorf("S3 returned status %d", resp.StatusCode)
 	}
 
 	closeMicroCMSBackupResponseBody(resp)
-	return nil
+	return resp.StatusCode, nil
+}
+
+func putS3ObjectIfAbsent(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, body []byte, contentType string, now time.Time) error {
+	headers := http.Header{}
+	headers.Set("If-None-Match", "*")
+
+	statusCode, err := putS3Object(ctx, config, credentials, objectKey, body, contentType, headers, now)
+	if err == nil {
+		return nil
+	}
+
+	if statusCode == http.StatusConflict || statusCode == http.StatusPreconditionFailed {
+		return errS3ObjectAlreadyExists
+	}
+
+	return err
+}
+
+func uploadMicroCMSBackupToS3(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, body []byte, now time.Time) error {
+	_, err := putS3Object(ctx, config, credentials, objectKey, body, microCMSBackupContentType, nil, now)
+	return err
+}
+
+func loadOneSignalConfigFromEnv() (oneSignalConfig, error) {
+	config := oneSignalConfig{
+		AppID:      strings.TrimSpace(os.Getenv("ONESIGNAL_APP_ID")),
+		RESTAPIKey: strings.TrimSpace(os.Getenv("ONESIGNAL_REST_API_KEY")),
+		BaseURL:    strings.TrimRight(strings.TrimSpace(os.Getenv("BASE_URL")), "/"),
+		BaseTitle:  strings.TrimSpace(os.Getenv("BASE_TITLE")),
+	}
+
+	if config.AppID == "" {
+		return oneSignalConfig{}, errors.New("ONESIGNAL_APP_ID environment variable is required")
+	}
+	if config.RESTAPIKey == "" {
+		return oneSignalConfig{}, errors.New("ONESIGNAL_REST_API_KEY environment variable is required")
+	}
+	if config.BaseURL == "" {
+		return oneSignalConfig{}, errors.New("BASE_URL environment variable is required")
+	}
+	if config.BaseTitle == "" {
+		return oneSignalConfig{}, errors.New("BASE_TITLE environment variable is required")
+	}
+
+	return config, nil
+}
+
+func microCMSArticleURL(baseURL, contentID string) string {
+	return strings.TrimRight(baseURL, "/") + "/articles/" + url.PathEscape(contentID)
+}
+
+func oneSignalNotificationMarkerKey(contentID string) string {
+	return fmt.Sprintf("onesignal/notifications/blog/%s.json", contentID)
+}
+
+func oneSignalNotificationMarkerBody(status string, payload microCMSWebhookPayload, articleTitle, articleURL, notificationID string, now time.Time) ([]byte, error) {
+	marker := map[string]interface{}{
+		"status":     status,
+		"contentId":  payload.ID,
+		"api":        payload.API,
+		"title":      articleTitle,
+		"articleUrl": articleURL,
+		"updatedAt":  now.UTC().Format(time.RFC3339),
+	}
+	if status == "pending" {
+		marker["createdAt"] = now.UTC().Format(time.RFC3339)
+	}
+	if notificationID != "" {
+		marker["oneSignalNotificationId"] = notificationID
+	}
+
+	return json.Marshal(marker)
+}
+
+func createOneSignalNotificationRequest(ctx context.Context, config oneSignalConfig, payload microCMSWebhookPayload, articleTitle, articleURL string) (*http.Request, error) {
+	notificationTitle := articleTitle
+	if notificationTitle == "" {
+		notificationTitle = "新しい記事"
+	}
+
+	requestBody := map[string]interface{}{
+		"app_id":            config.AppID,
+		"target_channel":    "push",
+		"included_segments": []string{oneSignalIncludedSegment},
+		"headings":          map[string]string{"ja": "新しい記事", "en": "New article"},
+		"contents":          map[string]string{"ja": "「" + notificationTitle + "」を公開しました", "en": "Published: " + notificationTitle},
+		"url":               articleURL,
+		"data":              map[string]string{"type": "article", "articleId": payload.ID},
+	}
+
+	body, err := json.Marshal(requestBody)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, oneSignalAPIURL, bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Key "+config.RESTAPIKey)
+
+	return req, nil
+}
+
+func sendOneSignalNotification(ctx context.Context, config oneSignalConfig, payload microCMSWebhookPayload, articleTitle, articleURL string) (string, error) {
+	req, err := createOneSignalNotificationRequest(ctx, config, payload, articleTitle, articleURL)
+	if err != nil {
+		return "", err
+	}
+
+	resp, err := microCMSBackupHTTPClient.Do(req)
+	if err != nil {
+		return "", err
+	}
+
+	body, readErr := io.ReadAll(io.LimitReader(resp.Body, 4096))
+	_ = resp.Body.Close()
+	if readErr != nil {
+		return "", readErr
+	}
+
+	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
+		bodySnippet := strings.TrimSpace(string(body))
+		if bodySnippet != "" {
+			return "", fmt.Errorf("OneSignal returned status %d: %s", resp.StatusCode, bodySnippet)
+		}
+		return "", fmt.Errorf("OneSignal returned status %d", resp.StatusCode)
+	}
+
+	var response struct {
+		ID string `json:"id"`
+	}
+	if len(body) > 0 {
+		if err := json.Unmarshal(body, &response); err != nil {
+			return "", err
+		}
+	}
+
+	return response.ID, nil
+}
+
+func notifyMicroCMSFirstPublishWithOneSignal(ctx context.Context, config s3BackupConfig, credentials awsCredentials, payload microCMSWebhookPayload, now time.Time) (oneSignalNotificationResult, error) {
+	if !isMicroCMSFirstPublishWebhook(payload) {
+		return oneSignalNotificationResult{}, nil
+	}
+
+	oneSignalConfig, err := loadOneSignalConfigFromEnv()
+	if err != nil {
+		return oneSignalNotificationResult{}, err
+	}
+
+	articleTitle := microCMSWebhookArticleTitle(payload)
+	articleURL := microCMSArticleURL(oneSignalConfig.BaseURL, payload.ID)
+	markerKey := oneSignalNotificationMarkerKey(payload.ID)
+
+	pendingMarkerBody, err := oneSignalNotificationMarkerBody("pending", payload, articleTitle, articleURL, "", now)
+	if err != nil {
+		return oneSignalNotificationResult{}, err
+	}
+
+	if err := putS3ObjectIfAbsent(ctx, config, credentials, markerKey, pendingMarkerBody, s3JSONContentType, now); err != nil {
+		if errors.Is(err, errS3ObjectAlreadyExists) {
+			log.Printf("OneSignal notification marker already exists for microCMS content %s; skipping notification", payload.ID)
+			return oneSignalNotificationResult{MarkerKey: markerKey}, nil
+		}
+		return oneSignalNotificationResult{}, err
+	}
+
+	notificationID, err := sendOneSignalNotification(ctx, oneSignalConfig, payload, articleTitle, articleURL)
+	if err != nil {
+		return oneSignalNotificationResult{MarkerKey: markerKey}, err
+	}
+
+	sentMarkerBody, err := oneSignalNotificationMarkerBody("sent", payload, articleTitle, articleURL, notificationID, now)
+	if err != nil {
+		return oneSignalNotificationResult{MarkerKey: markerKey}, err
+	}
+	if _, err := putS3Object(ctx, config, credentials, markerKey, sentMarkerBody, s3JSONContentType, nil, now); err != nil {
+		return oneSignalNotificationResult{MarkerKey: markerKey, NotificationID: notificationID}, err
+	}
+
+	return oneSignalNotificationResult{
+		Sent:           true,
+		MarkerKey:      markerKey,
+		NotificationID: notificationID,
+	}, nil
 }
 
 func expectedMicroCMSWebhookSignature(body []byte, secret string) string {
@@ -534,6 +846,12 @@ func MicroCMSBackupHandler(w http.ResponseWriter, r *http.Request) {
 
 	if !verifyMicroCMSWebhookSignature(body, webhookSecret, r.Header.Get("x-microcms-signature")) {
 		writeMicroCMSBackupJSON(w, http.StatusUnauthorized, map[string]string{"message": "Unauthorized"})
+		return
+	}
+
+	var webhookPayload microCMSWebhookPayload
+	if err := json.Unmarshal(body, &webhookPayload); err != nil {
+		writeMicroCMSBackupJSON(w, http.StatusBadRequest, map[string]string{"message": "invalid webhook json"})
 		return
 	}
 
@@ -586,11 +904,26 @@ func MicroCMSBackupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	notificationResult, err := notifyMicroCMSFirstPublishWithOneSignal(runContext, s3Config, credentials, webhookPayload, now)
+	if err != nil {
+		if runContext.Err() != nil {
+			log.Printf("microCMS backup timed out while sending OneSignal notification: %v", runContext.Err())
+			writeMicroCMSBackupJSON(w, http.StatusGatewayTimeout, map[string]string{"message": "microCMS backup timed out"})
+			return
+		}
+		log.Printf("Failed to send OneSignal notification for microCMS content %s: %v", webhookPayload.ID, err)
+		writeMicroCMSBackupJSON(w, http.StatusBadGateway, map[string]string{"message": "failed to send notification"})
+		return
+	}
+
 	writeMicroCMSBackupJSON(w, http.StatusOK, microCMSBackupResponse{
-		Success:      true,
-		ArticleCount: len(articles),
-		BucketName:   s3Config.BucketName,
-		ObjectKey:    objectKey,
-		SizeBytes:    len(csvBody),
+		Success:                   true,
+		ArticleCount:              len(articles),
+		BucketName:                s3Config.BucketName,
+		ObjectKey:                 objectKey,
+		SizeBytes:                 len(csvBody),
+		OneSignalNotificationSent: notificationResult.Sent,
+		OneSignalMarkerKey:        notificationResult.MarkerKey,
+		OneSignalNotificationID:   notificationResult.NotificationID,
 	})
 }

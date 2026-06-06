@@ -113,7 +113,8 @@ flowchart TB
     linkcheckerApi --> smtp
     microcmsWebhook[microCMS<br/>Content Webhook] --> microcmsbackupApi[Vercel Go Function<br/>/api/webhook/microcmsbackup]
     microcmsbackupApi --> microcmsBlogContentApi
-    microcmsbackupApi --> s3[AWS S3<br/>microCMS Backup CSV]
+    microcmsbackupApi --> s3[AWS S3<br/>Backup CSV<br/>Notification Marker]
+    microcmsbackupApi --> oneSignalApi[OneSignal<br/>Push Notification API]
   end
 ```
 
