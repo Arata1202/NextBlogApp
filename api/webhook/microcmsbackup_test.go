@@ -46,7 +46,7 @@ func TestBuildMicroCMSBackupRequest(t *testing.T) {
 		t.Fatalf("method = %s, want GET", req.Method)
 	}
 
-	if req.URL.String() != "https://example.microcms.io/api/v1/blog?limit=10&offset=20" {
+	if req.URL.String() != "https://example.microcms.io/api/v1/blog?fields=id%2Ctitle%2Cdescription%2Ccategories%2Ctags%2Cthumbnail%2Cintroduction_blocks%2Ccontent_blocks%2Crelated_articles%2CpublishedAt%2CupdatedAt&limit=10&offset=20" {
 		t.Fatalf("url = %q", req.URL.String())
 	}
 
@@ -66,10 +66,60 @@ func TestBuildMicroCMSBackupRequestNormalizesServiceDomain(t *testing.T) {
 				t.Fatalf("buildMicroCMSBackupRequest() error = %v", err)
 			}
 
-			if req.URL.String() != "https://example.microcms.io/api/v1/blog?limit=10&offset=20" {
+			if req.URL.String() != "https://example.microcms.io/api/v1/blog?fields=id%2Ctitle%2Cdescription%2Ccategories%2Ctags%2Cthumbnail%2Cintroduction_blocks%2Ccontent_blocks%2Crelated_articles%2CpublishedAt%2CupdatedAt&limit=10&offset=20" {
 				t.Fatalf("url = %q", req.URL.String())
 			}
 		})
+	}
+}
+
+func TestFetchMicroCMSBackupArticlesReducesLimitWhenResponseIsTooLarge(t *testing.T) {
+	originalClient := microCMSBackupHTTPClient
+	originalBaseURL := microCMSBackupAPIBaseURL
+
+	microCMSBackupAPIBaseURL = "https://%s.microcms.test/api/v1/blog"
+
+	requestLimits := []string{}
+	microCMSBackupHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			requestLimits = append(requestLimits, r.URL.Query().Get("limit"))
+
+			switch r.URL.Query().Get("limit") {
+			case "20":
+				return responseWithBody(http.StatusBadRequest, `{"message":"Response body size is too long. Check your url parameters."}`), nil
+			case "10":
+				if got := r.URL.Query().Get("offset"); got != "0" {
+					t.Fatalf("offset = %q, want 0", got)
+				}
+				return responseWithBody(http.StatusOK, `{
+					"contents": [{"id": "article-a"}],
+					"totalCount": 1,
+					"offset": 0,
+					"limit": 10
+				}`), nil
+			default:
+				t.Fatalf("unexpected limit = %q", r.URL.Query().Get("limit"))
+				return nil, nil
+			}
+		}),
+	}
+
+	t.Cleanup(func() {
+		microCMSBackupHTTPClient = originalClient
+		microCMSBackupAPIBaseURL = originalBaseURL
+	})
+
+	articles, err := fetchMicroCMSBackupArticles(t.Context(), "example", "api-key")
+	if err != nil {
+		t.Fatalf("fetchMicroCMSBackupArticles() error = %v", err)
+	}
+
+	if len(articles) != 1 || articles[0]["id"] != "article-a" {
+		t.Fatalf("articles = %#v", articles)
+	}
+
+	if strings.Join(requestLimits, ",") != "20,10" {
+		t.Fatalf("request limits = %v, want [20 10]", requestLimits)
 	}
 }
 

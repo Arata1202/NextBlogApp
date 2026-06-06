@@ -21,10 +21,12 @@ import (
 )
 
 const (
-	microCMSBackupFetchLimit     = 100
-	microCMSBackupRunTimeout     = 50 * time.Second
-	microCMSBackupRequestTimeout = 15 * time.Second
-	microCMSBackupContentType    = "text/csv; charset=utf-8"
+	microCMSBackupFields            = "id,title,description,categories,tags,thumbnail,introduction_blocks,content_blocks,related_articles,publishedAt,updatedAt"
+	microCMSBackupFetchLimit        = 20
+	microCMSBackupMinimumFetchLimit = 1
+	microCMSBackupRunTimeout        = 50 * time.Second
+	microCMSBackupRequestTimeout    = 15 * time.Second
+	microCMSBackupContentType       = "text/csv; charset=utf-8"
 )
 
 var (
@@ -146,6 +148,7 @@ func buildMicroCMSBackupRequest(ctx context.Context, serviceDomain, apiKey strin
 	params := apiURL.Query()
 	params.Set("limit", strconv.Itoa(limit))
 	params.Set("offset", strconv.Itoa(offset))
+	params.Set("fields", microCMSBackupFields)
 	apiURL.RawQuery = params.Encode()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, apiURL.String(), nil)
@@ -159,11 +162,26 @@ func buildMicroCMSBackupRequest(ctx context.Context, serviceDomain, apiKey strin
 	return req, nil
 }
 
+func microCMSBackupResponseTooLarge(statusCode int, bodySnippet string) bool {
+	return statusCode == http.StatusBadRequest &&
+		strings.Contains(strings.ToLower(bodySnippet), "response body size is too long")
+}
+
+func nextMicroCMSBackupFetchLimit(currentLimit int) int {
+	nextLimit := currentLimit / 2
+	if nextLimit < microCMSBackupMinimumFetchLimit {
+		return microCMSBackupMinimumFetchLimit
+	}
+
+	return nextLimit
+}
+
 func fetchMicroCMSBackupArticles(ctx context.Context, serviceDomain, apiKey string) ([]map[string]interface{}, error) {
 	articles := []map[string]interface{}{}
+	limit := microCMSBackupFetchLimit
 
-	for offset := 0; ; offset += microCMSBackupFetchLimit {
-		req, err := buildMicroCMSBackupRequest(ctx, serviceDomain, apiKey, microCMSBackupFetchLimit, offset)
+	for offset := 0; ; {
+		req, err := buildMicroCMSBackupRequest(ctx, serviceDomain, apiKey, limit, offset)
 		if err != nil {
 			return nil, err
 		}
@@ -175,6 +193,11 @@ func fetchMicroCMSBackupArticles(ctx context.Context, serviceDomain, apiKey stri
 
 		if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
 			bodySnippet := microCMSBackupResponseBodySnippet(resp)
+			if microCMSBackupResponseTooLarge(resp.StatusCode, bodySnippet) && limit > microCMSBackupMinimumFetchLimit {
+				limit = nextMicroCMSBackupFetchLimit(limit)
+				log.Printf("microCMS backup response was too large at offset %d; retrying with limit %d", offset, limit)
+				continue
+			}
 			if bodySnippet != "" {
 				return nil, fmt.Errorf("microCMS backup returned status %d: %s", resp.StatusCode, bodySnippet)
 			}
@@ -192,6 +215,7 @@ func fetchMicroCMSBackupArticles(ctx context.Context, serviceDomain, apiKey stri
 		if len(articles) >= listResponse.TotalCount || len(listResponse.Contents) == 0 {
 			return articles, nil
 		}
+		offset += len(listResponse.Contents)
 	}
 }
 
