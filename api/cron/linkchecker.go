@@ -42,8 +42,10 @@ var (
 	linkCheckerLookupIPAddr = net.DefaultResolver.LookupIPAddr
 	linkCheckerSMTPSend     = sendLinkCheckerSMTPMail
 
+	preBlockPattern      = regexp.MustCompile("(?is)<pre\\b[^>]*>.*?</pre>")
+	codeBlockPattern     = regexp.MustCompile("(?is)<code\\b[^>]*>.*?</code>")
+	anchorTagPattern     = regexp.MustCompile("(?is)<a\\b[^>]*>")
 	hrefAttributePattern = regexp.MustCompile("(?is)\\bhref\\s*=\\s*(?:\"([^\"]*)\"|'([^']*)'|([^\\s\"'<>`]+))")
-	markdownLinkPattern  = regexp.MustCompile(`(?is)\[[^\]]+\]\(\s*([^\s)]+)`)
 
 	linkCheckerBlockedIPPrefixes = []netip.Prefix{
 		netip.MustParsePrefix("0.0.0.0/8"),
@@ -256,13 +258,21 @@ func appendLinkReference(refsByURL map[string][]linkReference, rawLink string, r
 	refsByURL[normalizedURL] = append(refsByURL[normalizedURL], ref)
 }
 
-func extractTextLinks(refsByURL map[string][]linkReference, text string, ref linkReference, baseURL string) {
-	for _, match := range hrefAttributePattern.FindAllStringSubmatch(text, -1) {
-		appendLinkReference(refsByURL, firstString(match[1], match[2], match[3]), ref, baseURL)
-	}
+func stripCodeBlocks(text string) string {
+	text = preBlockPattern.ReplaceAllString(text, "")
+	return codeBlockPattern.ReplaceAllString(text, "")
+}
 
-	for _, match := range markdownLinkPattern.FindAllStringSubmatch(text, -1) {
-		appendLinkReference(refsByURL, match[1], ref, baseURL)
+func extractTextLinks(refsByURL map[string][]linkReference, text string, ref linkReference, baseURL string) {
+	text = stripCodeBlocks(text)
+
+	for _, anchorTag := range anchorTagPattern.FindAllString(text, -1) {
+		match := hrefAttributePattern.FindStringSubmatch(anchorTag)
+		if match == nil {
+			continue
+		}
+
+		appendLinkReference(refsByURL, firstString(match[1], match[2], match[3]), ref, baseURL)
 	}
 }
 
@@ -516,7 +526,10 @@ func checkSingleLink(ctx context.Context, linkURL string) (int, string, bool) {
 	defer cancel()
 
 	statusCode, err := doLinkCheckerRequest(requestContext, http.MethodHead, linkURL)
-	if err != nil || statusCode == http.StatusForbidden || statusCode == http.StatusMethodNotAllowed {
+	if err != nil ||
+		statusCode == http.StatusForbidden ||
+		statusCode == http.StatusMethodNotAllowed ||
+		isBrokenStatus(statusCode) {
 		statusCode, err = doLinkCheckerRequest(requestContext, http.MethodGet, linkURL)
 	}
 

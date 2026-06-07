@@ -73,6 +73,14 @@ func TestBuildMicroCMSLinkCheckerRequest(t *testing.T) {
 }
 
 func TestCollectArticleLinks(t *testing.T) {
+	nonLinkedExamplesHTML := strings.Join([]string{
+		`<p>Example attribute: href="https://not-linked.example/path"</p>`,
+		`<pre><code>&lt;a href=&quot;https://escaped-code.example/path&quot;&gt;sample&lt;/a&gt;</code></pre>`,
+		`<pre><code><a href="https://raw-code.example/path">sample</a></code></pre>`,
+		`<p><code><a href="https://inline-code.example/path">sample</a></code></p>`,
+		`<div class="iframely-embed"><a data-iframely-url href="https://iframely.example/embed"></a></div>`,
+	}, "")
+
 	refsByURL := collectArticleLinks(map[string]interface{}{
 		"id":    "article-a",
 		"title": "Article A",
@@ -87,6 +95,7 @@ func TestCollectArticleLinks(t *testing.T) {
 				"article_link": map[string]interface{}{"id": "related-article"},
 			},
 			map[string]interface{}{
+				"rich_text": nonLinkedExamplesHTML,
 				"box_point": `<a href="javascript:alert(1)">ignored</a><a href="#local">anchor</a>`,
 			},
 		},
@@ -99,7 +108,7 @@ func TestCollectArticleLinks(t *testing.T) {
 
 	wantURLs := []string{
 		"https://external.example/a?x=1&y=2",
-		"https://markdown.example/path",
+		"https://iframely.example/embed",
 		"https://site.example/articles/local",
 		"https://site.example/articles/related-article",
 	}
@@ -182,6 +191,46 @@ func TestCheckSingleLinkBlocksPrivateRedirectTarget(t *testing.T) {
 	}
 	if !strings.Contains(errorMessage, "blocked link target IP") {
 		t.Fatalf("errorMessage = %q, want blocked link target IP", errorMessage)
+	}
+}
+
+func TestCheckSingleLinkFallsBackToGetWhenHeadReportsBroken(t *testing.T) {
+	setLinkCheckerLookup(t, publicLinkCheckerLookup)
+
+	originalClient := linkCheckerHTTPClient
+	var methods []string
+	linkCheckerHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			methods = append(methods, r.Method)
+
+			switch r.Method {
+			case http.MethodHead:
+				return responseWithBody(http.StatusNotFound, ""), nil
+			case http.MethodGet:
+				return responseWithBody(http.StatusOK, ""), nil
+			default:
+				t.Fatalf("unexpected method = %q", r.Method)
+				return nil, nil
+			}
+		}),
+	}
+	t.Cleanup(func() {
+		linkCheckerHTTPClient = originalClient
+	})
+
+	statusCode, errorMessage, broken := checkSingleLink(t.Context(), "https://support.example/path")
+
+	if broken {
+		t.Fatal("broken = true, want false")
+	}
+	if statusCode != http.StatusOK {
+		t.Fatalf("statusCode = %d, want %d", statusCode, http.StatusOK)
+	}
+	if errorMessage != "" {
+		t.Fatalf("errorMessage = %q, want empty", errorMessage)
+	}
+	if !reflect.DeepEqual(methods, []string{http.MethodHead, http.MethodGet}) {
+		t.Fatalf("methods = %v, want HEAD then GET", methods)
 	}
 }
 
