@@ -2,12 +2,15 @@ package api
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
 	"time"
+
+	"NextBlogApp/internal/monitoring"
 )
 
 type RecaptchaRequest struct {
@@ -112,6 +115,11 @@ func RecaptchaHandler(w http.ResponseWriter, r *http.Request) {
 
 	secret := os.Getenv("RECAPTCHA_SECRET_KEY")
 	if secret == "" {
+		monitoring.CaptureError(errors.New("RECAPTCHA_SECRET_KEY is missing"), monitoring.EventContext{
+			Feature:   "recaptcha",
+			Operation: "load_recaptcha_secret",
+			Request:   r,
+		})
 		http.Error(w, "reCAPTCHA secret not set", http.StatusInternalServerError)
 		return
 	}
@@ -119,6 +127,11 @@ func RecaptchaHandler(w http.ResponseWriter, r *http.Request) {
 	success, err := verifyRecaptchaFunc(req.RecaptchaResponse, secret)
 	if err != nil {
 		log.Printf("Failed to send reCAPTCHA verification request: %v", err)
+		monitoring.CaptureError(err, monitoring.EventContext{
+			Feature:   "recaptcha",
+			Operation: "verify_recaptcha",
+			Request:   r,
+		})
 		http.Error(w, "Failed to send reCAPTCHA verification request", http.StatusInternalServerError)
 		return
 	}

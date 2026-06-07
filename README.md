@@ -121,6 +121,12 @@ flowchart TB
     microcmsbackupApi --> s3[AWS S3<br/>Backup CSV<br/>Notification Marker]
     microcmsbackupApi --> oneSignalApi[OneSignal<br/>Push Notification API]
   end
+
+  searchApi -. Server errors .-> sentry
+  sendEmailApi -. Server errors .-> sentry
+  recaptchaApi -. Server errors .-> sentry
+  linkcheckerApi -. Server errors .-> sentry
+  microcmsbackupApi -. Server errors .-> sentry
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
@@ -270,6 +276,10 @@ pnpm test:e2e:report
 │   └── theme.spec.ts
 ├── eslint.config.mjs
 ├── go.mod
+├── go.sum
+├── internal
+│   └── monitoring
+│       └── sentry.go
 ├── next.config.ts
 ├── package.json
 ├── playwright.config.ts
@@ -400,7 +410,7 @@ pnpm test:e2e:report
 ├── vercel.json
 └── vitest.config.mts
 
-67 directories, 125 files
+69 directories, 127 files
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>

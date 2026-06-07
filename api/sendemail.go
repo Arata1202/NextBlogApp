@@ -12,6 +12,8 @@ import (
 	"strings"
 	"unicode"
 	"unicode/utf8"
+
+	"NextBlogApp/internal/monitoring"
 )
 
 type EmailRequestBody struct {
@@ -236,6 +238,11 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 
 	recaptchaSecret := os.Getenv("RECAPTCHA_SECRET_KEY")
 	if recaptchaSecret == "" {
+		monitoring.CaptureError(fmt.Errorf("RECAPTCHA_SECRET_KEY is missing"), monitoring.EventContext{
+			Feature:   "sendemail",
+			Operation: "load_recaptcha_secret",
+			Request:   r,
+		})
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(map[string]string{"status": "reCAPTCHA secret missing"})
 		return
@@ -244,6 +251,11 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	verified, err := verifyRecaptchaFunc(req.RecaptchaResponse, recaptchaSecret)
 	if err != nil {
 		log.Printf("Failed to verify reCAPTCHA: %v", err)
+		monitoring.CaptureError(err, monitoring.EventContext{
+			Feature:   "sendemail",
+			Operation: "verify_recaptcha",
+			Request:   r,
+		})
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(map[string]string{"status": "reCAPTCHA verification failed"})
 		return
@@ -261,6 +273,11 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	smtpPass := os.Getenv("SMTP_PASS")
 
 	if emailTo == "" || emailFrom == "" || smtpUser == "" || smtpPass == "" {
+		monitoring.CaptureError(fmt.Errorf("email environment variables missing"), monitoring.EventContext{
+			Feature:   "sendemail",
+			Operation: "load_email_env",
+			Request:   r,
+		})
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(map[string]string{"status": "Environment variables missing"})
 		return
@@ -268,6 +285,11 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err := sendEmailFunc(emailTo, emailFrom, smtpUser, smtpPass, req.Email, req.Title, req.Message); err != nil {
 		log.Printf("Failed to send email: %v", err)
+		monitoring.CaptureError(err, monitoring.EventContext{
+			Feature:   "sendemail",
+			Operation: "send_email",
+			Request:   r,
+		})
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(map[string]string{"status": "fail"})
 		return

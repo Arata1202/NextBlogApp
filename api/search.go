@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"html"
 	"log"
@@ -13,6 +14,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"NextBlogApp/internal/monitoring"
 )
 
 const (
@@ -306,6 +309,11 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	serviceDomain := os.Getenv("MICROCMS_SERVICE_DOMAIN")
 	apiKey := os.Getenv("MICROCMS_API_KEY")
 	if serviceDomain == "" || apiKey == "" {
+		monitoring.CaptureError(errors.New("microCMS search environment variables missing"), monitoring.EventContext{
+			Feature:   "search",
+			Operation: "load_microcms_env",
+			Request:   r,
+		})
 		http.Error(w, `{"message":"microCMS environment variables missing"}`, http.StatusInternalServerError)
 		return
 	}
@@ -315,6 +323,11 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	articles, err := cachedMicroCMSSearchArticles(serviceDomain, apiKey)
 	if err != nil {
 		log.Printf("Failed to request microCMS search: %v", err)
+		monitoring.CaptureError(err, monitoring.EventContext{
+			Feature:   "search",
+			Operation: "fetch_microcms_articles",
+			Request:   r,
+		})
 		http.Error(w, `{"message":"failed to request search"}`, http.StatusBadGateway)
 		return
 	}
