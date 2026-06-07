@@ -27,8 +27,8 @@ import (
 	"sync"
 	"time"
 
-	"NextBlogApp/api/monitoring"
 	webhookapi "NextBlogApp/api/webhook"
+	"NextBlogApp/pkg/monitoring"
 )
 
 const (

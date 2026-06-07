@@ -249,8 +249,6 @@ pnpm test:e2e:report
 │   │   ├── linkchecker.go
 │   │   ├── linkchecker_test.go
 │   │   └── zennnotifier_test.go
-│   ├── monitoring
-│   │   └── sentry.go
 │   ├── recaptcha.go
 │   ├── recaptcha_test.go
 │   ├── search.go
@@ -281,6 +279,9 @@ pnpm test:e2e:report
 ├── go.sum
 ├── next.config.ts
 ├── package.json
+├── pkg
+│   └── monitoring
+│       └── sentry.go
 ├── playwright.config.ts
 ├── pnpm-lock.yaml
 ├── postcss.config.mjs
@@ -409,7 +410,7 @@ pnpm test:e2e:report
 ├── vercel.json
 └── vitest.config.mts
 
-68 directories, 127 files
+69 directories, 127 files
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>

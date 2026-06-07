@@ -3,6 +3,8 @@
 !api/**
 api/*_test.go
 api/**/*_test.go
+!pkg
+!pkg/**
 !go.mod
 !go.sum
 !vercel.json

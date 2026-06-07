@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"NextBlogApp/api/monitoring"
+	"NextBlogApp/pkg/monitoring"
 )
 
 type RecaptchaRequest struct {

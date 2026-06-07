@@ -13,7 +13,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"NextBlogApp/api/monitoring"
+	"NextBlogApp/pkg/monitoring"
 )
 
 type EmailRequestBody struct {

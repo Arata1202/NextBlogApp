@@ -15,7 +15,7 @@ import (
 	"sync"
 	"time"
 
-	"NextBlogApp/api/monitoring"
+	"NextBlogApp/pkg/monitoring"
 )
 
 const (
