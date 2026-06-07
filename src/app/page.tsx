@@ -29,6 +29,7 @@ export default async function Page() {
     name: defaultTitle,
     url: defaultUrl,
     description: DESCRIPTION,
+    inLanguage: 'ja-JP',
     publisher: {
       '@type': 'Person',
       '@id': `${defaultUrl}/profile#person`,

@@ -61,13 +61,16 @@ describe('app metadata', () => {
         height: 630,
       },
       categories: [createCategory({ id: 'category-a', name: 'Category A' })],
+      tags: [
+        createTag({ id: 'react', name: 'React' }),
+        createTag({ id: 'nextjs', name: 'Next.js' }),
+      ],
       publishedAt: '2024-01-01T00:00:00.000Z',
       updatedAt: '2024-01-02T00:00:00.000Z',
     });
     microcmsMock.getDetail.mockResolvedValue(article);
-    const { generateMetadata, default: ArticleLayout } = await import(
-      '@/app/articles/[slug]/layout'
-    );
+    const { generateMetadata, default: ArticleLayout } =
+      await import('@/app/articles/[slug]/layout');
 
     await expect(
       generateMetadata({
@@ -102,6 +105,9 @@ describe('app metadata', () => {
       '@type': 'BlogPosting',
       headline: 'Article A',
       url: 'https://example.com/articles/article-a',
+      inLanguage: 'ja-JP',
+      articleSection: 'Category A',
+      keywords: 'React, Next.js',
       mainEntityOfPage: {
         '@id': 'https://example.com/articles/article-a',
       },
@@ -125,9 +131,8 @@ describe('app metadata', () => {
   it('generates category metadata and breadcrumb JSON-LD', async () => {
     const category = createCategory({ id: 'programming', name: 'プログラミング' });
     microcmsMock.getCategory.mockResolvedValue(category);
-    const { generateMetadata, default: CategoryLayout } = await import(
-      '@/app/category/[categoryId]/layout'
-    );
+    const { generateMetadata, default: CategoryLayout } =
+      await import('@/app/category/[categoryId]/layout');
 
     await expect(
       generateMetadata({

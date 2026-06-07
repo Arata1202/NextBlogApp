@@ -47,6 +47,10 @@ export default async function ArticleLayout(props: Props) {
   const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
   const articleUrl = `${defaultUrl}/articles/${data.id}`;
+  const keywords = data.tags
+    ?.map((tag) => tag.name)
+    .filter(Boolean)
+    .join(', ');
 
   const blogPostingJsonLd = {
     '@context': 'https://schema.org',
@@ -56,6 +60,12 @@ export default async function ArticleLayout(props: Props) {
     headline: data.title,
     description: data.description,
     image: data.thumbnail.url,
+    inLanguage: 'ja-JP',
+    articleSection: data.categories
+      .map((category) => category.name)
+      .filter(Boolean)
+      .join(', '),
+    keywords: keywords || undefined,
     datePublished: data.publishedAt,
     dateModified: data.updatedAt,
     author: {
