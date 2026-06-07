@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/hmac"
+	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/csv"
 	"encoding/hex"
@@ -30,6 +31,7 @@ const (
 	microCMSBackupContentType       = "text/csv; charset=utf-8"
 	s3JSONContentType               = "application/json; charset=utf-8"
 	oneSignalSendDelay              = 5 * time.Minute
+	oneSignalNotificationTTLSeconds = 24 * 60 * 60
 	oneSignalAPIURL                 = "https://api.onesignal.com/notifications"
 	oneSignalIncludedSegment        = "Subscribed Users"
 )
@@ -39,6 +41,8 @@ var (
 	microCMSBackupAPIBaseURL = "https://%s.microcms.io/api/v1/blog"
 	microCMSBackupNow        = time.Now
 	errS3ObjectAlreadyExists = errors.New("s3 object already exists")
+
+	oneSignalIdempotencyNamespace = [16]byte{0x6b, 0xa7, 0xb8, 0x10, 0x9d, 0xad, 0x11, 0xd1, 0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8}
 )
 
 type microCMSBackupListResponse struct {
@@ -671,6 +675,21 @@ func oneSignalNotificationMarkerKey(contentID string) string {
 	return fmt.Sprintf("onesignal/notifications/blog/%s.json", contentID)
 }
 
+func oneSignalIdempotencyKey(payload microCMSWebhookPayload) string {
+	name := fmt.Sprintf("nextblogapp:microcms:%s:first-publish:%s", payload.API, payload.ID)
+
+	hash := sha1.New()
+	_, _ = hash.Write(oneSignalIdempotencyNamespace[:])
+	_, _ = hash.Write([]byte(name))
+
+	var uuid [16]byte
+	copy(uuid[:], hash.Sum(nil))
+	uuid[6] = (uuid[6] & 0x0f) | 0x50
+	uuid[8] = (uuid[8] & 0x3f) | 0x80
+
+	return fmt.Sprintf("%x-%x-%x-%x-%x", uuid[0:4], uuid[4:6], uuid[6:8], uuid[8:10], uuid[10:16])
+}
+
 func oneSignalNotificationMarkerBody(status string, payload microCMSWebhookPayload, articleTitle, articleURL, notificationID string, now time.Time) ([]byte, error) {
 	marker := map[string]interface{}{
 		"status":     status,
@@ -705,6 +724,8 @@ func createOneSignalNotificationRequest(ctx context.Context, config oneSignalCon
 		"url":               articleURL,
 		"data":              map[string]string{"type": "article", "articleId": payload.ID},
 		"send_after":        now.Add(oneSignalSendDelay).UTC().Format(time.RFC3339),
+		"idempotency_key":   oneSignalIdempotencyKey(payload),
+		"ttl":               oneSignalNotificationTTLSeconds,
 	}
 
 	body, err := json.Marshal(requestBody)

@@ -631,6 +631,12 @@ func TestMicroCMSBackupHandlerSendsOneSignalOnFirstPublish(t *testing.T) {
 				if body["send_after"] != "2026-06-05T22:13:09Z" {
 					t.Fatalf("OneSignal send_after = %#v", body["send_after"])
 				}
+				if body["idempotency_key"] != oneSignalIdempotencyKey(microCMSWebhookPayload{API: "blog", ID: "article-a"}) {
+					t.Fatalf("OneSignal idempotency_key = %#v", body["idempotency_key"])
+				}
+				if body["ttl"] != float64(86400) {
+					t.Fatalf("OneSignal ttl = %#v", body["ttl"])
+				}
 				headings, ok := body["headings"].(map[string]interface{})
 				if !ok || headings["ja"] != "新しい記事" {
 					t.Fatalf("OneSignal headings = %#v", body["headings"])
@@ -692,6 +698,21 @@ func TestMicroCMSBackupHandlerSendsOneSignalOnFirstPublish(t *testing.T) {
 		if !strings.Contains(gotBody, want) {
 			t.Fatalf("body = %s, want it to contain %s", gotBody, want)
 		}
+	}
+}
+
+func TestOneSignalIdempotencyKey(t *testing.T) {
+	payload := microCMSWebhookPayload{API: "blog", ID: "article-a"}
+
+	got := oneSignalIdempotencyKey(payload)
+	if len(got) != 36 || got[14] != '5' || strings.Count(got, "-") != 4 {
+		t.Fatalf("idempotency key = %q, want UUID v5 format", got)
+	}
+	if got != oneSignalIdempotencyKey(payload) {
+		t.Fatal("idempotency key should be stable for the same payload")
+	}
+	if got == oneSignalIdempotencyKey(microCMSWebhookPayload{API: "blog", ID: "article-b"}) {
+		t.Fatal("idempotency key should differ by article ID")
 	}
 }
 
