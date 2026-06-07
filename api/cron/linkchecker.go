@@ -2,8 +2,11 @@ package cron
 
 import (
 	"context"
+	"crypto/sha256"
 	"crypto/tls"
+	"encoding/hex"
 	"encoding/json"
+	"encoding/xml"
 	"errors"
 	"fmt"
 	"html"
@@ -23,6 +26,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	webhookapi "NextBlogApp/api/webhook"
 )
 
 const (
@@ -34,6 +39,13 @@ const (
 	linkCheckerMaxConcurrency    = 8
 	linkCheckerMaxRedirects      = 5
 	linkCheckerEmailPreviewLimit = 50
+
+	zennNotificationRequestTimeout = 8 * time.Second
+	zennNotificationRunTimeout     = 8 * time.Second
+	zennNotificationFeedURL        = "https://zenn.dev/realunivlog/feed"
+
+	cloudflarePagesDeployHookEnv        = "CLOUDFLARE_PAGES_DEPLOY_HOOK_URL"
+	cloudflarePagesDeployRequestTimeout = 8 * time.Second
 )
 
 var (
@@ -41,6 +53,19 @@ var (
 	linkCheckerAPIBaseURL   = "https://%s.microcms.io/api/v1/blog"
 	linkCheckerLookupIPAddr = net.DefaultResolver.LookupIPAddr
 	linkCheckerSMTPSend     = sendLinkCheckerSMTPMail
+
+	zennNotificationHTTPClient          = &http.Client{Timeout: zennNotificationRequestTimeout}
+	zennNotifyArticlesWithOneSignal     = webhookapi.NotifyExternalArticlesFirstPublishWithOneSignal
+	zennNotificationRequiredEnvVariable = []string{
+		"ONESIGNAL_APP_ID",
+		"ONESIGNAL_REST_API_KEY",
+		"BASE_URL",
+		"BASE_TITLE",
+		"AWS_ACCESS_KEY_ID",
+		"AWS_SECRET_ACCESS_KEY",
+		"BUCKET_NAME",
+	}
+	cloudflarePagesDeployHTTPClient = &http.Client{Timeout: cloudflarePagesDeployRequestTimeout}
 
 	preBlockPattern      = regexp.MustCompile("(?is)<pre\\b[^>]*>.*?</pre>")
 	codeBlockPattern     = regexp.MustCompile("(?is)<code\\b[^>]*>.*?</code>")
@@ -95,11 +120,48 @@ type linkCheckResult struct {
 }
 
 type linkCheckerResponse struct {
-	Success      bool              `json:"success"`
-	CheckedCount int               `json:"checkedCount"`
-	BrokenCount  int               `json:"brokenCount"`
-	Notified     bool              `json:"notified"`
-	BrokenLinks  []linkCheckResult `json:"brokenLinks"`
+	Success           bool                     `json:"success"`
+	CheckedCount      int                      `json:"checkedCount"`
+	BrokenCount       int                      `json:"brokenCount"`
+	Notified          bool                     `json:"notified"`
+	BrokenLinks       []linkCheckResult        `json:"brokenLinks"`
+	ZennNotifications *zennNotificationSummary `json:"zennNotifications,omitempty"`
+}
+
+type zennRSSFeed struct {
+	Channel zennRSSChannel `xml:"channel"`
+}
+
+type zennRSSChannel struct {
+	Items []zennRSSItem `xml:"item"`
+}
+
+type zennRSSItem struct {
+	Title   string `xml:"title"`
+	Link    string `xml:"link"`
+	PubDate string `xml:"pubDate"`
+}
+
+type zennNotificationSummary struct {
+	Enabled               bool                          `json:"enabled"`
+	CheckedCount          int                           `json:"checkedCount"`
+	NewCount              int                           `json:"newCount"`
+	SentCount             int                           `json:"sentCount"`
+	MarkerKeys            []string                      `json:"markerKeys,omitempty"`
+	CloudflarePagesDeploy *cloudflarePagesDeploySummary `json:"cloudflarePagesDeploy,omitempty"`
+	Error                 string                        `json:"error,omitempty"`
+}
+
+type cloudflarePagesDeploySummary struct {
+	Enabled    bool   `json:"enabled"`
+	Triggered  bool   `json:"triggered"`
+	StatusCode int    `json:"statusCode,omitempty"`
+	Error      string `json:"error,omitempty"`
+}
+
+type zennRSSArticleNotification struct {
+	article     webhookapi.ExternalArticleNotification
+	publishedAt time.Time
 }
 
 func writeLinkCheckerJSON(w http.ResponseWriter, statusCode int, response interface{}) {
@@ -784,6 +846,233 @@ func sendLinkCheckerNotification(links []linkCheckResult) error {
 	return linkCheckerSMTPSend("smtp.gmail.com:587", auth, from, []string{to}, []byte(builder.String()))
 }
 
+func zennNotificationsConfigured() bool {
+	for _, envName := range zennNotificationRequiredEnvVariable {
+		if strings.TrimSpace(os.Getenv(envName)) == "" {
+			return false
+		}
+	}
+
+	return strings.TrimSpace(os.Getenv("AWS_REGION")) != "" || strings.TrimSpace(os.Getenv("AWS_DEFAULT_REGION")) != ""
+}
+
+func buildZennNotificationFeedRequest(ctx context.Context) (*http.Request, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, zennNotificationFeedURL, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Accept", "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8")
+	req.Header.Set("User-Agent", "NextBlogApp-ZennNotifier/1.0")
+
+	return req, nil
+}
+
+func parseZennRSSPubDate(value string) time.Time {
+	value = strings.TrimSpace(value)
+	if value == "" {
+		return time.Time{}
+	}
+
+	for _, layout := range []string{time.RFC1123Z, time.RFC1123} {
+		parsed, err := time.Parse(layout, value)
+		if err == nil {
+			return parsed
+		}
+	}
+
+	return time.Time{}
+}
+
+func zennArticleID(linkURL string) string {
+	parsedURL, err := url.Parse(strings.TrimSpace(linkURL))
+	if err == nil && strings.EqualFold(parsedURL.Hostname(), "zenn.dev") {
+		segments := strings.Split(strings.Trim(parsedURL.EscapedPath(), "/"), "/")
+		if len(segments) >= 3 && segments[1] == "articles" {
+			if slug, err := url.PathUnescape(segments[2]); err == nil && strings.TrimSpace(slug) != "" {
+				return slug
+			}
+		}
+	}
+
+	sum := sha256.Sum256([]byte(strings.TrimSpace(linkURL)))
+	return hex.EncodeToString(sum[:16])
+}
+
+func zennRSSItemsToNotifications(items []zennRSSItem) []webhookapi.ExternalArticleNotification {
+	notifications := make([]zennRSSArticleNotification, 0, len(items))
+
+	for _, item := range items {
+		title := strings.TrimSpace(item.Title)
+		linkURL := strings.TrimSpace(item.Link)
+		if title == "" || linkURL == "" {
+			continue
+		}
+
+		notifications = append(notifications, zennRSSArticleNotification{
+			article: webhookapi.ExternalArticleNotification{
+				Source:    "zenn",
+				ContentID: zennArticleID(linkURL),
+				Title:     title,
+				URL:       linkURL,
+			},
+			publishedAt: parseZennRSSPubDate(item.PubDate),
+		})
+	}
+
+	sort.SliceStable(notifications, func(i, j int) bool {
+		if notifications[i].publishedAt.IsZero() || notifications[j].publishedAt.IsZero() {
+			return notifications[i].article.URL < notifications[j].article.URL
+		}
+		return notifications[i].publishedAt.Before(notifications[j].publishedAt)
+	})
+
+	articles := make([]webhookapi.ExternalArticleNotification, 0, len(notifications))
+	for _, notification := range notifications {
+		articles = append(articles, notification.article)
+	}
+
+	return articles
+}
+
+func fetchZennRSSNotifications(ctx context.Context) ([]webhookapi.ExternalArticleNotification, error) {
+	req, err := buildZennNotificationFeedRequest(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := zennNotificationHTTPClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer closeResponseBody(resp)
+
+	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
+		return nil, fmt.Errorf("Zenn RSS returned status %d", resp.StatusCode)
+	}
+
+	var feed zennRSSFeed
+	if err := xml.NewDecoder(resp.Body).Decode(&feed); err != nil {
+		return nil, err
+	}
+
+	return zennRSSItemsToNotifications(feed.Channel.Items), nil
+}
+
+func cloudflarePagesDeployHookURL() string {
+	return strings.TrimSpace(os.Getenv(cloudflarePagesDeployHookEnv))
+}
+
+func cloudflarePagesDeployConfigured() bool {
+	return cloudflarePagesDeployHookURL() != ""
+}
+
+func buildCloudflarePagesDeployRequest(ctx context.Context, hookURL string) (*http.Request, error) {
+	parsedURL, err := url.Parse(strings.TrimSpace(hookURL))
+	if err != nil {
+		return nil, err
+	}
+	if parsedURL.Scheme != "https" || parsedURL.Host == "" {
+		return nil, errors.New("Cloudflare Pages deploy hook URL must be an HTTPS URL")
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, parsedURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", "NextBlogApp-ZennNotifier/1.0")
+
+	return req, nil
+}
+
+func triggerCloudflarePagesDeploy(ctx context.Context) (cloudflarePagesDeploySummary, error) {
+	hookURL := cloudflarePagesDeployHookURL()
+	summary := cloudflarePagesDeploySummary{Enabled: hookURL != ""}
+	if hookURL == "" {
+		return summary, nil
+	}
+
+	req, err := buildCloudflarePagesDeployRequest(ctx, hookURL)
+	if err != nil {
+		return summary, err
+	}
+
+	resp, err := cloudflarePagesDeployHTTPClient.Do(req)
+	if err != nil {
+		return summary, err
+	}
+	defer closeResponseBody(resp)
+
+	summary.Triggered = true
+	summary.StatusCode = resp.StatusCode
+	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
+		return summary, fmt.Errorf("Cloudflare Pages deploy hook returned status %d", resp.StatusCode)
+	}
+
+	return summary, nil
+}
+
+func runZennFirstPublishNotifications(ctx context.Context, now time.Time) (*zennNotificationSummary, error) {
+	if !zennNotificationsConfigured() {
+		return &zennNotificationSummary{Enabled: false}, nil
+	}
+
+	articles, err := fetchZennRSSNotifications(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	results, notifyErr := zennNotifyArticlesWithOneSignal(ctx, articles, now)
+
+	summary := &zennNotificationSummary{
+		Enabled:      true,
+		CheckedCount: len(articles),
+	}
+
+	for _, result := range results {
+		if result.MarkerKey != "" {
+			summary.MarkerKeys = append(summary.MarkerKeys, result.MarkerKey)
+		}
+		if result.MarkerCreated {
+			summary.NewCount++
+		}
+		if result.Sent {
+			summary.SentCount++
+		}
+	}
+	summary.CloudflarePagesDeploy = &cloudflarePagesDeploySummary{
+		Enabled: cloudflarePagesDeployConfigured(),
+	}
+
+	if summary.SentCount > 0 {
+		log.Printf("Sent %d Zenn first-publish OneSignal notifications", summary.SentCount)
+	}
+
+	if summary.NewCount > 0 {
+		deploySummary, err := triggerCloudflarePagesDeploy(ctx)
+		summary.CloudflarePagesDeploy = &deploySummary
+		if err != nil {
+			summary.CloudflarePagesDeploy.Error = "failed to trigger deploy"
+			return summary, errors.Join(notifyErr, err)
+		}
+		if deploySummary.Triggered {
+			log.Printf("Triggered Cloudflare Pages deploy hook for %d new Zenn articles", summary.NewCount)
+		}
+	}
+
+	return summary, notifyErr
+}
+
+func zennNotificationErrorMessage(err error) string {
+	if errors.Is(err, context.DeadlineExceeded) || errors.Is(err, context.Canceled) {
+		return "zenn notification timed out"
+	}
+
+	return "failed to run zenn notifications"
+}
+
 func LinkCheckerHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		writeLinkCheckerJSON(w, http.StatusMethodNotAllowed, map[string]string{"message": "Method Not Allowed"})
@@ -806,6 +1095,17 @@ func LinkCheckerHandler(w http.ResponseWriter, r *http.Request) {
 	if serviceDomain == "" || apiKey == "" {
 		writeLinkCheckerJSON(w, http.StatusInternalServerError, map[string]string{"message": "microCMS environment variables missing"})
 		return
+	}
+
+	zennContext, zennCancel := context.WithTimeout(r.Context(), zennNotificationRunTimeout)
+	zennNotifications, err := runZennFirstPublishNotifications(zennContext, time.Now())
+	zennCancel()
+	if err != nil {
+		log.Printf("Failed to run Zenn first-publish notifications: %v", err)
+		if zennNotifications == nil {
+			zennNotifications = &zennNotificationSummary{Enabled: zennNotificationsConfigured()}
+		}
+		zennNotifications.Error = zennNotificationErrorMessage(err)
 	}
 
 	runContext, cancel := context.WithTimeout(r.Context(), linkCheckerRunTimeout)
@@ -847,10 +1147,11 @@ func LinkCheckerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	writeLinkCheckerJSON(w, http.StatusOK, linkCheckerResponse{
-		Success:      true,
-		CheckedCount: len(checkedLinks),
-		BrokenCount:  len(links),
-		Notified:     notified,
-		BrokenLinks:  links,
+		Success:           true,
+		CheckedCount:      len(checkedLinks),
+		BrokenCount:       len(links),
+		Notified:          notified,
+		BrokenLinks:       links,
+		ZennNotifications: zennNotifications,
 	})
 }

@@ -14,6 +14,9 @@ import (
 	"sort"
 	"strings"
 	"testing"
+	"time"
+
+	webhookapi "NextBlogApp/api/webhook"
 )
 
 type roundTripFunc func(*http.Request) (*http.Response, error)
@@ -254,6 +257,7 @@ func TestLinkCheckerHandlerUnauthorized(t *testing.T) {
 }
 
 func TestLinkCheckerHandlerSuccessWithBrokenLinksSendsNotification(t *testing.T) {
+	disableZennNotificationEnv(t)
 	t.Setenv("CRON_SECRET", "secret")
 	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
 	t.Setenv("MICROCMS_API_KEY", "api-key")
@@ -358,6 +362,7 @@ func TestLinkCheckerHandlerSuccessWithBrokenLinksSendsNotification(t *testing.T)
 }
 
 func TestLinkCheckerHandlerDoesNotSendNotificationWithoutBrokenLinks(t *testing.T) {
+	disableZennNotificationEnv(t)
 	t.Setenv("CRON_SECRET", "secret")
 	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
 	t.Setenv("MICROCMS_API_KEY", "api-key")
@@ -414,7 +419,95 @@ func TestLinkCheckerHandlerDoesNotSendNotificationWithoutBrokenLinks(t *testing.
 	}
 }
 
+func TestLinkCheckerHandlerContinuesWhenZennDeployFails(t *testing.T) {
+	setZennNotificationEnv(t)
+	t.Setenv(cloudflarePagesDeployHookEnv, "https://deploy.example/hook")
+	t.Setenv("CRON_SECRET", "secret")
+	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
+	t.Setenv("MICROCMS_API_KEY", "api-key")
+
+	originalLinkCheckerClient := linkCheckerHTTPClient
+	originalBaseURL := linkCheckerAPIBaseURL
+	originalZennClient := zennNotificationHTTPClient
+	originalNotify := zennNotifyArticlesWithOneSignal
+	originalDeployClient := cloudflarePagesDeployHTTPClient
+
+	linkCheckerAPIBaseURL = "https://%s.microcms.test/api/v1/blog"
+	linkCheckerHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			if r.URL.Host != "example.microcms.test" {
+				t.Fatalf("unexpected link checker host = %q", r.URL.Host)
+			}
+			return responseWithBody(http.StatusOK, `{
+				"contents": [],
+				"totalCount": 0,
+				"offset": 0,
+				"limit": 100
+			}`), nil
+		}),
+	}
+	zennNotificationHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			return responseWithBody(http.StatusOK, `
+				<rss>
+					<channel>
+						<item>
+							<title>Zenn A</title>
+							<link>https://zenn.dev/realunivlog/articles/zenn-a</link>
+							<pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate>
+						</item>
+					</channel>
+				</rss>
+			`), nil
+		}),
+	}
+	zennNotifyArticlesWithOneSignal = func(ctx context.Context, articles []webhookapi.ExternalArticleNotification, now time.Time) ([]webhookapi.OneSignalNotificationResult, error) {
+		return []webhookapi.OneSignalNotificationResult{
+			{Sent: true, MarkerCreated: true, MarkerKey: "onesignal/notifications/zenn/zenn-a.json", NotificationID: "notification-a"},
+		}, nil
+	}
+	cloudflarePagesDeployHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			return responseWithBody(http.StatusInternalServerError, `{"success":false}`), nil
+		}),
+	}
+
+	t.Cleanup(func() {
+		linkCheckerHTTPClient = originalLinkCheckerClient
+		linkCheckerAPIBaseURL = originalBaseURL
+		zennNotificationHTTPClient = originalZennClient
+		zennNotifyArticlesWithOneSignal = originalNotify
+		cloudflarePagesDeployHTTPClient = originalDeployClient
+	})
+
+	req := httptest.NewRequest(http.MethodGet, "/api/cron/linkchecker", nil)
+	req.Header.Set("Authorization", "Bearer secret")
+	rec := httptest.NewRecorder()
+
+	LinkCheckerHandler(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want %d; body = %s", rec.Code, http.StatusOK, rec.Body.String())
+	}
+
+	gotBody := compactJSON(rec.Body.String())
+	for _, want := range []string{
+		`"success":true`,
+		`"checkedCount":0`,
+		`"zennNotifications"`,
+		`"newCount":1`,
+		`"sentCount":1`,
+		`"cloudflarePagesDeploy":{"enabled":true,"triggered":true,"statusCode":500,"error":"failed to trigger deploy"}`,
+		`"error":"failed to run zenn notifications"`,
+	} {
+		if !strings.Contains(gotBody, want) {
+			t.Fatalf("body = %s, want it to contain %s", gotBody, want)
+		}
+	}
+}
+
 func TestLinkCheckerHandlerReportsNotificationErrors(t *testing.T) {
+	disableZennNotificationEnv(t)
 	t.Setenv("CRON_SECRET", "secret")
 	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
 	t.Setenv("MICROCMS_API_KEY", "api-key")

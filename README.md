@@ -70,7 +70,7 @@
 | CI/CD             | GitHub Actions, CodeQL, Dependabot             |
 | Design            | Canva                                          |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA  |
-| Integrations      | PWA, OneSignal, Pipedream, Sentry              |
+| Integrations      | PWA, OneSignal, Sentry                         |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -111,6 +111,11 @@ flowchart TB
     cron[Vercel Cron<br/>/api/cron/linkchecker] --> linkcheckerApi[Vercel Go Function<br/>Link Checker]
     linkcheckerApi --> microcmsBlogContentApi
     linkcheckerApi --> smtp
+    linkcheckerApi --> zenn
+    linkcheckerApi --> s3
+    linkcheckerApi --> oneSignalApi
+    linkcheckerApi --> pagesDeployHook[Cloudflare Pages Deploy Hook]
+    pagesDeployHook --> pagesBuild
     microcmsWebhook[microCMS<br/>Content Webhook] --> microcmsbackupApi[Vercel Go Function<br/>/api/webhook/microcmsbackup]
     microcmsbackupApi --> microcmsBlogContentApi
     microcmsbackupApi --> s3[AWS S3<br/>Backup CSV<br/>Notification Marker]
@@ -201,67 +206,68 @@ pnpm test:e2e:report
 ## ディレクトリ構成
 
 ```
-❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts|tmp|coverage|tsconfig.tsbuildinfo|playwright-report|test-results|.pnpm-store" -L 3
+❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts|tmp|coverage|tsconfig.tsbuildinfo|playwright-report|test-results|.pnpm-store|.terraform|terraform.tfstate|terraform.tfstate.backup|terraform.tfvars" -L 3
 .
 ├── .air.toml
 ├── .docker
-│   ├── go
-│   │   └── Dockerfile
-│   └── js
-│       └── Dockerfile
+│   ├── go
+│   │   └── Dockerfile
+│   └── js
+│       └── Dockerfile
 ├── .dockerignore
 ├── .docs
-│   └── readme
-│       └── images
+│   └── readme
+│       └── images
 ├── .env.example
 ├── .github
-│   ├── dependabot.yml
-│   └── workflows
-│       ├── codeql.yml
-│       ├── test.yml
-│       └── vercel_deploy.yml
+│   ├── dependabot.yml
+│   └── workflows
+│       ├── codeql.yml
+│       ├── test.yml
+│       └── vercel_deploy.yml
 ├── .gitignore
 ├── .husky
-│   └── pre-commit
+│   └── pre-commit
 ├── .npmrc
 ├── .nvmrc
 ├── .prettierignore
 ├── .prettierrc
 ├── .vercelignore
 ├── .vscode
-│   ├── extensions.json
-│   └── settings.json
+│   ├── extensions.json
+│   └── settings.json
 ├── LICENSE
 ├── README.md
 ├── api
-│   ├── cron
-│   │   ├── linkchecker.go
-│   │   └── linkchecker_test.go
-│   ├── recaptcha.go
-│   ├── recaptcha_test.go
-│   ├── search.go
-│   ├── search_test.go
-│   ├── sendemail.go
-│   ├── sendemail_test.go
-│   └── webhook
-│       ├── microcmsbackup.go
-│       └── microcmsbackup_test.go
+│   ├── cron
+│   │   ├── linkchecker.go
+│   │   ├── linkchecker_test.go
+│   │   └── zennnotifier_test.go
+│   ├── recaptcha.go
+│   ├── recaptcha_test.go
+│   ├── search.go
+│   ├── search_test.go
+│   ├── sendemail.go
+│   ├── sendemail_test.go
+│   └── webhook
+│       ├── microcmsbackup.go
+│       └── microcmsbackup_test.go
 ├── cmd
-│   └── main.go
+│   └── main.go
 ├── docker-compose.yml
 ├── e2e
-│   ├── contact.spec.ts
-│   ├── feeds.spec.ts
-│   ├── fixtures
-│   │   ├── content.d.mts
-│   │   └── content.mjs
-│   ├── navigation.spec.ts
-│   ├── responsive.spec.ts
-│   ├── search.spec.ts
-│   ├── smoke.spec.ts
-│   ├── support
-│   │   └── app.ts
-│   └── theme.spec.ts
+│   ├── contact.spec.ts
+│   ├── feeds.spec.ts
+│   ├── fixtures
+│   │   ├── content.d.mts
+│   │   └── content.mjs
+│   ├── navigation.spec.ts
+│   ├── responsive.spec.ts
+│   ├── search.spec.ts
+│   ├── smoke.spec.ts
+│   ├── support
+│   │   └── app.ts
+│   └── theme.spec.ts
 ├── eslint.config.mjs
 ├── go.mod
 ├── next.config.ts
@@ -270,131 +276,131 @@ pnpm test:e2e:report
 ├── pnpm-lock.yaml
 ├── postcss.config.mjs
 ├── public
-│   ├── OneSignalSDKWorker.js
-│   ├── ads.txt
-│   ├── app-ads.txt
-│   ├── favicon.ico
-│   ├── images
-│   │   ├── blog
-│   │   ├── head
-│   │   ├── plugin
-│   │   ├── post
-│   │   ├── pwa
-│   │   └── thumbnail
-│   ├── llms-full.txt
-│   ├── llms.txt
-│   └── robots.txt
+│   ├── OneSignalSDKWorker.js
+│   ├── ads.txt
+│   ├── app-ads.txt
+│   ├── favicon.ico
+│   ├── images
+│   │   ├── blog
+│   │   ├── head
+│   │   ├── plugin
+│   │   ├── post
+│   │   ├── pwa
+│   │   └── thumbnail
+│   ├── llms-full.txt
+│   ├── llms.txt
+│   └── robots.txt
 ├── scripts
-│   └── e2e
-│       ├── build.mjs
-│       ├── mock-fetch.mjs
-│       └── serve-static.mjs
-├── terraform
-│   ├── iam
-│   │   ├── iam.tf
-│   │   └── variables.tf
-│   ├── s3
-│   │   ├── s3.tf
-│   │   └── variables.tf
-│   ├── main.tf
-│   ├── module.tf
-│   ├── terraform.tfvars.example
-│   ├── variables.tf
-│   └── .terraform.lock.hcl
+│   └── e2e
+│       ├── build.mjs
+│       ├── mock-fetch.mjs
+│       └── serve-static.mjs
 ├── src
-│   ├── app
-│   │   ├── __tests__
-│   │   ├── archive
-│   │   ├── articles
-│   │   ├── category
-│   │   ├── contact
-│   │   ├── copyright
-│   │   ├── disclaimer
-│   │   ├── global-error.tsx
-│   │   ├── layout.module.css
-│   │   ├── layout.tsx
-│   │   ├── link
-│   │   ├── manifest.json
-│   │   ├── not-found.module.css
-│   │   ├── not-found.tsx
-│   │   ├── p
-│   │   ├── page.tsx
-│   │   ├── privacy
-│   │   ├── profile
-│   │   ├── rss.xml
-│   │   ├── search
-│   │   ├── sitemap-html
-│   │   ├── sitemap.ts
-│   │   └── tag
-│   ├── components
-│   │   ├── Common
-│   │   ├── Features
-│   │   ├── Pages
-│   │   └── ThirdParties
-│   ├── config
-│   │   ├── publicEnv.ts
-│   │   └── serverEnv.ts
-│   ├── constants
-│   │   ├── articleContent.ts
-│   │   ├── category.ts
-│   │   ├── customHtml.ts
-│   │   ├── data.ts
-│   │   ├── limit.ts
-│   │   └── page.ts
-│   ├── contents
-│   │   ├── copyright.ts
-│   │   ├── disclaimer.ts
-│   │   ├── link.ts
-│   │   ├── privacy.ts
-│   │   └── profile.ts
-│   ├── contexts
-│   │   ├── ThemeProvider.tsx
-│   │   ├── ThemeWrapper.tsx
-│   │   └── __tests__
-│   ├── hooks
-│   │   ├── __tests__
-│   │   ├── useCodeBlockCopyButtons.tsx
-│   │   ├── useExtractHeadings.ts
-│   │   ├── useIframelyEmbeds.ts
-│   │   ├── useIsClient.ts
-│   │   └── useMutationObserver.ts
-│   ├── instrumentation-client.ts
-│   ├── libs
-│   │   ├── __tests__
-│   │   ├── archive.ts
-│   │   ├── microcms.ts
-│   │   ├── microcmsPage.ts
-│   │   ├── pageData.ts
-│   │   ├── recent.ts
-│   │   ├── rss.ts
-│   │   ├── unified.ts
-│   │   └── zenn.ts
-│   ├── styles
-│   │   ├── globals.css
-│   │   └── plugin.css
-│   ├── test
-│   │   ├── factories.ts
-│   │   └── setup.ts
-│   ├── types
-│   │   ├── form.ts
-│   │   ├── heading.ts
-│   │   ├── microcms.ts
-│   │   ├── react-dom-client.d.ts
-│   │   └── unified.ts
-│   └── utils
-│       ├── __tests__
-│       ├── formatDate.ts
-│       ├── formatHeadings.ts
-│       ├── formatMicroCmsImageUrl.ts
-│       ├── formatRichText.ts
-│       ├── markdownHeadings.ts
-│       ├── sanitizeCustomHtml.ts
-│       └── urlSafety.ts
+│   ├── app
+│   │   ├── __tests__
+│   │   ├── archive
+│   │   ├── articles
+│   │   ├── category
+│   │   ├── contact
+│   │   ├── copyright
+│   │   ├── disclaimer
+│   │   ├── global-error.tsx
+│   │   ├── layout.module.css
+│   │   ├── layout.tsx
+│   │   ├── link
+│   │   ├── manifest.json
+│   │   ├── not-found.module.css
+│   │   ├── not-found.tsx
+│   │   ├── p
+│   │   ├── page.tsx
+│   │   ├── privacy
+│   │   ├── profile
+│   │   ├── rss.xml
+│   │   ├── search
+│   │   ├── sitemap-html
+│   │   ├── sitemap.ts
+│   │   └── tag
+│   ├── components
+│   │   ├── Common
+│   │   ├── Features
+│   │   ├── Pages
+│   │   └── ThirdParties
+│   ├── config
+│   │   ├── publicEnv.ts
+│   │   └── serverEnv.ts
+│   ├── constants
+│   │   ├── articleContent.ts
+│   │   ├── category.ts
+│   │   ├── customHtml.ts
+│   │   ├── data.ts
+│   │   ├── limit.ts
+│   │   └── page.ts
+│   ├── contents
+│   │   ├── copyright.ts
+│   │   ├── disclaimer.ts
+│   │   ├── link.ts
+│   │   ├── privacy.ts
+│   │   └── profile.ts
+│   ├── contexts
+│   │   ├── ThemeProvider.tsx
+│   │   ├── ThemeWrapper.tsx
+│   │   └── __tests__
+│   ├── hooks
+│   │   ├── __tests__
+│   │   ├── useCodeBlockCopyButtons.tsx
+│   │   ├── useExtractHeadings.ts
+│   │   ├── useIframelyEmbeds.ts
+│   │   ├── useIsClient.ts
+│   │   └── useMutationObserver.ts
+│   ├── instrumentation-client.ts
+│   ├── libs
+│   │   ├── __tests__
+│   │   ├── archive.ts
+│   │   ├── microcms.ts
+│   │   ├── microcmsPage.ts
+│   │   ├── pageData.ts
+│   │   ├── recent.ts
+│   │   ├── rss.ts
+│   │   ├── unified.ts
+│   │   └── zenn.ts
+│   ├── styles
+│   │   ├── globals.css
+│   │   └── plugin.css
+│   ├── test
+│   │   ├── factories.ts
+│   │   └── setup.ts
+│   ├── types
+│   │   ├── form.ts
+│   │   ├── heading.ts
+│   │   ├── microcms.ts
+│   │   ├── react-dom-client.d.ts
+│   │   └── unified.ts
+│   └── utils
+│       ├── __tests__
+│       ├── formatDate.ts
+│       ├── formatHeadings.ts
+│       ├── formatMicroCmsImageUrl.ts
+│       ├── formatRichText.ts
+│       ├── markdownHeadings.ts
+│       ├── sanitizeCustomHtml.ts
+│       └── urlSafety.ts
+├── terraform
+│   ├── .terraform.lock.hcl
+│   ├── iam
+│   │   ├── iam.tf
+│   │   └── variables.tf
+│   ├── main.tf
+│   ├── module.tf
+│   ├── s3
+│   │   ├── s3.tf
+│   │   └── variables.tf
+│   ├── terraform.tfvars.example
+│   └── variables.tf
 ├── tsconfig.json
 ├── vercel.json
 └── vitest.config.mts
 
-62 directories, 111 files
+67 directories, 125 files
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
