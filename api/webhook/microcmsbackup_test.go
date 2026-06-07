@@ -628,6 +628,9 @@ func TestMicroCMSBackupHandlerSendsOneSignalOnFirstPublish(t *testing.T) {
 				if body["url"] != "https://example.com/articles/article-a" {
 					t.Fatalf("OneSignal url = %#v", body["url"])
 				}
+				if body["send_after"] != "2026-06-05T22:13:09Z" {
+					t.Fatalf("OneSignal send_after = %#v", body["send_after"])
+				}
 				headings, ok := body["headings"].(map[string]interface{})
 				if !ok || headings["ja"] != "新しい記事" {
 					t.Fatalf("OneSignal headings = %#v", body["headings"])

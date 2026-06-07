@@ -29,6 +29,7 @@ const (
 	microCMSBackupRequestTimeout    = 15 * time.Second
 	microCMSBackupContentType       = "text/csv; charset=utf-8"
 	s3JSONContentType               = "application/json; charset=utf-8"
+	oneSignalSendDelay              = 5 * time.Minute
 	oneSignalAPIURL                 = "https://api.onesignal.com/notifications"
 	oneSignalIncludedSegment        = "Subscribed Users"
 )
@@ -689,7 +690,7 @@ func oneSignalNotificationMarkerBody(status string, payload microCMSWebhookPaylo
 	return json.Marshal(marker)
 }
 
-func createOneSignalNotificationRequest(ctx context.Context, config oneSignalConfig, payload microCMSWebhookPayload, articleTitle, articleURL string) (*http.Request, error) {
+func createOneSignalNotificationRequest(ctx context.Context, config oneSignalConfig, payload microCMSWebhookPayload, articleTitle, articleURL string, now time.Time) (*http.Request, error) {
 	notificationTitle := articleTitle
 	if notificationTitle == "" {
 		notificationTitle = "新しい記事"
@@ -703,6 +704,7 @@ func createOneSignalNotificationRequest(ctx context.Context, config oneSignalCon
 		"contents":          map[string]string{"ja": "「" + notificationTitle + "」を公開しました", "en": "Published: " + notificationTitle},
 		"url":               articleURL,
 		"data":              map[string]string{"type": "article", "articleId": payload.ID},
+		"send_after":        now.Add(oneSignalSendDelay).UTC().Format(time.RFC3339),
 	}
 
 	body, err := json.Marshal(requestBody)
@@ -721,8 +723,8 @@ func createOneSignalNotificationRequest(ctx context.Context, config oneSignalCon
 	return req, nil
 }
 
-func sendOneSignalNotification(ctx context.Context, config oneSignalConfig, payload microCMSWebhookPayload, articleTitle, articleURL string) (string, error) {
-	req, err := createOneSignalNotificationRequest(ctx, config, payload, articleTitle, articleURL)
+func sendOneSignalNotification(ctx context.Context, config oneSignalConfig, payload microCMSWebhookPayload, articleTitle, articleURL string, now time.Time) (string, error) {
+	req, err := createOneSignalNotificationRequest(ctx, config, payload, articleTitle, articleURL, now)
 	if err != nil {
 		return "", err
 	}
@@ -785,7 +787,7 @@ func notifyMicroCMSFirstPublishWithOneSignal(ctx context.Context, config s3Backu
 		return oneSignalNotificationResult{}, err
 	}
 
-	notificationID, err := sendOneSignalNotification(ctx, oneSignalConfig, payload, articleTitle, articleURL)
+	notificationID, err := sendOneSignalNotification(ctx, oneSignalConfig, payload, articleTitle, articleURL, now)
 	if err != nil {
 		return oneSignalNotificationResult{MarkerKey: markerKey}, err
 	}
