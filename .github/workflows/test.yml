@@ -45,5 +45,7 @@ jobs:
         with:
           go-version-file: go.mod
           cache: true
+      - name: Vet
+        run: go vet ./...
       - name: Test
         run: go test ./...
