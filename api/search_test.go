@@ -20,6 +20,54 @@ func compactJSON(input string) string {
 	return buffer.String()
 }
 
+func mockZennSearchFeed(t *testing.T, body string) {
+	t.Helper()
+
+	resetZennSearchCache()
+	originalClient := zennSearchHTTPClient
+	zennSearchHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			if r.URL.String() != zennSearchFeedURL {
+				t.Fatalf("Zenn RSS URL = %q, want %q", r.URL.String(), zennSearchFeedURL)
+			}
+
+			if got := r.Header.Get("User-Agent"); got != "NextBlogApp-Search/1.0" {
+				t.Fatalf("User-Agent = %q, want %q", got, "NextBlogApp-Search/1.0")
+			}
+
+			return &http.Response{
+				StatusCode: http.StatusOK,
+				Header:     http.Header{"Content-Type": []string{"application/rss+xml"}},
+				Body:       io.NopCloser(strings.NewReader(body)),
+			}, nil
+		}),
+	}
+	t.Cleanup(func() {
+		zennSearchHTTPClient = originalClient
+		resetZennSearchCache()
+	})
+}
+
+func mockZennSearchStatus(t *testing.T, statusCode int, body string) {
+	t.Helper()
+
+	resetZennSearchCache()
+	originalClient := zennSearchHTTPClient
+	zennSearchHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			return &http.Response{
+				StatusCode: statusCode,
+				Header:     http.Header{"Content-Type": []string{"application/rss+xml"}},
+				Body:       io.NopCloser(strings.NewReader(body)),
+			}, nil
+		}),
+	}
+	t.Cleanup(func() {
+		zennSearchHTTPClient = originalClient
+		resetZennSearchCache()
+	})
+}
+
 func TestBuildMicroCMSSearchRequest(t *testing.T) {
 	req, err := buildMicroCMSSearchRequest("example", "api-key", 10, 20)
 	if err != nil {
@@ -36,6 +84,25 @@ func TestBuildMicroCMSSearchRequest(t *testing.T) {
 
 	if got := req.Header.Get("X-MICROCMS-API-KEY"); got != "api-key" {
 		t.Fatalf("X-MICROCMS-API-KEY = %q, want %q", got, "api-key")
+	}
+}
+
+func TestBuildZennSearchRequestUsesAllItemsFeed(t *testing.T) {
+	req, err := buildZennSearchRequest(t.Context())
+	if err != nil {
+		t.Fatalf("buildZennSearchRequest() error = %v", err)
+	}
+
+	if req.Method != http.MethodGet {
+		t.Fatalf("method = %s, want GET", req.Method)
+	}
+
+	if req.URL.String() != "https://zenn.dev/realunivlog/feed?all=1" {
+		t.Fatalf("url = %q", req.URL.String())
+	}
+
+	if got := req.Header.Get("Accept"); !strings.Contains(got, "application/rss+xml") {
+		t.Fatalf("Accept = %q, want RSS accept header", got)
 	}
 }
 
@@ -63,6 +130,25 @@ func TestArticleMatchesSearchQueryTargetsLegacyFields(t *testing.T) {
 
 	if articleMatchesSearchQuery(article, "Ignored") {
 		t.Fatal("articleMatchesSearchQuery() matched tag text, want false")
+	}
+}
+
+func TestZennSearchItemUsesContentEncodedForSearchOnly(t *testing.T) {
+	article := zennSearchItemToArticle(zennSearchRSSItem{
+		Title:          "Zenn title",
+		Link:           "https://zenn.dev/realunivlog/articles/content-search",
+		PubDate:        "Mon, 05 Feb 2024 00:00:00 GMT",
+		Description:    "<p>Summary only</p>",
+		ContentEncoded: "<p>React body</p>",
+	})
+
+	if !articleMatchesSearchQuery(article, "React") {
+		t.Fatal("articleMatchesSearchQuery() = false, want true for content:encoded")
+	}
+
+	projected := projectSearchResponseArticles([]map[string]interface{}{article})
+	if _, ok := projected[0][searchContentField]; ok {
+		t.Fatal("projectSearchResponseArticles() exposed internal search content")
 	}
 }
 
@@ -106,6 +192,7 @@ func TestSearchHandlerEmptyQuery(t *testing.T) {
 func TestSearchHandlerSuccess(t *testing.T) {
 	resetMicroCMSSearchCache()
 	t.Cleanup(resetMicroCMSSearchCache)
+	mockZennSearchFeed(t, `<rss><channel></channel></rss>`)
 	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
 	t.Setenv("MICROCMS_API_KEY", "api-key")
 
@@ -139,10 +226,10 @@ func TestSearchHandlerSuccess(t *testing.T) {
 				Header:     http.Header{"Content-Type": []string{"application/json"}},
 				Body: io.NopCloser(strings.NewReader(`{
 					"contents":[
-						{"id":"article-a","title":"React title","description":"Title match"},
-						{"id":"article-b","title":"Article B","description":"React description"},
-						{"id":"article-c","title":"Article C","description":"Body match","content_blocks":[{"rich_text":"<p>React body</p>"}]},
-						{"id":"article-d","title":"Article D","description":"Ignored","tags":[{"name":"React"}]}
+						{"id":"article-a","title":"React title","description":"Title match","publishedAt":"2024-01-04T00:00:00.000Z"},
+						{"id":"article-b","title":"Article B","description":"React description","publishedAt":"2024-01-03T00:00:00.000Z"},
+						{"id":"article-c","title":"Article C","description":"Body match","content_blocks":[{"rich_text":"<p>React body</p>"}],"publishedAt":"2024-01-02T00:00:00.000Z"},
+						{"id":"article-d","title":"Article D","description":"Ignored","tags":[{"name":"React"}],"publishedAt":"2024-01-01T00:00:00.000Z"}
 					],
 					"totalCount":4,
 					"offset":0,
@@ -165,7 +252,116 @@ func TestSearchHandlerSuccess(t *testing.T) {
 		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
 	}
 
-	if got := compactJSON(rec.Body.String()); got != `{"contents":[{"description":"React description","id":"article-b","title":"Article B"},{"description":"Body match","id":"article-c","title":"Article C"}],"totalCount":3,"offset":1,"limit":2}` {
+	if got := compactJSON(rec.Body.String()); got != `{"contents":[{"description":"React description","id":"blog-article-b","publishedAt":"2024-01-03T00:00:00.000Z","source":"blog","title":"Article B","url":"/articles/article-b"},{"description":"Body match","id":"blog-article-c","publishedAt":"2024-01-02T00:00:00.000Z","source":"blog","title":"Article C","url":"/articles/article-c"}],"totalCount":3,"offset":1,"limit":2}` {
+		t.Fatalf("body = %q", got)
+	}
+}
+
+func TestSearchHandlerIncludesZennArticles(t *testing.T) {
+	resetMicroCMSSearchCache()
+	t.Cleanup(resetMicroCMSSearchCache)
+	mockZennSearchFeed(t, `
+		<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:media="http://search.yahoo.com/mrss/">
+			<channel>
+				<item>
+					<title>React Zenn</title>
+					<link>https://zenn.dev/realunivlog/articles/react-zenn</link>
+					<pubDate>Mon, 05 Feb 2024 00:00:00 GMT</pubDate>
+					<description><![CDATA[<p>Zenn description</p>]]></description>
+					<content:encoded><![CDATA[<p>React body</p><img src="https://example.com/zenn.png">]]></content:encoded>
+					<media:thumbnail url="https://example.com/thumb.png"></media:thumbnail>
+				</item>
+				<item>
+					<title>Ignored Zenn</title>
+					<link>https://zenn.dev/realunivlog/articles/ignored-zenn</link>
+					<pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate>
+					<description>No match</description>
+				</item>
+			</channel>
+		</rss>
+	`)
+	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
+	t.Setenv("MICROCMS_API_KEY", "api-key")
+
+	originalClient := microCMSSearchHTTPClient
+	originalBaseURL := microCMSSearchAPIBaseURL
+	microCMSSearchAPIBaseURL = "https://%s.microcms.test/api/v1/blog"
+	microCMSSearchHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			return &http.Response{
+				StatusCode: http.StatusOK,
+				Header:     http.Header{"Content-Type": []string{"application/json"}},
+				Body: io.NopCloser(strings.NewReader(`{
+					"contents":[
+						{"id":"article-a","title":"React Blog","description":"Blog description","publishedAt":"2024-01-01T00:00:00.000Z"}
+					],
+					"totalCount":1,
+					"offset":0,
+					"limit":100
+				}`)),
+			}, nil
+		}),
+	}
+	t.Cleanup(func() {
+		microCMSSearchHTTPClient = originalClient
+		microCMSSearchAPIBaseURL = originalBaseURL
+	})
+
+	req := httptest.NewRequest(http.MethodGet, "/api/search?q=React", nil)
+	rec := httptest.NewRecorder()
+
+	SearchHandler(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
+	}
+
+	if got := compactJSON(rec.Body.String()); got != `{"contents":[{"description":"Zenn description","id":"zenn-react-zenn","publishedAt":"2024-02-05T00:00:00Z","source":"zenn","thumbnailUrl":"https://example.com/thumb.png","title":"React Zenn","url":"https://zenn.dev/realunivlog/articles/react-zenn"},{"description":"Blog description","id":"blog-article-a","publishedAt":"2024-01-01T00:00:00.000Z","source":"blog","title":"React Blog","url":"/articles/article-a"}],"totalCount":2,"offset":0,"limit":10}` {
+		t.Fatalf("body = %q", got)
+	}
+}
+
+func TestSearchHandlerContinuesWhenZennRSSFails(t *testing.T) {
+	resetMicroCMSSearchCache()
+	t.Cleanup(resetMicroCMSSearchCache)
+	mockZennSearchStatus(t, http.StatusServiceUnavailable, "unavailable")
+	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
+	t.Setenv("MICROCMS_API_KEY", "api-key")
+
+	originalClient := microCMSSearchHTTPClient
+	originalBaseURL := microCMSSearchAPIBaseURL
+	microCMSSearchAPIBaseURL = "https://%s.microcms.test/api/v1/blog"
+	microCMSSearchHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			return &http.Response{
+				StatusCode: http.StatusOK,
+				Header:     http.Header{"Content-Type": []string{"application/json"}},
+				Body: io.NopCloser(strings.NewReader(`{
+					"contents":[
+						{"id":"article-a","title":"React Blog","description":"Blog description","publishedAt":"2024-01-01T00:00:00.000Z"}
+					],
+					"totalCount":1,
+					"offset":0,
+					"limit":100
+				}`)),
+			}, nil
+		}),
+	}
+	t.Cleanup(func() {
+		microCMSSearchHTTPClient = originalClient
+		microCMSSearchAPIBaseURL = originalBaseURL
+	})
+
+	req := httptest.NewRequest(http.MethodGet, "/api/search?q=React", nil)
+	rec := httptest.NewRecorder()
+
+	SearchHandler(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
+	}
+
+	if got := compactJSON(rec.Body.String()); got != `{"contents":[{"description":"Blog description","id":"blog-article-a","publishedAt":"2024-01-01T00:00:00.000Z","source":"blog","title":"React Blog","url":"/articles/article-a"}],"totalCount":1,"offset":0,"limit":10}` {
 		t.Fatalf("body = %q", got)
 	}
 }
@@ -173,6 +369,7 @@ func TestSearchHandlerSuccess(t *testing.T) {
 func TestSearchHandlerUsesCachedMicroCMSArticles(t *testing.T) {
 	resetMicroCMSSearchCache()
 	t.Cleanup(resetMicroCMSSearchCache)
+	mockZennSearchFeed(t, `<rss><channel></channel></rss>`)
 	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
 	t.Setenv("MICROCMS_API_KEY", "api-key")
 

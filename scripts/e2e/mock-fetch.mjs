@@ -155,7 +155,11 @@ globalThis.fetch = async (input, init) => {
     return microCmsResponse;
   }
 
-  if (url.href === 'https://zenn.dev/realunivlog/feed') {
+  if (
+    url.origin === 'https://zenn.dev' &&
+    url.pathname === '/realunivlog/feed' &&
+    (url.search === '' || url.searchParams.get('all') === '1')
+  ) {
     return new Response(createZennFeedXml(), {
       headers: {
         'content-type': 'application/rss+xml; charset=utf-8',

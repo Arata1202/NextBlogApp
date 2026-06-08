@@ -25,17 +25,19 @@ vi.mock('@/components/Common/PageHeading', () => ({
 vi.mock('@/components/Common/ArticleList', () => ({
   default: (props: {
     articles: { title: string }[];
+    mixedArticles?: { title: string }[];
     emptyMessage: string;
     isLoading?: boolean;
   }) => {
     articleListMock(props);
+    const visibleArticles = props.mixedArticles ?? props.articles;
 
     return (
       <div>
-        {props.articles.map((article) => (
+        {visibleArticles.map((article) => (
           <div key={article.title}>{article.title}</div>
         ))}
-        {!props.isLoading && props.articles.length === 0 && <div>{props.emptyMessage}</div>}
+        {!props.isLoading && visibleArticles.length === 0 && <div>{props.emptyMessage}</div>}
       </div>
     );
   },
@@ -74,7 +76,7 @@ describe('SearchPage', () => {
     fetchMock.mockResolvedValue({
       ok: true,
       json: async () => ({
-        contents: [createArticle({ title: 'React article' })],
+        contents: [createArticle({ id: 'react-article', title: 'React article' })],
         totalCount: 12,
       }),
     });
@@ -90,6 +92,17 @@ describe('SearchPage', () => {
     expect(screen.getByText('「React」の検索結果')).toBeInTheDocument();
     expect(await screen.findByText('React article')).toBeInTheDocument();
     expect(screen.getByText('pagination:12:2')).toBeInTheDocument();
+    expect(articleListMock).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        mixedArticles: [
+          expect.objectContaining({
+            id: 'blog-react-article',
+            source: 'blog',
+            url: '/articles/react-article',
+          }),
+        ],
+      }),
+    );
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
     const [url, init] = fetchMock.mock.calls[0];
@@ -140,6 +153,7 @@ describe('SearchPage', () => {
     expect(articleListMock).toHaveBeenCalledWith(
       expect.objectContaining({
         articles: [],
+        mixedArticles: [],
         emptyMessage: '記事はまだありません',
         isLoading: false,
       }),
@@ -162,6 +176,7 @@ describe('SearchPage', () => {
       expect(articleListMock).toHaveBeenLastCalledWith(
         expect.objectContaining({
           articles: [],
+          mixedArticles: [],
           emptyMessage: '記事はまだありません',
           isLoading: false,
         }),

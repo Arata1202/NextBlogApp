@@ -3,6 +3,10 @@ import { UnifiedArticle } from '@/types/unified';
 
 const FALLBACK_IMAGE = '/images/blog/title.webp';
 
+type GetZennFeedOptions = {
+  includeAll?: boolean;
+};
+
 const extractFirstImage = (html: string) => {
   const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
   return match?.[1];
@@ -19,9 +23,38 @@ const truncate = (text: string, max = 140) => {
   return `${text.slice(0, max - 1)}…`;
 };
 
-export const getZennFeed = async (userId: string, limit = 10): Promise<UnifiedArticle[]> => {
+const buildZennFeedUrl = (userId: string, includeAll = false) => {
+  const url = new URL(`https://zenn.dev/${encodeURIComponent(userId)}/feed`);
+  if (includeAll) {
+    url.searchParams.set('all', '1');
+  }
+
+  return url.toString();
+};
+
+const getZennArticleId = (link: string, index: number) => {
   try {
-    const url = `https://zenn.dev/${userId}/feed`;
+    const url = new URL(link);
+    const segments = url.pathname.split('/').filter(Boolean);
+    const slug = segments[1] === 'articles' ? segments[2] : undefined;
+
+    if (url.hostname === 'zenn.dev' && slug) {
+      return `zenn-${decodeURIComponent(slug)}`;
+    }
+  } catch {
+    // Fall back to an index only for malformed RSS links.
+  }
+
+  return `zenn-${index}`;
+};
+
+export const getZennFeed = async (
+  userId: string,
+  limit = 10,
+  options: GetZennFeedOptions = {},
+): Promise<UnifiedArticle[]> => {
+  try {
+    const url = buildZennFeedUrl(userId, options.includeAll);
     const res = await fetch(url, {
       next: { revalidate: 3600 },
     });
@@ -54,7 +87,7 @@ export const getZennFeed = async (userId: string, limit = 10): Promise<UnifiedAr
         const description = truncate(extractText(descriptionHtml || contentHtml));
 
         return {
-          id: `zenn-${index}`,
+          id: getZennArticleId(link, index),
           title,
           description,
           publishedAt: pubDate,

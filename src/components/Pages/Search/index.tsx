@@ -3,7 +3,7 @@
 import * as Sentry from '@sentry/nextjs';
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Article, Tag } from '@/types/microcms';
+import { Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
 import { UnifiedArticle } from '@/types/unified';
 import { LIMIT } from '@/constants/limit';
@@ -20,14 +20,24 @@ type Props = {
 };
 
 type SearchResponse = {
-  contents?: Article[];
+  contents?: SearchArticlePayload[];
   totalCount?: number;
+};
+
+type SearchArticlePayload = Partial<UnifiedArticle> & {
+  id?: unknown;
+  title?: unknown;
+  description?: unknown;
+  publishedAt?: unknown;
+  updatedAt?: unknown;
+  url?: unknown;
+  source?: unknown;
 };
 
 type SearchStatus = 'idle' | 'loading' | 'success' | 'error';
 
 type SearchState = {
-  articles: Article[];
+  articles: UnifiedArticle[];
   currentPage: number;
   query: string;
   status: SearchStatus;
@@ -57,6 +67,50 @@ const getSearchUrl = (endpoint: string, query: string, currentPage: number) => {
   url.searchParams.set('offset', String((currentPage - 1) * LIMIT));
 
   return url.toString();
+};
+
+const getPayloadString = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
+
+const normalizeSearchArticle = (article: SearchArticlePayload): UnifiedArticle | null => {
+  const rawId = getPayloadString(article.id);
+  const title = getPayloadString(article.title);
+
+  if (!rawId || !title) {
+    return null;
+  }
+
+  const source = article.source === 'zenn' ? 'zenn' : 'blog';
+  const contentId = source === 'blog' && rawId.startsWith('blog-') ? rawId.slice(5) : rawId;
+  const normalizedId = source === 'blog' && !rawId.startsWith('blog-') ? `blog-${rawId}` : rawId;
+  const fallbackUrl = source === 'blog' ? `/articles/${contentId}` : '';
+  const url = getPayloadString(article.url) || fallbackUrl;
+
+  if (!url) {
+    return null;
+  }
+
+  return {
+    id: normalizedId,
+    title,
+    description: getPayloadString(article.description),
+    publishedAt: getPayloadString(article.publishedAt) || getPayloadString(article.updatedAt),
+    updatedAt: getPayloadString(article.updatedAt) || undefined,
+    thumbnail: article.thumbnail,
+    thumbnailUrl: article.thumbnailUrl,
+    url,
+    source,
+  };
+};
+
+const normalizeSearchArticles = (contents: SearchResponse['contents']) => {
+  if (!Array.isArray(contents)) {
+    return [];
+  }
+
+  return contents.flatMap((article) => {
+    const normalizedArticle = normalizeSearchArticle(article);
+    return normalizedArticle ? [normalizedArticle] : [];
+  });
 };
 
 export default function SearchPage({ recentArticles, tags, archiveList }: Props) {
@@ -108,7 +162,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
         }
 
         const data = (await response.json()) as SearchResponse;
-        const contents = Array.isArray(data.contents) ? data.contents : [];
+        const contents = normalizeSearchArticles(data.contents);
 
         setSearchState({
           articles: contents,
@@ -160,7 +214,8 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
     <>
       <PageHeading page={{ type: 'search', searchKeyword: query }} />
       <ArticleList
-        articles={articles}
+        articles={[]}
+        mixedArticles={articles}
         recentArticles={recentArticles}
         tags={tags}
         archiveList={archiveList}

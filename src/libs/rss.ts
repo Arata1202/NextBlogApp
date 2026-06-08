@@ -45,7 +45,7 @@ export const generateRssFeedXml = async () => {
     source: 'blog',
   }));
 
-  const zennItems = await getZennFeed('realunivlog', 50);
+  const zennItems = await getZennFeed('realunivlog', 50, { includeAll: true });
 
   const merged = [...blogItems, ...zennItems].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),

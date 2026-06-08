@@ -55,6 +55,7 @@ describe('generateRssFeed', () => {
     const rss = await generateRssFeedXml();
 
     expect(fsMock.writeFileSync).not.toHaveBeenCalled();
+    expect(zennMock.getZennFeed).toHaveBeenCalledWith('realunivlog', 50, { includeAll: true });
     expect(rss).toContain('<title><![CDATA[Zenn A]]></title>');
     expect(rss).toContain('<title><![CDATA[Blog A]]></title>');
     expect(rss).toContain('https://example.com/articles/blog-a');

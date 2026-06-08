@@ -41,7 +41,7 @@ describe('getZennFeed', () => {
     });
     expect(result).toEqual([
       {
-        id: 'zenn-0',
+        id: 'zenn-first',
         title: 'First article',
         description: 'First description',
         publishedAt: 'Mon, 01 Jan 2024 00:00:00 GMT',
@@ -50,13 +50,26 @@ describe('getZennFeed', () => {
         source: 'zenn',
       },
       expect.objectContaining({
-        id: 'zenn-1',
+        id: 'zenn-second',
         thumbnailUrl: 'https://example.com/content.png',
         source: 'zenn',
       }),
     ]);
     expect(result[1].description).toHaveLength(140);
     expect(result[1].description.endsWith('…')).toBe(true);
+  });
+
+  it('uses the all-items RSS feed only when explicitly requested', async () => {
+    fetchMock.mockResolvedValue({
+      ok: true,
+      text: async () => '<rss><channel></channel></rss>',
+    });
+
+    await getZennFeed('user', 50, { includeAll: true });
+
+    expect(fetchMock).toHaveBeenCalledWith('https://zenn.dev/user/feed?all=1', {
+      next: { revalidate: 3600 },
+    });
   });
 
   it('returns an empty list when the RSS request fails', async () => {
