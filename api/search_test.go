@@ -2,7 +2,9 @@ package api
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -149,6 +151,20 @@ func TestZennSearchItemUsesContentEncodedForSearchOnly(t *testing.T) {
 	projected := projectSearchResponseArticles([]map[string]interface{}{article})
 	if _, ok := projected[0][searchContentField]; ok {
 		t.Fatal("projectSearchResponseArticles() exposed internal search content")
+	}
+}
+
+func TestShouldReportZennSearchErrorIgnoresExpectedCancellation(t *testing.T) {
+	if shouldReportZennSearchError(context.Canceled) {
+		t.Fatal("shouldReportZennSearchError(context.Canceled) = true, want false")
+	}
+
+	if shouldReportZennSearchError(context.DeadlineExceeded) {
+		t.Fatal("shouldReportZennSearchError(context.DeadlineExceeded) = true, want false")
+	}
+
+	if !shouldReportZennSearchError(errors.New("unexpected zenn failure")) {
+		t.Fatal("shouldReportZennSearchError(unexpected error) = false, want true")
 	}
 }
 

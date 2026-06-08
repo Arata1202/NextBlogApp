@@ -448,6 +448,10 @@ func requestZennSearchArticles(ctx context.Context) <-chan zennSearchResult {
 	return resultCh
 }
 
+func shouldReportZennSearchError(err error) bool {
+	return !errors.Is(err, context.Canceled) && !errors.Is(err, context.DeadlineExceeded)
+}
+
 func filterSearchArticles(articles []map[string]interface{}, query string) []map[string]interface{} {
 	matchedArticles := []map[string]interface{}{}
 	terms := searchTerms(query)
@@ -745,12 +749,14 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	matchedZennArticles := []map[string]interface{}{}
 	zennResult := <-zennResultCh
 	if zennResult.err != nil {
-		log.Printf("Failed to request Zenn search: %v", zennResult.err)
-		monitoring.CaptureError(zennResult.err, monitoring.EventContext{
-			Feature:   "search",
-			Operation: "fetch_zenn_articles",
-			Request:   r,
-		})
+		if shouldReportZennSearchError(zennResult.err) {
+			log.Printf("Failed to request Zenn search: %v", zennResult.err)
+			monitoring.CaptureError(zennResult.err, monitoring.EventContext{
+				Feature:   "search",
+				Operation: "fetch_zenn_articles",
+				Request:   r,
+			})
+		}
 	} else {
 		matchedZennArticles = filterSearchArticles(zennResult.articles, query)
 	}
