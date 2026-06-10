@@ -1,4 +1,4 @@
-package cron
+package linkchecker
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	webhookapi "NextBlogApp/api/webhook"
+	contentops "NextBlogApp/internal/contentops"
 )
 
 func setZennNotificationEnv(t *testing.T) {
@@ -73,10 +73,10 @@ func TestRunZennFirstPublishNotifications(t *testing.T) {
 		}),
 	}
 
-	var capturedArticles []webhookapi.ExternalArticleNotification
-	zennNotifyArticlesWithOneSignal = func(ctx context.Context, articles []webhookapi.ExternalArticleNotification, now time.Time) ([]webhookapi.OneSignalNotificationResult, error) {
-		capturedArticles = append([]webhookapi.ExternalArticleNotification{}, articles...)
-		return []webhookapi.OneSignalNotificationResult{
+	var capturedArticles []contentops.ExternalArticleNotification
+	zennNotifyArticlesWithOneSignal = func(ctx context.Context, articles []contentops.ExternalArticleNotification, now time.Time) ([]contentops.OneSignalNotificationResult, error) {
+		capturedArticles = append([]contentops.ExternalArticleNotification{}, articles...)
+		return []contentops.OneSignalNotificationResult{
 			{MarkerKey: "onesignal/notifications/zenn/first-zenn.json"},
 			{Sent: true, MarkerCreated: true, MarkerKey: "onesignal/notifications/zenn/second-zenn.json", NotificationID: "notification-a"},
 		}, nil
@@ -92,7 +92,7 @@ func TestRunZennFirstPublishNotifications(t *testing.T) {
 		t.Fatalf("runZennFirstPublishNotifications() error = %v", err)
 	}
 
-	wantArticles := []webhookapi.ExternalArticleNotification{
+	wantArticles := []contentops.ExternalArticleNotification{
 		{Source: "zenn", ContentID: "first-zenn", Title: "First Zenn", URL: "https://zenn.dev/realunivlog/articles/first-zenn"},
 		{Source: "zenn", ContentID: "second-zenn", Title: "Second Zenn", URL: "https://zenn.dev/realunivlog/articles/second-zenn"},
 	}
@@ -133,8 +133,8 @@ func TestRunZennFirstPublishNotificationsTriggersCloudflarePagesDeploy(t *testin
 			`), nil
 		}),
 	}
-	zennNotifyArticlesWithOneSignal = func(ctx context.Context, articles []webhookapi.ExternalArticleNotification, now time.Time) ([]webhookapi.OneSignalNotificationResult, error) {
-		return []webhookapi.OneSignalNotificationResult{
+	zennNotifyArticlesWithOneSignal = func(ctx context.Context, articles []contentops.ExternalArticleNotification, now time.Time) ([]contentops.OneSignalNotificationResult, error) {
+		return []contentops.OneSignalNotificationResult{
 			{Sent: true, MarkerCreated: true, MarkerKey: "onesignal/notifications/zenn/zenn-a.json", NotificationID: "notification-a"},
 		}, nil
 	}
@@ -193,8 +193,8 @@ func TestRunZennFirstPublishNotificationsTriggersDeployWhenOneSignalFailsAfterMa
 			`), nil
 		}),
 	}
-	zennNotifyArticlesWithOneSignal = func(ctx context.Context, articles []webhookapi.ExternalArticleNotification, now time.Time) ([]webhookapi.OneSignalNotificationResult, error) {
-		return []webhookapi.OneSignalNotificationResult{
+	zennNotifyArticlesWithOneSignal = func(ctx context.Context, articles []contentops.ExternalArticleNotification, now time.Time) ([]contentops.OneSignalNotificationResult, error) {
+		return []contentops.OneSignalNotificationResult{
 			{MarkerCreated: true, MarkerKey: "onesignal/notifications/zenn/zenn-a.json"},
 		}, errors.New("onesignal failed")
 	}
