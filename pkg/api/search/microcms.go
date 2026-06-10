@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"NextBlogApp/internal/microcms"
+	"NextBlogApp/pkg/api/microcms"
 )
 
 type microCMSSearchListResponse = microcms.ListResponse

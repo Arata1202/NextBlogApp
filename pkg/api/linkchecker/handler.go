@@ -8,8 +8,8 @@ import (
 	"os"
 	"time"
 
-	"NextBlogApp/internal/httpx"
-	"NextBlogApp/internal/monitoring"
+	"NextBlogApp/pkg/api/httpx"
+	"NextBlogApp/pkg/api/monitoring"
 )
 
 func writeLinkCheckerJSON(w http.ResponseWriter, statusCode int, response interface{}) {

@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"NextBlogApp/internal/search"
+	"NextBlogApp/pkg/api/search"
 )
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {

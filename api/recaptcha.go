@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"NextBlogApp/internal/recaptcha"
+	"NextBlogApp/pkg/api/recaptcha"
 )
 
 func RecaptchaHandler(w http.ResponseWriter, r *http.Request) {

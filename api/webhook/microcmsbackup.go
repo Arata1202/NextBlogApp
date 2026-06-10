@@ -3,7 +3,7 @@ package webhook
 import (
 	"net/http"
 
-	"NextBlogApp/internal/contentops"
+	"NextBlogApp/pkg/api/contentops"
 )
 
 func MicroCMSBackupHandler(w http.ResponseWriter, r *http.Request) {

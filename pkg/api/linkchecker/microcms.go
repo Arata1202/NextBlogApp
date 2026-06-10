@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"NextBlogApp/internal/microcms"
+	"NextBlogApp/pkg/api/microcms"
 )
 
 func buildMicroCMSLinkCheckerRequest(ctx context.Context, serviceDomain, apiKey string, limit, offset int) (*http.Request, error) {

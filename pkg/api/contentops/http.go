@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"NextBlogApp/internal/httpx"
+	"NextBlogApp/pkg/api/httpx"
 )
 
 func writeMicroCMSBackupJSON(w http.ResponseWriter, statusCode int, response interface{}) {

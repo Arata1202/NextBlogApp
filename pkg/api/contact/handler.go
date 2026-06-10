@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"os"
 
-	"NextBlogApp/internal/httpx"
-	"NextBlogApp/internal/monitoring"
-	"NextBlogApp/internal/recaptcha"
+	"NextBlogApp/pkg/api/httpx"
+	"NextBlogApp/pkg/api/monitoring"
+	"NextBlogApp/pkg/api/recaptcha"
 )
 
 var (

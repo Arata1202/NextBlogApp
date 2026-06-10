@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	contentops "NextBlogApp/internal/contentops"
+	contentops "NextBlogApp/pkg/api/contentops"
 )
 
 func TestLinkCheckerHandlerUnauthorized(t *testing.T) {

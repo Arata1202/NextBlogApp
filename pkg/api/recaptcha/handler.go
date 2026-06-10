@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	"NextBlogApp/internal/httpx"
-	"NextBlogApp/internal/monitoring"
+	"NextBlogApp/pkg/api/httpx"
+	"NextBlogApp/pkg/api/monitoring"
 )
 
 func RecaptchaHandler(w http.ResponseWriter, r *http.Request) {

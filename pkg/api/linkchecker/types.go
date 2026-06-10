@@ -3,8 +3,8 @@ package linkchecker
 import (
 	"time"
 
-	contentops "NextBlogApp/internal/contentops"
-	"NextBlogApp/internal/microcms"
+	contentops "NextBlogApp/pkg/api/contentops"
+	"NextBlogApp/pkg/api/microcms"
 )
 
 type microCMSLinkCheckerListResponse = microcms.ListResponse

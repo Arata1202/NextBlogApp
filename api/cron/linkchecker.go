@@ -3,7 +3,7 @@ package cron
 import (
 	"net/http"
 
-	"NextBlogApp/internal/linkchecker"
+	"NextBlogApp/pkg/api/linkchecker"
 )
 
 func LinkCheckerHandler(w http.ResponseWriter, r *http.Request) {

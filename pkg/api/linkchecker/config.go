@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"time"
 
-	contentops "NextBlogApp/internal/contentops"
+	contentops "NextBlogApp/pkg/api/contentops"
 )
 
 const (

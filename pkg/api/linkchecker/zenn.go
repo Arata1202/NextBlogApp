@@ -15,7 +15,7 @@ import (
 	"strings"
 	"time"
 
-	contentops "NextBlogApp/internal/contentops"
+	contentops "NextBlogApp/pkg/api/contentops"
 )
 
 func zennNotificationsConfigured() bool {

@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"os"
 
-	"NextBlogApp/internal/monitoring"
+	"NextBlogApp/pkg/api/monitoring"
 )
 
 func MicroCMSBackupHandler(w http.ResponseWriter, r *http.Request) {

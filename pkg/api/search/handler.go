@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"NextBlogApp/internal/httpx"
-	"NextBlogApp/internal/monitoring"
+	"NextBlogApp/pkg/api/httpx"
+	"NextBlogApp/pkg/api/monitoring"
 )
 
 type searchResponse struct {

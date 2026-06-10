@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	"NextBlogApp/internal/microcms"
+	"NextBlogApp/pkg/api/microcms"
 )
 
 func buildMicroCMSBackupRequest(ctx context.Context, serviceDomain, apiKey string, limit, offset int) (*http.Request, error) {

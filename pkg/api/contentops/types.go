@@ -1,6 +1,6 @@
 package contentops
 
-import "NextBlogApp/internal/microcms"
+import "NextBlogApp/pkg/api/microcms"
 
 type microCMSBackupListResponse = microcms.ListResponse
 
