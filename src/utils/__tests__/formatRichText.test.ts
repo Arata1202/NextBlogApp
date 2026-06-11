@@ -55,4 +55,19 @@ describe('formatRichText', () => {
     expect(html.match(new RegExp(ARTICLE_CONTENT_AD_MARKER, 'g'))).toHaveLength(2);
     expect(html.indexOf(ARTICLE_CONTENT_AD_MARKER)).toBeLessThan(html.indexOf('<h2>First</h2>'));
   });
+
+  it('sanitizes unsafe attributes, URLs, and scripts before rendering rich text', () => {
+    const html = formatRichText(`
+      <p onclick="alert(1)">Body</p>
+      <a href="javascript:alert(1)">Unsafe link</a>
+      <script>window.__unsafe = true;</script>
+    `);
+
+    expect(html).toContain('<p>Body</p>');
+    expect(html).toContain('<a>Unsafe link</a>');
+    expect(html).not.toContain('onclick');
+    expect(html).not.toContain('javascript:');
+    expect(html).not.toContain('<script');
+    expect(html).not.toContain('window.__unsafe');
+  });
 });

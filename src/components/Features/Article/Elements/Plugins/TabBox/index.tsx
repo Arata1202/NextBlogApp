@@ -6,6 +6,7 @@ import {
 } from '@heroicons/react/20/solid';
 import { ContentBlock } from '@/types/microcms';
 import styles from './index.module.css';
+import { sanitizeCmsHtml } from '@/utils/htmlSanitizer';
 
 type Props = {
   block: ContentBlock;
@@ -22,6 +23,14 @@ export default function TabBox({
   point = false,
   common = false,
 }: Props) {
+  const renderHtml = (html: string | undefined) => {
+    if (!html) {
+      return null;
+    }
+
+    return <div dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(html) }} />;
+  };
+
   return (
     <>
       <div
@@ -33,7 +42,7 @@ export default function TabBox({
               className={`h-8 w-8 ${styles.tab_merit_box_icon}`}
               aria-hidden="true"
             />
-            <div dangerouslySetInnerHTML={{ __html: block.box_merit! }} />
+            {renderHtml(block.box_merit)}
           </>
         )}
         {demerit && (
@@ -42,13 +51,13 @@ export default function TabBox({
               className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
               aria-hidden="true"
             />
-            <div dangerouslySetInnerHTML={{ __html: block.box_demerit! }} />
+            {renderHtml(block.box_demerit)}
           </>
         )}
         {point && (
           <>
             <LightBulbIcon className={`h-8 w-8 ${styles.tab_point_box_icon}`} aria-hidden="true" />
-            <div dangerouslySetInnerHTML={{ __html: block.box_point! }} />
+            {renderHtml(block.box_point)}
           </>
         )}
         {common && (
@@ -57,7 +66,7 @@ export default function TabBox({
               className={`h-8 w-8 ${styles.tab_common_box_icon}`}
               aria-hidden="true"
             />
-            <div dangerouslySetInnerHTML={{ __html: block.box_common! }} />
+            {renderHtml(block.box_common)}
           </>
         )}
       </div>

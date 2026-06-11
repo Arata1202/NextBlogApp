@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from 'next-themes';
 import { HandThumbUpIcon } from '@heroicons/react/24/solid';
 import {

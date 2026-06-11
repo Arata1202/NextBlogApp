@@ -23,8 +23,8 @@ export default function WebpImage({
   }
 
   const alt = card || recent ? '' : article.title;
-  const width = card ? 240 : 960;
-  const height = card ? 126 : 504;
+  const width = card ? 300 : 960;
+  const height = card ? 158 : 504;
   const imageUrl = formatMicroCmsImageUrl(article.thumbnail.url, {
     width,
     height,
@@ -48,8 +48,10 @@ export default function WebpImage({
         src={imageUrl}
         alt={alt}
         className={(card && styles.image) || (recent && styles.recent) || styles.thumbnail}
-        width={article.thumbnail?.width}
-        height={article.thumbnail?.height}
+        width={width}
+        height={height}
+        loading={priority ? 'eager' : 'lazy'}
+        decoding="async"
         fetchPriority={priority ? 'high' : undefined}
       />
     </picture>

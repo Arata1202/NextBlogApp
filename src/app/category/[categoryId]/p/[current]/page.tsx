@@ -17,6 +17,8 @@ export const metadata = {
   },
 };
 
+export const dynamicParams = false;
+
 export const generateStaticParams = async () => {
   const categories = await getAllCategoryLists({
     fields: 'id',

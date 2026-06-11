@@ -16,8 +16,10 @@ describe('WebpImage', () => {
     render(<WebpImage article={article} />);
 
     const image = screen.getByRole('img', { name: 'Article image' });
-    expect(image).toHaveAttribute('width', '1200');
-    expect(image).toHaveAttribute('height', '630');
+    expect(image).toHaveAttribute('width', '960');
+    expect(image).toHaveAttribute('height', '504');
+    expect(image).toHaveAttribute('loading', 'lazy');
+    expect(image).toHaveAttribute('decoding', 'async');
     expect(image).toHaveAttribute('src', expect.stringContaining('w=960'));
     expect(image).toHaveAttribute('src', expect.stringContaining('h=504'));
     expect(image?.getAttribute('src')).not.toContain(' 1x, ');
@@ -29,8 +31,10 @@ describe('WebpImage', () => {
     const image = container.querySelector('img');
 
     expect(image).toHaveAttribute('alt', '');
-    expect(image).toHaveAttribute('src', expect.stringContaining('w=240'));
-    expect(image).toHaveAttribute('src', expect.stringContaining('h=126'));
+    expect(image).toHaveAttribute('width', '300');
+    expect(image).toHaveAttribute('height', '158');
+    expect(image).toHaveAttribute('src', expect.stringContaining('w=300'));
+    expect(image).toHaveAttribute('src', expect.stringContaining('h=158'));
   });
 
   it('marks priority images with a high fetch priority', () => {
@@ -40,6 +44,7 @@ describe('WebpImage', () => {
       'fetchpriority',
       'high',
     );
+    expect(screen.getByRole('img', { name: 'Article image' })).toHaveAttribute('loading', 'eager');
   });
 
   it('renders sources for webp candidates', () => {

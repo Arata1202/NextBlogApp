@@ -19,7 +19,7 @@ export default function OneSignal() {
           window.OneSignalDeferred = window.OneSignalDeferred || [];
           OneSignalDeferred.push(async function(OneSignal) {
             await OneSignal.init({
-              appId: "${onesignalAppId}",
+              appId: ${JSON.stringify(onesignalAppId)},
             });
           });
         `}

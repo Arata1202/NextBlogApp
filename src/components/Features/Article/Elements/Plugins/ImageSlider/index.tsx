@@ -5,6 +5,7 @@ import Slider, { type CustomArrowProps } from 'react-slick';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { ContentBlock, IntroductionBlock } from '@/types/microcms';
 import { useIsClient } from '@/hooks/useIsClient';
+import { formatMicroCmsImageUrl } from '@/utils/formatMicroCmsImageUrl';
 import styles from './index.module.css';
 
 type Props = {
@@ -91,20 +92,29 @@ export default function ImageSlider({ block, imageAltFallback }: Props) {
       ? `${imageAltFallback}の画像`
       : `${imageAltFallback}の画像 ${index + 1}`;
   };
-  const renderImage = (image: (typeof images)[number], index: number) => (
-    <img
-      src={`${image.url}?fm=webp&q=70&fit=clip&w=960`}
-      srcSet={`${image.url}?fm=webp&q=70&fit=clip&w=640 640w, ${image.url}?fm=webp&q=70&fit=clip&w=960 960w, ${image.url}?fm=webp&q=70&fit=clip&w=1200 1200w`}
-      sizes="(max-width: 768px) 100vw, 960px"
-      alt={getAlt(index)}
-      width={image.width}
-      height={image.height}
-      loading={index === 0 ? 'eager' : 'lazy'}
-      className={styles.image}
-      tabIndex={-1}
-      draggable={false}
-    />
-  );
+  const renderImage = (image: (typeof images)[number], index: number) => {
+    const imageUrl = formatMicroCmsImageUrl(image.url, { width: 960, quality: 70, fit: 'clip' });
+    const srcSet = [640, 960, 1200]
+      .map((width) => {
+        return `${formatMicroCmsImageUrl(image.url, { width, quality: 70, fit: 'clip' })} ${width}w`;
+      })
+      .join(', ');
+
+    return (
+      <img
+        src={imageUrl}
+        srcSet={srcSet}
+        sizes="(max-width: 768px) 100vw, 960px"
+        alt={getAlt(index)}
+        width={image.width}
+        height={image.height}
+        loading={index === 0 ? 'eager' : 'lazy'}
+        className={styles.image}
+        tabIndex={-1}
+        draggable={false}
+      />
+    );
+  };
 
   if (!isMultiple || !isClient) {
     return (

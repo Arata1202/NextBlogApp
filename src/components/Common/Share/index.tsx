@@ -1,5 +1,3 @@
-'use client';
-
 import { Article } from '@/types/microcms';
 import ShareSection from './Elements/ShareSection';
 import FollowSection from './Elements/FollowSection';

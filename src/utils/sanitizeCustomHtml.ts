@@ -1,27 +1,12 @@
-import * as cheerio from 'cheerio';
 import {
   CUSTOM_HTML_MOSHIMO_SCRIPT_ATTRIBUTE,
   CUSTOM_HTML_SCRIPT_SRC_ATTRIBUTE,
 } from '@/constants/customHtml';
-import { SAFE_RESOURCE_PROTOCOLS, hasSafeUrlProtocol } from '@/utils/urlSafety';
+import { isSafeResourceUrl, loadHtmlFragment, sanitizeHtmlAttributes } from '@/utils/htmlSanitizer';
 
-const URL_ATTRIBUTES = new Set(['href', 'src', 'xlink:href']);
 const INERT_SCRIPT_TYPE = 'application/json';
 const MOSHIMO_SCRIPT_ID = 'msmaflink';
 const MOSHIMO_SCRIPT_KEYWORD = 'MoshimoAffiliateEasyLink';
-
-const loadHtmlFragment = (html: string) => {
-  const load = cheerio.load as unknown as (
-    content: string,
-    options: null,
-    isDocument: boolean,
-  ) => ReturnType<typeof cheerio.load>;
-
-  return load(html, null, false);
-};
-
-const isSafeHtmlAttributeUrl = (value: string) => hasSafeUrlProtocol(value);
-const isSafeScriptSrc = (value: string) => hasSafeUrlProtocol(value, SAFE_RESOURCE_PROTOCOLS);
 
 const isMoshimoEasyLinkScript = (src: string | undefined, text: string) => {
   return (
@@ -34,23 +19,7 @@ const isMoshimoEasyLinkScript = (src: string | undefined, text: string) => {
 export const sanitizeCustomHtml = (html: string) => {
   const $ = loadHtmlFragment(html);
 
-  $('*').each((_, element) => {
-    const target = $(element);
-    const attributes = target.attr() ?? {};
-
-    Object.entries(attributes).forEach(([attributeName, attributeValue]) => {
-      const normalizedAttributeName = attributeName.toLowerCase();
-
-      if (normalizedAttributeName.startsWith('on')) {
-        target.removeAttr(attributeName);
-        return;
-      }
-
-      if (URL_ATTRIBUTES.has(normalizedAttributeName) && !isSafeHtmlAttributeUrl(attributeValue)) {
-        target.removeAttr(attributeName);
-      }
-    });
-  });
+  sanitizeHtmlAttributes($);
 
   $('script').each((_, element) => {
     const script = $(element);
@@ -65,7 +34,7 @@ export const sanitizeCustomHtml = (html: string) => {
       return;
     }
 
-    if (src && isSafeScriptSrc(src)) {
+    if (src && isSafeResourceUrl(src)) {
       Object.keys(script.attr() ?? {}).forEach((attributeName) => {
         script.removeAttr(attributeName);
       });

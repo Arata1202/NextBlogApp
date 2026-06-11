@@ -369,6 +369,24 @@ describe('Article plugins', () => {
     expect(screen.getByText('Common')).toBeInTheDocument();
   });
 
+  it('sanitizes tab box html before rendering', () => {
+    const { container } = render(
+      <TabBox
+        block={{
+          box_merit:
+            '<span onclick="alert(1)">Merit</span><a href="javascript:alert(1)">Unsafe</a><script>window.__unsafe = true;</script>',
+        }}
+        merit
+      />,
+    );
+
+    expect(screen.getByText('Merit')).toBeInTheDocument();
+    expect(screen.getByText('Unsafe')).toBeInTheDocument();
+    expect(container.innerHTML).not.toContain('onclick');
+    expect(container.innerHTML).not.toContain('javascript:');
+    expect(container.innerHTML).not.toContain('<script');
+  });
+
   it('renders a single valid slider image without loading the carousel chrome', () => {
     const { container } = render(
       <ImageSlider

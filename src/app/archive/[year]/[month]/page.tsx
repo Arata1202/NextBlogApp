@@ -11,6 +11,8 @@ type Props = {
   }>;
 };
 
+export const dynamicParams = false;
+
 export const generateStaticParams = async () => {
   return await getArchiveStaticParams();
 };

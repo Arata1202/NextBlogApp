@@ -10,6 +10,8 @@ type Props = {
   }>;
 };
 
+export const dynamicParams = false;
+
 export const generateStaticParams = async () => {
   const tags = await getAllTagLists({
     fields: 'id',

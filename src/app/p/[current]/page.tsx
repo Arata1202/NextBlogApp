@@ -15,6 +15,8 @@ export const metadata = {
   },
 };
 
+export const dynamicParams = false;
+
 export const generateStaticParams = async () => {
   const data = await getList({
     limit: 0,
