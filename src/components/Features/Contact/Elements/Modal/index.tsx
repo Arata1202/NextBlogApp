@@ -3,6 +3,8 @@ import { EnvelopeIcon } from '@heroicons/react/24/solid';
 import { Dialog, Transition } from '@headlessui/react';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
+import { primaryButtonClassName } from '@/components/Common/controlClassNames';
+import { getThemeClassName, radiusClassNames, shadowClassNames } from '@/styles/designTokens';
 
 type Props = {
   title: string;
@@ -26,6 +28,7 @@ export default function Modal({
   isLoading = false,
 }: Props) {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
 
   return (
     <Transition.Root show={show} as={Fragment}>
@@ -54,7 +57,7 @@ export default function Modal({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel
-                className={`m-auto relative transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                className={`m-auto relative transform overflow-hidden ${radiusClassNames.dialog} px-4 pb-4 pt-5 text-left ${shadowClassNames.dialog} transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 ${themeClassName}`}
               >
                 <div className="sm:flex sm:items-start">
                   <div
@@ -65,7 +68,7 @@ export default function Modal({
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <Dialog.Title
                       as="h1"
-                      className={`${styles.DialogTitle} font-bold leading-6 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                      className={`${styles.DialogTitle} font-bold leading-6 ${themeClassName}`}
                     >
                       {title}
                     </Dialog.Title>
@@ -83,7 +86,7 @@ export default function Modal({
                   <button
                     type="button"
                     disabled={isLoading}
-                    className={`${styles.CancelButton} mt-3 inline-flex w-full cursor-pointer justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-xs ring-1 ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme hover:bg-gray-500' : 'LightTheme hover:bg-gray-50'}`}
+                    className={`${styles.CancelButton} mt-3 inline-flex w-full cursor-pointer justify-center ${radiusClassNames.control} px-3 py-2 text-sm font-semibold ${shadowClassNames.control} ring-1 ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme hover:bg-gray-500' : 'LightTheme hover:bg-gray-50'}`}
                     onClick={onClose}
                   >
                     {cancelText}
@@ -91,7 +94,7 @@ export default function Modal({
                   <button
                     type="button"
                     disabled={isLoading}
-                    className="inline-flex w-full cursor-pointer justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-600 disabled:cursor-wait disabled:opacity-70 sm:ml-3 sm:w-auto"
+                    className={`${primaryButtonClassName} cursor-pointer sm:ml-3 sm:w-auto`}
                     onClick={onConfirm}
                   >
                     {confirmText}

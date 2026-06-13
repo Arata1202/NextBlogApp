@@ -4,6 +4,12 @@ import { XMarkIcon, CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/re
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import { compactIconControlClassName } from '@/components/Common/controlClassNames';
+import {
+  colorClassNames,
+  getThemeClassName,
+  radiusClassNames,
+  shadowClassNames,
+} from '@/styles/designTokens';
 
 type Props = {
   onClose: () => void;
@@ -15,6 +21,7 @@ type Props = {
 
 export default function Alert({ onClose, show, title, description, variant = 'success' }: Props) {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
   const Icon = variant === 'error' ? ExclamationCircleIcon : CheckCircleIcon;
   const iconClassName = variant === 'error' ? 'h-6 w-6 text-red-600' : 'h-6 w-6 text-green-600';
   const role = variant === 'error' ? 'alert' : 'status';
@@ -34,7 +41,7 @@ export default function Alert({ onClose, show, title, description, variant = 'su
           leaveTo="opacity-0"
         >
           <div
-            className={`pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-blue-500/5 mt-24 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`pointer-events-auto w-full max-w-sm overflow-hidden ${radiusClassNames.dialog} ${shadowClassNames.dialog} ring-1 ring-blue-500/5 mt-24 ${themeClassName}`}
             role={role}
             aria-live={ariaLive}
           >
@@ -46,7 +53,7 @@ export default function Alert({ onClose, show, title, description, variant = 'su
                 <div className="ml-3 w-0 flex-1">
                   <div className="flex min-h-6 items-center">
                     <p
-                      className={`${styles.DialogTitle} leading-6 font-semibold ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                      className={`${styles.DialogTitle} leading-6 font-semibold ${themeClassName}`}
                     >
                       {title}
                     </p>
@@ -57,7 +64,7 @@ export default function Alert({ onClose, show, title, description, variant = 'su
                   <button
                     type="button"
                     aria-label="通知を閉じる"
-                    className={`${compactIconControlClassName} cursor-pointer hover:text-blue-600 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                    className={`${compactIconControlClassName} cursor-pointer ${colorClassNames.accentHoverText} ${themeClassName}`}
                     onClick={onClose}
                   >
                     <XMarkIcon className="h-5 w-5" aria-hidden="true" />

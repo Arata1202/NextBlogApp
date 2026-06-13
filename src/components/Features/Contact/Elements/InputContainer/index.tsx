@@ -1,6 +1,7 @@
 import { useTheme } from 'next-themes';
 import type { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import { fieldControlClassName } from '@/components/Common/controlClassNames';
+import { getThemeClassName } from '@/styles/designTokens';
 
 type Props = {
   label: string;
@@ -18,13 +19,14 @@ export default function InputContainer({
   textarea = false,
 }: Props) {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
   const errorId = `${name}-error`;
 
   return (
     <div className="sm:col-span-2">
       <label
         htmlFor={name}
-        className={`block text-sm font-semibold leading-6 ${theme === 'dark' ? 'DarkTheme placeholder:text-gray-500' : 'LightTheme placeholder:text-gray-500'}`}
+        className={`block text-sm font-semibold leading-6 placeholder:text-gray-500 ${themeClassName}`}
       >
         {label}
       </label>
@@ -38,7 +40,7 @@ export default function InputContainer({
             autoComplete={name}
             aria-invalid={Boolean(errors)}
             aria-describedby={errors ? errorId : undefined}
-            className={`${fieldControlClassName} block h-10 w-full px-3 text-base sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`${fieldControlClassName} block h-10 w-full px-3 text-base sm:text-sm ${themeClassName}`}
           />
         )}
         {textarea && (
@@ -49,7 +51,7 @@ export default function InputContainer({
             rows={4}
             aria-invalid={Boolean(errors)}
             aria-describedby={errors ? errorId : undefined}
-            className={`${fieldControlClassName} block w-full px-3 py-2 text-base sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`${fieldControlClassName} block w-full px-3 py-2 text-base sm:text-sm ${themeClassName}`}
           />
         )}
         {errors && (

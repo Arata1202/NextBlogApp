@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { LIMIT } from '@/constants/limit';
 import styles from './index.module.css';
+import { colorClassNames, getThemeClassName } from '@/styles/designTokens';
 
 type Props = {
   totalCount: number;
@@ -49,6 +50,7 @@ export default function Pagination({
   useQueryPage = false,
 }: Props) {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
 
   const totalPages = Math.ceil(totalCount / LIMIT);
   const pages = getPageItems(totalPages, current);
@@ -76,7 +78,7 @@ export default function Pagination({
               current !== p ? (
                 <Link
                   href={getHref(p)}
-                  className={`${styles.item} hover:text-blue-600 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+                  className={`${styles.item} ${colorClassNames.accentHoverText} ${themeClassName}`}
                   aria-label={`${p}ページ目へ移動`}
                 >
                   {p}

@@ -11,9 +11,11 @@ import Modal from './Elements/Modal';
 import Alert from './Elements/Alert';
 import { outlinedControlClassName } from '@/components/Common/controlClassNames';
 import { getApiSendEmailUrl, getRecaptchaSiteKey } from '@/config/publicEnv';
+import { getThemeClassName } from '@/styles/designTokens';
 
 export default function ContactFeature() {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
   const apiSendEmailUrl = getApiSendEmailUrl();
   const recaptchaSiteKey = getRecaptchaSiteKey();
   const isFormConfigured = Boolean(apiSendEmailUrl && recaptchaSiteKey);
@@ -180,7 +182,7 @@ export default function ContactFeature() {
           <button
             type="submit"
             disabled={isSending}
-            className={`${outlinedControlClassName} block w-full cursor-pointer px-3.5 py-2.5 text-center text-sm font-semibold disabled:cursor-wait disabled:opacity-70 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`${outlinedControlClassName} block w-full cursor-pointer px-3.5 py-2.5 text-center text-sm font-semibold disabled:cursor-wait disabled:opacity-70 ${themeClassName}`}
           >
             {isSending ? '送信中...' : '送信'}
           </button>

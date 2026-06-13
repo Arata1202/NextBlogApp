@@ -3,6 +3,7 @@
 import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { compactIconControlClassName } from '@/components/Common/controlClassNames';
+import { colorClassNames } from '@/styles/designTokens';
 
 export default function ThemeSwitch() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -12,7 +13,7 @@ export default function ThemeSwitch() {
       <button
         type="button"
         aria-label="ライトテーマに切り替え"
-        className={`${compactIconControlClassName} hover:text-blue-600 cursor-pointer`}
+        className={`${compactIconControlClassName} ${colorClassNames.accentHoverText} cursor-pointer`}
         onClick={() => {
           setTheme('light');
         }}
@@ -27,7 +28,7 @@ export default function ThemeSwitch() {
       <button
         type="button"
         aria-label="ダークテーマに切り替え"
-        className={`${compactIconControlClassName} hover:text-blue-600 cursor-pointer`}
+        className={`${compactIconControlClassName} ${colorClassNames.accentHoverText} cursor-pointer`}
         onClick={() => {
           setTheme('dark');
         }}

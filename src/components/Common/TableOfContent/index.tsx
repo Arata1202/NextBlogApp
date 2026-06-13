@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Heading } from '@/types/heading';
 import styles from './index.module.css';
 import { formatHeadings } from '@/utils/formatHeadings';
+import { colorClassNames, getThemeClassName } from '@/styles/designTokens';
 
 type Props = {
   headings: Heading[];
@@ -14,6 +15,7 @@ type Props = {
 
 export default function TableOfContents({ headings, sidebar = false }: Props) {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
   const [activeId, setActiveId] = useState('');
 
   const formattedHeadings = formatHeadings(headings);
@@ -67,7 +69,7 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
   return (
     <nav className={`flex justify-center`} aria-label="目次">
       <div
-        className={`${styles.toc} ${sidebar && styles.sidebarToc} w-1/2 border p-4 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+        className={`${styles.toc} ${sidebar && styles.sidebarToc} w-1/2 border p-4 ${themeClassName}`}
       >
         <div className="text-center font-bold text-lg">目次</div>
         <ol className="mt-4 list-none pl-0">
@@ -76,7 +78,8 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
               key={heading.id}
               style={{
                 marginLeft: heading.marginLeft,
-                backgroundColor: activeId === heading.id ? '#eaf4fc' : 'transparent',
+                backgroundColor:
+                  activeId === heading.id ? 'var(--color-accent-soft-bg)' : 'transparent',
                 color: activeId === heading.id && theme === 'dark' ? 'black' : 'inherit',
                 transition: 'background-color 0.3s ease',
               }}
@@ -84,7 +87,7 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
               <Link
                 href={`#${heading.id}`}
                 onClick={(e) => handleClick(e, heading.id)}
-                className="hover:text-blue-600"
+                className={colorClassNames.accentHoverText}
               >
                 {heading.number} {heading.title}
               </Link>

@@ -6,6 +6,7 @@ import { useTheme } from 'next-themes';
 import { useMutationObserver } from '@/hooks/useMutationObserver';
 import styles from './index.module.css';
 import { getGoogleAdSensePublisherId } from '@/config/publicEnv';
+import { getThemeClassName } from '@/styles/designTokens';
 
 declare global {
   interface Window {
@@ -25,6 +26,7 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
   pathname = pathname ? pathname : '';
 
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
   const publisherId = getGoogleAdSensePublisherId();
 
   useMutationObserver();
@@ -56,9 +58,7 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
         className={`${styles.container} mut-guard`}
         style={{ ...style }}
       >
-        <p className={`text-center ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
-          スポンサーリンク
-        </p>
+        <p className={`text-center ${themeClassName}`}>スポンサーリンク</p>
         <ins
           className={`${styles.adUnit} adsbygoogle mut-guard`}
           data-ad-client={`ca-pub-${publisherId}`}

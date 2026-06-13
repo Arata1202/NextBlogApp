@@ -5,14 +5,15 @@ import { UserCircleIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import { PROFILE_SENTENCE, PROFILE_NAME, PROFILE_IMAGE, SOCIAL_ICON } from '@/constants/data';
 import { iconControlClassName } from '@/components/Common/controlClassNames';
+import { colorClassNames, getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
 
 export default function Profile() {
   const { theme } = useTheme();
-  const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
+  const themeClassName = getThemeClassName(theme);
 
   return (
     <>
-      <div className={`pt-8 px-4 border py-5 ${themeClassName}`}>
+      <div className={`pt-8 px-4 ${surfaceClassNames.panel} ${themeClassName}`}>
         <div className={`text-2xl text-center font-semibold pb-5 flex justify-center`}>
           <UserCircleIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           ブログ運営者
@@ -39,7 +40,7 @@ export default function Profile() {
                 href={item.path}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${iconControlClassName} inline-flex h-10 w-10 items-center justify-center hover:text-blue-600`}
+                className={`${iconControlClassName} inline-flex h-10 w-10 items-center justify-center ${colorClassNames.accentHoverText}`}
                 aria-label={`${item.name}を新しいタブで開く`}
               >
                 <item.icon className="h-8 w-8" aria-hidden="true" />

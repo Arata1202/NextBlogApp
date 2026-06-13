@@ -6,10 +6,12 @@ import styles from './index.module.css';
 import { BLOG_IMAGE, COPYRIGHT, FOOTER_NAVIGATION, SOCIAL_ICON } from '@/constants/data';
 import { CATEGORY_ARR } from '@/constants/category';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
+import { colorClassNames, getThemeClassName, radiusClassNames } from '@/styles/designTokens';
 
 export default function Footer() {
   const { theme } = useTheme();
-  const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
+  const themeClassName = getThemeClassName(theme);
+  const footerLinkClassName = `text-sm leading-6 ${colorClassNames.accentHoverText} ${themeClassName}`;
 
   return (
     <>
@@ -41,7 +43,7 @@ export default function Footer() {
                     href={item.path}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`rounded-md hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`}
+                    className={`${radiusClassNames.control} ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`}
                     aria-label={`${item.name}を新しいタブで開く`}
                   >
                     <item.icon className="h-6 w-6" aria-hidden="true" />
@@ -58,10 +60,7 @@ export default function Footer() {
                   <ul className="mt-6 space-y-4">
                     {FOOTER_NAVIGATION.about.map((item) => (
                       <li key={item.name}>
-                        <Link
-                          href={item.path}
-                          className={`text-sm leading-6 hover:text-blue-600 ${themeClassName}`}
-                        >
+                        <Link href={item.path} className={footerLinkClassName}>
                           {item.name}
                         </Link>
                       </li>
@@ -75,10 +74,7 @@ export default function Footer() {
                   <ul className="mt-6 space-y-4">
                     {CATEGORY_ARR.map((item) => (
                       <li key={item.name}>
-                        <Link
-                          href={`/category/${item.id}`}
-                          className={`text-sm leading-6 hover:text-blue-600 ${themeClassName}`}
-                        >
+                        <Link href={`/category/${item.id}`} className={footerLinkClassName}>
                           {item.name}
                         </Link>
                       </li>
@@ -94,10 +90,7 @@ export default function Footer() {
                   <ul className="mt-6 space-y-4">
                     {FOOTER_NAVIGATION.policy.map((item) => (
                       <li key={item.name}>
-                        <Link
-                          href={item.path}
-                          className={`text-sm leading-6 hover:text-blue-600 ${themeClassName}`}
-                        >
+                        <Link href={item.path} className={footerLinkClassName}>
                           {item.name}
                         </Link>
                       </li>
@@ -111,10 +104,7 @@ export default function Footer() {
                   <ul className="mt-6 space-y-4">
                     {FOOTER_NAVIGATION.contact.map((item) => (
                       <li key={item.name}>
-                        <Link
-                          href={item.path}
-                          className={`text-sm leading-6 hover:text-blue-600 ${themeClassName}`}
-                        >
+                        <Link href={item.path} className={footerLinkClassName}>
                           {item.name}
                         </Link>
                       </li>

@@ -69,6 +69,7 @@ layer(base);
     --color-border-light: #f3f3f3;
     --color-current: #eee;
     --color-focus-ring: #2563eb;
+    --color-accent-soft-bg: #eaf4fc;
     --color-link: #1d4ed8;
     --color-link-hover: #1e40af;
     --color-link-dark: #93c5fd;

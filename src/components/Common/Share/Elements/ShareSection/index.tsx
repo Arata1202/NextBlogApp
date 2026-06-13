@@ -16,6 +16,7 @@ import {
 } from 'react-share';
 import { Article } from '@/types/microcms';
 import { roundIconControlClassName } from '@/components/Common/controlClassNames';
+import { getThemeClassName } from '@/styles/designTokens';
 
 type Props = {
   data?: Article;
@@ -23,6 +24,7 @@ type Props = {
 
 export default function ShareSection({ data }: Props) {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const baseTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
@@ -31,9 +33,7 @@ export default function ShareSection({ data }: Props) {
 
   return (
     <>
-      <div
-        className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-      >
+      <div className={`text-2xl font-semibold flex justify-center mb-5 ${themeClassName}`}>
         <HandThumbUpIcon className="h-8 w-8 mr-2" aria-hidden="true" />
         シェアする
       </div>

@@ -7,6 +7,7 @@ import { UnifiedArticle } from '@/types/unified';
 import WebpImage from '@/components/Common/Elements/WebpImage';
 import styles from './index.module.css';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
+import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
 
 type Props = {
   recentArticles: UnifiedArticle[];
@@ -20,8 +21,8 @@ const normalizePath = (path?: string) => {
 export default function Recent({ recentArticles, currentArticleUrl }: Props) {
   const { theme } = useTheme();
   const normalizedCurrentArticleUrl = normalizePath(currentArticleUrl);
-  const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
-  const linkClassName = `${styles.link} block border p-2 shadow-lg hover:shadow-xl transition-shadow duration-200 ${interactiveFocusClassName} ${themeClassName}`;
+  const themeClassName = getThemeClassName(theme);
+  const linkClassName = `${styles.link} block p-2 ${surfaceClassNames.card} ${interactiveFocusClassName} ${themeClassName}`;
 
   const sortedArticles = recentArticles
     .slice()
@@ -35,7 +36,7 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
 
   return (
     <>
-      <div className={`pt-8 px-4 border py-5 mt-5 ${themeClassName}`}>
+      <div className={`pt-8 px-4 mt-5 ${surfaceClassNames.panel} ${themeClassName}`}>
         <div className={`text-2xl text-center font-semibold flex justify-center`}>
           <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           最新記事

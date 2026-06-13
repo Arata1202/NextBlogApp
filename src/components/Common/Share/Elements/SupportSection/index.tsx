@@ -4,6 +4,7 @@ import { useTheme } from 'next-themes';
 import { FireIcon } from '@heroicons/react/24/solid';
 import { Article } from '@/types/microcms';
 import BuyMeaCoffee from '../Elements/BuyMeaCoffee';
+import { getThemeClassName } from '@/styles/designTokens';
 
 type Props = {
   data?: Article;
@@ -11,12 +12,11 @@ type Props = {
 
 export default function SupportSection({ data }: Props) {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
 
   return (
     <div className="mt-5">
-      <div
-        className={`text-2xl font-semibold flex justify-center mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-      >
+      <div className={`text-2xl font-semibold flex justify-center mb-5 ${themeClassName}`}>
         <FireIcon className="h-8 w-8 mr-2" aria-hidden="true" />
         応援する
       </div>

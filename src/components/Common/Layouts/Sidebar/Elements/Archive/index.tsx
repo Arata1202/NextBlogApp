@@ -8,6 +8,12 @@ import { CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import { ArchiveItem } from '@/libs/archive';
 import { fieldControlClassName } from '@/components/Common/controlClassNames';
+import {
+  colorClassNames,
+  getThemeClassName,
+  surfaceClassNames,
+  transitionClassNames,
+} from '@/styles/designTokens';
 
 type Props = {
   archiveList: ArchiveItem[];
@@ -16,6 +22,7 @@ type Props = {
 export default function Archive({ archiveList }: Props) {
   const { theme } = useTheme();
   const router = useRouter();
+  const themeClassName = getThemeClassName(theme);
 
   const [selectedMonth, setSelectedMonth] = useState('');
 
@@ -35,9 +42,7 @@ export default function Archive({ archiveList }: Props) {
 
   return (
     <>
-      <div
-        className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-      >
+      <div className={`pt-8 px-4 mt-5 ${surfaceClassNames.panel} ${themeClassName}`}>
         <div className={`text-2xl text-center font-semibold flex justify-center`}>
           <CalendarDaysIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           アーカイブ
@@ -48,7 +53,7 @@ export default function Archive({ archiveList }: Props) {
             <Listbox.Button
               type="button"
               onKeyDown={handleButtonKeyDown}
-              className={`${fieldControlClassName} ${styles.ListBox} relative w-full cursor-pointer pl-3 pr-10 text-left text-base sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`${fieldControlClassName} ${styles.ListBox} relative w-full cursor-pointer pl-3 pr-10 text-left text-base sm:text-sm ${themeClassName}`}
             >
               <span className={`${styles.ListBoxSelect} block truncate text-gray-500`}>
                 {selectedMonth
@@ -67,14 +72,14 @@ export default function Archive({ archiveList }: Props) {
 
             <Listbox.Options
               modal={false}
-              className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border py-1 text-base shadow-lg sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto py-1 text-base sm:text-sm ${surfaceClassNames.popover} ${themeClassName}`}
             >
               {archiveList.map((item, index) => (
                 <Listbox.Option
                   key={index}
                   value={`${item.year}/${item.month.padStart(2, '0')}`}
                   className={({ active }) =>
-                    `relative cursor-pointer select-none py-2 pl-3 pr-9 transition-colors duration-150 hover:text-blue-600 ${active ? (theme === 'dark' ? 'text-blue-400!' : 'text-blue-600!') : ''} ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`
+                    `relative cursor-pointer select-none py-2 pl-3 pr-9 ${transitionClassNames.color} ${colorClassNames.accentHoverText} ${active ? (theme === 'dark' ? 'text-blue-400!' : 'text-blue-600!') : ''} ${themeClassName}`
                   }
                 >
                   {`${item.year}年${item.month}月`}

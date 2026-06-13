@@ -6,6 +6,7 @@ import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 import DoubleDate from '../DoubleDate';
 import WebpImage from '../Elements/WebpImage';
+import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
 
 type Props = {
   article: Article;
@@ -14,13 +15,14 @@ type Props = {
 
 export default function ArticleCard({ article, priority = false }: Props) {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
 
   return (
     <>
       <li className={styles.list}>
         <Link
           href={`/articles/${article.id}`}
-          className={`${styles.link} p-2 border shadow-lg hover:shadow-xl transition-shadow duration-200 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+          className={`${styles.link} p-2 ${surfaceClassNames.card} ${themeClassName}`}
         >
           <WebpImage article={article} card={true} priority={priority} />
           <div className={styles.content}>

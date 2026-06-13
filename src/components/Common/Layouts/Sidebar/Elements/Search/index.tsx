@@ -8,9 +8,11 @@ import {
   fieldControlClassName,
   outlinedControlClassName,
 } from '@/components/Common/controlClassNames';
+import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
 
 export default function Search() {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState('');
@@ -47,7 +49,7 @@ export default function Search() {
   };
 
   return (
-    <div className={`px-4 border py-5 mb-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}>
+    <div className={`px-4 mb-5 ${surfaceClassNames.panel} ${themeClassName}`}>
       <div className="text-2xl text-center font-semibold flex justify-center">
         <MagnifyingGlassIcon className="h-8 w-8 mr-2" aria-hidden="true" />
         検索
@@ -73,11 +75,11 @@ export default function Search() {
             aria-invalid={Boolean(errorMessage)}
             aria-describedby={errorMessage ? errorMessageId : undefined}
             aria-keyshortcuts="Meta+K"
-            className={`${fieldControlClassName} h-10 min-w-0 flex-1 px-3 text-base sm:text-sm ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`${fieldControlClassName} h-10 min-w-0 flex-1 px-3 text-base sm:text-sm ${themeClassName}`}
           />
           <button
             type="submit"
-            className={`${outlinedControlClassName} inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+            className={`${outlinedControlClassName} inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center ${themeClassName}`}
             aria-label="検索"
           >
             <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />

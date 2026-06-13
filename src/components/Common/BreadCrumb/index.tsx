@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import SearchResultLabelSkeleton from '../SearchResultLabelSkeleton';
 import { getPageHeadingLabel, type BreadCrumbPage } from '../pageHeadingModel';
+import { colorClassNames } from '@/styles/designTokens';
 
 type Props = {
   page: BreadCrumbPage;
@@ -13,6 +14,7 @@ const breadcrumbCurrentItemClassName = `${breadcrumbItemClassName} flex-1`;
 const breadcrumbSegmentClassName = 'flex min-w-0 items-center';
 const currentPageClassName =
   'ml-4 min-w-0 flex-1 text-sm font-medium text-gray-500 [overflow-wrap:anywhere]';
+const breadcrumbLinkClassName = `text-gray-500 ${colorClassNames.accentHoverText}`;
 
 const renderCurrentPage = (label: string, isLoading: boolean) => (
   <span
@@ -38,7 +40,7 @@ export default function BreadCrumb({ page, isLoading = false }: Props) {
     <nav aria-label="パンくず">
       <ul className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
         <li className={breadcrumbItemClassName}>
-          <Link href="/" className="flex text-gray-500 hover:text-blue-600" aria-label="ホーム">
+          <Link href="/" className={`flex ${breadcrumbLinkClassName}`} aria-label="ホーム">
             <HomeIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
           </Link>
         </li>
@@ -48,7 +50,7 @@ export default function BreadCrumb({ page, isLoading = false }: Props) {
               <ChevronRightIcon className="h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" />
               <Link
                 href={`/category/${page.article.categories[0].id}`}
-                className="whitespace-nowrap ml-4 text-sm font-medium text-gray-500 hover:text-blue-600"
+                className={`whitespace-nowrap ml-4 text-sm font-medium ${breadcrumbLinkClassName}`}
               >
                 {page.article.categories[0].name}
               </Link>

@@ -5,15 +5,15 @@ import { useTheme } from 'next-themes';
 import { FolderIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import { CATEGORY_ARR } from '@/constants/category';
+import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
 
 export default function Category() {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
 
   return (
     <>
-      <div
-        className={`pt-8 px-4 border py-5 mt-5 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
-      >
+      <div className={`pt-8 px-4 mt-5 ${surfaceClassNames.panel} ${themeClassName}`}>
         <div className={`text-2xl text-center font-semibold flex justify-center`}>
           <FolderIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           カテゴリー
@@ -23,7 +23,7 @@ export default function Category() {
             <Link
               key={item.name}
               href={`/category/${item.id}`}
-              className={`${styles.CategoryList} text-start p-4 md:p-3 border shadow-lg hover:shadow-xl transition-shadow duration-200 ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+              className={`${styles.CategoryList} text-start p-4 md:p-3 ${surfaceClassNames.card} ${themeClassName}`}
             >
               <div className="flex justify-center">
                 <item.icon className="w-12 h-12" aria-hidden="true" />

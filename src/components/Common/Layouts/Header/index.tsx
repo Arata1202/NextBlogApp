@@ -30,6 +30,7 @@ import {
   compactIconControlClassName,
   interactiveFocusClassName,
 } from '@/components/Common/controlClassNames';
+import { colorClassNames, getThemeClassName, radiusClassNames } from '@/styles/designTokens';
 
 type Category = (typeof CATEGORY_ARR)[number];
 
@@ -90,13 +91,13 @@ export default function Header() {
   const categoryPopoverRef = useRef<HTMLDivElement>(null);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
-  const headerLinkClassName = `flex text-sm leading-6 hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
-  const menuLinkClassName = `flex items-center py-1 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
-  const categoryMenuLinkClassName = `ml-5 flex items-center py-1 text-base font-bold border-b hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`;
-  const popoverMenuLinkClassName = `relative z-0 flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:text-blue-600 focus-visible:z-10 ${interactiveFocusClassName} ${themeClassName}`;
-  const githubLinkClassName = `rounded-md hover:text-blue-600 ${interactiveFocusClassName}`;
-  const mobileGithubLinkClassName = `${compactIconControlClassName} hover:text-blue-600`;
+  const themeClassName = getThemeClassName(theme);
+  const headerLinkClassName = `flex text-sm leading-6 ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`;
+  const menuLinkClassName = `flex items-center py-1 text-base font-bold border-b ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`;
+  const categoryMenuLinkClassName = `ml-5 flex items-center py-1 text-base font-bold border-b ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`;
+  const popoverMenuLinkClassName = `relative z-0 flex items-center gap-2 ${radiusClassNames.control} px-3 py-2 text-sm ${colorClassNames.accentHoverText} focus-visible:z-10 ${interactiveFocusClassName} ${themeClassName}`;
+  const githubLinkClassName = `${radiusClassNames.control} ${colorClassNames.accentHoverText} ${interactiveFocusClassName}`;
+  const mobileGithubLinkClassName = `${compactIconControlClassName} ${colorClassNames.accentHoverText}`;
 
   return (
     <>
@@ -175,7 +176,7 @@ export default function Header() {
                     onClose={close}
                   />
                   <Popover.Button
-                    className={`flex cursor-pointer items-center text-sm font-medium hover:text-blue-600 ${interactiveFocusClassName} ${themeClassName}`}
+                    className={`flex cursor-pointer items-center text-sm font-medium ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`}
                   >
                     <FolderIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                     カテゴリー

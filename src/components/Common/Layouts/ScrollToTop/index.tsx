@@ -4,9 +4,11 @@ import { useTheme } from 'next-themes';
 import { ChevronDoubleUpIcon } from '@heroicons/react/20/solid';
 import styles from './index.module.css';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
+import { colorClassNames, getThemeClassName, shadowClassNames } from '@/styles/designTokens';
 
 export default function ScrollTopButton() {
   const { theme } = useTheme();
+  const themeClassName = getThemeClassName(theme);
 
   const scrollToTop = () => {
     const prefersReducedMotion =
@@ -25,7 +27,7 @@ export default function ScrollTopButton() {
         type="button"
         aria-label="ページ上部へ戻る"
         onClick={scrollToTop}
-        className={`${interactiveFocusClassName} ${styles.button} fixed z-50 flex cursor-pointer items-center justify-center shadow-sm hover:text-blue-600 border ${theme === 'dark' ? 'DarkTheme' : 'LightTheme'}`}
+        className={`${interactiveFocusClassName} ${styles.button} fixed z-50 flex cursor-pointer items-center justify-center border ${shadowClassNames.control} ${colorClassNames.accentHoverText} ${themeClassName}`}
       >
         <ChevronDoubleUpIcon className={styles.icon} aria-hidden="true" />
       </button>
