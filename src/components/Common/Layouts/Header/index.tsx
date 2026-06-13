@@ -30,7 +30,16 @@ import {
   compactIconControlClassName,
   interactiveFocusClassName,
 } from '@/components/Common/controlClassNames';
-import { colorClassNames, getThemeClassName, radiusClassNames } from '@/styles/designTokens';
+import {
+  colorClassNames,
+  getThemeClassName,
+  getThemeVariantClassName,
+  radiusClassNames,
+  shadowClassNames,
+  surfaceClassNames,
+  themeVariantClassNames,
+  transitionClassNames,
+} from '@/styles/designTokens';
 
 type Category = (typeof CATEGORY_ARR)[number];
 
@@ -98,6 +107,12 @@ export default function Header() {
   const popoverMenuLinkClassName = `relative z-0 flex items-center gap-2 ${radiusClassNames.control} px-3 py-2 text-sm ${colorClassNames.accentHoverText} focus-visible:z-10 ${interactiveFocusClassName} ${themeClassName}`;
   const githubLinkClassName = `${radiusClassNames.control} ${colorClassNames.accentHoverText} ${interactiveFocusClassName}`;
   const mobileGithubLinkClassName = `${compactIconControlClassName} ${colorClassNames.accentHoverText}`;
+  const selectedSurfaceClassName = getThemeVariantClassName(
+    theme,
+    themeVariantClassNames.selectedSurface,
+  );
+  const mutedTextClassName = getThemeVariantClassName(theme, themeVariantClassNames.mutedText);
+  const subtleRingClassName = getThemeVariantClassName(theme, themeVariantClassNames.subtleRing);
 
   return (
     <>
@@ -106,7 +121,10 @@ export default function Header() {
           className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
           aria-label="グローバルナビゲーション"
         >
-          <Link href="/" className="-m-1.5 p-1.5 hover:scale-110 transition-transform">
+          <Link
+            href="/"
+            className={`-m-1.5 p-1.5 hover:scale-110 ${transitionClassNames.transform}`}
+          >
             {BLOG_IMAGE.map((item) => (
               <img
                 key={item.alt}
@@ -142,7 +160,7 @@ export default function Header() {
                   </a>
                 </div>
                 <div
-                  className={`inline-flex items-center justify-center rounded-md px-3 ${themeClassName}`}
+                  className={`inline-flex items-center justify-center ${radiusClassNames.control} px-3 ${themeClassName}`}
                 >
                   <ThemeSwitch />
                 </div>
@@ -192,7 +210,7 @@ export default function Header() {
                     leaveTo="opacity-0 translate-y-1"
                   >
                     <Popover.Panel
-                      className={`absolute z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ${theme === 'dark' ? 'DarkTheme ring-gray-500/5' : 'LightTheme ring-gray-300/5'}`}
+                      className={`absolute z-10 mt-2 w-56 origin-top-right ring-1 ${surfaceClassNames.popover} ${subtleRingClassName} ${themeClassName}`}
                     >
                       <div className="p-1">
                         {CATEGORY_ARR.map((item) => (
@@ -251,7 +269,7 @@ export default function Header() {
               leaveTo="translate-x-full"
             >
               <Dialog.Panel
-                className={`fixed inset-y-0 right-0 flex max-w-xs w-full shadow-xl ${themeClassName}`}
+                className={`fixed inset-y-0 right-0 flex max-w-xs w-full ${shadowClassNames.dialog} ${themeClassName}`}
               >
                 <div className="flex w-full flex-col p-5">
                   <div className="-ml-2 flex justify-end p-2">
@@ -265,7 +283,7 @@ export default function Header() {
                     </button>
                   </div>
                   <Dialog.Title
-                    className={`text-center py-2 text-xl font-bold  ${theme === 'dark' ? 'bg-gray-500' : 'bg-gray-300'}`}
+                    className={`text-center py-2 text-xl font-bold ${selectedSurfaceClassName}`}
                   >
                     Menu
                   </Dialog.Title>
@@ -285,7 +303,7 @@ export default function Header() {
                     ))}
                     <li className="pt-2">
                       <p
-                        className={`flex items-center gap-2 text-xs font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}
+                        className={`flex items-center gap-2 text-xs font-semibold ${mutedTextClassName}`}
                       >
                         <FolderIcon className="h-4 w-4" aria-hidden="true" />
                         カテゴリー

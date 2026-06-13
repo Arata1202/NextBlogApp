@@ -11,7 +11,9 @@ import { fieldControlClassName } from '@/components/Common/controlClassNames';
 import {
   colorClassNames,
   getThemeClassName,
+  getThemeVariantClassName,
   surfaceClassNames,
+  themeVariantClassNames,
   transitionClassNames,
 } from '@/styles/designTokens';
 
@@ -23,6 +25,11 @@ export default function Archive({ archiveList }: Props) {
   const { theme } = useTheme();
   const router = useRouter();
   const themeClassName = getThemeClassName(theme);
+  const activeAccentTextClassName = getThemeVariantClassName(
+    theme,
+    themeVariantClassNames.activeAccentText,
+  );
+  const subtleIconClassName = getThemeVariantClassName(theme, themeVariantClassNames.subtleIcon);
 
   const [selectedMonth, setSelectedMonth] = useState('');
 
@@ -55,7 +62,9 @@ export default function Archive({ archiveList }: Props) {
               onKeyDown={handleButtonKeyDown}
               className={`${fieldControlClassName} ${styles.ListBox} relative w-full cursor-pointer pl-3 pr-10 text-left text-base sm:text-sm ${themeClassName}`}
             >
-              <span className={`${styles.ListBoxSelect} block truncate text-gray-500`}>
+              <span
+                className={`${styles.ListBoxSelect} block truncate ${colorClassNames.mutedText}`}
+              >
                 {selectedMonth
                   ? `${selectedMonth.split('/')[0]}年${selectedMonth
                       .split('/')[1]
@@ -64,7 +73,7 @@ export default function Archive({ archiveList }: Props) {
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronUpDownIcon
-                  className={`h-7 w-7 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-300'}`}
+                  className={`h-7 w-7 ${subtleIconClassName}`}
                   aria-hidden="true"
                 />
               </span>
@@ -79,7 +88,7 @@ export default function Archive({ archiveList }: Props) {
                   key={index}
                   value={`${item.year}/${item.month.padStart(2, '0')}`}
                   className={({ active }) =>
-                    `relative cursor-pointer select-none py-2 pl-3 pr-9 ${transitionClassNames.color} ${colorClassNames.accentHoverText} ${active ? (theme === 'dark' ? 'text-blue-400!' : 'text-blue-600!') : ''} ${themeClassName}`
+                    `relative cursor-pointer select-none py-2 pl-3 pr-9 ${transitionClassNames.color} ${colorClassNames.accentHoverText} ${active ? activeAccentTextClassName : ''} ${themeClassName}`
                   }
                 >
                   {`${item.year}年${item.month}月`}

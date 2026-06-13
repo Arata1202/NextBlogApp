@@ -23,7 +23,9 @@ export default function Alert({ onClose, show, title, description, variant = 'su
   const { theme } = useTheme();
   const themeClassName = getThemeClassName(theme);
   const Icon = variant === 'error' ? ExclamationCircleIcon : CheckCircleIcon;
-  const iconClassName = variant === 'error' ? 'h-6 w-6 text-red-600' : 'h-6 w-6 text-green-600';
+  const iconClassName = `h-6 w-6 ${
+    variant === 'error' ? colorClassNames.dangerText : colorClassNames.successText
+  }`;
   const role = variant === 'error' ? 'alert' : 'status';
   const ariaLive = variant === 'error' ? 'assertive' : 'polite';
 
@@ -58,7 +60,9 @@ export default function Alert({ onClose, show, title, description, variant = 'su
                       {title}
                     </p>
                   </div>
-                  <p className={`${styles.DialogDescription} mt-1 text-gray-500`}>{description}</p>
+                  <p className={`${styles.DialogDescription} mt-1 ${colorClassNames.mutedText}`}>
+                    {description}
+                  </p>
                 </div>
                 <div className="ml-4 flex h-6 shrink-0 items-center">
                   <button

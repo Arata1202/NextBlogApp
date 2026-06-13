@@ -24,10 +24,7 @@ export default function InputContainer({
 
   return (
     <div className="sm:col-span-2">
-      <label
-        htmlFor={name}
-        className={`block text-sm font-semibold leading-6 placeholder:text-gray-500 ${themeClassName}`}
-      >
+      <label htmlFor={name} className={`block text-sm font-semibold leading-6 ${themeClassName}`}>
         {label}
       </label>
       <div className="mt-2.5">

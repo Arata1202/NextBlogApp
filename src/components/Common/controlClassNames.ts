@@ -1,7 +1,9 @@
 import {
   colorClassNames,
+  getThemeVariantClassName,
   radiusClassNames,
   shadowClassNames,
+  themeVariantClassNames,
   transitionClassNames,
 } from '@/styles/designTokens';
 
@@ -26,9 +28,15 @@ export const textLinkClassName = `${colorClassNames.textLink} underline underlin
 export const darkTextLinkClassName = `${colorClassNames.darkTextLink} underline underline-offset-2`;
 
 export const getTextLinkClassName = (theme?: string) => {
-  return theme === 'dark' ? darkTextLinkClassName : textLinkClassName;
+  return getThemeVariantClassName(theme, {
+    light: textLinkClassName,
+    dark: darkTextLinkClassName,
+  });
 };
 
 export const accentIconClassName = colorClassNames.accentText;
+
+export const getMutedTextClassName = (theme?: string) =>
+  getThemeVariantClassName(theme, themeVariantClassNames.mutedText);
 
 export const primaryButtonClassName = `${interactiveFocusClassName} inline-flex w-full justify-center ${radiusClassNames.control} ${colorClassNames.primaryButton} px-3 py-2 text-sm font-semibold ${shadowClassNames.control} disabled:cursor-wait disabled:opacity-70`;

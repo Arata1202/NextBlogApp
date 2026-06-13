@@ -4,7 +4,12 @@ import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { LIMIT } from '@/constants/limit';
 import styles from './index.module.css';
-import { colorClassNames, getThemeClassName } from '@/styles/designTokens';
+import {
+  colorClassNames,
+  getThemeClassName,
+  getThemeVariantClassName,
+  themeVariantClassNames,
+} from '@/styles/designTokens';
 
 type Props = {
   totalCount: number;
@@ -51,6 +56,10 @@ export default function Pagination({
 }: Props) {
   const { theme } = useTheme();
   const themeClassName = getThemeClassName(theme);
+  const selectedSurfaceClassName = getThemeVariantClassName(
+    theme,
+    themeVariantClassNames.selectedSurface,
+  );
 
   const totalPages = Math.ceil(totalCount / LIMIT);
   const pages = getPageItems(totalPages, current);
@@ -85,7 +94,7 @@ export default function Pagination({
                 </Link>
               ) : (
                 <span
-                  className={`${styles.item} ${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                  className={`${styles.item} ${selectedSurfaceClassName}`}
                   aria-current="page"
                   aria-label={`${p}ページ目`}
                 >

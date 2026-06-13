@@ -80,7 +80,7 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
                 marginLeft: heading.marginLeft,
                 backgroundColor:
                   activeId === heading.id ? 'var(--color-accent-soft-bg)' : 'transparent',
-                color: activeId === heading.id && theme === 'dark' ? 'black' : 'inherit',
+                color: activeId === heading.id ? 'var(--color-accent-soft-text)' : 'inherit',
                 transition: 'background-color 0.3s ease',
               }}
             >

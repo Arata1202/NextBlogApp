@@ -4,7 +4,14 @@ import { Dialog, Transition } from '@headlessui/react';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
 import { primaryButtonClassName } from '@/components/Common/controlClassNames';
-import { getThemeClassName, radiusClassNames, shadowClassNames } from '@/styles/designTokens';
+import {
+  colorClassNames,
+  getThemeClassName,
+  getThemeVariantClassName,
+  radiusClassNames,
+  shadowClassNames,
+  themeVariantClassNames,
+} from '@/styles/designTokens';
 
 type Props = {
   title: string;
@@ -29,6 +36,10 @@ export default function Modal({
 }: Props) {
   const { theme } = useTheme();
   const themeClassName = getThemeClassName(theme);
+  const controlHoverSurfaceClassName = getThemeVariantClassName(
+    theme,
+    themeVariantClassNames.controlHoverSurface,
+  );
 
   return (
     <Transition.Root show={show} as={Fragment}>
@@ -75,7 +86,7 @@ export default function Modal({
                     <div className="mt-2">
                       <Dialog.Description
                         as="p"
-                        className={`${styles.DialogDescription} text-gray-500`}
+                        className={`${styles.DialogDescription} ${colorClassNames.mutedText}`}
                       >
                         {description}
                       </Dialog.Description>
@@ -86,7 +97,7 @@ export default function Modal({
                   <button
                     type="button"
                     disabled={isLoading}
-                    className={`${styles.CancelButton} mt-3 inline-flex w-full cursor-pointer justify-center ${radiusClassNames.control} px-3 py-2 text-sm font-semibold ${shadowClassNames.control} ring-1 ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:mt-0 sm:w-auto ${theme === 'dark' ? 'DarkTheme hover:bg-gray-500' : 'LightTheme hover:bg-gray-50'}`}
+                    className={`${styles.CancelButton} mt-3 inline-flex w-full cursor-pointer justify-center ${radiusClassNames.control} px-3 py-2 text-sm font-semibold ${shadowClassNames.control} ring-1 ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:mt-0 sm:w-auto ${controlHoverSurfaceClassName} ${themeClassName}`}
                     onClick={onClose}
                   >
                     {cancelText}

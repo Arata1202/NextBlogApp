@@ -8,6 +8,7 @@ import { PROFILE_IMAGE } from '@/constants/data';
 import FixedContentContainer from '../Layouts/Container/FixedContentContainer';
 import CodeBlock from '@/components/Common/CodeBlock';
 import { getTextLinkClassName } from '@/components/Common/controlClassNames';
+import { getThemeVariantClassName, themeVariantClassNames } from '@/styles/designTokens';
 import { SAFE_RESOURCE_PROTOCOLS, parseUrl } from '@/utils/urlSafety';
 
 type Props = {
@@ -75,6 +76,14 @@ const createHeadingIdPlugin = (headingIds: string[]) => () => (tree: MarkdownAst
 export default function Markdown({ content, headingIds, profile = false }: Props) {
   const { theme } = useTheme();
   const linkClassName = getTextLinkClassName(theme);
+  const selectedSurfaceClassName = getThemeVariantClassName(
+    theme,
+    themeVariantClassNames.selectedSurface,
+  );
+  const borderedTextClassName = getThemeVariantClassName(
+    theme,
+    themeVariantClassNames.borderedText,
+  );
   const remarkPlugins = useMemo(
     () => (headingIds ? [remarkGfm, createHeadingIdPlugin(headingIds)] : [remarkGfm]),
     [headingIds],
@@ -104,10 +113,7 @@ export default function Markdown({ content, headingIds, profile = false }: Props
               void node;
 
               return (
-                <h2
-                  className={`${theme === 'dark' ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                  {...props}
-                >
+                <h2 className={selectedSurfaceClassName} {...props}>
                   {children}
                 </h2>
               );
@@ -116,10 +122,7 @@ export default function Markdown({ content, headingIds, profile = false }: Props
               void node;
 
               return (
-                <h3
-                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
-                  {...props}
-                >
+                <h3 className={borderedTextClassName} {...props}>
                   {children}
                 </h3>
               );
@@ -128,10 +131,7 @@ export default function Markdown({ content, headingIds, profile = false }: Props
               void node;
 
               return (
-                <h4
-                  className={`${theme === 'dark' ? 'border-gray-500 text-white' : 'border-gray-300 text-gray-700'}`}
-                  {...props}
-                >
+                <h4 className={borderedTextClassName} {...props}>
                   {children}
                 </h4>
               );

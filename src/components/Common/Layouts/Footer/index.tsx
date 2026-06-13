@@ -6,7 +6,12 @@ import styles from './index.module.css';
 import { BLOG_IMAGE, COPYRIGHT, FOOTER_NAVIGATION, SOCIAL_ICON } from '@/constants/data';
 import { CATEGORY_ARR } from '@/constants/category';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
-import { colorClassNames, getThemeClassName, radiusClassNames } from '@/styles/designTokens';
+import {
+  colorClassNames,
+  getThemeClassName,
+  radiusClassNames,
+  transitionClassNames,
+} from '@/styles/designTokens';
 
 export default function Footer() {
   const { theme } = useTheme();
@@ -22,7 +27,7 @@ export default function Footer() {
               <div className={styles.logo}>
                 <Link
                   href="/"
-                  className={`inline-flex rounded-md p-1.5 hover:scale-110 ${interactiveFocusClassName}`}
+                  className={`inline-flex ${radiusClassNames.control} p-1.5 hover:scale-110 ${transitionClassNames.transform}`}
                   aria-label="ホームへ戻る"
                 >
                   {BLOG_IMAGE.map((item) => (

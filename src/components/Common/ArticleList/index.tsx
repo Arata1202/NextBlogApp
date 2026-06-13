@@ -14,6 +14,8 @@ import UnifiedArticleCard from '../UnifiedArticleCard';
 import Sidebar from '../Layouts/Sidebar';
 import Share from '../Share';
 import { UnifiedArticle } from '@/types/unified';
+import { getMutedTextClassName } from '@/components/Common/controlClassNames';
+import { colorClassNames } from '@/styles/designTokens';
 
 type Props = {
   articles: Article[];
@@ -29,11 +31,14 @@ type Props = {
 const skeletonItems = [0, 1, 2];
 
 function EmptyState({ message, theme }: { message: string; theme?: string }) {
-  const colorClassName = theme === 'dark' ? 'text-gray-300' : 'text-gray-500';
+  const colorClassName = getMutedTextClassName(theme);
 
   return (
     <div className="py-10 text-center">
-      <DocumentTextIcon className="mx-auto mb-2 h-7 w-7 text-gray-400" aria-hidden="true" />
+      <DocumentTextIcon
+        className={`mx-auto mb-2 h-7 w-7 ${colorClassNames.subtleText}`}
+        aria-hidden="true"
+      />
       <p className={`text-sm font-medium ${colorClassName}`}>{message}</p>
     </div>
   );

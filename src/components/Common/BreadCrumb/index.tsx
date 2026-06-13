@@ -12,9 +12,8 @@ type Props = {
 const breadcrumbItemClassName = 'min-w-0';
 const breadcrumbCurrentItemClassName = `${breadcrumbItemClassName} flex-1`;
 const breadcrumbSegmentClassName = 'flex min-w-0 items-center';
-const currentPageClassName =
-  'ml-4 min-w-0 flex-1 text-sm font-medium text-gray-500 [overflow-wrap:anywhere]';
-const breadcrumbLinkClassName = `text-gray-500 ${colorClassNames.accentHoverText}`;
+const currentPageClassName = `ml-4 min-w-0 flex-1 text-sm font-medium ${colorClassNames.mutedText} [overflow-wrap:anywhere]`;
+const breadcrumbLinkClassName = `${colorClassNames.mutedText} ${colorClassNames.accentHoverText}`;
 
 const renderCurrentPage = (label: string, isLoading: boolean) => (
   <span
@@ -47,7 +46,10 @@ export default function BreadCrumb({ page, isLoading = false }: Props) {
         {page.type === 'article' && (
           <li className={breadcrumbItemClassName}>
             <div className={breadcrumbSegmentClassName}>
-              <ChevronRightIcon className="h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" />
+              <ChevronRightIcon
+                className={`h-4 w-4 shrink-0 ${colorClassNames.subtleText}`}
+                aria-hidden="true"
+              />
               <Link
                 href={`/category/${page.article.categories[0].id}`}
                 className={`whitespace-nowrap ml-4 text-sm font-medium ${breadcrumbLinkClassName}`}
@@ -59,7 +61,10 @@ export default function BreadCrumb({ page, isLoading = false }: Props) {
         )}
         <li className={breadcrumbCurrentItemClassName}>
           <div className={breadcrumbSegmentClassName}>
-            <ChevronRightIcon className="h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" />
+            <ChevronRightIcon
+              className={`h-4 w-4 shrink-0 ${colorClassNames.subtleText}`}
+              aria-hidden="true"
+            />
             {isSearchLoading ? (
               <span
                 className={currentPageClassName}
