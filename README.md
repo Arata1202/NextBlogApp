@@ -28,7 +28,6 @@
 ## リンク一覧
 
 <ul><li><a href="https://realunivlog.com">リアル大学生</a></li></ul>
-<ul><li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1&node-type=canvas&t=zcqCjvUj22ccvYpV-11">Figma</a></li></ul>
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
