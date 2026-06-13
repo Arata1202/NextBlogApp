@@ -23,7 +23,7 @@ export const PROFILE_CONTENT = `
 - Infrastructure｜Cloudflare Pages, Vercel, Amazon S3, Terraform
 - Environment setup｜Docker
 - CI/CD｜GitHub Actions, CodeQL, Dependabot
-- Design｜Canva
+- Design｜Figma, Canva
 - Google｜AdSense, Analytics, Search Console, reCAPTCHA
 - Integrations｜PWA, OneSignal, Sentry
 

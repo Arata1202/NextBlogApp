@@ -27,7 +27,10 @@
 
 ## リンク一覧
 
-<ul><li><a href="https://realunivlog.com">リアル大学生</a></li></ul>
+<ul>
+  <li><a href="https://realunivlog.com">リアル大学生</a></li>
+  <li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1&node-type=canvas&t=zcqCjvUj22ccvYpV-11">Figma</a></li>
+</ul>
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -67,7 +70,7 @@
 | Infrastructure    | Cloudflare Pages, Vercel, Amazon S3, Terraform |
 | Environment setup | Docker                                         |
 | CI/CD             | GitHub Actions, CodeQL, Dependabot             |
-| Design            | Canva                                          |
+| Design            | Figma, Canva                                   |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA  |
 | Integrations      | PWA, OneSignal, Sentry                         |
 
