@@ -152,15 +152,18 @@ func TestLinkCheckerHandlerDoesNotSendNotificationWithoutBrokenLinks(t *testing.
 		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
 			if r.URL.Host == "example.microcms.test" {
 				return responseWithBody(http.StatusOK, `{
-					"contents": [{"id": "article-a", "title": "Article A", "content_blocks": [{"rich_text": "<a href=\"https://ok.example/path\">OK</a>"}]}],
-					"totalCount": 1,
-					"offset": 0,
-					"limit": 100
-				}`), nil
+						"contents": [{"id": "article-a", "title": "Article A", "content_blocks": [{"rich_text": "<a href=\"https://ok.example/path\">OK</a><a href=\"https://blocked.example/path\">Blocked</a>"}]}],
+						"totalCount": 1,
+						"offset": 0,
+						"limit": 100
+					}`), nil
 			}
 
-			if r.URL.Host == "ok.example" {
+			switch r.URL.Host {
+			case "ok.example":
 				return responseWithBody(http.StatusOK, ""), nil
+			case "blocked.example":
+				return responseWithBody(http.StatusForbidden, ""), nil
 			}
 
 			t.Fatalf("unexpected host = %q", r.URL.Host)
@@ -185,7 +188,7 @@ func TestLinkCheckerHandlerDoesNotSendNotificationWithoutBrokenLinks(t *testing.
 	}
 
 	gotBody := compactJSON(rec.Body.String())
-	if !strings.Contains(gotBody, `"checkedCount":1`) || !strings.Contains(gotBody, `"brokenCount":0`) || !strings.Contains(gotBody, `"notified":false`) {
+	if !strings.Contains(gotBody, `"checkedCount":2`) || !strings.Contains(gotBody, `"brokenCount":0`) || !strings.Contains(gotBody, `"notified":false`) {
 		t.Fatalf("body = %s", gotBody)
 	}
 }

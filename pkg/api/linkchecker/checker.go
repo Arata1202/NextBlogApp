@@ -171,13 +171,24 @@ func isBrokenStatus(statusCode int) bool {
 	return statusCode >= http.StatusBadRequest
 }
 
+func isInconclusiveLinkCheckerStatus(statusCode int) bool {
+	switch statusCode {
+	case http.StatusUnauthorized,
+		http.StatusForbidden,
+		http.StatusTooManyRequests:
+		return true
+	default:
+		return false
+	}
+}
+
 func checkSingleLink(ctx context.Context, linkURL string) (int, string, bool) {
 	requestContext, cancel := context.WithTimeout(ctx, linkCheckerRequestTimeout)
 	defer cancel()
 
 	statusCode, err := doLinkCheckerRequest(requestContext, http.MethodHead, linkURL)
 	if err != nil ||
-		statusCode == http.StatusForbidden ||
+		isInconclusiveLinkCheckerStatus(statusCode) ||
 		statusCode == http.StatusMethodNotAllowed ||
 		isBrokenStatus(statusCode) {
 		statusCode, err = doLinkCheckerRequest(requestContext, http.MethodGet, linkURL)
@@ -187,7 +198,7 @@ func checkSingleLink(ctx context.Context, linkURL string) (int, string, bool) {
 		return 0, err.Error(), true
 	}
 
-	return statusCode, "", isBrokenStatus(statusCode)
+	return statusCode, "", isBrokenStatus(statusCode) && !isInconclusiveLinkCheckerStatus(statusCode)
 }
 
 func checkLinks(ctx context.Context, refsByURL map[string][]linkReference) []linkCheckResult {

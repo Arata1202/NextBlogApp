@@ -121,3 +121,34 @@ func TestCheckSingleLinkFallsBackToGetWhenHeadReportsBroken(t *testing.T) {
 		t.Fatalf("methods = %v, want HEAD then GET", methods)
 	}
 }
+
+func TestCheckSingleLinkDoesNotTreatForbiddenAsBroken(t *testing.T) {
+	setLinkCheckerLookup(t, publicLinkCheckerLookup)
+
+	originalClient := linkCheckerHTTPClient
+	var methods []string
+	linkCheckerHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			methods = append(methods, r.Method)
+			return responseWithBody(http.StatusForbidden, ""), nil
+		}),
+	}
+	t.Cleanup(func() {
+		linkCheckerHTTPClient = originalClient
+	})
+
+	statusCode, errorMessage, broken := checkSingleLink(t.Context(), "https://blocked.example/path")
+
+	if broken {
+		t.Fatal("broken = true, want false")
+	}
+	if statusCode != http.StatusForbidden {
+		t.Fatalf("statusCode = %d, want %d", statusCode, http.StatusForbidden)
+	}
+	if errorMessage != "" {
+		t.Fatalf("errorMessage = %q, want empty", errorMessage)
+	}
+	if !reflect.DeepEqual(methods, []string{http.MethodHead, http.MethodGet}) {
+		t.Fatalf("methods = %v, want HEAD then GET", methods)
+	}
+}
