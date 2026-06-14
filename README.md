@@ -14,7 +14,6 @@
 - [リアル大学生](#top)
   - [目次](#目次)
   - [リンク一覧](#リンク一覧)
-  - [主な機能一覧](#主な機能一覧)
   - [使用技術](#使用技術)
   - [アーキテクチャ](#アーキテクチャ)
   - [環境構築](#環境構築)
@@ -29,34 +28,9 @@
 
 <ul>
   <li><a href="https://realunivlog.com">リアル大学生</a></li>
-  <li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1&node-type=canvas&t=zcqCjvUj22ccvYpV-11">Figma</a></li>
+  <li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=2102-4673">Figma（Design Tokens）</a></li>
+  <li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1">Figma（Archived UI）</a></li>
 </ul>
-
-<p align="right">(<a href="#top">トップへ</a>)</p>
-
-## 主な機能一覧
-
-※本番環境ではGoogle AdSenseによる広告が表示されます。
-
-| 最新記事ページ                     | 　カテゴリーページ                               |
-| ---------------------------------- | ------------------------------------------------ |
-| ![1](/.docs/readme/images/1.png)   | ![2](/.docs/readme/images/2.png)                 |
-| 最新記事を一覧表示するページです。 | 特定のカテゴリーの記事を一覧表示するページです。 |
-
-| タグページ                                 | お問い合わせページ                   |
-| ------------------------------------------ | ------------------------------------ |
-| ![3](/.docs/readme/images/3.png)           | ![7](/.docs/readme/images/7.png)     |
-| 特定のタグの記事を一覧表示するページです。 | 管理者にお問い合わせするページです。 |
-
-| アーカイブページ                           | 　記事ページ                     |
-| ------------------------------------------ | -------------------------------- |
-| ![5](/.docs/readme/images/5.png)           | ![6](/.docs/readme/images/6.png) |
-| 特定の年月の記事を一覧表示するページです。 | 記事を表示するページです。       |
-
-| サイトマップ・RSS                            | 　ダークテーマ                                         |
-| -------------------------------------------- | ------------------------------------------------------ |
-| ![9](/.docs/readme/images/9.png)             | ![8](/.docs/readme/images/8.png)                       |
-| XML形式のサイトマップとRSSを公開しています。 | ライトテーマとダークテーマを切り替えることができます。 |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -218,201 +192,208 @@ pnpm test:e2e:report
 .
 ├── .air.toml
 ├── .docker
-│   ├── go
-│   │   └── Dockerfile
-│   └── js
-│       └── Dockerfile
+│   ├── go
+│   │   └── Dockerfile
+│   └── js
+│       └── Dockerfile
 ├── .dockerignore
 ├── .docs
-│   └── readme
-│       └── images
+│   └── readme
+│       └── images
 ├── .env.example
 ├── .github
-│   ├── dependabot.yml
-│   └── workflows
-│       ├── codeql.yml
-│       ├── test.yml
-│       └── vercel_deploy.yml
+│   ├── dependabot.yml
+│   └── workflows
+│       ├── codeql.yml
+│       ├── test.yml
+│       └── vercel_deploy.yml
 ├── .gitignore
 ├── .husky
-│   └── pre-commit
+│   └── pre-commit
 ├── .npmrc
 ├── .nvmrc
 ├── .prettierignore
 ├── .prettierrc
 ├── .vercelignore
 ├── .vscode
-│   ├── extensions.json
-│   └── settings.json
-├── LICENSE
-├── README.md
+│   ├── extensions.json
+│   └── settings.json
 ├── api
-│   ├── cron
-│   │   ├── linkchecker.go
-│   │   ├── linkchecker_test.go
-│   │   └── zennnotifier_test.go
-│   ├── recaptcha.go
-│   ├── recaptcha_test.go
-│   ├── search.go
-│   ├── search_test.go
-│   ├── sendemail.go
-│   ├── sendemail_test.go
-│   └── webhook
-│       ├── microcmsbackup.go
-│       └── microcmsbackup_test.go
+│   ├── cron
+│   │   └── linkchecker.go
+│   ├── recaptcha.go
+│   ├── search.go
+│   ├── sendemail.go
+│   └── webhook
+│       └── microcmsbackup.go
 ├── cmd
-│   └── main.go
+│   └── main.go
 ├── docker-compose.yml
 ├── e2e
-│   ├── contact.spec.ts
-│   ├── feeds.spec.ts
-│   ├── fixtures
-│   │   ├── content.d.mts
-│   │   └── content.mjs
-│   ├── navigation.spec.ts
-│   ├── responsive.spec.ts
-│   ├── search.spec.ts
-│   ├── smoke.spec.ts
-│   ├── support
-│   │   └── app.ts
-│   └── theme.spec.ts
+│   ├── contact.spec.ts
+│   ├── feeds.spec.ts
+│   ├── fixtures
+│   │   ├── content.d.mts
+│   │   └── content.mjs
+│   ├── navigation.spec.ts
+│   ├── responsive.spec.ts
+│   ├── search.spec.ts
+│   ├── smoke.spec.ts
+│   ├── support
+│   │   └── app.ts
+│   └── theme.spec.ts
 ├── eslint.config.mjs
+├── figma
+│   ├── main.js
+│   ├── manifest.json
+│   └── README.md
 ├── go.mod
 ├── go.sum
+├── LICENSE
 ├── next.config.ts
 ├── package.json
 ├── pkg
-│   └── monitoring
-│       └── sentry.go
+│   └── api
+│       ├── contact
+│       ├── contentops
+│       ├── httpx
+│       ├── linkchecker
+│       ├── microcms
+│       ├── monitoring
+│       ├── recaptcha
+│       └── search
 ├── playwright.config.ts
 ├── pnpm-lock.yaml
 ├── postcss.config.mjs
 ├── public
-│   ├── OneSignalSDKWorker.js
-│   ├── ads.txt
-│   ├── app-ads.txt
-│   ├── favicon.ico
-│   ├── images
-│   │   ├── blog
-│   │   ├── head
-│   │   ├── plugin
-│   │   ├── post
-│   │   ├── pwa
-│   │   └── thumbnail
-│   ├── llms-full.txt
-│   ├── llms.txt
-│   └── robots.txt
+│   ├── ads.txt
+│   ├── app-ads.txt
+│   ├── favicon.ico
+│   ├── images
+│   │   ├── blog
+│   │   ├── head
+│   │   ├── plugin
+│   │   ├── post
+│   │   ├── pwa
+│   │   └── thumbnail
+│   ├── llms-full.txt
+│   ├── llms.txt
+│   ├── OneSignalSDKWorker.js
+│   └── robots.txt
+├── README.md
 ├── scripts
-│   └── e2e
-│       ├── build.mjs
-│       ├── mock-fetch.mjs
-│       └── serve-static.mjs
+│   └── e2e
+│       ├── build.mjs
+│       ├── mock-fetch.mjs
+│       └── serve-static.mjs
 ├── src
-│   ├── app
-│   │   ├── __tests__
-│   │   ├── archive
-│   │   ├── articles
-│   │   ├── category
-│   │   ├── contact
-│   │   ├── copyright
-│   │   ├── disclaimer
-│   │   ├── global-error.tsx
-│   │   ├── layout.module.css
-│   │   ├── layout.tsx
-│   │   ├── link
-│   │   ├── manifest.json
-│   │   ├── not-found.module.css
-│   │   ├── not-found.tsx
-│   │   ├── p
-│   │   ├── page.tsx
-│   │   ├── privacy
-│   │   ├── profile
-│   │   ├── rss.xml
-│   │   ├── search
-│   │   ├── sitemap-html
-│   │   ├── sitemap.ts
-│   │   └── tag
-│   ├── components
-│   │   ├── Common
-│   │   ├── Features
-│   │   ├── Pages
-│   │   └── ThirdParties
-│   ├── config
-│   │   ├── publicEnv.ts
-│   │   └── serverEnv.ts
-│   ├── constants
-│   │   ├── articleContent.ts
-│   │   ├── category.ts
-│   │   ├── customHtml.ts
-│   │   ├── data.ts
-│   │   ├── limit.ts
-│   │   └── page.ts
-│   ├── contents
-│   │   ├── copyright.ts
-│   │   ├── disclaimer.ts
-│   │   ├── link.ts
-│   │   ├── privacy.ts
-│   │   └── profile.ts
-│   ├── contexts
-│   │   ├── ThemeProvider.tsx
-│   │   ├── ThemeWrapper.tsx
-│   │   └── __tests__
-│   ├── hooks
-│   │   ├── __tests__
-│   │   ├── useCodeBlockCopyButtons.tsx
-│   │   ├── useExtractHeadings.ts
-│   │   ├── useIframelyEmbeds.ts
-│   │   ├── useIsClient.ts
-│   │   └── useMutationObserver.ts
-│   ├── instrumentation-client.ts
-│   ├── libs
-│   │   ├── __tests__
-│   │   ├── archive.ts
-│   │   ├── microcms.ts
-│   │   ├── microcmsPage.ts
-│   │   ├── pageData.ts
-│   │   ├── recent.ts
-│   │   ├── rss.ts
-│   │   ├── unified.ts
-│   │   └── zenn.ts
-│   ├── styles
-│   │   ├── globals.css
-│   │   └── plugin.css
-│   ├── test
-│   │   ├── factories.ts
-│   │   └── setup.ts
-│   ├── types
-│   │   ├── form.ts
-│   │   ├── heading.ts
-│   │   ├── microcms.ts
-│   │   ├── react-dom-client.d.ts
-│   │   └── unified.ts
-│   └── utils
-│       ├── __tests__
-│       ├── formatDate.ts
-│       ├── formatHeadings.ts
-│       ├── formatMicroCmsImageUrl.ts
-│       ├── formatRichText.ts
-│       ├── markdownHeadings.ts
-│       ├── sanitizeCustomHtml.ts
-│       └── urlSafety.ts
+│   ├── app
+│   │   ├── __tests__
+│   │   ├── archive
+│   │   ├── articles
+│   │   ├── category
+│   │   ├── contact
+│   │   ├── copyright
+│   │   ├── disclaimer
+│   │   ├── global-error.tsx
+│   │   ├── layout.module.css
+│   │   ├── layout.tsx
+│   │   ├── link
+│   │   ├── manifest.json
+│   │   ├── not-found.module.css
+│   │   ├── not-found.tsx
+│   │   ├── p
+│   │   ├── page.tsx
+│   │   ├── privacy
+│   │   ├── profile
+│   │   ├── rss.xml
+│   │   ├── search
+│   │   ├── sitemap-html
+│   │   ├── sitemap.ts
+│   │   └── tag
+│   ├── components
+│   │   ├── Common
+│   │   ├── Features
+│   │   ├── Pages
+│   │   └── ThirdParties
+│   ├── config
+│   │   ├── publicEnv.ts
+│   │   └── serverEnv.ts
+│   ├── constants
+│   │   ├── articleContent.ts
+│   │   ├── category.ts
+│   │   ├── customHtml.ts
+│   │   ├── data.ts
+│   │   ├── limit.ts
+│   │   └── page.ts
+│   ├── contents
+│   │   ├── copyright.ts
+│   │   ├── disclaimer.ts
+│   │   ├── link.ts
+│   │   ├── privacy.ts
+│   │   └── profile.ts
+│   ├── contexts
+│   │   ├── __tests__
+│   │   ├── ThemeProvider.tsx
+│   │   └── ThemeWrapper.tsx
+│   ├── hooks
+│   │   ├── __tests__
+│   │   ├── useCodeBlockCopyButtons.tsx
+│   │   ├── useExtractHeadings.ts
+│   │   ├── useIframelyEmbeds.ts
+│   │   ├── useIsClient.ts
+│   │   └── useMutationObserver.ts
+│   ├── instrumentation-client.ts
+│   ├── libs
+│   │   ├── __tests__
+│   │   ├── archive.ts
+│   │   ├── microcms.ts
+│   │   ├── microcmsPage.ts
+│   │   ├── pageData.ts
+│   │   ├── recent.ts
+│   │   ├── rss.ts
+│   │   ├── unified.ts
+│   │   └── zenn.ts
+│   ├── styles
+│   │   ├── designTokens.ts
+│   │   ├── globals.css
+│   │   └── plugin.css
+│   ├── test
+│   │   ├── factories.ts
+│   │   └── setup.ts
+│   ├── types
+│   │   ├── form.ts
+│   │   ├── heading.ts
+│   │   ├── microcms.ts
+│   │   ├── react-dom-client.d.ts
+│   │   └── unified.ts
+│   └── utils
+│       ├── __tests__
+│       ├── formatDate.ts
+│       ├── formatHeadings.ts
+│       ├── formatMicroCmsImageUrl.ts
+│       ├── formatRichText.ts
+│       ├── htmlSanitizer.ts
+│       ├── markdownHeadings.ts
+│       ├── sanitizeCustomHtml.ts
+│       └── urlSafety.ts
 ├── terraform
-│   ├── .terraform.lock.hcl
-│   ├── iam
-│   │   ├── iam.tf
-│   │   └── variables.tf
-│   ├── main.tf
-│   ├── module.tf
-│   ├── s3
-│   │   ├── s3.tf
-│   │   └── variables.tf
-│   ├── terraform.tfvars.example
-│   └── variables.tf
+│   ├── .terraform.lock.hcl
+│   ├── iam
+│   │   ├── iam.tf
+│   │   └── variables.tf
+│   ├── main.tf
+│   ├── module.tf
+│   ├── s3
+│   │   ├── s3.tf
+│   │   └── variables.tf
+│   ├── terraform.tfvars.example
+│   └── variables.tf
 ├── tsconfig.json
 ├── vercel.json
 └── vitest.config.mts
 
-69 directories, 127 files
+78 directories, 125 files
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
