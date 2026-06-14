@@ -1,0 +1,10 @@
+{
+  "name": "NextBlogApp Design Tokens",
+  "api": "1.0.0",
+  "editorType": ["figma"],
+  "main": "main.js",
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  }
+}
