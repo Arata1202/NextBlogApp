@@ -133,7 +133,7 @@ function AppSearchIndex({ tags, archiveList }: Pick<Props, 'tags' | 'archiveList
     <div className="pb-4" data-app-search-index>
       <label
         htmlFor="app-search-archive"
-        className={`mb-2 flex items-center text-sm font-semibold ${colorClassNames.mutedText}`}
+        className="mb-2 flex items-center text-sm font-semibold text-gray-700"
       >
         <CalendarDaysIcon className="mr-2 h-5 w-5" aria-hidden="true" />
         アーカイブ
@@ -156,9 +156,7 @@ function AppSearchIndex({ tags, archiveList }: Pick<Props, 'tags' | 'archiveList
         })}
       </select>
 
-      <div
-        className={`mb-3 mt-5 flex items-center text-sm font-semibold ${colorClassNames.mutedText}`}
-      >
+      <div className="mb-3 mt-5 flex items-center text-sm font-semibold text-gray-700">
         <HashtagIcon className="mr-2 h-5 w-5" aria-hidden="true" />
         タグ
       </div>
