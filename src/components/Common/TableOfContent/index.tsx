@@ -7,25 +7,31 @@ import { Heading } from '@/types/heading';
 import styles from './index.module.css';
 import { formatHeadings } from '@/utils/formatHeadings';
 import { colorClassNames, getThemeClassName } from '@/styles/designTokens';
+import { useAppWebViewMode } from '@/hooks/useAppWebViewMode';
 
 type Props = {
   headings: Heading[];
   sidebar?: boolean;
 };
 
+const WEB_HEADER_SCROLL_OFFSET = -130;
+const APP_WEBVIEW_SCROLL_OFFSET = 0;
+
 export default function TableOfContents({ headings, sidebar = false }: Props) {
   const { theme } = useTheme();
   const themeClassName = getThemeClassName(theme);
+  const isAppWebViewMode = useAppWebViewMode();
   const [activeId, setActiveId] = useState('');
 
   const formattedHeadings = formatHeadings(headings);
+  const scrollOffset = isAppWebViewMode ? APP_WEBVIEW_SCROLL_OFFSET : WEB_HEADER_SCROLL_OFFSET;
+  const activeScrollPosition = Math.abs(scrollOffset) + 1;
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
     event.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      const yOffset = -130;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + scrollOffset;
       const prefersReducedMotion =
         typeof window.matchMedia === 'function' &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -42,15 +48,15 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
           const rect = element.getBoundingClientRect();
           const isLastHeading = index === headings.length - 1;
           if (isLastHeading) {
-            if (rect.top <= 131) {
+            if (rect.top <= activeScrollPosition) {
               currentId = heading.id;
             }
           } else {
-            if (rect.top <= 131 && rect.bottom > 131) {
+            if (rect.top <= activeScrollPosition && rect.bottom > activeScrollPosition) {
               currentId = heading.id;
-            } else if (rect.top <= 131 && headings[index + 1]) {
+            } else if (rect.top <= activeScrollPosition && headings[index + 1]) {
               const nextElement = document.getElementById(headings[index + 1].id);
-              if (nextElement && nextElement.getBoundingClientRect().top > 131) {
+              if (nextElement && nextElement.getBoundingClientRect().top > activeScrollPosition) {
                 currentId = heading.id;
               }
             }
@@ -64,7 +70,7 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  });
+  }, [activeScrollPosition, headings]);
 
   return (
     <nav className={`flex justify-center`} aria-label="目次">

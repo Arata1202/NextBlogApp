@@ -5,6 +5,7 @@ import TableOfContents from '@/components/Common/TableOfContent';
 
 describe('TableOfContents', () => {
   beforeEach(() => {
+    window.history.pushState({}, '', '/');
     window.scrollTo = vi.fn();
     Object.defineProperty(window, 'pageYOffset', {
       configurable: true,
@@ -44,5 +45,30 @@ describe('TableOfContents', () => {
     await user.click(screen.getByRole('link', { name: '1 Intro' }));
 
     expect(window.scrollTo).toHaveBeenCalledWith({ top: 190, behavior: 'smooth' });
+  });
+
+  it('does not reserve web header space in app WebView mode', async () => {
+    window.history.pushState({}, '', '/articles/test?app=1');
+    const user = userEvent.setup();
+    const target = document.createElement('section');
+    target.id = 'intro';
+    target.getBoundingClientRect = vi.fn(() => ({
+      top: 300,
+      bottom: 500,
+      left: 0,
+      right: 0,
+      width: 0,
+      height: 200,
+      x: 0,
+      y: 300,
+      toJSON: () => ({}),
+    }));
+    document.body.appendChild(target);
+
+    render(<TableOfContents headings={[{ id: 'intro', title: 'Intro', level: 2 }]} />);
+
+    await user.click(screen.getByRole('link', { name: '1 Intro' }));
+
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 320, behavior: 'smooth' });
   });
 });
