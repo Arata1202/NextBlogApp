@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useMutationObserver } from '@/hooks/useMutationObserver';
+import { useAppWebViewMode } from '@/hooks/useAppWebViewMode';
 import styles from './index.module.css';
 import { getGoogleAdSensePublisherId } from '@/config/publicEnv';
 import { getThemeClassName } from '@/styles/designTokens';
@@ -26,13 +27,14 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
   pathname = pathname ? pathname : '';
 
   const { theme } = useTheme();
+  const isAppWebViewMode = useAppWebViewMode();
   const themeClassName = getThemeClassName(theme);
   const publisherId = getGoogleAdSensePublisherId();
 
   useMutationObserver();
 
   useEffect(() => {
-    if (!publisherId) {
+    if (isAppWebViewMode || !publisherId) {
       return;
     }
 
@@ -45,9 +47,9 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [pathname, publisherId]);
+  }, [isAppWebViewMode, pathname, publisherId]);
 
-  if (!publisherId) {
+  if (isAppWebViewMode || !publisherId) {
     return null;
   }
 
@@ -56,6 +58,7 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
       <div
         key={pathname.replace(/\//g, '-') + '-' + slot}
         className={`${styles.container} mut-guard`}
+        data-web-ad
         style={{ ...style }}
       >
         <p className={`text-center ${themeClassName}`}>スポンサーリンク</p>

@@ -166,6 +166,24 @@ describe('SearchPage', () => {
     );
   });
 
+  it('renders the app tag index until a query is provided in app mode', () => {
+    window.history.pushState({}, '', '/search?app=1');
+
+    render(
+      <SearchPage
+        tags={[createTag({ id: 'react', name: 'React' })]}
+        archiveList={[{ year: '2024', month: '1' }]}
+      />,
+    );
+
+    expect(screen.getByLabelText('アーカイブ')).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: '2024年1月' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'React' })).toHaveAttribute('href', '/tag/react?app=1');
+    expect(screen.queryByText('記事はまだありません')).not.toBeInTheDocument();
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(articleListMock).not.toHaveBeenCalled();
+  });
+
   it('does not show API errors to users', async () => {
     window.history.pushState({}, '', '/search?q=React');
     fetchMock.mockRejectedValue(new Error('network error'));

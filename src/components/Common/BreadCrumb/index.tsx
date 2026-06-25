@@ -36,7 +36,7 @@ export default function BreadCrumb({ page, isLoading = false }: Props) {
   const isSearchLoading = page.type === 'search' && isLoading;
 
   return (
-    <nav aria-label="パンくず">
+    <nav aria-label="パンくず" data-web-breadcrumb>
       <ul className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
         <li className={breadcrumbItemClassName}>
           <Link href="/" className={`flex ${breadcrumbLinkClassName}`} aria-label="ホーム">

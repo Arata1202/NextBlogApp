@@ -9,10 +9,12 @@ import {
   outlinedControlClassName,
 } from '@/components/Common/controlClassNames';
 import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
+import { appendAppWebViewParam, useAppWebViewMode } from '@/hooks/useAppWebViewMode';
 
 export default function Search() {
   const { theme } = useTheme();
   const themeClassName = getThemeClassName(theme);
+  const isAppWebViewMode = useAppWebViewMode();
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState('');
@@ -45,7 +47,8 @@ export default function Search() {
     }
 
     setErrorMessage('');
-    router.push(`/search?q=${encodeURIComponent(trimmedQuery)}`);
+    const href = `/search?q=${encodeURIComponent(trimmedQuery)}`;
+    router.push(isAppWebViewMode ? appendAppWebViewParam(href) : href);
   };
 
   return (

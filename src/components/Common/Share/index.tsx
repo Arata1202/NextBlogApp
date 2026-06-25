@@ -10,7 +10,7 @@ type Props = {
 export default function Share({ data }: Props) {
   return (
     <>
-      <div className="mt-5">
+      <div className="mt-5" data-web-share>
         <ShareSection data={data} />
         <FollowSection />
         <SupportSection data={data} />

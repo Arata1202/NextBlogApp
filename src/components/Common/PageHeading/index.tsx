@@ -14,6 +14,7 @@ export default function PageHeading({ page, isLoading = false }: Props) {
       <div
         className={`${styles.container} text-3xl font-bold pt-5 max-w-340 sm:px-6 lg:px-8 mx-auto pb-2`}
         aria-busy={isLoading}
+        data-page-heading
       >
         {page.type !== 'home' && <BreadCrumb page={page} isLoading={isLoading} />}
         <PageTitle page={page} isLoading={isLoading} />

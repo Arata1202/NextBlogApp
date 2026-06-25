@@ -16,6 +16,17 @@ import Embedly from '@/components/ThirdParties/Embedly';
 import Header from '@/components/Common/Layouts/Header';
 import Footer from '@/components/Common/Layouts/Footer';
 import ScrollTopButton from '@/components/Common/Layouts/ScrollToTop';
+import AppWebViewLinkHandler from '@/components/Common/AppWebViewLinkHandler';
+
+const appWebViewBootstrapScript = [
+  '(function(){try{',
+  "var value='1';",
+  'var params=new URLSearchParams(window.location.search);',
+  "if(params.get('app')===value){",
+  'document.documentElement.dataset.appWebview=value;',
+  '}',
+  '}catch(error){}})();',
+].join('');
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -80,15 +91,25 @@ export default async function RootLayout({ children }: Props) {
         <meta property="og:site_name" content={title} />
         <meta property="og:locale" content="ja_JP" />
         <link rel="alternate" type="application/rss+xml" title={title} href={`${url}/rss.xml`} />
+        <script dangerouslySetInnerHTML={{ __html: appWebViewBootstrapScript }} />
         <GoogleSearchConsole />
       </head>
       <body>
         <ThemeProvider defaultTheme="light">
           <ThemeWrapper />
-          <Header />
-          <main className={styles.main}>{children}</main>
-          <Footer />
-          <ScrollTopButton />
+          <AppWebViewLinkHandler />
+          <div data-web-chrome>
+            <Header />
+          </div>
+          <main className={styles.main} data-app-main>
+            {children}
+          </main>
+          <div data-web-chrome>
+            <Footer />
+          </div>
+          <div data-web-chrome>
+            <ScrollTopButton />
+          </div>
           <GoogleAdSense />
           <GoogleAnalytics />
           <Instagram />

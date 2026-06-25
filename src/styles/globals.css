@@ -57,7 +57,8 @@ layer(base);
   :root {
     --font-mono:
       ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
-      'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+      'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New',
+      monospace;
     --color-text-main: #333;
     --color-text-sub: #999;
     --color-bg-main: #fff;
@@ -98,6 +99,42 @@ layer(base);
     line-height: 1.8;
   }
 
+  :root[data-app-webview='1'] [data-web-chrome],
+  :root[data-app-webview='1'] [data-web-ad],
+  :root[data-app-webview='1'] [data-web-breadcrumb],
+  :root[data-app-webview='1'] [data-web-share],
+  :root[data-app-webview='1'] [data-web-sidebar] {
+    display: none !important;
+  }
+
+  :root[data-app-webview='1'] [data-app-main] {
+    max-width: none;
+    margin-top: 10px;
+    padding: 0 16px 16px;
+  }
+
+  :root[data-app-webview='1'] [data-app-main] > *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  :root[data-app-webview='1'] [data-article-main='true'] {
+    padding-top: 0;
+  }
+
+  :root[data-app-webview='1'] [data-page-heading] {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  :root[data-app-webview='1'] [data-article-title] {
+    margin-top: 0;
+  }
+
+  :root[data-app-webview='1'] [data-app-content-grid] {
+    display: block;
+  }
+
   code {
     font-family: monospace;
   }
@@ -129,15 +166,15 @@ layer(base);
 
   @supports selector(:focus-visible) {
     :where(
-      a[href],
-      button,
-      input,
-      select,
-      textarea,
-      summary,
-      [role='button'],
-      [tabindex]:not([tabindex='-1'])
-    ):focus:not(:focus-visible) {
+        a[href],
+        button,
+        input,
+        select,
+        textarea,
+        summary,
+        [role='button'],
+        [tabindex]:not([tabindex='-1'])
+      ):focus:not(:focus-visible) {
       outline: none;
     }
   }

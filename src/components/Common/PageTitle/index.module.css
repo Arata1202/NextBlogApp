@@ -11,3 +11,8 @@
     margin-top: 0;
   }
 }
+
+:global(:root[data-app-webview='1']) .home,
+:global(:root[data-app-webview='1']) .withBreadCrumbs {
+  margin-top: 0;
+}

@@ -1,8 +1,9 @@
 'use client';
 
 import * as Sentry from '@sentry/nextjs';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { CalendarDaysIcon, HashtagIcon } from '@heroicons/react/24/solid';
 import { Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
 import { UnifiedArticle } from '@/types/unified';
@@ -12,6 +13,9 @@ import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import { getApiSearchUrl } from '@/config/publicEnv';
+import { APP_WEBVIEW_QUERY_PARAMETER, APP_WEBVIEW_QUERY_VALUE } from '@/hooks/useAppWebViewMode';
+import { fieldControlClassName, pillControlClassName } from '@/components/Common/controlClassNames';
+import { colorClassNames } from '@/styles/designTokens';
 
 type Props = {
   recentArticles?: UnifiedArticle[];
@@ -113,8 +117,70 @@ const normalizeSearchArticles = (contents: SearchResponse['contents']) => {
   });
 };
 
+function AppSearchIndex({ tags, archiveList }: Pick<Props, 'tags' | 'archiveList'>) {
+  const [selectedArchive, setSelectedArchive] = useState('');
+
+  const handleArchiveChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setSelectedArchive(value);
+
+    if (value) {
+      window.location.href = `/archive/${value}?app=1`;
+    }
+  };
+
+  return (
+    <div className="pb-4" data-app-search-index>
+      <label
+        htmlFor="app-search-archive"
+        className={`mb-2 flex items-center text-sm font-semibold ${colorClassNames.mutedText}`}
+      >
+        <CalendarDaysIcon className="mr-2 h-5 w-5" aria-hidden="true" />
+        アーカイブ
+      </label>
+      <select
+        id="app-search-archive"
+        value={selectedArchive}
+        onChange={handleArchiveChange}
+        className={`${fieldControlClassName} h-11 w-full bg-white px-3 text-base ${colorClassNames.mutedText}`}
+      >
+        <option value="">アーカイブを選択</option>
+        {archiveList.map((item) => {
+          const value = `${item.year}/${item.month.padStart(2, '0')}`;
+
+          return (
+            <option key={value} value={value}>
+              {`${item.year}年${Number(item.month)}月`}
+            </option>
+          );
+        })}
+      </select>
+
+      <div
+        className={`mb-3 mt-5 flex items-center text-sm font-semibold ${colorClassNames.mutedText}`}
+      >
+        <HashtagIcon className="mr-2 h-5 w-5" aria-hidden="true" />
+        タグ
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {tags.map((tag) => (
+          <a
+            key={tag.id}
+            href={`/tag/${tag.id}?app=1`}
+            className={`${pillControlClassName} inline-block rounded-full px-3 py-1 text-sm font-semibold`}
+          >
+            {tag.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function SearchPage({ recentArticles, tags, archiveList }: Props) {
   const searchParams = useSearchParams();
+  const hasAppWebViewParam =
+    searchParams.get(APP_WEBVIEW_QUERY_PARAMETER) === APP_WEBVIEW_QUERY_VALUE;
   const query = useMemo(() => searchParams.get('q')?.trim() ?? '', [searchParams]);
   const currentPage = useMemo(() => getCurrentPage(searchParams.get('page')), [searchParams]);
   const [searchState, setSearchState] = useState<SearchState>(initialSearchState);
@@ -209,6 +275,10 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
   const isLoading = Boolean(query) && (status === 'idle' || status === 'loading');
 
   const emptyMessage = '記事はまだありません';
+
+  if (!query && hasAppWebViewParam) {
+    return <AppSearchIndex tags={tags} archiveList={archiveList} />;
+  }
 
   return (
     <>

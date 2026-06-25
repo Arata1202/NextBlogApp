@@ -7,3 +7,8 @@
     padding-top: 65px !important;
   }
 }
+
+:global(:root[data-app-webview='1']) .container {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
