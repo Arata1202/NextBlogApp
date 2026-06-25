@@ -47,7 +47,7 @@ describe('TableOfContents', () => {
     expect(window.scrollTo).toHaveBeenCalledWith({ top: 190, behavior: 'smooth' });
   });
 
-  it('does not reserve web header space in app WebView mode', async () => {
+  it('keeps app WebView headings below the top spacing', async () => {
     window.history.pushState({}, '', '/articles/test?app=1');
     const user = userEvent.setup();
     const target = document.createElement('section');
@@ -69,6 +69,6 @@ describe('TableOfContents', () => {
 
     await user.click(screen.getByRole('link', { name: '1 Intro' }));
 
-    expect(window.scrollTo).toHaveBeenCalledWith({ top: 320, behavior: 'smooth' });
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 310, behavior: 'smooth' });
   });
 });

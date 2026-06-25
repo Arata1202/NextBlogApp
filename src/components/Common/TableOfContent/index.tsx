@@ -15,7 +15,7 @@ type Props = {
 };
 
 const WEB_HEADER_SCROLL_OFFSET = -130;
-const APP_WEBVIEW_SCROLL_OFFSET = 0;
+const APP_WEBVIEW_SCROLL_OFFSET = -10;
 
 export default function TableOfContents({ headings, sidebar = false }: Props) {
   const { theme } = useTheme();
