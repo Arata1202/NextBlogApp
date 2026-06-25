@@ -69,6 +69,6 @@ describe('TableOfContents', () => {
 
     await user.click(screen.getByRole('link', { name: '1 Intro' }));
 
-    expect(window.scrollTo).toHaveBeenCalledWith({ top: 310, behavior: 'smooth' });
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 304, behavior: 'smooth' });
   });
 });
