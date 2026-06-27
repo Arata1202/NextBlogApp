@@ -230,20 +230,7 @@ func TestMicroCMSBackupHandlerSendsOneSignalOnFirstPublish(t *testing.T) {
 				if body["url"] != "https://example.com/articles/article-a" {
 					t.Fatalf("OneSignal url = %#v", body["url"])
 				}
-				if body["isIos"] != true || body["isAnyWeb"] != true {
-					t.Fatalf("OneSignal platform flags = isIos:%#v isAnyWeb:%#v", body["isIos"], body["isAnyWeb"])
-				}
-				if _, ok := body["included_segments"]; ok {
-					t.Fatalf("OneSignal included_segments should not be set: %#v", body["included_segments"])
-				}
-				filters, ok := body["filters"].([]interface{})
-				if !ok || len(filters) != 1 {
-					t.Fatalf("OneSignal filters = %#v", body["filters"])
-				}
-				filter, ok := filters[0].(map[string]interface{})
-				if !ok || filter["field"] != "session_count" || filter["relation"] != ">" || filter["value"] != "0" {
-					t.Fatalf("OneSignal filter = %#v", filters[0])
-				}
+				assertOneSignalPushTargeting(t, body)
 				if body["send_after"] != "2026-06-05T22:13:09Z" {
 					t.Fatalf("OneSignal send_after = %#v", body["send_after"])
 				}

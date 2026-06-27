@@ -210,7 +210,7 @@ func oneSignalNotificationMarkerBody(status string, payload microCMSWebhookPaylo
 	return json.Marshal(marker)
 }
 
-func oneSignalSubscribedPushFilters() []map[string]string {
+func oneSignalActiveSubscriptionFilters() []map[string]string {
 	return []map[string]string{
 		{
 			"field":    "session_count",
@@ -219,6 +219,8 @@ func oneSignalSubscribedPushFilters() []map[string]string {
 		},
 	}
 }
+
+type oneSignalPendingMarkerBuilder func(attempt int, retryErr error) ([]byte, error)
 
 func createOneSignalNotificationRequest(ctx context.Context, config oneSignalConfig, source, contentID, articleTitle, articleURL string, attempt int, now time.Time) (*http.Request, error) {
 	notificationTitle := articleTitle
@@ -229,7 +231,7 @@ func createOneSignalNotificationRequest(ctx context.Context, config oneSignalCon
 	requestBody := map[string]interface{}{
 		"app_id":          config.AppID,
 		"target_channel":  "push",
-		"filters":         oneSignalSubscribedPushFilters(),
+		"filters":         oneSignalActiveSubscriptionFilters(),
 		"isIos":           true,
 		"isAnyWeb":        true,
 		"headings":        map[string]string{"ja": "新しい記事", "en": "New article"},
@@ -305,6 +307,20 @@ func shouldAdvanceOneSignalRetryAttempt(err error) bool {
 	return errors.As(err, &noNotificationIDError)
 }
 
+func recordOneSignalRetryAttempt(ctx context.Context, config s3BackupConfig, credentials awsCredentials, markerKey string, attempt int, retryErr error, buildMarker oneSignalPendingMarkerBuilder, now time.Time) error {
+	if !shouldAdvanceOneSignalRetryAttempt(retryErr) {
+		return nil
+	}
+
+	retryMarkerBody, err := buildMarker(attempt+1, retryErr)
+	if err != nil {
+		return err
+	}
+
+	_, err = putS3Object(ctx, config, credentials, markerKey, retryMarkerBody, s3JSONContentType, nil, now)
+	return err
+}
+
 func notifyExternalArticleFirstPublishWithOneSignal(ctx context.Context, config s3BackupConfig, credentials awsCredentials, oneSignalConfig oneSignalConfig, article ExternalArticleNotification, now time.Time) (OneSignalNotificationResult, error) {
 	if strings.TrimSpace(article.Source) == "" || strings.TrimSpace(article.ContentID) == "" || strings.TrimSpace(article.URL) == "" {
 		return OneSignalNotificationResult{}, errors.New("source, content ID, and URL are required")
@@ -326,14 +342,11 @@ func notifyExternalArticleFirstPublishWithOneSignal(ctx context.Context, config 
 
 	notificationID, err := sendOneSignalNotification(ctx, oneSignalConfig, article.Source, article.ContentID, article.Title, article.URL, attempt, now)
 	if err != nil {
-		if shouldAdvanceOneSignalRetryAttempt(err) {
-			retryMarkerBody, markerErr := oneSignalExternalArticleMarkerBody(oneSignalMarkerStatusPending, article, "", attempt+1, err, now)
-			if markerErr != nil {
-				return OneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, errors.Join(err, markerErr)
-			}
-			if _, putErr := putS3Object(ctx, config, credentials, markerKey, retryMarkerBody, s3JSONContentType, nil, now); putErr != nil {
-				return OneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, errors.Join(err, putErr)
-			}
+		markerErr := recordOneSignalRetryAttempt(ctx, config, credentials, markerKey, attempt, err, func(nextAttempt int, retryErr error) ([]byte, error) {
+			return oneSignalExternalArticleMarkerBody(oneSignalMarkerStatusPending, article, "", nextAttempt, retryErr, now)
+		}, now)
+		if markerErr != nil {
+			return OneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, errors.Join(err, markerErr)
 		}
 		return OneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, err
 	}
@@ -413,14 +426,11 @@ func notifyMicroCMSFirstPublishWithOneSignal(ctx context.Context, config s3Backu
 
 	notificationID, err := sendOneSignalNotification(ctx, oneSignalConfig, payload.API, payload.ID, articleTitle, articleURL, attempt, now)
 	if err != nil {
-		if shouldAdvanceOneSignalRetryAttempt(err) {
-			retryMarkerBody, markerErr := oneSignalNotificationMarkerBody(oneSignalMarkerStatusPending, payload, articleTitle, articleURL, "", attempt+1, err, now)
-			if markerErr != nil {
-				return oneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, errors.Join(err, markerErr)
-			}
-			if _, putErr := putS3Object(ctx, config, credentials, markerKey, retryMarkerBody, s3JSONContentType, nil, now); putErr != nil {
-				return oneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, errors.Join(err, putErr)
-			}
+		markerErr := recordOneSignalRetryAttempt(ctx, config, credentials, markerKey, attempt, err, func(nextAttempt int, retryErr error) ([]byte, error) {
+			return oneSignalNotificationMarkerBody(oneSignalMarkerStatusPending, payload, articleTitle, articleURL, "", nextAttempt, retryErr, now)
+		}, now)
+		if markerErr != nil {
+			return oneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, errors.Join(err, markerErr)
 		}
 		return oneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, err
 	}
