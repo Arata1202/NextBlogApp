@@ -97,3 +97,42 @@ func TestBuildS3PutObjectRequestSignsConditionalHeaders(t *testing.T) {
 		}
 	}
 }
+
+func TestBuildS3GetObjectRequestSignsRequest(t *testing.T) {
+	now := time.Date(2026, 6, 5, 22, 8, 9, 0, time.UTC)
+
+	req, err := buildS3GetObjectRequest(
+		context.Background(),
+		s3BackupConfig{BucketName: "backup-bucket", Region: "ap-northeast-1"},
+		awsCredentials{AccessKeyID: "AKIAEXAMPLE", SecretAccessKey: "secret"},
+		"onesignal/notifications/zenn/article-a.json",
+		now,
+	)
+	if err != nil {
+		t.Fatalf("buildS3GetObjectRequest() error = %v", err)
+	}
+
+	if req.Method != http.MethodGet {
+		t.Fatalf("method = %s, want GET", req.Method)
+	}
+	if req.URL.String() != "https://backup-bucket.s3.ap-northeast-1.amazonaws.com/onesignal/notifications/zenn/article-a.json" {
+		t.Fatalf("url = %q", req.URL.String())
+	}
+	if got := req.Header.Get("X-Amz-Date"); got != "20260605T220809Z" {
+		t.Fatalf("X-Amz-Date = %q, want 20260605T220809Z", got)
+	}
+	if got := req.Header.Get("X-Amz-Content-Sha256"); got != sha256Hex(nil) {
+		t.Fatalf("X-Amz-Content-Sha256 = %q, want %q", got, sha256Hex(nil))
+	}
+
+	authorization := req.Header.Get("Authorization")
+	for _, want := range []string{
+		"AWS4-HMAC-SHA256 Credential=AKIAEXAMPLE/20260605/ap-northeast-1/s3/aws4_request",
+		"SignedHeaders=host;x-amz-content-sha256;x-amz-date",
+		"Signature=",
+	} {
+		if !strings.Contains(authorization, want) {
+			t.Fatalf("Authorization = %q, want it to contain %q", authorization, want)
+		}
+	}
+}

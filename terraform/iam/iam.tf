@@ -9,8 +9,11 @@ resource "aws_iam_policy" "microcms_backup_s3_put_object" {
     Version = "2012-10-17",
     Statement = [
       {
-        Effect   = "Allow",
-        Action   = "s3:PutObject",
+        Effect = "Allow",
+        Action = [
+          "s3:GetObject",
+          "s3:PutObject",
+        ],
         Resource = "arn:aws:s3:::${var.s3_bucket_name}/*"
       }
     ]

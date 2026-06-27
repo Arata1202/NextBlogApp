@@ -48,6 +48,56 @@ func oneSignalNotificationMarkerKey(source, contentID string) string {
 	return fmt.Sprintf("onesignal/notifications/%s/%s.json", source, contentID)
 }
 
+func oneSignalNotificationMarkerStatus(ctx context.Context, config s3BackupConfig, credentials awsCredentials, markerKey string, now time.Time) (string, error) {
+	body, exists, err := getS3Object(ctx, config, credentials, markerKey, now)
+	if err != nil {
+		return "", err
+	}
+	if !exists {
+		return "", fmt.Errorf("OneSignal notification marker %s disappeared after conflict", markerKey)
+	}
+
+	var marker struct {
+		Status string `json:"status"`
+	}
+	if err := json.Unmarshal(body, &marker); err != nil {
+		return "", fmt.Errorf("failed to decode OneSignal notification marker %s: %w", markerKey, err)
+	}
+
+	status := strings.TrimSpace(marker.Status)
+	if status == "" {
+		return "", fmt.Errorf("OneSignal notification marker %s is missing status", markerKey)
+	}
+
+	return status, nil
+}
+
+func reserveOneSignalNotificationMarker(ctx context.Context, config s3BackupConfig, credentials awsCredentials, markerKey, source, contentID string, pendingMarkerBody []byte, now time.Time) (bool, bool, error) {
+	if err := putS3ObjectIfAbsent(ctx, config, credentials, markerKey, pendingMarkerBody, s3JSONContentType, now); err != nil {
+		if !errors.Is(err, errS3ObjectAlreadyExists) {
+			return false, false, err
+		}
+
+		status, err := oneSignalNotificationMarkerStatus(ctx, config, credentials, markerKey, now)
+		if err != nil {
+			return false, false, err
+		}
+
+		switch status {
+		case oneSignalMarkerStatusPending:
+			log.Printf("OneSignal notification marker is pending for %s content %s; retrying notification", source, contentID)
+			return false, true, nil
+		case oneSignalMarkerStatusSent:
+			log.Printf("OneSignal notification marker is already sent for %s content %s; skipping notification", source, contentID)
+			return false, false, nil
+		default:
+			return false, false, fmt.Errorf("unexpected OneSignal notification marker status %q for %s", status, markerKey)
+		}
+	}
+
+	return true, true, nil
+}
+
 func oneSignalIdempotencyKey(source, contentID string) string {
 	name := fmt.Sprintf("nextblogapp:%s:first-publish:%s", source, contentID)
 
@@ -72,7 +122,7 @@ func oneSignalExternalArticleMarkerBody(status string, article ExternalArticleNo
 		"articleUrl": article.URL,
 		"updatedAt":  now.UTC().Format(time.RFC3339),
 	}
-	if status == "pending" {
+	if status == oneSignalMarkerStatusPending {
 		marker["createdAt"] = now.UTC().Format(time.RFC3339)
 	}
 	if notificationID != "" {
@@ -91,7 +141,7 @@ func oneSignalNotificationMarkerBody(status string, payload microCMSWebhookPaylo
 		"articleUrl": articleURL,
 		"updatedAt":  now.UTC().Format(time.RFC3339),
 	}
-	if status == "pending" {
+	if status == oneSignalMarkerStatusPending {
 		marker["createdAt"] = now.UTC().Format(time.RFC3339)
 	}
 	if notificationID != "" {
@@ -179,35 +229,35 @@ func notifyExternalArticleFirstPublishWithOneSignal(ctx context.Context, config 
 	}
 
 	markerKey := oneSignalNotificationMarkerKey(article.Source, article.ContentID)
-	pendingMarkerBody, err := oneSignalExternalArticleMarkerBody("pending", article, "", now)
+	pendingMarkerBody, err := oneSignalExternalArticleMarkerBody(oneSignalMarkerStatusPending, article, "", now)
 	if err != nil {
 		return OneSignalNotificationResult{}, err
 	}
 
-	if err := putS3ObjectIfAbsent(ctx, config, credentials, markerKey, pendingMarkerBody, s3JSONContentType, now); err != nil {
-		if errors.Is(err, errS3ObjectAlreadyExists) {
-			log.Printf("OneSignal notification marker already exists for %s content %s; skipping notification", article.Source, article.ContentID)
-			return OneSignalNotificationResult{MarkerKey: markerKey}, nil
-		}
+	markerCreated, shouldSend, err := reserveOneSignalNotificationMarker(ctx, config, credentials, markerKey, article.Source, article.ContentID, pendingMarkerBody, now)
+	if err != nil {
 		return OneSignalNotificationResult{}, err
+	}
+	if !shouldSend {
+		return OneSignalNotificationResult{MarkerKey: markerKey}, nil
 	}
 
 	notificationID, err := sendOneSignalNotification(ctx, oneSignalConfig, article.Source, article.ContentID, article.Title, article.URL, now)
 	if err != nil {
-		return OneSignalNotificationResult{MarkerCreated: true, MarkerKey: markerKey}, err
+		return OneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, err
 	}
 
-	sentMarkerBody, err := oneSignalExternalArticleMarkerBody("sent", article, notificationID, now)
+	sentMarkerBody, err := oneSignalExternalArticleMarkerBody(oneSignalMarkerStatusSent, article, notificationID, now)
 	if err != nil {
-		return OneSignalNotificationResult{MarkerCreated: true, MarkerKey: markerKey}, err
+		return OneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, err
 	}
 	if _, err := putS3Object(ctx, config, credentials, markerKey, sentMarkerBody, s3JSONContentType, nil, now); err != nil {
-		return OneSignalNotificationResult{MarkerCreated: true, MarkerKey: markerKey, NotificationID: notificationID}, err
+		return OneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey, NotificationID: notificationID}, err
 	}
 
 	return OneSignalNotificationResult{
 		Sent:           true,
-		MarkerCreated:  true,
+		MarkerCreated:  markerCreated,
 		MarkerKey:      markerKey,
 		NotificationID: notificationID,
 	}, nil
@@ -257,35 +307,35 @@ func notifyMicroCMSFirstPublishWithOneSignal(ctx context.Context, config s3Backu
 	articleURL := microCMSArticleURL(oneSignalConfig.BaseURL, payload.ID)
 	markerKey := oneSignalNotificationMarkerKey(payload.API, payload.ID)
 
-	pendingMarkerBody, err := oneSignalNotificationMarkerBody("pending", payload, articleTitle, articleURL, "", now)
+	pendingMarkerBody, err := oneSignalNotificationMarkerBody(oneSignalMarkerStatusPending, payload, articleTitle, articleURL, "", now)
 	if err != nil {
 		return oneSignalNotificationResult{}, err
 	}
 
-	if err := putS3ObjectIfAbsent(ctx, config, credentials, markerKey, pendingMarkerBody, s3JSONContentType, now); err != nil {
-		if errors.Is(err, errS3ObjectAlreadyExists) {
-			log.Printf("OneSignal notification marker already exists for microCMS content %s; skipping notification", payload.ID)
-			return oneSignalNotificationResult{MarkerKey: markerKey}, nil
-		}
+	markerCreated, shouldSend, err := reserveOneSignalNotificationMarker(ctx, config, credentials, markerKey, payload.API, payload.ID, pendingMarkerBody, now)
+	if err != nil {
 		return oneSignalNotificationResult{}, err
+	}
+	if !shouldSend {
+		return oneSignalNotificationResult{MarkerKey: markerKey}, nil
 	}
 
 	notificationID, err := sendOneSignalNotification(ctx, oneSignalConfig, payload.API, payload.ID, articleTitle, articleURL, now)
 	if err != nil {
-		return oneSignalNotificationResult{MarkerCreated: true, MarkerKey: markerKey}, err
+		return oneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, err
 	}
 
-	sentMarkerBody, err := oneSignalNotificationMarkerBody("sent", payload, articleTitle, articleURL, notificationID, now)
+	sentMarkerBody, err := oneSignalNotificationMarkerBody(oneSignalMarkerStatusSent, payload, articleTitle, articleURL, notificationID, now)
 	if err != nil {
-		return oneSignalNotificationResult{MarkerCreated: true, MarkerKey: markerKey}, err
+		return oneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey}, err
 	}
 	if _, err := putS3Object(ctx, config, credentials, markerKey, sentMarkerBody, s3JSONContentType, nil, now); err != nil {
-		return oneSignalNotificationResult{MarkerCreated: true, MarkerKey: markerKey, NotificationID: notificationID}, err
+		return oneSignalNotificationResult{MarkerCreated: markerCreated, MarkerKey: markerKey, NotificationID: notificationID}, err
 	}
 
 	return oneSignalNotificationResult{
 		Sent:           true,
-		MarkerCreated:  true,
+		MarkerCreated:  markerCreated,
 		MarkerKey:      markerKey,
 		NotificationID: notificationID,
 	}, nil

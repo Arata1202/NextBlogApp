@@ -8,6 +8,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -118,7 +119,7 @@ func canonicalS3Headers(req *http.Request) (string, string) {
 	return canonicalHeaders.String(), strings.Join(headerNames, ";")
 }
 
-func signS3PutObjectRequest(req *http.Request, credentials awsCredentials, region string, body []byte, now time.Time) {
+func signS3ObjectRequest(req *http.Request, credentials awsCredentials, region string, body []byte, now time.Time) {
 	amzDate := now.UTC().Format("20060102T150405Z")
 	dateStamp := now.UTC().Format("20060102")
 	payloadHash := sha256Hex(body)
@@ -175,7 +176,18 @@ func buildS3PutObjectRequestWithHeaders(ctx context.Context, config s3BackupConf
 			req.Header.Add(name, value)
 		}
 	}
-	signS3PutObjectRequest(req, credentials, config.Region, body, now)
+	signS3ObjectRequest(req, credentials, config.Region, body, now)
+	return req, nil
+}
+
+func buildS3GetObjectRequest(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, now time.Time) (*http.Request, error) {
+	endpoint := fmt.Sprintf("https://%s.s3.%s.amazonaws.com%s", config.BucketName, config.Region, s3ObjectPath(objectKey))
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, endpoint, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	signS3ObjectRequest(req, credentials, config.Region, nil, now)
 	return req, nil
 }
 
@@ -216,6 +228,39 @@ func putS3ObjectIfAbsent(ctx context.Context, config s3BackupConfig, credentials
 	}
 
 	return err
+}
+
+func getS3Object(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, now time.Time) ([]byte, bool, error) {
+	req, err := buildS3GetObjectRequest(ctx, config, credentials, objectKey, now)
+	if err != nil {
+		return nil, false, err
+	}
+
+	resp, err := microCMSBackupHTTPClient.Do(req)
+	if err != nil {
+		return nil, false, err
+	}
+
+	if resp.StatusCode == http.StatusNotFound {
+		closeMicroCMSBackupResponseBody(resp)
+		return nil, false, nil
+	}
+
+	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
+		bodySnippet := microCMSBackupResponseBodySnippet(resp)
+		if bodySnippet != "" {
+			return nil, false, fmt.Errorf("S3 returned status %d: %s", resp.StatusCode, bodySnippet)
+		}
+		return nil, false, fmt.Errorf("S3 returned status %d", resp.StatusCode)
+	}
+
+	body, readErr := io.ReadAll(io.LimitReader(resp.Body, 64*1024))
+	_ = resp.Body.Close()
+	if readErr != nil {
+		return nil, false, readErr
+	}
+
+	return body, true, nil
 }
 
 func uploadMicroCMSBackupToS3(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, body []byte, now time.Time) error {
