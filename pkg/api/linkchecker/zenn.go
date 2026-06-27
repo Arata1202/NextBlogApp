@@ -244,17 +244,3 @@ func zennNotificationErrorMessage(err error) string {
 
 	return "failed to run zenn notifications"
 }
-
-func zennNotificationErrorDetail(err error) string {
-	if err == nil {
-		return ""
-	}
-
-	const maxLength = 500
-	message := strings.TrimSpace(err.Error())
-	if len(message) <= maxLength {
-		return message
-	}
-
-	return message[:maxLength] + "..."
-}

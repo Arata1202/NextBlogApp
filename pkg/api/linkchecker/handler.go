@@ -64,7 +64,6 @@ func LinkCheckerHandler(w http.ResponseWriter, r *http.Request) {
 			zennNotifications = &zennNotificationSummary{Enabled: zennNotificationsConfigured()}
 		}
 		zennNotifications.Error = zennNotificationErrorMessage(err)
-		zennNotifications.ErrorDetail = zennNotificationErrorDetail(err)
 	}
 
 	runContext, cancel := context.WithTimeout(r.Context(), linkCheckerRunTimeout)

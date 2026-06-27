@@ -230,6 +230,9 @@ func TestMicroCMSBackupHandlerSendsOneSignalOnFirstPublish(t *testing.T) {
 				if body["url"] != "https://example.com/articles/article-a" {
 					t.Fatalf("OneSignal url = %#v", body["url"])
 				}
+				if body["isIos"] != true || body["isAnyWeb"] != true {
+					t.Fatalf("OneSignal platform flags = isIos:%#v isAnyWeb:%#v", body["isIos"], body["isAnyWeb"])
+				}
 				if body["send_after"] != "2026-06-05T22:13:09Z" {
 					t.Fatalf("OneSignal send_after = %#v", body["send_after"])
 				}

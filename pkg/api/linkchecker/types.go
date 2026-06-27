@@ -54,7 +54,6 @@ type zennNotificationSummary struct {
 	MarkerKeys            []string                      `json:"markerKeys,omitempty"`
 	CloudflarePagesDeploy *cloudflarePagesDeploySummary `json:"cloudflarePagesDeploy,omitempty"`
 	Error                 string                        `json:"error,omitempty"`
-	ErrorDetail           string                        `json:"errorDetail,omitempty"`
 }
 
 type cloudflarePagesDeploySummary struct {

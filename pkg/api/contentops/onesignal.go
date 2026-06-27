@@ -220,6 +220,8 @@ func createOneSignalNotificationRequest(ctx context.Context, config oneSignalCon
 		"app_id":            config.AppID,
 		"target_channel":    "push",
 		"included_segments": []string{oneSignalIncludedSegment},
+		"isIos":             true,
+		"isAnyWeb":          true,
 		"headings":          map[string]string{"ja": "新しい記事", "en": "New article"},
 		"contents":          map[string]string{"ja": "「" + notificationTitle + "」を公開しました", "en": "Published: " + notificationTitle},
 		"url":               articleURL,

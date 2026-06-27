@@ -80,6 +80,9 @@ func TestNotifyExternalArticlesFirstPublishWithOneSignalSendsZennNotification(t 
 				if body["url"] != "https://zenn.dev/realunivlog/articles/zenn-a" {
 					t.Fatalf("OneSignal url = %#v", body["url"])
 				}
+				if body["isIos"] != true || body["isAnyWeb"] != true {
+					t.Fatalf("OneSignal platform flags = isIos:%#v isAnyWeb:%#v", body["isIos"], body["isAnyWeb"])
+				}
 				if body["idempotency_key"] != oneSignalIdempotencyKey("zenn", "zenn-a") {
 					t.Fatalf("OneSignal idempotency_key = %#v", body["idempotency_key"])
 				}
