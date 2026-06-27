@@ -24,6 +24,12 @@ func TestOneSignalIdempotencyKey(t *testing.T) {
 	if got == oneSignalIdempotencyKey("zenn", "article-a") {
 		t.Fatal("idempotency key should differ by source")
 	}
+	if got != oneSignalIdempotencyKeyForAttempt("blog", "article-a", 1) {
+		t.Fatal("first attempt should keep the original idempotency key")
+	}
+	if got == oneSignalIdempotencyKeyForAttempt("blog", "article-a", 2) {
+		t.Fatal("idempotency key should differ after a no-id retry attempt advances")
+	}
 }
 
 func TestNotifyExternalArticlesFirstPublishWithOneSignalSendsZennNotification(t *testing.T) {
@@ -140,7 +146,7 @@ func TestNotifyExternalArticlesFirstPublishWithOneSignalFailsWhenOneSignalOmitsN
 
 	originalClient := microCMSBackupHTTPClient
 	pendingMarkerPutCount := 0
-	sentMarkerPutCount := 0
+	retryMarkerPutCount := 0
 	oneSignalRequestCount := 0
 
 	microCMSBackupHTTPClient = &http.Client{
@@ -150,12 +156,24 @@ func TestNotifyExternalArticlesFirstPublishWithOneSignalFailsWhenOneSignalOmitsN
 				if r.URL.EscapedPath() != "/onesignal/notifications/zenn/zenn-a.json" {
 					t.Fatalf("S3 path = %q", r.URL.EscapedPath())
 				}
+				body, err := io.ReadAll(r.Body)
+				if err != nil {
+					t.Fatalf("read S3 body error = %v", err)
+				}
 				if r.Header.Get("If-None-Match") == "*" {
 					pendingMarkerPutCount++
+					if !strings.Contains(string(body), `"attempt":1`) {
+						t.Fatalf("pending marker body = %s", string(body))
+					}
 					return responseWithBody(http.StatusOK, ""), nil
 				}
 
-				sentMarkerPutCount++
+				retryMarkerPutCount++
+				if !strings.Contains(string(body), `"status":"pending"`) ||
+					!strings.Contains(string(body), `"attempt":2`) ||
+					!strings.Contains(string(body), `"lastError"`) {
+					t.Fatalf("retry marker body = %s", string(body))
+				}
 				return responseWithBody(http.StatusOK, ""), nil
 			case "api.onesignal.com":
 				oneSignalRequestCount++
@@ -195,13 +213,10 @@ func TestNotifyExternalArticlesFirstPublishWithOneSignalFailsWhenOneSignalOmitsN
 	}
 	for name, got := range map[string]int{
 		"pendingMarkerPutCount": pendingMarkerPutCount,
-		"sentMarkerPutCount":    sentMarkerPutCount,
+		"retryMarkerPutCount":   retryMarkerPutCount,
 		"oneSignalRequestCount": oneSignalRequestCount,
 	} {
 		want := 1
-		if name == "sentMarkerPutCount" {
-			want = 0
-		}
 		if got != want {
 			t.Fatalf("%s = %d, want %d", name, got, want)
 		}
@@ -310,6 +325,82 @@ func TestNotifyExternalArticlesFirstPublishWithOneSignalRetriesPendingMarker(t *
 		if got != 1 {
 			t.Fatalf("%s = %d, want 1", name, got)
 		}
+	}
+}
+
+func TestNotifyExternalArticlesFirstPublishWithOneSignalUsesAdvancedAttemptForPendingMarker(t *testing.T) {
+	t.Setenv("ONESIGNAL_APP_ID", "onesignal-app-id")
+	t.Setenv("ONESIGNAL_REST_API_KEY", "onesignal-rest-api-key")
+	t.Setenv("BASE_URL", "https://example.com")
+	t.Setenv("BASE_TITLE", "Example Blog")
+	t.Setenv("AWS_ACCESS_KEY_ID", "AKIAEXAMPLE")
+	t.Setenv("AWS_SECRET_ACCESS_KEY", "secret")
+	t.Setenv("AWS_DEFAULT_REGION", "ap-northeast-1")
+	t.Setenv("BUCKET_NAME", "backup-bucket")
+
+	originalClient := microCMSBackupHTTPClient
+	oneSignalRequestCount := 0
+
+	microCMSBackupHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			switch r.URL.Host {
+			case "backup-bucket.s3.ap-northeast-1.amazonaws.com":
+				if r.URL.EscapedPath() != "/onesignal/notifications/zenn/zenn-a.json" {
+					t.Fatalf("S3 path = %q", r.URL.EscapedPath())
+				}
+
+				switch r.Method {
+				case http.MethodPut:
+					if r.Header.Get("If-None-Match") == "*" {
+						return responseWithBody(http.StatusPreconditionFailed, ""), nil
+					}
+					return responseWithBody(http.StatusOK, ""), nil
+				case http.MethodGet:
+					return responseWithBody(http.StatusOK, `{"status":"pending","source":"zenn","contentId":"zenn-a","attempt":2}`), nil
+				default:
+					t.Fatalf("S3 method = %s", r.Method)
+					return nil, nil
+				}
+			case "api.onesignal.com":
+				oneSignalRequestCount++
+
+				var body map[string]interface{}
+				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+					t.Fatalf("OneSignal request json error = %v", err)
+				}
+				if body["idempotency_key"] != oneSignalIdempotencyKeyForAttempt("zenn", "zenn-a", 2) {
+					t.Fatalf("OneSignal idempotency_key = %#v", body["idempotency_key"])
+				}
+				return responseWithBody(http.StatusOK, `{"id":"notification-a"}`), nil
+			default:
+				t.Fatalf("unexpected host = %q", r.URL.Host)
+				return nil, nil
+			}
+		}),
+	}
+
+	t.Cleanup(func() {
+		microCMSBackupHTTPClient = originalClient
+	})
+
+	results, err := NotifyExternalArticlesFirstPublishWithOneSignal(
+		t.Context(),
+		[]ExternalArticleNotification{{
+			Source:    "zenn",
+			ContentID: "zenn-a",
+			Title:     "Zenn A",
+			URL:       "https://zenn.dev/realunivlog/articles/zenn-a",
+		}},
+		time.Date(2026, 6, 5, 22, 8, 9, 0, time.UTC),
+	)
+	if err != nil {
+		t.Fatalf("NotifyExternalArticlesFirstPublishWithOneSignal() error = %v", err)
+	}
+	if len(results) != 1 || !results[0].Sent || results[0].NotificationID != "notification-a" {
+		t.Fatalf("results = %#v", results)
+	}
+	if oneSignalRequestCount != 1 {
+		t.Fatalf("oneSignalRequestCount = %d, want 1", oneSignalRequestCount)
 	}
 }
 
