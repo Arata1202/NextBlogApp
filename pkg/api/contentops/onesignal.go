@@ -220,7 +220,16 @@ func sendOneSignalNotification(ctx context.Context, config oneSignalConfig, sour
 		}
 	}
 
-	return response.ID, nil
+	notificationID := strings.TrimSpace(response.ID)
+	if notificationID == "" {
+		bodySnippet := strings.TrimSpace(string(body))
+		if bodySnippet != "" {
+			return "", fmt.Errorf("OneSignal accepted request without notification id: %s", bodySnippet)
+		}
+		return "", errors.New("OneSignal accepted request without notification id")
+	}
+
+	return notificationID, nil
 }
 
 func notifyExternalArticleFirstPublishWithOneSignal(ctx context.Context, config s3BackupConfig, credentials awsCredentials, oneSignalConfig oneSignalConfig, article ExternalArticleNotification, now time.Time) (OneSignalNotificationResult, error) {

@@ -128,6 +128,86 @@ func TestNotifyExternalArticlesFirstPublishWithOneSignalSendsZennNotification(t 
 	}
 }
 
+func TestNotifyExternalArticlesFirstPublishWithOneSignalFailsWhenOneSignalOmitsNotificationID(t *testing.T) {
+	t.Setenv("ONESIGNAL_APP_ID", "onesignal-app-id")
+	t.Setenv("ONESIGNAL_REST_API_KEY", "onesignal-rest-api-key")
+	t.Setenv("BASE_URL", "https://example.com")
+	t.Setenv("BASE_TITLE", "Example Blog")
+	t.Setenv("AWS_ACCESS_KEY_ID", "AKIAEXAMPLE")
+	t.Setenv("AWS_SECRET_ACCESS_KEY", "secret")
+	t.Setenv("AWS_DEFAULT_REGION", "ap-northeast-1")
+	t.Setenv("BUCKET_NAME", "backup-bucket")
+
+	originalClient := microCMSBackupHTTPClient
+	pendingMarkerPutCount := 0
+	sentMarkerPutCount := 0
+	oneSignalRequestCount := 0
+
+	microCMSBackupHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			switch r.URL.Host {
+			case "backup-bucket.s3.ap-northeast-1.amazonaws.com":
+				if r.URL.EscapedPath() != "/onesignal/notifications/zenn/zenn-a.json" {
+					t.Fatalf("S3 path = %q", r.URL.EscapedPath())
+				}
+				if r.Header.Get("If-None-Match") == "*" {
+					pendingMarkerPutCount++
+					return responseWithBody(http.StatusOK, ""), nil
+				}
+
+				sentMarkerPutCount++
+				return responseWithBody(http.StatusOK, ""), nil
+			case "api.onesignal.com":
+				oneSignalRequestCount++
+				return responseWithBody(http.StatusOK, `{"recipients":0}`), nil
+			default:
+				t.Fatalf("unexpected host = %q", r.URL.Host)
+				return nil, nil
+			}
+		}),
+	}
+
+	t.Cleanup(func() {
+		microCMSBackupHTTPClient = originalClient
+	})
+
+	results, err := NotifyExternalArticlesFirstPublishWithOneSignal(
+		t.Context(),
+		[]ExternalArticleNotification{{
+			Source:    "zenn",
+			ContentID: "zenn-a",
+			Title:     "Zenn A",
+			URL:       "https://zenn.dev/realunivlog/articles/zenn-a",
+		}},
+		time.Date(2026, 6, 5, 22, 8, 9, 0, time.UTC),
+	)
+	if err == nil {
+		t.Fatal("NotifyExternalArticlesFirstPublishWithOneSignal() error = nil, want error")
+	}
+	if !strings.Contains(err.Error(), "without notification id") {
+		t.Fatalf("error = %v, want missing notification id", err)
+	}
+	if !reflect.DeepEqual(results, []OneSignalNotificationResult{{
+		MarkerCreated: true,
+		MarkerKey:     "onesignal/notifications/zenn/zenn-a.json",
+	}}) {
+		t.Fatalf("results = %#v", results)
+	}
+	for name, got := range map[string]int{
+		"pendingMarkerPutCount": pendingMarkerPutCount,
+		"sentMarkerPutCount":    sentMarkerPutCount,
+		"oneSignalRequestCount": oneSignalRequestCount,
+	} {
+		want := 1
+		if name == "sentMarkerPutCount" {
+			want = 0
+		}
+		if got != want {
+			t.Fatalf("%s = %d, want %d", name, got, want)
+		}
+	}
+}
+
 func TestNotifyExternalArticlesFirstPublishWithOneSignalRetriesPendingMarker(t *testing.T) {
 	t.Setenv("ONESIGNAL_APP_ID", "onesignal-app-id")
 	t.Setenv("ONESIGNAL_REST_API_KEY", "onesignal-rest-api-key")
