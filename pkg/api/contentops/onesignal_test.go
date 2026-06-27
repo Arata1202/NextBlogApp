@@ -98,8 +98,14 @@ func TestNotifyExternalArticlesFirstPublishWithOneSignalSendsZennNotification(t 
 				if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 					t.Fatalf("OneSignal request json error = %v", err)
 				}
-				if body["url"] != "https://zenn.dev/realunivlog/articles/zenn-a" {
-					t.Fatalf("OneSignal url = %#v", body["url"])
+				if body["web_url"] != "https://example.com" {
+					t.Fatalf("OneSignal web_url = %#v", body["web_url"])
+				}
+				if _, ok := body["url"]; ok {
+					t.Fatalf("OneSignal url should not be set for native iOS: %#v", body["url"])
+				}
+				if _, ok := body["app_url"]; ok {
+					t.Fatalf("OneSignal app_url should not be set when native iOS should only open the app: %#v", body["app_url"])
 				}
 				assertOneSignalPushTargeting(t, body)
 				if body["idempotency_key"] != oneSignalIdempotencyKey("zenn", "zenn-a") {
@@ -109,7 +115,10 @@ func TestNotifyExternalArticlesFirstPublishWithOneSignalSendsZennNotification(t 
 					t.Fatalf("OneSignal ttl = %#v", body["ttl"])
 				}
 				data, ok := body["data"].(map[string]interface{})
-				if !ok || data["source"] != "zenn" || data["articleId"] != "zenn-a" {
+				if !ok ||
+					data["source"] != "zenn" ||
+					data["articleId"] != "zenn-a" ||
+					data["articleUrl"] != "https://zenn.dev/realunivlog/articles/zenn-a" {
 					t.Fatalf("OneSignal data = %#v", body["data"])
 				}
 				return responseWithBody(http.StatusOK, `{"id":"notification-a"}`), nil

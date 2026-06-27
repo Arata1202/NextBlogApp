@@ -227,8 +227,14 @@ func TestMicroCMSBackupHandlerSendsOneSignalOnFirstPublish(t *testing.T) {
 				if body["app_id"] != "onesignal-app-id" {
 					t.Fatalf("OneSignal app_id = %#v", body["app_id"])
 				}
-				if body["url"] != "https://example.com/articles/article-a" {
-					t.Fatalf("OneSignal url = %#v", body["url"])
+				if body["web_url"] != "https://example.com" {
+					t.Fatalf("OneSignal web_url = %#v", body["web_url"])
+				}
+				if _, ok := body["url"]; ok {
+					t.Fatalf("OneSignal url should not be set for native iOS: %#v", body["url"])
+				}
+				if _, ok := body["app_url"]; ok {
+					t.Fatalf("OneSignal app_url should not be set when native iOS should only open the app: %#v", body["app_url"])
 				}
 				assertOneSignalPushTargeting(t, body)
 				if body["send_after"] != "2026-06-05T22:13:09Z" {

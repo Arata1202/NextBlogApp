@@ -227,6 +227,10 @@ func createOneSignalNotificationRequest(ctx context.Context, config oneSignalCon
 	if notificationTitle == "" {
 		notificationTitle = "新しい記事"
 	}
+	notificationData := map[string]string{"type": "article", "source": source, "articleId": contentID}
+	if source == "zenn" {
+		notificationData["articleUrl"] = articleURL
+	}
 
 	requestBody := map[string]interface{}{
 		"app_id":          config.AppID,
@@ -236,8 +240,8 @@ func createOneSignalNotificationRequest(ctx context.Context, config oneSignalCon
 		"isAnyWeb":        true,
 		"headings":        map[string]string{"ja": "新しい記事", "en": "New article"},
 		"contents":        map[string]string{"ja": "「" + notificationTitle + "」を公開しました", "en": "Published: " + notificationTitle},
-		"url":             articleURL,
-		"data":            map[string]string{"type": "article", "source": source, "articleId": contentID},
+		"web_url":         config.BaseURL,
+		"data":            notificationData,
 		"send_after":      now.Add(oneSignalSendDelay).UTC().Format(time.RFC3339),
 		"idempotency_key": oneSignalIdempotencyKeyForAttempt(source, contentID, attempt),
 		"ttl":             oneSignalNotificationTTLSeconds,
