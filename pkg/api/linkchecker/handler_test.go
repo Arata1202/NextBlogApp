@@ -273,6 +273,7 @@ func TestLinkCheckerHandlerContinuesWhenZennDeployFails(t *testing.T) {
 		`"sentCount":1`,
 		`"cloudflarePagesDeploy":{"enabled":true,"triggered":true,"statusCode":500,"error":"failed to trigger deploy"}`,
 		`"error":"failed to run zenn notifications"`,
+		`"errorDetail":"Cloudflare Pages deploy hook returned status 500"`,
 	} {
 		if !strings.Contains(gotBody, want) {
 			t.Fatalf("body = %s, want it to contain %s", gotBody, want)
