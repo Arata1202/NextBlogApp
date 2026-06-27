@@ -210,6 +210,16 @@ func oneSignalNotificationMarkerBody(status string, payload microCMSWebhookPaylo
 	return json.Marshal(marker)
 }
 
+func oneSignalSubscribedPushFilters() []map[string]string {
+	return []map[string]string{
+		{
+			"field":    "session_count",
+			"relation": ">",
+			"value":    "0",
+		},
+	}
+}
+
 func createOneSignalNotificationRequest(ctx context.Context, config oneSignalConfig, source, contentID, articleTitle, articleURL string, attempt int, now time.Time) (*http.Request, error) {
 	notificationTitle := articleTitle
 	if notificationTitle == "" {
@@ -217,18 +227,18 @@ func createOneSignalNotificationRequest(ctx context.Context, config oneSignalCon
 	}
 
 	requestBody := map[string]interface{}{
-		"app_id":            config.AppID,
-		"target_channel":    "push",
-		"included_segments": []string{oneSignalIncludedSegment},
-		"isIos":             true,
-		"isAnyWeb":          true,
-		"headings":          map[string]string{"ja": "新しい記事", "en": "New article"},
-		"contents":          map[string]string{"ja": "「" + notificationTitle + "」を公開しました", "en": "Published: " + notificationTitle},
-		"url":               articleURL,
-		"data":              map[string]string{"type": "article", "source": source, "articleId": contentID},
-		"send_after":        now.Add(oneSignalSendDelay).UTC().Format(time.RFC3339),
-		"idempotency_key":   oneSignalIdempotencyKeyForAttempt(source, contentID, attempt),
-		"ttl":               oneSignalNotificationTTLSeconds,
+		"app_id":          config.AppID,
+		"target_channel":  "push",
+		"filters":         oneSignalSubscribedPushFilters(),
+		"isIos":           true,
+		"isAnyWeb":        true,
+		"headings":        map[string]string{"ja": "新しい記事", "en": "New article"},
+		"contents":        map[string]string{"ja": "「" + notificationTitle + "」を公開しました", "en": "Published: " + notificationTitle},
+		"url":             articleURL,
+		"data":            map[string]string{"type": "article", "source": source, "articleId": contentID},
+		"send_after":      now.Add(oneSignalSendDelay).UTC().Format(time.RFC3339),
+		"idempotency_key": oneSignalIdempotencyKeyForAttempt(source, contentID, attempt),
+		"ttl":             oneSignalNotificationTTLSeconds,
 	}
 
 	body, err := json.Marshal(requestBody)

@@ -17,7 +17,6 @@ const (
 	oneSignalSendDelay              = 5 * time.Minute
 	oneSignalNotificationTTLSeconds = 24 * 60 * 60
 	oneSignalAPIURL                 = "https://api.onesignal.com/notifications"
-	oneSignalIncludedSegment        = "Subscribed Users"
 	oneSignalMarkerStatusPending    = "pending"
 	oneSignalMarkerStatusSent       = "sent"
 )
