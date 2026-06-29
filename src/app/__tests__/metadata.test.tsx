@@ -15,9 +15,7 @@ vi.mock('@/components/Common/Layouts/ScrollToTop', () => ({ default: () => null 
 vi.mock('@/components/ThirdParties/GoogleSearchConsole', () => ({ default: () => null }));
 vi.mock('@/components/ThirdParties/GoogleAdSense', () => ({ default: () => null }));
 vi.mock('@/components/ThirdParties/GoogleAnalytics', () => ({ default: () => null }));
-vi.mock('@/components/ThirdParties/Instagram', () => ({ default: () => null }));
 vi.mock('@/components/ThirdParties/OneSignal', () => ({ default: () => null }));
-vi.mock('@/components/ThirdParties/Embedly', () => ({ default: () => null }));
 
 const parseJsonLd = (container: HTMLElement) =>
   Array.from(container.querySelectorAll('script[type="application/ld+json"]')).map((script) =>

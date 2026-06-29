@@ -10,9 +10,7 @@ import ThemeWrapper from '@/contexts/ThemeWrapper';
 import GoogleSearchConsole from '@/components/ThirdParties/GoogleSearchConsole';
 import GoogleAdSense from '@/components/ThirdParties/GoogleAdSense';
 import GoogleAnalytics from '@/components/ThirdParties/GoogleAnalytics';
-import Instagram from '@/components/ThirdParties/Instagram';
 import OneSignal from '@/components/ThirdParties/OneSignal';
-import Embedly from '@/components/ThirdParties/Embedly';
 import Header from '@/components/Common/Layouts/Header';
 import Footer from '@/components/Common/Layouts/Footer';
 import ScrollTopButton from '@/components/Common/Layouts/ScrollToTop';
@@ -112,9 +110,7 @@ export default async function RootLayout({ children }: Props) {
           </div>
           <GoogleAdSense />
           <GoogleAnalytics />
-          <Instagram />
           <OneSignal />
-          <Embedly />
         </ThemeProvider>
       </body>
     </html>

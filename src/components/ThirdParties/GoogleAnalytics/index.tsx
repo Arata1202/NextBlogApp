@@ -1,5 +1,5 @@
-import { GoogleAnalytics as GA4 } from '@next/third-parties/google';
 import { getGoogleAnalyticsId } from '@/config/serverEnv';
+import GoogleAnalyticsClient from './Client';
 
 export default function GoogleAnalytics() {
   const gaId = getGoogleAnalyticsId();
@@ -8,5 +8,5 @@ export default function GoogleAnalytics() {
     return null;
   }
 
-  return <GA4 gaId={gaId} />;
+  return <GoogleAnalyticsClient gaId={gaId} />;
 }
