@@ -6,6 +6,7 @@ import styles from './index.module.css';
 import { BLOG_IMAGE, COPYRIGHT, FOOTER_NAVIGATION, SOCIAL_ICON } from '@/constants/data';
 import { CATEGORY_ARR } from '@/constants/category';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
+import AppsPromo from '@/components/Common/AppsPromo';
 import {
   colorClassNames,
   getThemeClassName,
@@ -21,6 +22,7 @@ export default function Footer() {
   return (
     <>
       <footer className={`${styles.footer} mt-5 w-full ${themeClassName}`}>
+        <AppsPromo />
         <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
             <div className="space-y-8">

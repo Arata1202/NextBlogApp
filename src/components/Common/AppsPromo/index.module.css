@@ -1,0 +1,326 @@
+.appsPromo {
+  width: 100%;
+  overflow: hidden;
+  border-top: 1px solid #d6d6d6;
+  border-bottom: 1px solid #eeeeee;
+  background: #e3e3e3;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: max-content 330px;
+  gap: 24px;
+  align-items: stretch;
+  justify-content: center;
+  width: min(100%, 760px);
+  min-height: 250px;
+  margin: 0 auto;
+  padding: 18px 24px 0;
+}
+
+.content {
+  align-self: start;
+  padding-top: 34px;
+}
+
+.title {
+  margin: 0 0 14px;
+  padding: 0;
+  color: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+.appList {
+  display: grid;
+  gap: 10px;
+}
+
+.appItem {
+  display: grid;
+  grid-template-columns: 42px max-content;
+  gap: 12px;
+  align-items: center;
+  min-height: 42px;
+}
+
+.appIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+}
+
+.appName {
+  min-width: 0;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.creatorLink {
+  display: inline-flex;
+  margin-top: 14px;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
+}
+
+.creatorLink:hover {
+  opacity: 0.82;
+  transform: translateY(-1px);
+}
+
+.storeBadge {
+  display: block;
+  width: 109px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.preview {
+  position: relative;
+  min-height: 250px;
+}
+
+.phoneMockup {
+  position: absolute;
+  aspect-ratio: 1301 / 2545;
+  filter: drop-shadow(0 8px 14px rgba(15, 23, 42, 0.24));
+}
+
+.phoneFrame,
+.phoneScreen {
+  position: absolute;
+  display: block;
+}
+
+.phoneFrame {
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+
+.phoneScreen {
+  top: 3%;
+  left: 8.2%;
+  z-index: 1;
+  width: 83.6%;
+  height: 94.4%;
+  border-radius: 9% / 4.5%;
+  object-fit: cover;
+}
+
+.phonePrimary {
+  right: 120px;
+  bottom: -180px;
+  z-index: 2;
+  width: 220px;
+}
+
+.phoneSecondary {
+  right: 10px;
+  bottom: -150px;
+  z-index: 1;
+  width: 180px;
+  opacity: 0.96;
+}
+
+:global(body.DarkTheme) .appsPromo {
+  border-top-color: #3f3f46;
+  border-bottom-color: #27272a;
+  background: #2b2b2f;
+}
+
+:global(body.DarkTheme) .appName {
+  color: #f9fafb;
+}
+
+@media (max-width: 720px) {
+  .inner {
+    grid-template-columns: max-content 286px;
+    gap: 16px;
+    width: min(100%, 650px);
+    min-height: 238px;
+    padding: 18px 16px 0;
+  }
+
+  .content {
+    padding-top: 34px;
+  }
+
+  .appItem {
+    grid-template-columns: 40px max-content;
+    gap: 10px;
+    min-height: 40px;
+  }
+
+  .appIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .creatorLink {
+    margin-top: 12px;
+  }
+
+  .storeBadge {
+    width: 104px;
+    height: 38px;
+  }
+
+  .preview {
+    min-height: 238px;
+  }
+
+  .phonePrimary {
+    right: 74px;
+    bottom: -166px;
+    width: 204px;
+  }
+
+  .phoneSecondary {
+    bottom: -138px;
+    width: 168px;
+  }
+}
+
+@media (max-width: 520px) {
+  .inner {
+    grid-template-columns: max-content 221px;
+    gap: 16px;
+    width: min(100%, 420px);
+    min-height: 168px;
+    padding: 12px 16px 0;
+  }
+
+  .content {
+    padding-top: 23px;
+  }
+
+  .title {
+    margin-bottom: 9px;
+    font-size: 13px;
+  }
+
+  .appList {
+    gap: 7px;
+  }
+
+  .appItem {
+    grid-template-columns: 28px max-content;
+    gap: 8px;
+    min-height: 28px;
+  }
+
+  .appIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+  }
+
+  .appName {
+    overflow: hidden;
+    font-size: 11px;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .creatorLink {
+    margin-top: 9px;
+  }
+
+  .storeBadge {
+    width: 73px;
+    height: 27px;
+  }
+
+  .preview {
+    min-height: 168px;
+  }
+
+  .phonePrimary {
+    right: 80px;
+    bottom: -121px;
+    width: 147px;
+  }
+
+  .phoneSecondary {
+    right: 7px;
+    bottom: -101px;
+    width: 121px;
+  }
+}
+
+@media (max-width: 360px) {
+  .inner {
+    grid-template-columns: max-content 172px;
+    gap: 12px;
+    width: min(100%, 360px);
+    min-height: 132px;
+    padding-top: 9px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .content {
+    padding-top: 18px;
+  }
+
+  .title {
+    margin-bottom: 7px;
+    font-size: 11px;
+  }
+
+  .appList {
+    gap: 5px;
+  }
+
+  .appItem {
+    grid-template-columns: 22px max-content;
+    gap: 6px;
+    min-height: 22px;
+  }
+
+  .appIcon {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+  }
+
+  .appName {
+    font-size: 9px;
+  }
+
+  .creatorLink {
+    margin-top: 7px;
+  }
+
+  .storeBadge {
+    width: 57px;
+    height: 21px;
+  }
+
+  .preview {
+    min-height: 132px;
+  }
+
+  .phonePrimary {
+    right: 62px;
+    bottom: -94px;
+    width: 114px;
+  }
+
+  .phoneSecondary {
+    right: 5px;
+    bottom: -78px;
+    width: 94px;
+  }
+}
