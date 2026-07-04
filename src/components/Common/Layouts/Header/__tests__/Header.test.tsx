@@ -8,9 +8,11 @@ describe('Header', () => {
     render(<Header />);
 
     expect(screen.getByRole('img', { name: 'リアル大学生' })).toHaveClass(
-      'h-[30px]',
-      'w-[165px]',
+      'h-[28px]',
+      'w-[154px]',
       'object-contain',
+      'sm:h-[30px]',
+      'sm:w-[165px]',
     );
   });
 

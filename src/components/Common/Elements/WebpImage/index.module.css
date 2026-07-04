@@ -1,11 +1,33 @@
+.cardPicture,
+.recentPicture {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.cardPicture {
+  max-width: 300px;
+  flex-shrink: 0;
+}
+
+.recentPicture {
+  width: 100%;
+}
+
 .image {
+  display: block;
+  width: 100%;
   height: auto;
   max-width: 300px;
+  min-width: 0;
 }
 
 .recent {
+  display: block;
+  width: 100%;
   height: auto;
   max-width: 100%;
+  min-width: 0;
 }
 
 .thumbnail {
@@ -16,6 +38,10 @@
 }
 
 @media (max-width: 1023px) and (min-width: 641px) {
+  .cardPicture {
+    max-width: 300px;
+  }
+
   .image {
     height: auto;
     max-width: 300px;
@@ -23,6 +49,10 @@
 }
 
 @media (max-width: 1081px) and (min-width: 1023px) {
+  .cardPicture {
+    max-width: 250px;
+  }
+
   .image {
     height: auto;
     max-width: 250px;
@@ -30,6 +60,10 @@
 }
 
 @media (max-width: 717px) and (min-width: 641px) {
+  .cardPicture {
+    max-width: 200px;
+  }
+
   .image {
     height: auto;
     max-width: 200px;
@@ -37,6 +71,11 @@
 }
 
 @media (max-width: 640px) {
+  .cardPicture {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .image {
     width: 100%;
     max-width: 100%;

@@ -7,7 +7,13 @@
 @media (max-width: 640px) {
   .main {
     width: auto;
-    padding: 24px;
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .main {
+    padding: 16px 10px;
   }
 }
 

@@ -36,12 +36,14 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
 
   return (
     <>
-      <div className={`pt-8 px-4 mt-5 ${surfaceClassNames.panel} ${themeClassName}`}>
+      <div
+        className={`${styles.panel} pt-8 px-4 mt-5 ${surfaceClassNames.panel} ${themeClassName}`}
+      >
         <div className={`text-2xl text-center font-semibold flex justify-center`}>
           <BellAlertIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           最新記事
         </div>
-        <ul className="mt-5 space-y-5">
+        <ul className={`${styles.list} mt-5 space-y-5`}>
           {sortedArticles.map((article) => {
             const isExternal = article.source === 'zenn';
             const articleContent = (

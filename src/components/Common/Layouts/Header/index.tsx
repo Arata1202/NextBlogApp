@@ -118,7 +118,7 @@ export default function Header() {
     <>
       <header className={`${styles.header} fixed top-0 left-0 w-full z-30 ${themeClassName}`}>
         <nav
-          className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+          className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:p-6 lg:px-8"
           aria-label="グローバルナビゲーション"
         >
           <Link
@@ -132,7 +132,7 @@ export default function Header() {
                 alt={item.alt}
                 width={165}
                 height={30}
-                className="block h-[30px] w-[165px] object-contain"
+                className="block h-[28px] w-[154px] object-contain sm:h-[30px] sm:w-[165px]"
               />
             ))}
           </Link>
@@ -148,7 +148,9 @@ export default function Header() {
               </button>
             ) : (
               <div className="flex">
-                <div className={`inline-flex items-center justify-center px-3 ${themeClassName}`}>
+                <div
+                  className={`inline-flex items-center justify-center px-2 sm:px-3 ${themeClassName}`}
+                >
                   <a
                     href="https://github.com/Arata1202/NextBlogApp"
                     target="_blank"
@@ -160,11 +162,11 @@ export default function Header() {
                   </a>
                 </div>
                 <div
-                  className={`inline-flex items-center justify-center ${radiusClassNames.control} px-3 ${themeClassName}`}
+                  className={`inline-flex items-center justify-center ${radiusClassNames.control} px-2 sm:px-3 ${themeClassName}`}
                 >
                   <ThemeSwitch />
                 </div>
-                <div className="-m-2.5 ml-1 flex items-center justify-center p-2.5">
+                <div className="-m-2 ml-0.5 flex items-center justify-center p-2 sm:-m-2.5 sm:ml-1 sm:p-2.5">
                   <button
                     type="button"
                     aria-label="メニューを開く"

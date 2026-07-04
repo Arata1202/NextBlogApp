@@ -36,7 +36,7 @@ export default function Sidebar({
   return (
     <>
       <aside
-        className={`${article && styles.article} lg:col-span-1 lg:w-full lg:h-full mut-guard`}
+        className={`${styles.sidebar} ${article && styles.article} lg:col-span-1 lg:w-full lg:h-full mut-guard`}
         aria-label="サイドバー"
         data-web-sidebar
       >

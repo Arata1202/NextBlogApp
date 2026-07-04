@@ -39,9 +39,11 @@ export default function WebpImage({
     devicePixelRatio: 2,
   });
   const srcSet = `${imageUrl} 1x, ${imageUrl2x} 2x`;
+  const pictureClassName =
+    (card && styles.cardPicture) || (recent && styles.recentPicture) || undefined;
 
   return (
-    <picture>
+    <picture className={pictureClassName}>
       <source type="image/webp" media="(max-width: 640px)" srcSet={srcSet} />
       <source type="image/webp" srcSet={srcSet} />
       <img

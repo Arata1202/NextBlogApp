@@ -1,13 +1,42 @@
+.panel {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.list {
+  min-width: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.link {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
 .image {
+  display: block;
   width: 100%;
   height: auto;
   max-width: 100%;
+  min-width: 0;
+}
+
+.title {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 1023px) and (min-width: 641px) {
   .link {
     display: flex;
     gap: 10px;
+    align-items: flex-start;
   }
 
   .image {

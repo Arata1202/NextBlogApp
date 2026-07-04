@@ -1,9 +1,17 @@
 .date {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0 10px;
   justify-content: right;
   margin-top: auto;
 }
 
 .articleMode {
   margin-top: 0px !important;
+}
+
+@media (max-width: 360px) {
+  .date {
+    justify-content: flex-start;
+  }
 }
