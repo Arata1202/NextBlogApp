@@ -48,18 +48,20 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
             const isExternal = article.source === 'zenn';
             const articleContent = (
               <>
-                {article.source === 'blog' && article.thumbnail && (
-                  <WebpImage article={article} recent={true} />
-                )}
-                {article.source !== 'blog' && article.thumbnailUrl && (
-                  <img
-                    src={article.thumbnailUrl}
-                    alt=""
-                    className={styles.image}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                )}
+                <div className={styles.media}>
+                  {article.source === 'blog' && article.thumbnail && (
+                    <WebpImage article={article} recent={true} />
+                  )}
+                  {article.source !== 'blog' && article.thumbnailUrl && (
+                    <img
+                      src={article.thumbnailUrl}
+                      alt=""
+                      className={styles.image}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                </div>
                 <div className={`${styles.title} font-bold`}>{article.title}</div>
               </>
             );
