@@ -1,5 +1,5 @@
 import AdAlert from '@/components/Common/AdAlert';
-import SingleDate from '@/components/Common/SingleDate';
+import DoubleDate from '@/components/Common/DoubleDate';
 
 type Props = {
   date: Date;
@@ -9,10 +9,13 @@ type Props = {
 export default function FixedDateContainer({ date, updatedDate }: Props) {
   return (
     <div className="space-y-5 lg:space-y-8">
-      <div className="flex justify-end mb-0">
-        <SingleDate date={date.toISOString()} />
-        {updatedDate && <SingleDate date={updatedDate.toISOString()} updatedAt={true} />}
-      </div>
+      <DoubleDate
+        article={{
+          publishedAt: date.toISOString(),
+          updatedAt: updatedDate?.toISOString(),
+        }}
+        articleMode
+      />
       <AdAlert />
     </div>
   );

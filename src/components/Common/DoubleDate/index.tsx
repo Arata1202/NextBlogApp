@@ -1,13 +1,19 @@
-import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 import SingleDate from '../SingleDate';
 
 type Props = {
-  article: Article;
+  article: {
+    publishedAt?: string;
+    updatedAt?: string;
+  };
   articleMode?: boolean;
 };
 
 export default function DoubleDate({ article, articleMode = false }: Props) {
+  if (!article.publishedAt) {
+    return null;
+  }
+
   const isNextDayOrLater = (date1: string, date2: string) => {
     const d1 = new Date(date1);
     const d2 = new Date(date2);
@@ -18,8 +24,8 @@ export default function DoubleDate({ article, articleMode = false }: Props) {
 
   return (
     <div className={`${styles.date} ${articleMode && styles.articleMode}`}>
-      <SingleDate date={article.publishedAt!} />
-      {article.updatedAt && isNextDayOrLater(article.updatedAt, article.publishedAt!) && (
+      <SingleDate date={article.publishedAt} />
+      {article.updatedAt && isNextDayOrLater(article.updatedAt, article.publishedAt) && (
         <SingleDate date={article.updatedAt} updatedAt={true} />
       )}
     </div>

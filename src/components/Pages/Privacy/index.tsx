@@ -24,13 +24,14 @@ type Props = {
 
 export default function PrivacyPage({ recentArticles, tags, archiveList }: Props) {
   const date = new Date('2023-11-27T00:00:00+09:00');
+  const updatedDate = new Date('2026-07-05T00:00:00+09:00');
 
   return (
     <>
       <PageHeading page={{ type: 'privacy' }} />
       <MainContainer>
         <ContentContainer>
-          <FixedDateContainer date={date} />
+          <FixedDateContainer date={date} updatedDate={updatedDate} />
           {privacyHeadings.length > 0 && (
             <div className="mt-10">
               <TableOfContents headings={privacyHeadings} />
