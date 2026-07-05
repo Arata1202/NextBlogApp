@@ -100,6 +100,7 @@ export default function Header() {
   const categoryPopoverRef = useRef<HTMLDivElement>(null);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [suppressCategoryFocusOutline, setSuppressCategoryFocusOutline] = useState(false);
   const themeClassName = getThemeClassName(theme);
   const headerLinkClassName = `flex text-sm leading-6 ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`;
   const menuLinkClassName = `flex items-center py-1 text-base font-bold border-b ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`;
@@ -196,7 +197,16 @@ export default function Header() {
                     onClose={close}
                   />
                   <Popover.Button
-                    className={`flex cursor-pointer items-center text-sm font-medium ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`}
+                    className={`flex cursor-pointer items-center text-sm font-medium ${suppressCategoryFocusOutline ? 'focus-visible:outline-none' : ''} ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`}
+                    onPointerDown={() => {
+                      setSuppressCategoryFocusOutline(true);
+                    }}
+                    onKeyDown={() => {
+                      setSuppressCategoryFocusOutline(false);
+                    }}
+                    onBlur={() => {
+                      setSuppressCategoryFocusOutline(false);
+                    }}
                   >
                     <FolderIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                     カテゴリー
