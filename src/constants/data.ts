@@ -61,7 +61,6 @@ export const PROFILE_IMAGE = [
 ];
 
 export const PROFILE_SENTENCE = [
-  { sentence: '23歳' },
-  { sentence: '文系｜26卒で、現在は社会人です' },
-  { sentence: 'Web系SaaS企業でエンジニアやってます' },
+  { sentence: '文系出身のエンジニアです。' },
+  { sentence: '現在はSaaS企業で働いています。' },
 ];
