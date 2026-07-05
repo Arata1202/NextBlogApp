@@ -42,7 +42,7 @@ export default function ArticlePage({
           archiveList={archiveList}
         />
       </MainContainer>
-      <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
+      <AdUnit slot="5969933704" sidebarStickyStop style={{ marginTop: '1.25rem' }} />
     </>
   );
 }

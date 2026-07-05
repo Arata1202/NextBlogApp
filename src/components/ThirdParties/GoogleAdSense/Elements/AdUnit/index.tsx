@@ -19,10 +19,17 @@ type Props = {
   slot: string;
   format?: string;
   responsive?: string;
+  sidebarStickyStop?: boolean;
   style?: object;
 };
 
-export default function AdUnit({ slot, format = 'rectangle', responsive = 'false', style }: Props) {
+export default function AdUnit({
+  slot,
+  format = 'rectangle',
+  responsive = 'false',
+  sidebarStickyStop = false,
+  style,
+}: Props) {
   let pathname = usePathname();
   pathname = pathname ? pathname : '';
 
@@ -59,6 +66,7 @@ export default function AdUnit({ slot, format = 'rectangle', responsive = 'false
         key={pathname.replace(/\//g, '-') + '-' + slot}
         className={`${styles.container} mut-guard`}
         data-web-ad
+        data-sidebar-sticky-stop={sidebarStickyStop ? '' : undefined}
         style={{ ...style }}
       >
         <p className={`text-center ${themeClassName}`}>スポンサーリンク</p>

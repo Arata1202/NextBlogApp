@@ -33,7 +33,7 @@ function PhoneMockup({ className, screenshot }: PhoneMockupProps) {
 
 export default function AppsPromo() {
   return (
-    <section className={styles.appsPromo} aria-labelledby="apps-promo-title">
+    <section className={styles.appsPromo} aria-labelledby="apps-promo-title" data-apps-promo>
       <div className={styles.inner}>
         <div className={styles.content}>
           <h2 id="apps-promo-title" className={styles.title}>

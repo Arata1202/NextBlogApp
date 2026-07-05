@@ -28,6 +28,16 @@ describe('AdUnit', () => {
     expect(window.adsbygoogle).toHaveLength(1);
   });
 
+  it('marks the ad as a sidebar sticky stop point when requested', () => {
+    process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_PUBLISHER_ID = 'publisher-id';
+
+    render(<AdUnit slot="slot-1" sidebarStickyStop />);
+
+    expect(screen.getByText('スポンサーリンク').parentElement).toHaveAttribute(
+      'data-sidebar-sticky-stop',
+    );
+  });
+
   it('does not render an ad placeholder when the publisher id is missing', () => {
     render(<AdUnit slot="slot-1" />);
 
