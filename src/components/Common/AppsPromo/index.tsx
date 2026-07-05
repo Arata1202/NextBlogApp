@@ -37,7 +37,7 @@ export default function AppsPromo() {
       <div className={styles.inner}>
         <div className={styles.content}>
           <h2 id="apps-promo-title" className={styles.title}>
-            アプリも公開中
+            アプリも公開中！
           </h2>
           <ul className={styles.appList} aria-label="公開中のアプリ">
             {apps.map((app) => (
