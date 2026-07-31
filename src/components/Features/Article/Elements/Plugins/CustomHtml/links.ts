@@ -1,4 +1,5 @@
 import { parseUrl } from '@/utils/urlSafety';
+import { isSponsorLink, mergeSponsoredRel } from '@/utils/sponsored';
 
 const SAFE_TARGET_BLANK_REL_VALUES = ['noopener', 'noreferrer'];
 const SAME_PAGE_FRAGMENT_BASE = 'https://example.invalid/';
@@ -39,5 +40,19 @@ export const applyTargetBlankToLinks = (content: HTMLElement) => {
 
     anchor.setAttribute('target', '_blank');
     anchor.setAttribute('rel', mergeRelValues(anchor.getAttribute('rel')));
+  });
+};
+
+export const applySponsoredRelToLinks = (content: HTMLElement, sponsorUrl?: string) => {
+  if (!sponsorUrl) {
+    return;
+  }
+
+  content.querySelectorAll<HTMLAnchorElement>('a[href]').forEach((anchor) => {
+    const href = anchor.getAttribute('href');
+
+    if (href && isSponsorLink(href, sponsorUrl)) {
+      anchor.setAttribute('rel', mergeSponsoredRel(anchor.getAttribute('rel')));
+    }
   });
 };

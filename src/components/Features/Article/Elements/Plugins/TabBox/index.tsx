@@ -14,6 +14,7 @@ type Props = {
   demerit?: boolean;
   common?: boolean;
   point?: boolean;
+  sponsorUrl?: string;
 };
 
 export default function TabBox({
@@ -22,13 +23,14 @@ export default function TabBox({
   demerit = false,
   point = false,
   common = false,
+  sponsorUrl,
 }: Props) {
   const renderHtml = (html: string | undefined) => {
     if (!html) {
       return null;
     }
 
-    return <div dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(html) }} />;
+    return <div dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(html, sponsorUrl) }} />;
   };
 
   return (

@@ -46,19 +46,36 @@ describe('microcms client helpers', () => {
     await expect(getList(queries)).resolves.toEqual({ contents: [] });
     await expect(getDetail('article-a', queries)).resolves.toEqual({ id: 'article-a' });
 
+    const blogQueries = {
+      fields: 'id,title,isSponsored,sponsorName,sponsorUrl',
+    };
+
     expect(microcmsSdkMock.client.getAllContents).toHaveBeenCalledWith({
       endpoint: 'blog',
-      queries,
+      queries: blogQueries,
     });
     expect(microcmsSdkMock.client.getList).toHaveBeenCalledWith({
       endpoint: 'blog',
-      queries,
+      queries: blogQueries,
     });
     expect(microcmsSdkMock.client.getListDetail).toHaveBeenCalledWith({
       endpoint: 'blog',
       contentId: 'article-a',
-      queries,
+      queries: blogQueries,
     });
+  });
+
+  it('rejects incomplete sponsored articles returned by microCMS', async () => {
+    const { getDetail } = await import('@/libs/microcms');
+
+    microcmsSdkMock.client.getListDetail.mockResolvedValue({
+      title: 'Sponsored article',
+      isSponsored: true,
+      sponsorName: '',
+      sponsorUrl: 'https://sponsor.example',
+    });
+
+    await expect(getDetail('article-a')).rejects.toThrow(/sponsorName/);
   });
 
   it('delegates category helpers to the categories endpoint', async () => {

@@ -8,6 +8,7 @@ import SingleDate from '@/components/Common/SingleDate';
 import doubleDateStyles from '@/components/Common/DoubleDate/index.module.css';
 import WebpImage from '../Elements/WebpImage';
 import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
+import SponsoredDisclosure from '../SponsoredDisclosure';
 
 type Props = {
   article: UnifiedArticle;
@@ -54,6 +55,7 @@ export default function UnifiedArticleCard({ article, priority = false }: Props)
           />
         )}
         <div className={styles.content}>
+          {article.isSponsored && <SponsoredDisclosure compact />}
           <div className={styles.title}>{article.title}</div>
           <div className={styles.description}>{article.description}</div>
           <div className={doubleDateStyles.date}>

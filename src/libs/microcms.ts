@@ -1,6 +1,7 @@
 import { createClient } from 'microcms-js-sdk';
 import type { MicroCMSQueries } from 'microcms-js-sdk';
 import { Blog, Category, Tag } from '@/types/microcms';
+import { assertValidSponsoredArticle, includeSponsoredFields } from '@/utils/sponsored';
 
 if (!process.env.MICROCMS_SERVICE_DOMAIN) {
   throw new Error('MICROCMS_SERVICE_DOMAIN is required');
@@ -18,18 +19,20 @@ export const client = createClient({
 export const getAllLists = async (queries?: MicroCMSQueries) => {
   const listData = await client.getAllContents<Blog>({
     endpoint: 'blog',
-    queries,
+    queries: queries ? { ...queries, fields: includeSponsoredFields(queries.fields) } : queries,
   });
 
+  listData.forEach(assertValidSponsoredArticle);
   return listData;
 };
 
 export const getList = async (queries?: MicroCMSQueries) => {
   const listData = await client.getList<Blog>({
     endpoint: 'blog',
-    queries,
+    queries: queries ? { ...queries, fields: includeSponsoredFields(queries.fields) } : queries,
   });
 
+  listData.contents.forEach(assertValidSponsoredArticle);
   return listData;
 };
 
@@ -37,9 +40,10 @@ export const getDetail = async (contentId: string, queries?: MicroCMSQueries) =>
   const detailData = await client.getListDetail<Blog>({
     endpoint: 'blog',
     contentId,
-    queries,
+    queries: queries ? { ...queries, fields: includeSponsoredFields(queries.fields) } : queries,
   });
 
+  assertValidSponsoredArticle(detailData);
   return detailData;
 };
 

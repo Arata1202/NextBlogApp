@@ -15,6 +15,7 @@ import vim from 'highlight.js/lib/languages/vim';
 import { formatMicroCmsImageUrl, isMicroCmsImageUrl } from './formatMicroCmsImageUrl';
 import { ARTICLE_CONTENT_AD_MARKER } from '@/constants/articleContent';
 import { loadHtmlFragment, removeHtmlScripts, sanitizeHtmlAttributes } from '@/utils/htmlSanitizer';
+import { applySponsoredRelToHtmlLinks } from '@/utils/sponsored';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
@@ -34,6 +35,7 @@ export { ARTICLE_CONTENT_AD_MARKER };
 type FormatRichTextOptions = {
   insertAdsBeforeH2?: boolean;
   imageAltFallback?: string;
+  sponsorUrl?: string;
 };
 
 const formatRichTextImages = ($: ReturnType<typeof cheerio.load>, imageAltFallback?: string) => {
@@ -111,6 +113,7 @@ export const formatRichText = (richText: string, options: FormatRichTextOptions 
   }
 
   sanitizeHtmlAttributes($);
+  applySponsoredRelToHtmlLinks($, options.sponsorUrl);
   removeHtmlScripts($);
 
   return $.html();

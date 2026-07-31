@@ -16,6 +16,7 @@ import RelatedArticle from './Elements/RelatedArticle';
 import { useExtractHeadings } from '@/hooks/useExtractHeadings';
 import { formatRichText } from '@/utils/formatRichText';
 import { sanitizeCustomHtml } from '@/utils/sanitizeCustomHtml';
+import SponsoredDisclosure from '@/components/Common/SponsoredDisclosure';
 
 type Props = {
   data: Article;
@@ -40,15 +41,17 @@ const countH2Elements = (richText: string) => {
 };
 
 export default function ArticleFeature({ data, relatedArticles }: Props) {
+  const sponsorUrl = data.isSponsored ? data.sponsorUrl : undefined;
   const headings = useExtractHeadings(data.content_blocks);
   const introductionBlocks = data.introduction_blocks.map((block) => ({
     block,
     richTextHtml: block.rich_text
       ? formatRichText(block.rich_text, {
           imageAltFallback: data.title,
+          sponsorUrl,
         })
       : undefined,
-    customHtml: block.custom_html ? sanitizeCustomHtml(block.custom_html) : undefined,
+    customHtml: block.custom_html ? sanitizeCustomHtml(block.custom_html, sponsorUrl) : undefined,
   }));
   const contentBlockAdSlots = data.content_blocks.reduce(
     (result, block) => {
@@ -71,16 +74,19 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
       ? formatRichText(block.rich_text, {
           insertAdsBeforeH2: contentBlockAdSlots[index].length > 0,
           imageAltFallback: data.title,
+          sponsorUrl,
         })
       : undefined,
-    customHtml: block.custom_html ? sanitizeCustomHtml(block.custom_html) : undefined,
+    customHtml: block.custom_html ? sanitizeCustomHtml(block.custom_html, sponsorUrl) : undefined,
   }));
 
   return (
     <>
+      {data.isSponsored && <SponsoredDisclosure compact />}
       <h1 className={`${styles.title} text-3xl font-bold lg:text-3xl`} data-article-title>
         {data.title}
       </h1>
+      {data.isSponsored && <SponsoredDisclosure sponsorName={data.sponsorName} />}
       <WebpImage article={data} priority />
       <DoubleDate article={data} articleMode={true} />
       <AdAlert />
@@ -88,17 +94,17 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
         <div className="mt-10" key={index}>
           {block.bubble_text && block.bubble_image && <SpeechBubble block={block} />}
           {richTextHtml && <RichText html={richTextHtml} />}
-          {customHtml && <CustomHtml html={customHtml} />}
+          {customHtml && <CustomHtml html={customHtml} sponsorUrl={sponsorUrl} />}
           {block.image_slider && block.image_slider.length > 0 && (
             <ImageSlider block={block} imageAltFallback={data.title} />
           )}
           {block.article_link && typeof block.article_link !== 'string' && (
             <WantToRead block={block} />
           )}
-          {block.box_merit && <TabBox block={block} merit={true} />}
-          {block.box_demerit && <TabBox block={block} demerit={true} />}
-          {block.box_point && <TabBox block={block} point={true} />}
-          {block.box_common && <TabBox block={block} common={true} />}
+          {block.box_merit && <TabBox block={block} merit={true} sponsorUrl={sponsorUrl} />}
+          {block.box_demerit && <TabBox block={block} demerit={true} sponsorUrl={sponsorUrl} />}
+          {block.box_point && <TabBox block={block} point={true} sponsorUrl={sponsorUrl} />}
+          {block.box_common && <TabBox block={block} common={true} sponsorUrl={sponsorUrl} />}
         </div>
       ))}
       {headings.length > 0 && <TableOfContents headings={headings} />}
@@ -107,17 +113,17 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
           <div key={index} className="mt-5">
             {block.bubble_text && block.bubble_image && <SpeechBubble block={block} />}
             {richTextHtml && <RichText html={richTextHtml} adSlots={contentBlockAdSlots[index]} />}
-            {customHtml && <CustomHtml html={customHtml} />}
+            {customHtml && <CustomHtml html={customHtml} sponsorUrl={sponsorUrl} />}
             {block.image_slider && block.image_slider.length > 0 && (
               <ImageSlider block={block} imageAltFallback={data.title} />
             )}
             {block.article_link && typeof block.article_link !== 'string' && (
               <WantToRead block={block} />
             )}
-            {block.box_merit && <TabBox block={block} merit={true} />}
-            {block.box_demerit && <TabBox block={block} demerit={true} />}
-            {block.box_point && <TabBox block={block} point={true} />}
-            {block.box_common && <TabBox block={block} common={true} />}
+            {block.box_merit && <TabBox block={block} merit={true} sponsorUrl={sponsorUrl} />}
+            {block.box_demerit && <TabBox block={block} demerit={true} sponsorUrl={sponsorUrl} />}
+            {block.box_point && <TabBox block={block} point={true} sponsorUrl={sponsorUrl} />}
+            {block.box_common && <TabBox block={block} common={true} sponsorUrl={sponsorUrl} />}
           </div>
         );
       })}

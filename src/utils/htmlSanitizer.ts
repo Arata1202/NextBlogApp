@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio';
 import { SAFE_RESOURCE_PROTOCOLS, hasSafeUrlProtocol } from '@/utils/urlSafety';
+import { applySponsoredRelToHtmlLinks } from '@/utils/sponsored';
 
 const URL_ATTRIBUTES = new Set(['href', 'src', 'xlink:href']);
 
@@ -40,10 +41,11 @@ export const removeHtmlScripts = ($: ReturnType<typeof cheerio.load>) => {
   $('script').remove();
 };
 
-export const sanitizeCmsHtml = (html: string) => {
+export const sanitizeCmsHtml = (html: string, sponsorUrl?: string) => {
   const $ = loadHtmlFragment(html);
 
   sanitizeHtmlAttributes($);
+  applySponsoredRelToHtmlLinks($, sponsorUrl);
   removeHtmlScripts($);
 
   return $.html();

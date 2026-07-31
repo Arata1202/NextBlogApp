@@ -36,6 +36,10 @@
   overflow-wrap: anywhere;
 }
 
+.content > :first-child + .title {
+  margin-top: 0.5rem;
+}
+
 @media (max-width: 1023px) and (min-width: 641px) {
   .image {
     height: auto;

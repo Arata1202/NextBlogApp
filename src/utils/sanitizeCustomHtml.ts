@@ -3,6 +3,7 @@ import {
   CUSTOM_HTML_SCRIPT_SRC_ATTRIBUTE,
 } from '@/constants/customHtml';
 import { isSafeResourceUrl, loadHtmlFragment, sanitizeHtmlAttributes } from '@/utils/htmlSanitizer';
+import { applySponsoredRelToHtmlLinks } from '@/utils/sponsored';
 
 const INERT_SCRIPT_TYPE = 'application/json';
 const MOSHIMO_SCRIPT_ID = 'msmaflink';
@@ -16,10 +17,11 @@ const isMoshimoEasyLinkScript = (src: string | undefined, text: string) => {
   );
 };
 
-export const sanitizeCustomHtml = (html: string) => {
+export const sanitizeCustomHtml = (html: string, sponsorUrl?: string) => {
   const $ = loadHtmlFragment(html);
 
   sanitizeHtmlAttributes($);
+  applySponsoredRelToHtmlLinks($, sponsorUrl);
 
   $('script').each((_, element) => {
     const script = $(element);

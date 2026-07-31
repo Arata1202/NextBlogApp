@@ -3,7 +3,7 @@
 import { memo, useEffect, useMemo, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import styles from './index.module.css';
-import { applyTargetBlankToLinks } from './links';
+import { applySponsoredRelToLinks, applyTargetBlankToLinks } from './links';
 import { setupMoshimoEasyLinkFallback, syncMoshimoEasyLinkArrows } from './moshimoEasyLinkFallback';
 import { runCustomHtmlScripts } from './scripts';
 import { useIframelyEmbeds } from '@/hooks/useIframelyEmbeds';
@@ -12,11 +12,12 @@ import { useCodeBlockCopyButtons } from '@/hooks/useCodeBlockCopyButtons';
 
 type Props = {
   html: string;
+  sponsorUrl?: string;
 };
 
 const SCRIPT_REPLAY_DELAY_MS = 100;
 
-function CustomHtml({ html }: Props) {
+function CustomHtml({ html, sponsorUrl }: Props) {
   const pathname = usePathname();
   const contentRef = useRef<HTMLDivElement>(null);
   const dangerouslySetInnerHTML = useMemo(() => ({ __html: html }), [html]);
@@ -34,6 +35,7 @@ function CustomHtml({ html }: Props) {
 
     const syncCustomHtmlEnhancements = () => {
       applyTargetBlankToLinks(content);
+      applySponsoredRelToLinks(content, sponsorUrl);
       syncMoshimoEasyLinkArrows(content);
     };
 
@@ -62,7 +64,7 @@ function CustomHtml({ html }: Props) {
       observer.disconnect();
       window.clearTimeout(timer);
     };
-  }, [html, pathname]);
+  }, [html, pathname, sponsorUrl]);
 
   return (
     <div
@@ -75,5 +77,5 @@ function CustomHtml({ html }: Props) {
 }
 
 export default memo(CustomHtml, (prevProps, nextProps) => {
-  return prevProps.html === nextProps.html;
+  return prevProps.html === nextProps.html && prevProps.sponsorUrl === nextProps.sponsorUrl;
 });
