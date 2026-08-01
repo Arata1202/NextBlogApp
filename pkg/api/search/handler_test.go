@@ -62,8 +62,8 @@ func TestSearchHandlerSuccess(t *testing.T) {
 				t.Fatalf("host = %q, want %q", r.URL.Host, "example.microcms.test")
 			}
 
-			if got := r.URL.Query().Get("q"); got != "" {
-				t.Fatalf("q = %q, want empty", got)
+			if got := r.URL.Query().Get("q"); got != "React" {
+				t.Fatalf("q = %q, want %q", got, "React")
 			}
 
 			if got := r.URL.Query().Get("limit"); got != "100" {
@@ -109,8 +109,12 @@ func TestSearchHandlerSuccess(t *testing.T) {
 		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
 	}
 
-	if got := compactJSON(rec.Body.String()); got != `{"contents":[{"description":"React description","id":"blog-article-b","publishedAt":"2024-01-03T00:00:00.000Z","source":"blog","title":"Article B","url":"/articles/article-b"},{"description":"Body match","id":"blog-article-c","publishedAt":"2024-01-02T00:00:00.000Z","source":"blog","title":"Article C","url":"/articles/article-c"}],"totalCount":3,"offset":1,"limit":2}` {
+	if got := compactJSON(rec.Body.String()); got != `{"contents":[{"description":"React description","id":"blog-article-b","publishedAt":"2024-01-03T00:00:00.000Z","source":"blog","title":"Article B","url":"/articles/article-b"},{"description":"Body match","id":"blog-article-c","publishedAt":"2024-01-02T00:00:00.000Z","source":"blog","title":"Article C","url":"/articles/article-c"}],"totalCount":4,"offset":1,"limit":2}` {
 		t.Fatalf("body = %q", got)
+	}
+
+	if got := rec.Header().Get("Cache-Control"); got != "public, s-maxage=300, stale-while-revalidate=3600" {
+		t.Fatalf("Cache-Control = %q", got)
 	}
 }
 
@@ -223,7 +227,7 @@ func TestSearchHandlerContinuesWhenZennRSSFails(t *testing.T) {
 	}
 }
 
-func TestSearchHandlerUsesCachedMicroCMSArticles(t *testing.T) {
+func TestSearchHandlerCachesMicroCMSArticlesPerQuery(t *testing.T) {
 	resetMicroCMSSearchCache()
 	t.Cleanup(resetMicroCMSSearchCache)
 	mockZennSearchFeed(t, `<rss><channel></channel></rss>`)
@@ -262,7 +266,7 @@ func TestSearchHandlerUsesCachedMicroCMSArticles(t *testing.T) {
 		microCMSSearchNow = originalNow
 	})
 
-	for _, rawURL := range []string{"/api/search?q=React", "/api/search?q=Body"} {
+	for _, rawURL := range []string{"/api/search?q=React", "/api/search?q=React", "/api/search?q=Body"} {
 		req := httptest.NewRequest(http.MethodGet, rawURL, nil)
 		rec := httptest.NewRecorder()
 
@@ -273,12 +277,12 @@ func TestSearchHandlerUsesCachedMicroCMSArticles(t *testing.T) {
 		}
 	}
 
-	if requestCount != 1 {
-		t.Fatalf("microCMS request count = %d, want 1", requestCount)
+	if requestCount != 2 {
+		t.Fatalf("microCMS request count = %d, want 2", requestCount)
 	}
 
 	now = now.Add(microCMSSearchCacheTTL + time.Second)
-	req := httptest.NewRequest(http.MethodGet, "/api/search?q=React", nil)
+	req := httptest.NewRequest(http.MethodGet, "/api/search?q=Body", nil)
 	rec := httptest.NewRecorder()
 
 	SearchHandler(rec, req)
@@ -287,8 +291,8 @@ func TestSearchHandlerUsesCachedMicroCMSArticles(t *testing.T) {
 		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
 	}
 
-	if requestCount != 2 {
-		t.Fatalf("microCMS request count after expiry = %d, want 2", requestCount)
+	if requestCount != 3 {
+		t.Fatalf("microCMS request count after expiry = %d, want 3", requestCount)
 	}
 }
 

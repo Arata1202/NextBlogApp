@@ -168,3 +168,22 @@ func filterSearchArticles(articles []map[string]interface{}, query string) []map
 
 	return matchedArticles
 }
+
+func rankMicroCMSSearchArticles(articles []map[string]interface{}, query string) []map[string]interface{} {
+	rankedArticles := make([]map[string]interface{}, 0, len(articles))
+	terms := searchTerms(query)
+
+	for _, article := range articles {
+		score := articleSearchScore(article, terms)
+		if score == 0 {
+			// microCMS may match text fields that are not included in the compact response.
+			score = 1
+		}
+
+		rankedArticle := cloneSearchArticle(article)
+		rankedArticle[searchScoreField] = score
+		rankedArticles = append(rankedArticles, rankedArticle)
+	}
+
+	return rankedArticles
+}

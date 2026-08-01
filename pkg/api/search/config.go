@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	microCMSSearchFields    = "id,title,description,thumbnail,categories,tags,introduction_blocks,content_blocks,publishedAt,updatedAt"
+	microCMSSearchFields    = "id,title,description,thumbnail,publishedAt,updatedAt"
 	microCMSListFetchLimit  = 100
 	microCMSSearchLimit     = 10
 	microCMSSearchLimitMax  = 50
@@ -35,6 +35,7 @@ var (
 		sync.RWMutex
 		serviceDomain string
 		apiKey        string
+		query         string
 		articles      []map[string]interface{}
 		expiresAt     time.Time
 	}{}

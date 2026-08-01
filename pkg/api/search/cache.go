@@ -26,6 +26,7 @@ func resetMicroCMSSearchCache() {
 
 	microCMSSearchCache.serviceDomain = ""
 	microCMSSearchCache.apiKey = ""
+	microCMSSearchCache.query = ""
 	microCMSSearchCache.articles = nil
 	microCMSSearchCache.expiresAt = time.Time{}
 }
@@ -38,12 +39,14 @@ func resetZennSearchCache() {
 	zennSearchCache.expiresAt = time.Time{}
 }
 
-func cachedMicroCMSSearchArticles(serviceDomain, apiKey string) ([]map[string]interface{}, error) {
+func cachedMicroCMSSearchArticles(serviceDomain, apiKey, query string) ([]map[string]interface{}, error) {
 	now := microCMSSearchNow()
+	normalizedQuery := normalizedSearchText(query)
 
 	microCMSSearchCache.RLock()
 	if microCMSSearchCache.serviceDomain == serviceDomain &&
 		microCMSSearchCache.apiKey == apiKey &&
+		microCMSSearchCache.query == normalizedQuery &&
 		now.Before(microCMSSearchCache.expiresAt) {
 		articles := cloneSearchArticles(microCMSSearchCache.articles)
 		microCMSSearchCache.RUnlock()
@@ -51,7 +54,7 @@ func cachedMicroCMSSearchArticles(serviceDomain, apiKey string) ([]map[string]in
 	}
 	microCMSSearchCache.RUnlock()
 
-	articles, err := fetchMicroCMSSearchArticles(serviceDomain, apiKey)
+	articles, err := fetchMicroCMSSearchArticles(serviceDomain, apiKey, query)
 	if err != nil {
 		return nil, err
 	}
@@ -59,6 +62,7 @@ func cachedMicroCMSSearchArticles(serviceDomain, apiKey string) ([]map[string]in
 	microCMSSearchCache.Lock()
 	microCMSSearchCache.serviceDomain = serviceDomain
 	microCMSSearchCache.apiKey = apiKey
+	microCMSSearchCache.query = normalizedQuery
 	microCMSSearchCache.articles = cloneSearchArticles(articles)
 	microCMSSearchCache.expiresAt = now.Add(microCMSSearchCacheTTL)
 	microCMSSearchCache.Unlock()

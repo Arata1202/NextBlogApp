@@ -5,21 +5,31 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"NextBlogApp/pkg/api/microcms"
 )
 
 type microCMSSearchListResponse = microcms.ListResponse
 
-func buildMicroCMSSearchRequest(serviceDomain, apiKey string, limit, offset int) (*http.Request, error) {
-	return microcms.BuildListRequest(context.Background(), microCMSSearchAPIBaseURL, serviceDomain, apiKey, microCMSSearchFields, limit, offset)
+func buildMicroCMSSearchRequest(serviceDomain, apiKey, query string, limit, offset int) (*http.Request, error) {
+	req, err := microcms.BuildListRequest(context.Background(), microCMSSearchAPIBaseURL, serviceDomain, apiKey, microCMSSearchFields, limit, offset)
+	if err != nil {
+		return nil, err
+	}
+
+	params := req.URL.Query()
+	params.Set("q", strings.TrimSpace(query))
+	req.URL.RawQuery = params.Encode()
+
+	return req, nil
 }
 
-func fetchMicroCMSSearchArticles(serviceDomain, apiKey string) ([]map[string]interface{}, error) {
+func fetchMicroCMSSearchArticles(serviceDomain, apiKey, query string) ([]map[string]interface{}, error) {
 	articles := []map[string]interface{}{}
 
 	for offset := 0; ; offset += microCMSListFetchLimit {
-		req, err := buildMicroCMSSearchRequest(serviceDomain, apiKey, microCMSListFetchLimit, offset)
+		req, err := buildMicroCMSSearchRequest(serviceDomain, apiKey, query, microCMSListFetchLimit, offset)
 		if err != nil {
 			return nil, err
 		}

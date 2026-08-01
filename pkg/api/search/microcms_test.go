@@ -6,7 +6,7 @@ import (
 )
 
 func TestBuildMicroCMSSearchRequest(t *testing.T) {
-	req, err := buildMicroCMSSearchRequest("example", "api-key", 10, 20)
+	req, err := buildMicroCMSSearchRequest("example", "api-key", "React hooks", 10, 20)
 	if err != nil {
 		t.Fatalf("buildMicroCMSSearchRequest() error = %v", err)
 	}
@@ -15,7 +15,7 @@ func TestBuildMicroCMSSearchRequest(t *testing.T) {
 		t.Fatalf("method = %s, want GET", req.Method)
 	}
 
-	if req.URL.String() != "https://example.microcms.io/api/v1/blog?fields=id%2Ctitle%2Cdescription%2Cthumbnail%2Ccategories%2Ctags%2Cintroduction_blocks%2Ccontent_blocks%2CpublishedAt%2CupdatedAt&limit=10&offset=20" {
+	if req.URL.String() != "https://example.microcms.io/api/v1/blog?fields=id%2Ctitle%2Cdescription%2Cthumbnail%2CpublishedAt%2CupdatedAt&limit=10&offset=20&q=React+hooks" {
 		t.Fatalf("url = %q", req.URL.String())
 	}
 
