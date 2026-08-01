@@ -294,7 +294,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
 
   const hasSearchError = status === 'error';
   const emptyMessage = hasSearchError
-    ? '検索に失敗しました。時間をおいて再度お試しください。'
+    ? '検索結果を取得できませんでした。もう一度お試しください。'
     : '記事はまだありません';
 
   if (!query && hasAppWebViewParam) {
@@ -315,7 +315,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
           hasSearchError ? (
             <button
               type="button"
-              className={`${outlinedControlClassName} px-4 py-2 text-sm font-semibold`}
+              className={`${outlinedControlClassName} cursor-pointer px-4 py-2 text-sm font-semibold`}
               onClick={() => setRetryCount((count) => count + 1)}
             >
               もう一度検索する

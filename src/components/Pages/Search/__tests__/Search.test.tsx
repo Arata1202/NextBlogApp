@@ -168,9 +168,11 @@ describe('SearchPage', () => {
     });
 
     expect(
-      screen.getByText('検索に失敗しました。時間をおいて再度お試しください。'),
+      screen.getByText('検索結果を取得できませんでした。もう一度お試しください。'),
     ).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'もう一度検索する' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'もう一度検索する' })).toHaveClass(
+      'cursor-pointer',
+    );
     expect(articleListMock).toHaveBeenLastCalledWith(
       expect.objectContaining({
         isLoading: false,
@@ -236,14 +238,14 @@ describe('SearchPage', () => {
         expect.objectContaining({
           articles: [],
           mixedArticles: [],
-          emptyMessage: '検索に失敗しました。時間をおいて再度お試しください。',
+          emptyMessage: '検索結果を取得できませんでした。もう一度お試しください。',
           isLoading: false,
         }),
       ),
     );
 
     expect(
-      screen.getByText('検索に失敗しました。時間をおいて再度お試しください。'),
+      screen.getByText('検索結果を取得できませんでした。もう一度お試しください。'),
     ).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'もう一度検索する' }));
