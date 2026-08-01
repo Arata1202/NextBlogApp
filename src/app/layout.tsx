@@ -75,6 +75,7 @@ export default async function RootLayout({ children }: Props) {
     <html lang="ja" suppressHydrationWarning>
       <head>
         <meta name="format-detection" content="email=no,telephone=no,address=no" />
+        <meta name="apple-itunes-app" content="app-id=6590619103" />
         <link rel="preconnect" href="https://images.microcms-assets.io" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" href={`${url}/images/head/16.png`} sizes="16x16" type="image/png" />
