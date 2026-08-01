@@ -33,7 +33,7 @@ describe('ArticleFeature', () => {
 
     expect(screen.getByText('PR')).toBeInTheDocument();
     expect(
-      screen.getByText('この記事はExample Sponsorから依頼を受け、広告として制作しています。'),
+      screen.getByText('本記事は、Example Sponsorから依頼を受けて制作した広告です。'),
     ).toBeInTheDocument();
   });
 

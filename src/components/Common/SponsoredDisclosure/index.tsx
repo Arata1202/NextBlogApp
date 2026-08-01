@@ -34,7 +34,7 @@ export default function SponsoredDisclosure({ sponsorName, compact = false }: Pr
   return (
     <aside className={disclosureClassName} aria-label="広告に関する表示">
       <span className={badgeClassName}>PR</span>
-      <span>この記事は{sponsorName}から依頼を受け、広告として制作しています。</span>
+      <span>本記事は、{sponsorName}から依頼を受けて制作した広告です。</span>
     </aside>
   );
 }

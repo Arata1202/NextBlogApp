@@ -10,7 +10,7 @@ test('discloses sponsored articles and marks only sponsor links', async ({ page 
 
   await expect(page.getByText('PR', { exact: true })).toBeVisible();
   await expect(
-    page.getByText('この記事はExample Sponsorから依頼を受け、広告として制作しています。'),
+    page.getByText('本記事は、Example Sponsorから依頼を受けて制作した広告です。'),
   ).toBeVisible();
   await expect(page.getByRole('link', { name: 'スポンサーリンク' })).toHaveAttribute(
     'rel',
