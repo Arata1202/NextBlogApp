@@ -1,0 +1,32 @@
+.badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  height: 1.4rem;
+  padding: 0 0.5rem;
+}
+
+.disclosure {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  border-width: 1px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.disclosure .badge {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 640px) {
+  .disclosure {
+    margin-bottom: 1.25rem;
+  }
+}

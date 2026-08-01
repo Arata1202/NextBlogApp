@@ -402,7 +402,7 @@ func NotifyExternalArticlesFirstPublishWithOneSignal(ctx context.Context, articl
 }
 
 func notifyMicroCMSFirstPublishWithOneSignal(ctx context.Context, config s3BackupConfig, credentials awsCredentials, payload microCMSWebhookPayload, now time.Time) (oneSignalNotificationResult, error) {
-	if !isMicroCMSFirstPublishWebhook(payload) {
+	if !isMicroCMSFirstPublishWebhook(payload) || isMicroCMSSponsoredArticle(payload) {
 		return oneSignalNotificationResult{}, nil
 	}
 

@@ -3,6 +3,16 @@ import { describe, expect, it } from 'vitest';
 import { ARTICLE_CONTENT_AD_MARKER, formatRichText } from '@/utils/formatRichText';
 
 describe('formatRichText', () => {
+  it('marks only links to the configured sponsor domain as sponsored', () => {
+    const html = formatRichText(
+      '<p><a href="https://shop.sponsor.example/item" rel="noopener">Sponsor</a><a href="https://reference.example/source">Reference</a></p>',
+      { sponsorUrl: 'https://sponsor.example' },
+    );
+
+    expect(html).toContain('rel="noopener sponsored"');
+    expect(html).toContain('<a href="https://reference.example/source">Reference</a>');
+  });
+
   it('highlights code blocks and marks them as hljs', () => {
     const html = formatRichText(
       '<pre><code class="language-javascript">const value = 1;</code></pre>',

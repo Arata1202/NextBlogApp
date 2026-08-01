@@ -108,10 +108,12 @@ const createArticle = (index, baseUrl) => {
     ],
     content_blocks: [
       {
-        rich_text:
-          '<h2 id="main-flow">主要導線</h2><p>記事一覧、カテゴリ、タグ、検索を確認します。</p><h3 id="stable-ci">安定したCI</h3><p>外部サービスはモックして、ブラウザ上の振る舞いを検証します。</p>',
+        rich_text: `<h2 id="main-flow">主要導線</h2><p>記事一覧、カテゴリ、タグ、検索を確認します。</p><h3 id="stable-ci">安定したCI</h3><p>外部サービスはモックして、ブラウザ上の振る舞いを検証します。</p>${index === 1 ? '<p><a href="https://shop.sponsor.example/product">スポンサーリンク</a><a href="https://reference.example/source">参考リンク</a></p>' : ''}`,
       },
     ],
+    isSponsored: index === 1,
+    sponsorName: index === 1 ? 'Example Sponsor' : undefined,
+    sponsorUrl: index === 1 ? 'https://sponsor.example' : undefined,
     createdAt: publishedAt,
     publishedAt,
     revisedAt: publishedAt,

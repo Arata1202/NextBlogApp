@@ -53,6 +53,16 @@ func microCMSWebhookArticleTitle(payload microCMSWebhookPayload) string {
 	return strings.TrimSpace(microCMSBackupStringValue(publishedValue["title"]))
 }
 
+func isMicroCMSSponsoredArticle(payload microCMSWebhookPayload) bool {
+	publishedValue := microCMSWebhookPublishedValue(payload)
+	if publishedValue == nil {
+		return false
+	}
+
+	isSponsored, ok := publishedValue["isSponsored"].(bool)
+	return ok && isSponsored
+}
+
 func expectedMicroCMSWebhookSignature(body []byte, secret string) string {
 	mac := hmac.New(sha256.New, []byte(secret))
 	mac.Write(body)

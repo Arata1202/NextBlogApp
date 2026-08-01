@@ -7,6 +7,7 @@ import styles from './index.module.css';
 import DoubleDate from '../DoubleDate';
 import WebpImage from '../Elements/WebpImage';
 import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
+import SponsoredDisclosure from '../SponsoredDisclosure';
 
 type Props = {
   article: Article;
@@ -26,6 +27,7 @@ export default function ArticleCard({ article, priority = false }: Props) {
         >
           <WebpImage article={article} card={true} priority={priority} />
           <div className={styles.content}>
+            {article.isSponsored && <SponsoredDisclosure compact />}
             <div className={styles.title}>{article.title}</div>
             <div className={styles.description}>{article.description}</div>
             <DoubleDate article={article} />

@@ -12,6 +12,7 @@ export const mapBlogArticlesToUnified = (articles: Article[]): UnifiedArticle[] 
     thumbnailUrl: item.thumbnail?.url,
     url: `/articles/${item.id}`,
     source: 'blog',
+    isSponsored: item.isSponsored,
   }));
 };
 

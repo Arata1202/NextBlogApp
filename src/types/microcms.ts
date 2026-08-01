@@ -8,6 +8,9 @@ export type Blog = {
   tags?: Tag[];
   introduction_blocks: IntroductionBlock[];
   content_blocks: ContentBlock[];
+  isSponsored?: boolean;
+  sponsorName?: string;
+  sponsorUrl?: string;
 };
 
 export type Article = Blog & MicroCMSContentId & MicroCMSDate;

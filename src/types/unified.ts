@@ -12,4 +12,5 @@ export type UnifiedArticle = {
   thumbnailUrl?: string;
   url: string;
   source: UnifiedArticleSource;
+  isSponsored?: boolean;
 };

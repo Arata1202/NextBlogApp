@@ -22,6 +22,21 @@ vi.mock('react-slick', async () => {
 });
 
 describe('ArticleFeature', () => {
+  it('shows a clear disclosure for sponsored articles', () => {
+    const article = createArticle({
+      isSponsored: true,
+      sponsorName: 'Example Sponsor',
+      sponsorUrl: 'https://sponsor.example',
+    });
+
+    render(<ArticleFeature data={article} relatedArticles={[]} />);
+
+    expect(screen.getByText('PR')).toBeInTheDocument();
+    expect(
+      screen.getByText('本記事は、Example Sponsorから依頼を受けて制作した広告です。'),
+    ).toBeInTheDocument();
+  });
+
   it('composes article content, table of contents, in-content ads, and related articles', () => {
     const relatedArticle = createArticle({
       id: 'related-article',
