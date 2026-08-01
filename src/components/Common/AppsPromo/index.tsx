@@ -2,18 +2,18 @@ import styles from './index.module.css';
 
 const APP_STORE_BADGE = '/images/badge/app-store-badge-jp.svg';
 const IPHONE_FRAME = '/images/apps/iphone-15-pro-max-frame.webp';
-const CREATOR_APP_STORE_URL = 'https://apps.apple.com/jp/iphone/search?term=aratatakano';
+const CREATOR_APP_STORE_URL = 'https://apps.apple.com/jp/developer/arata-takano/id1760110538';
 
 const apps = [
+  {
+    name: 'リクビジョン',
+    icon: '/images/apps/rikuvision-app-icon.webp',
+    screenshot: '/images/apps/rikuvision-screenshot.webp',
+  },
   {
     name: 'Pocket Video',
     icon: '/images/apps/pocket-video-app-icon.webp',
     screenshot: '/images/apps/pocket-video-screenshot.webp',
-  },
-  {
-    name: 'リアル大学生',
-    icon: '/images/apps/real-student-app-icon.webp',
-    screenshot: '/images/apps/real-student-screenshot.webp',
   },
 ] as const;
 
