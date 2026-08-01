@@ -14,7 +14,11 @@ import ArticleList from '@/components/Common/ArticleList';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import { getApiSearchUrl } from '@/config/publicEnv';
 import { APP_WEBVIEW_QUERY_PARAMETER, APP_WEBVIEW_QUERY_VALUE } from '@/hooks/useAppWebViewMode';
-import { fieldControlClassName, pillControlClassName } from '@/components/Common/controlClassNames';
+import {
+  fieldControlClassName,
+  outlinedControlClassName,
+  pillControlClassName,
+} from '@/components/Common/controlClassNames';
 import { colorClassNames } from '@/styles/designTokens';
 
 type Props = {
@@ -55,6 +59,8 @@ const initialSearchState: SearchState = {
   status: 'idle',
   totalCount: 0,
 };
+
+const SEARCH_REQUEST_TIMEOUT_MS = 12_000;
 
 const getCurrentPage = (page: string | null) => {
   const parsedPage = Number(page);
@@ -182,6 +188,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
   const query = useMemo(() => searchParams.get('q')?.trim() ?? '', [searchParams]);
   const currentPage = useMemo(() => getCurrentPage(searchParams.get('page')), [searchParams]);
   const [searchState, setSearchState] = useState<SearchState>(initialSearchState);
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     if (!query) {
@@ -189,6 +196,8 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
     }
 
     const abortController = new AbortController();
+    let isActive = true;
+    let timeoutId: number | undefined;
 
     const searchArticles = async () => {
       const endpoint = getApiSearchUrl();
@@ -211,6 +220,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
         status: 'loading',
         totalCount: 0,
       });
+      timeoutId = window.setTimeout(() => abortController.abort(), SEARCH_REQUEST_TIMEOUT_MS);
 
       try {
         const response = await fetch(getSearchUrl(endpoint, query, currentPage), {
@@ -236,7 +246,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
           totalCount: typeof data.totalCount === 'number' ? data.totalCount : contents.length,
         });
       } catch (error) {
-        if (error instanceof DOMException && error.name === 'AbortError') {
+        if (!isActive) {
           return;
         }
 
@@ -257,13 +267,23 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
           status: 'error',
           totalCount: 0,
         });
+      } finally {
+        if (timeoutId !== undefined) {
+          window.clearTimeout(timeoutId);
+        }
       }
     };
 
     searchArticles();
 
-    return () => abortController.abort();
-  }, [query, currentPage]);
+    return () => {
+      isActive = false;
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
+      abortController.abort();
+    };
+  }, [query, currentPage, retryCount]);
 
   const hasCurrentSearchState =
     Boolean(query) && searchState.query === query && searchState.currentPage === currentPage;
@@ -272,7 +292,10 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
   const status = hasCurrentSearchState ? searchState.status : 'idle';
   const isLoading = Boolean(query) && (status === 'idle' || status === 'loading');
 
-  const emptyMessage = '記事はまだありません';
+  const hasSearchError = status === 'error';
+  const emptyMessage = hasSearchError
+    ? '検索に失敗しました。時間をおいて再度お試しください。'
+    : '記事はまだありません';
 
   if (!query && hasAppWebViewParam) {
     return <AppSearchIndex tags={tags} archiveList={archiveList} />;
@@ -288,6 +311,17 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
         tags={tags}
         archiveList={archiveList}
         emptyMessage={emptyMessage}
+        emptyAction={
+          hasSearchError ? (
+            <button
+              type="button"
+              className={`${outlinedControlClassName} px-4 py-2 text-sm font-semibold`}
+              onClick={() => setRetryCount((count) => count + 1)}
+            >
+              もう一度検索する
+            </button>
+          ) : undefined
+        }
         isLoading={isLoading}
         stackedPagination={
           <Pagination

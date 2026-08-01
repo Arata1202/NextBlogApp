@@ -40,6 +40,21 @@ describe('ArticleList', () => {
     expect(screen.getByTestId('share')).toBeInTheDocument();
   });
 
+  it('renders an optional empty-state action', () => {
+    render(
+      <ArticleList
+        articles={[]}
+        tags={tags}
+        archiveList={archiveList}
+        emptyMessage="検索に失敗しました"
+        emptyAction={<button type="button">もう一度検索する</button>}
+      />,
+    );
+
+    expect(screen.getByText('検索に失敗しました')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'もう一度検索する' })).toBeInTheDocument();
+  });
+
   it('renders skeleton items while loading', () => {
     render(<ArticleList articles={[]} tags={tags} archiveList={archiveList} isLoading />);
 

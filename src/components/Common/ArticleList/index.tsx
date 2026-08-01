@@ -24,13 +24,22 @@ type Props = {
   archiveList: ArchiveItem[];
   mixedArticles?: UnifiedArticle[];
   emptyMessage?: string;
+  emptyAction?: ReactNode;
   isLoading?: boolean;
   stackedPagination?: ReactNode;
 };
 
 const skeletonItems = [0, 1, 2];
 
-function EmptyState({ message, theme }: { message: string; theme?: string }) {
+function EmptyState({
+  action,
+  message,
+  theme,
+}: {
+  action?: ReactNode;
+  message: string;
+  theme?: string;
+}) {
   const colorClassName = getMutedTextClassName(theme);
 
   return (
@@ -40,6 +49,7 @@ function EmptyState({ message, theme }: { message: string; theme?: string }) {
         aria-hidden="true"
       />
       <p className={`text-sm font-medium ${colorClassName}`}>{message}</p>
+      {action && <div className="mt-4 flex justify-center">{action}</div>}
     </div>
   );
 }
@@ -51,6 +61,7 @@ export default function ArticleList({
   archiveList,
   mixedArticles,
   emptyMessage = '記事はまだありません',
+  emptyAction,
   isLoading = false,
   stackedPagination,
 }: Props) {
@@ -76,10 +87,10 @@ export default function ArticleList({
             </ul>
           )}
           {!isLoading && !isMixed && articles.length === 0 && (
-            <EmptyState message={emptyMessage} theme={theme} />
+            <EmptyState action={emptyAction} message={emptyMessage} theme={theme} />
           )}
           {!isLoading && isMixed && mixedArticles && mixedArticles.length === 0 && (
-            <EmptyState message={emptyMessage} theme={theme} />
+            <EmptyState action={emptyAction} message={emptyMessage} theme={theme} />
           )}
           {!isLoading && !isMixed && articles.length > 0 && (
             <ul className={styles.main}>

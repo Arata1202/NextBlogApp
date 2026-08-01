@@ -1,4 +1,6 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import type { ReactNode } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import SearchPage from '@/components/Pages/Search';
 import { createArticle, createTag, createUnifiedArticle } from '@/test/factories';
@@ -27,6 +29,7 @@ vi.mock('@/components/Common/ArticleList', () => ({
     articles: { title: string }[];
     mixedArticles?: { title: string }[];
     emptyMessage: string;
+    emptyAction?: ReactNode;
     isLoading?: boolean;
   }) => {
     articleListMock(props);
@@ -38,6 +41,7 @@ vi.mock('@/components/Common/ArticleList', () => ({
           <div key={article.title}>{article.title}</div>
         ))}
         {!props.isLoading && visibleArticles.length === 0 && <div>{props.emptyMessage}</div>}
+        {props.emptyAction}
       </div>
     );
   },
@@ -67,6 +71,7 @@ describe('SearchPage', () => {
   });
 
   afterEach(() => {
+    vi.useRealTimers();
     delete process.env.NEXT_PUBLIC_API_SEARCH_URL;
     vi.unstubAllGlobals();
   });
@@ -144,6 +149,35 @@ describe('SearchPage', () => {
     expect(screen.queryByText('検索中...')).not.toBeInTheDocument();
   });
 
+  it('stops loading and shows retry UI when the request times out', async () => {
+    vi.useFakeTimers();
+    window.history.pushState({}, '', '/search?q=React');
+    fetchMock.mockImplementation(
+      (_url: RequestInfo | URL, init: RequestInit) =>
+        new Promise((_resolve, reject) => {
+          init.signal?.addEventListener('abort', () => {
+            reject(new DOMException('The operation was aborted', 'AbortError'));
+          });
+        }),
+    );
+
+    render(<SearchPage tags={[]} archiveList={[]} />);
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(12_000);
+    });
+
+    expect(
+      screen.getByText('検索に失敗しました。時間をおいて再度お試しください。'),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'もう一度検索する' })).toBeInTheDocument();
+    expect(articleListMock).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        isLoading: false,
+      }),
+    );
+  });
+
   it('does not fetch until a query is provided', () => {
     render(<SearchPage tags={[]} archiveList={[]} />);
 
@@ -184,9 +218,16 @@ describe('SearchPage', () => {
     expect(articleListMock).not.toHaveBeenCalled();
   });
 
-  it('does not show API errors to users', async () => {
+  it('shows API errors and retries the search', async () => {
     window.history.pushState({}, '', '/search?q=React');
-    fetchMock.mockRejectedValue(new Error('network error'));
+    fetchMock.mockRejectedValueOnce(new Error('network error')).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        contents: [createArticle({ id: 'react-article', title: 'React article' })],
+        totalCount: 1,
+      }),
+    });
+    const user = userEvent.setup();
 
     render(<SearchPage tags={[]} archiveList={[]} />);
 
@@ -195,15 +236,19 @@ describe('SearchPage', () => {
         expect.objectContaining({
           articles: [],
           mixedArticles: [],
-          emptyMessage: '記事はまだありません',
+          emptyMessage: '検索に失敗しました。時間をおいて再度お試しください。',
           isLoading: false,
         }),
       ),
     );
 
-    expect(screen.getByText('記事はまだありません')).toBeInTheDocument();
     expect(
-      screen.queryByText('検索に失敗しました。時間をおいて再度お試しください。'),
-    ).not.toBeInTheDocument();
+      screen.getByText('検索に失敗しました。時間をおいて再度お試しください。'),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'もう一度検索する' }));
+
+    expect(await screen.findByText('React article')).toBeInTheDocument();
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 });
