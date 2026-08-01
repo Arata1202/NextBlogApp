@@ -38,7 +38,7 @@ export const shadowClassNames = {
 } as const;
 
 export const colorClassNames = {
-  accentBadge: 'bg-blue-900 text-white',
+  accentBadge: 'bg-blue-600 text-white',
   accentText: 'text-blue-600',
   accentHoverText: 'hover:text-blue-600',
   accentBorderHover: 'hover:border-blue-600',

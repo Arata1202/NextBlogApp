@@ -17,10 +17,16 @@
   border-width: 1px;
   font-size: 0.875rem;
   line-height: 1.6;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   padding: 0.65rem 0.75rem;
 }
 
 .disclosure .badge {
   flex: 0 0 auto;
+}
+
+@media (max-width: 640px) {
+  .disclosure {
+    margin-bottom: 1.25rem;
+  }
 }
