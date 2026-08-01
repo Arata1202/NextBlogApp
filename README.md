@@ -141,11 +141,13 @@ microCMSの`blog` APIに以下のフィールドを追加する。
 | ------------- | -------- | --------------------- |
 | `isSponsored` | 真偽値   | 初期値を`false`にする |
 | `sponsorName` | テキスト | 広告主の正式名称      |
-| `sponsorUrl`  | URL      | 広告主の公式URL       |
+| `sponsorUrl`  | テキスト | 広告主の公式URL       |
 
 `isSponsored`を有効にした記事では、一覧と記事上部にPR表示が追加される。本文中のリンクは、`sponsorUrl`と同じドメインまたはそのサブドメインに限り`rel="sponsored"`が付与される。
 
 スポンサー記事では`sponsorName`と有効な`sponsorUrl`が必須となり、不足している場合はビルドが失敗する。
+
+スポンサー記事は、初回公開時のOneSignalプッシュ通知から自動的に除外される。
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 

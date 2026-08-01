@@ -32,6 +32,37 @@ func TestOneSignalIdempotencyKey(t *testing.T) {
 	}
 }
 
+func TestNotifyMicroCMSFirstPublishWithOneSignalSkipsSponsoredArticle(t *testing.T) {
+	payload := microCMSWebhookPayload{
+		API:  "blog",
+		ID:   "article-a",
+		Type: "new",
+		Contents: &microCMSWebhookPayloadState{
+			New: &microCMSWebhookContentState{
+				Status: []string{"PUBLISH"},
+				PublishValue: map[string]interface{}{
+					"title":       "Sponsored Article",
+					"isSponsored": true,
+				},
+			},
+		},
+	}
+
+	result, err := notifyMicroCMSFirstPublishWithOneSignal(
+		t.Context(),
+		s3BackupConfig{},
+		awsCredentials{},
+		payload,
+		time.Now(),
+	)
+	if err != nil {
+		t.Fatalf("notifyMicroCMSFirstPublishWithOneSignal() error = %v", err)
+	}
+	if result != (oneSignalNotificationResult{}) {
+		t.Fatalf("result = %#v, want empty result", result)
+	}
+}
+
 func assertOneSignalPushTargeting(t *testing.T, body map[string]interface{}) {
 	t.Helper()
 

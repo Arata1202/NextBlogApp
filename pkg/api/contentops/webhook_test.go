@@ -68,3 +68,32 @@ func TestIsMicroCMSFirstPublishWebhook(t *testing.T) {
 		})
 	}
 }
+
+func TestIsMicroCMSSponsoredArticle(t *testing.T) {
+	for _, testCase := range []struct {
+		name    string
+		value   interface{}
+		want    bool
+	}{
+		{name: "sponsored article", value: true, want: true},
+		{name: "regular article", value: false, want: false},
+		{name: "missing flag", value: nil, want: false},
+		{name: "invalid flag", value: "true", want: false},
+	} {
+		t.Run(testCase.name, func(t *testing.T) {
+			publishValue := map[string]interface{}{"title": "Article A"}
+			if testCase.value != nil {
+				publishValue["isSponsored"] = testCase.value
+			}
+			payload := microCMSWebhookPayload{
+				Contents: &microCMSWebhookPayloadState{
+					New: &microCMSWebhookContentState{PublishValue: publishValue},
+				},
+			}
+
+			if got := isMicroCMSSponsoredArticle(payload); got != testCase.want {
+				t.Fatalf("isMicroCMSSponsoredArticle() = %t, want %t", got, testCase.want)
+			}
+		})
+	}
+}
