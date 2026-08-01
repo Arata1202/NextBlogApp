@@ -6,12 +6,13 @@
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1;
-  padding: 0.35rem 0.5rem;
+  height: 1.4rem;
+  padding: 0 0.5rem;
 }
 
 .disclosure {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.625rem;
   border-width: 1px;
   font-size: 0.875rem;
@@ -22,5 +23,4 @@
 
 .disclosure .badge {
   flex: 0 0 auto;
-  margin-top: 0.2rem;
 }
