@@ -38,6 +38,7 @@ export const shadowClassNames = {
 } as const;
 
 export const colorClassNames = {
+  accentBadge: 'bg-blue-900 text-white',
   accentText: 'text-blue-600',
   accentHoverText: 'hover:text-blue-600',
   accentBorderHover: 'hover:border-blue-600',
@@ -71,6 +72,10 @@ export const themeVariantClassNames = {
   selectedSurface: {
     light: 'bg-gray-300 text-gray-700',
     dark: 'bg-gray-500 text-white',
+  },
+  subtleSurface: {
+    light: 'bg-gray-50',
+    dark: 'bg-gray-700',
   },
   subtleIcon: {
     light: 'text-gray-300',
