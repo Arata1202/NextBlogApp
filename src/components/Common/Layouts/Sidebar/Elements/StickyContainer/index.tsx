@@ -5,7 +5,7 @@ import BuyMeaCoffee from '@/components/Common/Share/Elements/Elements/BuyMeaCoff
 import { useExtractHeadings } from '@/hooks/useExtractHeadings';
 
 const STICKY_STOP_SELECTOR = '[data-sidebar-sticky-stop], [data-apps-promo]';
-const STICKY_TOP = 90;
+const STICKY_TOP = 60;
 const STICKY_APPS_PROMO_GAP = 16;
 
 type Props = {

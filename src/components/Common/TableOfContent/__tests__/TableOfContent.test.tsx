@@ -44,7 +44,7 @@ describe('TableOfContents', () => {
 
     await user.click(screen.getByRole('link', { name: '1 Intro' }));
 
-    expect(window.scrollTo).toHaveBeenCalledWith({ top: 190, behavior: 'smooth' });
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 220, behavior: 'smooth' });
   });
 
   it('keeps app WebView headings below the top spacing', async () => {

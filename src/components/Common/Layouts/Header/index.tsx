@@ -25,7 +25,6 @@ import { BLOG_IMAGE } from '@/constants/data';
 import { HEADER_NAVIGATION } from '@/constants/data';
 import { CATEGORY_ARR } from '@/constants/category';
 import { GitHubIcon } from '../../Elements/SocialIcon';
-import Banner from './Elements/Banner';
 import {
   compactIconControlClassName,
   interactiveFocusClassName,
@@ -340,7 +339,6 @@ export default function Header() {
             </Transition.Child>
           </Dialog>
         </Transition.Root>
-        <Banner />
       </header>
     </>
   );
