@@ -182,6 +182,19 @@ func isInconclusiveLinkCheckerStatus(statusCode int) bool {
 	}
 }
 
+func isInconclusiveLinkCheckerError(err error) bool {
+	if err == nil {
+		return false
+	}
+
+	if errors.Is(err, context.DeadlineExceeded) || errors.Is(err, context.Canceled) {
+		return true
+	}
+
+	var networkError net.Error
+	return errors.As(err, &networkError) && networkError.Timeout()
+}
+
 func checkSingleLink(ctx context.Context, linkURL string) (int, string, bool) {
 	requestContext, cancel := context.WithTimeout(ctx, linkCheckerRequestTimeout)
 	defer cancel()
@@ -195,7 +208,7 @@ func checkSingleLink(ctx context.Context, linkURL string) (int, string, bool) {
 	}
 
 	if err != nil {
-		return 0, err.Error(), true
+		return 0, err.Error(), !isInconclusiveLinkCheckerError(err)
 	}
 
 	return statusCode, "", isBrokenStatus(statusCode) && !isInconclusiveLinkCheckerStatus(statusCode)

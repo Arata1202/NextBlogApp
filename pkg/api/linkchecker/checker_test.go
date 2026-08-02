@@ -10,6 +10,32 @@ import (
 	"testing"
 )
 
+func TestCheckSingleLinkDoesNotTreatTimeoutAsBroken(t *testing.T) {
+	setLinkCheckerLookup(t, publicLinkCheckerLookup)
+
+	originalClient := linkCheckerHTTPClient
+	linkCheckerHTTPClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			return nil, context.DeadlineExceeded
+		}),
+	}
+	t.Cleanup(func() {
+		linkCheckerHTTPClient = originalClient
+	})
+
+	statusCode, errorMessage, broken := checkSingleLink(t.Context(), "https://support.example/path")
+
+	if broken {
+		t.Fatal("broken = true, want false")
+	}
+	if statusCode != 0 {
+		t.Fatalf("statusCode = %d, want 0", statusCode)
+	}
+	if !strings.Contains(errorMessage, context.DeadlineExceeded.Error()) {
+		t.Fatalf("errorMessage = %q, want deadline exceeded", errorMessage)
+	}
+}
+
 func TestCheckSingleLinkBlocksPrivateResolvedAddress(t *testing.T) {
 	originalClient := linkCheckerHTTPClient
 	linkCheckerHTTPClient = &http.Client{
