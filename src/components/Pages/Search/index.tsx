@@ -123,7 +123,7 @@ const normalizeSearchArticles = (contents: SearchResponse['contents']) => {
   });
 };
 
-function AppSearchIndex({ tags, archiveList }: Pick<Props, 'tags' | 'archiveList'>) {
+export function AppSearchIndex({ tags, archiveList }: Pick<Props, 'tags' | 'archiveList'>) {
   const [selectedArchive, setSelectedArchive] = useState('');
 
   const handleArchiveChange = (event: ChangeEvent<HTMLSelectElement>) => {

@@ -15,6 +15,7 @@ vi.mock('@/components/Pages/Search', () => ({
   default: () => {
     throw suspendedSearchPage.promise;
   },
+  AppSearchIndex: () => <div>app-search-index</div>,
 }));
 
 vi.mock('@/components/Common/ArticleList', async () => {
@@ -47,7 +48,7 @@ describe('search app page', () => {
   it('renders the search fallback as loading while the client search page is suspended', async () => {
     const Page = (await import('@/app/search/page')).default;
 
-    render(await Page());
+    render(await Page({ searchParams: Promise.resolve({}) }));
 
     expect(screen.getByLabelText('現在のページを読み込み中')).toHaveTextContent('「」の検索結果');
     expect(screen.getByRole('heading', { name: 'ページタイトルを読み込み中' })).toHaveTextContent(
@@ -62,5 +63,24 @@ describe('search app page', () => {
         isLoading: true,
       }),
     );
+  });
+
+  it('renders the app search index instead of the loading fallback for the app search top', async () => {
+    const Page = (await import('@/app/search/page')).default;
+
+    render(await Page({ searchParams: Promise.resolve({ app: '1' }) }));
+
+    expect(screen.getByText('app-search-index')).toBeInTheDocument();
+    expect(screen.queryByText('loading-list')).not.toBeInTheDocument();
+    expect(articleListMock).not.toHaveBeenCalled();
+  });
+
+  it('keeps the loading fallback for an app search with a query', async () => {
+    const Page = (await import('@/app/search/page')).default;
+
+    render(await Page({ searchParams: Promise.resolve({ app: '1', q: 'Flutter' }) }));
+
+    expect(screen.getByText('loading-list')).toBeInTheDocument();
+    expect(screen.queryByText('app-search-index')).not.toBeInTheDocument();
   });
 });
