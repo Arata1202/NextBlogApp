@@ -9,7 +9,6 @@ export type Blog = {
   introduction_blocks: IntroductionBlock[];
   content_blocks: ContentBlock[];
   isSponsored?: boolean;
-  sponsorName?: string;
   sponsorUrl?: string;
 };
 

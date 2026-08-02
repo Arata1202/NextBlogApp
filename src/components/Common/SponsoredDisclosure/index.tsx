@@ -11,11 +11,10 @@ import {
 } from '@/styles/designTokens';
 
 type Props = {
-  sponsorName?: string;
   compact?: boolean;
 };
 
-export default function SponsoredDisclosure({ sponsorName, compact = false }: Props) {
+export default function SponsoredDisclosure({ compact = false }: Props) {
   const { theme } = useTheme();
   const badgeClassName = `${styles.badge} ${radiusClassNames.control} ${colorClassNames.accentBadge}`;
 
@@ -34,7 +33,7 @@ export default function SponsoredDisclosure({ sponsorName, compact = false }: Pr
   return (
     <aside className={disclosureClassName} aria-label="広告に関する表示">
       <span className={badgeClassName}>PR</span>
-      <span>本記事は、{sponsorName}から依頼を受けて制作した広告です。</span>
+      <span>本記事は、広告主から依頼を受けて制作した広告です。</span>
     </aside>
   );
 }

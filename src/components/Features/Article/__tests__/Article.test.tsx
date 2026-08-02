@@ -25,7 +25,6 @@ describe('ArticleFeature', () => {
   it('shows a clear disclosure for sponsored articles', () => {
     const article = createArticle({
       isSponsored: true,
-      sponsorName: 'Example Sponsor',
       sponsorUrl: 'https://sponsor.example',
     });
 
@@ -33,7 +32,7 @@ describe('ArticleFeature', () => {
 
     expect(screen.getByText('PR')).toBeInTheDocument();
     expect(
-      screen.getByText('本記事は、Example Sponsorから依頼を受けて制作した広告です。'),
+      screen.getByText('本記事は、広告主から依頼を受けて制作した広告です。'),
     ).toBeInTheDocument();
   });
 

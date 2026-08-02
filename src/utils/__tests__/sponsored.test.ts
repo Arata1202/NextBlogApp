@@ -22,23 +22,15 @@ describe('sponsored article utilities', () => {
     expect(mergeSponsoredRel('sponsored')).toBe('sponsored');
   });
 
-  it('requires a sponsor name and valid URL only for sponsored articles', () => {
+  it('requires a valid sponsor URL only for sponsored articles', () => {
     expect(() => assertValidSponsoredArticle(createArticle())).not.toThrow();
-    expect(() =>
-      assertValidSponsoredArticle(
-        createArticle({ isSponsored: true, sponsorUrl: 'https://sponsor.example' }),
-      ),
-    ).toThrow(/sponsorName/);
-    expect(() =>
-      assertValidSponsoredArticle(
-        createArticle({ isSponsored: true, sponsorName: 'Example Sponsor' }),
-      ),
-    ).toThrow(/sponsorUrl/);
+    expect(() => assertValidSponsoredArticle(createArticle({ isSponsored: true }))).toThrow(
+      /sponsorUrl/,
+    );
     expect(() =>
       assertValidSponsoredArticle(
         createArticle({
           isSponsored: true,
-          sponsorName: 'Example Sponsor',
           sponsorUrl: 'https://sponsor.example',
         }),
       ),
@@ -46,12 +38,11 @@ describe('sponsored article utilities', () => {
   });
 
   it('includes sponsored fields in partial microCMS queries', () => {
-    expect(includeSponsoredFields('id,title')).toBe('id,title,isSponsored,sponsorName,sponsorUrl');
+    expect(includeSponsoredFields('id,title')).toBe('id,title,isSponsored,sponsorUrl');
     expect(includeSponsoredFields(['id', 'title'])).toEqual([
       'id',
       'title',
       'isSponsored',
-      'sponsorName',
       'sponsorUrl',
     ]);
     expect(includeSponsoredFields('')).toBe('');

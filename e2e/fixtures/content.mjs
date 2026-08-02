@@ -112,7 +112,6 @@ const createArticle = (index, baseUrl) => {
       },
     ],
     isSponsored: index === 1,
-    sponsorName: index === 1 ? 'Example Sponsor' : undefined,
     sponsorUrl: index === 1 ? 'https://sponsor.example' : undefined,
     createdAt: publishedAt,
     publishedAt,
