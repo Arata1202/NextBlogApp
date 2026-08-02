@@ -2,7 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import type { Blog } from '@/types/microcms';
 
 const SPONSORED_REL_VALUE = 'sponsored';
-const SPONSORED_FIELDS = ['isSponsored', 'sponsorName', 'sponsorUrl'] as const;
+const SPONSORED_FIELDS = ['isSponsored', 'sponsorUrl'] as const;
 
 const normalizeHostname = (hostname: string) => hostname.toLowerCase().replace(/^www\./, '');
 
@@ -55,10 +55,6 @@ export const applySponsoredRelToHtmlLinks = ($: CheerioAPI, sponsorUrl?: string)
 export const assertValidSponsoredArticle = (article: Blog) => {
   if (!article.isSponsored) {
     return;
-  }
-
-  if (!article.sponsorName?.trim()) {
-    throw new Error(`Sponsored article "${article.title}" requires sponsorName`);
   }
 
   if (!article.sponsorUrl?.trim() || !parseHttpUrl(article.sponsorUrl)) {

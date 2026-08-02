@@ -47,7 +47,7 @@ describe('microcms client helpers', () => {
     await expect(getDetail('article-a', queries)).resolves.toEqual({ id: 'article-a' });
 
     const blogQueries = {
-      fields: 'id,title,isSponsored,sponsorName,sponsorUrl',
+      fields: 'id,title,isSponsored,sponsorUrl',
     };
 
     expect(microcmsSdkMock.client.getAllContents).toHaveBeenCalledWith({
@@ -71,11 +71,10 @@ describe('microcms client helpers', () => {
     microcmsSdkMock.client.getListDetail.mockResolvedValue({
       title: 'Sponsored article',
       isSponsored: true,
-      sponsorName: '',
-      sponsorUrl: 'https://sponsor.example',
+      sponsorUrl: '',
     });
 
-    await expect(getDetail('article-a')).rejects.toThrow(/sponsorName/);
+    await expect(getDetail('article-a')).rejects.toThrow(/sponsorUrl/);
   });
 
   it('delegates category helpers to the categories endpoint', async () => {
