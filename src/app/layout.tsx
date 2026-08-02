@@ -22,6 +22,9 @@ const appWebViewBootstrapScript = [
   'var params=new URLSearchParams(window.location.search);',
   "if(params.get('app')===value){",
   'document.documentElement.dataset.appWebview=value;',
+  "if(window.location.pathname==='/search'&&!((params.get('q')||'').trim())){",
+  'document.documentElement.dataset.appSearchTop=value;',
+  '}',
   '}',
   '}catch(error){}})();',
 ].join('');

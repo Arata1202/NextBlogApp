@@ -77,6 +77,7 @@ describe('fixed app pages', () => {
     ['disclaimer', '@/app/disclaimer/page', 'DisclaimerPage mock'],
     ['copyright', '@/app/copyright/page', 'CopyrightPage mock'],
     ['link', '@/app/link/page', 'LinkPage mock'],
+    ['search', '@/app/search/page', 'SearchPage mock'],
   ] as const)('loads shared sidebar data for the %s page', async (mockName, importPath, label) => {
     const Page = (await import(importPath)).default;
 
@@ -87,22 +88,6 @@ describe('fixed app pages', () => {
     expect(microcmsMock.getAllTagLists).toHaveBeenCalledWith({ fields: 'id,name' });
     expect(archiveMock.getArchiveList).toHaveBeenCalledTimes(1);
     expect(pageMocks[mockName]).toHaveBeenCalledWith({
-      recentArticles,
-      tags,
-      archiveList,
-    });
-  });
-
-  it('loads shared sidebar data for the search page', async () => {
-    const Page = (await import('@/app/search/page')).default;
-
-    render(await Page({ searchParams: Promise.resolve({}) }));
-
-    expect(screen.getByText('SearchPage mock')).toBeInTheDocument();
-    expect(recentMock.getMixedRecentArticles).toHaveBeenCalledTimes(1);
-    expect(microcmsMock.getAllTagLists).toHaveBeenCalledWith({ fields: 'id,name' });
-    expect(archiveMock.getArchiveList).toHaveBeenCalledTimes(1);
-    expect(pageMocks.search).toHaveBeenCalledWith({
       recentArticles,
       tags,
       archiveList,

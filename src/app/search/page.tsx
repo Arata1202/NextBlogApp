@@ -4,68 +4,42 @@ import PageHeading from '@/components/Common/PageHeading';
 import ArticleList from '@/components/Common/ArticleList';
 import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import { getSidebarData } from '@/libs/pageData';
+import styles from './page.module.css';
 
 export const revalidate = 60;
 
-type SearchParams = {
-  app?: string | string[];
-  q?: string | string[];
-};
-
-type Props = {
-  searchParams: Promise<SearchParams>;
-};
-
-type SearchPageShellProps = Awaited<ReturnType<typeof getSearchPageData>> & {
-  showAppSearchIndex: boolean;
-};
+type SearchPageShellProps = Awaited<ReturnType<typeof getSearchPageData>>;
 
 async function getSearchPageData() {
   return getSidebarData();
 }
 
-function getFirstSearchParam(value: string | string[] | undefined) {
-  return Array.isArray(value) ? (value[0] ?? '') : (value ?? '');
-}
-
-function SearchPageShell({
-  recentArticles,
-  tags,
-  archiveList,
-  showAppSearchIndex,
-}: SearchPageShellProps) {
-  if (showAppSearchIndex) {
-    return <AppSearchIndex tags={tags} archiveList={archiveList} />;
-  }
-
+function SearchPageShell({ recentArticles, tags, archiveList }: SearchPageShellProps) {
   return (
     <>
-      <PageHeading page={{ type: 'search' }} isLoading />
-      <ArticleList
-        articles={[]}
-        recentArticles={recentArticles}
-        tags={tags}
-        archiveList={archiveList}
-        isLoading
-      />
-      <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
+      <div className={styles.appSearchIndexFallback} data-app-search-index-fallback>
+        <AppSearchIndex tags={tags} archiveList={archiveList} />
+      </div>
+      <div className={styles.loadingFallback} data-search-loading-fallback>
+        <PageHeading page={{ type: 'search' }} isLoading />
+        <ArticleList
+          articles={[]}
+          recentArticles={recentArticles}
+          tags={tags}
+          archiveList={archiveList}
+          isLoading
+        />
+        <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
+      </div>
     </>
   );
 }
 
-export default async function Page({ searchParams }: Props) {
-  const [searchPageData, resolvedSearchParams] = await Promise.all([
-    getSearchPageData(),
-    searchParams,
-  ]);
-  const showAppSearchIndex =
-    getFirstSearchParam(resolvedSearchParams.app) === '1' &&
-    getFirstSearchParam(resolvedSearchParams.q).trim() === '';
+export default async function Page() {
+  const searchPageData = await getSearchPageData();
 
   return (
-    <Suspense
-      fallback={<SearchPageShell {...searchPageData} showAppSearchIndex={showAppSearchIndex} />}
-    >
+    <Suspense fallback={<SearchPageShell {...searchPageData} />}>
       <SearchPage {...searchPageData} />
     </Suspense>
   );

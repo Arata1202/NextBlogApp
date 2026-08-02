@@ -1,0 +1,11 @@
+.appSearchIndexFallback {
+  display: none;
+}
+
+:global(html[data-app-search-top='1']) .loadingFallback {
+  display: none;
+}
+
+:global(html[data-app-search-top='1']) .appSearchIndexFallback {
+  display: block;
+}
