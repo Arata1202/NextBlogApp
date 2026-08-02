@@ -42,17 +42,18 @@ export default function UnifiedArticleCard({ article, priority = false }: Props)
           <WebpImage article={article} card={true} priority={priority} />
         )}
         {article.source !== 'blog' && article.thumbnailUrl && (
-          <img
-            className={styles.image}
-            src={article.thumbnailUrl}
-            alt=""
-            width={1200}
-            height={630}
-            loading="lazy"
-            decoding="async"
-            fetchPriority={priority ? 'high' : undefined}
-            style={{ alignSelf: 'flex-start' }}
-          />
+          <span className={styles.imageFrame}>
+            <img
+              className={styles.image}
+              src={article.thumbnailUrl}
+              alt=""
+              width={1200}
+              height={630}
+              loading={priority ? 'eager' : 'lazy'}
+              decoding="async"
+              fetchPriority={priority ? 'high' : undefined}
+            />
+          </span>
         )}
         <div className={styles.content}>
           {article.isSponsored && <SponsoredDisclosure compact />}

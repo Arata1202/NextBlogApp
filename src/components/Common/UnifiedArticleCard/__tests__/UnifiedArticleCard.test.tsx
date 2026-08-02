@@ -40,6 +40,7 @@ describe('UnifiedArticleCard', () => {
     expect(image).toHaveAttribute('src', 'https://example.com/zenn.png');
     expect(image).toHaveAttribute('width', '1200');
     expect(image).toHaveAttribute('height', '630');
+    expect(image?.parentElement?.tagName).toBe('SPAN');
   });
 
   it('renders the updated date only when it is a later day than publishedAt', () => {
