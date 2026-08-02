@@ -6,8 +6,11 @@
 }
 
 .cardPicture {
-  max-width: 300px;
+  width: 300px;
+  aspect-ratio: 300 / 158;
   flex-shrink: 0;
+  overflow: hidden;
+  background-color: rgba(156, 163, 175, 0.18);
 }
 
 .recentPicture {
@@ -17,9 +20,10 @@
 .image {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 300px;
   min-width: 0;
+  object-fit: cover;
 }
 
 .recent {
@@ -39,33 +43,30 @@
 
 @media (max-width: 1023px) and (min-width: 641px) {
   .cardPicture {
-    max-width: 300px;
+    width: 300px;
   }
 
   .image {
-    height: auto;
     max-width: 300px;
   }
 }
 
 @media (max-width: 1081px) and (min-width: 1023px) {
   .cardPicture {
-    max-width: 250px;
+    width: 250px;
   }
 
   .image {
-    height: auto;
     max-width: 250px;
   }
 }
 
 @media (max-width: 717px) and (min-width: 641px) {
   .cardPicture {
-    max-width: 200px;
+    width: 200px;
   }
 
   .image {
-    height: auto;
     max-width: 200px;
   }
 }
@@ -73,14 +74,12 @@
 @media (max-width: 640px) {
   .cardPicture {
     width: 100%;
-    max-width: 100%;
+    margin-bottom: 1rem;
   }
 
   .image {
     width: 100%;
     max-width: 100%;
-    height: auto;
-    margin-bottom: 1rem;
   }
 
   .thumbnail {
