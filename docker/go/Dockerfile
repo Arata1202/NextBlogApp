@@ -8,7 +8,10 @@ RUN go install github.com/air-verse/air@${AIR_VERSION}
 COPY ./go.mod ./go.sum ./
 RUN go mod download
 
-COPY . .
+COPY ./.air.toml ./
+COPY ./api/ ./api/
+COPY ./cmd/ ./cmd/
+COPY ./pkg/ ./pkg/
 
 EXPOSE 8000
 
