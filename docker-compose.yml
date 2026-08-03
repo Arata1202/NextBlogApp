@@ -3,7 +3,7 @@ services:
     container_name: js
     build:
       context: .
-      dockerfile: ./.docker/js/Dockerfile
+      dockerfile: ./docker/js/Dockerfile
     volumes:
       - './:/var/www/html/js'
       - '/var/www/html/js/node_modules'
@@ -18,7 +18,7 @@ services:
     container_name: go
     build:
       context: .
-      dockerfile: ./.docker/go/Dockerfile
+      dockerfile: ./docker/go/Dockerfile
     volumes:
       - './:/app'
     working_dir: '/app'
