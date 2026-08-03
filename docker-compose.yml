@@ -1,6 +1,5 @@
 services:
   js:
-    container_name: js
     build:
       context: .
       dockerfile: ./docker/js/Dockerfile
@@ -15,7 +14,6 @@ services:
       - network
 
   go:
-    container_name: go
     build:
       context: .
       dockerfile: ./docker/go/Dockerfile
