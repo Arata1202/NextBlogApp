@@ -1,0 +1,165 @@
+{
+  "$schema": "./docs/design-tokens.schema.json",
+  "meta": {
+    "name": "NextBlogApp Design Tokens",
+    "version": 1,
+    "sourceOfTruth": true
+  },
+  "primitive": {
+    "color": {
+      "white": "#ffffff",
+      "neutral-25": "#f9fafb",
+      "neutral-50": "#f3f3f3",
+      "neutral-100": "#eeeeee",
+      "neutral-200": "#dddddd",
+      "neutral-250": "#d1d5db",
+      "neutral-300": "#cccccc",
+      "neutral-400": "#9ca3af",
+      "neutral-450": "#999999",
+      "neutral-500": "#6b7280",
+      "neutral-600": "#4b5563",
+      "neutral-700": "#374151",
+      "neutral-750": "#333333",
+      "neutral-800": "#262626",
+      "neutral-900": "#111827",
+      "blue-200": "#bfdbfe",
+      "blue-50": "#eaf4fc",
+      "blue-300": "#93c5fd",
+      "blue-400": "#60a5fa",
+      "blue-500": "#3b82f6",
+      "blue-600": "#2563eb",
+      "blue-700": "#1d4ed8",
+      "blue-800": "#1e40af",
+      "green-600": "#16a34a",
+      "green-50": "#ecffe9",
+      "green-500": "#00d084",
+      "red-50": "#ffecec",
+      "red-400": "#ff7f7f",
+      "red-600": "#dc2626",
+      "yellow-50": "#fffacd",
+      "yellow-400": "#ffd700",
+      "steel-600": "#4682b4",
+      "code-surface": "#0d1117",
+      "code-text": "#c9d1d9"
+    },
+    "space": {
+      "0": 0,
+      "1": 4,
+      "2": 8,
+      "3": 12,
+      "4": 16,
+      "5": 20,
+      "6": 24,
+      "8": 32,
+      "12": 48
+    },
+    "radius": {
+      "none": 0,
+      "sm": 4,
+      "md": 6,
+      "lg": 8,
+      "full": 9999
+    }
+  },
+  "semantic": {
+    "color": {
+      "light": {
+        "text-primary": "{primitive.color.neutral-750}",
+        "text-secondary": "{primitive.color.neutral-600}",
+        "text-subtle": "{primitive.color.neutral-500}",
+        "text-inverse": "{primitive.color.white}",
+        "surface-page": "{primitive.color.white}",
+        "surface-subtle": "{primitive.color.neutral-50}",
+        "surface-selected": "{primitive.color.neutral-250}",
+        "border-default": "{primitive.color.neutral-200}",
+        "border-strong": "{primitive.color.neutral-250}",
+        "accent-default": "{primitive.color.blue-600}",
+        "accent-hover": "{primitive.color.blue-700}",
+        "link-default": "{primitive.color.blue-700}",
+        "link-hover": "{primitive.color.blue-800}",
+        "focus-ring": "{primitive.color.blue-600}",
+        "status-success": "{primitive.color.green-600}",
+        "status-danger": "{primitive.color.red-600}",
+        "code-surface": "{primitive.color.code-surface}",
+        "code-text": "{primitive.color.code-text}"
+      },
+      "dark": {
+        "text-primary": "{primitive.color.white}",
+        "text-secondary": "{primitive.color.neutral-250}",
+        "text-subtle": "{primitive.color.neutral-400}",
+        "text-inverse": "{primitive.color.neutral-900}",
+        "surface-page": "{primitive.color.neutral-800}",
+        "surface-subtle": "{primitive.color.neutral-700}",
+        "surface-selected": "{primitive.color.neutral-500}",
+        "border-default": "{primitive.color.neutral-500}",
+        "border-strong": "{primitive.color.neutral-400}",
+        "accent-default": "{primitive.color.blue-400}",
+        "accent-hover": "{primitive.color.blue-300}",
+        "link-default": "{primitive.color.blue-300}",
+        "link-hover": "{primitive.color.blue-200}",
+        "focus-ring": "{primitive.color.blue-400}",
+        "status-success": "{primitive.color.green-600}",
+        "status-danger": "{primitive.color.red-600}",
+        "code-surface": "{primitive.color.code-surface}",
+        "code-text": "{primitive.color.code-text}"
+      }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "sans": "Geist",
+      "mono": "ui-monospace"
+    },
+    "style": {
+      "display": { "fontSize": 32, "lineHeight": 42, "fontWeight": 700 },
+      "heading": { "fontSize": 24, "lineHeight": 34, "fontWeight": 700 },
+      "subheading": { "fontSize": 20, "lineHeight": 30, "fontWeight": 600 },
+      "body-large": { "fontSize": 18, "lineHeight": 32, "fontWeight": 400 },
+      "body": { "fontSize": 16, "lineHeight": 28, "fontWeight": 400 },
+      "label": { "fontSize": 14, "lineHeight": 20, "fontWeight": 600 },
+      "caption": { "fontSize": 12, "lineHeight": 18, "fontWeight": 400 }
+    }
+  },
+  "effect": {
+    "shadow": {
+      "control": { "x": 0, "y": 1, "blur": 2, "spread": 0, "color": "#000000", "opacity": 0.08 },
+      "card": { "x": 0, "y": 10, "blur": 15, "spread": -3, "color": "#000000", "opacity": 0.12 },
+      "card-hover": {
+        "x": 0,
+        "y": 20,
+        "blur": 25,
+        "spread": -5,
+        "color": "#000000",
+        "opacity": 0.14
+      },
+      "dialog": { "x": 0, "y": 20, "blur": 25, "spread": -5, "color": "#000000", "opacity": 0.18 }
+    }
+  },
+  "motion": {
+    "duration": { "fast": 150, "normal": 200 },
+    "easing": { "standard": "ease" }
+  },
+  "component": {
+    "focusRing": { "width": 2, "offset": 2 },
+    "control": { "radius": "{primitive.radius.sm}" },
+    "dialog": { "radius": "{primitive.radius.lg}" },
+    "callout": {
+      "merit": {
+        "surface": "{primitive.color.green-50}",
+        "accent": "{primitive.color.green-500}"
+      },
+      "demerit": {
+        "surface": "{primitive.color.red-50}",
+        "accent": "{primitive.color.red-400}"
+      },
+      "point": {
+        "surface": "{primitive.color.yellow-50}",
+        "accent": "{primitive.color.yellow-400}"
+      },
+      "common": {
+        "surface": "{primitive.color.blue-50}",
+        "accent": "{primitive.color.steel-600}"
+      }
+    }
+  }
+}

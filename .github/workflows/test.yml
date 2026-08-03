@@ -26,6 +26,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Lint
         run: pnpm lint
+      - name: Verify generated design tokens
+        run: pnpm tokens:check
       - name: Typecheck
         run: pnpm typecheck
       - name: Test

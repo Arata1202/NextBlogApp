@@ -2,6 +2,7 @@
 layer(base);
 
 @import 'tailwindcss';
+@import './design-tokens.generated.css';
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
@@ -21,17 +22,17 @@ layer(base);
   }
 
   .LightTheme {
-    background-color: white;
-    color: rgb(55 65 81);
-    border-color: rgb(209 213 219);
-    --tw-ring-color: rgb(209 213 219);
+    background-color: var(--ds-color-surface-page);
+    color: var(--ds-color-text-primary);
+    border-color: var(--ds-color-border-strong);
+    --tw-ring-color: var(--ds-color-border-strong);
   }
 
   .DarkTheme {
-    background-color: #262626;
-    color: white;
-    border-color: rgb(107 114 128);
-    --tw-ring-color: rgb(107 114 128);
+    background-color: var(--ds-color-surface-page);
+    color: var(--ds-color-text-primary);
+    border-color: var(--ds-color-border-default);
+    --tw-ring-color: var(--ds-color-border-default);
   }
 
   .iframely-embed {
@@ -59,26 +60,6 @@ layer(base);
       ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
       'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New',
       monospace;
-    --color-text-main: #333;
-    --color-text-sub: #999;
-    --color-bg-main: #fff;
-    --color-bg-sub: #f3f3f3;
-    --color-bg-code: #0d1117;
-    --color-text-code: #c9d1d9;
-    --color-border-dark: #ccc;
-    --color-border: #ddd;
-    --color-border-light: #f3f3f3;
-    --color-current: #eee;
-    --color-focus-ring: #2563eb;
-    --color-accent-soft-bg: #eaf4fc;
-    --color-accent-soft-text: #111827;
-    --color-link: #1d4ed8;
-    --color-link-hover: #1e40af;
-    --color-link-dark: #93c5fd;
-    --color-link-dark-hover: #bfdbfe;
-    --border-radius: 4px;
-    --focus-ring-width: 2px;
-    --focus-ring-offset: 2px;
   }
 
   * {
@@ -94,7 +75,7 @@ layer(base);
   }
 
   body {
-    font-family: 'Geist', sans-serif;
+    font-family: var(--ds-font-family-sans);
     color: var(--color-text-main);
     line-height: 1.8;
   }
