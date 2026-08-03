@@ -4,14 +4,168 @@
   "type": "object",
   "required": ["meta", "primitive", "semantic", "typography", "effect", "motion", "component"],
   "additionalProperties": false,
+  "$defs": {
+    "hexColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+    "reference": { "type": "string", "pattern": "^\\{[a-zA-Z0-9._-]+\\}$" },
+    "colorValue": { "oneOf": [{ "$ref": "#/$defs/hexColor" }, { "$ref": "#/$defs/reference" }] },
+    "nonNegativeNumber": { "type": "number", "minimum": 0 },
+    "tokenMap": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }
+    },
+    "semanticColors": {
+      "allOf": [
+        { "$ref": "#/$defs/tokenMap" },
+        { "additionalProperties": { "$ref": "#/$defs/colorValue" } }
+      ]
+    },
+    "typographyStyle": {
+      "type": "object",
+      "required": ["fontSize", "lineHeight", "fontWeight"],
+      "additionalProperties": false,
+      "properties": {
+        "fontSize": { "$ref": "#/$defs/nonNegativeNumber" },
+        "lineHeight": { "$ref": "#/$defs/nonNegativeNumber" },
+        "fontWeight": { "type": "integer", "enum": [400, 500, 600, 700] }
+      }
+    },
+    "shadow": {
+      "type": "object",
+      "required": ["x", "y", "blur", "spread", "color", "opacity"],
+      "additionalProperties": false,
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "blur": { "$ref": "#/$defs/nonNegativeNumber" },
+        "spread": { "type": "number" },
+        "color": { "$ref": "#/$defs/hexColor" },
+        "opacity": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  },
   "properties": {
     "$schema": { "type": "string" },
-    "meta": { "type": "object" },
-    "primitive": { "type": "object" },
-    "semantic": { "type": "object" },
-    "typography": { "type": "object" },
-    "effect": { "type": "object" },
-    "motion": { "type": "object" },
-    "component": { "type": "object" }
+    "meta": {
+      "type": "object",
+      "required": ["name", "version", "sourceOfTruth"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "integer", "minimum": 1 },
+        "sourceOfTruth": { "const": true }
+      }
+    },
+    "primitive": {
+      "type": "object",
+      "required": ["color", "space", "radius"],
+      "additionalProperties": false,
+      "properties": {
+        "color": {
+          "allOf": [
+            { "$ref": "#/$defs/tokenMap" },
+            { "additionalProperties": { "$ref": "#/$defs/hexColor" } }
+          ]
+        },
+        "space": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/nonNegativeNumber" }
+        },
+        "radius": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/nonNegativeNumber" }
+        }
+      }
+    },
+    "semantic": {
+      "type": "object",
+      "required": ["color"],
+      "additionalProperties": false,
+      "properties": {
+        "color": {
+          "type": "object",
+          "required": ["light", "dark"],
+          "additionalProperties": false,
+          "properties": {
+            "light": { "$ref": "#/$defs/semanticColors" },
+            "dark": { "$ref": "#/$defs/semanticColors" }
+          }
+        }
+      }
+    },
+    "typography": {
+      "type": "object",
+      "required": ["fontFamily", "style"],
+      "additionalProperties": false,
+      "properties": {
+        "fontFamily": {
+          "type": "object",
+          "required": ["sans", "mono"],
+          "additionalProperties": false,
+          "properties": { "sans": { "type": "string" }, "mono": { "type": "string" } }
+        },
+        "style": { "type": "object", "additionalProperties": { "$ref": "#/$defs/typographyStyle" } }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "required": ["shadow"],
+      "additionalProperties": false,
+      "properties": {
+        "shadow": { "type": "object", "additionalProperties": { "$ref": "#/$defs/shadow" } }
+      }
+    },
+    "motion": {
+      "type": "object",
+      "required": ["duration", "easing"],
+      "additionalProperties": false,
+      "properties": {
+        "duration": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/nonNegativeNumber" }
+        },
+        "easing": { "type": "object", "additionalProperties": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "component": {
+      "type": "object",
+      "required": ["focusRing", "control", "dialog", "callout"],
+      "additionalProperties": false,
+      "properties": {
+        "focusRing": {
+          "type": "object",
+          "required": ["width", "offset"],
+          "additionalProperties": false,
+          "properties": {
+            "width": { "$ref": "#/$defs/nonNegativeNumber" },
+            "offset": { "$ref": "#/$defs/nonNegativeNumber" }
+          }
+        },
+        "control": {
+          "type": "object",
+          "required": ["radius"],
+          "additionalProperties": false,
+          "properties": { "radius": { "$ref": "#/$defs/reference" } }
+        },
+        "dialog": {
+          "type": "object",
+          "required": ["radius"],
+          "additionalProperties": false,
+          "properties": { "radius": { "$ref": "#/$defs/reference" } }
+        },
+        "callout": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["surface", "accent"],
+            "additionalProperties": false,
+            "properties": {
+              "surface": { "$ref": "#/$defs/colorValue" },
+              "accent": { "$ref": "#/$defs/colorValue" }
+            }
+          }
+        }
+      }
+    }
   }
 }

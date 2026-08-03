@@ -24,70 +24,70 @@ export const getThemeVariantClassName = (
 };
 
 export const transitionClassNames = {
-  color: 'transition-colors duration-150',
-  shadow: 'transition-shadow duration-200',
-  transform: 'transition-transform duration-200',
+  color: 'ds-transition-colors',
+  shadow: 'ds-transition-shadow',
+  transform: 'ds-transition-transform',
 } as const;
 
 export const radiusClassNames = {
-  control: 'rounded-md',
-  dialog: 'rounded-lg',
-  round: 'rounded-full',
+  control: 'ds-radius-control',
+  dialog: 'ds-radius-dialog',
+  round: 'ds-radius-round',
 } as const;
 
 export const shadowClassNames = {
-  control: 'shadow-xs',
-  card: 'shadow-lg hover:shadow-xl',
-  dialog: 'shadow-xl',
+  control: 'ds-shadow-control',
+  card: 'ds-shadow-card',
+  dialog: 'ds-shadow-dialog',
 } as const;
 
 export const colorClassNames = {
-  accentBadge: 'bg-blue-600 text-white',
-  accentText: 'text-blue-600',
-  accentHoverText: 'hover:text-blue-600',
-  accentBorderHover: 'hover:border-blue-600',
-  dangerText: 'text-red-600',
-  mutedText: 'text-gray-500',
-  placeholderMutedText: 'placeholder:text-gray-500',
-  primaryButton: 'bg-blue-600 hover:bg-blue-700 text-white',
-  subtleText: 'text-gray-400',
-  successText: 'text-green-600',
-  textLink: 'text-blue-700 hover:text-blue-800',
-  darkTextLink: 'text-blue-300 hover:text-blue-200',
+  accentBadge: 'ds-bg-accent ds-text-inverse',
+  accentText: 'ds-text-accent',
+  accentHoverText: 'ds-hover-text-accent',
+  accentBorderHover: 'ds-hover-border-accent',
+  dangerText: 'ds-text-danger',
+  mutedText: 'ds-text-secondary',
+  placeholderMutedText: 'ds-placeholder-secondary',
+  primaryButton: 'ds-primary-button',
+  subtleText: 'ds-text-subtle',
+  successText: 'ds-text-success',
+  textLink: 'ds-text-link',
+  darkTextLink: 'ds-text-link',
 } as const;
 
 export const themeVariantClassNames = {
   activeAccentText: {
-    light: 'text-blue-600!',
-    dark: 'text-blue-400!',
+    light: 'ds-active-accent',
+    dark: 'ds-active-accent',
   },
   borderedText: {
-    light: 'border-gray-300 text-gray-700',
-    dark: 'border-gray-500 text-white',
+    light: 'ds-bordered-text',
+    dark: 'ds-bordered-text',
   },
   controlHoverSurface: {
-    light: 'hover:bg-gray-50',
-    dark: 'hover:bg-gray-500',
+    light: 'ds-hover-surface-subtle',
+    dark: 'ds-hover-surface-subtle',
   },
   mutedText: {
-    light: 'text-gray-500',
-    dark: 'text-gray-300',
+    light: 'ds-text-secondary',
+    dark: 'ds-text-secondary',
   },
   selectedSurface: {
-    light: 'bg-gray-300 text-gray-700',
-    dark: 'bg-gray-500 text-white',
+    light: 'ds-selected-surface',
+    dark: 'ds-selected-surface',
   },
   subtleSurface: {
-    light: 'bg-gray-50',
-    dark: 'bg-gray-700',
+    light: 'ds-surface-subtle',
+    dark: 'ds-surface-subtle',
   },
   subtleIcon: {
-    light: 'text-gray-300',
-    dark: 'text-gray-500',
+    light: 'ds-text-subtle',
+    dark: 'ds-text-subtle',
   },
   subtleRing: {
-    light: 'ring-gray-300/5',
-    dark: 'ring-gray-500/5',
+    light: 'ds-ring-subtle',
+    dark: 'ds-ring-subtle',
   },
 } as const satisfies Record<string, ThemeVariantClassNames>;
 

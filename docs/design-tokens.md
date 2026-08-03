@@ -26,7 +26,9 @@ Generated files must not be edited directly:
 - `src/styles/design-tokens.generated.css`
 - the leading `tokens` block in `figma/main.js`
 
-The Figma plugin updates local paint, text and effect styles with stable names. It replaces the existing token specimen frame instead of creating duplicates. Running the plugin remains a manual step because unattended Variables REST API synchronization requires an Enterprise plan.
+The Figma plugin reconciles the local paint, text and effect styles it owns: current styles are updated, removed tokens are deleted, and the specimen frame is replaced instead of duplicated. Legacy `Color/*` styles created by the previous plugin format are removed during migration. Running the plugin remains a manual step because unattended Variables REST API synchronization requires an Enterprise plan.
+
+Semantic text colors intended for normal-size copy must meet WCAG AA contrast against their paired surface. Decorative and disabled states should use separate component tokens rather than weakening shared text roles.
 
 ## Naming rules
 

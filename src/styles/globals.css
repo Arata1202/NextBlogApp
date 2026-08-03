@@ -22,17 +22,17 @@ layer(base);
   }
 
   .LightTheme {
-    background-color: white;
-    color: rgb(55 65 81);
-    border-color: rgb(209 213 219);
-    --tw-ring-color: rgb(209 213 219);
+    background-color: var(--ds-color-surface-page);
+    color: var(--ds-color-text-primary);
+    border-color: var(--ds-color-border-strong);
+    --tw-ring-color: var(--ds-color-border-strong);
   }
 
   .DarkTheme {
-    background-color: #262626;
-    color: white;
-    border-color: rgb(107 114 128);
-    --tw-ring-color: rgb(107 114 128);
+    background-color: var(--ds-color-surface-page);
+    color: var(--ds-color-text-primary);
+    border-color: var(--ds-color-border-default);
+    --tw-ring-color: var(--ds-color-border-default);
   }
 
   .iframely-embed {

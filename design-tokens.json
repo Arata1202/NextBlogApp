@@ -65,8 +65,8 @@
     "color": {
       "light": {
         "text-primary": "{primitive.color.neutral-750}",
-        "text-secondary": "{primitive.color.neutral-450}",
-        "text-subtle": "{primitive.color.neutral-400}",
+        "text-secondary": "{primitive.color.neutral-600}",
+        "text-subtle": "{primitive.color.neutral-500}",
         "text-inverse": "{primitive.color.white}",
         "surface-page": "{primitive.color.white}",
         "surface-subtle": "{primitive.color.neutral-50}",
@@ -86,7 +86,7 @@
       "dark": {
         "text-primary": "{primitive.color.white}",
         "text-secondary": "{primitive.color.neutral-250}",
-        "text-subtle": "{primitive.color.neutral-500}",
+        "text-subtle": "{primitive.color.neutral-400}",
         "text-inverse": "{primitive.color.neutral-900}",
         "surface-page": "{primitive.color.neutral-800}",
         "surface-subtle": "{primitive.color.neutral-700}",
@@ -124,6 +124,14 @@
     "shadow": {
       "control": { "x": 0, "y": 1, "blur": 2, "spread": 0, "color": "#000000", "opacity": 0.08 },
       "card": { "x": 0, "y": 10, "blur": 15, "spread": -3, "color": "#000000", "opacity": 0.12 },
+      "card-hover": {
+        "x": 0,
+        "y": 20,
+        "blur": 25,
+        "spread": -5,
+        "color": "#000000",
+        "opacity": 0.14
+      },
       "dialog": { "x": 0, "y": 20, "blur": 25, "spread": -5, "color": "#000000", "opacity": 0.18 }
     }
   },

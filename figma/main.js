@@ -38,8 +38,8 @@ const tokens = {
   "semanticColors": {
     "light": {
       "text-primary": "#333333",
-      "text-secondary": "#999999",
-      "text-subtle": "#9ca3af",
+      "text-secondary": "#4b5563",
+      "text-subtle": "#6b7280",
       "text-inverse": "#ffffff",
       "surface-page": "#ffffff",
       "surface-subtle": "#f3f3f3",
@@ -59,7 +59,7 @@ const tokens = {
     "dark": {
       "text-primary": "#ffffff",
       "text-secondary": "#d1d5db",
-      "text-subtle": "#6b7280",
+      "text-subtle": "#9ca3af",
       "text-inverse": "#111827",
       "surface-page": "#262626",
       "surface-subtle": "#374151",
@@ -107,7 +107,7 @@ const tokens = {
   },
   "colors": {
     "textMain": "#333333",
-    "textSub": "#999999",
+    "textSub": "#4b5563",
     "surfaceLight": "#ffffff",
     "surfaceDark": "#262626",
     "surfaceSubtle": "#f3f3f3",
@@ -190,6 +190,14 @@ const tokens = {
       "color": "#000000",
       "opacity": 0.12
     },
+    "card-hover": {
+      "x": 0,
+      "y": 20,
+      "blur": 25,
+      "spread": -5,
+      "color": "#000000",
+      "opacity": 0.14
+    },
     "dialog": {
       "x": 0,
       "y": 20,
@@ -260,6 +268,14 @@ function localStyle(styles, name) {
   return null;
 }
 
+function removeStaleStyles(styles, expectedNames, prefix) {
+  for (const style of styles) {
+    if (style.name.startsWith(prefix) && !expectedNames.has(style.name)) {
+      style.remove();
+    }
+  }
+}
+
 function section(name, width) {
   if (width === undefined) {
     width = 720;
@@ -308,7 +324,7 @@ function fontStyle(weight) {
 }
 
 function tokenLabel(name, value) {
-  const label = textNode(name + '\n' + value, tokens.typography.small);
+  const label = textNode(name + '\n' + value, tokens.typography.caption);
   label.resize(260, 48);
   return label;
 }
@@ -438,6 +454,7 @@ async function createTextStyles() {
       ? await figma.getLocalTextStylesAsync()
       : [];
 
+  const expectedNames = new Set();
   for (const name in tokens.typography) {
     if (!hasOwn(tokens.typography, name)) {
       continue;
@@ -445,6 +462,7 @@ async function createTextStyles() {
 
     const typography = tokens.typography[name];
     const styleName = 'Typography/' + name;
+    expectedNames.add(styleName);
     const existing = localStyle(styles, styleName);
     const style = existing || figma.createTextStyle();
     style.name = styleName;
@@ -452,6 +470,7 @@ async function createTextStyles() {
     style.fontSize = typography.fontSize;
     style.lineHeight = { unit: 'PIXELS', value: typography.lineHeight };
   }
+  removeStaleStyles(styles, expectedNames, 'Typography/');
 }
 
 async function createPaintStyles() {
@@ -460,21 +479,12 @@ async function createPaintStyles() {
       ? await figma.getLocalPaintStylesAsync()
       : [];
 
-  for (const name in tokens.colors) {
-    if (!hasOwn(tokens.colors, name)) {
-      continue;
-    }
-
-    const styleName = 'Color/' + name;
-    const existing = localStyle(styles, styleName);
-    const style = existing || figma.createPaintStyle();
-    style.name = styleName;
-    style.paints = [paint(tokens.colors[name])];
-  }
+  const expectedNames = new Set();
 
   for (const name in tokens.primitiveColors) {
     if (!hasOwn(tokens.primitiveColors, name)) continue;
     const styleName = 'Color/Primitive/' + name;
+    expectedNames.add(styleName);
     const existing = localStyle(styles, styleName);
     const style = existing || figma.createPaintStyle();
     style.name = styleName;
@@ -486,6 +496,7 @@ async function createPaintStyles() {
     for (const name in tokens.semanticColors[mode]) {
       if (!hasOwn(tokens.semanticColors[mode], name)) continue;
       const styleName = 'Color/Semantic/' + mode + '/' + name;
+      expectedNames.add(styleName);
       const existing = localStyle(styles, styleName);
       const style = existing || figma.createPaintStyle();
       style.name = styleName;
@@ -496,10 +507,19 @@ async function createPaintStyles() {
   for (const name in tokens.componentColors) {
     if (!hasOwn(tokens.componentColors, name)) continue;
     const styleName = 'Color/Component/' + name;
+    expectedNames.add(styleName);
     const existing = localStyle(styles, styleName);
     const style = existing || figma.createPaintStyle();
     style.name = styleName;
     style.paints = [paint(tokens.componentColors[name])];
+  }
+  removeStaleStyles(styles, expectedNames, 'Color/Primitive/');
+  removeStaleStyles(styles, expectedNames, 'Color/Semantic/');
+  removeStaleStyles(styles, expectedNames, 'Color/Component/');
+
+  const legacyNames = new Set(Object.keys(tokens.colors).map((name) => 'Color/' + name));
+  for (const style of styles) {
+    if (legacyNames.has(style.name)) style.remove();
   }
 }
 
@@ -509,17 +529,20 @@ async function createEffectStyles() {
       ? await figma.getLocalEffectStylesAsync()
       : [];
 
+  const expectedNames = new Set();
   for (const name in tokens.shadow) {
     if (!hasOwn(tokens.shadow, name)) {
       continue;
     }
 
     const styleName = 'Shadow/' + name;
+    expectedNames.add(styleName);
     const existing = localStyle(styles, styleName);
     const style = existing || figma.createEffectStyle();
     style.name = styleName;
     style.effects = [effect(tokens.shadow[name])];
   }
+  removeStaleStyles(styles, expectedNames, 'Shadow/');
 }
 
 function appendColorTokens(root) {
@@ -672,11 +695,7 @@ async function main() {
 
   root.appendChild(textNode('NextBlogApp Design Tokens', tokens.typography.display));
   root.appendChild(
-    textNode(
-      'Generated from src/styles/designTokens.ts conventions.',
-      tokens.typography.body,
-      tokens.colors.textSub,
-    ),
+    textNode('Generated from design-tokens.json.', tokens.typography.body, tokens.colors.textSub),
   );
 
   appendColorTokens(root);

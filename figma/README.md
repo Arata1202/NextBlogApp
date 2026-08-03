@@ -15,4 +15,4 @@ The source of truth is `../design-tokens.json`. Do not edit the generated `token
 3. `figma/manifest.json` を選択します。
 4. `プラグイン` → `開発` → `NextBlogApp Design Tokens` を実行します。
 
-同名のローカルスタイルは更新され、既存のトークン一覧フレームは置き換えられます。
+同名のローカルスタイルは更新され、削除済みトークンの管理対象スタイルは整理されます。既存のトークン一覧フレームも置き換えられます。
