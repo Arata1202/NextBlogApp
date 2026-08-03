@@ -26,8 +26,8 @@ updates:
           - '*'
   - package-ecosystem: 'docker'
     directories:
-      - '/.docker/js'
-      - '/.docker/go'
+      - '/docker/js'
+      - '/docker/go'
     schedule:
       interval: 'monthly'
     groups:

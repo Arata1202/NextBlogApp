@@ -7,7 +7,7 @@
 
 </div>
 
-![2](/.docs/readme/images/title.png)
+![2](/docs/assets/readme/images/title.png)
 
 ## 目次
 
@@ -209,15 +209,7 @@ pnpm test:e2e:report
 ❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts|tmp|coverage|tsconfig.tsbuildinfo|playwright-report|test-results|.pnpm-store|.terraform|terraform.tfstate|terraform.tfstate.backup|terraform.tfvars" -L 3
 .
 ├── .air.toml
-├── .docker
-│   ├── go
-│   │   └── Dockerfile
-│   └── js
-│       └── Dockerfile
 ├── .dockerignore
-├── .docs
-│   └── readme
-│       └── images
 ├── .env.example
 ├── .github
 │   ├── dependabot.yml
@@ -247,6 +239,14 @@ pnpm test:e2e:report
 ├── cmd
 │   └── main.go
 ├── docker-compose.yml
+├── docker
+│   ├── go
+│   │   └── Dockerfile
+│   └── js
+│       └── Dockerfile
+├── docs
+│   └── assets
+│       └── readme
 ├── e2e
 │   ├── contact.spec.ts
 │   ├── feeds.spec.ts

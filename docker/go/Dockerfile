@@ -2,7 +2,8 @@ FROM golang:1.26.3-alpine
 
 WORKDIR /app
 
-RUN go install github.com/air-verse/air@latest
+ARG AIR_VERSION=v1.65.1
+RUN go install github.com/air-verse/air@${AIR_VERSION}
 
 COPY ./go.mod ./go.sum ./
 RUN go mod download
@@ -10,6 +11,7 @@ RUN go mod download
 COPY ./.air.toml ./
 COPY ./api/ ./api/
 COPY ./cmd/ ./cmd/
+COPY ./pkg/ ./pkg/
 
 EXPOSE 8000
 
