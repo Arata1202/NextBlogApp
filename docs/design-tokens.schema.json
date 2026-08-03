@@ -17,7 +17,7 @@
     "semanticColors": {
       "allOf": [
         { "$ref": "#/$defs/tokenMap" },
-        { "additionalProperties": { "$ref": "#/$defs/colorValue" } }
+        { "type": "object", "additionalProperties": { "$ref": "#/$defs/colorValue" } }
       ]
     },
     "typographyStyle": {
@@ -64,7 +64,7 @@
         "color": {
           "allOf": [
             { "$ref": "#/$defs/tokenMap" },
-            { "additionalProperties": { "$ref": "#/$defs/hexColor" } }
+            { "type": "object", "additionalProperties": { "$ref": "#/$defs/hexColor" } }
           ]
         },
         "space": {
