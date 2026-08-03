@@ -1,3 +1,7 @@
+/**
+ * Reusable Tailwind class recipes.
+ * Token values live in /design-tokens.json; do not add raw design values here.
+ */
 export const themeClassNames = {
   light: 'LightTheme',
   dark: 'DarkTheme',

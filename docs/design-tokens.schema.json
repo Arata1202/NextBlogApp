@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NextBlogApp design tokens",
+  "type": "object",
+  "required": ["meta", "primitive", "semantic", "typography", "effect", "motion", "component"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "meta": { "type": "object" },
+    "primitive": { "type": "object" },
+    "semantic": { "type": "object" },
+    "typography": { "type": "object" },
+    "effect": { "type": "object" },
+    "motion": { "type": "object" },
+    "component": { "type": "object" }
+  }
+}
