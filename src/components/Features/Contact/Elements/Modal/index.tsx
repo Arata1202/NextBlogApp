@@ -3,15 +3,13 @@ import { EnvelopeIcon } from '@heroicons/react/24/solid';
 import { Dialog, Transition } from '@headlessui/react';
 import { useTheme } from 'next-themes';
 import styles from './index.module.css';
-import { primaryButtonClassName } from '@/components/Common/controlClassNames';
+import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
 import {
   colorClassNames,
   getThemeClassName,
-  getThemeVariantClassName,
   radiusClassNames,
   shadowClassNames,
-  themeVariantClassNames,
-} from '@/styles/designTokens';
+} from '@/styles/uiClassNames';
 
 type Props = {
   title: string;
@@ -36,10 +34,8 @@ export default function Modal({
 }: Props) {
   const { theme } = useTheme();
   const themeClassName = getThemeClassName(theme);
-  const controlHoverSurfaceClassName = getThemeVariantClassName(
-    theme,
-    themeVariantClassNames.controlHoverSurface,
-  );
+  const controlHoverSurfaceClassName = theme === 'dark' ? 'hover:bg-gray-500' : 'hover:bg-gray-50';
+  const primaryButtonClassName = `${interactiveFocusClassName} inline-flex w-full justify-center ${radiusClassNames.control} bg-blue-600 px-3 py-2 text-sm font-semibold text-white ${shadowClassNames.control} hover:bg-blue-700 disabled:cursor-wait disabled:opacity-70`;
 
   return (
     <Transition.Root show={show} as={Fragment}>

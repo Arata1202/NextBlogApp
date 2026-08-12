@@ -9,7 +9,7 @@ import {
   getThemeClassName,
   getThemeVariantClassName,
   themeVariantClassNames,
-} from '@/styles/designTokens';
+} from '@/styles/uiClassNames';
 
 type Props = {
   totalCount: number;

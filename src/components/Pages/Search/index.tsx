@@ -19,7 +19,7 @@ import {
   outlinedControlClassName,
   pillControlClassName,
 } from '@/components/Common/controlClassNames';
-import { colorClassNames } from '@/styles/designTokens';
+import { colorClassNames } from '@/styles/uiClassNames';
 
 type Props = {
   recentArticles?: UnifiedArticle[];
@@ -171,7 +171,7 @@ export function AppSearchIndex({ tags, archiveList }: Pick<Props, 'tags' | 'arch
           <a
             key={tag.id}
             href={`/tag/${tag.id}?app=1`}
-            className={`${pillControlClassName} inline-block rounded-full px-3 py-1 text-sm font-semibold`}
+            className={`${pillControlClassName} inline-block px-3 py-1 text-sm font-semibold`}
           >
             {tag.name}
           </a>

@@ -7,7 +7,7 @@ import { useMutationObserver } from '@/hooks/useMutationObserver';
 import { useAppWebViewMode } from '@/hooks/useAppWebViewMode';
 import styles from './index.module.css';
 import { getGoogleAdSensePublisherId } from '@/config/publicEnv';
-import { getThemeClassName } from '@/styles/designTokens';
+import { getThemeClassName } from '@/styles/uiClassNames';
 
 declare global {
   interface Window {

@@ -16,7 +16,7 @@ import {
 } from 'react-share';
 import { Article } from '@/types/microcms';
 import { roundIconControlClassName } from '@/components/Common/controlClassNames';
-import { getThemeClassName } from '@/styles/designTokens';
+import { getThemeClassName } from '@/styles/uiClassNames';
 
 type Props = {
   data?: Article;

@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes';
 import { FireIcon } from '@heroicons/react/24/solid';
 import { Article } from '@/types/microcms';
 import BuyMeaCoffee from '../Elements/BuyMeaCoffee';
-import { getThemeClassName } from '@/styles/designTokens';
+import { getThemeClassName } from '@/styles/uiClassNames';
 
 type Props = {
   data?: Article;

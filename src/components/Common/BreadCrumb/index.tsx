@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import SearchResultLabelSkeleton from '../SearchResultLabelSkeleton';
 import { getPageHeadingLabel, type BreadCrumbPage } from '../pageHeadingModel';
-import { colorClassNames } from '@/styles/designTokens';
+import { colorClassNames } from '@/styles/uiClassNames';
 
 type Props = {
   page: BreadCrumbPage;

@@ -8,7 +8,7 @@ import {
   fieldControlClassName,
   outlinedControlClassName,
 } from '@/components/Common/controlClassNames';
-import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
+import { getThemeClassName, surfaceClassNames } from '@/styles/uiClassNames';
 import { appendAppWebViewParam, useAppWebViewMode } from '@/hooks/useAppWebViewMode';
 
 export default function Search() {

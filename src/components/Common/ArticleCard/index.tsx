@@ -6,7 +6,7 @@ import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 import DoubleDate from '../DoubleDate';
 import WebpImage from '../Elements/WebpImage';
-import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
+import { getThemeClassName, surfaceClassNames } from '@/styles/uiClassNames';
 import SponsoredDisclosure from '../SponsoredDisclosure';
 
 type Props = {

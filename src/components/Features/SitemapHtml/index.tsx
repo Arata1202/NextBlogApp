@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes';
 import { Article, Category } from '@/types/microcms';
 import { PAGE_ARR } from '@/constants/page';
 import { getTextLinkClassName } from '@/components/Common/controlClassNames';
-import { getThemeVariantClassName, themeVariantClassNames } from '@/styles/designTokens';
+import { getThemeVariantClassName, themeVariantClassNames } from '@/styles/uiClassNames';
 
 type Props = {
   articles: Article[];

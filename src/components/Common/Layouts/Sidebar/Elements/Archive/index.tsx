@@ -11,11 +11,9 @@ import { fieldControlClassName } from '@/components/Common/controlClassNames';
 import {
   colorClassNames,
   getThemeClassName,
-  getThemeVariantClassName,
   surfaceClassNames,
-  themeVariantClassNames,
   transitionClassNames,
-} from '@/styles/designTokens';
+} from '@/styles/uiClassNames';
 
 type Props = {
   archiveList: ArchiveItem[];
@@ -25,11 +23,8 @@ export default function Archive({ archiveList }: Props) {
   const { theme } = useTheme();
   const router = useRouter();
   const themeClassName = getThemeClassName(theme);
-  const activeAccentTextClassName = getThemeVariantClassName(
-    theme,
-    themeVariantClassNames.activeAccentText,
-  );
-  const subtleIconClassName = getThemeVariantClassName(theme, themeVariantClassNames.subtleIcon);
+  const activeAccentTextClassName = theme === 'dark' ? 'text-blue-400!' : 'text-blue-600!';
+  const subtleIconClassName = theme === 'dark' ? 'text-gray-500' : 'text-gray-300';
 
   const [selectedMonth, setSelectedMonth] = useState('');
 

@@ -38,32 +38,18 @@ export const shadowClassNames = {
 } as const;
 
 export const colorClassNames = {
-  accentBadge: 'bg-blue-600 text-white',
-  accentText: 'text-blue-600',
   accentHoverText: 'hover:text-blue-600',
   accentBorderHover: 'hover:border-blue-600',
-  dangerText: 'text-red-600',
   mutedText: 'text-gray-500',
-  placeholderMutedText: 'placeholder:text-gray-500',
-  primaryButton: 'bg-blue-600 hover:bg-blue-700 text-white',
   subtleText: 'text-gray-400',
-  successText: 'text-green-600',
   textLink: 'text-blue-700 hover:text-blue-800',
   darkTextLink: 'text-blue-300 hover:text-blue-200',
 } as const;
 
 export const themeVariantClassNames = {
-  activeAccentText: {
-    light: 'text-blue-600!',
-    dark: 'text-blue-400!',
-  },
   borderedText: {
     light: 'border-gray-300 text-gray-700',
     dark: 'border-gray-500 text-white',
-  },
-  controlHoverSurface: {
-    light: 'hover:bg-gray-50',
-    dark: 'hover:bg-gray-500',
   },
   mutedText: {
     light: 'text-gray-500',
@@ -72,18 +58,6 @@ export const themeVariantClassNames = {
   selectedSurface: {
     light: 'bg-gray-300 text-gray-700',
     dark: 'bg-gray-500 text-white',
-  },
-  subtleSurface: {
-    light: 'bg-gray-50',
-    dark: 'bg-gray-700',
-  },
-  subtleIcon: {
-    light: 'text-gray-300',
-    dark: 'text-gray-500',
-  },
-  subtleRing: {
-    light: 'ring-gray-300/5',
-    dark: 'ring-gray-500/5',
   },
 } as const satisfies Record<string, ThemeVariantClassNames>;
 

@@ -5,7 +5,7 @@ import { UserCircleIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import { PROFILE_SENTENCE, PROFILE_NAME, PROFILE_IMAGE, SOCIAL_ICON } from '@/constants/data';
 import { iconControlClassName } from '@/components/Common/controlClassNames';
-import { colorClassNames, getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
+import { colorClassNames, getThemeClassName, surfaceClassNames } from '@/styles/uiClassNames';
 
 export default function Profile() {
   const { theme } = useTheme();

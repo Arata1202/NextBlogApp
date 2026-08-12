@@ -5,7 +5,7 @@ import {
   shadowClassNames,
   themeVariantClassNames,
   transitionClassNames,
-} from '@/styles/designTokens';
+} from '@/styles/uiClassNames';
 
 export const controlFocusClassName = `${transitionClassNames.color} ${colorClassNames.accentBorderHover}`;
 
@@ -21,7 +21,7 @@ export const compactIconControlClassName = `inline-flex h-6 w-6 items-center jus
 
 export const roundIconControlClassName = `${radiusClassNames.round} ${interactiveFocusClassName}`;
 
-export const pillControlClassName = `border ${transitionClassNames.color} ${colorClassNames.accentBorderHover} ${colorClassNames.accentHoverText}`;
+export const pillControlClassName = `${radiusClassNames.round} border ${transitionClassNames.color} ${colorClassNames.accentBorderHover} ${colorClassNames.accentHoverText}`;
 
 export const textLinkClassName = `${colorClassNames.textLink} underline underline-offset-2`;
 
@@ -34,9 +34,5 @@ export const getTextLinkClassName = (theme?: string) => {
   });
 };
 
-export const accentIconClassName = colorClassNames.accentText;
-
 export const getMutedTextClassName = (theme?: string) =>
   getThemeVariantClassName(theme, themeVariantClassNames.mutedText);
-
-export const primaryButtonClassName = `${interactiveFocusClassName} inline-flex w-full justify-center ${radiusClassNames.control} ${colorClassNames.primaryButton} px-3 py-2 text-sm font-semibold ${shadowClassNames.control} disabled:cursor-wait disabled:opacity-70`;

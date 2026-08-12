@@ -9,7 +9,7 @@ import {
   getThemeClassName,
   radiusClassNames,
   shadowClassNames,
-} from '@/styles/designTokens';
+} from '@/styles/uiClassNames';
 
 type Props = {
   onClose: () => void;
@@ -23,9 +23,7 @@ export default function Alert({ onClose, show, title, description, variant = 'su
   const { theme } = useTheme();
   const themeClassName = getThemeClassName(theme);
   const Icon = variant === 'error' ? ExclamationCircleIcon : CheckCircleIcon;
-  const iconClassName = `h-6 w-6 ${
-    variant === 'error' ? colorClassNames.dangerText : colorClassNames.successText
-  }`;
+  const iconClassName = `h-6 w-6 ${variant === 'error' ? 'text-red-600' : 'text-green-600'}`;
   const role = variant === 'error' ? 'alert' : 'status';
   const ariaLive = variant === 'error' ? 'assertive' : 'polite';
 

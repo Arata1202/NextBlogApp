@@ -8,7 +8,7 @@ import { PROFILE_IMAGE } from '@/constants/data';
 import FixedContentContainer from '../Layouts/Container/FixedContentContainer';
 import CodeBlock from '@/components/Common/CodeBlock';
 import { getTextLinkClassName } from '@/components/Common/controlClassNames';
-import { getThemeVariantClassName, themeVariantClassNames } from '@/styles/designTokens';
+import { getThemeVariantClassName, themeVariantClassNames } from '@/styles/uiClassNames';
 import { SAFE_RESOURCE_PROTOCOLS, parseUrl } from '@/utils/urlSafety';
 
 type Props = {

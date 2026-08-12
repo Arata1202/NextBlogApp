@@ -12,7 +12,7 @@ import {
   getThemeClassName,
   radiusClassNames,
   transitionClassNames,
-} from '@/styles/designTokens';
+} from '@/styles/uiClassNames';
 
 export default function Footer() {
   const { theme } = useTheme();

@@ -395,7 +395,7 @@ scripts/send-onesignal-test-notifications.sh
 │   │   ├── unified.ts
 │   │   └── zenn.ts
 │   ├── styles
-│   │   ├── designTokens.ts
+│   │   ├── uiClassNames.ts
 │   │   ├── globals.css
 │   │   └── plugin.css
 │   ├── test
