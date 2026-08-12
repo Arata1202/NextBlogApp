@@ -1,0 +1,59 @@
+name: OneSignal Test Notification
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Run mode (send delivers 4 notifications to Test Users)
+        required: true
+        default: dry-run
+        type: choice
+        options:
+          - dry-run
+          - send
+
+permissions:
+  contents: read
+
+concurrency:
+  group: onesignal-test-notification
+  cancel-in-progress: false
+
+jobs:
+  dry-run:
+    if: inputs.mode == 'dry-run'
+    name: Preview payloads
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+      - name: Preview OneSignal payloads
+        env:
+          ONESIGNAL_APP_ID: 00000000-0000-0000-0000-000000000000
+          BASE_URL: https://realunivlog.com
+        run: scripts/send-onesignal-test-notifications.sh --dry-run
+
+  send:
+    if: inputs.mode == 'send' && github.ref == 'refs/heads/master'
+    name: Send to Test Users
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: onesignal-test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+      - name: Send OneSignal test notifications
+        env:
+          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          ONESIGNAL_REST_API_KEY: ${{ secrets.ONESIGNAL_REST_API_KEY }}
+          BASE_URL: https://realunivlog.com
+        run: scripts/send-onesignal-test-notifications.sh

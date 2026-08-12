@@ -20,6 +20,7 @@
   - [スポンサー記事](#スポンサー記事)
   - [Terraform](#terraform)
   - [テスト](#テスト)
+  - [OneSignalテスト通知](#onesignalテスト通知)
   - [ディレクトリ構成](#ディレクトリ構成)
   - [Gitの運用](#Gitの運用)
     - [ブランチ](#ブランチ)
@@ -203,6 +204,29 @@ pnpm test:e2e:report
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
+## OneSignalテスト通知
+
+GitHub Actionsの`OneSignal Test Notification`から、`Test Users`セグメントへブログ／Zenn × Web／iOSの4種類のテスト通知を送信できる。
+
+事前にGitHubの`onesignal-test` Environmentを作成し、次のSecretsを登録する。必要に応じてEnvironmentにRequired reviewersも設定する。
+
+- `ONESIGNAL_APP_ID`
+- `ONESIGNAL_REST_API_KEY`
+
+Actionsの`Run workflow`では、ペイロードだけを表示する`dry-run`が既定値になっている。実際に通知するときだけ`master`ブランチで`send`を選択する。送信先セグメントはスクリプト内で`Test Users`に固定している。
+
+ローカルでは次のコマンドで同じテストを実行できる。
+
+```bash
+# ペイロードの確認
+scripts/send-onesignal-test-notifications.sh --dry-run
+
+# Test Usersへ送信
+scripts/send-onesignal-test-notifications.sh
+```
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
 ## ディレクトリ構成
 
 ```
@@ -215,6 +239,7 @@ pnpm test:e2e:report
 │   ├── dependabot.yml
 │   └── workflows
 │       ├── codeql.yml
+│       ├── onesignal_test.yml
 │       ├── test.yml
 │       └── vercel_deploy.yml
 ├── .gitignore
@@ -300,10 +325,11 @@ pnpm test:e2e:report
 │   └── robots.txt
 ├── README.md
 ├── scripts
-│   └── e2e
-│       ├── build.mjs
-│       ├── mock-fetch.mjs
-│       └── serve-static.mjs
+│   ├── e2e
+│   │   ├── build.mjs
+│   │   ├── mock-fetch.mjs
+│   │   └── serve-static.mjs
+│   └── send-onesignal-test-notifications.sh
 ├── src
 │   ├── app
 │   │   ├── __tests__

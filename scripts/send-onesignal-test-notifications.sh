@@ -6,17 +6,16 @@ ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 ENV_FILE="${ENV_FILE:-$ROOT_DIR/.env}"
 API_URL="https://api.onesignal.com/notifications"
 
-SEGMENT="${ONESIGNAL_TEST_SEGMENT:-Test Users}"
+SEGMENT="Test Users"
 BASE_URL_OVERRIDE=""
 DRY_RUN=false
 
 usage() {
   cat <<'USAGE'
 Usage:
-  scripts/onesignal.sh [options]
+  scripts/send-onesignal-test-notifications.sh [options]
 
 Options:
-  --segment NAME   OneSignal test segment name. Default: Test Users
   --base-url URL   Web/PWA launch URL. Default: BASE_URL or NEXT_PUBLIC_BASE_URL from env/.env
   --dry-run        Print the 4 payloads without sending
   -h, --help       Show this help
@@ -24,17 +23,13 @@ Options:
 The script sends 4 push messages to the test segment:
   blog x web, blog x iOS app, zenn x web, zenn x iOS app
 
-It reads only ONESIGNAL_APP_ID, ONESIGNAL_REST_API_KEY, BASE_URL, and
-NEXT_PUBLIC_BASE_URL from .env without sourcing the file.
+It reads ONESIGNAL_APP_ID, BASE_URL, and NEXT_PUBLIC_BASE_URL from .env
+without sourcing the file. ONESIGNAL_REST_API_KEY is read only when sending.
 USAGE
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --segment)
-      SEGMENT="${2:-}"
-      shift 2
-      ;;
     --base-url)
       BASE_URL_OVERRIDE="${2:-}"
       shift 2
@@ -60,7 +55,7 @@ if ! command -v node >/dev/null 2>&1; then
   exit 1
 fi
 
-if ! command -v curl >/dev/null 2>&1; then
+if [[ "$DRY_RUN" == false ]] && ! command -v curl >/dev/null 2>&1; then
   echo "curl is required" >&2
   exit 1
 fi
@@ -116,16 +111,8 @@ require_value() {
   fi
 }
 
-case "$SEGMENT" in
-  "" | "Total Subscriptions" | "Subscribed Users" | "All" | "All Users")
-    echo "Refusing to send to broad segment: ${SEGMENT:-<empty>}" >&2
-    echo "Use a test-only segment such as Test Users." >&2
-    exit 1
-    ;;
-esac
-
 ONESIGNAL_APP_ID_VALUE="$(read_env ONESIGNAL_APP_ID)"
-ONESIGNAL_REST_API_KEY_VALUE="$(read_env ONESIGNAL_REST_API_KEY)"
+ONESIGNAL_REST_API_KEY_VALUE=""
 BASE_URL_VALUE="$BASE_URL_OVERRIDE"
 
 if [[ -z "$BASE_URL_VALUE" ]]; then
@@ -138,8 +125,12 @@ fi
 BASE_URL_VALUE="${BASE_URL_VALUE%/}"
 
 require_value "ONESIGNAL_APP_ID" "$ONESIGNAL_APP_ID_VALUE"
-require_value "ONESIGNAL_REST_API_KEY" "$ONESIGNAL_REST_API_KEY_VALUE"
 require_value "BASE_URL or NEXT_PUBLIC_BASE_URL" "$BASE_URL_VALUE"
+
+if [[ "$DRY_RUN" == false ]]; then
+  ONESIGNAL_REST_API_KEY_VALUE="$(read_env ONESIGNAL_REST_API_KEY)"
+  require_value "ONESIGNAL_REST_API_KEY" "$ONESIGNAL_REST_API_KEY_VALUE"
+fi
 
 payload_for() {
   local source="$1"
