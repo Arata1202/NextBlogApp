@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes';
 import { ChevronDoubleUpIcon } from '@heroicons/react/20/solid';
 import styles from './index.module.css';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
-import { colorClassNames, getThemeClassName, shadowClassNames } from '@/styles/designTokens';
+import { colorClassNames, getThemeClassName, shadowClassNames } from '@/styles/uiClassNames';
 
 export default function ScrollTopButton() {
   const { theme } = useTheme();

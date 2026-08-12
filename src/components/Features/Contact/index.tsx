@@ -11,7 +11,7 @@ import Modal from './Elements/Modal';
 import Alert from './Elements/Alert';
 import { outlinedControlClassName } from '@/components/Common/controlClassNames';
 import { getApiSendEmailUrl, getRecaptchaSiteKey } from '@/config/publicEnv';
-import { getThemeClassName } from '@/styles/designTokens';
+import { getThemeClassName } from '@/styles/uiClassNames';
 
 export default function ContactFeature() {
   const { theme } = useTheme();

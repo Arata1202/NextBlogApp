@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { BellIcon } from '@heroicons/react/24/outline';
 import styles from './index.module.css';
-import { getThemeVariantClassName, themeVariantClassNames } from '@/styles/designTokens';
+import { getThemeVariantClassName, themeVariantClassNames } from '@/styles/uiClassNames';
 
 export default function AdAlert() {
   const { theme } = useTheme();

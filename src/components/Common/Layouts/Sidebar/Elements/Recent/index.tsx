@@ -7,7 +7,7 @@ import { UnifiedArticle } from '@/types/unified';
 import WebpImage from '@/components/Common/Elements/WebpImage';
 import styles from './index.module.css';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
-import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
+import { getThemeClassName, surfaceClassNames } from '@/styles/uiClassNames';
 
 type Props = {
   recentArticles: UnifiedArticle[];

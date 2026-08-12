@@ -1,7 +1,7 @@
 import { useTheme } from 'next-themes';
 import type { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import { fieldControlClassName } from '@/components/Common/controlClassNames';
-import { getThemeClassName } from '@/styles/designTokens';
+import { getThemeClassName } from '@/styles/uiClassNames';
 
 type Props = {
   label: string;

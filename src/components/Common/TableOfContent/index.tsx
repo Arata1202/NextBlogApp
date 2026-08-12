@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Heading } from '@/types/heading';
 import styles from './index.module.css';
 import { formatHeadings } from '@/utils/formatHeadings';
-import { colorClassNames, getThemeClassName } from '@/styles/designTokens';
+import { colorClassNames, getThemeClassName } from '@/styles/uiClassNames';
 import { useAppWebViewMode } from '@/hooks/useAppWebViewMode';
 
 type Props = {

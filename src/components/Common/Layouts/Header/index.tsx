@@ -38,7 +38,7 @@ import {
   surfaceClassNames,
   themeVariantClassNames,
   transitionClassNames,
-} from '@/styles/designTokens';
+} from '@/styles/uiClassNames';
 
 type Category = (typeof CATEGORY_ARR)[number];
 
@@ -112,7 +112,7 @@ export default function Header() {
     themeVariantClassNames.selectedSurface,
   );
   const mutedTextClassName = getThemeVariantClassName(theme, themeVariantClassNames.mutedText);
-  const subtleRingClassName = getThemeVariantClassName(theme, themeVariantClassNames.subtleRing);
+  const subtleRingClassName = theme === 'dark' ? 'ring-gray-500/5' : 'ring-gray-300/5';
 
   return (
     <>

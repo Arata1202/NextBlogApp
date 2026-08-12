@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { compactIconControlClassName } from '@/components/Common/controlClassNames';
-import { colorClassNames } from '@/styles/designTokens';
+import { colorClassNames } from '@/styles/uiClassNames';
 
 export default function ThemeSwitch() {
   const { setTheme, resolvedTheme } = useTheme();

@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes';
 import { HashtagIcon } from '@heroicons/react/24/solid';
 import { Tag as TagType } from '@/types/microcms';
 import { pillControlClassName } from '@/components/Common/controlClassNames';
-import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
+import { getThemeClassName, surfaceClassNames } from '@/styles/uiClassNames';
 
 type Props = {
   tags: TagType[];
@@ -27,7 +27,7 @@ export default function Tag({ tags }: Props) {
             <Link
               key={tag.id}
               href={`/tag/${tag.id}`}
-              className={`${pillControlClassName} mr-2 mb-2 inline-block rounded-full px-3 py-1 text-sm font-semibold ${themeClassName}`}
+              className={`${pillControlClassName} mr-2 mb-2 inline-block px-3 py-1 text-sm font-semibold ${themeClassName}`}
             >
               {tag.name}
             </Link>

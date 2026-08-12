@@ -7,7 +7,7 @@ import { UnifiedArticle } from '@/types/unified';
 import SingleDate from '@/components/Common/SingleDate';
 import doubleDateStyles from '@/components/Common/DoubleDate/index.module.css';
 import WebpImage from '../Elements/WebpImage';
-import { getThemeClassName, surfaceClassNames } from '@/styles/designTokens';
+import { getThemeClassName, surfaceClassNames } from '@/styles/uiClassNames';
 import SponsoredDisclosure from '../SponsoredDisclosure';
 
 type Props = {

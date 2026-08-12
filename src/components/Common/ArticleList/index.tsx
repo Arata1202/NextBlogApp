@@ -15,7 +15,7 @@ import Sidebar from '../Layouts/Sidebar';
 import Share from '../Share';
 import { UnifiedArticle } from '@/types/unified';
 import { getMutedTextClassName } from '@/components/Common/controlClassNames';
-import { colorClassNames } from '@/styles/designTokens';
+import { colorClassNames } from '@/styles/uiClassNames';
 
 type Props = {
   articles: Article[];
