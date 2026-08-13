@@ -208,21 +208,21 @@ pnpm test:e2e:report
 
 GitHub Actionsの`OneSignal Test Notification`から、`Test Users`セグメントへブログ／Zenn × Web／iOSの4種類のテスト通知を送信できる。
 
-事前にGitHubの`onesignal-test` Environmentを作成し、次のSecretsを登録する。必要に応じてEnvironmentにRequired reviewersも設定する。
+事前にGitHubの`onesignal-test` Environmentを作成し、Deployment branches and tagsを`master`のみに制限したうえで、次のSecretsを登録する。必要に応じてEnvironmentにRequired reviewersも設定する。
 
 - `ONESIGNAL_APP_ID`
 - `ONESIGNAL_REST_API_KEY`
 
-Actionsの`Run workflow`では、ペイロードだけを表示する`dry-run`が既定値になっている。実際に通知するときだけ`master`ブランチで`send`を選択する。送信先セグメントはスクリプト内で`Test Users`に固定している。
+Actionsの`Run workflow`では、ペイロードだけを表示する`dry-run`が既定値になっている。実際に通知するときだけ`master`ブランチで`send`を選択する。`master`以外からの送信指定はワークフローを失敗させる。送信先セグメントはスクリプト内で`Test Users`に固定している。
 
 ローカルでは次のコマンドで同じテストを実行できる。
 
 ```bash
-# ペイロードの確認
-scripts/send-onesignal-test-notifications.sh --dry-run
+# ペイロードの確認（--dry-runは省略可）
+scripts/send-onesignal-test-notifications.sh
 
 # Test Usersへ送信
-scripts/send-onesignal-test-notifications.sh
+scripts/send-onesignal-test-notifications.sh --send
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>

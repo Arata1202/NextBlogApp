@@ -8,7 +8,7 @@ API_URL="https://api.onesignal.com/notifications"
 
 SEGMENT="Test Users"
 BASE_URL_OVERRIDE=""
-DRY_RUN=false
+DRY_RUN=true
 
 usage() {
   cat <<'USAGE'
@@ -17,7 +17,8 @@ Usage:
 
 Options:
   --base-url URL   Web/PWA launch URL. Default: BASE_URL or NEXT_PUBLIC_BASE_URL from env/.env
-  --dry-run        Print the 4 payloads without sending
+  --dry-run        Print the 4 payloads without sending (default)
+  --send           Send the 4 notifications to Test Users
   -h, --help       Show this help
 
 The script sends 4 push messages to the test segment:
@@ -31,11 +32,19 @@ USAGE
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --base-url)
-      BASE_URL_OVERRIDE="${2:-}"
+      if [[ $# -lt 2 || -z "${2:-}" ]]; then
+        echo "--base-url requires a non-empty URL" >&2
+        exit 2
+      fi
+      BASE_URL_OVERRIDE="$2"
       shift 2
       ;;
     --dry-run)
       DRY_RUN=true
+      shift
+      ;;
+    --send)
+      DRY_RUN=false
       shift
       ;;
     -h | --help)
@@ -222,7 +231,10 @@ send_payload() {
 
   local response
   response="$(
-    curl -sS -w $'\n%{http_code}' \
+    curl -sS \
+      --connect-timeout 10 \
+      --max-time 30 \
+      -w $'\n%{http_code}' \
       -X POST "$API_URL" \
       -H "Content-Type: application/json" \
       -H "Authorization: Key $ONESIGNAL_REST_API_KEY_VALUE" \
@@ -243,7 +255,11 @@ send_payload() {
   echo "SENT: $label -> $message_id"
 }
 
-echo "Sending OneSignal test notifications to segment: $SEGMENT"
+if [[ "$DRY_RUN" == true ]]; then
+  echo "Previewing OneSignal test notifications for segment: $SEGMENT"
+else
+  echo "Sending OneSignal test notifications to segment: $SEGMENT"
+fi
 echo "Web/PWA launch URL: $BASE_URL_VALUE"
 
 failures=0
