@@ -11,7 +11,7 @@
 }
 
 .content > h1 {
-  font-size: 2rem;
+  font-size: var(--font-size-content-heading-1);
   font-weight: bold;
   border-bottom: 1px solid var(--color-border);
   margin: 2.8rem 0 1rem;
@@ -20,7 +20,7 @@
 .content > h2 {
   background-color: rgb(209 213 219);
   color: rgb(55 65 81);
-  font-size: 1.6rem;
+  font-size: var(--font-size-content-heading-2);
   font-weight: bold;
   margin: 2.8em 0 1rem;
   margin-top: 50px !important;
@@ -29,7 +29,7 @@
 .content > h3 {
   border-color: rgb(209 213 219);
   color: rgb(55 65 81);
-  font-size: 1.4rem;
+  font-size: var(--font-size-content-heading-3);
   font-weight: bold;
   margin: 2.8rem 0 1rem;
   margin-top: 50px !important;
@@ -38,14 +38,14 @@
 .content > h4 {
   border-color: rgb(209 213 219);
   color: rgb(55 65 81);
-  font-size: 1.2rem;
+  font-size: var(--font-size-content-heading-4);
   font-weight: bold;
   margin: 2.8rem 0 1rem;
   margin-top: 50px !important;
 }
 
 .content > h5 {
-  font-size: 1.1rem;
+  font-size: var(--font-size-content-heading-5);
   font-weight: bold;
   margin: 2.8rem 0 1rem;
   margin-top: 50px !important;
@@ -53,7 +53,7 @@
 
 .content > p {
   margin: 2rem 0 0.5rem;
-  line-height: 2;
+  line-height: var(--line-height-content-body);
 }
 
 .content > pre {
@@ -77,9 +77,9 @@
   content: attr(data-filename);
   margin: 1em 0 0;
   font-family: menlo, inconsolata, monospace;
-  font-size: 0.8rem;
+  font-size: var(--font-size-content-small);
   padding: 4px 16px;
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  border-radius: var(--radius-small) var(--radius-small) 0 0;
 }
 
 .content ul,
@@ -133,7 +133,7 @@
 }
 
 .content > figure figcaption {
-  font-size: 0.8rem;
+  font-size: var(--font-size-content-small);
   color: var(--color-text-sub);
 }
 

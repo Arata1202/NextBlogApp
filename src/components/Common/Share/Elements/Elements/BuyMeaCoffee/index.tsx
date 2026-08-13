@@ -1,6 +1,7 @@
+import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
+import { radiusClassNames } from '@/styles/uiClassNames';
 import { Article } from '@/types/microcms';
 import styles from './index.module.css';
-import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
 
 type Props = {
   data?: Article;
@@ -17,7 +18,7 @@ export default function BuyMeaCoffee({ data, sidebar = false }: Props) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="BuyMeaCoffeeを新しいタブで開く"
-        className={`mx-auto mt-5 flex w-fit rounded-md hover:opacity-60 ${interactiveFocusClassName}`}
+        className={`mx-auto mt-5 flex w-fit ${radiusClassNames.control} hover:opacity-60 ${interactiveFocusClassName}`}
       >
         <img
           src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"

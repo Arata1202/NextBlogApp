@@ -24,7 +24,7 @@
 .skeletonTitle,
 .skeletonLine,
 .skeletonLineShort {
-  border-radius: 4px;
+  border-radius: var(--radius-small);
   background: linear-gradient(
     90deg,
     rgba(156, 163, 175, 0.22),

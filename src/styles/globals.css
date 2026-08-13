@@ -76,7 +76,14 @@ layer(base);
     --color-link-hover: #1e40af;
     --color-link-dark: #93c5fd;
     --color-link-dark-hover: #bfdbfe;
-    --border-radius: 4px;
+    --font-size-content-heading-1: 2rem;
+    --font-size-content-heading-2: 1.6rem;
+    --font-size-content-heading-3: 1.4rem;
+    --font-size-content-heading-4: 1.2rem;
+    --font-size-content-heading-5: 1.1rem;
+    --font-size-content-small: 0.8rem;
+    --line-height-content-body: 2;
+    --radius-small: 4px;
     --focus-ring-width: 2px;
     --focus-ring-offset: 2px;
   }

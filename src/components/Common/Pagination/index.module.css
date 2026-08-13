@@ -17,7 +17,7 @@
   align-items: center;
   width: clamp(32px, 9vw, 36px);
   height: clamp(32px, 9vw, 36px);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-small);
 }
 .ellipsis {
   color: var(--color-text-sub);
