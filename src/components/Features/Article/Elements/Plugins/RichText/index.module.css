@@ -12,41 +12,41 @@
 
 .content > h1 {
   font-size: var(--font-size-content-heading-1);
-  font-weight: bold;
+  font-weight: var(--font-weight-content-heading);
   border-bottom: 1px solid var(--color-border);
   margin: 2.8rem 0 1rem;
 }
 
 .content > h2 {
-  background-color: rgb(209 213 219);
-  color: rgb(55 65 81);
+  background-color: var(--color-theme-light-border);
+  color: var(--color-theme-light-text);
   font-size: var(--font-size-content-heading-2);
-  font-weight: bold;
+  font-weight: var(--font-weight-content-heading);
   margin: 2.8em 0 1rem;
   margin-top: 50px !important;
 }
 
 .content > h3 {
-  border-color: rgb(209 213 219);
-  color: rgb(55 65 81);
+  border-color: var(--color-theme-light-border);
+  color: var(--color-theme-light-text);
   font-size: var(--font-size-content-heading-3);
-  font-weight: bold;
+  font-weight: var(--font-weight-content-heading);
   margin: 2.8rem 0 1rem;
   margin-top: 50px !important;
 }
 
 .content > h4 {
-  border-color: rgb(209 213 219);
-  color: rgb(55 65 81);
+  border-color: var(--color-theme-light-border);
+  color: var(--color-theme-light-text);
   font-size: var(--font-size-content-heading-4);
-  font-weight: bold;
+  font-weight: var(--font-weight-content-heading);
   margin: 2.8rem 0 1rem;
   margin-top: 50px !important;
 }
 
 .content > h5 {
   font-size: var(--font-size-content-heading-5);
-  font-weight: bold;
+  font-weight: var(--font-weight-content-heading);
   margin: 2.8rem 0 1rem;
   margin-top: 50px !important;
 }
@@ -73,10 +73,10 @@
 .content div[data-filename]:not([data-code-filename-mounted])::before {
   display: inline-block;
   background-color: var(--color-bg-sub);
-  color: rgb(55 65 81);
+  color: var(--color-theme-light-text);
   content: attr(data-filename);
   margin: 1em 0 0;
-  font-family: menlo, inconsolata, monospace;
+  font-family: var(--font-family-content-code);
   font-size: var(--font-size-content-small);
   padding: 4px 16px;
   border-radius: var(--radius-small) var(--radius-small) 0 0;
@@ -171,14 +171,14 @@
 }
 
 :global(body.DarkTheme) .content > h2 {
-  background-color: rgb(107 114 128);
-  color: white;
+  background-color: var(--color-theme-dark-border);
+  color: var(--color-theme-dark-text);
 }
 
 :global(body.DarkTheme) .content > h3,
 :global(body.DarkTheme) .content > h4 {
-  border-color: rgb(107 114 128);
-  color: white;
+  border-color: var(--color-theme-dark-border);
+  color: var(--color-theme-dark-text);
 }
 
 @media (max-width: 640px) {

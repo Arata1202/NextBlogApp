@@ -21,17 +21,17 @@ layer(base);
   }
 
   .LightTheme {
-    background-color: white;
-    color: rgb(55 65 81);
-    border-color: rgb(209 213 219);
-    --tw-ring-color: rgb(209 213 219);
+    background-color: var(--color-theme-light-background);
+    color: var(--color-theme-light-text);
+    border-color: var(--color-theme-light-border);
+    --tw-ring-color: var(--color-theme-light-border);
   }
 
   .DarkTheme {
-    background-color: #262626;
-    color: white;
-    border-color: rgb(107 114 128);
-    --tw-ring-color: rgb(107 114 128);
+    background-color: var(--color-theme-dark-background);
+    color: var(--color-theme-dark-text);
+    border-color: var(--color-theme-dark-border);
+    --tw-ring-color: var(--color-theme-dark-border);
   }
 
   .iframely-embed {
@@ -61,14 +61,11 @@ layer(base);
       monospace;
     --color-text-main: #333;
     --color-text-sub: #999;
-    --color-bg-main: #fff;
     --color-bg-sub: #f3f3f3;
     --color-bg-code: #0d1117;
     --color-text-code: #c9d1d9;
     --color-border-dark: #ccc;
     --color-border: #ddd;
-    --color-border-light: #f3f3f3;
-    --color-current: #eee;
     --color-focus-ring: #2563eb;
     --color-accent-soft-bg: #eaf4fc;
     --color-accent-soft-text: #111827;
@@ -76,12 +73,21 @@ layer(base);
     --color-link-hover: #1e40af;
     --color-link-dark: #93c5fd;
     --color-link-dark-hover: #bfdbfe;
+    --color-theme-light-background: #fff;
+    --color-theme-light-text: #374151;
+    --color-theme-light-border: #d1d5db;
+    --color-theme-dark-background: #262626;
+    --color-theme-dark-text: #fff;
+    --color-theme-dark-border: #6b7280;
+    --font-family-content-code: menlo, inconsolata, monospace;
+    --font-size-content-body: 18px;
     --font-size-content-heading-1: 2rem;
     --font-size-content-heading-2: 1.6rem;
     --font-size-content-heading-3: 1.4rem;
     --font-size-content-heading-4: 1.2rem;
     --font-size-content-heading-5: 1.1rem;
     --font-size-content-small: 0.8rem;
+    --font-weight-content-heading: 700;
     --line-height-content-body: 2;
     --radius-small: 4px;
     --focus-ring-width: 2px;
@@ -187,7 +193,7 @@ layer(base);
   }
 
   p {
-    font-size: 18px !important;
+    font-size: var(--font-size-content-body) !important;
   }
 
   ol,
@@ -196,7 +202,7 @@ layer(base);
   }
 
   li {
-    font-size: 18px !important;
+    font-size: var(--font-size-content-body) !important;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -30,7 +30,7 @@
 
 <ul>
   <li><a href="https://realunivlog.com">リアル大学生</a></li>
-  <li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=2102-4673">Figma（Design Tokens）</a></li>
+  <li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=2102-4673">Figma（Archived Design Tokens）</a></li>
   <li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1">Figma（Archived UI）</a></li>
 </ul>
 

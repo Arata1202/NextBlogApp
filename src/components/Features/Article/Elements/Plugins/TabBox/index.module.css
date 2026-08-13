@@ -58,7 +58,7 @@
 /* タブボックス (汎用) */
 .tab_common_box {
   padding: 10px;
-  background-color: #eaf4fc;
+  background-color: var(--color-accent-soft-bg);
   display: flex;
   margin-bottom: 2.5rem;
   margin-top: 2.5rem;
@@ -135,7 +135,7 @@
   /* タブボックス (汎用) */
   .tab_common_box {
     padding: 10px;
-    background-color: #eaf4fc;
+    background-color: var(--color-accent-soft-bg);
     display: flex;
     margin-bottom: 2.5rem;
     margin-top: 2.5rem;

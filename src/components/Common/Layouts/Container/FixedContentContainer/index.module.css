@@ -8,32 +8,32 @@
 
 .content > h1 {
   font-size: var(--font-size-content-heading-1);
-  font-weight: bold;
+  font-weight: var(--font-weight-content-heading);
   border-bottom: 1px solid var(--color-border);
   margin: 2.8rem 0 1rem;
 }
 
 .content > h2 {
   font-size: var(--font-size-content-heading-2);
-  font-weight: bold;
+  font-weight: var(--font-weight-content-heading);
   margin: 2.8em 0 1rem;
 }
 
 .content > h3 {
   font-size: var(--font-size-content-heading-3);
-  font-weight: bold;
+  font-weight: var(--font-weight-content-heading);
   margin: 2.8rem 0 1rem;
 }
 
 .content > h4 {
   font-size: var(--font-size-content-heading-4);
-  font-weight: bold;
+  font-weight: var(--font-weight-content-heading);
   margin: 2.8rem 0 1rem;
 }
 
 .content > h5 {
   font-size: var(--font-size-content-heading-5);
-  font-weight: bold;
+  font-weight: var(--font-weight-content-heading);
   margin: 2.8rem 0 1rem;
 }
 
@@ -61,7 +61,7 @@
   background-color: var(--color-bg-sub);
   content: attr(data-filename);
   margin: 1em 0 0;
-  font-family: menlo, inconsolata, monospace;
+  font-family: var(--font-family-content-code);
   font-size: var(--font-size-content-small);
   padding: 4px 16px;
   border-radius: var(--radius-small) var(--radius-small) 0 0;

@@ -11,5 +11,5 @@
 }
 
 .Icon {
-  background-color: #eaf4fc;
+  background-color: var(--color-accent-soft-bg);
 }

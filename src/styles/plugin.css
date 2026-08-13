@@ -34,15 +34,15 @@ table {
 }
 
 table tr th {
-  border: 1px solid #ccc;
-  background-color: #eaf4fc !important;
+  border: 1px solid var(--color-border-dark);
+  background-color: var(--color-accent-soft-bg) !important;
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
 }
 
 table tr td {
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border-dark);
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
@@ -73,7 +73,7 @@ table tr td {
   padding: 10px;
   border-radius: 10px;
   position: relative;
-  background-color: #eaf4fc;
+  background-color: var(--color-accent-soft-bg);
   display: flex;
   flex-direction: column;
 }
@@ -90,12 +90,12 @@ table tr td {
 
 .speech-bubble.left .bubble-content:after {
   left: -20px;
-  border-right-color: #eaf4fc;
+  border-right-color: var(--color-accent-soft-bg);
 }
 
 .speech-bubble.right .bubble-content:after {
   right: -20px;
-  border-left-color: #eaf4fc;
+  border-left-color: var(--color-accent-soft-bg);
 }
 
 .bubble-name {
@@ -126,7 +126,7 @@ table tr td {
     padding: 10px;
     border-radius: 10px;
     position: relative;
-    background-color: #eaf4fc;
+    background-color: var(--color-accent-soft-bg);
     display: flex;
     flex-direction: column;
   }
@@ -198,7 +198,7 @@ pre {
 blockquote,
 q {
   quotes: none;
-  color: rgb(55 65 81);
+  color: var(--color-theme-light-text);
   background:
     url('/images/plugin/icon_quote.svg') no-repeat 20px 10px,
     #eee;
