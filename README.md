@@ -286,10 +286,6 @@ scripts/send-onesignal-test-notifications.sh
 │   │   └── app.ts
 │   └── theme.spec.ts
 ├── eslint.config.mjs
-├── figma
-│   ├── main.js
-│   ├── manifest.json
-│   └── README.md
 ├── go.mod
 ├── go.sum
 ├── LICENSE

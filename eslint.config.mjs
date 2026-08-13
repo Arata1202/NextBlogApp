@@ -53,15 +53,6 @@ export default [
       },
     },
   },
-  {
-    name: 'figma/javascript-globals',
-    files: ['figma/**/*.js'],
-    languageOptions: {
-      globals: {
-        figma: 'readonly',
-      },
-    },
-  },
   jsxA11yPlugin.flatConfigs.recommended,
   {
     name: 'next/core-web-vitals',
