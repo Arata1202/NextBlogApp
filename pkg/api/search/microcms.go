@@ -78,6 +78,10 @@ func microCMSSearchArticleToUnifiedArticle(article map[string]interface{}) map[s
 		unifiedArticle["updatedAt"] = updatedAt
 	}
 
+	if isSponsored, ok := article["isSponsored"].(bool); ok && isSponsored {
+		unifiedArticle["isSponsored"] = true
+	}
+
 	if thumbnail, ok := article["thumbnail"]; ok && thumbnail != nil {
 		unifiedArticle["thumbnail"] = thumbnail
 

@@ -13,7 +13,7 @@ describe('FixedDateContainer', () => {
 
     expect(screen.getByText('2024年1月2日')).toBeInTheDocument();
     expect(screen.getByText('2024年1月3日')).toBeInTheDocument();
-    expect(screen.getByText('記事内に広告が含まれています。')).toBeInTheDocument();
+    expect(screen.getByText('この記事には広告が含まれています。')).toBeInTheDocument();
   });
 
   it('omits the updated date when it is not provided', () => {

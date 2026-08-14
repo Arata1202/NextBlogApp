@@ -109,6 +109,7 @@ const normalizeSearchArticle = (article: SearchArticlePayload): UnifiedArticle |
     thumbnailUrl: article.thumbnailUrl,
     url,
     source,
+    isSponsored: article.isSponsored === true,
   };
 };
 

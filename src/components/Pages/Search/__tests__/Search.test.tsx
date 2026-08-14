@@ -81,7 +81,9 @@ describe('SearchPage', () => {
     fetchMock.mockResolvedValue({
       ok: true,
       json: async () => ({
-        contents: [createArticle({ id: 'react-article', title: 'React article' })],
+        contents: [
+          createArticle({ id: 'react-article', title: 'React article', isSponsored: true }),
+        ],
         totalCount: 12,
       }),
     });
@@ -102,6 +104,7 @@ describe('SearchPage', () => {
         mixedArticles: [
           expect.objectContaining({
             id: 'blog-react-article',
+            isSponsored: true,
             source: 'blog',
             url: '/articles/react-article',
           }),
@@ -170,9 +173,7 @@ describe('SearchPage', () => {
     expect(
       screen.getByText('検索結果を取得できませんでした。もう一度お試しください。'),
     ).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'もう一度検索する' })).toHaveClass(
-      'cursor-pointer',
-    );
+    expect(screen.getByRole('button', { name: 'もう一度検索する' })).toHaveClass('cursor-pointer');
     expect(articleListMock).toHaveBeenLastCalledWith(
       expect.objectContaining({
         isLoading: false,

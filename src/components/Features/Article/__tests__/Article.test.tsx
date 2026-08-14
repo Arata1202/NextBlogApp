@@ -71,7 +71,7 @@ describe('ArticleFeature', () => {
     render(<ArticleFeature data={article} relatedArticles={[relatedArticle]} />);
 
     expect(screen.getByRole('heading', { name: 'Main article' })).toBeInTheDocument();
-    expect(screen.getByText('記事内に広告が含まれています。')).toBeInTheDocument();
+    expect(screen.getByText('この記事には広告が含まれています。')).toBeInTheDocument();
     expect(screen.getByText('Introduction text')).toBeInTheDocument();
     expect(screen.getByText('Bubble text')).toBeInTheDocument();
     expect(screen.getByText('Merit content')).toBeInTheDocument();

@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	microCMSSearchFields    = "id,title,description,thumbnail,publishedAt,updatedAt"
+	microCMSSearchFields    = "id,title,description,thumbnail,publishedAt,updatedAt,isSponsored"
 	microCMSListFetchLimit  = 100
 	microCMSSearchLimit     = 10
 	microCMSSearchLimitMax  = 50

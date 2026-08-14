@@ -8,6 +8,7 @@ import WebpImage from '@/components/Common/Elements/WebpImage';
 import styles from './index.module.css';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
 import { getThemeClassName, surfaceClassNames } from '@/styles/uiClassNames';
+import SponsoredDisclosure from '@/components/Common/SponsoredDisclosure';
 
 type Props = {
   recentArticles: UnifiedArticle[];
@@ -62,7 +63,10 @@ export default function Recent({ recentArticles, currentArticleUrl }: Props) {
                     />
                   )}
                 </div>
-                <div className={`${styles.title} font-bold`}>{article.title}</div>
+                <div className={styles.content}>
+                  {article.isSponsored && <SponsoredDisclosure compact />}
+                  <div className={`${styles.title} font-bold`}>{article.title}</div>
+                </div>
               </>
             );
 

@@ -26,6 +26,7 @@ describe('Sidebar', () => {
           createUnifiedArticle({
             id: 'recent',
             title: 'Recent article',
+            isSponsored: true,
             url: '/articles/recent',
             publishedAt: '2024-02-01T00:00:00.000Z',
           }),
@@ -55,6 +56,7 @@ describe('Sidebar', () => {
     expect(screen.getByRole('link', { name: 'React' })).toHaveAttribute('href', '/tag/react');
     expect(screen.getByText('アーカイブ')).toBeInTheDocument();
     expect(screen.getByText('Recent article')).toBeInTheDocument();
+    expect(screen.getByText('PR')).toBeInTheDocument();
     expect(screen.getByText('External recent')).toBeInTheDocument();
     expect(screen.queryByText('Current article')).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: '1 TOC heading' })).toHaveAttribute(

@@ -15,11 +15,24 @@ func TestBuildMicroCMSSearchRequest(t *testing.T) {
 		t.Fatalf("method = %s, want GET", req.Method)
 	}
 
-	if req.URL.String() != "https://example.microcms.io/api/v1/blog?fields=id%2Ctitle%2Cdescription%2Cthumbnail%2CpublishedAt%2CupdatedAt&limit=10&offset=20&q=React+hooks" {
+	if req.URL.String() != "https://example.microcms.io/api/v1/blog?fields=id%2Ctitle%2Cdescription%2Cthumbnail%2CpublishedAt%2CupdatedAt%2CisSponsored&limit=10&offset=20&q=React+hooks" {
 		t.Fatalf("url = %q", req.URL.String())
 	}
 
 	if got := req.Header.Get("X-MICROCMS-API-KEY"); got != "api-key" {
 		t.Fatalf("X-MICROCMS-API-KEY = %q, want %q", got, "api-key")
+	}
+}
+
+func TestMicroCMSSearchArticleToUnifiedArticlePreservesSponsoredFlag(t *testing.T) {
+	article := microCMSSearchArticleToUnifiedArticle(map[string]interface{}{
+		"id":          "sponsored-article",
+		"title":       "Sponsored article",
+		"publishedAt": "2026-08-14T00:00:00Z",
+		"isSponsored": true,
+	})
+
+	if isSponsored, ok := article["isSponsored"].(bool); !ok || !isSponsored {
+		t.Fatalf("isSponsored = %#v, want true", article["isSponsored"])
 	}
 }
