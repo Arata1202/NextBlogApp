@@ -1,7 +1,7 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { BellIcon } from '@heroicons/react/24/outline';
+import { MegaphoneIcon } from '@heroicons/react/24/outline';
 import styles from './index.module.css';
 import { getThemeVariantClassName, themeVariantClassNames } from '@/styles/uiClassNames';
 
@@ -17,8 +17,8 @@ export default function AdAlert() {
       <div
         className={`${styles.alert} flex justify-center text-center p-3 border ${borderedTextClassName}`}
       >
-        <BellIcon className="h-7 w-7 mr-2" aria-hidden="true" />
-        記事内に広告が含まれています。
+        <MegaphoneIcon className="h-7 w-7 mr-2" aria-hidden="true" />
+        この記事には広告が含まれています。
       </div>
     </>
   );
