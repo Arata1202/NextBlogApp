@@ -8,7 +8,7 @@ type Props = {
 
 export default function FixedDateContainer({ date, updatedDate }: Props) {
   return (
-    <div className="space-y-5 lg:space-y-8">
+    <>
       <DoubleDate
         article={{
           publishedAt: date.toISOString(),
@@ -17,6 +17,6 @@ export default function FixedDateContainer({ date, updatedDate }: Props) {
         articleMode
       />
       <AdAlert />
-    </div>
+    </>
   );
 }
