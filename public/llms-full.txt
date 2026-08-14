@@ -43,10 +43,10 @@
 
 ## URL Patterns
 
-- [Article pages](https://realunivlog.com/articles): 個別記事は `/articles/{slug}` 配下。
-- [Category pages](https://realunivlog.com/category/programming): カテゴリ別一覧は `/category/{id}` 配下。
-- [Tag pages](https://realunivlog.com/tag): タグ別一覧は `/tag/{id}` 配下。
-- [Archive pages](https://realunivlog.com/archive): 月別アーカイブは `/archive/{year}/{month}` 配下。
+- Article pages: 個別記事は `/articles/{slug}` 配下。
+- Category pages: カテゴリ別一覧は `/category/{id}` 配下。
+- Tag pages: タグ別一覧は `/tag/{id}` 配下。
+- Archive pages: 月別アーカイブは `/archive/{year}/{month}` 配下。
 - [Profile](https://realunivlog.com/profile): プロフィールページ。
 - [Contact](https://realunivlog.com/contact): お問い合わせページ。
 
