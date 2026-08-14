@@ -27,7 +27,10 @@ export default function BuyMeaCoffee({ data, sidebar = false }: Props) {
           width="160"
         />
       </a>
-      <div className={`${styles.BuyMeaCoffeeMessage} text-center mt-4`}>
+      <div
+        className={`${styles.BuyMeaCoffeeMessage} text-center mt-4`}
+        data-main-buy-me-a-coffee-end={sidebar ? undefined : ''}
+      >
         もし{buyMeaCoffeeMessage}記事が役に立ったなら、
         <br />
         こちらから ☕ を一杯支援いただけると喜びます

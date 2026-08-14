@@ -5,8 +5,9 @@ import BuyMeaCoffee from '@/components/Common/Share/Elements/Elements/BuyMeaCoff
 import { useExtractHeadings } from '@/hooks/useExtractHeadings';
 
 const STICKY_STOP_SELECTOR = '[data-sidebar-sticky-stop], [data-apps-promo]';
+const MAIN_BUY_ME_A_COFFEE_END_SELECTOR = '[data-main-buy-me-a-coffee-end]';
 const STICKY_TOP = 60;
-const STICKY_APPS_PROMO_GAP = 16;
+const STICKY_STOP_FALLBACK_GAP = 16;
 
 type Props = {
   contentBlocks?: { rich_text?: string }[];
@@ -72,6 +73,9 @@ export default function StickyContainer({ contentBlocks }: Props) {
       const frame = frameRef.current;
       const panel = panelRef.current;
       const stickyStopElement = document.querySelector<HTMLElement>(STICKY_STOP_SELECTOR);
+      const mainBuyMeACoffeeEndElement = document.querySelector<HTMLElement>(
+        MAIN_BUY_ME_A_COFFEE_END_SELECTOR,
+      );
 
       if (!frame || !panel || !stickyStopElement) {
         resetPanel();
@@ -80,11 +84,14 @@ export default function StickyContainer({ contentBlocks }: Props) {
 
       const frameRect = frame.getBoundingClientRect();
       const stickyStopRect = stickyStopElement.getBoundingClientRect();
+      const stopPanelBottom = mainBuyMeACoffeeEndElement
+        ? mainBuyMeACoffeeEndElement.getBoundingClientRect().bottom
+        : stickyStopRect.top - STICKY_STOP_FALLBACK_GAP;
       const scrollY = window.scrollY;
       const panelHeight = panel.offsetHeight;
       const frameDocumentTop = scrollY + frameRect.top;
       const stickyDocumentTop = scrollY + STICKY_TOP;
-      const stopDocumentTop = scrollY + stickyStopRect.top - STICKY_APPS_PROMO_GAP - panelHeight;
+      const stopDocumentTop = scrollY + stopPanelBottom - panelHeight;
 
       if (stickyDocumentTop < frameDocumentTop) {
         resetPanel();

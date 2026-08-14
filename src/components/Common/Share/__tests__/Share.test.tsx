@@ -119,8 +119,8 @@ describe('Share components', () => {
       screen.getByText((_content, element) =>
         Boolean(
           element?.tagName === 'DIV' &&
-            element.textContent ===
-              'もしこの記事が役に立ったなら、こちらから ☕ を一杯支援いただけると喜びます',
+          element.textContent ===
+            'もしこの記事が役に立ったなら、こちらから ☕ を一杯支援いただけると喜びます',
         ),
       ),
     ).toBeInTheDocument();
@@ -131,6 +131,7 @@ describe('Share components', () => {
     const getMessage = () => container.querySelector('[class*="BuyMeaCoffeeMessage"]');
 
     expect(getMessage()).toHaveTextContent(/^もし記事/);
+    expect(getMessage()).toHaveAttribute('data-main-buy-me-a-coffee-end', '');
     const supportLink = screen.getByRole('link', {
       name: 'BuyMeaCoffeeを新しいタブで開く',
     });
@@ -145,5 +146,6 @@ describe('Share components', () => {
     rerender(<BuyMeaCoffee sidebar />);
 
     expect(getMessage()).toHaveTextContent(/^もしこの記事/);
+    expect(getMessage()).not.toHaveAttribute('data-main-buy-me-a-coffee-end');
   });
 });
