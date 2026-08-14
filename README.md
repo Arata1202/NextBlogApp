@@ -7,7 +7,7 @@
 
 </div>
 
-![2](/docs/assets/readme/images/title.png)
+![リアル大学生](/docs/assets/readme/images/title.png)
 
 ## 目次
 
@@ -22,7 +22,7 @@
   - [テスト](#テスト)
   - [OneSignalテスト通知](#onesignalテスト通知)
   - [ディレクトリ構成](#ディレクトリ構成)
-  - [Gitの運用](#Gitの運用)
+  - [Gitの運用](#gitの運用)
     - [ブランチ](#ブランチ)
     - [コミットメッセージの記法](#コミットメッセージの記法)
 
@@ -44,11 +44,11 @@
 | Backend           | Go, Vercel Functions                           |
 | CMS               | microCMS, Zenn RSS                             |
 | Infrastructure    | Cloudflare Pages, Vercel, Amazon S3, Terraform |
-| Environment setup | Docker                                         |
+| Environment setup | Node.js, pnpm, Docker Compose                  |
 | CI/CD             | GitHub Actions, CodeQL, Dependabot             |
-| Design            | Figma, Canva                                   |
+| Design            | Canva（Figmaはアーカイブ済み）                 |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA  |
-| Integrations      | PWA, OneSignal, Sentry                         |
+| Integrations      | PWA, OneSignal, Sentry, Iframely, Instagram    |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -75,17 +75,19 @@ flowchart TB
 
   subgraph runtime[Browser Runtime]
     browser --> app[Next.js Client App]
-    app --> thirdParty[Google Analytics / AdSense<br/>OneSignal / Embedly / Instagram]
+    app --> thirdParty[Google Analytics / AdSense<br/>OneSignal / Iframely / Instagram]
     app -. Client errors .-> sentry[Sentry]
   end
 
   subgraph vercelFunctions[Vercel Functions]
     app --> searchApi[Vercel Go Function<br/>/api/search]
     searchApi --> microcmsBlogContentApi[microCMS<br/>Blog Content API]
+    searchApi --> zenn
     app --> sendEmailApi[Vercel Go Function<br/>/api/sendemail]
-    app --> recaptchaApi[Vercel Go Function<br/>/api/recaptcha]
+    recaptchaApi[Vercel Go Function<br/>/api/recaptcha]
     sendEmailApi --> smtp[SMTP / Gmail]
-    recaptchaApi --> recaptcha[Google reCAPTCHA]
+    sendEmailApi --> recaptcha[Google reCAPTCHA]
+    recaptchaApi --> recaptcha
     cron[Vercel Cron<br/>/api/cron/linkchecker] --> linkcheckerApi[Vercel Go Function<br/>Link Checker]
     linkcheckerApi --> microcmsBlogContentApi
     linkcheckerApi --> smtp
@@ -111,24 +113,39 @@ flowchart TB
 
 ## 環境構築
 
-```
+Node.jsは`.nvmrc`、pnpmは`package.json`の`packageManager`に記載されたバージョンを使用する。通常はフロントエンドをホスト上、Go APIをDocker上で起動する。`docker-compose.yml`の`js`サービスは、フロントエンドもコンテナで起動したい場合の代替手段として利用できる。
+
+```bash
 # リポジトリのクローン
 git clone git@github.com:Arata1202/NextBlogApp.git
 cd NextBlogApp
 
 # .env.exampleから.envを作成
-mv .env.example .env
+cp .env.example .env
 
-# .envの編集
+# 利用する機能に必要な環境変数を設定
 vi .env
 
-# コンテナのビルドと起動
-docker compose up -d --build
+# フロントエンドの依存関係をインストール
+corepack enable
+pnpm install --frozen-lockfile
 
-# ブラウザにアクセス
-http:localhost:3000
+# Go APIをDockerで起動
+docker compose up -d --build go
 
-# コンテナの停止
+# フロントエンドをホスト上で起動
+pnpm dev
+```
+
+ブラウザで <http://localhost:3000> にアクセスする。ローカルのGo APIをフロントエンドから利用する場合は、`.env`に次のURLを設定する。
+
+```dotenv
+NEXT_PUBLIC_API_SEARCH_URL=http://localhost:8000/api/search
+NEXT_PUBLIC_API_SENDEMAIL_URL=http://localhost:8000/api/sendemail
+```
+
+```bash
+# Go APIを停止
 docker compose down
 ```
 
@@ -177,23 +194,21 @@ terraform apply
 
 ## テスト
 
-```
+```bash
 # Lint / 型チェック / ユニットテスト
 pnpm lint
 pnpm typecheck
 pnpm test:run
 
+# Goの静的解析 / テスト（Docker）
+docker compose run --rm go go vet ./...
+docker compose run --rm go go test ./...
+
 # Playwright のブラウザをインストール
 pnpm exec playwright install chromium
 
-# E2E用の固定データで静的ビルド
-pnpm build:e2e
-
-# E2Eテスト
+# E2Eテスト（固定データのビルドとテストサーバーの起動を含む）
 pnpm test:e2e
-
-# 既存のローカルサーバーを再利用してE2Eテストを実行
-PLAYWRIGHT_REUSE_SERVER=1 pnpm test:e2e
 
 # E2Eテストをブラウザ表示ありで実行
 pnpm test:e2e:headed
@@ -229,211 +244,28 @@ scripts/send-onesignal-test-notifications.sh --send
 
 ## ディレクトリ構成
 
-```
-❯ tree -a -I "node_modules|.next|.git|out|.vercel|_|.DS_Store|.env|next-env.d.ts|tmp|coverage|tsconfig.tsbuildinfo|playwright-report|test-results|.pnpm-store|.terraform|terraform.tfstate|terraform.tfstate.backup|terraform.tfvars" -L 3
+```text
 .
-├── .air.toml
-├── .dockerignore
-├── .env.example
-├── .github
-│   ├── dependabot.yml
-│   └── workflows
-│       ├── codeql.yml
-│       ├── onesignal_test.yml
-│       ├── test.yml
-│       └── vercel_deploy.yml
-├── .gitignore
-├── .husky
-│   └── pre-commit
-├── .npmrc
-├── .nvmrc
-├── .prettierignore
-├── .prettierrc
-├── .vercelignore
-├── .vscode
-│   ├── extensions.json
-│   └── settings.json
-├── api
-│   ├── cron
-│   │   └── linkchecker.go
-│   ├── recaptcha.go
-│   ├── search.go
-│   ├── sendemail.go
-│   └── webhook
-│       └── microcmsbackup.go
-├── cmd
-│   └── main.go
-├── docker-compose.yml
-├── docker
-│   ├── go
-│   │   └── Dockerfile
-│   └── js
-│       └── Dockerfile
-├── docs
-│   └── assets
-│       └── readme
-├── e2e
-│   ├── contact.spec.ts
-│   ├── feeds.spec.ts
-│   ├── fixtures
-│   │   ├── content.d.mts
-│   │   └── content.mjs
-│   ├── navigation.spec.ts
-│   ├── responsive.spec.ts
-│   ├── search.spec.ts
-│   ├── smoke.spec.ts
-│   ├── support
-│   │   └── app.ts
-│   └── theme.spec.ts
-├── eslint.config.mjs
-├── go.mod
-├── go.sum
-├── LICENSE
-├── next.config.ts
-├── package.json
-├── pkg
-│   └── api
-│       ├── contact
-│       ├── contentops
-│       ├── httpx
-│       ├── linkchecker
-│       ├── microcms
-│       ├── monitoring
-│       ├── recaptcha
-│       └── search
-├── playwright.config.ts
-├── pnpm-lock.yaml
-├── postcss.config.mjs
-├── public
-│   ├── ads.txt
-│   ├── app-ads.txt
-│   ├── favicon.ico
-│   ├── images
-│   │   ├── blog
-│   │   ├── head
-│   │   ├── plugin
-│   │   ├── post
-│   │   ├── pwa
-│   │   └── thumbnail
-│   ├── llms-full.txt
-│   ├── llms.txt
-│   ├── OneSignalSDKWorker.js
-│   └── robots.txt
-├── README.md
-├── scripts
-│   ├── e2e
-│   │   ├── build.mjs
-│   │   ├── mock-fetch.mjs
-│   │   └── serve-static.mjs
-│   └── send-onesignal-test-notifications.sh
-├── src
-│   ├── app
-│   │   ├── __tests__
-│   │   ├── archive
-│   │   ├── articles
-│   │   ├── category
-│   │   ├── contact
-│   │   ├── copyright
-│   │   ├── disclaimer
-│   │   ├── global-error.tsx
-│   │   ├── layout.module.css
-│   │   ├── layout.tsx
-│   │   ├── link
-│   │   ├── manifest.json
-│   │   ├── not-found.module.css
-│   │   ├── not-found.tsx
-│   │   ├── p
-│   │   ├── page.tsx
-│   │   ├── privacy
-│   │   ├── profile
-│   │   ├── rss.xml
-│   │   ├── search
-│   │   ├── sitemap-html
-│   │   ├── sitemap.ts
-│   │   └── tag
-│   ├── components
-│   │   ├── Common
-│   │   ├── Features
-│   │   ├── Pages
-│   │   └── ThirdParties
-│   ├── config
-│   │   ├── publicEnv.ts
-│   │   └── serverEnv.ts
-│   ├── constants
-│   │   ├── articleContent.ts
-│   │   ├── category.ts
-│   │   ├── customHtml.ts
-│   │   ├── data.ts
-│   │   ├── limit.ts
-│   │   └── page.ts
-│   ├── contents
-│   │   ├── copyright.ts
-│   │   ├── disclaimer.ts
-│   │   ├── link.ts
-│   │   ├── privacy.ts
-│   │   └── profile.ts
-│   ├── contexts
-│   │   ├── __tests__
-│   │   ├── ThemeProvider.tsx
-│   │   └── ThemeWrapper.tsx
-│   ├── hooks
-│   │   ├── __tests__
-│   │   ├── useCodeBlockCopyButtons.tsx
-│   │   ├── useExtractHeadings.ts
-│   │   ├── useIframelyEmbeds.ts
-│   │   ├── useIsClient.ts
-│   │   └── useMutationObserver.ts
-│   ├── instrumentation-client.ts
-│   ├── libs
-│   │   ├── __tests__
-│   │   ├── archive.ts
-│   │   ├── microcms.ts
-│   │   ├── microcmsPage.ts
-│   │   ├── pageData.ts
-│   │   ├── recent.ts
-│   │   ├── rss.ts
-│   │   ├── unified.ts
-│   │   └── zenn.ts
-│   ├── styles
-│   │   ├── uiClassNames.ts
-│   │   ├── globals.css
-│   │   └── plugin.css
-│   ├── test
-│   │   ├── factories.ts
-│   │   └── setup.ts
-│   ├── types
-│   │   ├── form.ts
-│   │   ├── heading.ts
-│   │   ├── microcms.ts
-│   │   ├── react-dom-client.d.ts
-│   │   └── unified.ts
-│   └── utils
-│       ├── __tests__
-│       ├── formatDate.ts
-│       ├── formatHeadings.ts
-│       ├── formatMicroCmsImageUrl.ts
-│       ├── formatRichText.ts
-│       ├── htmlSanitizer.ts
-│       ├── markdownHeadings.ts
-│       ├── sanitizeCustomHtml.ts
-│       └── urlSafety.ts
-├── terraform
-│   ├── .terraform.lock.hcl
-│   ├── iam
-│   │   ├── iam.tf
-│   │   └── variables.tf
-│   ├── main.tf
-│   ├── module.tf
-│   ├── s3
-│   │   ├── s3.tf
-│   │   └── variables.tf
-│   ├── terraform.tfvars.example
-│   └── variables.tf
-├── tsconfig.json
-├── vercel.json
-└── vitest.config.mts
-
-78 directories, 125 files
+├── .github/workflows/  # CI/CD・運用ワークフロー
+├── api/                # Vercel Functionsのエントリーポイント
+├── cmd/                # ローカルGo APIサーバー
+├── docker/             # 開発用Dockerイメージ
+├── docs/                # READMEなどのドキュメント資産
+├── e2e/                 # Playwright E2Eテスト
+├── pkg/api/             # Go APIの実装
+├── public/              # 静的ファイル
+├── scripts/             # E2E・運用スクリプト
+├── src/
+│   ├── app/             # Next.js App Router
+│   ├── components/      # UIコンポーネント
+│   ├── config/          # 環境変数の参照
+│   ├── contents/        # 固定ページのコンテンツ
+│   ├── hooks/           # React Hooks
+│   ├── libs/            # データ取得・変換
+│   ├── styles/          # グローバルスタイル・共通UI定義
+│   ├── types/           # TypeScriptの型定義
+│   └── utils/           # 汎用処理
+└── terraform/           # AWSリソース定義
 ```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
