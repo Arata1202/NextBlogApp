@@ -6,16 +6,24 @@ import {
   getThemeVariantClassName,
   radiusClassNames,
   themeVariantClassNames,
-  transitionClassNames,
 } from '@/styles/uiClassNames';
 
 type Props = {
   compact?: boolean;
 };
 
+const SPONSORED_BADGE_THEME_CLASS_NAMES = {
+  light: 'bg-blue-600/10 text-blue-700 inset-ring-blue-600/20',
+  dark: 'bg-blue-400/10 text-blue-300 inset-ring-blue-400/20',
+} as const;
+
 export default function SponsoredDisclosure({ compact = false }: Props) {
   const { theme } = useTheme();
-  const badgeClassName = `${styles.badge} ${radiusClassNames.control} bg-blue-600 text-white`;
+  const badgeClassName = [
+    'inline-flex w-fit shrink-0 items-center px-2 py-1 text-xs font-medium inset-ring',
+    radiusClassNames.control,
+    getThemeVariantClassName(theme, SPONSORED_BADGE_THEME_CLASS_NAMES),
+  ].join(' ');
 
   if (compact) {
     return <span className={badgeClassName}>PR</span>;
@@ -23,10 +31,8 @@ export default function SponsoredDisclosure({ compact = false }: Props) {
 
   const disclosureClassName = [
     styles.disclosure,
-    radiusClassNames.control,
-    transitionClassNames.color,
+    'flex justify-start text-left p-3 border',
     getThemeVariantClassName(theme, themeVariantClassNames.borderedText),
-    theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50',
   ].join(' ');
 
   return (

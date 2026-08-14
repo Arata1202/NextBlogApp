@@ -7,7 +7,7 @@ describe('ArticleCard', () => {
   it('shows a PR badge only for sponsored articles', () => {
     const { rerender } = render(<ArticleCard article={createArticle({ isSponsored: true })} />);
 
-    expect(screen.getByText('PR')).toBeInTheDocument();
+    expect(screen.getByText('PR')).toHaveClass('w-fit');
 
     rerender(<ArticleCard article={createArticle({ isSponsored: false })} />);
     expect(screen.queryByText('PR')).not.toBeInTheDocument();
