@@ -118,7 +118,7 @@ export default function Header() {
     <>
       <header className={`${styles.header} fixed top-0 left-0 w-full z-30 ${themeClassName}`}>
         <nav
-          className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:p-6 lg:px-8"
+          className="mx-auto flex max-w-340 items-center justify-between px-4 py-5 sm:p-6 lg:px-8"
           aria-label="グローバルナビゲーション"
         >
           <Link

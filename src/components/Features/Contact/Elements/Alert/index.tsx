@@ -41,7 +41,7 @@ export default function Alert({ onClose, show, title, description, variant = 'su
           leaveTo="opacity-0"
         >
           <div
-            className={`pointer-events-auto w-full max-w-sm overflow-hidden ${radiusClassNames.dialog} ${shadowClassNames.dialog} ring-1 ring-blue-500/5 mt-24 ${themeClassName}`}
+            className={`pointer-events-auto mt-16 w-full max-w-sm overflow-hidden ${radiusClassNames.dialog} ${shadowClassNames.dialog} ring-1 ring-blue-500/5 ${themeClassName}`}
             role={role}
             aria-live={ariaLive}
           >

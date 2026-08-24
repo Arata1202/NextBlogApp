@@ -4,6 +4,14 @@ import { describe, expect, it } from 'vitest';
 import Header from '@/components/Common/Layouts/Header';
 
 describe('Header', () => {
+  it('aligns its content width with the main container', () => {
+    render(<Header />);
+
+    expect(screen.getByRole('navigation', { name: 'グローバルナビゲーション' })).toHaveClass(
+      'max-w-340',
+    );
+  });
+
   it('keeps the logo layout size stable', () => {
     render(<Header />);
 
