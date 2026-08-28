@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import ArticleList from '.';
-import { articleFixture, unifiedArticleFixture } from '@/stories/articleFixtures';
+import { articleFixture } from '@/stories/articleFixtures';
 
 const createdAt = '2026-08-01T09:00:00.000Z';
 const tags = [
@@ -30,29 +30,6 @@ export const Articles: Story = {
     articles: [
       articleFixture,
       { ...articleFixture, id: 'storybook-article-2', title: 'StorybookでUIを確認する方法' },
-    ],
-  },
-};
-
-export const MixedSources: Story = {
-  args: {
-    articles: [],
-    mixedArticles: [
-      unifiedArticleFixture,
-      {
-        ...unifiedArticleFixture,
-        id: 'storybook-zenn',
-        source: 'zenn',
-        url: 'https://zenn.dev/example/articles/storybook',
-        title: 'Next.js App Routerの設計で意識したこと',
-        description:
-          'Zennから取得した外部記事です。ブログ記事とは異なる配信元とリンク先を持つ一覧表示を確認します。',
-        publishedAt: '2026-07-20T09:00:00.000Z',
-        updatedAt: undefined,
-        thumbnail: undefined,
-        thumbnailUrl: '/images/thumbnail/7.webp',
-        isSponsored: false,
-      },
     ],
   },
 };
