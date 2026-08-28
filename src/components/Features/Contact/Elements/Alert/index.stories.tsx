@@ -8,8 +8,8 @@ const meta = {
   args: {
     onClose: fn(),
     show: true,
-    title: '送信しました',
-    description: 'お問い合わせありがとうございます。内容を確認してご連絡します。',
+    title: 'お問い合わせありがとうございます',
+    description: '正常に処理が完了しました。',
   },
   tags: ['autodocs'],
 } satisfies Meta<typeof Alert>;
@@ -22,8 +22,8 @@ export const Success: Story = {};
 export const Error: Story = {
   args: {
     variant: 'error',
-    title: '送信できませんでした',
-    description: '時間をおいて、もう一度お試しください。',
+    title: '送信に失敗しました',
+    description: '時間をおいて再度お試しください。',
   },
 };
 
