@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import RichText from '.';
+import '@/styles/plugin.css';
 
 const tableHtml = `
   <table>

@@ -18,24 +18,20 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Blog: Story = { args: { article: unifiedArticleFixture } };
-
 export const Zenn: Story = {
   args: {
     article: {
       ...unifiedArticleFixture,
       id: 'storybook-zenn-article',
-      title: 'Zennで公開した技術記事',
+      title: 'Next.js App Routerの設計で意識したこと',
+      description: 'Zennから取得した外部記事として、新しいタブで開くカードを確認します。',
+      publishedAt: '2026-07-20T09:00:00.000Z',
+      updatedAt: undefined,
       url: 'https://zenn.dev/example/articles/storybook',
       source: 'zenn',
       thumbnail: undefined,
       thumbnailUrl: '/images/thumbnail/7.webp',
+      isSponsored: false,
     },
-  },
-};
-
-export const Sponsored: Story = {
-  args: {
-    article: { ...unifiedArticleFixture, id: 'storybook-unified-sponsored', isSponsored: true },
   },
 };
