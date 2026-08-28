@@ -13,6 +13,9 @@ export default defineConfig(async () => {
         '@': path.resolve(import.meta.dirname, './src'),
       },
     },
+    optimizeDeps: {
+      include: ['react-slick'],
+    },
     test: {
       projects: [
         {

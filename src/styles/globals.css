@@ -25,6 +25,7 @@ layer(base);
     color: var(--color-theme-light-text);
     border-color: var(--color-theme-light-border);
     --tw-ring-color: var(--color-theme-light-border);
+    --color-text-sub: #767676;
   }
 
   .DarkTheme {
@@ -32,6 +33,7 @@ layer(base);
     color: var(--color-theme-dark-text);
     border-color: var(--color-theme-dark-border);
     --tw-ring-color: var(--color-theme-dark-border);
+    --color-text-sub: #999;
   }
 
   .iframely-embed {
@@ -60,7 +62,7 @@ layer(base);
       'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New',
       monospace;
     --color-text-main: #333;
-    --color-text-sub: #999;
+    --color-text-sub: #767676;
     --color-bg-sub: #f3f3f3;
     --color-bg-code: #0d1117;
     --color-text-code: #c9d1d9;

@@ -147,7 +147,7 @@ export default function ImageSlider({ block, imageAltFallback }: Props) {
         className={styles.slider}
         prevArrow={<SliderArrow direction="previous" />}
         nextArrow={<SliderArrow direction="next" />}
-        afterChange={setCurrentSlide}
+        beforeChange={(_, nextSlide) => setCurrentSlide(nextSlide)}
         customPaging={(index) => (
           <button
             type="button"

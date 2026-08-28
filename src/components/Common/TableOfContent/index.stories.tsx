@@ -20,3 +20,15 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = { args: { headings } };
 
 export const Sidebar: Story = { args: { headings, sidebar: true } };
+
+export const DeepHierarchy: Story = {
+  args: {
+    headings: [
+      { id: 'overview', title: '概要', level: 2 },
+      { id: 'configuration', title: '設定', level: 3 },
+      { id: 'advanced', title: '詳細設定', level: 4 },
+      { id: 'verification', title: '動作確認で確認しておきたい長い見出し', level: 2 },
+    ],
+  },
+  globals: { viewport: { value: 'mobile1', isRotated: false } },
+};

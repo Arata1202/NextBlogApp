@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { useTheme } from 'next-themes';
 import { expect } from 'storybook/test';
 
 type ColorToken = {
@@ -26,7 +27,7 @@ const themeColors: ColorToken[] = [
 
 const contentColors: ColorToken[] = [
   { name: 'Main text', variable: '--color-text-main', value: '#333' },
-  { name: 'Secondary text', variable: '--color-text-sub', value: '#999' },
+  { name: 'Secondary text', variable: '--color-text-sub', value: '#767676' },
   { name: 'Subtle background', variable: '--color-bg-sub', value: '#f3f3f3' },
   { name: 'Border', variable: '--color-border', value: '#ddd' },
   { name: 'Dark border', variable: '--color-border-dark', value: '#ccc' },
@@ -166,6 +167,13 @@ function TypographyScale() {
 }
 
 function Foundations() {
+  const { resolvedTheme } = useTheme();
+  const themedContentColors = contentColors.map((token) =>
+    token.variable === '--color-text-sub'
+      ? { ...token, value: resolvedTheme === 'dark' ? '#999' : '#767676' }
+      : token,
+  );
+
   return (
     <main className="mx-auto max-w-7xl space-y-12">
       <header>
@@ -182,7 +190,7 @@ function Foundations() {
 
       <section className="space-y-4">
         <h2 className="text-2xl font-bold">Content colors</h2>
-        <ColorPalette colors={contentColors} />
+        <ColorPalette colors={themedContentColors} />
       </section>
 
       <section className="space-y-4">
