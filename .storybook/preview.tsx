@@ -23,7 +23,6 @@ const preview: Preview = {
   globalTypes: {
     theme: {
       description: 'Component theme',
-      defaultValue: 'light',
       toolbar: {
         icon: 'paintbrush',
         items: [
@@ -33,6 +32,9 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+  },
+  initialGlobals: {
+    theme: 'light',
   },
   parameters: {
     layout: 'fullscreen',
