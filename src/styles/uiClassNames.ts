@@ -26,38 +26,38 @@ export const transitionClassNames = {
 } as const;
 
 export const radiusClassNames = {
-  control: 'rounded-md',
-  dialog: 'rounded-lg',
-  round: 'rounded-full',
+  control: 'rounded-[var(--radius-control)]',
+  dialog: 'rounded-[var(--radius-dialog)]',
+  round: 'rounded-[var(--radius-round)]',
 } as const;
 
 export const shadowClassNames = {
-  control: 'shadow-xs',
-  card: 'shadow-lg hover:shadow-xl',
-  dialog: 'shadow-xl',
+  control: 'shadow-[var(--shadow-control)]',
+  card: 'shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)]',
+  dialog: 'shadow-[var(--shadow-dialog)]',
 } as const;
 
 export const colorClassNames = {
-  accentHoverText: 'hover:text-blue-600',
-  accentBorderHover: 'hover:border-blue-600',
-  mutedText: 'text-gray-500',
-  subtleText: 'text-gray-400',
-  textLink: 'text-blue-700 hover:text-blue-800',
-  darkTextLink: 'text-blue-300 hover:text-blue-200',
+  accentHoverText: 'hover:text-[var(--color-interactive)]',
+  accentBorderHover: 'hover:border-[var(--color-interactive)]',
+  mutedText: 'text-[var(--color-text-muted)]',
+  subtleText: 'text-[var(--color-text-subtle)]',
+  textLink: 'text-[var(--color-link)] hover:text-[var(--color-link-hover)]',
+  darkTextLink: 'text-[var(--color-link-dark)] hover:text-[var(--color-link-dark-hover)]',
 } as const;
 
 export const themeVariantClassNames = {
   borderedText: {
-    light: 'border-gray-300 text-gray-700',
-    dark: 'border-gray-500 text-white',
+    light: 'border-[var(--color-theme-border)] text-[var(--color-theme-text)]',
+    dark: 'border-[var(--color-theme-border)] text-[var(--color-theme-text)]',
   },
   mutedText: {
-    light: 'text-gray-500',
-    dark: 'text-gray-300',
+    light: 'text-[var(--color-theme-muted-text)]',
+    dark: 'text-[var(--color-theme-muted-text)]',
   },
   selectedSurface: {
-    light: 'bg-gray-300 text-gray-700',
-    dark: 'bg-gray-500 text-white',
+    light: 'bg-[var(--color-theme-selected-background)] text-[var(--color-theme-selected-text)]',
+    dark: 'bg-[var(--color-theme-selected-background)] text-[var(--color-theme-selected-text)]',
   },
 } as const satisfies Record<string, ThemeVariantClassNames>;
 

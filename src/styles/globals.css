@@ -21,17 +21,31 @@ layer(base);
   }
 
   .LightTheme {
-    background-color: var(--color-theme-light-background);
-    color: var(--color-theme-light-text);
-    border-color: var(--color-theme-light-border);
-    --tw-ring-color: var(--color-theme-light-border);
+    --color-theme-background: var(--color-theme-light-background);
+    --color-theme-text: var(--color-theme-light-text);
+    --color-theme-border: var(--color-theme-light-border);
+    --color-theme-muted-text: var(--color-theme-light-muted-text);
+    --color-theme-selected-background: var(--color-theme-light-selected-background);
+    --color-theme-selected-text: var(--color-theme-light-selected-text);
+
+    background-color: var(--color-theme-background);
+    color: var(--color-theme-text);
+    border-color: var(--color-theme-border);
+    --tw-ring-color: var(--color-theme-border);
   }
 
   .DarkTheme {
-    background-color: var(--color-theme-dark-background);
-    color: var(--color-theme-dark-text);
-    border-color: var(--color-theme-dark-border);
-    --tw-ring-color: var(--color-theme-dark-border);
+    --color-theme-background: var(--color-theme-dark-background);
+    --color-theme-text: var(--color-theme-dark-text);
+    --color-theme-border: var(--color-theme-dark-border);
+    --color-theme-muted-text: var(--color-theme-dark-muted-text);
+    --color-theme-selected-background: var(--color-theme-dark-selected-background);
+    --color-theme-selected-text: var(--color-theme-dark-selected-text);
+
+    background-color: var(--color-theme-background);
+    color: var(--color-theme-text);
+    border-color: var(--color-theme-border);
+    --tw-ring-color: var(--color-theme-border);
   }
 
   .iframely-embed {
@@ -73,12 +87,27 @@ layer(base);
     --color-link-hover: #1e40af;
     --color-link-dark: #93c5fd;
     --color-link-dark-hover: #bfdbfe;
+    --color-interactive: #2563eb;
+    --color-text-muted: #6b7280;
+    --color-text-subtle: #9ca3af;
     --color-theme-light-background: #fff;
     --color-theme-light-text: #374151;
     --color-theme-light-border: #d1d5db;
+    --color-theme-light-muted-text: #6b7280;
+    --color-theme-light-selected-background: #d1d5db;
+    --color-theme-light-selected-text: #374151;
     --color-theme-dark-background: #262626;
     --color-theme-dark-text: #fff;
     --color-theme-dark-border: #6b7280;
+    --color-theme-dark-muted-text: #d1d5db;
+    --color-theme-dark-selected-background: #6b7280;
+    --color-theme-dark-selected-text: #fff;
+    --color-theme-background: var(--color-theme-light-background);
+    --color-theme-text: var(--color-theme-light-text);
+    --color-theme-border: var(--color-theme-light-border);
+    --color-theme-muted-text: var(--color-theme-light-muted-text);
+    --color-theme-selected-background: var(--color-theme-light-selected-background);
+    --color-theme-selected-text: var(--color-theme-light-selected-text);
     --font-family-content-code: menlo, inconsolata, monospace;
     --font-size-content-body: 18px;
     --font-size-content-heading-1: 2rem;
@@ -90,6 +119,16 @@ layer(base);
     --font-weight-content-heading: 700;
     --line-height-content-body: 2;
     --radius-small: 4px;
+    --radius-control: 0.375rem;
+    --radius-dialog: 0.5rem;
+    --radius-round: 9999px;
+    --shadow-control: 0 1px 2px 0 rgb(0 0 0 / 5%);
+    --shadow-card:
+      0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
+    --shadow-card-hover:
+      0 20px 25px -5px rgb(0 0 0 / 10%), 0 8px 10px -6px rgb(0 0 0 / 10%);
+    --shadow-dialog:
+      0 20px 25px -5px rgb(0 0 0 / 10%), 0 8px 10px -6px rgb(0 0 0 / 10%);
     --focus-ring-width: 2px;
     --focus-ring-offset: 2px;
   }
