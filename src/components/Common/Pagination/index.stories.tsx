@@ -16,7 +16,3 @@ export const FirstPage: Story = { args: { current: 1 } };
 export const MiddlePage: Story = { args: { current: 6 } };
 
 export const LastPage: Story = { args: { current: 12 } };
-
-export const QueryPagination: Story = {
-  args: { current: 3, basePath: '/search', q: 'storybook', useQueryPage: true },
-};
