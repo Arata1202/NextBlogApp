@@ -8,6 +8,9 @@ const MOUNT_ATTRIBUTE = 'data-code-copy-button-mount';
 const WRAPPER_ATTRIBUTE = 'data-code-copy-wrapper';
 
 type EnhancedCodeBlock = {
+  addedAriaLabel: boolean;
+  addedRole: boolean;
+  addedTabIndex: boolean;
   filenameContainer: HTMLElement | null;
   mount: HTMLDivElement;
   pre: HTMLPreElement;
@@ -72,6 +75,9 @@ export const useCodeBlockCopyButtons = (
       const filename = getFilename(pre);
       const filenameContainer = getFilenameContainer(pre);
       const wrapper = document.createElement('div');
+      const addedAriaLabel = !pre.hasAttribute('aria-label');
+      const addedRole = !pre.hasAttribute('role');
+      const addedTabIndex = !pre.hasAttribute('tabindex');
 
       const renderControls = () => {
         root.render(
@@ -92,6 +98,15 @@ export const useCodeBlockCopyButtons = (
       wrapper.setAttribute(WRAPPER_ATTRIBUTE, 'true');
       wrapper.classList.add(codeBlockStyles.codeBlockFrame);
       pre.setAttribute(ENHANCED_ATTRIBUTE, 'true');
+      if (addedAriaLabel) {
+        pre.setAttribute('aria-label', filename ? `コードブロック: ${filename}` : 'コードブロック');
+      }
+      if (addedRole) {
+        pre.setAttribute('role', 'region');
+      }
+      if (addedTabIndex) {
+        pre.tabIndex = 0;
+      }
       filenameContainer?.toggleAttribute(FILENAME_MOUNTED_ATTRIBUTE, Boolean(filename));
       pre.classList.add(codeBlockStyles.codeBlock);
       updateWrapState(pre, wrapped);
@@ -99,7 +114,16 @@ export const useCodeBlockCopyButtons = (
       wrapper.appendChild(mount);
       wrapper.appendChild(pre);
       renderControls();
-      enhancedCodeBlocks.push({ filenameContainer, mount, pre, root, wrapper });
+      enhancedCodeBlocks.push({
+        addedAriaLabel,
+        addedRole,
+        addedTabIndex,
+        filenameContainer,
+        mount,
+        pre,
+        root,
+        wrapper,
+      });
     };
 
     const enhanceCodeBlocks = () => {
@@ -119,19 +143,41 @@ export const useCodeBlockCopyButtons = (
 
     return () => {
       observer.disconnect();
-      enhancedCodeBlocks.forEach(({ filenameContainer, mount, pre, root, wrapper }) => {
-        root.unmount();
-        mount.remove();
-        wrapper.parentElement?.insertBefore(pre, wrapper);
-        wrapper.remove();
-        pre.removeAttribute(ENHANCED_ATTRIBUTE);
-        filenameContainer?.removeAttribute(FILENAME_MOUNTED_ATTRIBUTE);
-        pre.classList.remove(
-          codeBlockStyles.codeBlock,
-          codeBlockStyles.wrapped,
-          codeBlockStyles.unwrapped,
-        );
-      });
+      enhancedCodeBlocks.forEach(
+        ({
+          addedAriaLabel,
+          addedRole,
+          addedTabIndex,
+          filenameContainer,
+          mount,
+          pre,
+          root,
+          wrapper,
+        }) => {
+          queueMicrotask(() => {
+            root.unmount();
+            mount.remove();
+          });
+          wrapper.parentElement?.insertBefore(pre, wrapper);
+          wrapper.remove();
+          pre.removeAttribute(ENHANCED_ATTRIBUTE);
+          if (addedAriaLabel) {
+            pre.removeAttribute('aria-label');
+          }
+          if (addedRole) {
+            pre.removeAttribute('role');
+          }
+          if (addedTabIndex) {
+            pre.removeAttribute('tabindex');
+          }
+          filenameContainer?.removeAttribute(FILENAME_MOUNTED_ATTRIBUTE);
+          pre.classList.remove(
+            codeBlockStyles.codeBlock,
+            codeBlockStyles.wrapped,
+            codeBlockStyles.unwrapped,
+          );
+        },
+      );
     };
   }, [containerRef, refreshKey]);
 };

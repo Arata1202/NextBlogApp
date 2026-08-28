@@ -37,7 +37,7 @@ const articleHtml = `
 `;
 
 const meta = {
-  title: 'Content/RichText',
+  title: 'Content/Article Plugins/Rich Text',
   component: RichText,
   tags: ['autodocs'],
 } satisfies Meta<typeof RichText>;

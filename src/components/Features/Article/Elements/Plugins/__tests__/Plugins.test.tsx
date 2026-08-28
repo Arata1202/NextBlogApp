@@ -96,6 +96,9 @@ describe('Article plugins', () => {
     expect(pre).toBeInTheDocument();
     expect(toolbar.closest('pre')).toBeNull();
     expect(wrapper).toContainElement(toolbar);
+    expect(pre).toHaveAttribute('aria-label', 'コードブロック');
+    expect(pre).toHaveAttribute('role', 'region');
+    expect(pre).toHaveAttribute('tabindex', '0');
 
     fireEvent.click(wrapButton);
 
