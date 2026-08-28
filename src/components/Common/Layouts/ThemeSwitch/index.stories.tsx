@@ -10,6 +10,4 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const LightTheme: Story = { globals: { theme: 'light' } };
-
-export const DarkTheme: Story = { globals: { theme: 'dark' } };
+export const Default: Story = {};
