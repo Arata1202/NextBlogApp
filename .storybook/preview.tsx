@@ -2,6 +2,8 @@ import type { Decorator, Preview } from '@storybook/nextjs-vite';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { ThemeProvider, useTheme } from 'next-themes';
 import { useGlobals } from 'storybook/preview-api';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import '@/styles/globals.css';
 
 type Theme = 'light' | 'dark';
