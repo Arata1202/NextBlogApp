@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { expect } from 'storybook/test';
 
 type ColorToken = {
   name: string;
@@ -85,6 +86,36 @@ const typography: TypographyToken[] = [
   },
 ];
 
+const typographyDetails = [
+  { variable: '--font-weight-content-heading', value: '700' },
+  { variable: '--line-height-content-body', value: '2' },
+] as const;
+
+const codeTokens = [
+  {
+    variable: '--font-mono',
+    value:
+      'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+  },
+  { variable: '--font-family-content-code', value: 'menlo, inconsolata, monospace' },
+  { variable: '--radius-small', value: '4px' },
+] as const;
+
+const focusTokens = [
+  { variable: '--color-focus-ring', value: '#2563eb' },
+  { variable: '--focus-ring-width', value: '2px' },
+  { variable: '--focus-ring-offset', value: '2px' },
+] as const;
+
+const documentedTokens = [
+  ...themeColors,
+  ...contentColors,
+  ...typography,
+  ...typographyDetails,
+  ...codeTokens,
+  ...focusTokens,
+];
+
 function TokenDetails({ variable, value }: { variable: string; value: string }) {
   return (
     <div className="space-y-1 p-3">
@@ -161,8 +192,9 @@ function Foundations() {
         </div>
         <TypographyScale />
         <div className="grid gap-3 sm:grid-cols-2">
-          <TokenDetails variable="--font-weight-content-heading" value="700" />
-          <TokenDetails variable="--line-height-content-body" value="2" />
+          {typographyDetails.map((token) => (
+            <TokenDetails key={token.variable} {...token} />
+          ))}
         </div>
       </section>
 
@@ -180,15 +212,9 @@ function Foundations() {
           <code>const theme = &apos;NextBlogApp&apos;;</code>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
-          <TokenDetails
-            variable="--font-mono"
-            value="ui-monospace, Menlo, Monaco, Cascadia Mono, Segoe UI Mono, Roboto Mono, Oxygen Mono, Ubuntu Monospace, Source Code Pro, Fira Mono, Droid Sans Mono, Courier New, monospace"
-          />
-          <TokenDetails
-            variable="--font-family-content-code"
-            value="menlo, inconsolata, monospace"
-          />
-          <TokenDetails variable="--radius-small" value="4px" />
+          {codeTokens.map((token) => (
+            <TokenDetails key={token.variable} {...token} />
+          ))}
         </div>
       </section>
 
@@ -199,9 +225,9 @@ function Foundations() {
           フォーカス表示を確認
         </a>
         <div className="grid gap-3 sm:grid-cols-3">
-          <TokenDetails variable="--color-focus-ring" value="#2563eb" />
-          <TokenDetails variable="--focus-ring-width" value="2px" />
-          <TokenDetails variable="--focus-ring-offset" value="2px" />
+          {focusTokens.map((token) => (
+            <TokenDetails key={token.variable} {...token} />
+          ))}
         </div>
       </section>
     </main>
@@ -218,4 +244,13 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async () => {
+    const rootStyles = getComputedStyle(document.documentElement);
+
+    for (const { variable, value } of documentedTokens) {
+      const actualValue = rootStyles.getPropertyValue(variable).trim().replace(/\s+/g, ' ');
+      await expect(actualValue).toBe(value);
+    }
+  },
+};

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import Markdown from '.';
 
-const content = `## 記事本文の見出し
+const content = `## 固定ページの見出し
 
 本文には[内部リンク](/profile)と[外部リンク](https://example.com)を含められます。
 
@@ -29,6 +29,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const ArticleContent: Story = {
-  args: { content, headingIds: ['article-heading', 'list-and-quote', 'code'] },
+export const FixedPageContent: Story = {
+  args: { content, headingIds: ['page-heading', 'list-and-quote', 'code'] },
 };
