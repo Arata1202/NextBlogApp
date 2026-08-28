@@ -12,13 +12,6 @@ const content = `## 記事本文の見出し
 
 > 引用文の表示例です。
 
-### 表
-
-| 項目 | 内容 |
-| --- | --- |
-| Storybook | UIを単体で確認 |
-| a11y | アクセシビリティを検査 |
-
 ### コード
 
 ~~~ts
@@ -37,5 +30,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const ArticleContent: Story = {
-  args: { content, headingIds: ['article-heading', 'list-and-quote', 'table', 'code'] },
+  args: { content, headingIds: ['article-heading', 'list-and-quote', 'code'] },
 };
