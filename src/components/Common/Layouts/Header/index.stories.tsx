@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { expect } from 'storybook/test';
 import Header from '.';
 
 const meta = {
@@ -21,5 +22,8 @@ type Story = StoryObj<typeof meta>;
 export const Desktop: Story = {};
 
 export const Mobile: Story = {
-  parameters: { viewport: { defaultViewport: 'mobile1' } },
+  globals: { viewport: { value: 'mobile1', isRotated: false } },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('button', { name: 'メニューを開く' })).toBeVisible();
+  },
 };
