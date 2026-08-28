@@ -42,14 +42,17 @@ export const colorClassNames = {
   accentBorderHover: 'hover:border-[var(--color-interactive)]',
   mutedText: 'text-[var(--color-text-muted)]',
   subtleText: 'text-[var(--color-text-subtle)]',
-  textLink: 'text-[var(--color-link)] hover:text-[var(--color-link-hover)]',
-  darkTextLink: 'text-[var(--color-link-dark)] hover:text-[var(--color-link-dark-hover)]',
+  textLink: 'text-[var(--color-control-link)] hover:text-[var(--color-control-link-hover)]',
+  darkTextLink:
+    'text-[var(--color-control-link-dark)] hover:text-[var(--color-control-link-dark-hover)]',
 } as const;
 
 export const themeVariantClassNames = {
   borderedText: {
-    light: 'border-[var(--color-theme-border)] text-[var(--color-theme-text)]',
-    dark: 'border-[var(--color-theme-border)] text-[var(--color-theme-text)]',
+    light:
+      'border-[var(--color-theme-bordered-text-border)] text-[var(--color-theme-bordered-text)]',
+    dark:
+      'border-[var(--color-theme-bordered-text-border)] text-[var(--color-theme-bordered-text)]',
   },
   mutedText: {
     light: 'text-[var(--color-theme-muted-text)]',
