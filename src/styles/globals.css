@@ -21,6 +21,7 @@ layer(base);
   }
 
   .LightTheme {
+    --color-text-sub: #767676;
     --color-theme-background: var(--color-theme-light-background);
     --color-theme-text: var(--color-theme-light-text);
     --color-theme-border: var(--color-theme-light-border);
@@ -37,6 +38,7 @@ layer(base);
   }
 
   .DarkTheme {
+    --color-text-sub: #999;
     --color-theme-background: var(--color-theme-dark-background);
     --color-theme-text: var(--color-theme-dark-text);
     --color-theme-border: var(--color-theme-dark-border);
@@ -78,7 +80,7 @@ layer(base);
       'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New',
       monospace;
     --color-text-main: #333;
-    --color-text-sub: #999;
+    --color-text-sub: #767676;
     --color-bg-sub: #f3f3f3;
     --color-bg-code: #0d1117;
     --color-text-code: #c9d1d9;
