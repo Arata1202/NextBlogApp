@@ -36,6 +36,7 @@ export const sponsoredArticleFixture: Article = {
   ...articleFixture,
   id: 'storybook-sponsored-article',
   isSponsored: true,
+  sponsorUrl: 'https://sponsor.example.com',
 };
 
 export const unifiedArticleFixture = {
