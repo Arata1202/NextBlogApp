@@ -22,16 +22,6 @@ export const Default: Story = { args: { article: articleFixture } };
 
 export const Sponsored: Story = { args: { article: sponsoredArticleFixture } };
 
-export const WithoutImage: Story = {
-  args: {
-    article: {
-      ...articleFixture,
-      id: 'storybook-without-image',
-      thumbnail: { url: '', width: 1200, height: 630 },
-    },
-  },
-};
-
 export const LongContent: Story = {
   args: {
     article: {

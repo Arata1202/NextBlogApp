@@ -10,7 +10,13 @@ const withTheme: Decorator = (Story, context) => {
   document.body.classList.toggle('LightTheme', theme === 'light');
 
   return (
-    <ThemeProvider forcedTheme={theme} enableSystem={false}>
+    <ThemeProvider
+      key={`${context.id}-${theme}`}
+      defaultTheme={theme}
+      forcedTheme={theme}
+      enableSystem={false}
+      storageKey={`storybook-theme-${context.id}`}
+    >
       <div className={`${themeClassName} min-h-screen p-6`}>
         <Story />
       </div>
