@@ -18,6 +18,7 @@
   - [アーキテクチャ](#アーキテクチャ)
   - [環境構築](#環境構築)
   - [スポンサー記事](#スポンサー記事)
+  - [Storybook](#storybook)
   - [Terraform](#terraform)
   - [テスト](#テスト)
   - [OneSignalテスト通知](#onesignalテスト通知)
@@ -46,7 +47,7 @@
 | Infrastructure    | Cloudflare Pages, Vercel, Amazon S3, Terraform |
 | Environment setup | Node.js, pnpm, Docker Compose                  |
 | CI/CD             | GitHub Actions, CodeQL, Dependabot             |
-| Design            | Canva（Figmaはアーカイブ済み）                 |
+| Design            | Storybook, Canva（Figmaはアーカイブ済み）      |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA  |
 | Integrations      | PWA, OneSignal, Sentry, Iframely, Instagram    |
 
@@ -168,6 +169,25 @@ microCMSの`blog` APIに以下のフィールドを追加する。
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
+## Storybook
+
+共通UIと主要な表示状態はStorybookで確認する。ツールバーからLight／Darkテーマを切り替えられ、AccessibilityパネルとブラウザテストでWCAG違反や操作を検証できる。
+
+```bash
+# Storybookを起動
+pnpm storybook
+
+# 静的Storybookを生成
+pnpm build-storybook
+
+# StoryとアクセシビリティをChromiumで検証
+pnpm test:storybook
+```
+
+Storyは対象コンポーネントと同じディレクトリの`index.stories.tsx`へ配置する。基礎スタイルと共通fixtureは`src/stories/`で管理する。
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
 ## Terraform
 
 ```
@@ -199,6 +219,10 @@ terraform apply
 pnpm lint
 pnpm typecheck
 pnpm test:run
+
+# Storybookの静的ビルド / ブラウザテスト
+pnpm build-storybook
+pnpm test:storybook
 
 # Goの静的解析 / テスト（Docker）
 docker compose run --rm go go vet ./...
@@ -247,6 +271,7 @@ scripts/send-onesignal-test-notifications.sh --send
 ```text
 .
 ├── .github/workflows/  # CI/CD・運用ワークフロー
+├── .storybook/         # Storybook設定
 ├── api/                # Vercel Functionsのエントリーポイント
 ├── cmd/                # ローカルGo APIサーバー
 ├── docker/             # 開発用Dockerイメージ
@@ -258,6 +283,7 @@ scripts/send-onesignal-test-notifications.sh --send
 ├── src/
 │   ├── app/             # Next.js App Router
 │   ├── components/      # UIコンポーネント
+│   ├── stories/         # 基礎スタイル・共通Story fixture
 │   ├── config/          # 環境変数の参照
 │   ├── contents/        # 固定ページのコンテンツ
 │   ├── hooks/           # React Hooks

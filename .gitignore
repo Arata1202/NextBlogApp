@@ -55,3 +55,6 @@ next-env.d.ts
 
 # air
 /tmp
+
+/debug-storybook.log
+/storybook-static/

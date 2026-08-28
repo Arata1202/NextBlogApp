@@ -37,8 +37,12 @@ jobs:
         run: pnpm typecheck
       - name: Test
         run: pnpm test:run
+      - name: Build Storybook
+        run: pnpm build-storybook
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium
+      - name: Test Storybook
+        run: pnpm test:storybook
       - name: E2E
         run: pnpm test:e2e
   go:
