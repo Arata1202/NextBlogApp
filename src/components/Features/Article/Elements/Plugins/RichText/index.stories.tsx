@@ -29,6 +29,7 @@ const articleHtml = `
   <p>段落の余白と行間を確認するための文章です。</p>
   <h3>見出し3</h3>
   <ul><li>箇条書きの項目</li><li>もうひとつの項目</li></ul>
+  <h4>見出し4</h4>
   <ol><li>番号付きの項目</li><li>次の手順</li></ol>
   <blockquote><p>引用として表示される文章です。</p></blockquote>
   <figure><img src="/images/thumbnail/7.webp" alt="記事本文のサンプル画像"><figcaption>画像のキャプション</figcaption></figure>
