@@ -26,7 +26,6 @@ const themeColors: ColorToken[] = [
 ];
 
 const contentColors: ColorToken[] = [
-  { name: 'Main text', variable: '--color-text-main', value: '#333' },
   { name: 'Secondary text', variable: '--color-text-sub', value: '#767676' },
   { name: 'Subtle background', variable: '--color-bg-sub', value: '#f3f3f3' },
   { name: 'Border', variable: '--color-border', value: '#ddd' },

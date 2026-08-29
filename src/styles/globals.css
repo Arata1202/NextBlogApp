@@ -27,7 +27,7 @@ layer(base);
 
   :where([data-app-root]) {
     font-family: 'Geist', sans-serif;
-    color: var(--color-text-main);
+    color: var(--color-theme-light-text);
     line-height: 1.8;
   }
 
@@ -74,7 +74,6 @@ layer(base);
       ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
       'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New',
       monospace;
-    --color-text-main: #333;
     --color-text-sub: #767676;
     --color-bg-sub: #f3f3f3;
     --color-bg-code: #0d1117;
