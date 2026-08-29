@@ -18,6 +18,7 @@
   - [アーキテクチャ](#アーキテクチャ)
   - [環境構築](#環境構築)
   - [スポンサー記事](#スポンサー記事)
+  - [Storybook](#storybook)
   - [Terraform](#terraform)
   - [テスト](#テスト)
   - [OneSignalテスト通知](#onesignalテスト通知)
@@ -30,8 +31,7 @@
 
 <ul>
   <li><a href="https://realunivlog.com">リアル大学生</a></li>
-  <li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=2102-4673">Figma（Archived Design Tokens）</a></li>
-  <li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1">Figma（Archived UI）</a></li>
+  <li><a href="https://master--6a922f631bdb93f72e661b33.chromatic.com/">Storybook</a></li>
 </ul>
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
@@ -45,8 +45,8 @@
 | CMS               | microCMS, Zenn RSS                             |
 | Infrastructure    | Cloudflare Pages, Vercel, Amazon S3, Terraform |
 | Environment setup | Node.js, pnpm, Docker Compose                  |
-| CI/CD             | GitHub Actions, CodeQL, Dependabot             |
-| Design            | Canva（Figmaはアーカイブ済み）                 |
+| CI/CD             | GitHub Actions, Chromatic, CodeQL, Dependabot  |
+| Design            | Storybook, Canva                               |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA  |
 | Integrations      | PWA, OneSignal, Sentry, Iframely, Instagram    |
 
@@ -54,60 +54,7 @@
 
 ## アーキテクチャ
 
-```mermaid
-flowchart TB
-  developer[Developer] --> github[GitHub Repository]
-
-  subgraph ci[CI]
-    github --> actions[GitHub Actions]
-    actions --> quality[Lint / Typecheck / Test / CodeQL]
-  end
-
-  subgraph build[Static Build]
-    github --> pagesBuild[Cloudflare Pages Build<br/>pnpm build]
-    microcms[microCMS<br/>Blog / Category / Tag] --> pagesBuild
-    zenn[Zenn RSS] --> pagesBuild
-    pagesBuild --> generated[Static Output<br/>HTML / JS / CSS / RSS / sitemap]
-  end
-
-  generated --> pages[Cloudflare Pages<br/>out]
-  pages --> browser[User Browser]
-
-  subgraph runtime[Browser Runtime]
-    browser --> app[Next.js Client App]
-    app --> thirdParty[Google Analytics / AdSense<br/>OneSignal / Iframely / Instagram]
-    app -. Client errors .-> sentry[Sentry]
-  end
-
-  subgraph vercelFunctions[Vercel Functions]
-    app --> searchApi[Vercel Go Function<br/>/api/search]
-    searchApi --> microcmsBlogContentApi[microCMS<br/>Blog Content API]
-    searchApi --> zenn
-    app --> sendEmailApi[Vercel Go Function<br/>/api/sendemail]
-    recaptchaApi[Vercel Go Function<br/>/api/recaptcha]
-    sendEmailApi --> smtp[SMTP / Gmail]
-    sendEmailApi --> recaptcha[Google reCAPTCHA]
-    recaptchaApi --> recaptcha
-    cron[Vercel Cron<br/>/api/cron/linkchecker] --> linkcheckerApi[Vercel Go Function<br/>Link Checker]
-    linkcheckerApi --> microcmsBlogContentApi
-    linkcheckerApi --> smtp
-    linkcheckerApi --> zenn
-    linkcheckerApi --> s3
-    linkcheckerApi --> oneSignalApi
-    linkcheckerApi --> pagesDeployHook[Cloudflare Pages Deploy Hook]
-    pagesDeployHook --> pagesBuild
-    microcmsWebhook[microCMS<br/>Content Webhook] --> microcmsbackupApi[Vercel Go Function<br/>/api/webhook/microcmsbackup]
-    microcmsbackupApi --> microcmsBlogContentApi
-    microcmsbackupApi --> s3[AWS S3<br/>Backup CSV<br/>Notification Marker]
-    microcmsbackupApi --> oneSignalApi[OneSignal<br/>Push Notification API]
-  end
-
-  searchApi -. Server errors .-> sentry
-  sendEmailApi -. Server errors .-> sentry
-  recaptchaApi -. Server errors .-> sentry
-  linkcheckerApi -. Server errors .-> sentry
-  microcmsbackupApi -. Server errors .-> sentry
-```
+![NextBlogAppアーキテクチャ](public/images/architecture/nextblogapp.png)
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
@@ -168,6 +115,28 @@ microCMSの`blog` APIに以下のフィールドを追加する。
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
+## Storybook
+
+共通UIと主要な表示状態はStorybookで確認する。ツールバーからLight／Darkテーマを切り替えられ、AccessibilityパネルとブラウザテストでWCAG違反や操作を検証できる。
+
+```bash
+# Storybookを起動
+pnpm storybook
+
+# 静的Storybookを生成
+pnpm build-storybook
+
+# Chromiumをインストール（初回またはPlaywright更新後）
+pnpm exec playwright install chromium
+
+# StoryとアクセシビリティをChromiumで検証
+pnpm test:storybook
+```
+
+Storyは対象コンポーネントと同じディレクトリの`index.stories.tsx`へ配置する。基礎スタイルと共通fixtureは`src/stories/`で管理する。
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
 ## Terraform
 
 ```
@@ -199,6 +168,10 @@ terraform apply
 pnpm lint
 pnpm typecheck
 pnpm test:run
+
+# Storybookの静的ビルド / ブラウザテスト
+pnpm build-storybook
+pnpm test:storybook
 
 # Goの静的解析 / テスト（Docker）
 docker compose run --rm go go vet ./...
@@ -247,6 +220,7 @@ scripts/send-onesignal-test-notifications.sh --send
 ```text
 .
 ├── .github/workflows/  # CI/CD・運用ワークフロー
+├── .storybook/         # Storybook設定
 ├── api/                # Vercel Functionsのエントリーポイント
 ├── cmd/                # ローカルGo APIサーバー
 ├── docker/             # 開発用Dockerイメージ
@@ -258,6 +232,7 @@ scripts/send-onesignal-test-notifications.sh --send
 ├── src/
 │   ├── app/             # Next.js App Router
 │   ├── components/      # UIコンポーネント
+│   ├── stories/         # 基礎スタイル・共通Story fixture
 │   ├── config/          # 環境変数の参照
 │   ├── contents/        # 固定ページのコンテンツ
 │   ├── hooks/           # React Hooks

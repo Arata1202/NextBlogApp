@@ -96,7 +96,7 @@ export default async function RootLayout({ children }: Props) {
         <script dangerouslySetInnerHTML={{ __html: appWebViewBootstrapScript }} />
         <GoogleSearchConsole />
       </head>
-      <body>
+      <body data-app-root>
         <ThemeProvider defaultTheme="light">
           <ThemeWrapper />
           <AppWebViewLinkHandler />

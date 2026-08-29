@@ -14,11 +14,11 @@ export default function RelatedArticle({ relatedArticles }: Props) {
           <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           関連記事
         </div>
-        <div className="mt-5">
+        <ul className="mt-5">
           {relatedArticles.map((item) => (
             <ArticleCard key={item.id} article={item} />
           ))}
-        </div>
+        </ul>
       </div>
     </>
   );

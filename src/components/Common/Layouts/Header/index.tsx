@@ -257,7 +257,12 @@ export default function Header() {
         </nav>
 
         <Transition.Root show={mobileMenuOpen} as={Fragment}>
-          <Dialog as="div" className="relative lg:hidden z-50" onClose={setMobileMenuOpen}>
+          <Dialog
+            as="div"
+            className="relative lg:hidden z-50"
+            data-app-root
+            onClose={setMobileMenuOpen}
+          >
             <Transition.Child
               as={Fragment}
               enter="ease-in-out duration-300"

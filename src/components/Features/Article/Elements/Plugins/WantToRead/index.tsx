@@ -17,7 +17,9 @@ export default function WantToRead({ block }: Props) {
         <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
         <div className="text-2xl font-semibold mb-5">あわせて読みたい</div>
       </div>
-      <ArticleCard article={block.article_link} />
+      <ul>
+        <ArticleCard article={block.article_link} />
+      </ul>
     </>
   );
 }

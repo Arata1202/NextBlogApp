@@ -4,6 +4,8 @@ import { isValidElement, useState, type ComponentPropsWithoutRef, type ReactNode
 import CodeBlockToolbar from './Toolbar';
 import styles from './index.module.css';
 
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex -- Scrollable code regions need keyboard focus. */
+
 type Props = ComponentPropsWithoutRef<'pre'>;
 
 export const getReactNodeText = (node: ReactNode): string => {
@@ -33,7 +35,13 @@ export default function CodeBlock({ children, className, ...props }: Props) {
         wrapped={wrapped}
         onWrappedChange={setWrapped}
       />
-      <pre className={`${styles.codeBlock} ${wrapClassName} ${className ?? ''}`.trim()} {...props}>
+      <pre
+        aria-label="コードブロック"
+        role="region"
+        tabIndex={0}
+        className={`${styles.codeBlock} ${wrapClassName} ${className ?? ''}`.trim()}
+        {...props}
+      >
         {children}
       </pre>
     </div>

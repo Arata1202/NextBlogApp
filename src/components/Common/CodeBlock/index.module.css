@@ -9,7 +9,8 @@
 }
 
 .codeBlock {
-  overflow: hidden !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
   margin: 0 !important;
   background-color: var(--color-bg-code);
   color: var(--color-text-code);
@@ -19,9 +20,14 @@
 
 .codeBlock > code {
   display: block;
-  overflow-x: auto;
+  padding: 16px;
   background-color: var(--color-bg-code) !important;
   color: var(--color-text-code);
+}
+
+.codeBlock:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: calc(-1 * var(--focus-ring-width));
 }
 
 .wrapped > code {

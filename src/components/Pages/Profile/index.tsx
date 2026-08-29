@@ -19,7 +19,7 @@ type Props = {
 
 export default function ProfilePage({ recentArticles, tags, archiveList }: Props) {
   const date = new Date('2023-11-27T00:00:00+09:00');
-  const updatedDate = new Date('2026-01-05T00:00:00+09:00');
+  const updatedDate = new Date('2026-08-29T00:00:00+09:00');
 
   return (
     <>
