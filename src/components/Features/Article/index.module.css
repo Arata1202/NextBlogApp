@@ -1,5 +1,5 @@
 .title {
-  font-size: 1.8rem;
+  font-size: var(--font-size-article-title);
   font-weight: bold;
   margin-bottom: 24px;
   text-align: left;
@@ -8,7 +8,7 @@
 
 @media (max-width: 640px) {
   .title {
-    font-size: 1.5rem;
+    font-size: var(--font-size-article-title-mobile);
     margin-bottom: 20px;
   }
 }

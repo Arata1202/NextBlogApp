@@ -82,7 +82,7 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
 
   return (
     <>
-      <h1 className={`${styles.title} text-3xl font-bold lg:text-3xl`} data-article-title>
+      <h1 className={styles.title} data-article-title>
         {data.title}
       </h1>
       {data.isSponsored && <SponsoredDisclosure />}

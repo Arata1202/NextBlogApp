@@ -19,18 +19,15 @@ type TypographyToken = {
 const themeColors: ColorToken[] = [
   { name: 'Light background', variable: '--color-theme-light-background', value: '#fff' },
   { name: 'Light text', variable: '--color-theme-light-text', value: '#374151' },
-  { name: 'Light border', variable: '--color-theme-light-border', value: '#d1d5db' },
+  { name: 'Light muted', variable: '--color-theme-light-muted', value: '#d1d5db' },
   { name: 'Dark background', variable: '--color-theme-dark-background', value: '#262626' },
   { name: 'Dark text', variable: '--color-theme-dark-text', value: '#fff' },
-  { name: 'Dark border', variable: '--color-theme-dark-border', value: '#6b7280' },
+  { name: 'Dark muted', variable: '--color-theme-dark-muted', value: '#6b7280' },
 ];
 
 const contentColors: ColorToken[] = [
-  { name: 'Main text', variable: '--color-text-main', value: '#333' },
   { name: 'Secondary text', variable: '--color-text-sub', value: '#767676' },
   { name: 'Subtle background', variable: '--color-bg-sub', value: '#f3f3f3' },
-  { name: 'Border', variable: '--color-border', value: '#ddd' },
-  { name: 'Dark border', variable: '--color-border-dark', value: '#ccc' },
   { name: 'Soft accent background', variable: '--color-accent-soft-bg', value: '#eaf4fc' },
   { name: 'Soft accent text', variable: '--color-accent-soft-text', value: '#111827' },
   { name: 'Link', variable: '--color-link', value: '#1d4ed8' },
@@ -44,9 +41,15 @@ const contentColors: ColorToken[] = [
 
 const typography: TypographyToken[] = [
   {
-    name: 'Heading 1',
-    variable: '--font-size-content-heading-1',
-    value: '2rem',
+    name: 'Article title',
+    variable: '--font-size-article-title',
+    value: '1.8rem',
+    sample: '記事タイトル',
+  },
+  {
+    name: 'Article title (mobile)',
+    variable: '--font-size-article-title-mobile',
+    value: '1.5rem',
     sample: '記事タイトル',
   },
   {
@@ -160,7 +163,10 @@ function TypographyScale() {
       {typography.map(({ name, variable, value, sample }) => {
         const style = {
           fontSize: `var(${variable})`,
-          fontWeight: name.startsWith('Heading') ? 'var(--font-weight-content-heading)' : undefined,
+          fontWeight:
+            name.startsWith('Heading') || name.startsWith('Article title')
+              ? 'var(--font-weight-content-heading)'
+              : undefined,
           lineHeight: name === 'Body' ? 'var(--line-height-content-body)' : undefined,
         } satisfies CSSProperties;
 

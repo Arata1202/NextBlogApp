@@ -10,15 +10,8 @@
   margin-top: 0;
 }
 
-.content > h1 {
-  font-size: var(--font-size-content-heading-1);
-  font-weight: var(--font-weight-content-heading);
-  border-bottom: 1px solid var(--color-border);
-  margin: 2.8rem 0 1rem;
-}
-
 .content > h2 {
-  background-color: var(--color-theme-light-border);
+  background-color: var(--color-theme-muted);
   color: var(--color-theme-light-text);
   font-size: var(--font-size-content-heading-2);
   font-weight: var(--font-weight-content-heading);
@@ -27,7 +20,7 @@
 }
 
 .content > h3 {
-  border-color: var(--color-theme-light-border);
+  border-color: var(--color-theme-border);
   color: var(--color-theme-light-text);
   font-size: var(--font-size-content-heading-3);
   font-weight: var(--font-weight-content-heading);
@@ -36,7 +29,7 @@
 }
 
 .content > h4 {
-  border-color: var(--color-theme-light-border);
+  border-color: var(--color-theme-border);
   color: var(--color-theme-light-text);
   font-size: var(--font-size-content-heading-4);
   font-weight: var(--font-weight-content-heading);
@@ -141,16 +134,10 @@
   font-weight: bold;
 }
 
-.content > blockquote {
-  border-left: 4px solid var(--color-border);
-  padding-left: 1rem;
-  margin: 2rem 0;
-}
-
 .content > hr {
   margin: 4rem 0;
   height: 1px;
-  background-color: var(--color-border);
+  background-color: var(--color-theme-border);
   border: none;
 }
 
@@ -171,13 +158,11 @@
 }
 
 :global(body.DarkTheme) .content > h2 {
-  background-color: var(--color-theme-dark-border);
   color: var(--color-theme-dark-text);
 }
 
 :global(body.DarkTheme) .content > h3,
 :global(body.DarkTheme) .content > h4 {
-  border-color: var(--color-theme-dark-border);
   color: var(--color-theme-dark-text);
 }
 
