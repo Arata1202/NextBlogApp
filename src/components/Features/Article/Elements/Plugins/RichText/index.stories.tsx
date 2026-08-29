@@ -24,7 +24,6 @@ const tableHtml = `
 `;
 
 const articleHtml = `
-  <h1>記事本文の見出し1</h1>
   <p>本文には<strong>強調</strong>や<a href="https://example.com">リンク</a>が含まれます。</p>
   <h2>見出し2</h2>
   <p>段落の余白と行間を確認するための文章です。</p>

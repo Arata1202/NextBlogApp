@@ -37,6 +37,7 @@ layer(base);
     color: var(--color-theme-light-text);
     border-color: var(--color-theme-light-border);
     --tw-ring-color: var(--color-theme-light-border);
+    --color-theme-border: var(--color-theme-light-border);
     --color-text-sub: #767676;
   }
 
@@ -46,6 +47,7 @@ layer(base);
     color: var(--color-theme-dark-text);
     border-color: var(--color-theme-dark-border);
     --tw-ring-color: var(--color-theme-dark-border);
+    --color-theme-border: var(--color-theme-dark-border);
     --color-text-sub: #999;
   }
 
@@ -78,8 +80,6 @@ layer(base);
     --color-bg-sub: #f3f3f3;
     --color-bg-code: #0d1117;
     --color-text-code: #c9d1d9;
-    --color-border-dark: #ccc;
-    --color-border: #ddd;
     --color-focus-ring: #2563eb;
     --color-accent-soft-bg: #eaf4fc;
     --color-accent-soft-text: #111827;
@@ -93,9 +93,11 @@ layer(base);
     --color-theme-dark-background: #262626;
     --color-theme-dark-text: #fff;
     --color-theme-dark-border: #6b7280;
+    --color-theme-border: var(--color-theme-light-border);
     --font-family-content-code: menlo, inconsolata, monospace;
     --font-size-content-body: 18px;
-    --font-size-content-heading-1: 2rem;
+    --font-size-article-title: 1.8rem;
+    --font-size-article-title-mobile: 1.5rem;
     --font-size-content-heading-2: 1.6rem;
     --font-size-content-heading-3: 1.4rem;
     --font-size-content-heading-4: 1.2rem;
