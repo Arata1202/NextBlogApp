@@ -126,6 +126,9 @@ pnpm storybook
 # 静的Storybookを生成
 pnpm build-storybook
 
+# Chromiumをインストール（初回またはPlaywright更新後）
+pnpm exec playwright install chromium
+
 # StoryとアクセシビリティをChromiumで検証
 pnpm test:storybook
 ```
