@@ -57,4 +57,9 @@ next-env.d.ts
 /tmp
 
 /debug-storybook.log
+/build-storybook.log
+/storybook-build.log
+/chromatic.log
+/chromatic-build-*.xml
+/chromatic-diagnostics.json
 /storybook-static/

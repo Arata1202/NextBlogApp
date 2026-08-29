@@ -82,6 +82,7 @@
     "@vitejs/plugin-react": "^6.0.2",
     "@vitest/browser-playwright": "4.1.7",
     "@vitest/coverage-v8": "^4.1.7",
+    "chromatic": "^18.7.1",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "^6.9.0",

@@ -117,6 +117,16 @@ const documentedTokens = [
   ...focusTokens,
 ];
 
+function normalizeCssValue(value: string) {
+  return value
+    .trim()
+    .replace(/\s+/g, ' ')
+    .replace(
+      /(^|[\s,(])(-?)\.(\d+)/g,
+      (_, prefix: string, sign: string, digits: string) => `${prefix}${sign}0.${digits}`,
+    );
+}
+
 function TokenDetails({ variable, value }: { variable: string; value: string }) {
   return (
     <div className="space-y-1 p-3">
@@ -257,8 +267,8 @@ export const Default: Story = {
     const rootStyles = getComputedStyle(document.documentElement);
 
     for (const { variable, value } of documentedTokens) {
-      const actualValue = rootStyles.getPropertyValue(variable).trim().replace(/\s+/g, ' ');
-      await expect(actualValue).toBe(value);
+      const actualValue = normalizeCssValue(rootStyles.getPropertyValue(variable));
+      await expect(actualValue).toBe(normalizeCssValue(value));
     }
   },
 };
