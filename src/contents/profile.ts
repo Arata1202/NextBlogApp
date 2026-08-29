@@ -20,15 +20,21 @@ export const PROFILE_CONTENT = `
 - Backend｜Go, Vercel Functions
 - CMS｜microCMS, Zenn RSS
 - Infrastructure｜Cloudflare Pages, Vercel, Amazon S3, Terraform
-- Environment setup｜Docker
+- Environment setup｜Node.js, pnpm, Docker Compose
 - CI/CD｜GitHub Actions, Chromatic, CodeQL, Dependabot
 - Design｜Storybook, Canva
 - Google｜AdSense, Analytics, Search Console, reCAPTCHA
-- Integrations｜PWA, OneSignal, Sentry
+- Integrations｜PWA, OneSignal, Sentry, Iframely, Instagram
 
-- [GitHub](https://github.com/Arata1202/NextBlogApp)
-- [Storybook](https://master--6a922f631bdb93f72e661b33.chromatic.com)
-- [リアル大学生：モバイル](https://apps.apple.com/jp/app/%E3%83%AA%E3%82%A2%E3%83%AB%E5%A4%A7%E5%AD%A6%E7%94%9F-%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB/id6590619103)
+## アーキテクチャ
+
+![NextBlogAppアーキテクチャ](/images/architecture/nextblogapp.png)
+
+## 関連リンク
+
+- [リアル大学生：モバイル（App Store）](https://apps.apple.com/jp/app/%E3%83%AA%E3%82%A2%E3%83%AB%E5%A4%A7%E5%AD%A6%E7%94%9F-%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB/id6590619103)
+- [ソースコード](https://github.com/Arata1202/NextBlogApp)
+- [Storybook](https://master--6a922f631bdb93f72e661b33.chromatic.com/)
 
 ## お問い合わせ
 

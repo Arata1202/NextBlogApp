@@ -54,60 +54,7 @@
 
 ## アーキテクチャ
 
-```mermaid
-flowchart TB
-  developer[Developer] --> github[GitHub Repository]
-
-  subgraph ci[CI]
-    github --> actions[GitHub Actions]
-    actions --> quality[Lint / Typecheck / Test / CodeQL]
-  end
-
-  subgraph build[Static Build]
-    github --> pagesBuild[Cloudflare Pages Build<br/>pnpm build]
-    microcms[microCMS<br/>Blog / Category / Tag] --> pagesBuild
-    zenn[Zenn RSS] --> pagesBuild
-    pagesBuild --> generated[Static Output<br/>HTML / JS / CSS / RSS / sitemap]
-  end
-
-  generated --> pages[Cloudflare Pages<br/>out]
-  pages --> browser[User Browser]
-
-  subgraph runtime[Browser Runtime]
-    browser --> app[Next.js Client App]
-    app --> thirdParty[Google Analytics / AdSense<br/>OneSignal / Iframely / Instagram]
-    app -. Client errors .-> sentry[Sentry]
-  end
-
-  subgraph vercelFunctions[Vercel Functions]
-    app --> searchApi[Vercel Go Function<br/>/api/search]
-    searchApi --> microcmsBlogContentApi[microCMS<br/>Blog Content API]
-    searchApi --> zenn
-    app --> sendEmailApi[Vercel Go Function<br/>/api/sendemail]
-    recaptchaApi[Vercel Go Function<br/>/api/recaptcha]
-    sendEmailApi --> smtp[SMTP / Gmail]
-    sendEmailApi --> recaptcha[Google reCAPTCHA]
-    recaptchaApi --> recaptcha
-    cron[Vercel Cron<br/>/api/cron/linkchecker] --> linkcheckerApi[Vercel Go Function<br/>Link Checker]
-    linkcheckerApi --> microcmsBlogContentApi
-    linkcheckerApi --> smtp
-    linkcheckerApi --> zenn
-    linkcheckerApi --> s3
-    linkcheckerApi --> oneSignalApi
-    linkcheckerApi --> pagesDeployHook[Cloudflare Pages Deploy Hook]
-    pagesDeployHook --> pagesBuild
-    microcmsWebhook[microCMS<br/>Content Webhook] --> microcmsbackupApi[Vercel Go Function<br/>/api/webhook/microcmsbackup]
-    microcmsbackupApi --> microcmsBlogContentApi
-    microcmsbackupApi --> s3[AWS S3<br/>Backup CSV<br/>Notification Marker]
-    microcmsbackupApi --> oneSignalApi[OneSignal<br/>Push Notification API]
-  end
-
-  searchApi -. Server errors .-> sentry
-  sendEmailApi -. Server errors .-> sentry
-  recaptchaApi -. Server errors .-> sentry
-  linkcheckerApi -. Server errors .-> sentry
-  microcmsbackupApi -. Server errors .-> sentry
-```
+![NextBlogAppアーキテクチャ](public/images/architecture/nextblogapp.png)
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
