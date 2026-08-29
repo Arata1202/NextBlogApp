@@ -59,7 +59,7 @@ const WithTheme: Decorator = (Story, context) => {
       storageKey={`storybook-theme-${context.id}`}
     >
       <ThemeSync globalTheme={theme} updateGlobals={updateGlobals}>
-        <div className={`${themeClassName} min-h-screen p-6`}>
+        <div className={`${themeClassName} min-h-screen p-6`} data-app-root>
           <Story />
         </div>
       </ThemeSync>

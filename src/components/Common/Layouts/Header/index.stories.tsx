@@ -19,7 +19,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Desktop: Story = {};
+export const Desktop: Story = {
+  play: async ({ canvas }) => {
+    const header = canvas.getByRole('banner');
+
+    await expect(header).toBeVisible();
+    await expect(header).toHaveStyle({ backgroundColor: 'rgb(255, 255, 255)' });
+  },
+};
 
 export const Mobile: Story = {
   globals: { viewport: { value: 'mobile1', isRotated: false } },

@@ -12,15 +12,27 @@ layer(base);
   color utility to any element that depends on these defaults.
 */
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
+  :where([data-app-root]),
+  :where([data-app-root]) *,
+  :where([data-app-root])::after,
+  :where([data-app-root])::before,
+  :where([data-app-root])::backdrop,
+  :where([data-app-root])::file-selector-button,
+  :where([data-app-root]) *::after,
+  :where([data-app-root]) *::before,
+  :where([data-app-root]) *::backdrop,
+  :where([data-app-root]) *::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
 
-  .LightTheme {
+  :where([data-app-root]) {
+    font-family: 'Geist', sans-serif;
+    color: var(--color-text-main);
+    line-height: 1.8;
+  }
+
+  :where([data-app-root]).LightTheme,
+  :where([data-app-root]) .LightTheme {
     background-color: var(--color-theme-light-background);
     color: var(--color-theme-light-text);
     border-color: var(--color-theme-light-border);
@@ -28,7 +40,8 @@ layer(base);
     --color-text-sub: #767676;
   }
 
-  .DarkTheme {
+  :where([data-app-root]).DarkTheme,
+  :where([data-app-root]) .DarkTheme {
     background-color: var(--color-theme-dark-background);
     color: var(--color-theme-dark-text);
     border-color: var(--color-theme-dark-border);
@@ -36,21 +49,21 @@ layer(base);
     --color-text-sub: #999;
   }
 
-  .iframely-embed {
+  :where([data-app-root]) .iframely-embed {
     margin-top: 32px !important;
   }
 
-  h2 {
+  :where([data-app-root]) h2 {
     padding: 15px 15px 15px 15px;
   }
 
-  h3 {
+  :where([data-app-root]) h3 {
     border: 1px solid;
     padding: 5px 15px 5px 15px;
     border-left: 5px solid;
   }
 
-  h4 {
+  :where([data-app-root]) h4 {
     border-top: 2px solid;
     border-bottom: 2px solid;
     padding: 5px 15px 5px 15px;
@@ -96,22 +109,15 @@ layer(base);
     --focus-ring-offset: 2px;
   }
 
-  * {
+  :where([data-app-root]),
+  :where([data-app-root]) * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
   }
 
-  html,
-  body {
+  body:where([data-app-root]) {
     max-width: 100vw;
-    font-family: inherit;
-  }
-
-  body {
-    font-family: 'Geist', sans-serif;
-    color: var(--color-text-main);
-    line-height: 1.8;
   }
 
   :root[data-app-webview='1'] [data-web-chrome],
@@ -150,37 +156,39 @@ layer(base);
     display: block;
   }
 
-  code {
+  :where([data-app-root]) code {
     font-family: monospace;
   }
 
-  pre {
+  :where([data-app-root]) pre {
     white-space: pre-wrap !important;
     word-break: break-all;
     font-size: 15px;
   }
 
-  a {
+  :where([data-app-root]) a {
     color: inherit;
     text-decoration: none;
   }
 
-  :where(
-    a[href],
-    button,
-    input,
-    select,
-    textarea,
-    summary,
-    [role='button'],
-    [tabindex]:not([tabindex='-1'])
-  ):focus-visible {
+  :where([data-app-root])
+    :where(
+      a[href],
+      button,
+      input,
+      select,
+      textarea,
+      summary,
+      [role='button'],
+      [tabindex]:not([tabindex='-1'])
+    ):focus-visible {
     outline: var(--focus-ring-width) solid var(--color-focus-ring);
     outline-offset: var(--focus-ring-offset);
   }
 
   @supports selector(:focus-visible) {
-    :where(
+    :where([data-app-root])
+      :where(
         a[href],
         button,
         input,
@@ -194,23 +202,24 @@ layer(base);
     }
   }
 
-  p {
+  :where([data-app-root]) p {
     font-size: var(--font-size-content-body) !important;
   }
 
-  ol,
-  ul {
+  :where([data-app-root]) ol,
+  :where([data-app-root]) ul {
     list-style: none;
   }
 
-  li {
+  :where([data-app-root]) li {
     font-size: var(--font-size-content-body) !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    :where([data-app-root]),
+    :where([data-app-root]) *,
+    :where([data-app-root]) *::before,
+    :where([data-app-root]) *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       scroll-behavior: auto !important;
