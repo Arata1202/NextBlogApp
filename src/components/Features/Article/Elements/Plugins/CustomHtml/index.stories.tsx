@@ -43,8 +43,18 @@ export const GoogleMap: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const map = canvas.getByTitle('東京周辺のGoogle Map');
+    const container = map.parentElement;
 
     await expect(map).toHaveAttribute('loading', 'lazy');
-    await expect(getComputedStyle(map).width).not.toBe('600px');
+    await expect(container).not.toBeNull();
+
+    if (!container) {
+      throw new Error('Google Map container was not rendered');
+    }
+
+    await expect(map.getBoundingClientRect().width).toBeCloseTo(
+      container.getBoundingClientRect().width,
+      0,
+    );
   },
 };
