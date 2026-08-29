@@ -21,10 +21,14 @@ export const PROFILE_CONTENT = `
 - CMS｜microCMS, Zenn RSS
 - Infrastructure｜Cloudflare Pages, Vercel, Amazon S3, Terraform
 - Environment setup｜Docker
-- CI/CD｜GitHub Actions, CodeQL, Dependabot
-- Design｜Figma, Canva
+- CI/CD｜GitHub Actions, Chromatic, CodeQL, Dependabot
+- Design｜Storybook, Canva
 - Google｜AdSense, Analytics, Search Console, reCAPTCHA
 - Integrations｜PWA, OneSignal, Sentry
+
+- [GitHub](https://github.com/Arata1202/NextBlogApp)
+- [Storybook](https://master--6a922f631bdb93f72e661b33.chromatic.com)
+- [リアル大学生：モバイル](https://apps.apple.com/jp/app/%E3%83%AA%E3%82%A2%E3%83%AB%E5%A4%A7%E5%AD%A6%E7%94%9F-%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB/id6590619103)
 
 ## お問い合わせ
 

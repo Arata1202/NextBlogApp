@@ -31,8 +31,7 @@
 
 <ul>
   <li><a href="https://realunivlog.com">リアル大学生</a></li>
-  <li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=2102-4673">Figma（Archived Design Tokens）</a></li>
-  <li><a href="https://www.figma.com/design/Fa4LsgTvBhWAu4sIcwYy1O/NextBlogApp?node-id=0-1">Figma（Archived UI）</a></li>
+  <li><a href="https://master--6a922f631bdb93f72e661b33.chromatic.com/">Storybook</a></li>
 </ul>
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
@@ -46,8 +45,8 @@
 | CMS               | microCMS, Zenn RSS                             |
 | Infrastructure    | Cloudflare Pages, Vercel, Amazon S3, Terraform |
 | Environment setup | Node.js, pnpm, Docker Compose                  |
-| CI/CD             | GitHub Actions, CodeQL, Dependabot             |
-| Design            | Storybook, Canva（Figmaはアーカイブ済み）      |
+| CI/CD             | GitHub Actions, Chromatic, CodeQL, Dependabot  |
+| Design            | Storybook, Canva                               |
 | Google            | AdSense, Analytics, Search Console, reCAPTCHA  |
 | Integrations      | PWA, OneSignal, Sentry, Iframely, Instagram    |
 
