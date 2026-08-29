@@ -19,10 +19,10 @@ type TypographyToken = {
 const themeColors: ColorToken[] = [
   { name: 'Light background', variable: '--color-theme-light-background', value: '#fff' },
   { name: 'Light text', variable: '--color-theme-light-text', value: '#374151' },
-  { name: 'Light border', variable: '--color-theme-light-border', value: '#d1d5db' },
+  { name: 'Light muted', variable: '--color-theme-light-muted', value: '#d1d5db' },
   { name: 'Dark background', variable: '--color-theme-dark-background', value: '#262626' },
   { name: 'Dark text', variable: '--color-theme-dark-text', value: '#fff' },
-  { name: 'Dark border', variable: '--color-theme-dark-border', value: '#6b7280' },
+  { name: 'Dark muted', variable: '--color-theme-dark-muted', value: '#6b7280' },
 ];
 
 const contentColors: ColorToken[] = [

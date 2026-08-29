@@ -11,7 +11,7 @@
 }
 
 .content > h2 {
-  background-color: var(--color-theme-light-border);
+  background-color: var(--color-theme-muted);
   color: var(--color-theme-light-text);
   font-size: var(--font-size-content-heading-2);
   font-weight: var(--font-weight-content-heading);
@@ -20,7 +20,7 @@
 }
 
 .content > h3 {
-  border-color: var(--color-theme-light-border);
+  border-color: var(--color-theme-border);
   color: var(--color-theme-light-text);
   font-size: var(--font-size-content-heading-3);
   font-weight: var(--font-weight-content-heading);
@@ -29,7 +29,7 @@
 }
 
 .content > h4 {
-  border-color: var(--color-theme-light-border);
+  border-color: var(--color-theme-border);
   color: var(--color-theme-light-text);
   font-size: var(--font-size-content-heading-4);
   font-weight: var(--font-weight-content-heading);
@@ -158,13 +158,11 @@
 }
 
 :global(body.DarkTheme) .content > h2 {
-  background-color: var(--color-theme-dark-border);
   color: var(--color-theme-dark-text);
 }
 
 :global(body.DarkTheme) .content > h3,
 :global(body.DarkTheme) .content > h4 {
-  border-color: var(--color-theme-dark-border);
   color: var(--color-theme-dark-text);
 }
 

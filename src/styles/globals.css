@@ -35,9 +35,10 @@ layer(base);
   :where([data-app-root]) .LightTheme {
     background-color: var(--color-theme-light-background);
     color: var(--color-theme-light-text);
-    border-color: var(--color-theme-light-border);
-    --tw-ring-color: var(--color-theme-light-border);
-    --color-theme-border: var(--color-theme-light-border);
+    border-color: var(--color-theme-light-muted);
+    --tw-ring-color: var(--color-theme-light-muted);
+    --color-theme-border: var(--color-theme-light-muted);
+    --color-theme-muted: var(--color-theme-light-muted);
     --color-text-sub: #767676;
   }
 
@@ -45,9 +46,10 @@ layer(base);
   :where([data-app-root]) .DarkTheme {
     background-color: var(--color-theme-dark-background);
     color: var(--color-theme-dark-text);
-    border-color: var(--color-theme-dark-border);
-    --tw-ring-color: var(--color-theme-dark-border);
-    --color-theme-border: var(--color-theme-dark-border);
+    border-color: var(--color-theme-dark-muted);
+    --tw-ring-color: var(--color-theme-dark-muted);
+    --color-theme-border: var(--color-theme-dark-muted);
+    --color-theme-muted: var(--color-theme-dark-muted);
     --color-text-sub: #999;
   }
 
@@ -89,11 +91,12 @@ layer(base);
     --color-link-dark-hover: #bfdbfe;
     --color-theme-light-background: #fff;
     --color-theme-light-text: #374151;
-    --color-theme-light-border: #d1d5db;
+    --color-theme-light-muted: #d1d5db;
     --color-theme-dark-background: #262626;
     --color-theme-dark-text: #fff;
-    --color-theme-dark-border: #6b7280;
-    --color-theme-border: var(--color-theme-light-border);
+    --color-theme-dark-muted: #6b7280;
+    --color-theme-border: var(--color-theme-light-muted);
+    --color-theme-muted: var(--color-theme-light-muted);
     --font-family-content-code: menlo, inconsolata, monospace;
     --font-size-content-body: 18px;
     --font-size-article-title: 1.8rem;
