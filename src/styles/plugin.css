@@ -12,19 +12,13 @@
 }
 
 .underline_code {
-  background-color: #f7f7fc;
+  background-color: var(--color-bg-sub);
   border: 1px solid var(--color-theme-border);
-  border-radius: 3px;
-  color: #2b2c30;
+  border-radius: var(--radius-small);
+  color: var(--color-theme-light-text);
   margin: 0 2px;
   padding: 2px 4px;
-  font-family:
-    Menlo,
-    Monaco,
-    Consolas,
-    Liberation Mono,
-    Courier New,
-    monospace;
+  font-family: var(--font-family-content-code);
 }
 
 /* テーブル */
