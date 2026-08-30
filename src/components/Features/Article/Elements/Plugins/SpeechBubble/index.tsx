@@ -15,6 +15,7 @@ export default function SpeechBubble({ block }: Props) {
               <img
                 src={formatMicroCmsImageUrl(block.bubble_image.url, {
                   width: 150,
+                  height: 150,
                   quality: 70,
                   fit: 'crop',
                 })}

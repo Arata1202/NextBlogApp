@@ -31,5 +31,5 @@ export const LongTitle: Story = {
       },
     },
   },
-  globals: { viewport: { value: 'mobile1', isRotated: false } },
+  globals: { viewport: { value: 'iphone13promax', isRotated: false } },
 };

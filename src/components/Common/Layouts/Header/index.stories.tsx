@@ -29,7 +29,7 @@ export const Desktop: Story = {
 };
 
 export const Mobile: Story = {
-  globals: { viewport: { value: 'mobile1', isRotated: false } },
+  globals: { viewport: { value: 'iphone13promax', isRotated: false } },
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('button', { name: 'メニューを開く' })).toBeVisible();
   },

@@ -30,5 +30,5 @@ export const DeepHierarchy: Story = {
       { id: 'verification', title: '動作確認で確認しておきたい長い見出し', level: 2 },
     ],
   },
-  globals: { viewport: { value: 'mobile1', isRotated: false } },
+  globals: { viewport: { value: 'iphone13promax', isRotated: false } },
 };

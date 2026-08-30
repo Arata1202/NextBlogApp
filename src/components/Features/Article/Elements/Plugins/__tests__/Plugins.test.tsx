@@ -349,6 +349,8 @@ describe('Article plugins', () => {
     const image = container.querySelector('img');
     expect(image).toHaveAttribute('alt', '');
     expect(image).toHaveAttribute('src', expect.stringContaining('w=150'));
+    expect(image).toHaveAttribute('src', expect.stringContaining('h=150'));
+    expect(image).toHaveAttribute('src', expect.stringContaining('fit=crop'));
   });
 
   it('renders each tab box variant from its corresponding html field', () => {

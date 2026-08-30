@@ -25,5 +25,5 @@ export const LongText: Story = {
         '文章が長い場合でも、画像と吹き出しの位置関係を保ちながら自然に折り返されることを確認します。スマートフォンの画面幅でも内容がはみ出さないことが重要です。',
     },
   },
-  globals: { viewport: { value: 'mobile1', isRotated: false } },
+  globals: { viewport: { value: 'iphone13promax', isRotated: false } },
 };
