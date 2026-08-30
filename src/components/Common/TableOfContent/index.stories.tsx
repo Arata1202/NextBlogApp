@@ -19,7 +19,16 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = { args: { headings } };
 
-export const Sidebar: Story = { args: { headings, sidebar: true } };
+export const Sidebar: Story = {
+  args: { headings, sidebar: true },
+  decorators: [
+    (Story) => (
+      <div className="w-full max-w-sm">
+        <Story />
+      </div>
+    ),
+  ],
+};
 
 export const DeepHierarchy: Story = {
   args: {
