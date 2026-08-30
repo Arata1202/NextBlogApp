@@ -141,6 +141,21 @@ describe('Article plugins', () => {
     ).toHaveAttribute('aria-pressed', 'false');
   });
 
+  it('marks a focused custom html iframe for a visible focus indicator', async () => {
+    renderCustomHtml('<iframe title="Embedded content" src="https://example.com"></iframe>');
+
+    const iframe = screen.getByTitle('Embedded content');
+    iframe.focus();
+    fireEvent.blur(window);
+
+    await waitFor(() => {
+      expect(iframe).toHaveAttribute('data-focus-visible', 'true');
+    });
+
+    fireEvent.focus(window);
+    expect(iframe).not.toHaveAttribute('data-focus-visible');
+  });
+
   it('renders rich text and injects article ad units before h2 sections', () => {
     render(
       <RichText
@@ -349,6 +364,8 @@ describe('Article plugins', () => {
     const image = container.querySelector('img');
     expect(image).toHaveAttribute('alt', '');
     expect(image).toHaveAttribute('src', expect.stringContaining('w=150'));
+    expect(image).toHaveAttribute('src', expect.stringContaining('h=150'));
+    expect(image).toHaveAttribute('src', expect.stringContaining('fit=crop'));
   });
 
   it('renders each tab box variant from its corresponding html field', () => {

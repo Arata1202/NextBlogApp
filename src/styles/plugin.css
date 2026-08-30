@@ -1,30 +1,24 @@
 /* マーカー */
 .underline_blue {
-  background: linear-gradient(transparent 70%, skyblue 70%);
+  background: linear-gradient(transparent 70%, rgb(135 206 235 / 35%) 70%);
 }
 
 .underline_red {
-  background: linear-gradient(transparent 70%, pink 70%);
+  background: linear-gradient(transparent 70%, rgb(255 192 203 / 35%) 70%);
 }
 
 .underline_yellow {
-  background: linear-gradient(transparent 70%, yellow 70%);
+  background: linear-gradient(transparent 70%, rgb(255 255 0 / 35%) 70%);
 }
 
 .underline_code {
-  background-color: #f7f7fc;
+  background-color: var(--color-bg-sub);
   border: 1px solid var(--color-theme-border);
-  border-radius: 3px;
-  color: #2b2c30;
+  border-radius: var(--radius-small);
+  color: var(--color-theme-light-text);
   margin: 0 2px;
   padding: 2px 4px;
-  font-family:
-    Menlo,
-    Monaco,
-    Consolas,
-    Liberation Mono,
-    Courier New,
-    monospace;
+  font-family: var(--font-family-content-code);
 }
 
 /* テーブル */
@@ -35,7 +29,8 @@ table {
 
 table tr th {
   border: 1px solid var(--color-theme-border);
-  background-color: var(--color-accent-soft-bg) !important;
+  background-color: var(--color-bg-sub) !important;
+  color: var(--color-theme-light-text);
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
@@ -64,6 +59,10 @@ table tr td {
 }
 
 .bubble-image {
+  display: block;
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
   border-radius: 50%;
   margin: 0 10px;
 }
@@ -110,6 +109,7 @@ table tr td {
 .bubble-image-wrapper {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .bubble-image-wrapper.left {

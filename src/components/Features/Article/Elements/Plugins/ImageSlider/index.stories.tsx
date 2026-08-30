@@ -26,7 +26,9 @@ type Story = StoryObj<typeof meta>;
 
 export const MultipleImages: Story = {};
 export const SingleImage: Story = { args: { block: { image_slider: [images[0]] } } };
-export const Mobile: Story = { globals: { viewport: { value: 'mobile1', isRotated: false } } };
+export const Mobile: Story = {
+  globals: { viewport: { value: 'iphone13promax', isRotated: false } },
+};
 export const NextImageInteraction: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

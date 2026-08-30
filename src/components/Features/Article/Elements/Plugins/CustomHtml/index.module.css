@@ -123,6 +123,11 @@
   outline-offset: var(--focus-ring-offset);
 }
 
+.content iframe[data-focus-visible='true'] {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring) !important;
+  outline-offset: var(--focus-ring-offset);
+}
+
 .content > figure {
   margin: 2rem 0;
 }
@@ -155,6 +160,7 @@
 
 .content > table th {
   background-color: var(--color-bg-sub);
+  color: var(--color-theme-light-text);
   text-align: left;
   padding: 1rem;
 }

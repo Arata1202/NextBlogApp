@@ -6,7 +6,9 @@ import styles from './index.module.css';
 
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex -- Scrollable code regions need keyboard focus. */
 
-type Props = ComponentPropsWithoutRef<'pre'>;
+type Props = ComponentPropsWithoutRef<'pre'> & {
+  filename?: string;
+};
 
 export const getReactNodeText = (node: ReactNode): string => {
   if (typeof node === 'string' || typeof node === 'number') {
@@ -24,19 +26,20 @@ export const getReactNodeText = (node: ReactNode): string => {
   return '';
 };
 
-export default function CodeBlock({ children, className, ...props }: Props) {
+export default function CodeBlock({ children, className, filename, ...props }: Props) {
   const [wrapped, setWrapped] = useState(false);
   const wrapClassName = wrapped ? styles.wrapped : styles.unwrapped;
 
   return (
     <div className={styles.codeBlockFrame}>
       <CodeBlockToolbar
+        filename={filename}
         getCodeText={() => getReactNodeText(children)}
         wrapped={wrapped}
         onWrappedChange={setWrapped}
       />
       <pre
-        aria-label="コードブロック"
+        aria-label={filename ? `コードブロック: ${filename}` : 'コードブロック'}
         role="region"
         tabIndex={0}
         className={`${styles.codeBlock} ${wrapClassName} ${className ?? ''}`.trim()}

@@ -19,7 +19,16 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = { args: { headings } };
 
-export const Sidebar: Story = { args: { headings, sidebar: true } };
+export const Sidebar: Story = {
+  args: { headings, sidebar: true },
+  decorators: [
+    (Story) => (
+      <div className="w-full max-w-sm">
+        <Story />
+      </div>
+    ),
+  ],
+};
 
 export const DeepHierarchy: Story = {
   args: {
@@ -30,5 +39,5 @@ export const DeepHierarchy: Story = {
       { id: 'verification', title: '動作確認で確認しておきたい長い見出し', level: 2 },
     ],
   },
-  globals: { viewport: { value: 'mobile1', isRotated: false } },
+  globals: { viewport: { value: 'iphone13promax', isRotated: false } },
 };

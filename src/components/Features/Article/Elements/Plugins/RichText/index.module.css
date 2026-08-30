@@ -148,6 +148,7 @@
 
 .content > table th {
   background-color: var(--color-bg-sub);
+  color: var(--color-theme-light-text);
   text-align: left;
   padding: 1rem;
 }

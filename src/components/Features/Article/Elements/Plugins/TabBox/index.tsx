@@ -36,7 +36,7 @@ export default function TabBox({
   return (
     <>
       <div
-        className={`${merit && styles.tab_merit_box} ${demerit && styles.tab_demerit_box} ${point && styles.tab_point_box} ${common && styles.tab_common_box} text-gray-700 flex items-center`}
+        className={`${merit && styles.tab_merit_box} ${demerit && styles.tab_demerit_box} ${point && styles.tab_point_box} ${common && styles.tab_common_box} flex items-center gap-4 text-gray-700`}
       >
         {merit && (
           <>

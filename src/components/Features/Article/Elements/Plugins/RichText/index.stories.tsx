@@ -24,7 +24,7 @@ const tableHtml = `
 `;
 
 const articleHtml = `
-  <p>本文には<strong>強調</strong>や<a href="https://example.com">リンク</a>が含まれます。</p>
+  <p>本文には<strong>強調</strong>、<span class="underline_blue">青マーカー</span>、<span class="underline_red">赤マーカー</span>、<span class="underline_yellow">黄マーカー</span>、<span class="underline_code">inlineCode()</span>、<a href="https://example.com">リンク</a>が含まれます。</p>
   <h2>見出し2</h2>
   <p>段落の余白と行間を確認するための文章です。</p>
   <h3>見出し3</h3>
