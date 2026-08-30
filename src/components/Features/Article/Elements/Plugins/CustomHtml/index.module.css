@@ -123,6 +123,11 @@
   outline-offset: var(--focus-ring-offset);
 }
 
+.content iframe[data-focus-visible='true'] {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring) !important;
+  outline-offset: var(--focus-ring-offset);
+}
+
 .content > figure {
   margin: 2rem 0;
 }

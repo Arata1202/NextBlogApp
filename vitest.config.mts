@@ -14,7 +14,7 @@ export default defineConfig(async () => {
       },
     },
     optimizeDeps: {
-      include: ['react-slick'],
+      include: ['react-slick', 'storybook/viewport'],
     },
     test: {
       projects: [

@@ -43,6 +43,27 @@ function CustomHtml({ html, sponsorUrl }: Props) {
 
     const cleanupMoshimoEasyLinkFallback = setupMoshimoEasyLinkFallback(content);
 
+    let iframeFocusFrame: number | undefined;
+    const clearIframeFocus = () => {
+      content.querySelectorAll('iframe[data-focus-visible]').forEach((iframe) => {
+        iframe.removeAttribute('data-focus-visible');
+      });
+    };
+    const syncIframeFocus = () => {
+      window.cancelAnimationFrame(iframeFocusFrame ?? 0);
+      iframeFocusFrame = window.requestAnimationFrame(() => {
+        clearIframeFocus();
+        const activeElement = document.activeElement;
+
+        if (activeElement instanceof HTMLIFrameElement && content.contains(activeElement)) {
+          activeElement.dataset.focusVisible = 'true';
+        }
+      });
+    };
+
+    window.addEventListener('blur', syncIframeFocus);
+    window.addEventListener('focus', clearIframeFocus);
+
     const observer = new MutationObserver(() => {
       syncCustomHtmlEnhancements();
     });
@@ -61,6 +82,10 @@ function CustomHtml({ html, sponsorUrl }: Props) {
 
     return () => {
       cleanupMoshimoEasyLinkFallback();
+      window.cancelAnimationFrame(iframeFocusFrame ?? 0);
+      window.removeEventListener('blur', syncIframeFocus);
+      window.removeEventListener('focus', clearIframeFocus);
+      clearIframeFocus();
       observer.disconnect();
       window.clearTimeout(timer);
     };
