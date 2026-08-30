@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { expect } from 'storybook/test';
 import CodeBlock, { codeBlockStyles } from '.';
 
 const sampleCode = `export function greeting(name: string) {
@@ -17,6 +18,17 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: <code className={codeBlockStyles.code}>{sampleCode}</code>,
+  },
+};
+
+export const WithFilename: Story = {
+  args: {
+    filename: 'greeting.ts',
+    children: <code className={codeBlockStyles.code}>{sampleCode}</code>,
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('greeting.ts')).toBeVisible();
+    await expect(canvas.getByRole('region', { name: 'コードブロック: greeting.ts' })).toBeVisible();
   },
 };
 
