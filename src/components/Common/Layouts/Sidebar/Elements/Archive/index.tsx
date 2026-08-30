@@ -27,6 +27,7 @@ export default function Archive({ archiveList }: Props) {
   const subtleIconClassName = theme === 'dark' ? 'text-gray-500' : 'text-gray-300';
 
   const [selectedMonth, setSelectedMonth] = useState('');
+  const [openedWithPointer, setOpenedWithPointer] = useState(false);
 
   const handleArchiveChange = (value: string) => {
     setSelectedMonth(value);
@@ -34,6 +35,8 @@ export default function Archive({ archiveList }: Props) {
   };
 
   const handleButtonKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    setOpenedWithPointer(false);
+
     if (event.key !== 'Enter') {
       return;
     }
@@ -54,6 +57,7 @@ export default function Archive({ archiveList }: Props) {
           <div className="relative mt-5">
             <Listbox.Button
               type="button"
+              onPointerDown={() => setOpenedWithPointer(true)}
               onKeyDown={handleButtonKeyDown}
               className={`${fieldControlClassName} ${styles.ListBox} relative w-full cursor-pointer pl-3 pr-10 text-left text-base sm:text-sm ${themeClassName}`}
             >
@@ -76,7 +80,9 @@ export default function Archive({ archiveList }: Props) {
 
             <Listbox.Options
               modal={false}
-              className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto py-1 text-base sm:text-sm ${surfaceClassNames.popover} ${themeClassName}`}
+              data-pointer-open={openedWithPointer ? 'true' : undefined}
+              onKeyDown={() => setOpenedWithPointer(false)}
+              className={`${styles.ListBoxOptions} absolute z-10 mt-1 max-h-60 w-full overflow-auto py-1 text-base sm:text-sm ${surfaceClassNames.popover} ${themeClassName}`}
             >
               {archiveList.map((item, index) => (
                 <Listbox.Option

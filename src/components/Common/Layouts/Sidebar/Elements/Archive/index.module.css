@@ -2,6 +2,19 @@
   height: 40px;
 }
 
+.ListBox:focus {
+  outline: none;
+}
+
+.ListBox[data-focus] {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.ListBoxOptions[data-pointer-open='true']:focus {
+  outline: none;
+}
+
 .ListBoxSelect {
   font-size: 18px;
 }

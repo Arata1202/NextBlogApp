@@ -26,6 +26,7 @@ describe('Archive', () => {
     render(<Archive archiveList={[{ year: '2024', month: '1' }]} />);
 
     await user.click(screen.getByRole('button', { name: 'アーカイブを選択' }));
+    expect(screen.getByRole('listbox')).toHaveAttribute('data-pointer-open', 'true');
     await user.click(screen.getByRole('option', { name: '2024年1月' }));
 
     expect(routerMock.push).toHaveBeenCalledWith('/archive/2024/01');
@@ -49,6 +50,7 @@ describe('Archive', () => {
 
     await user.keyboard('{Enter}');
     expect(screen.getByRole('option', { name: '2024年1月' })).toBeInTheDocument();
+    expect(screen.getByRole('listbox')).not.toHaveAttribute('data-pointer-open');
 
     await user.keyboard('{ArrowDown}');
     await user.keyboard('{ArrowDown}');
