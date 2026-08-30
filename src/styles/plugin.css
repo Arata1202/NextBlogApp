@@ -1,14 +1,14 @@
 /* マーカー */
 .underline_blue {
-  background: linear-gradient(transparent 70%, skyblue 70%);
+  background: linear-gradient(transparent 70%, rgb(135 206 235 / 35%) 70%);
 }
 
 .underline_red {
-  background: linear-gradient(transparent 70%, pink 70%);
+  background: linear-gradient(transparent 70%, rgb(255 192 203 / 35%) 70%);
 }
 
 .underline_yellow {
-  background: linear-gradient(transparent 70%, yellow 70%);
+  background: linear-gradient(transparent 70%, rgb(255 255 0 / 35%) 70%);
 }
 
 .underline_code {
