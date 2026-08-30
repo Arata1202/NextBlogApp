@@ -20,3 +20,13 @@ export const Merit: Story = { args: { merit: true } };
 export const Demerit: Story = { args: { demerit: true } };
 export const Point: Story = { args: { point: true } };
 export const Common: Story = { args: { common: true } };
+export const CommonList: Story = {
+  args: {
+    block: {
+      ...block,
+      box_common:
+        '<ul><li>対象となる利用環境を確認する</li><li>必要な設定を済ませる</li><li>表示と動作を確認する</li></ul>',
+    },
+    common: true,
+  },
+};

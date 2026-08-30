@@ -9,7 +9,8 @@
 
 .tab_merit_box ul {
   list-style: disc;
-  margin-left: 50px;
+  margin-left: 0;
+  padding-left: 1.25rem;
 }
 
 .tab_merit_box_icon {
@@ -28,7 +29,8 @@
 
 .tab_demerit_box ul {
   list-style: disc;
-  margin-left: 50px;
+  margin-left: 0;
+  padding-left: 1.25rem;
 }
 
 .tab_demerit_box_icon {
@@ -47,7 +49,8 @@
 
 .tab_point_box ul {
   list-style: disc;
-  margin-left: 50px;
+  margin-left: 0;
+  padding-left: 1.25rem;
 }
 
 .tab_point_box_icon {
@@ -66,7 +69,8 @@
 
 .tab_common_box ul {
   list-style: disc;
-  margin-left: 50px;
+  margin-left: 0;
+  padding-left: 1.25rem;
 }
 
 .tab_common_box_icon {
@@ -86,7 +90,8 @@
 
   .tab_merit_box ul {
     list-style: disc;
-    margin-left: 25px;
+    margin-left: 0;
+    padding-left: 1.25rem;
   }
 
   .tab_merit_box_icon {
@@ -105,7 +110,8 @@
 
   .tab_demerit_box ul {
     list-style: disc;
-    margin-left: 25px;
+    margin-left: 0;
+    padding-left: 1.25rem;
   }
 
   .tab_demerit_box_icon {
@@ -124,7 +130,8 @@
 
   .tab_point_box ul {
     list-style: disc;
-    margin-left: 25px;
+    margin-left: 0;
+    padding-left: 1.25rem;
   }
 
   .tab_point_box_icon {
@@ -143,7 +150,8 @@
 
   .tab_common_box ul {
     list-style: disc;
-    margin-left: 25px;
+    margin-left: 0;
+    padding-left: 1.25rem;
   }
 
   .tab_common_box_icon {
