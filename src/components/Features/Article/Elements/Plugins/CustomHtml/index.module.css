@@ -154,7 +154,8 @@
 }
 
 .content > table th {
-  background-color: var(--color-bg-sub);
+  background-color: var(--color-accent-soft-bg);
+  color: var(--color-theme-light-text);
   text-align: left;
   padding: 1rem;
 }
