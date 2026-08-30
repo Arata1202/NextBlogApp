@@ -29,7 +29,7 @@ table {
 
 table tr th {
   border: 1px solid var(--color-theme-border);
-  background-color: var(--color-accent-soft-bg) !important;
+  background-color: var(--color-bg-sub) !important;
   color: var(--color-theme-light-text);
   word-wrap: break-word;
   overflow-wrap: break-word;
