@@ -64,6 +64,22 @@ describe('ContactFeature', () => {
     vi.unstubAllGlobals();
   });
 
+  it('shows guidance for blog, app, and business inquiries', () => {
+    render(<ContactFeature />);
+
+    expect(
+      screen.getByText(
+        '本ブログおよび運営中のアプリに関するご質問、不具合のご報告、ご意見・ご要望は、以下のフォームよりお問い合わせください。',
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('広告掲載やタイアップに関するご相談も受け付けています。'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('アプリに関するお問い合わせは、件名にアプリ名をご記載ください。'),
+    ).toBeInTheDocument();
+  });
+
   it('shows validation messages and does not call the API when required fields are empty', async () => {
     const user = userEvent.setup();
 
