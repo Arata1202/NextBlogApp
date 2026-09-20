@@ -131,9 +131,13 @@ export default function ContactFeature() {
 
   return (
     <>
-      <p className="mt-5">
-        本ブログに関するご質問やお気づきの点がございましたら、お気軽にお問い合わせください。
-      </p>
+      <div className="mt-5 space-y-2">
+        <p>
+          本ブログおよび運営中のアプリに関するご質問、不具合のご報告、ご意見・ご要望は、以下のフォームよりお問い合わせください。
+        </p>
+        <p>広告掲載やタイアップに関するご相談も受け付けています。</p>
+        <p>アプリに関するお問い合わせは、件名にアプリ名をご記載ください。</p>
+      </div>
       <form onSubmit={onSubmit(handleSubmit)} method="POST" className="pt-5 mb-5">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <InputContainer
