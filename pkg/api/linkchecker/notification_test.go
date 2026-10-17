@@ -67,6 +67,42 @@ func TestBuildLinkCheckerEmailBodies(t *testing.T) {
 	}
 }
 
+func TestFormatLinkCheckerSender(t *testing.T) {
+	tests := []struct {
+		name        string
+		displayName string
+		address     string
+		want        string
+	}{
+		{
+			name:        "Japanese display name",
+			displayName: "リアル大学生",
+			address:     "alerts@example.com",
+			want:        "リアル大学生 <alerts@example.com>",
+		},
+		{
+			name:        "empty display name",
+			displayName: "  ",
+			address:     "alerts@example.com",
+			want:        "alerts@example.com",
+		},
+		{
+			name:        "header control characters",
+			displayName: "Real\r\n<Blog>",
+			address:     "alerts@example.com",
+			want:        "Real Blog <alerts@example.com>",
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			if got := formatLinkCheckerSender(test.displayName, test.address); got != test.want {
+				t.Fatalf("formatLinkCheckerSender() = %q, want %q", got, test.want)
+			}
+		})
+	}
+}
+
 func TestLinkCheckerIdempotencyKey(t *testing.T) {
 	first := linkCheckerIdempotencyKey("subject", "body")
 	second := linkCheckerIdempotencyKey("subject", "body")

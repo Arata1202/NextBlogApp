@@ -112,6 +112,15 @@ func linkCheckerIdempotencyKey(subject, htmlBody string) string {
 	return "linkchecker-" + hex.EncodeToString(sum[:])
 }
 
+func formatLinkCheckerSender(name, address string) string {
+	name = strings.NewReplacer("\r", " ", "\n", " ", "<", "", ">", "").Replace(name)
+	name = strings.Join(strings.Fields(name), " ")
+	if name == "" {
+		return address
+	}
+	return fmt.Sprintf("%s <%s>", name, address)
+}
+
 func sendLinkCheckerNotification(ctx context.Context, links []linkCheckResult) error {
 	config, err := notificationConfig()
 	if err != nil {
@@ -123,7 +132,7 @@ func sendLinkCheckerNotification(ctx context.Context, links []linkCheckResult) e
 	from := config.From
 	if siteTitle != "" {
 		subject = siteTitle + " - " + subject
-		from = (&mail.Address{Name: siteTitle, Address: config.From}).String()
+		from = formatLinkCheckerSender(siteTitle, config.From)
 	}
 
 	htmlBody, textBody := buildLinkCheckerEmailBodies(links)
