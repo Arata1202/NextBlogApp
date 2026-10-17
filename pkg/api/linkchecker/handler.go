@@ -114,7 +114,7 @@ func LinkCheckerHandler(w http.ResponseWriter, r *http.Request) {
 	notified := false
 
 	if len(links) > 0 {
-		if err := sendLinkCheckerNotification(links); err != nil {
+		if err := sendLinkCheckerNotification(r.Context(), links); err != nil {
 			log.Printf("Failed to send link checker notification: %v", err)
 			monitoring.CaptureError(err, monitoring.EventContext{
 				Feature:   "linkchecker",
