@@ -3,11 +3,12 @@ package contact
 import "net/mail"
 
 type EmailRequestBody struct {
-	RequestID         string `json:"requestId"`
-	Title             string `json:"title"`
-	Email             string `json:"email"`
-	Message           string `json:"message"`
-	RecaptchaResponse string `json:"g-recaptcha-response"`
+	RequestID             string `json:"requestId"`
+	Title                 string `json:"title"`
+	Email                 string `json:"email"`
+	Message               string `json:"message"`
+	TurnstileToken        string `json:"turnstileToken"`
+	TurnstileValidationID string `json:"turnstileValidationId"`
 }
 
 type emailConfig struct {

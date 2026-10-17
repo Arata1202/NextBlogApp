@@ -3,8 +3,12 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import ContactFeature from '@/components/Features/Contact';
 
-const recaptchaMock = vi.hoisted(() => ({
+const turnstileMock = vi.hoisted(() => ({
   reset: vi.fn(),
+}));
+
+const themeMock = vi.hoisted(() => ({
+  theme: 'light',
 }));
 
 const sentryMock = vi.hoisted(() => ({
@@ -12,40 +16,56 @@ const sentryMock = vi.hoisted(() => ({
 }));
 
 vi.mock('@sentry/nextjs', () => sentryMock);
+vi.mock('next-themes', () => ({
+  useTheme: () => ({ theme: themeMock.theme }),
+}));
 
-vi.mock('react-google-recaptcha', async () => {
+vi.mock('@marsidev/react-turnstile', async () => {
   const React = await import('react');
 
-  type RecaptchaHandle = {
+  type TurnstileHandle = {
     reset: () => void;
   };
 
-  type RecaptchaProps = {
-    onChange?: (value: string | null) => void;
-    onExpired?: () => void;
+  type TurnstileProps = {
+    onSuccess?: (token: string) => void;
+    options?: { theme?: string };
+    scriptOptions?: { onError?: () => void };
     className?: string;
   };
 
-  const ReCAPTCHA = React.forwardRef<RecaptchaHandle, RecaptchaProps>(({ onChange }, ref) => {
-    React.useImperativeHandle(ref, () => ({
-      reset: recaptchaMock.reset,
-    }));
+  const Turnstile = React.forwardRef<TurnstileHandle, TurnstileProps>(
+    ({ onSuccess, options, scriptOptions }, ref) => {
+      React.useImperativeHandle(ref, () => ({
+        reset: turnstileMock.reset,
+      }));
 
-    return React.createElement(
-      'button',
-      {
-        type: 'button',
-        onClick: () => onChange?.('captcha-token'),
-      },
-      'reCAPTCHA',
-    );
-  });
+      return React.createElement(
+        'div',
+        { 'data-theme': options?.theme },
+        React.createElement(
+          'button',
+          {
+            type: 'button',
+            onClick: () => onSuccess?.('turnstile-token'),
+          },
+          'Turnstile',
+        ),
+        React.createElement(
+          'button',
+          {
+            type: 'button',
+            onClick: () => scriptOptions?.onError?.(),
+          },
+          'Turnstile script error',
+        ),
+      );
+    },
+  );
 
-  ReCAPTCHA.displayName = 'MockReCAPTCHA';
+  Turnstile.displayName = 'MockTurnstile';
 
-  return {
-    default: ReCAPTCHA,
-  };
+  return { Turnstile };
 });
 
 describe('ContactFeature', () => {
@@ -53,13 +73,14 @@ describe('ContactFeature', () => {
 
   beforeEach(() => {
     fetchMock.mockReset();
-    recaptchaMock.reset.mockReset();
+    turnstileMock.reset.mockReset();
     sentryMock.captureException.mockReset();
+    themeMock.theme = 'light';
     process.env.NEXT_PUBLIC_API_SENDEMAIL_URL = '/api/sendemail';
-    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY = 'site-key';
-    vi.spyOn(globalThis.crypto, 'randomUUID').mockReturnValue(
-      '00000000-0000-4000-8000-000000000001',
-    );
+    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = 'site-key';
+    vi.spyOn(globalThis.crypto, 'randomUUID')
+      .mockReturnValueOnce('11111111-1111-4111-8111-111111111111')
+      .mockReturnValue('00000000-0000-4000-8000-000000000001');
     vi.stubGlobal('fetch', fetchMock);
   });
 
@@ -112,7 +133,7 @@ describe('ContactFeature', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it('shows a recaptcha validation message before opening the confirmation modal', async () => {
+  it('shows a Turnstile validation message before opening the confirmation modal', async () => {
     const user = userEvent.setup();
 
     render(<ContactFeature />);
@@ -122,7 +143,7 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('内容'), 'Test message');
     await user.click(screen.getByRole('button', { name: '送信' }));
 
-    expect(await screen.findByText('※ reCAPTCHAを完了してください')).toBeInTheDocument();
+    expect(await screen.findByText('※ セキュリティ検証を完了してください')).toBeInTheDocument();
     expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
     expect(fetchMock).not.toHaveBeenCalled();
   });
@@ -130,7 +151,7 @@ describe('ContactFeature', () => {
   it('does not open the confirmation modal when public form settings are missing', async () => {
     const user = userEvent.setup();
     delete process.env.NEXT_PUBLIC_API_SENDEMAIL_URL;
-    delete process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+    delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
     render(<ContactFeature />);
 
@@ -146,7 +167,38 @@ describe('ContactFeature', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it('confirms captcha, sends the email, resets the form, and shows success alert', async () => {
+  it('shows an actionable error when the Turnstile script fails to load', async () => {
+    const user = userEvent.setup();
+
+    render(<ContactFeature />);
+
+    await user.click(screen.getByRole('button', { name: 'Turnstile script error' }));
+
+    expect(
+      await screen.findByText('※ セキュリティ検証に失敗しました。再読み込みしてください'),
+    ).toBeInTheDocument();
+  });
+
+  it('requires a fresh Turnstile token after the site theme changes', async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(<ContactFeature />);
+
+    await user.click(screen.getByRole('button', { name: 'Turnstile' }));
+
+    themeMock.theme = 'dark';
+    rerender(<ContactFeature />);
+
+    await user.type(screen.getByLabelText('メールアドレス'), 'test@example.com');
+    await user.type(screen.getByLabelText('件名'), 'Test subject');
+    await user.type(screen.getByLabelText('内容'), 'Test message');
+    await user.click(screen.getByRole('button', { name: '送信' }));
+
+    expect(await screen.findByText('※ セキュリティ検証を完了してください')).toBeInTheDocument();
+    expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
+    expect(document.querySelector('[data-theme="dark"]')).toBeInTheDocument();
+  });
+
+  it('confirms Turnstile, sends the email, resets the form, and shows success alert', async () => {
     const user = userEvent.setup();
     fetchMock.mockResolvedValueOnce({
       json: async () => ({ success: true }),
@@ -157,7 +209,7 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('メールアドレス'), 'test@example.com');
     await user.type(screen.getByLabelText('件名'), 'Test subject');
     await user.type(screen.getByLabelText('内容'), 'Test message');
-    await user.click(screen.getByRole('button', { name: 'reCAPTCHA' }));
+    await user.click(screen.getByRole('button', { name: 'Turnstile' }));
     await user.click(screen.getByRole('button', { name: '送信' }));
 
     expect(await screen.findByText('お問い合わせを送信しますか？')).toBeInTheDocument();
@@ -178,22 +230,24 @@ describe('ContactFeature', () => {
           title: 'Test subject',
           message: 'Test message',
           requestId: '00000000-0000-4000-8000-000000000001',
-          'g-recaptcha-response': 'captcha-token',
+          turnstileToken: 'turnstile-token',
+          turnstileValidationId: '11111111-1111-4111-8111-111111111111',
         }),
       }),
     );
     expect(await screen.findByText('お問い合わせありがとうございます')).toBeInTheDocument();
-    expect(recaptchaMock.reset).toHaveBeenCalledTimes(1);
+    expect(turnstileMock.reset).toHaveBeenCalledTimes(1);
     expect(screen.getByLabelText('メールアドレス')).toHaveValue('');
     await waitFor(() => {
       expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
     });
   });
 
-  it('shows a failure alert when the API reports a send failure', async () => {
+  it('resets Turnstile when the API rejects its token', async () => {
     const user = userEvent.setup();
     fetchMock.mockResolvedValueOnce({
-      json: async () => ({ success: false, status: 'reCAPTCHA verification failed' }),
+      status: 403,
+      json: async () => ({ success: false, status: 'Turnstile verification failed' }),
     });
 
     render(<ContactFeature />);
@@ -201,7 +255,7 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('メールアドレス'), 'test@example.com');
     await user.type(screen.getByLabelText('件名'), 'Test subject');
     await user.type(screen.getByLabelText('内容'), 'Test message');
-    await user.click(screen.getByRole('button', { name: 'reCAPTCHA' }));
+    await user.click(screen.getByRole('button', { name: 'Turnstile' }));
     await user.click(screen.getByRole('button', { name: '送信' }));
     await user.click((await screen.findAllByRole('button', { name: '送信' })).at(-1)!);
 
@@ -216,7 +270,8 @@ describe('ContactFeature', () => {
           title: 'Test subject',
           message: 'Test message',
           requestId: '00000000-0000-4000-8000-000000000001',
-          'g-recaptcha-response': 'captcha-token',
+          turnstileToken: 'turnstile-token',
+          turnstileValidationId: '11111111-1111-4111-8111-111111111111',
         }),
       }),
     );
@@ -224,7 +279,7 @@ describe('ContactFeature', () => {
     expect(await screen.findByText('送信に失敗しました')).toBeInTheDocument();
     expect(screen.getByText('時間をおいて再度お試しください。')).toBeInTheDocument();
     expect(screen.getByRole('alert')).toHaveTextContent('送信に失敗しました');
-    expect(recaptchaMock.reset).not.toHaveBeenCalled();
+    expect(turnstileMock.reset).toHaveBeenCalledTimes(1);
     expect(sentryMock.captureException).toHaveBeenCalledTimes(1);
 
     await waitFor(() => {
@@ -247,7 +302,7 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('メールアドレス'), 'test@example.com');
     await user.type(screen.getByLabelText('件名'), 'Test subject');
     await user.type(screen.getByLabelText('内容'), 'Test message');
-    await user.click(screen.getByRole('button', { name: 'reCAPTCHA' }));
+    await user.click(screen.getByRole('button', { name: 'Turnstile' }));
 
     await user.click(screen.getByRole('button', { name: '送信' }));
     await user.click((await screen.findAllByRole('button', { name: '送信' })).at(-1)!);
@@ -265,7 +320,8 @@ describe('ContactFeature', () => {
     const secondBody = JSON.parse(fetchMock.mock.calls[1][1].body as string);
     expect(firstBody.requestId).toBe('00000000-0000-4000-8000-000000000001');
     expect(secondBody.requestId).toBe(firstBody.requestId);
-    expect(globalThis.crypto.randomUUID).toHaveBeenCalledTimes(1);
+    expect(secondBody.turnstileValidationId).toBe(firstBody.turnstileValidationId);
+    expect(globalThis.crypto.randomUUID).toHaveBeenCalledTimes(2);
   });
 
   it('shows a failure alert when the email request fails', async () => {
@@ -277,7 +333,7 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('メールアドレス'), 'test@example.com');
     await user.type(screen.getByLabelText('件名'), 'Test subject');
     await user.type(screen.getByLabelText('内容'), 'Test message');
-    await user.click(screen.getByRole('button', { name: 'reCAPTCHA' }));
+    await user.click(screen.getByRole('button', { name: 'Turnstile' }));
     await user.click(screen.getByRole('button', { name: '送信' }));
     await user.click((await screen.findAllByRole('button', { name: '送信' })).at(-1)!);
 
@@ -285,7 +341,7 @@ describe('ContactFeature', () => {
     expect(screen.getByText('時間をおいて再度お試しください。')).toBeInTheDocument();
     expect(screen.getByRole('alert')).toHaveTextContent('送信に失敗しました');
     expect(screen.queryByText('お問い合わせありがとうございます')).not.toBeInTheDocument();
-    expect(recaptchaMock.reset).not.toHaveBeenCalled();
+    expect(turnstileMock.reset).not.toHaveBeenCalled();
     expect(sentryMock.captureException).toHaveBeenCalledTimes(1);
 
     await waitFor(() => {

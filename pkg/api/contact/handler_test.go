@@ -2,6 +2,7 @@ package contact
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -78,6 +79,34 @@ func TestSendEmailHandlerInvalidJSON(t *testing.T) {
 	}
 }
 
+func TestSendEmailHandlerRejectsOversizedBody(t *testing.T) {
+	validBody := `{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`
+	req := httptest.NewRequest(
+		http.MethodPost,
+		"/api/sendemail",
+		strings.NewReader(validBody+strings.Repeat(" ", maxContactRequestBodyBytes)),
+	)
+	rec := httptest.NewRecorder()
+
+	SendEmailHandler(rec, req)
+
+	if rec.Code != http.StatusRequestEntityTooLarge {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusRequestEntityTooLarge)
+	}
+}
+
+func TestSendEmailHandlerRejectsTrailingJSON(t *testing.T) {
+	body := `{"requestId":"00000000-0000-4000-8000-000000000001"} {}`
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", strings.NewReader(body))
+	rec := httptest.NewRecorder()
+
+	SendEmailHandler(rec, req)
+
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusBadRequest)
+	}
+}
+
 func TestSendEmailHandlerMissingRequiredFields(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com"}`))
 	rec := httptest.NewRecorder()
@@ -98,7 +127,7 @@ func TestSendEmailHandlerMissingRequiredFields(t *testing.T) {
 	}
 }
 
-func TestSendEmailHandlerMissingRecaptchaResponse(t *testing.T) {
+func TestSendEmailHandlerMissingTurnstileToken(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello"}`))
 	rec := httptest.NewRecorder()
 
@@ -113,8 +142,8 @@ func TestSendEmailHandlerMissingRecaptchaResponse(t *testing.T) {
 		t.Fatalf("Decode() error = %v", err)
 	}
 
-	if body["status"] != "Missing reCAPTCHA response" {
-		t.Fatalf("status body = %q, want %q", body["status"], "Missing reCAPTCHA response")
+	if body["status"] != "Missing Turnstile validation" {
+		t.Fatalf("status body = %q, want %q", body["status"], "Missing Turnstile validation")
 	}
 }
 
@@ -125,35 +154,46 @@ func TestSendEmailHandlerRejectsInvalidRequestFields(t *testing.T) {
 	}{
 		{
 			name: "invalid request ID",
-			body: `{"requestId":"not-a-uuid","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+			body: `{"requestId":"not-a-uuid","email":"user@example.com","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`,
+		},
+		{
+			name: "invalid Turnstile validation ID",
+			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"not-a-uuid"}`,
+		},
+		{
+			name: "Turnstile token too long",
+			body: fmt.Sprintf(
+				`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","turnstileToken":"%s","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`,
+				strings.Repeat("a", maxTurnstileTokenLength+1),
+			),
 		},
 		{
 			name: "invalid email address",
-			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"not-an-email","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"not-an-email","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`,
 		},
 		{
 			name: "email control characters",
-			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com\r\nBcc: attacker@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com\r\nBcc: attacker@example.com","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`,
 		},
 		{
 			name: "title control characters",
-			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test\r\nBcc: attacker@example.com","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test\r\nBcc: attacker@example.com","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`,
 		},
 		{
 			name: "message control characters",
-			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello\u0000","g-recaptcha-response":"captcha-token"}`,
+			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello\u0000","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`,
 		},
 		{
 			name: "title too long",
 			body: fmt.Sprintf(
-				`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"%s","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+				`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"%s","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`,
 				strings.Repeat("a", maxTitleLength+1),
 			),
 		},
 		{
 			name: "message too long",
 			body: fmt.Sprintf(
-				`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"%s","g-recaptcha-response":"captcha-token"}`,
+				`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"%s","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`,
 				strings.Repeat("a", maxMessageLength+1),
 			),
 		},
@@ -161,13 +201,15 @@ func TestSendEmailHandlerRejectsInvalidRequestFields(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			originalVerify := verifyRecaptchaFunc
-			verifyRecaptchaFunc = func(response, secret string) (bool, error) {
-				t.Fatal("verifyRecaptchaFunc should not be called for invalid request fields")
+			originalVerify := verifyTurnstileFunc
+			verifyTurnstileFunc = func(
+				context.Context, string, string, string, string, string,
+			) (bool, error) {
+				t.Fatal("verifyTurnstileFunc should not be called for invalid request fields")
 				return false, nil
 			}
 			t.Cleanup(func() {
-				verifyRecaptchaFunc = originalVerify
+				verifyTurnstileFunc = originalVerify
 			})
 
 			req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(tt.body))
@@ -191,11 +233,50 @@ func TestSendEmailHandlerRejectsInvalidRequestFields(t *testing.T) {
 	}
 }
 
-func TestSendEmailHandlerRecaptchaVerificationFailure(t *testing.T) {
-	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
-	stubVerifyRecaptcha(t, false, nil)
+func TestSendEmailHandlerMissingTurnstileConfiguration(t *testing.T) {
+	tests := []struct {
+		name             string
+		secret           string
+		expectedHostname string
+	}{
+		{name: "missing secret", expectedHostname: "realunivlog.com"},
+		{name: "missing expected hostname", secret: "test-secret"},
+	}
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			t.Setenv("TURNSTILE_SECRET_KEY", test.secret)
+			t.Setenv("TURNSTILE_EXPECTED_HOSTNAME", test.expectedHostname)
+
+			originalVerify := verifyTurnstileFunc
+			verifyTurnstileFunc = func(
+				context.Context, string, string, string, string, string,
+			) (bool, error) {
+				t.Fatal("verifyTurnstileFunc should not be called without complete configuration")
+				return false, nil
+			}
+			t.Cleanup(func() {
+				verifyTurnstileFunc = originalVerify
+			})
+
+			req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`))
+			rec := httptest.NewRecorder()
+
+			SendEmailHandler(rec, req)
+
+			if rec.Code != http.StatusInternalServerError {
+				t.Fatalf("status = %d, want %d", rec.Code, http.StatusInternalServerError)
+			}
+		})
+	}
+}
+
+func TestSendEmailHandlerTurnstileVerificationFailure(t *testing.T) {
+	t.Setenv("TURNSTILE_SECRET_KEY", "test-secret")
+	t.Setenv("TURNSTILE_EXPECTED_HOSTNAME", "realunivlog.com")
+	stubVerifyTurnstile(t, false, nil)
+
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -205,11 +286,12 @@ func TestSendEmailHandlerRecaptchaVerificationFailure(t *testing.T) {
 	}
 }
 
-func TestSendEmailHandlerRecaptchaVerificationError(t *testing.T) {
-	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
-	stubVerifyRecaptcha(t, false, errors.New("network error"))
+func TestSendEmailHandlerTurnstileVerificationError(t *testing.T) {
+	t.Setenv("TURNSTILE_SECRET_KEY", "test-secret")
+	t.Setenv("TURNSTILE_EXPECTED_HOSTNAME", "realunivlog.com")
+	stubVerifyTurnstile(t, false, errors.New("network error"))
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -220,13 +302,14 @@ func TestSendEmailHandlerRecaptchaVerificationError(t *testing.T) {
 }
 
 func TestSendEmailHandlerMissingEnvironment(t *testing.T) {
-	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
+	t.Setenv("TURNSTILE_SECRET_KEY", "test-secret")
+	t.Setenv("TURNSTILE_EXPECTED_HOSTNAME", "realunivlog.com")
 	t.Setenv("CONTACT_EMAIL_TO", "")
 	t.Setenv("CONTACT_EMAIL_FROM", "")
 	t.Setenv("CONTACT_RESEND_API_KEY", "")
-	stubVerifyRecaptcha(t, true, nil)
+	stubVerifyTurnstile(t, true, nil)
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -237,17 +320,18 @@ func TestSendEmailHandlerMissingEnvironment(t *testing.T) {
 }
 
 func TestSendEmailHandlerSuccess(t *testing.T) {
-	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
+	t.Setenv("TURNSTILE_SECRET_KEY", "test-secret")
+	t.Setenv("TURNSTILE_EXPECTED_HOSTNAME", "realunivlog.com")
 	t.Setenv("CONTACT_EMAIL_TO", "owner@example.com")
 	t.Setenv("CONTACT_EMAIL_FROM", "from@example.com")
 	t.Setenv("CONTACT_RESEND_API_KEY", "resend-token")
 	t.Setenv("BASE_TITLE", "Real Univ Log")
-	stubVerifyRecaptcha(t, true, nil)
+	stubVerifyTurnstile(t, true, nil)
 
 	sender := &fakeEmailSender{ids: []string{"owner-id", "user-id"}}
 	stubNewEmailSender(t, "resend-token", sender)
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -270,16 +354,17 @@ func TestSendEmailHandlerSuccess(t *testing.T) {
 }
 
 func TestSendEmailHandlerTrimsEmailBeforeSending(t *testing.T) {
-	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
+	t.Setenv("TURNSTILE_SECRET_KEY", "test-secret")
+	t.Setenv("TURNSTILE_EXPECTED_HOSTNAME", "realunivlog.com")
 	t.Setenv("CONTACT_EMAIL_TO", "owner@example.com")
 	t.Setenv("CONTACT_EMAIL_FROM", "from@example.com")
 	t.Setenv("CONTACT_RESEND_API_KEY", "resend-token")
-	stubVerifyRecaptcha(t, true, nil)
+	stubVerifyTurnstile(t, true, nil)
 
 	sender := &fakeEmailSender{ids: []string{"owner-id", "user-id"}}
 	stubNewEmailSender(t, "resend-token", sender)
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":" user@example.com ","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":" user@example.com ","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -293,16 +378,17 @@ func TestSendEmailHandlerTrimsEmailBeforeSending(t *testing.T) {
 }
 
 func TestSendEmailHandlerSendError(t *testing.T) {
-	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
+	t.Setenv("TURNSTILE_SECRET_KEY", "test-secret")
+	t.Setenv("TURNSTILE_EXPECTED_HOSTNAME", "realunivlog.com")
 	t.Setenv("CONTACT_EMAIL_TO", "owner@example.com")
 	t.Setenv("CONTACT_EMAIL_FROM", "from@example.com")
 	t.Setenv("CONTACT_RESEND_API_KEY", "resend-token")
-	stubVerifyRecaptcha(t, true, nil)
+	stubVerifyTurnstile(t, true, nil)
 
 	sender := &fakeEmailSender{err: errors.New("resend error")}
 	stubNewEmailSender(t, "resend-token", sender)
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","turnstileToken":"turnstile-token","turnstileValidationId":"11111111-1111-4111-8111-111111111111"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)

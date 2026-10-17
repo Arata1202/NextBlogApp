@@ -10,11 +10,11 @@ import (
 func TestSendContactEmailsBuildsSeparatedMessages(t *testing.T) {
 	sender := &fakeEmailSender{ids: []string{"owner-id", "user-id"}}
 	request := EmailRequestBody{
-		RequestID:         "00000000-0000-4000-8000-000000000001",
-		Email:             "user@example.com",
-		Title:             "<Test subject>",
-		Message:           "Line 1\n<script>alert('x')</script>",
-		RecaptchaResponse: "captcha-token",
+		RequestID:      "00000000-0000-4000-8000-000000000001",
+		Email:          "user@example.com",
+		Title:          "<Test subject>",
+		Message:        "Line 1\n<script>alert('x')</script>",
+		TurnstileToken: "turnstile-token",
 	}
 
 	ids, err := sendContactEmails(
@@ -102,7 +102,7 @@ func TestSendContactEmailsRejectsInvalidAddresses(t *testing.T) {
 		sender,
 		emailConfig{To: "not-an-email", From: "contact@example.com"},
 		siteConfig{Title: "Real Univ Log"},
-		EmailRequestBody{RequestID: "00000000-0000-4000-8000-000000000001", Email: "user@example.com", Title: "Title", Message: "Message", RecaptchaResponse: "captcha"},
+		EmailRequestBody{RequestID: "00000000-0000-4000-8000-000000000001", Email: "user@example.com", Title: "Title", Message: "Message", TurnstileToken: "captcha"},
 	)
 	if err == nil {
 		t.Fatal("sendContactEmails() error = nil, want invalid address error")
@@ -119,7 +119,7 @@ func TestSendContactEmailsWrapsSenderError(t *testing.T) {
 		sender,
 		emailConfig{To: "owner@example.com", From: "contact@example.com"},
 		siteConfig{Title: "Real Univ Log"},
-		EmailRequestBody{RequestID: "00000000-0000-4000-8000-000000000001", Email: "user@example.com", Title: "Title", Message: "Message", RecaptchaResponse: "captcha"},
+		EmailRequestBody{RequestID: "00000000-0000-4000-8000-000000000001", Email: "user@example.com", Title: "Title", Message: "Message", TurnstileToken: "captcha"},
 	)
 	if err == nil || !strings.Contains(err.Error(), "send contact email batch") {
 		t.Fatalf("sendContactEmails() error = %v", err)
@@ -143,7 +143,7 @@ func TestSendContactEmailsValidatesProviderResponse(t *testing.T) {
 				sender,
 				emailConfig{To: "owner@example.com", From: "contact@example.com"},
 				siteConfig{Title: "Real Univ Log"},
-				EmailRequestBody{RequestID: "00000000-0000-4000-8000-000000000001", Email: "user@example.com", Title: "Title", Message: "Message", RecaptchaResponse: "captcha"},
+				EmailRequestBody{RequestID: "00000000-0000-4000-8000-000000000001", Email: "user@example.com", Title: "Title", Message: "Message", TurnstileToken: "captcha"},
 			)
 			if err == nil {
 				t.Fatal("sendContactEmails() error = nil, want provider response error")

@@ -17,7 +17,6 @@ func main() {
 		port = "8000"
 	}
 
-	http.HandleFunc("/api/recaptcha", api.RecaptchaHandler)
 	http.HandleFunc("/api/sendemail", api.SendEmailHandler)
 	http.HandleFunc("/api/search", api.SearchHandler)
 	http.HandleFunc("/api/cron/linkchecker", cronapi.LinkCheckerHandler)

@@ -17,29 +17,39 @@ const searchArticles = (query: string, limit: number, offset: number) => {
   };
 };
 
-const recaptchaApiScript = `
+const turnstileApiScript = `
 (() => {
   const params = new URL(document.currentScript.src).searchParams;
   const onload = params.get('onload');
-  window.grecaptcha = {
+  let response = '';
+  window.turnstile = {
+    ready(callback) {
+      callback();
+    },
     render(container, options = {}) {
-      const element = typeof container === 'string' ? document.getElementById(container) : container;
+      const element = typeof container === 'string' ? document.querySelector(container) : container;
       const button = document.createElement('button');
       button.type = 'button';
-      button.textContent = 'reCAPTCHA E2E';
-      button.setAttribute('aria-label', 'reCAPTCHAを完了');
+      button.textContent = 'Turnstile E2E';
+      button.setAttribute('aria-label', 'セキュリティ検証を完了');
       button.addEventListener('click', () => {
-        if (typeof options.callback === 'function') {
-          options.callback('e2e-recaptcha-token');
-        }
+        response = 'e2e-turnstile-token';
+        options.callback?.(response);
       });
       element?.appendChild(button);
-      return 1;
+      return 'e2e-turnstile-widget';
     },
-    reset() {},
+    reset() {
+      response = '';
+    },
+    remove() {},
+    execute() {},
     getResponse() {
-      return 'e2e-recaptcha-token';
-    }
+      return response;
+    },
+    isExpired() {
+      return response === '';
+    },
   };
   if (onload && typeof window[onload] === 'function') {
     setTimeout(() => window[onload](), 0);
@@ -100,21 +110,14 @@ export const test = base.extend({
     });
 
     await page.route(
-      /https:\/\/(?:www\.)?(?:google\.com|recaptcha\.net)\/recaptcha\/api\.js.*/,
+      /https:\/\/challenges\.cloudflare\.com\/turnstile\/v0\/api\.js.*/,
       async (route) => {
         await route.fulfill({
           contentType: 'text/javascript; charset=utf-8',
-          body: recaptchaApiScript,
+          body: turnstileApiScript,
         });
       },
     );
-
-    await page.route(/https:\/\/www\.gstatic\.com\/recaptcha\/.*/, async (route) => {
-      await route.fulfill({
-        contentType: 'text/javascript; charset=utf-8',
-        body: '',
-      });
-    });
 
     await continueTest(page);
 

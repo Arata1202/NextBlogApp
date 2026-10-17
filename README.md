@@ -47,7 +47,8 @@
 | Environment setup | Node.js, pnpm, Docker Compose                       |
 | CI/CD             | GitHub Actions, Chromatic, CodeQL, Dependabot       |
 | Design            | Storybook, Canva                                    |
-| Google            | AdSense, Analytics, Search Console, reCAPTCHA       |
+| Google            | AdSense, Analytics, Search Console                  |
+| Security          | Cloudflare Turnstile                                |
 | Integrations      | PWA, OneSignal, Sentry, Iframely, Instagram, Resend |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>

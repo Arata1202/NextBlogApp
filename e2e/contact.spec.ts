@@ -17,13 +17,13 @@ test.describe('contact form', () => {
     ).toBeVisible();
   });
 
-  test('submits through mocked reCAPTCHA and send-email API', async ({ page }) => {
+  test('submits through mocked Turnstile and send-email API', async ({ page }) => {
     await page.goto('/contact');
 
     await page.getByLabel('メールアドレス').fill('e2e@example.com');
     await page.getByLabel('件名').fill('Playwright E2E');
     await page.getByLabel('内容').fill('お問い合わせフォームのE2Eテストです。');
-    await page.getByRole('button', { name: 'reCAPTCHAを完了' }).click();
+    await page.getByRole('button', { name: 'セキュリティ検証を完了' }).click();
     await page.getByRole('button', { name: '送信' }).click();
 
     const dialog = page.getByRole('dialog');

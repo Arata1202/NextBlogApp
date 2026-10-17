@@ -4,32 +4,34 @@ import * as Sentry from '@sentry/nextjs';
 import { useState, useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 import { useForm } from 'react-hook-form';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 import type { Form } from '@/types/form';
 import InputContainer from './Elements/InputContainer';
 import Modal from './Elements/Modal';
 import Alert from './Elements/Alert';
 import { outlinedControlClassName } from '@/components/Common/controlClassNames';
-import { getApiSendEmailUrl, getRecaptchaSiteKey } from '@/config/publicEnv';
+import { getApiSendEmailUrl, getTurnstileSiteKey } from '@/config/publicEnv';
 import { getThemeClassName } from '@/styles/uiClassNames';
 
 export default function ContactFeature() {
   const { theme } = useTheme();
   const themeClassName = getThemeClassName(theme);
   const apiSendEmailUrl = getApiSendEmailUrl();
-  const recaptchaSiteKey = getRecaptchaSiteKey();
-  const isFormConfigured = Boolean(apiSendEmailUrl && recaptchaSiteKey);
+  const turnstileSiteKey = getTurnstileSiteKey();
+  const isFormConfigured = Boolean(apiSendEmailUrl && turnstileSiteKey);
 
   const [confirmSendEmailModalOpen, setConfirmSendEmailModalOpen] = useState(false);
   const [successSendEmailAlertOpen, setSuccessSendEmailAlertOpen] = useState(false);
   const [failureSendEmailAlertOpen, setFailureSendEmailAlertOpen] = useState(false);
   const [formData, setFormData] = useState<Form | null>(null);
-  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
-  const [captchaError, setCaptchaError] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileValidationId, setTurnstileValidationId] = useState<string | null>(null);
+  const [turnstileError, setTurnstileError] = useState('');
   const [isSending, setIsSending] = useState(false);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const turnstileRef = useRef<TurnstileInstance>(undefined);
+  const previousThemeRef = useRef(theme);
   const pendingSubmissionRef = useRef<{ payload: string; requestId: string } | null>(null);
-  const captchaErrorId = 'recaptcha-error';
+  const turnstileErrorId = 'turnstile-error';
 
   const {
     register,
@@ -38,14 +40,25 @@ export default function ContactFeature() {
     reset,
   } = useForm<Form>();
 
-  const handleSubmit = (data: Form) => {
-    if (!isFormConfigured) {
-      setCaptchaError('※ お問い合わせフォームの設定が不足しています');
+  useEffect(() => {
+    if (previousThemeRef.current === theme) {
       return;
     }
 
-    if (!captchaValue) {
-      setCaptchaError('※ reCAPTCHAを完了してください');
+    previousThemeRef.current = theme;
+    setTurnstileToken(null);
+    setTurnstileValidationId(null);
+    setTurnstileError('');
+  }, [theme]);
+
+  const handleSubmit = (data: Form) => {
+    if (!isFormConfigured) {
+      setTurnstileError('※ お問い合わせフォームの設定が不足しています');
+      return;
+    }
+
+    if (!turnstileToken || !turnstileValidationId) {
+      setTurnstileError('※ セキュリティ検証を完了してください');
       return;
     }
 
@@ -53,12 +66,20 @@ export default function ContactFeature() {
     setConfirmSendEmailModalOpen(true);
   };
 
-  const handleChangeCaptchaValue = (value: string | null) => {
-    setCaptchaValue(value);
+  const handleTurnstileSuccess = (token: string) => {
+    setTurnstileToken(token);
+    setTurnstileValidationId(crypto.randomUUID());
+    setTurnstileError('');
+  };
 
-    if (value) {
-      setCaptchaError('');
-    }
+  const clearTurnstileValidation = () => {
+    setTurnstileToken(null);
+    setTurnstileValidationId(null);
+  };
+
+  const handleTurnstileError = () => {
+    clearTurnstileValidation();
+    setTurnstileError('※ セキュリティ検証に失敗しました。再読み込みしてください');
   };
 
   const handleSendEmail = async () => {
@@ -66,8 +87,8 @@ export default function ContactFeature() {
       return;
     }
 
-    if (!captchaValue) {
-      setCaptchaError('※ reCAPTCHAを完了してください');
+    if (!turnstileToken || !turnstileValidationId) {
+      setTurnstileError('※ セキュリティ検証を完了してください');
       setConfirmSendEmailModalOpen(false);
       return;
     }
@@ -86,7 +107,8 @@ export default function ContactFeature() {
         body: JSON.stringify({
           ...formData,
           requestId: pendingSubmissionRef.current.requestId,
-          'g-recaptcha-response': captchaValue,
+          turnstileToken,
+          turnstileValidationId,
         }),
       });
 
@@ -96,12 +118,18 @@ export default function ContactFeature() {
         setSuccessSendEmailAlertOpen(true);
         setFailureSendEmailAlertOpen(false);
         reset();
-        recaptchaRef.current?.reset();
-        setCaptchaValue(null);
-        setCaptchaError('');
+        turnstileRef.current?.reset();
+        clearTurnstileValidation();
+        setTurnstileError('');
         pendingSubmissionRef.current = null;
         setConfirmSendEmailModalOpen(false);
       } else {
+        if (response.status === 403) {
+          turnstileRef.current?.reset();
+          clearTurnstileValidation();
+          pendingSubmissionRef.current = null;
+        }
+
         const message = data.message ?? data.status ?? 'Contact request failed';
 
         Sentry.captureException(new Error(String(message)), {
@@ -174,20 +202,28 @@ export default function ContactFeature() {
             errors={errors.message}
           />
         </div>
-        <div role="group" aria-describedby={captchaError ? captchaErrorId : undefined}>
-          {recaptchaSiteKey && (
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey={recaptchaSiteKey}
-              onChange={handleChangeCaptchaValue}
-              onExpired={() => setCaptchaValue(null)}
+        <div role="group" aria-describedby={turnstileError ? turnstileErrorId : undefined}>
+          {turnstileSiteKey && (
+            <Turnstile
+              ref={turnstileRef}
+              siteKey={turnstileSiteKey}
+              onSuccess={handleTurnstileSuccess}
+              onExpire={clearTurnstileValidation}
+              onError={handleTurnstileError}
+              options={{
+                action: 'contact',
+                language: 'ja',
+                responseField: false,
+                theme: theme === 'dark' ? 'dark' : 'light',
+              }}
+              scriptOptions={{ onError: handleTurnstileError }}
               className="mt-3"
             />
           )}
         </div>
-        {captchaError && (
-          <p id={captchaErrorId} className="text-red-700" role="alert">
-            {captchaError}
+        {turnstileError && (
+          <p id={turnstileErrorId} className="text-red-700" role="alert">
+            {turnstileError}
           </p>
         )}
         <div className="mt-3">

@@ -12,9 +12,10 @@ import (
 var requestIDPattern = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$`)
 
 const (
-	maxEmailLength   = 254
-	maxTitleLength   = 200
-	maxMessageLength = 5000
+	maxEmailLength          = 254
+	maxTitleLength          = 200
+	maxMessageLength        = 5000
+	maxTurnstileTokenLength = 2048
 )
 
 func sanitizeEmailContent(value string, keepLineBreaks bool) string {
@@ -75,6 +76,16 @@ func validateEmailRequestInput(req *EmailRequestBody) error {
 	req.RequestID = strings.TrimSpace(req.RequestID)
 	if !requestIDPattern.MatchString(req.RequestID) {
 		return fmt.Errorf("invalid request ID")
+	}
+
+	req.TurnstileValidationID = strings.TrimSpace(req.TurnstileValidationID)
+	if !requestIDPattern.MatchString(req.TurnstileValidationID) {
+		return fmt.Errorf("invalid Turnstile validation ID")
+	}
+
+	req.TurnstileToken = strings.TrimSpace(req.TurnstileToken)
+	if len(req.TurnstileToken) > maxTurnstileTokenLength {
+		return fmt.Errorf("Turnstile token is too long")
 	}
 
 	req.Email = strings.TrimSpace(req.Email)

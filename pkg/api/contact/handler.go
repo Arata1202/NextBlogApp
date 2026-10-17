@@ -4,22 +4,40 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"NextBlogApp/pkg/api/httpx"
 	"NextBlogApp/pkg/api/monitoring"
-	"NextBlogApp/pkg/api/recaptcha"
+	"NextBlogApp/pkg/api/turnstile"
+)
+
+const (
+	contactTurnstileAction     = "contact"
+	maxContactRequestBodyBytes = 32 << 10
 )
 
 var (
-	verifyRecaptchaFunc = recaptcha.Verify
+	verifyTurnstileFunc = turnstile.Verify
 	newEmailSenderFunc  = newResendEmailSender
 )
 
 func writeEmailStatus(w http.ResponseWriter, statusCode int, status string) {
 	httpx.WriteJSON(w, statusCode, statusResponse{Status: status})
+}
+
+func writeRequestBodyError(w http.ResponseWriter, err error) {
+	var maxBytesError *http.MaxBytesError
+	if errors.As(err, &maxBytesError) {
+		writeEmailStatus(w, http.StatusRequestEntityTooLarge, "Request body too large")
+		return
+	}
+
+	log.Printf("Failed to parse request body: %v", err)
+	writeEmailStatus(w, http.StatusBadRequest, "Invalid request body")
 }
 
 func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
@@ -39,11 +57,16 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer r.Body.Close()
+	r.Body = http.MaxBytesReader(w, r.Body, maxContactRequestBodyBytes)
 
+	decoder := json.NewDecoder(r.Body)
 	var req EmailRequestBody
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		log.Printf("Failed to parse request body: %v", err)
-		writeEmailStatus(w, http.StatusBadRequest, "Invalid request body")
+	if err := decoder.Decode(&req); err != nil {
+		writeRequestBodyError(w, err)
+		return
+	}
+	if err := decoder.Decode(&struct{}{}); err != io.EOF {
+		writeRequestBodyError(w, err)
 		return
 	}
 
@@ -52,41 +75,49 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if req.TurnstileToken == "" || req.TurnstileValidationID == "" {
+		writeEmailStatus(w, http.StatusBadRequest, "Missing Turnstile validation")
+		return
+	}
+
 	if err := validateEmailRequestInput(&req); err != nil {
 		writeEmailStatus(w, http.StatusBadRequest, "Invalid request fields")
 		return
 	}
 
-	if req.RecaptchaResponse == "" {
-		writeEmailStatus(w, http.StatusBadRequest, "Missing reCAPTCHA response")
-		return
-	}
-
-	recaptchaSecret := os.Getenv("RECAPTCHA_SECRET_KEY")
-	if recaptchaSecret == "" {
-		monitoring.CaptureError(errors.New("RECAPTCHA_SECRET_KEY is missing"), monitoring.EventContext{
+	turnstileSecret := strings.TrimSpace(os.Getenv("TURNSTILE_SECRET_KEY"))
+	expectedHostname := strings.TrimSpace(os.Getenv("TURNSTILE_EXPECTED_HOSTNAME"))
+	if turnstileSecret == "" || expectedHostname == "" {
+		monitoring.CaptureError(errors.New("TURNSTILE_SECRET_KEY or TURNSTILE_EXPECTED_HOSTNAME is missing"), monitoring.EventContext{
 			Feature:   "sendemail",
-			Operation: "load_recaptcha_secret",
+			Operation: "load_turnstile_config",
 			Request:   r,
 		})
-		writeEmailStatus(w, http.StatusInternalServerError, "reCAPTCHA secret missing")
+		writeEmailStatus(w, http.StatusInternalServerError, "Turnstile configuration missing")
 		return
 	}
 
-	verified, err := verifyRecaptchaFunc(req.RecaptchaResponse, recaptchaSecret)
+	verified, err := verifyTurnstileFunc(
+		r.Context(),
+		req.TurnstileToken,
+		turnstileSecret,
+		expectedHostname,
+		contactTurnstileAction,
+		req.TurnstileValidationID,
+	)
 	if err != nil {
-		log.Printf("Failed to verify reCAPTCHA: %v", err)
+		log.Printf("Failed to verify Turnstile token: %v", err)
 		monitoring.CaptureError(err, monitoring.EventContext{
 			Feature:   "sendemail",
-			Operation: "verify_recaptcha",
+			Operation: "verify_turnstile",
 			Request:   r,
 		})
-		writeEmailStatus(w, http.StatusInternalServerError, "reCAPTCHA verification failed")
+		writeEmailStatus(w, http.StatusInternalServerError, "Turnstile verification failed")
 		return
 	}
 
 	if !verified {
-		writeEmailStatus(w, http.StatusForbidden, "reCAPTCHA verification failed")
+		writeEmailStatus(w, http.StatusForbidden, "Turnstile verification failed")
 		return
 	}
 
