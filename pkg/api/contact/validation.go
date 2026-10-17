@@ -3,10 +3,13 @@ package contact
 import (
 	"fmt"
 	"net/mail"
+	"regexp"
 	"strings"
 	"unicode"
 	"unicode/utf8"
 )
+
+var requestIDPattern = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$`)
 
 const (
 	maxEmailLength   = 254
@@ -69,6 +72,11 @@ func validateEmailTextField(name, value string, maxLength int, allowLineBreaks b
 }
 
 func validateEmailRequestInput(req *EmailRequestBody) error {
+	req.RequestID = strings.TrimSpace(req.RequestID)
+	if !requestIDPattern.MatchString(req.RequestID) {
+		return fmt.Errorf("invalid request ID")
+	}
+
 	req.Email = strings.TrimSpace(req.Email)
 	if len(req.Email) > maxEmailLength {
 		return fmt.Errorf("email is too long")
