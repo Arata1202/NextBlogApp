@@ -216,7 +216,6 @@ export default function ContactFeature() {
                 responseField: false,
                 theme: theme === 'dark' ? 'dark' : 'light',
               }}
-              scriptOptions={{ onError: handleTurnstileError }}
               className="mt-3"
             />
           )}

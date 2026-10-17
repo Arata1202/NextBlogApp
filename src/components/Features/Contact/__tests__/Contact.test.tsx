@@ -29,13 +29,13 @@ vi.mock('@marsidev/react-turnstile', async () => {
 
   type TurnstileProps = {
     onSuccess?: (token: string) => void;
+    onError?: () => void;
     options?: { theme?: string };
-    scriptOptions?: { onError?: () => void };
     className?: string;
   };
 
   const Turnstile = React.forwardRef<TurnstileHandle, TurnstileProps>(
-    ({ onSuccess, options, scriptOptions }, ref) => {
+    ({ onSuccess, onError, options }, ref) => {
       React.useImperativeHandle(ref, () => ({
         reset: turnstileMock.reset,
       }));
@@ -55,9 +55,9 @@ vi.mock('@marsidev/react-turnstile', async () => {
           'button',
           {
             type: 'button',
-            onClick: () => scriptOptions?.onError?.(),
+            onClick: () => onError?.(),
           },
-          'Turnstile script error',
+          'Turnstile error',
         ),
       );
     },
@@ -167,12 +167,12 @@ describe('ContactFeature', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it('shows an actionable error when the Turnstile script fails to load', async () => {
+  it('shows an actionable error when the Turnstile widget reports an error', async () => {
     const user = userEvent.setup();
 
     render(<ContactFeature />);
 
-    await user.click(screen.getByRole('button', { name: 'Turnstile script error' }));
+    await user.click(screen.getByRole('button', { name: 'Turnstile error' }));
 
     expect(
       await screen.findByText('※ セキュリティ検証に失敗しました。再読み込みしてください'),
