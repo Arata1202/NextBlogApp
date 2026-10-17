@@ -57,10 +57,14 @@ describe('ContactFeature', () => {
     sentryMock.captureException.mockReset();
     process.env.NEXT_PUBLIC_API_SENDEMAIL_URL = '/api/sendemail';
     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY = 'site-key';
+    vi.spyOn(globalThis.crypto, 'randomUUID').mockReturnValue(
+      '00000000-0000-4000-8000-000000000001',
+    );
     vi.stubGlobal('fetch', fetchMock);
   });
 
   afterEach(() => {
+    vi.restoreAllMocks();
     vi.unstubAllGlobals();
   });
 
@@ -173,6 +177,7 @@ describe('ContactFeature', () => {
           email: 'test@example.com',
           title: 'Test subject',
           message: 'Test message',
+          requestId: '00000000-0000-4000-8000-000000000001',
           'g-recaptcha-response': 'captcha-token',
         }),
       }),
@@ -210,6 +215,7 @@ describe('ContactFeature', () => {
           email: 'test@example.com',
           title: 'Test subject',
           message: 'Test message',
+          requestId: '00000000-0000-4000-8000-000000000001',
           'g-recaptcha-response': 'captcha-token',
         }),
       }),
@@ -224,6 +230,42 @@ describe('ContactFeature', () => {
     await waitFor(() => {
       expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
     });
+  });
+
+  it('reuses the request ID when retrying the same failed submission', async () => {
+    const user = userEvent.setup();
+    fetchMock
+      .mockResolvedValueOnce({
+        json: async () => ({ success: false, status: 'temporary failure' }),
+      })
+      .mockResolvedValueOnce({
+        json: async () => ({ success: true }),
+      });
+
+    render(<ContactFeature />);
+
+    await user.type(screen.getByLabelText('メールアドレス'), 'test@example.com');
+    await user.type(screen.getByLabelText('件名'), 'Test subject');
+    await user.type(screen.getByLabelText('内容'), 'Test message');
+    await user.click(screen.getByRole('button', { name: 'reCAPTCHA' }));
+
+    await user.click(screen.getByRole('button', { name: '送信' }));
+    await user.click((await screen.findAllByRole('button', { name: '送信' })).at(-1)!);
+    expect(await screen.findByText('送信に失敗しました')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: '送信' }));
+    await user.click((await screen.findAllByRole('button', { name: '送信' })).at(-1)!);
+    expect(await screen.findByText('お問い合わせありがとうございます')).toBeInTheDocument();
+
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const firstBody = JSON.parse(fetchMock.mock.calls[0][1].body as string);
+    const secondBody = JSON.parse(fetchMock.mock.calls[1][1].body as string);
+    expect(firstBody.requestId).toBe('00000000-0000-4000-8000-000000000001');
+    expect(secondBody.requestId).toBe(firstBody.requestId);
+    expect(globalThis.crypto.randomUUID).toHaveBeenCalledTimes(1);
   });
 
   it('shows a failure alert when the email request fails', async () => {

@@ -2,7 +2,10 @@ module NextBlogApp
 
 go 1.26.3
 
-require github.com/getsentry/sentry-go v0.48.0
+require (
+	github.com/getsentry/sentry-go v0.48.0
+	github.com/resend/resend-go/v4 v4.9.0
+)
 
 require (
 	golang.org/x/sys v0.45.0 // indirect

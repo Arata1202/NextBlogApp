@@ -14,8 +14,8 @@ import (
 )
 
 var (
-	sendEmailFunc       = sendEmail
 	verifyRecaptchaFunc = recaptcha.Verify
+	newEmailSenderFunc  = newResendEmailSender
 )
 
 func writeEmailStatus(w http.ResponseWriter, statusCode int, status string) {
@@ -47,7 +47,7 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Email == "" || req.Title == "" || req.Message == "" {
+	if req.RequestID == "" || req.Email == "" || req.Title == "" || req.Message == "" {
 		writeEmailStatus(w, http.StatusBadRequest, "Missing required fields")
 		return
 	}
@@ -101,7 +101,8 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := sendEmailFunc(emailConfig.To, emailConfig.From, emailConfig.SMTPUser, emailConfig.SMTPPass, req.Email, req.Title, req.Message); err != nil {
+	sender := newEmailSenderFunc(emailConfig.ResendToken)
+	if _, err := sendContactEmails(r.Context(), sender, emailConfig, loadSiteConfigFromEnv(), req); err != nil {
 		log.Printf("Failed to send email: %v", err)
 		monitoring.CaptureError(err, monitoring.EventContext{
 			Feature:   "sendemail",

@@ -8,14 +8,13 @@ import (
 
 func loadEmailConfigFromEnv() (emailConfig, error) {
 	config := emailConfig{
-		To:       strings.TrimSpace(os.Getenv("EMAIL_TO")),
-		From:     strings.TrimSpace(os.Getenv("EMAIL_FROM")),
-		SMTPUser: strings.TrimSpace(os.Getenv("SMTP_USER")),
-		SMTPPass: strings.TrimSpace(os.Getenv("SMTP_PASS")),
+		To:          strings.TrimSpace(os.Getenv("CONTACT_EMAIL_TO")),
+		From:        strings.TrimSpace(os.Getenv("CONTACT_EMAIL_FROM")),
+		ResendToken: strings.TrimSpace(os.Getenv("CONTACT_RESEND_API_KEY")),
 	}
 
-	if config.To == "" || config.From == "" || config.SMTPUser == "" || config.SMTPPass == "" {
-		return emailConfig{}, errors.New("EMAIL_TO, EMAIL_FROM, SMTP_USER, and SMTP_PASS environment variables are required")
+	if config.To == "" || config.From == "" || len(config.ResendToken) == 0 {
+		return emailConfig{}, errors.New("CONTACT_EMAIL_TO, CONTACT_EMAIL_FROM, and CONTACT_RESEND_API_KEY environment variables are required")
 	}
 
 	return config, nil
