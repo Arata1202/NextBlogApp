@@ -5,13 +5,14 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
-	"net/smtp"
 	"reflect"
 	"strings"
 	"testing"
 	"time"
 
 	contentops "NextBlogApp/pkg/api/contentops"
+
+	"github.com/resend/resend-go/v4"
 )
 
 func TestLinkCheckerHandlerUnauthorized(t *testing.T) {
@@ -34,27 +35,24 @@ func TestLinkCheckerHandlerSuccessWithBrokenLinksSendsNotification(t *testing.T)
 	t.Setenv("MICROCMS_API_KEY", "api-key")
 	t.Setenv("BASE_URL", "https://site.example")
 	t.Setenv("BASE_TITLE", "Real Univ Log")
-	t.Setenv("EMAIL_TO", "owner@example.com")
-	t.Setenv("EMAIL_FROM", "sender@example.com")
-	t.Setenv("SMTP_USER", "sender@example.com")
-	t.Setenv("SMTP_PASS", "app-password")
+	t.Setenv("LINKCHECKER_EMAIL_TO", "owner@example.com")
+	t.Setenv("LINKCHECKER_EMAIL_FROM", "sender@example.com")
+	t.Setenv("LINKCHECKER_RESEND_API_KEY", "resend-token")
 	setLinkCheckerLookup(t, publicLinkCheckerLookup)
 
 	originalClient := linkCheckerHTTPClient
 	originalBaseURL := linkCheckerAPIBaseURL
-	originalSMTPSend := linkCheckerSMTPSend
+	originalResendSend := linkCheckerResendSend
 
 	linkCheckerAPIBaseURL = "https://%s.microcms.test/api/v1/blog"
-	var capturedSMTPAddr string
-	var capturedSMTPFrom string
-	var capturedSMTPTo []string
-	var capturedMessage string
-	linkCheckerSMTPSend = func(addr string, auth smtp.Auth, from string, to []string, msg []byte) error {
-		capturedSMTPAddr = addr
-		capturedSMTPFrom = from
-		capturedSMTPTo = to
-		capturedMessage = string(msg)
-		return nil
+	var capturedToken string
+	var capturedParams *resend.SendEmailRequest
+	var capturedOptions *resend.SendEmailOptions
+	linkCheckerResendSend = func(ctx context.Context, token string, params *resend.SendEmailRequest, options *resend.SendEmailOptions) (string, error) {
+		capturedToken = token
+		capturedParams = params
+		capturedOptions = options
+		return "email-id", nil
 	}
 
 	linkCheckerHTTPClient = &http.Client{
@@ -92,7 +90,7 @@ func TestLinkCheckerHandlerSuccessWithBrokenLinksSendsNotification(t *testing.T)
 	t.Cleanup(func() {
 		linkCheckerHTTPClient = originalClient
 		linkCheckerAPIBaseURL = originalBaseURL
-		linkCheckerSMTPSend = originalSMTPSend
+		linkCheckerResendSend = originalResendSend
 	})
 
 	req := httptest.NewRequest(http.MethodGet, "/api/cron/linkchecker", nil)
@@ -110,24 +108,32 @@ func TestLinkCheckerHandlerSuccessWithBrokenLinksSendsNotification(t *testing.T)
 		t.Fatalf("body = %s", gotBody)
 	}
 
-	if capturedSMTPAddr != "smtp.gmail.com:587" {
-		t.Fatalf("smtp addr = %q, want smtp.gmail.com:587", capturedSMTPAddr)
+	if capturedToken != "resend-token" {
+		t.Fatalf("resend token = %q, want resend-token", capturedToken)
 	}
-	if capturedSMTPFrom != "sender@example.com" {
-		t.Fatalf("smtp from = %q, want sender@example.com", capturedSMTPFrom)
+	if capturedParams == nil {
+		t.Fatal("Resend params were not captured")
 	}
-	if !reflect.DeepEqual(capturedSMTPTo, []string{"owner@example.com"}) {
-		t.Fatalf("smtp to = %v, want owner@example.com", capturedSMTPTo)
+	if !strings.Contains(capturedParams.From, "Real Univ Log") || !strings.Contains(capturedParams.From, "sender@example.com") {
+		t.Fatalf("from = %q, want site title and sender address", capturedParams.From)
+	}
+	if !reflect.DeepEqual(capturedParams.To, []string{"owner@example.com"}) {
+		t.Fatalf("to = %v, want owner@example.com", capturedParams.To)
+	}
+	if capturedParams.Subject != "Real Univ Log - リンク切れを検出しました" {
+		t.Fatalf("subject = %q", capturedParams.Subject)
+	}
+	if capturedOptions == nil || capturedOptions.IdempotencyKey == "" {
+		t.Fatal("Resend idempotency key is missing")
 	}
 
 	for _, want := range []string{
-		"Real Univ Log",
 		"https://broken.example/missing",
 		"https://site.example/articles/missing",
 		"Article A",
 	} {
-		if !strings.Contains(capturedMessage, want) {
-			t.Fatalf("message does not contain %q: %s", want, capturedMessage)
+		if !strings.Contains(capturedParams.Html, want) || !strings.Contains(capturedParams.Text, want) {
+			t.Fatalf("email bodies do not contain %q: html=%s text=%s", want, capturedParams.Html, capturedParams.Text)
 		}
 	}
 }
@@ -141,12 +147,12 @@ func TestLinkCheckerHandlerDoesNotSendNotificationWithoutBrokenLinks(t *testing.
 
 	originalClient := linkCheckerHTTPClient
 	originalBaseURL := linkCheckerAPIBaseURL
-	originalSMTPSend := linkCheckerSMTPSend
+	originalResendSend := linkCheckerResendSend
 
 	linkCheckerAPIBaseURL = "https://%s.microcms.test/api/v1/blog"
-	linkCheckerSMTPSend = func(addr string, auth smtp.Auth, from string, to []string, msg []byte) error {
-		t.Fatal("linkCheckerSMTPSend should not be called")
-		return nil
+	linkCheckerResendSend = func(ctx context.Context, token string, params *resend.SendEmailRequest, options *resend.SendEmailOptions) (string, error) {
+		t.Fatal("linkCheckerResendSend should not be called")
+		return "", nil
 	}
 	linkCheckerHTTPClient = &http.Client{
 		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
@@ -174,7 +180,7 @@ func TestLinkCheckerHandlerDoesNotSendNotificationWithoutBrokenLinks(t *testing.
 	t.Cleanup(func() {
 		linkCheckerHTTPClient = originalClient
 		linkCheckerAPIBaseURL = originalBaseURL
-		linkCheckerSMTPSend = originalSMTPSend
+		linkCheckerResendSend = originalResendSend
 	})
 
 	req := httptest.NewRequest(http.MethodGet, "/api/cron/linkchecker", nil)
@@ -285,19 +291,18 @@ func TestLinkCheckerHandlerReportsNotificationErrors(t *testing.T) {
 	t.Setenv("CRON_SECRET", "secret")
 	t.Setenv("MICROCMS_SERVICE_DOMAIN", "example")
 	t.Setenv("MICROCMS_API_KEY", "api-key")
-	t.Setenv("EMAIL_TO", "owner@example.com")
-	t.Setenv("EMAIL_FROM", "sender@example.com")
-	t.Setenv("SMTP_USER", "sender@example.com")
-	t.Setenv("SMTP_PASS", "app-password")
+	t.Setenv("LINKCHECKER_EMAIL_TO", "owner@example.com")
+	t.Setenv("LINKCHECKER_EMAIL_FROM", "sender@example.com")
+	t.Setenv("LINKCHECKER_RESEND_API_KEY", "resend-token")
 	setLinkCheckerLookup(t, publicLinkCheckerLookup)
 
 	originalClient := linkCheckerHTTPClient
 	originalBaseURL := linkCheckerAPIBaseURL
-	originalSMTPSend := linkCheckerSMTPSend
+	originalResendSend := linkCheckerResendSend
 
 	linkCheckerAPIBaseURL = "https://%s.microcms.test/api/v1/blog"
-	linkCheckerSMTPSend = func(addr string, auth smtp.Auth, from string, to []string, msg []byte) error {
-		return errors.New("smtp failed")
+	linkCheckerResendSend = func(ctx context.Context, token string, params *resend.SendEmailRequest, options *resend.SendEmailOptions) (string, error) {
+		return "", errors.New("resend failed")
 	}
 	linkCheckerHTTPClient = &http.Client{
 		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
@@ -317,7 +322,7 @@ func TestLinkCheckerHandlerReportsNotificationErrors(t *testing.T) {
 	t.Cleanup(func() {
 		linkCheckerHTTPClient = originalClient
 		linkCheckerAPIBaseURL = originalBaseURL
-		linkCheckerSMTPSend = originalSMTPSend
+		linkCheckerResendSend = originalResendSend
 	})
 
 	req := httptest.NewRequest(http.MethodGet, "/api/cron/linkchecker", nil)

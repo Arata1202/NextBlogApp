@@ -1,105 +1,61 @@
 package linkchecker
 
 import (
-	"crypto/tls"
-	"errors"
+	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"html"
-	"mime"
-	"net"
 	"net/mail"
-	"net/smtp"
 	"os"
 	"strings"
-	"time"
+
+	"github.com/resend/resend-go/v4"
 )
 
-func sendLinkCheckerSMTPMail(addr string, auth smtp.Auth, from string, to []string, msg []byte) error {
-	host, _, err := net.SplitHostPort(addr)
-	if err != nil {
-		return err
-	}
-
-	dialer := net.Dialer{Timeout: linkCheckerSMTPTimeout}
-	conn, err := dialer.Dial("tcp", addr)
-	if err != nil {
-		return err
-	}
-	defer conn.Close()
-
-	if err := conn.SetDeadline(time.Now().Add(linkCheckerSMTPTimeout)); err != nil {
-		return err
-	}
-
-	client, err := smtp.NewClient(conn, host)
-	if err != nil {
-		return err
-	}
-	defer client.Close()
-
-	if ok, _ := client.Extension("STARTTLS"); ok {
-		if err := client.StartTLS(&tls.Config{ServerName: host, MinVersion: tls.VersionTLS12}); err != nil {
-			return err
-		}
-	}
-
-	if auth != nil {
-		if ok, _ := client.Extension("AUTH"); !ok {
-			return errors.New("smtp: server doesn't support AUTH")
-		}
-		if err := client.Auth(auth); err != nil {
-			return err
-		}
-	}
-
-	if err := client.Mail(from); err != nil {
-		return err
-	}
-
-	for _, recipient := range to {
-		if err := client.Rcpt(recipient); err != nil {
-			return err
-		}
-	}
-
-	writer, err := client.Data()
-	if err != nil {
-		return err
-	}
-
-	if _, err := writer.Write(msg); err != nil {
-		_ = writer.Close()
-		return err
-	}
-
-	if err := writer.Close(); err != nil {
-		return err
-	}
-
-	return client.Quit()
+type linkCheckerNotificationConfig struct {
+	To          string
+	From        string
+	ResendToken string
 }
 
-func notificationConfig() (string, string, string, string, error) {
-	to := strings.TrimSpace(os.Getenv("EMAIL_TO"))
-	from := strings.TrimSpace(os.Getenv("EMAIL_FROM"))
-	smtpUser := strings.TrimSpace(os.Getenv("SMTP_USER"))
-	smtpPass := strings.TrimSpace(os.Getenv("SMTP_PASS"))
-
-	if to == "" || from == "" || smtpUser == "" || smtpPass == "" {
-		return "", "", "", "", fmt.Errorf("EMAIL_TO, EMAIL_FROM, SMTP_USER, and SMTP_PASS environment variables are required")
+func notificationConfig() (linkCheckerNotificationConfig, error) {
+	config := linkCheckerNotificationConfig{
+		To:          strings.TrimSpace(os.Getenv("LINKCHECKER_EMAIL_TO")),
+		From:        strings.TrimSpace(os.Getenv("LINKCHECKER_EMAIL_FROM")),
+		ResendToken: strings.TrimSpace(os.Getenv("LINKCHECKER_RESEND_API_KEY")),
 	}
 
-	toAddress, err := mail.ParseAddress(to)
+	if config.To == "" || config.From == "" || config.ResendToken == "" {
+		return linkCheckerNotificationConfig{}, fmt.Errorf("LINKCHECKER_EMAIL_TO, LINKCHECKER_EMAIL_FROM, and LINKCHECKER_RESEND_API_KEY environment variables are required")
+	}
+
+	toAddress, err := mail.ParseAddress(config.To)
 	if err != nil {
-		return "", "", "", "", fmt.Errorf("invalid notification recipient: %w", err)
+		return linkCheckerNotificationConfig{}, fmt.Errorf("invalid notification recipient: %w", err)
 	}
 
-	fromAddress, err := mail.ParseAddress(from)
+	fromAddress, err := mail.ParseAddress(config.From)
 	if err != nil {
-		return "", "", "", "", fmt.Errorf("invalid notification sender: %w", err)
+		return linkCheckerNotificationConfig{}, fmt.Errorf("invalid notification sender: %w", err)
 	}
 
-	return toAddress.Address, fromAddress.Address, smtpUser, smtpPass, nil
+	config.To = toAddress.Address
+	config.From = fromAddress.Address
+	return config, nil
+}
+
+func sendLinkCheckerResendEmail(ctx context.Context, token string, params *resend.SendEmailRequest, options *resend.SendEmailOptions) (string, error) {
+	client := resend.NewClient(token)
+	response, err := client.Emails.SendWithOptions(ctx, params, options)
+	if err != nil {
+		return "", fmt.Errorf("send link checker email with Resend: %w", err)
+	}
+	if response == nil || strings.TrimSpace(response.Id) == "" {
+		return "", fmt.Errorf("send link checker email with Resend: response did not include an email ID")
+	}
+
+	return response.Id, nil
 }
 
 func linkCheckerIssueLabel(link linkCheckResult) string {
@@ -110,58 +66,79 @@ func linkCheckerIssueLabel(link linkCheckResult) string {
 	return fmt.Sprintf("HTTP %d", link.StatusCode)
 }
 
-func writeLinkCheckerEmailBody(builder *strings.Builder, links []linkCheckResult) {
-	builder.WriteString("<p>記事コンテンツ内でリンク切れの可能性があるURLを検出しました。</p>")
-	builder.WriteString("<ul>")
+func buildLinkCheckerEmailBodies(links []linkCheckResult) (string, string) {
+	var htmlBuilder strings.Builder
+	var textBuilder strings.Builder
+
+	htmlBuilder.WriteString("<p>記事コンテンツ内でリンク切れの可能性があるURLを検出しました。</p>")
+	htmlBuilder.WriteString("<ul>")
+	textBuilder.WriteString("記事コンテンツ内でリンク切れの可能性があるURLを検出しました。\n\n")
 
 	for index, link := range links {
 		if index >= linkCheckerEmailPreviewLimit {
-			builder.WriteString(fmt.Sprintf("<li>ほか %d 件</li>", len(links)-linkCheckerEmailPreviewLimit))
+			remaining := len(links) - linkCheckerEmailPreviewLimit
+			htmlBuilder.WriteString(fmt.Sprintf("<li>ほか %d 件</li>", remaining))
+			textBuilder.WriteString(fmt.Sprintf("ほか %d 件\n", remaining))
 			break
 		}
 
 		escapedURL := html.EscapeString(link.URL)
-		builder.WriteString("<li style=\"margin-bottom:16px;\">")
-		builder.WriteString(fmt.Sprintf("<a href=\"%s\">%s</a><br>", escapedURL, escapedURL))
-		builder.WriteString(fmt.Sprintf("状態: %s<br>", html.EscapeString(linkCheckerIssueLabel(link))))
-		builder.WriteString("参照元:<ul>")
+		issueLabel := linkCheckerIssueLabel(link)
+		htmlBuilder.WriteString("<li style=\"margin-bottom:16px;\">")
+		htmlBuilder.WriteString(fmt.Sprintf("<a href=\"%s\">%s</a><br>", escapedURL, escapedURL))
+		htmlBuilder.WriteString(fmt.Sprintf("状態: %s<br>", html.EscapeString(issueLabel)))
+		htmlBuilder.WriteString("参照元:<ul>")
+
+		textBuilder.WriteString(fmt.Sprintf("- %s\n  状態: %s\n  参照元:\n", link.URL, issueLabel))
 		for _, ref := range link.References {
 			label := fmt.Sprintf("%s %s", ref.ArticleID, ref.Field)
 			if ref.ArticleTitle != "" {
 				label = fmt.Sprintf("%s (%s) %s", ref.ArticleID, ref.ArticleTitle, ref.Field)
 			}
-			builder.WriteString(fmt.Sprintf("<li>%s</li>", html.EscapeString(strings.TrimSpace(label))))
+			label = strings.TrimSpace(label)
+			htmlBuilder.WriteString(fmt.Sprintf("<li>%s</li>", html.EscapeString(label)))
+			textBuilder.WriteString(fmt.Sprintf("    - %s\n", label))
 		}
-		builder.WriteString("</ul></li>")
+		htmlBuilder.WriteString("</ul></li>")
+		textBuilder.WriteString("\n")
 	}
 
-	builder.WriteString("</ul>")
+	htmlBuilder.WriteString("</ul>")
+	return htmlBuilder.String(), strings.TrimSpace(textBuilder.String())
 }
 
-func sendLinkCheckerNotification(links []linkCheckResult) error {
-	to, from, smtpUser, smtpPass, err := notificationConfig()
+func linkCheckerIdempotencyKey(subject, htmlBody string) string {
+	sum := sha256.Sum256([]byte(subject + "\n" + htmlBody))
+	return "linkchecker-" + hex.EncodeToString(sum[:])
+}
+
+func sendLinkCheckerNotification(ctx context.Context, links []linkCheckResult) error {
+	config, err := notificationConfig()
 	if err != nil {
 		return err
 	}
 
 	siteTitle := strings.TrimSpace(os.Getenv("BASE_TITLE"))
 	subject := "リンク切れを検出しました"
+	from := config.From
 	if siteTitle != "" {
 		subject = siteTitle + " - " + subject
+		from = (&mail.Address{Name: siteTitle, Address: config.From}).String()
 	}
 
-	fromAddress := mail.Address{Name: siteTitle, Address: from}
-	toAddress := mail.Address{Address: to}
+	htmlBody, textBody := buildLinkCheckerEmailBodies(links)
+	params := &resend.SendEmailRequest{
+		From:    from,
+		To:      []string{config.To},
+		Subject: subject,
+		Html:    htmlBody,
+		Text:    textBody,
+	}
+	options := &resend.SendEmailOptions{IdempotencyKey: linkCheckerIdempotencyKey(subject, htmlBody)}
 
-	var builder strings.Builder
-	builder.WriteString(fmt.Sprintf("From: %s\r\n", fromAddress.String()))
-	builder.WriteString(fmt.Sprintf("To: %s\r\n", toAddress.String()))
-	builder.WriteString(fmt.Sprintf("Subject: %s\r\n", mime.QEncoding.Encode("UTF-8", subject)))
-	builder.WriteString("MIME-Version: 1.0\r\n")
-	builder.WriteString("Content-Type: text/html; charset=\"UTF-8\"\r\n")
-	builder.WriteString("\r\n")
-	writeLinkCheckerEmailBody(&builder, links)
+	notificationContext, cancel := context.WithTimeout(ctx, linkCheckerNotificationTimeout)
+	defer cancel()
 
-	auth := smtp.PlainAuth("", smtpUser, smtpPass, "smtp.gmail.com")
-	return linkCheckerSMTPSend("smtp.gmail.com:587", auth, from, []string{to}, []byte(builder.String()))
+	_, err = linkCheckerResendSend(notificationContext, config.ResendToken, params, options)
+	return err
 }
