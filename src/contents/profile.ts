@@ -24,7 +24,7 @@ export const PROFILE_CONTENT = `
 - CI/CD｜GitHub Actions, Chromatic, CodeQL, Dependabot
 - Design｜Storybook, Canva
 - Google｜AdSense, Analytics, Search Console, reCAPTCHA
-- Integrations｜PWA, OneSignal, Sentry, Iframely, Instagram
+- Integrations｜PWA, OneSignal, Sentry, Iframely, Instagram, Resend
 
 ## アーキテクチャ
 

@@ -38,17 +38,17 @@
 
 ## 使用技術
 
-| Category          | Technology Stack                               |
-| ----------------- | ---------------------------------------------- |
-| Frontend          | Next.js, React, TypeScript, Tailwind CSS       |
-| Backend           | Go, Vercel Functions                           |
-| CMS               | microCMS, Zenn RSS                             |
-| Infrastructure    | Cloudflare Pages, Vercel, Amazon S3, Terraform |
-| Environment setup | Node.js, pnpm, Docker Compose                  |
-| CI/CD             | GitHub Actions, Chromatic, CodeQL, Dependabot  |
-| Design            | Storybook, Canva                               |
-| Google            | AdSense, Analytics, Search Console, reCAPTCHA  |
-| Integrations      | PWA, OneSignal, Sentry, Iframely, Instagram    |
+| Category          | Technology Stack                                    |
+| ----------------- | --------------------------------------------------- |
+| Frontend          | Next.js, React, TypeScript, Tailwind CSS            |
+| Backend           | Go, Vercel Functions                                |
+| CMS               | microCMS, Zenn RSS                                  |
+| Infrastructure    | Cloudflare Pages, Vercel, Amazon S3, Terraform      |
+| Environment setup | Node.js, pnpm, Docker Compose                       |
+| CI/CD             | GitHub Actions, Chromatic, CodeQL, Dependabot       |
+| Design            | Storybook, Canva                                    |
+| Google            | AdSense, Analytics, Search Console, reCAPTCHA       |
+| Integrations      | PWA, OneSignal, Sentry, Iframely, Instagram, Resend |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 

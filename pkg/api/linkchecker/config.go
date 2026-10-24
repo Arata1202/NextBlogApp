@@ -11,14 +11,14 @@ import (
 )
 
 const (
-	microCMSLinkCheckerFields    = "id,title,introduction_blocks,content_blocks,publishedAt,updatedAt"
-	microCMSLinkCheckerLimit     = 100
-	linkCheckerRunTimeout        = 50 * time.Second
-	linkCheckerRequestTimeout    = 10 * time.Second
-	linkCheckerSMTPTimeout       = 8 * time.Second
-	linkCheckerMaxConcurrency    = 8
-	linkCheckerMaxRedirects      = 5
-	linkCheckerEmailPreviewLimit = 50
+	microCMSLinkCheckerFields      = "id,title,introduction_blocks,content_blocks,publishedAt,updatedAt"
+	microCMSLinkCheckerLimit       = 100
+	linkCheckerRunTimeout          = 50 * time.Second
+	linkCheckerRequestTimeout      = 10 * time.Second
+	linkCheckerNotificationTimeout = 8 * time.Second
+	linkCheckerMaxConcurrency      = 8
+	linkCheckerMaxRedirects        = 5
+	linkCheckerEmailPreviewLimit   = 50
 
 	zennNotificationRequestTimeout = 8 * time.Second
 	zennNotificationRunTimeout     = 8 * time.Second
@@ -32,7 +32,7 @@ var (
 	linkCheckerHTTPClient   = &http.Client{Timeout: linkCheckerRequestTimeout}
 	linkCheckerAPIBaseURL   = "https://%s.microcms.io/api/v1/blog"
 	linkCheckerLookupIPAddr = net.DefaultResolver.LookupIPAddr
-	linkCheckerSMTPSend     = sendLinkCheckerSMTPMail
+	linkCheckerResendSend   = sendLinkCheckerResendEmail
 
 	zennNotificationHTTPClient          = &http.Client{Timeout: zennNotificationRequestTimeout}
 	zennNotifyArticlesWithOneSignal     = contentops.NotifyExternalArticlesFirstPublishWithOneSignal

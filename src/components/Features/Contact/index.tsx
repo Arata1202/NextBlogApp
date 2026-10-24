@@ -28,6 +28,7 @@ export default function ContactFeature() {
   const [captchaError, setCaptchaError] = useState('');
   const [isSending, setIsSending] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const pendingSubmissionRef = useRef<{ payload: string; requestId: string } | null>(null);
   const captchaErrorId = 'recaptcha-error';
 
   const {
@@ -73,12 +74,18 @@ export default function ContactFeature() {
 
     setIsSending(true);
 
+    const payload = JSON.stringify(formData);
+    if (!pendingSubmissionRef.current || pendingSubmissionRef.current.payload !== payload) {
+      pendingSubmissionRef.current = { payload, requestId: crypto.randomUUID() };
+    }
+
     try {
       const response = await fetch(apiSendEmailUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
+          requestId: pendingSubmissionRef.current.requestId,
           'g-recaptcha-response': captchaValue,
         }),
       });
@@ -92,6 +99,7 @@ export default function ContactFeature() {
         recaptchaRef.current?.reset();
         setCaptchaValue(null);
         setCaptchaError('');
+        pendingSubmissionRef.current = null;
         setConfirmSendEmailModalOpen(false);
       } else {
         const message = data.message ?? data.status ?? 'Contact request failed';

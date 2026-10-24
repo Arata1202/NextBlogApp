@@ -79,7 +79,7 @@ func TestSendEmailHandlerInvalidJSON(t *testing.T) {
 }
 
 func TestSendEmailHandlerMissingRequiredFields(t *testing.T) {
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -99,7 +99,7 @@ func TestSendEmailHandlerMissingRequiredFields(t *testing.T) {
 }
 
 func TestSendEmailHandlerMissingRecaptchaResponse(t *testing.T) {
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -124,32 +124,36 @@ func TestSendEmailHandlerRejectsInvalidRequestFields(t *testing.T) {
 		body string
 	}{
 		{
+			name: "invalid request ID",
+			body: `{"requestId":"not-a-uuid","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+		},
+		{
 			name: "invalid email address",
-			body: `{"email":"not-an-email","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"not-an-email","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`,
 		},
 		{
 			name: "email control characters",
-			body: `{"email":"user@example.com\r\nBcc: attacker@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com\r\nBcc: attacker@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`,
 		},
 		{
 			name: "title control characters",
-			body: `{"email":"user@example.com","title":"Test\r\nBcc: attacker@example.com","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test\r\nBcc: attacker@example.com","message":"Hello","g-recaptcha-response":"captcha-token"}`,
 		},
 		{
 			name: "message control characters",
-			body: `{"email":"user@example.com","title":"Test","message":"Hello\u0000","g-recaptcha-response":"captcha-token"}`,
+			body: `{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello\u0000","g-recaptcha-response":"captcha-token"}`,
 		},
 		{
 			name: "title too long",
 			body: fmt.Sprintf(
-				`{"email":"user@example.com","title":"%s","message":"Hello","g-recaptcha-response":"captcha-token"}`,
+				`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"%s","message":"Hello","g-recaptcha-response":"captcha-token"}`,
 				strings.Repeat("a", maxTitleLength+1),
 			),
 		},
 		{
 			name: "message too long",
 			body: fmt.Sprintf(
-				`{"email":"user@example.com","title":"Test","message":"%s","g-recaptcha-response":"captcha-token"}`,
+				`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"%s","g-recaptcha-response":"captcha-token"}`,
 				strings.Repeat("a", maxMessageLength+1),
 			),
 		},
@@ -191,7 +195,7 @@ func TestSendEmailHandlerRecaptchaVerificationFailure(t *testing.T) {
 	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
 	stubVerifyRecaptcha(t, false, nil)
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -205,7 +209,7 @@ func TestSendEmailHandlerRecaptchaVerificationError(t *testing.T) {
 	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
 	stubVerifyRecaptcha(t, false, errors.New("network error"))
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -217,13 +221,12 @@ func TestSendEmailHandlerRecaptchaVerificationError(t *testing.T) {
 
 func TestSendEmailHandlerMissingEnvironment(t *testing.T) {
 	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
-	t.Setenv("EMAIL_TO", "")
-	t.Setenv("EMAIL_FROM", "")
-	t.Setenv("SMTP_USER", "")
-	t.Setenv("SMTP_PASS", "")
+	t.Setenv("CONTACT_EMAIL_TO", "")
+	t.Setenv("CONTACT_EMAIL_FROM", "")
+	t.Setenv("CONTACT_RESEND_API_KEY", "")
 	stubVerifyRecaptcha(t, true, nil)
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -235,49 +238,25 @@ func TestSendEmailHandlerMissingEnvironment(t *testing.T) {
 
 func TestSendEmailHandlerSuccess(t *testing.T) {
 	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
-	t.Setenv("EMAIL_TO", "owner@example.com")
-	t.Setenv("EMAIL_FROM", "from@example.com")
-	t.Setenv("SMTP_USER", "smtp-user")
-	t.Setenv("SMTP_PASS", "smtp-pass")
+	t.Setenv("CONTACT_EMAIL_TO", "owner@example.com")
+	t.Setenv("CONTACT_EMAIL_FROM", "from@example.com")
+	t.Setenv("CONTACT_RESEND_API_KEY", "resend-token")
+	t.Setenv("BASE_TITLE", "Real Univ Log")
 	stubVerifyRecaptcha(t, true, nil)
 
-	originalSendEmail := sendEmailFunc
-	sendEmailFunc = func(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
-		if emailTo != "owner@example.com" {
-			t.Fatalf("emailTo = %q, want %q", emailTo, "owner@example.com")
-		}
-		if emailFrom != "from@example.com" {
-			t.Fatalf("emailFrom = %q, want %q", emailFrom, "from@example.com")
-		}
-		if smtpUser != "smtp-user" {
-			t.Fatalf("smtpUser = %q, want %q", smtpUser, "smtp-user")
-		}
-		if smtpPass != "smtp-pass" {
-			t.Fatal("smtpPass was not forwarded correctly")
-		}
-		if userEmail != "user@example.com" {
-			t.Fatalf("userEmail = %q, want %q", userEmail, "user@example.com")
-		}
-		if title != "Test" {
-			t.Fatalf("title = %q, want %q", title, "Test")
-		}
-		if message != "Hello" {
-			t.Fatalf("message = %q, want %q", message, "Hello")
-		}
+	sender := &fakeEmailSender{ids: []string{"owner-id", "user-id"}}
+	stubNewEmailSender(t, "resend-token", sender)
 
-		return nil
-	}
-	t.Cleanup(func() {
-		sendEmailFunc = originalSendEmail
-	})
-
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
 
 	if rec.Code != http.StatusOK {
 		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
+	}
+	if sender.calls != 1 || len(sender.messages) != 2 {
+		t.Fatalf("sender calls = %d, messages = %d", sender.calls, len(sender.messages))
 	}
 
 	var body map[string]bool
@@ -292,25 +271,15 @@ func TestSendEmailHandlerSuccess(t *testing.T) {
 
 func TestSendEmailHandlerTrimsEmailBeforeSending(t *testing.T) {
 	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
-	t.Setenv("EMAIL_TO", "owner@example.com")
-	t.Setenv("EMAIL_FROM", "from@example.com")
-	t.Setenv("SMTP_USER", "smtp-user")
-	t.Setenv("SMTP_PASS", "smtp-pass")
+	t.Setenv("CONTACT_EMAIL_TO", "owner@example.com")
+	t.Setenv("CONTACT_EMAIL_FROM", "from@example.com")
+	t.Setenv("CONTACT_RESEND_API_KEY", "resend-token")
 	stubVerifyRecaptcha(t, true, nil)
 
-	originalSendEmail := sendEmailFunc
-	sendEmailFunc = func(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
-		if userEmail != "user@example.com" {
-			t.Fatalf("userEmail = %q, want %q", userEmail, "user@example.com")
-		}
+	sender := &fakeEmailSender{ids: []string{"owner-id", "user-id"}}
+	stubNewEmailSender(t, "resend-token", sender)
 
-		return nil
-	}
-	t.Cleanup(func() {
-		sendEmailFunc = originalSendEmail
-	})
-
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":" user@example.com ","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":" user@example.com ","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
@@ -318,25 +287,22 @@ func TestSendEmailHandlerTrimsEmailBeforeSending(t *testing.T) {
 	if rec.Code != http.StatusOK {
 		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
 	}
+	if got := sender.messages[0].ReplyTo.Address; got != "user@example.com" {
+		t.Fatalf("ReplyTo = %q, want %q", got, "user@example.com")
+	}
 }
 
 func TestSendEmailHandlerSendError(t *testing.T) {
 	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
-	t.Setenv("EMAIL_TO", "owner@example.com")
-	t.Setenv("EMAIL_FROM", "from@example.com")
-	t.Setenv("SMTP_USER", "smtp-user")
-	t.Setenv("SMTP_PASS", "smtp-pass")
+	t.Setenv("CONTACT_EMAIL_TO", "owner@example.com")
+	t.Setenv("CONTACT_EMAIL_FROM", "from@example.com")
+	t.Setenv("CONTACT_RESEND_API_KEY", "resend-token")
 	stubVerifyRecaptcha(t, true, nil)
 
-	originalSendEmail := sendEmailFunc
-	sendEmailFunc = func(emailTo, emailFrom, smtpUser, smtpPass, userEmail, title, message string) error {
-		return errors.New("smtp error")
-	}
-	t.Cleanup(func() {
-		sendEmailFunc = originalSendEmail
-	})
+	sender := &fakeEmailSender{err: errors.New("resend error")}
+	stubNewEmailSender(t, "resend-token", sender)
 
-	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/sendemail", bytes.NewBufferString(`{"requestId":"00000000-0000-4000-8000-000000000001","email":"user@example.com","title":"Test","message":"Hello","g-recaptcha-response":"captcha-token"}`))
 	rec := httptest.NewRecorder()
 
 	SendEmailHandler(rec, req)
