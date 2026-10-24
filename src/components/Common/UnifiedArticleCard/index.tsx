@@ -35,7 +35,6 @@ export default function UnifiedArticleCard({ article, priority = false }: Props)
         href={article.url}
         target={isExternal ? '_blank' : undefined}
         rel={isExternal ? 'noopener noreferrer' : undefined}
-        aria-label={isExternal ? `${article.title}を新しいタブで開く` : undefined}
         className={`${styles.link} p-2 ${surfaceClassNames.card} ${themeClassName}`}
       >
         {article.source === 'blog' && article.thumbnail && (
@@ -64,6 +63,7 @@ export default function UnifiedArticleCard({ article, priority = false }: Props)
             {showUpdated && <SingleDate date={article.updatedAt!} updatedAt={true} />}
           </div>
         </div>
+        {isExternal && <span className="sr-only">新しいタブで開く</span>}
       </Link>
     </li>
   );

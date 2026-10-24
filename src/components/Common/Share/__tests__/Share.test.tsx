@@ -130,7 +130,7 @@ describe('Share components', () => {
     const { container, rerender } = render(<BuyMeaCoffee />);
     const getMessage = () => container.querySelector('[class*="BuyMeaCoffeeMessage"]');
 
-    expect(getMessage()).toHaveTextContent(/^もし記事/);
+    expect(getMessage()?.textContent).toMatch(/^もし記事/);
     expect(getMessage()).toHaveAttribute('data-main-buy-me-a-coffee-end', '');
     const supportLink = screen.getByRole('link', {
       name: 'BuyMeaCoffeeを新しいタブで開く',
@@ -141,11 +141,11 @@ describe('Share components', () => {
 
     rerender(<BuyMeaCoffee data={createArticle({ id: 'article-a', title: 'Article A' })} />);
 
-    expect(getMessage()).toHaveTextContent(/^もしこの記事/);
+    expect(getMessage()?.textContent).toMatch(/^もしこの記事/);
 
     rerender(<BuyMeaCoffee sidebar />);
 
-    expect(getMessage()).toHaveTextContent(/^もしこの記事/);
+    expect(getMessage()?.textContent).toMatch(/^もしこの記事/);
     expect(getMessage()).not.toHaveAttribute('data-main-buy-me-a-coffee-end');
   });
 });
