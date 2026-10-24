@@ -26,6 +26,7 @@ describe('UnifiedArticleCard', () => {
         article={createUnifiedArticle({
           source: 'zenn',
           title: 'Zenn title',
+          description: 'Zenn article description',
           thumbnail: undefined,
           thumbnailUrl: 'https://example.com/zenn.png',
           url: 'https://zenn.dev/user/articles/article',
@@ -33,6 +34,9 @@ describe('UnifiedArticleCard', () => {
       />,
     );
 
+    expect(screen.getByRole('link')).toHaveAccessibleName(
+      /Zenn title.*Zenn article description.*新しいタブで開く/,
+    );
     expect(screen.getByRole('link')).toHaveAttribute('target', '_blank');
     expect(screen.getByRole('link')).toHaveAttribute('rel', 'noopener noreferrer');
     const image = container.querySelector('img');
