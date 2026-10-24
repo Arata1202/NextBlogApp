@@ -1,9 +1,9 @@
-FROM node:24.22.1-alpine
+FROM node:26.12.1-alpine
 
 WORKDIR /var/www/html/js
 
 COPY package.json pnpm-lock.yaml ./
-RUN corepack enable && pnpm install --frozen-lockfile
+RUN npm install --global corepack@0.34.6 && corepack enable && pnpm install --frozen-lockfile
 
 COPY . .
 
