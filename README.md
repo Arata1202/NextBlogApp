@@ -74,6 +74,7 @@ cp .env.example .env
 vi .env
 
 # フロントエンドの依存関係をインストール
+npm install --global corepack@0.34.6
 corepack enable
 pnpm install --frozen-lockfile
 
