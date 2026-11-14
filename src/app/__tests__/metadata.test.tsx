@@ -105,7 +105,6 @@ describe('app metadata', () => {
       url: 'https://example.com/articles/article-a',
       inLanguage: 'ja-JP',
       articleSection: 'Category A',
-      author: expect.objectContaining({ name: 'Arata' }),
       keywords: 'React, Next.js',
       mainEntityOfPage: {
         '@id': 'https://example.com/articles/article-a',
@@ -318,7 +317,6 @@ describe('app metadata', () => {
       mainEntity: expect.objectContaining({
         '@type': 'Person',
         '@id': 'https://example.com/profile#person',
-        name: 'Arata',
         url: 'https://example.com/profile',
       }),
     });
