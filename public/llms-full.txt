@@ -2,13 +2,13 @@
 
 > 日本語の個人ブログです。大学生活、社会人生活、プログラミング、旅行、ブログ運営に関する実体験ベースの記事を公開しています。
 
-リアル大学生は、Arata1202が運営する個人ブログです。
+リアル大学生は、Arataが運営する個人ブログです。
 主に日本語で記事を公開しており、大学生活・社会人生活・プログラミング・旅行・ブログ運営に関する情報を扱います。
 体験ベースの記事、実用的なハウツー、個人開発やサイト運営に関する記録を中心としています。
 
 - Site: https://realunivlog.com
 - Language: ja-JP
-- Author: Arata1202
+- Author: Arata
 - Profile: https://realunivlog.com/profile
 - RSS: https://realunivlog.com/rss.xml
 - XML Sitemap: https://realunivlog.com/sitemap.xml
