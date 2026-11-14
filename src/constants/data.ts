@@ -51,7 +51,7 @@ export const SOCIAL_ICON = [
 
 export const COPYRIGHT = 'Copyright © 2024 リアル大学生 All Rights Reserved.';
 
-export const PROFILE_NAME = 'Arata1202';
+export const PROFILE_NAME = 'Arata';
 
 export const PROFILE_IMAGE = [
   {

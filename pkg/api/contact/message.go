@@ -84,7 +84,7 @@ func buildMessageBodies(site siteConfig, emailFrom, userEmail, title, message, i
 	htmlBuilder.WriteString("<div style='margin-top: 24px; color: #111827; line-height: 1.7; word-break: break-word;'>")
 	htmlBuilder.WriteString("<div style='height: 0; line-height: 0; font-size: 0; border-top: 2px solid #d0d0d0; margin-bottom: 12px;'>&nbsp;</div>")
 	htmlBuilder.WriteString(fmt.Sprintf("<span style='color: #111827;'>%s</span><br>", escapedSiteTitle))
-	htmlBuilder.WriteString("<span style='color: #111827;'>運営者: Arata1202</span><br>")
+	htmlBuilder.WriteString("<span style='color: #111827;'>運営者: Arata</span><br>")
 	if site.URL != "" {
 		escapedWebURL := html.EscapeString(site.URL)
 		htmlBuilder.WriteString(fmt.Sprintf("<span style='color: #111827;'>Web: <a href='%s' style='color: #111827; text-decoration: none; word-break: break-all;'>%s</a></span><br>", escapedWebURL, escapedWebURL))
@@ -112,7 +112,7 @@ func buildMessageBodies(site siteConfig, emailFrom, userEmail, title, message, i
 `)
 	textBuilder.WriteString(site.Title)
 	textBuilder.WriteString(`
-運営者: Arata1202`)
+運営者: Arata`)
 	if site.URL != "" {
 		textBuilder.WriteString(`
 Web: `)

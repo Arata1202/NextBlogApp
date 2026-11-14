@@ -4,7 +4,7 @@
 
 - Site: https://realunivlog.com
 - Language: ja
-- Author: Arata1202
+- Author: Arata
 - RSS: https://realunivlog.com/rss.xml
 - Sitemap: https://realunivlog.com/sitemap.xml
 

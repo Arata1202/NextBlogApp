@@ -1,5 +1,5 @@
 export const PROFILE_CONTENT = `
-はじめまして、Arata1202と申します。
+はじめまして、Arataと申します。
 
 ## プロフィール
 
@@ -40,7 +40,7 @@ export const PROFILE_CONTENT = `
 
 お問い合わせの際は、下記の窓口からお願いいたします。
 
-サイト運営者：Arata1202
+サイト運営者：Arata
 
 連絡先：[お問い合わせ](/contact)
 

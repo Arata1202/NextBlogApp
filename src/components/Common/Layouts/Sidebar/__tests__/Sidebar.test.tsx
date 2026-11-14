@@ -49,6 +49,11 @@ describe('Sidebar', () => {
 
     const searchInput = screen.getByRole('searchbox', { name: '検索' });
     const profileHeading = screen.getByText('ブログ運営者');
+    expect(screen.getByText('Arata')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'GitHubを新しいタブで開く' })).toHaveAttribute(
+      'href',
+      'https://github.com/Arata1202',
+    );
     expect(searchInput.compareDocumentPosition(profileHeading)).toBe(
       Node.DOCUMENT_POSITION_FOLLOWING,
     );
