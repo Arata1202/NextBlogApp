@@ -67,6 +67,9 @@
 
 .creatorLink {
   display: flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 44px;
   margin-top: 15px;
   line-height: 0;
   transition: opacity 150ms ease;
