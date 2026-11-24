@@ -24,7 +24,7 @@ type Props = {
 
 export default function PrivacyPage({ recentArticles, tags, archiveList }: Props) {
   const date = new Date('2023-11-27T00:00:00+09:00');
-  const updatedDate = new Date('2026-07-05T00:00:00+09:00');
+  const updatedDate = new Date('2026-11-25T00:00:00+09:00');
 
   return (
     <>
