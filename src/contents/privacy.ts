@@ -17,6 +17,7 @@ export const PRIVACY_CONTENT = `
 
 - [リアル大学生：モバイル](https://apps.apple.com/jp/app/%E3%83%AA%E3%82%A2%E3%83%AB%E5%A4%A7%E5%AD%A6%E7%94%9F-%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB/id6590619103)
 - [Pocket Video](https://apps.apple.com/jp/app/pocket-video/id6783846586)
+- [リクビジョン](https://apps.apple.com/jp/app/id6789862900)
 
 App Store上の表示内容は、アプリの機能、第三者サービスの仕様、ユーザーの利用状況により変更される場合があります。
 
