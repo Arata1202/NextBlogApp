@@ -19,13 +19,14 @@ type Props = {
 
 export default function DisclaimerPage({ recentArticles, tags, archiveList }: Props) {
   const date = new Date('2023-11-27T00:00:00+09:00');
+  const updatedDate = new Date('2026-11-25T00:00:00+09:00');
 
   return (
     <>
       <PageHeading page={{ type: 'disclaimer' }} />
       <MainContainer>
         <ContentContainer>
-          <FixedDateContainer date={date} />
+          <FixedDateContainer date={date} updatedDate={updatedDate} />
           <Markdown content={DISCLAIMER_CONTENT} />
           <AdUnit slot="1831092739" />
           <Share />
