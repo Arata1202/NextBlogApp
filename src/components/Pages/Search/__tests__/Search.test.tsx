@@ -194,6 +194,19 @@ describe('SearchPage', () => {
     },
   );
 
+  it('distinguishes an empty page from a search with no matches', async () => {
+    window.history.pushState({}, '', '/search?q=React&page=3');
+    fetchMock.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ contents: [], totalCount: 12 }),
+    });
+
+    render(<SearchPage tags={[]} archiveList={[]} />);
+
+    expect(await screen.findByText('このページに表示できる記事はありません。')).toBeInTheDocument();
+    expect(screen.queryByText('一致する記事が見つかりませんでした。')).not.toBeInTheDocument();
+  });
+
   it('does not fetch until a query is provided', () => {
     render(<SearchPage tags={[]} archiveList={[]} />);
 
