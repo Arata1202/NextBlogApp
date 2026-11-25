@@ -296,11 +296,9 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
   const hasSearchError = status === 'error';
   const emptyMessage = hasSearchError
     ? '検索結果を取得できませんでした。もう一度お試しください。'
-    : hasAppWebViewParam
-      ? '記事はまだありません'
-      : query
-        ? '一致する記事が見つかりませんでした。'
-        : 'キーワードを入力して検索してください。';
+    : query
+      ? '一致する記事が見つかりませんでした。'
+      : 'キーワードを入力して検索してください。';
 
   if (!query && hasAppWebViewParam) {
     return <AppSearchIndex tags={tags} archiveList={archiveList} />;

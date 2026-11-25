@@ -181,6 +181,19 @@ describe('SearchPage', () => {
     );
   });
 
+  it.each(['/search?q=none', '/search?q=none&app=1'])(
+    'shows the no-match message for %s',
+    async (url) => {
+      window.history.pushState({}, '', url);
+      fetchMock.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ contents: [], totalCount: 0 }),
+      });
+      render(<SearchPage tags={[]} archiveList={[]} />);
+      expect(await screen.findByText('一致する記事が見つかりませんでした。')).toBeInTheDocument();
+    },
+  );
+
   it('does not fetch until a query is provided', () => {
     render(<SearchPage tags={[]} archiveList={[]} />);
 
