@@ -2,7 +2,6 @@ package search
 
 import (
 	"net/http"
-	"regexp"
 	"sync"
 	"time"
 )
@@ -28,8 +27,6 @@ var (
 	microCMSSearchHTTPClient = &http.Client{Timeout: 10 * time.Second}
 	zennSearchHTTPClient     = &http.Client{Timeout: zennSearchRequestTimeout}
 	microCMSSearchAPIBaseURL = "https://%s.microcms.io/api/v1/blog"
-	htmlTagPattern           = regexp.MustCompile(`<[^>]*>`)
-	htmlImageSourcePattern   = regexp.MustCompile(`(?i)<img[^>]+src=["']([^"']+)["']`)
 	microCMSSearchNow        = time.Now
 	microCMSSearchCache      = struct {
 		sync.RWMutex
@@ -40,6 +37,7 @@ var (
 		expiresAt     time.Time
 	}{}
 	zennSearchCache = struct {
+		refresh chan struct{}
 		sync.RWMutex
 		articles  []map[string]interface{}
 		expiresAt time.Time

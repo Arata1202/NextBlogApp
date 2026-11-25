@@ -2,6 +2,7 @@ package search
 
 import (
 	"context"
+	"strings"
 	"time"
 )
 
@@ -39,9 +40,9 @@ func resetZennSearchCache() {
 	zennSearchCache.expiresAt = time.Time{}
 }
 
-func cachedMicroCMSSearchArticles(serviceDomain, apiKey, query string) ([]map[string]interface{}, error) {
+func cachedMicroCMSSearchArticles(ctx context.Context, serviceDomain, apiKey, query string) ([]map[string]interface{}, error) {
 	now := microCMSSearchNow()
-	normalizedQuery := normalizedSearchText(query)
+	normalizedQuery := strings.TrimSpace(query)
 
 	microCMSSearchCache.RLock()
 	if microCMSSearchCache.serviceDomain == serviceDomain &&
@@ -54,7 +55,7 @@ func cachedMicroCMSSearchArticles(serviceDomain, apiKey, query string) ([]map[st
 	}
 	microCMSSearchCache.RUnlock()
 
-	articles, err := fetchMicroCMSSearchArticles(serviceDomain, apiKey, query)
+	articles, err := fetchMicroCMSSearchArticles(ctx, serviceDomain, apiKey, query)
 	if err != nil {
 		return nil, err
 	}
@@ -71,25 +72,33 @@ func cachedMicroCMSSearchArticles(serviceDomain, apiKey, query string) ([]map[st
 }
 
 func cachedZennSearchArticles(ctx context.Context) ([]map[string]interface{}, error) {
-	now := microCMSSearchNow()
-
-	zennSearchCache.RLock()
-	if now.Before(zennSearchCache.expiresAt) {
-		articles := cloneSearchArticles(zennSearchCache.articles)
-		zennSearchCache.RUnlock()
-		return articles, nil
+	for {
+		zennSearchCache.Lock()
+		if microCMSSearchNow().Before(zennSearchCache.expiresAt) {
+			articles := cloneSearchArticles(zennSearchCache.articles)
+			zennSearchCache.Unlock()
+			return articles, nil
+		}
+		if wait := zennSearchCache.refresh; wait != nil {
+			zennSearchCache.Unlock()
+			select {
+			case <-ctx.Done():
+				return nil, ctx.Err()
+			case <-wait:
+				continue
+			}
+		}
+		zennSearchCache.refresh = make(chan struct{})
+		zennSearchCache.Unlock()
+		articles, err := fetchZennSearchArticles(ctx)
+		zennSearchCache.Lock()
+		if err == nil {
+			zennSearchCache.articles = cloneSearchArticles(articles)
+			zennSearchCache.expiresAt = microCMSSearchNow().Add(zennSearchCacheTTL)
+		}
+		close(zennSearchCache.refresh)
+		zennSearchCache.refresh = nil
+		zennSearchCache.Unlock()
+		return articles, err
 	}
-	zennSearchCache.RUnlock()
-
-	articles, err := fetchZennSearchArticles(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	zennSearchCache.Lock()
-	zennSearchCache.articles = cloneSearchArticles(articles)
-	zennSearchCache.expiresAt = now.Add(zennSearchCacheTTL)
-	zennSearchCache.Unlock()
-
-	return articles, nil
 }

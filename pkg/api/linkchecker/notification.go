@@ -107,8 +107,8 @@ func buildLinkCheckerEmailBodies(links []linkCheckResult) (string, string) {
 	return htmlBuilder.String(), strings.TrimSpace(textBuilder.String())
 }
 
-func linkCheckerIdempotencyKey(subject, htmlBody string) string {
-	sum := sha256.Sum256([]byte(subject + "\n" + htmlBody))
+func linkCheckerIdempotencyKey(fields ...string) string {
+	sum := sha256.Sum256([]byte(strings.Join(fields, "\x00")))
 	return "linkchecker-" + hex.EncodeToString(sum[:])
 }
 
@@ -118,7 +118,7 @@ func formatLinkCheckerSender(name, address string) string {
 	if name == "" {
 		return address
 	}
-	return fmt.Sprintf("%s <%s>", name, address)
+	return (&mail.Address{Name: name, Address: address}).String()
 }
 
 func sendLinkCheckerNotification(ctx context.Context, links []linkCheckResult) error {
@@ -143,7 +143,7 @@ func sendLinkCheckerNotification(ctx context.Context, links []linkCheckResult) e
 		Html:    htmlBody,
 		Text:    textBody,
 	}
-	options := &resend.SendEmailOptions{IdempotencyKey: linkCheckerIdempotencyKey(subject, htmlBody)}
+	options := &resend.SendEmailOptions{IdempotencyKey: linkCheckerIdempotencyKey(from, config.To, subject, htmlBody, textBody)}
 
 	notificationContext, cancel := context.WithTimeout(ctx, linkCheckerNotificationTimeout)
 	defer cancel()

@@ -1,7 +1,6 @@
 package contact
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -34,6 +33,7 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method != http.MethodPost {
+		w.Header().Set("Allow", "POST, OPTIONS")
 		writeEmailStatus(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
 	}
@@ -41,9 +41,9 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
 	var req EmailRequestBody
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+	if status, err := httpx.ReadRequestJSON(w, r, &req); err != nil {
 		log.Printf("Failed to parse request body: %v", err)
-		writeEmailStatus(w, http.StatusBadRequest, "Invalid request body")
+		writeEmailStatus(w, status, "Invalid request body")
 		return
 	}
 
@@ -73,7 +73,7 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	verified, err := verifyRecaptchaFunc(req.RecaptchaResponse, recaptchaSecret)
+	verified, err := verifyRecaptchaFunc(r.Context(), req.RecaptchaResponse, recaptchaSecret)
 	if err != nil {
 		log.Printf("Failed to verify reCAPTCHA: %v", err)
 		monitoring.CaptureError(err, monitoring.EventContext{

@@ -22,7 +22,7 @@ func fetchMicroCMSLinkCheckerArticles(ctx context.Context, serviceDomain, apiKey
 			return nil, err
 		}
 
-		resp, err := linkCheckerHTTPClient.Do(req)
+		resp, err := microcms.DoListRequest(linkCheckerHTTPClient, req)
 		if err != nil {
 			return nil, err
 		}

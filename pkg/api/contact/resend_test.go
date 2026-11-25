@@ -87,9 +87,9 @@ func TestResendEmailSenderHandlesProviderFailures(t *testing.T) {
 		response *resend.BatchEmailResponse
 		err      error
 	}{
-		{name: "request error", err: errors.New("network error")},
+		{name: "request error", err: errors.New("invalid recipient: user@example.com")},
 		{name: "nil response"},
-		{name: "validation errors", response: &resend.BatchEmailResponse{Errors: []resend.BatchError{{Index: 0, Message: "invalid"}}}},
+		{name: "validation errors", response: &resend.BatchEmailResponse{Errors: []resend.BatchError{{Index: 0, Message: "invalid recipient: user@example.com"}}}},
 	}
 
 	for _, tt := range tests {
@@ -104,7 +104,7 @@ func TestResendEmailSenderHandlesProviderFailures(t *testing.T) {
 				HTML:    "<p>Body</p>",
 				Text:    "Body",
 			}}, "contact/request-id")
-			if err == nil || !strings.Contains(err.Error(), "resend batch request") {
+			if err == nil || !strings.Contains(err.Error(), "resend batch request") || strings.Contains(err.Error(), "user@example.com") || errors.Is(err, tt.err) {
 				t.Fatalf("SendBatch() error = %v", err)
 			}
 		})

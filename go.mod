@@ -5,6 +5,7 @@ go 1.26.3
 require (
 	github.com/getsentry/sentry-go v0.50.0
 	github.com/resend/resend-go/v4 v4.9.0
+	golang.org/x/net v0.57.0
 )
 
 require (

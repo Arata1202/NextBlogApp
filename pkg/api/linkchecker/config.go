@@ -4,7 +4,6 @@ import (
 	"net"
 	"net/http"
 	"net/netip"
-	"regexp"
 	"time"
 
 	contentops "NextBlogApp/pkg/api/contentops"
@@ -13,7 +12,7 @@ import (
 const (
 	microCMSLinkCheckerFields      = "id,title,introduction_blocks,content_blocks,publishedAt,updatedAt"
 	microCMSLinkCheckerLimit       = 100
-	linkCheckerRunTimeout          = 50 * time.Second
+	linkCheckerRunTimeout          = 40 * time.Second
 	linkCheckerRequestTimeout      = 10 * time.Second
 	linkCheckerNotificationTimeout = 8 * time.Second
 	linkCheckerMaxConcurrency      = 8
@@ -35,22 +34,17 @@ var (
 	linkCheckerResendSend   = sendLinkCheckerResendEmail
 
 	zennNotificationHTTPClient          = &http.Client{Timeout: zennNotificationRequestTimeout}
+	deployZennFeed                      = contentops.DeployZennFeed
 	zennNotifyArticlesWithOneSignal     = contentops.NotifyExternalArticlesFirstPublishWithOneSignal
 	zennNotificationRequiredEnvVariable = []string{
 		"ONESIGNAL_APP_ID",
 		"ONESIGNAL_REST_API_KEY",
 		"BASE_URL",
-		"BASE_TITLE",
 		"AWS_ACCESS_KEY_ID",
 		"AWS_SECRET_ACCESS_KEY",
 		"BUCKET_NAME",
 	}
 	cloudflarePagesDeployHTTPClient = &http.Client{Timeout: cloudflarePagesDeployRequestTimeout}
-
-	preBlockPattern      = regexp.MustCompile("(?is)<pre\\b[^>]*>.*?</pre>")
-	codeBlockPattern     = regexp.MustCompile("(?is)<code\\b[^>]*>.*?</code>")
-	anchorTagPattern     = regexp.MustCompile("(?is)<a\\b[^>]*>")
-	hrefAttributePattern = regexp.MustCompile("(?is)\\bhref\\s*=\\s*(?:\"([^\"]*)\"|'([^']*)'|([^\\s\"'<>`]+))")
 
 	linkCheckerBlockedIPPrefixes = []netip.Prefix{
 		netip.MustParsePrefix("0.0.0.0/8"),

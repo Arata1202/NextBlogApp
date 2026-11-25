@@ -136,3 +136,13 @@ func TestBuildS3GetObjectRequestSignsRequest(t *testing.T) {
 		}
 	}
 }
+
+func TestS3SigningTemporaryCredentialsAndDottedBucket(t *testing.T) {
+	req, err := buildS3GetObjectRequest(t.Context(), s3BackupConfig{BucketName: "site.backups", Region: "ap-northeast-1"}, awsCredentials{SessionToken: "session"}, "a+b:c", time.Unix(0, 0))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if req.URL.Host != "s3.ap-northeast-1.amazonaws.com" || req.URL.EscapedPath() != "/site.backups/a%2Bb%3Ac" || req.Header.Get("X-Amz-Security-Token") != "session" || !strings.Contains(req.Header.Get("Authorization"), "x-amz-security-token") {
+		t.Fatal("incorrect endpoint, key encoding or session headers")
+	}
+}

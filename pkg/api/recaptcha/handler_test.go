@@ -2,6 +2,7 @@ package recaptcha
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -95,7 +96,7 @@ func TestRecaptchaHandlerSuccess(t *testing.T) {
 	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
 
 	originalVerify := verifyRecaptchaFunc
-	verifyRecaptchaFunc = func(response, secret string) (bool, error) {
+	verifyRecaptchaFunc = func(_ context.Context, response, secret string) (bool, error) {
 		if response != "captcha-token" {
 			t.Fatalf("response = %q, want %q", response, "captcha-token")
 		}
@@ -136,7 +137,7 @@ func TestRecaptchaHandlerVerificationFailure(t *testing.T) {
 	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
 
 	originalVerify := verifyRecaptchaFunc
-	verifyRecaptchaFunc = func(response, secret string) (bool, error) {
+	verifyRecaptchaFunc = func(_ context.Context, response, secret string) (bool, error) {
 		return false, nil
 	}
 	t.Cleanup(func() {
@@ -166,7 +167,7 @@ func TestRecaptchaHandlerVerificationError(t *testing.T) {
 	t.Setenv("RECAPTCHA_SECRET_KEY", "test-secret")
 
 	originalVerify := verifyRecaptchaFunc
-	verifyRecaptchaFunc = func(response, secret string) (bool, error) {
+	verifyRecaptchaFunc = func(_ context.Context, response, secret string) (bool, error) {
 		return false, errors.New("network error")
 	}
 	t.Cleanup(func() {

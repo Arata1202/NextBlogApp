@@ -82,7 +82,7 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	defer zennCancel()
 	zennResultCh := requestZennSearchArticles(zennContext)
 
-	articles, err := cachedMicroCMSSearchArticles(serviceDomain, apiKey, query)
+	articles, err := cachedMicroCMSSearchArticles(r.Context(), serviceDomain, apiKey, query)
 	if err != nil {
 		log.Printf("Failed to request microCMS search: %v", err)
 		monitoring.CaptureError(err, monitoring.EventContext{
@@ -115,7 +115,11 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	matchedUnifiedArticles := combineSearchArticles(matchedBlogArticles, matchedZennArticles)
 	paginatedArticles := projectSearchResponseArticles(paginateSearchArticles(matchedUnifiedArticles, limit, offset))
 
-	w.Header().Set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600")
+	if zennResult.err == nil {
+		w.Header().Set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600")
+	} else {
+		w.Header().Set("Cache-Control", "no-store")
+	}
 	httpx.WriteJSON(w, http.StatusOK, searchResponse{
 		Contents:   paginatedArticles,
 		TotalCount: len(matchedUnifiedArticles),

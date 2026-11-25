@@ -2,6 +2,8 @@ package httpx
 
 import (
 	"encoding/json"
+	"errors"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -25,7 +27,7 @@ func SetCORSHeaders(w http.ResponseWriter, r *http.Request, allowMethods string)
 	origins := allowedOrigins()
 	origin := r.Header.Get("Origin")
 
-	w.Header().Set("Vary", "Origin")
+	w.Header().Add("Vary", "Origin")
 	w.Header().Set("Access-Control-Allow-Methods", allowMethods)
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
@@ -52,9 +54,28 @@ func WriteError(w http.ResponseWriter, statusCode int, message string) {
 }
 
 func WriteJSON(w http.ResponseWriter, statusCode int, response interface{}) {
+	body, err := json.Marshal(response)
+	if err != nil {
+		log.Printf("failed to encode JSON response: %v", err)
+		body = []byte(`{"message":"Internal Server Error"}`)
+		statusCode = http.StatusInternalServerError
+	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
-	if err := json.NewEncoder(w).Encode(response); err != nil {
-		log.Printf("failed to encode JSON response: %v", err)
+	_, _ = w.Write(append(body, '\n'))
+}
+
+func ReadRequestJSON(w http.ResponseWriter, r *http.Request, target any) (int, error) {
+	body, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 128<<10))
+	if err != nil {
+		var limit *http.MaxBytesError
+		if errors.As(err, &limit) {
+			return http.StatusRequestEntityTooLarge, err
+		}
+		return http.StatusBadRequest, err
 	}
+	if err := json.Unmarshal(body, target); err != nil {
+		return http.StatusBadRequest, err
+	}
+	return http.StatusOK, nil
 }

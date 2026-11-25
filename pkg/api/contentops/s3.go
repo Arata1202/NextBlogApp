@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/hmac"
+	"crypto/rand"
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
@@ -27,6 +28,7 @@ func loadS3BackupConfigFromEnv() (s3BackupConfig, awsCredentials, error) {
 	}
 	credentials := awsCredentials{
 		AccessKeyID:     strings.TrimSpace(os.Getenv("AWS_ACCESS_KEY_ID")),
+		SessionToken:    strings.TrimSpace(os.Getenv("AWS_SESSION_TOKEN")),
 		SecretAccessKey: strings.TrimSpace(os.Getenv("AWS_SECRET_ACCESS_KEY")),
 	}
 
@@ -54,7 +56,7 @@ func microCMSBackupObjectKey(now time.Time) string {
 		jst.Year(),
 		jst.Month(),
 		jst.Day(),
-		jst.Format("20060102T150405JST"),
+		jst.Format("20060102T150405.999999999JST"),
 	)
 }
 
@@ -62,7 +64,7 @@ func s3ObjectPath(objectKey string) string {
 	segments := strings.Split(objectKey, "/")
 	escapedSegments := make([]string, 0, len(segments))
 	for _, segment := range segments {
-		escapedSegments = append(escapedSegments, url.PathEscape(segment))
+		escapedSegments = append(escapedSegments, strings.ReplaceAll(url.QueryEscape(segment), "+", "%20"))
 	}
 
 	return "/" + strings.Join(escapedSegments, "/")
@@ -126,6 +128,9 @@ func signS3ObjectRequest(req *http.Request, credentials awsCredentials, region s
 
 	req.Header.Set("X-Amz-Content-Sha256", payloadHash)
 	req.Header.Set("X-Amz-Date", amzDate)
+	if credentials.SessionToken != "" {
+		req.Header.Set("X-Amz-Security-Token", credentials.SessionToken)
+	}
 
 	canonicalHeaders, signedHeaders := canonicalS3Headers(req)
 
@@ -159,12 +164,19 @@ func signS3ObjectRequest(req *http.Request, credentials awsCredentials, region s
 	)
 }
 
+func s3Endpoint(config s3BackupConfig, objectKey string) string {
+	if strings.Contains(config.BucketName, ".") {
+		return fmt.Sprintf("https://s3.%s.amazonaws.com/%s%s", config.Region, config.BucketName, s3ObjectPath(objectKey))
+	}
+	return fmt.Sprintf("https://%s.s3.%s.amazonaws.com%s", config.BucketName, config.Region, s3ObjectPath(objectKey))
+}
+
 func buildS3PutObjectRequest(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, body []byte, now time.Time) (*http.Request, error) {
 	return buildS3PutObjectRequestWithHeaders(ctx, config, credentials, objectKey, body, microCMSBackupContentType, nil, now)
 }
 
 func buildS3PutObjectRequestWithHeaders(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, body []byte, contentType string, headers http.Header, now time.Time) (*http.Request, error) {
-	endpoint := fmt.Sprintf("https://%s.s3.%s.amazonaws.com%s", config.BucketName, config.Region, s3ObjectPath(objectKey))
+	endpoint := s3Endpoint(config, objectKey)
 	req, err := http.NewRequestWithContext(ctx, http.MethodPut, endpoint, bytes.NewReader(body))
 	if err != nil {
 		return nil, err
@@ -181,7 +193,7 @@ func buildS3PutObjectRequestWithHeaders(ctx context.Context, config s3BackupConf
 }
 
 func buildS3GetObjectRequest(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, now time.Time) (*http.Request, error) {
-	endpoint := fmt.Sprintf("https://%s.s3.%s.amazonaws.com%s", config.BucketName, config.Region, s3ObjectPath(objectKey))
+	endpoint := s3Endpoint(config, objectKey)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, endpoint, nil)
 	if err != nil {
 		return nil, err
@@ -223,47 +235,58 @@ func putS3ObjectIfAbsent(ctx context.Context, config s3BackupConfig, credentials
 		return nil
 	}
 
-	if statusCode == http.StatusConflict || statusCode == http.StatusPreconditionFailed {
+	if statusCode == http.StatusConflict {
+		statusCode, err = putS3Object(ctx, config, credentials, objectKey, body, contentType, headers, now)
+	}
+	if statusCode == http.StatusPreconditionFailed {
 		return errS3ObjectAlreadyExists
 	}
 
 	return err
 }
 
-func getS3Object(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, now time.Time) ([]byte, bool, error) {
+func getS3Object(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, now time.Time) ([]byte, string, bool, error) {
 	req, err := buildS3GetObjectRequest(ctx, config, credentials, objectKey, now)
 	if err != nil {
-		return nil, false, err
+		return nil, "", false, err
 	}
 
 	resp, err := microCMSBackupHTTPClient.Do(req)
 	if err != nil {
-		return nil, false, err
+		return nil, "", false, err
 	}
 
 	if resp.StatusCode == http.StatusNotFound {
 		closeMicroCMSBackupResponseBody(resp)
-		return nil, false, nil
+		return nil, "", false, nil
 	}
 
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
 		bodySnippet := microCMSBackupResponseBodySnippet(resp)
 		if bodySnippet != "" {
-			return nil, false, fmt.Errorf("S3 returned status %d: %s", resp.StatusCode, bodySnippet)
+			return nil, "", false, fmt.Errorf("S3 returned status %d: %s", resp.StatusCode, bodySnippet)
 		}
-		return nil, false, fmt.Errorf("S3 returned status %d", resp.StatusCode)
+		return nil, "", false, fmt.Errorf("S3 returned status %d", resp.StatusCode)
 	}
 
-	body, readErr := io.ReadAll(io.LimitReader(resp.Body, 64*1024))
+	body, readErr := io.ReadAll(io.LimitReader(resp.Body, 64*1024+1))
 	_ = resp.Body.Close()
 	if readErr != nil {
-		return nil, false, readErr
+		return nil, "", false, readErr
 	}
 
-	return body, true, nil
+	if len(body) > 64*1024 {
+		return nil, "", false, errors.New("S3 marker exceeds 64 KiB")
+	}
+	return body, resp.Header.Get("ETag"), true, nil
 }
 
-func uploadMicroCMSBackupToS3(ctx context.Context, config s3BackupConfig, credentials awsCredentials, objectKey string, body []byte, now time.Time) error {
-	_, err := putS3Object(ctx, config, credentials, objectKey, body, microCMSBackupContentType, nil, now)
-	return err
+func uploadMicroCMSBackupToS3(ctx context.Context, config s3BackupConfig, credentials awsCredentials, body []byte, now time.Time) (string, error) {
+	key := microCMSBackupObjectKey(now)
+	err := putS3ObjectIfAbsent(ctx, config, credentials, key, body, microCMSBackupContentType, now)
+	if errors.Is(err, errS3ObjectAlreadyExists) {
+		key = strings.TrimSuffix(key, ".csv") + "-" + rand.Text() + ".csv"
+		err = putS3ObjectIfAbsent(ctx, config, credentials, key, body, microCMSBackupContentType, now)
+	}
+	return key, err
 }

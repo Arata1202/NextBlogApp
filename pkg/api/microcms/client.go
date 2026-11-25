@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -17,12 +18,17 @@ type ListResponse struct {
 	Limit      int                      `json:"limit"`
 }
 
+var serviceLabel = regexp.MustCompile(`^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$`)
+
 func NormalizeServiceDomain(value string) (string, error) {
-	serviceDomain := strings.TrimSpace(value)
+	serviceDomain := strings.ToLower(strings.TrimSpace(value))
 	if serviceDomain == "" {
 		return "", errors.New("MICROCMS_SERVICE_DOMAIN environment variable is required")
 	}
 
+	if strings.ContainsAny(serviceDomain, "?#@\\") {
+		return "", errors.New("invalid microCMS service domain")
+	}
 	if strings.Contains(serviceDomain, "://") {
 		parsedURL, err := url.Parse(serviceDomain)
 		if err != nil || parsedURL.Host == "" {
@@ -34,7 +40,7 @@ func NormalizeServiceDomain(value string) (string, error) {
 	}
 
 	serviceDomain = strings.TrimSuffix(serviceDomain, ".microcms.io")
-	if serviceDomain == "" || strings.ContainsAny(serviceDomain, "/\\") {
+	if !serviceLabel.MatchString(serviceDomain) {
 		return "", errors.New("MICROCMS_SERVICE_DOMAIN must be a microCMS service domain")
 	}
 
@@ -67,4 +73,11 @@ func BuildListRequest(ctx context.Context, apiBaseURL, serviceDomain, apiKey, fi
 	req.Header.Set("Accept", "application/json")
 
 	return req, nil
+}
+
+// DoListRequest keeps the service API key on the configured endpoint.
+func DoListRequest(client *http.Client, req *http.Request) (*http.Response, error) {
+	fixed := *client
+	fixed.CheckRedirect = func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }
+	return fixed.Do(req)
 }

@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"NextBlogApp/api"
 	cronapi "NextBlogApp/api/cron"
@@ -24,5 +25,6 @@ func main() {
 	http.HandleFunc("/api/webhook/microcmsbackup", webhookapi.MicroCMSBackupHandler)
 
 	fmt.Printf("Server is running on port %s\n", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	server := &http.Server{Addr: ":" + port, ReadHeaderTimeout: 10 * time.Second}
+	log.Fatal(server.ListenAndServe())
 }

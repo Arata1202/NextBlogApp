@@ -42,36 +42,33 @@ func combineSearchArticles(articleGroups ...[]map[string]interface{}) []map[stri
 		totalLength += len(articles)
 	}
 
-	combinedArticles := make([]map[string]interface{}, 0, totalLength)
-	for _, articles := range articleGroups {
-		combinedArticles = append(combinedArticles, articles...)
+	type ranked struct {
+		article map[string]interface{}
+		score   int
+		date    time.Time
+		url     string
 	}
-
-	sort.SliceStable(combinedArticles, func(i, j int) bool {
-		leftScore, _ := combinedArticles[i][searchScoreField].(int)
-		rightScore, _ := combinedArticles[j][searchScoreField].(int)
-		if leftScore != rightScore {
-			return leftScore > rightScore
+	rows := make([]ranked, 0, totalLength)
+	for _, group := range articleGroups {
+		for _, article := range group {
+			score, _ := article[searchScoreField].(int)
+			rows = append(rows, ranked{article: article, score: score, date: searchArticleTime(article), url: searchStringValue(article["url"])})
 		}
-
-		leftPublishedAt := searchArticleTime(combinedArticles[i])
-		rightPublishedAt := searchArticleTime(combinedArticles[j])
-
-		if leftPublishedAt.Equal(rightPublishedAt) {
-			return searchStringValue(combinedArticles[i]["url"]) < searchStringValue(combinedArticles[j]["url"])
+	}
+	sort.SliceStable(rows, func(i, j int) bool {
+		a, b := rows[i], rows[j]
+		if a.score != b.score {
+			return a.score > b.score
 		}
-
-		if leftPublishedAt.IsZero() {
-			return false
+		if !a.date.Equal(b.date) {
+			return a.date.After(b.date)
 		}
-
-		if rightPublishedAt.IsZero() {
-			return true
-		}
-
-		return leftPublishedAt.After(rightPublishedAt)
+		return a.url < b.url
 	})
-
+	combinedArticles := make([]map[string]interface{}, len(rows))
+	for i, row := range rows {
+		combinedArticles[i] = row.article
+	}
 	return combinedArticles
 }
 

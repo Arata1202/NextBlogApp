@@ -46,7 +46,7 @@ func TestVerifyRecaptcha(t *testing.T) {
 		recaptchaHTTPClient = originalClient
 	})
 
-	success, err := verifyRecaptcha("captcha-token", "test-secret")
+	success, err := verifyRecaptcha(t.Context(), "captcha-token", "test-secret")
 	if err != nil {
 		t.Fatalf("verifyRecaptcha() error = %v", err)
 	}
@@ -73,7 +73,7 @@ func TestVerifyRecaptchaDecodeError(t *testing.T) {
 		recaptchaHTTPClient = originalClient
 	})
 
-	success, err := verifyRecaptcha("captcha-token", "test-secret")
+	success, err := verifyRecaptcha(t.Context(), "captcha-token", "test-secret")
 	if err == nil {
 		t.Fatal("verifyRecaptcha() error = nil, want error")
 	}
@@ -97,7 +97,7 @@ func TestVerifyRecaptchaRequestError(t *testing.T) {
 		recaptchaHTTPClient = originalClient
 	})
 
-	success, err := verifyRecaptcha("captcha-token", "test-secret")
+	success, err := verifyRecaptcha(t.Context(), "captcha-token", "test-secret")
 	if err == nil {
 		t.Fatal("verifyRecaptcha() error = nil, want error")
 	}

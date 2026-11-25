@@ -93,7 +93,7 @@ func zennRSSItemsToNotifications(items []zennRSSItem) []contentops.ExternalArtic
 	}
 
 	sort.SliceStable(notifications, func(i, j int) bool {
-		if notifications[i].publishedAt.IsZero() || notifications[j].publishedAt.IsZero() {
+		if notifications[i].publishedAt.Equal(notifications[j].publishedAt) {
 			return notifications[i].article.URL < notifications[j].article.URL
 		}
 		return notifications[i].publishedAt.Before(notifications[j].publishedAt)
@@ -168,12 +168,15 @@ func triggerCloudflarePagesDeploy(ctx context.Context) (cloudflarePagesDeploySum
 
 	req, err := buildCloudflarePagesDeployRequest(ctx, hookURL)
 	if err != nil {
-		return summary, err
+		return summary, errors.New("invalid Cloudflare Pages deploy hook")
 	}
 
 	resp, err := cloudflarePagesDeployHTTPClient.Do(req)
 	if err != nil {
-		return summary, err
+		if ctx.Err() != nil {
+			return summary, ctx.Err()
+		}
+		return summary, errors.New("Cloudflare Pages deploy request failed")
 	}
 	defer closeResponseBody(resp)
 
@@ -222,15 +225,24 @@ func runZennFirstPublishNotifications(ctx context.Context, now time.Time) (*zenn
 		log.Printf("Sent %d Zenn first-publish OneSignal notifications", summary.SentCount)
 	}
 
-	if summary.NewCount > 0 {
-		deploySummary, err := triggerCloudflarePagesDeploy(ctx)
-		summary.CloudflarePagesDeploy = &deploySummary
+	if len(articles) > 0 && cloudflarePagesDeployConfigured() {
+		ids := make([]string, 0, len(articles))
+		for _, article := range articles {
+			ids = append(ids, article.ContentID)
+		}
+		sort.Strings(ids)
+		sum := sha256.Sum256([]byte(strings.Join(ids, "\x00")))
+		err := deployZennFeed(ctx, hex.EncodeToString(sum[:]), now, func() error {
+			deploySummary, err := triggerCloudflarePagesDeploy(ctx)
+			summary.CloudflarePagesDeploy = &deploySummary
+			return err
+		})
 		if err != nil {
 			summary.CloudflarePagesDeploy.Error = "failed to trigger deploy"
 			return summary, errors.Join(notifyErr, err)
 		}
-		if deploySummary.Triggered {
-			log.Printf("Triggered Cloudflare Pages deploy hook for %d new Zenn articles", summary.NewCount)
+		if summary.CloudflarePagesDeploy.Triggered {
+			log.Print("Triggered Cloudflare Pages deploy hook for updated Zenn feed")
 		}
 	}
 

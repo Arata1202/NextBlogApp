@@ -29,6 +29,13 @@ func isMicroCMSFirstPublishWebhook(payload microCMSWebhookPayload) bool {
 	oldPublished := microCMSWebhookStatusIncludes(payload.Contents.Old, "PUBLISH")
 	newPublished := microCMSWebhookStatusIncludes(payload.Contents.New, "PUBLISH")
 
+	if old := payload.Contents.Old; old != nil {
+		for _, value := range []map[string]interface{}{old.DraftValue, old.PublishValue} {
+			if microCMSBackupStringValue(value["publishedAt"]) != "" {
+				return false
+			}
+		}
+	}
 	return !oldPublished && newPublished
 }
 

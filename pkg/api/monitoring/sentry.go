@@ -1,7 +1,6 @@
 package monitoring
 
 import (
-	"errors"
 	"log"
 	"net/http"
 	"os"
@@ -109,9 +108,11 @@ func CaptureError(err error, eventContext EventContext) {
 }
 
 func CaptureMessage(message string, eventContext EventContext) {
-	if strings.TrimSpace(message) == "" {
+	if strings.TrimSpace(message) == "" || !initSentry() {
 		return
 	}
-
-	CaptureError(errors.New(message), eventContext)
+	hub := sentry.CurrentHub().Clone()
+	hub.ConfigureScope(func(scope *sentry.Scope) { applyScope(scope, eventContext) })
+	hub.CaptureMessage(message)
+	sentry.Flush(sentryFlushTimeout)
 }

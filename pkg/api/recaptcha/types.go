@@ -10,5 +10,6 @@ type RecaptchaResponse struct {
 }
 
 type siteVerifyResponse struct {
-	Success bool `json:"success"`
+	Success bool     `json:"success"`
+	Errors  []string `json:"error-codes"`
 }

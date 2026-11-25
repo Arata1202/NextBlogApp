@@ -39,7 +39,7 @@ func stubVerifyRecaptcha(t *testing.T, success bool, err error) {
 	t.Helper()
 
 	originalVerify := verifyRecaptchaFunc
-	verifyRecaptchaFunc = func(response, secret string) (bool, error) {
+	verifyRecaptchaFunc = func(_ context.Context, response, secret string) (bool, error) {
 		if response != "captcha-token" {
 			t.Fatalf("response = %q, want %q", response, "captcha-token")
 		}

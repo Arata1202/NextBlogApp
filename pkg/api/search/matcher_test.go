@@ -49,3 +49,18 @@ func TestRankMicroCMSSearchArticlesKeepsMatchesFromOmittedFields(t *testing.T) {
 		t.Fatalf("search score = %#v, want 1", rankedArticles[0][searchScoreField])
 	}
 }
+
+func TestLiteralAngleBracketsInSearch(t *testing.T) {
+	article := map[string]interface{}{"title": "Generic", "content_blocks": []interface{}{map[string]interface{}{"rich_text": "<code>List&lt;Widget&gt; &amp;copy;</code>"}}}
+	for _, query := range []string{"List<Widget>", "&copy;"} {
+		if !articleMatchesSearchQuery(article, query) {
+			t.Errorf("missing rendered text %q", query)
+		}
+	}
+	if articleMatchesSearchQuery(article, "List<Other>") {
+		t.Fatal("query lost its literal brackets")
+	}
+	if src := extractFirstSearchImage(`<img src="cover" data-src="placeholder">`); src != "cover" {
+		t.Errorf("wrong src %s", src)
+	}
+}

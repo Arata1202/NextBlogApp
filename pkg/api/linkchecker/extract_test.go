@@ -55,3 +55,13 @@ func TestCollectArticleLinks(t *testing.T) {
 		t.Fatalf("unexpected reference = %#v", refsByURL["https://external.example/a?x=1&y=2"][0])
 	}
 }
+
+func TestArticleRelativeAndEncodedLinks(t *testing.T) {
+	article := map[string]interface{}{"id": "sample", "content_blocks": []interface{}{map[string]interface{}{"rich_text": `<a data-href="/unused" title="a > b" href="?q=a&amp;amp;b">query</a><a href="//assets.example/?q='go'">asset</a>`}}}
+	links := collectArticlesLinks([]map[string]interface{}{article}, "http://example.com")
+	for _, key := range []string{"http://example.com/articles/sample?q=a&amp;b", "http://assets.example/?q='go'"} {
+		if len(links[key]) != 1 {
+			t.Errorf("missing %s in %v", key, links)
+		}
+	}
+}

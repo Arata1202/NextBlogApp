@@ -62,21 +62,22 @@ func TestSendContactEmailsBuildsSeparatedMessages(t *testing.T) {
 		t.Fatalf("confirmation Subject = %q", confirmation.Subject)
 	}
 
-	for _, message := range sender.messages {
-		for _, want := range []string{
-			"メールアドレス: user@example.com",
-			"件名: &lt;Test subject&gt;",
-			"内容: Line 1<br>&lt;script&gt;alert(&#39;x&#39;)&lt;/script&gt;",
-			"https://example.com",
-			"Email: contact@example.com",
-		} {
-			if !strings.Contains(message.HTML, want) {
-				t.Fatalf("HTML does not contain %q: %q", want, message.HTML)
-			}
+	if strings.Contains(confirmation.Text, request.Message) || strings.Contains(confirmation.HTML, "Test subject") {
+		t.Fatal("confirmation contains submitted content")
+	}
+	for _, want := range []string{
+		"メールアドレス: user@example.com",
+		"件名: &lt;Test subject&gt;",
+		"内容: Line 1<br>&lt;script&gt;alert(&#39;x&#39;)&lt;/script&gt;",
+		"https://example.com",
+		"Email: contact@example.com",
+	} {
+		if !strings.Contains(owner.HTML, want) {
+			t.Fatalf("HTML does not contain %q: %q", want, owner.HTML)
 		}
-		if !strings.Contains(message.Text, "Line 1\n<script>alert('x')</script>") {
-			t.Fatalf("Text body does not preserve plain text content: %q", message.Text)
-		}
+	}
+	if !strings.Contains(owner.Text, "Line 1\n<script>alert('x')</script>") {
+		t.Fatalf("Text body does not preserve plain text content: %q", owner.Text)
 	}
 
 	if sender.idempotencyKey != "contact/"+request.RequestID {
@@ -149,5 +150,23 @@ func TestSendContactEmailsValidatesProviderResponse(t *testing.T) {
 				t.Fatal("sendContactEmails() error = nil, want provider response error")
 			}
 		})
+	}
+}
+
+func TestQuotedMailboxIsPreservedForDelivery(t *testing.T) {
+	req := EmailRequestBody{RequestID: "00000000-0000-4000-8000-000000000001", Email: `"first last"@example.org`, Title: "hello", Message: "line 1\r\nline 2　end"}
+	if err := validateEmailRequestInput(&req); err != nil {
+		t.Fatal(err)
+	}
+	if req.Message != "line 1\nline 2　end" {
+		t.Fatal("line endings were not normalized")
+	}
+	addr, err := formatHeaderAddress(req.Email)
+	if err != nil || bareMailbox(addr) != req.Email {
+		t.Fatalf("mailbox: %s, err %v", bareMailbox(addr), err)
+	}
+	req.Email = "Example <user@example.org>"
+	if err := validateEmailRequestInput(&req); err == nil {
+		t.Fatal("accepted display-name address")
 	}
 }

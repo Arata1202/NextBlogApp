@@ -1,13 +1,23 @@
 package search
 
 import (
-	"html"
+	"golang.org/x/net/html"
 	"strings"
 )
 
 func stripSearchHTML(value string) string {
-	strippedText := htmlTagPattern.ReplaceAllString(html.UnescapeString(value), " ")
-	return strings.Join(strings.Fields(strippedText), " ")
+	tokenizer := html.NewTokenizer(strings.NewReader(value))
+	var text strings.Builder
+	for {
+		switch tokenizer.Next() {
+		case html.ErrorToken:
+			return strings.Join(strings.Fields(text.String()), " ")
+		case html.TextToken:
+			text.Write(tokenizer.Text())
+		default:
+			text.WriteByte(' ')
+		}
+	}
 }
 
 func searchStringValue(value interface{}) string {
@@ -20,7 +30,7 @@ func searchStringValue(value interface{}) string {
 }
 
 func normalizedSearchText(value string) string {
-	return strings.ToLower(stripSearchHTML(value))
+	return strings.Join(strings.Fields(strings.ToLower(value)), " ")
 }
 
 func appendSearchText(builder *strings.Builder, value interface{}) {
@@ -67,18 +77,6 @@ func blockSearchText(value interface{}) string {
 	return normalizedSearchText(builder.String())
 }
 
-func articleSearchText(article map[string]interface{}) string {
-	var builder strings.Builder
-
-	appendSearchText(&builder, article["title"])
-	appendSearchText(&builder, article["description"])
-	appendSearchText(&builder, article[searchContentField])
-	appendBlockSearchText(&builder, article["introduction_blocks"])
-	appendBlockSearchText(&builder, article["content_blocks"])
-
-	return strings.ToLower(builder.String())
-}
-
 func searchTerms(query string) []string {
 	return strings.Fields(normalizedSearchText(query))
 }
@@ -106,18 +104,16 @@ func articleSearchScore(article map[string]interface{}, terms []string) int {
 		return 0
 	}
 
-	searchText := articleSearchText(article)
+	title := normalizedSearchText(searchStringValue(article["title"]))
+	description := normalizedSearchText(searchStringValue(article["description"]))
+	body := normalizedSearchText(stripSearchHTML(searchStringValue(article[searchContentField]))) +
+		" " + blockSearchText(article["introduction_blocks"]) +
+		" " + blockSearchText(article["content_blocks"])
 	for _, term := range terms {
-		if !strings.Contains(searchText, term) {
+		if !strings.Contains(title, term) && !strings.Contains(description, term) && !strings.Contains(body, term) {
 			return 0
 		}
 	}
-
-	title := normalizedSearchText(searchStringValue(article["title"]))
-	description := normalizedSearchText(searchStringValue(article["description"]))
-	body := normalizedSearchText(searchStringValue(article[searchContentField])) +
-		" " + blockSearchText(article["introduction_blocks"]) +
-		" " + blockSearchText(article["content_blocks"])
 	phrase := strings.Join(terms, " ")
 
 	score := 0

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set +x
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -25,14 +26,14 @@ The script sends 4 push messages to the test segment:
   blog x web, blog x iOS app, zenn x web, zenn x iOS app
 
 It reads ONESIGNAL_APP_ID, BASE_URL, and NEXT_PUBLIC_BASE_URL from .env
-without sourcing the file. ONESIGNAL_REST_API_KEY is read only when sending.
+without sourcing the file. ONESIGNAL_REST_API_KEY is used only when sending.
 USAGE
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --base-url)
-      if [[ $# -lt 2 || -z "${2:-}" ]]; then
+      if [[ $# -lt 2 || -z "${2:-}" || "${2:-}" == -* ]]; then
         echo "--base-url requires a non-empty URL" >&2
         exit 2
       fi
@@ -86,27 +87,9 @@ if (!file || !key || !fs.existsSync(file)) {
   process.exit(0);
 }
 
-const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/);
-for (const line of lines) {
-  const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/);
-  if (!match || match[1] !== key) {
-    continue;
-  }
+const { parseEnv } = require('node:util');
+process.stdout.write(parseEnv(fs.readFileSync(file, 'utf8'))[key] ?? '');
 
-  let value = match[2].trim();
-  const quoted =
-    (value.startsWith('"') && value.endsWith('"')) ||
-    (value.startsWith("'") && value.endsWith("'"));
-
-  if (quoted) {
-    value = value.slice(1, -1);
-  } else {
-    value = value.replace(/\s+#.*$/, '').trim();
-  }
-
-  process.stdout.write(value);
-  break;
-}
 NODE
 }
 
@@ -135,6 +118,11 @@ BASE_URL_VALUE="${BASE_URL_VALUE%/}"
 
 require_value "ONESIGNAL_APP_ID" "$ONESIGNAL_APP_ID_VALUE"
 require_value "BASE_URL or NEXT_PUBLIC_BASE_URL" "$BASE_URL_VALUE"
+
+if ! node -e 'const url = new URL(process.argv[1]); process.exit(["https:", "http:"].includes(url.protocol) && url.hostname ? 0 : 1)' "$BASE_URL_VALUE" 2>/dev/null; then
+  echo "Base URL must be an absolute HTTP(S) URL" >&2
+  exit 2
+fi
 
 if [[ "$DRY_RUN" == false ]]; then
   ONESIGNAL_REST_API_KEY_VALUE="$(read_env ONESIGNAL_REST_API_KEY)"
@@ -230,16 +218,19 @@ send_payload() {
   fi
 
   local response
-  response="$(
-    curl -sS \
+  if ! response="$(
+    printf 'Authorization: Key %s\n' "$ONESIGNAL_REST_API_KEY_VALUE" | curl -sS \
       --connect-timeout 10 \
       --max-time 30 \
       -w $'\n%{http_code}' \
       -X POST "$API_URL" \
       -H "Content-Type: application/json" \
-      -H "Authorization: Key $ONESIGNAL_REST_API_KEY_VALUE" \
+      --header @- \
       --data "$payload"
-  )"
+  )"; then
+    echo "Delivery unconfirmed: $label (transport error)" >&2
+    return 1
+  fi
 
   local status="${response##*$'\n'}"
   local body="${response%$'\n'*}"

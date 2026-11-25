@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: onesignal-test-notification
+  group: onesignal-test-notification-${{ inputs.mode }}
   cancel-in-progress: false
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
       - name: Setup Node.js
@@ -41,6 +41,7 @@ jobs:
         run: scripts/send-onesignal-test-notifications.sh --dry-run
 
   validate-send-ref:
+    permissions: {}
     if: inputs.mode == 'send'
     name: Validate send branch
     runs-on: ubuntu-latest
@@ -62,7 +63,7 @@ jobs:
     environment: onesignal-test
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
       - name: Setup Node.js

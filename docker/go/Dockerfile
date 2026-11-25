@@ -5,6 +5,9 @@ WORKDIR /app
 ARG AIR_VERSION=v1.65.1
 RUN go install github.com/air-verse/air@${AIR_VERSION}
 
+RUN adduser -D -u 1000 dev && chown -R dev:dev /go /app
+USER dev
+
 COPY ./go.mod ./go.sum ./
 RUN go mod download
 
