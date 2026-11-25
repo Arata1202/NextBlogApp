@@ -1,3 +1,4 @@
+import { ARTICLE_SHARE_ID } from '@/constants/navigation';
 import { Article } from '@/types/microcms';
 import ShareSection from './Elements/ShareSection';
 import FollowSection from './Elements/FollowSection';
@@ -11,7 +12,7 @@ export default function Share({ data }: Props) {
   return (
     <>
       <div
-        id={data ? 'article-share' : undefined}
+        id={data ? ARTICLE_SHARE_ID : undefined}
         tabIndex={data ? -1 : undefined}
         className="mt-5 scroll-mt-20"
         data-web-share

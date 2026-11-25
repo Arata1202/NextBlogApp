@@ -1,7 +1,9 @@
 'use client';
 
+import { SIDEBAR_SEARCH_ID } from '@/constants/navigation';
+import { SearchResultsFocusContext } from '@/contexts/SearchResultsNavigation';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useContext, useEffect, useRef, useState, type FormEvent } from 'react';
 import { useTheme } from 'next-themes';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import {
@@ -15,6 +17,7 @@ export default function Search() {
   const { theme } = useTheme();
   const themeClassName = getThemeClassName(theme);
   const isAppWebViewMode = useAppWebViewMode();
+  const requestResultsFocus = useContext(SearchResultsFocusContext);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState('');
@@ -49,15 +52,13 @@ export default function Search() {
     setErrorMessage('');
     const href = `/search?q=${encodeURIComponent(trimmedQuery)}`;
     const target = isAppWebViewMode ? appendAppWebViewParam(href) : href;
-    const heading = document.getElementById('search-results-heading');
 
-    if (heading) {
+    if (requestResultsFocus) {
       // A same-page query change updates useSearchParams without a route-level scroll.
       if (window.location.href !== new URL(target, window.location.origin).href) {
         window.history.pushState(null, '', target);
       }
-      heading.focus({ preventScroll: true });
-      heading.scrollIntoView({ block: 'start' });
+      requestResultsFocus(trimmedQuery);
       return;
     }
 
@@ -72,13 +73,13 @@ export default function Search() {
       </div>
 
       <form onSubmit={handleSubmit} className="mt-5">
-        <label htmlFor="sidebar-search" className="sr-only">
+        <label htmlFor={SIDEBAR_SEARCH_ID} className="sr-only">
           検索
         </label>
         <div className="flex gap-2">
           <input
             ref={inputRef}
-            id="sidebar-search"
+            id={SIDEBAR_SEARCH_ID}
             type="search"
             value={query}
             onChange={(event) => {

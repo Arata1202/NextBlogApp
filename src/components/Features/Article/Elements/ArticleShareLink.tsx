@@ -1,5 +1,7 @@
 'use client';
 
+import { ARTICLE_SHARE_ID } from '@/constants/navigation';
+import { focusAndScroll } from '@/utils/focusAndScroll';
 import { useTheme } from 'next-themes';
 import { getTextLinkClassName } from '@/components/Common/controlClassNames';
 
@@ -8,7 +10,7 @@ export default function ArticleShareLink() {
 
   return (
     <a
-      href="#article-share"
+      href={`#${ARTICLE_SHARE_ID}`}
       className={getTextLinkClassName(theme)}
       onClick={(event) => {
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -19,9 +21,7 @@ export default function ArticleShareLink() {
 
         event.preventDefault();
         if (window.location.hash !== hash) window.history.pushState(null, '', hash);
-        target.focus({ preventScroll: true });
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        target.scrollIntoView({ behavior: reduceMotion ? 'instant' : 'smooth', block: 'start' });
+        focusAndScroll(target, 'start');
       }}
     >
       この記事をシェアする

@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { SearchResultsNavigation } from '@/contexts/SearchResultsNavigation';
+import PageTitle from '@/components/Common/PageTitle';
 import Search from '@/components/Common/Layouts/Sidebar/Elements/Search';
 
 const routerMock = vi.hoisted(() => ({
@@ -38,14 +40,13 @@ describe('Search', () => {
     window.history.replaceState(null, '', '/search?q=old');
 
     try {
-      render(
-        <>
-          <h1 id="search-results-heading" tabIndex={-1}>
-            検索結果
-          </h1>
+      const results = (query: string) => (
+        <SearchResultsNavigation query={query}>
+          <PageTitle page={{ type: 'search', searchKeyword: query }} />
           <Search />
-        </>,
+        </SearchResultsNavigation>
       );
+      const { rerender } = render(results('old'));
       const heading = screen.getByRole('heading');
       heading.scrollIntoView = scrollIntoView;
 
@@ -53,9 +54,12 @@ describe('Search', () => {
       expect(scrollIntoView).not.toHaveBeenCalled();
       await user.keyboard('{Enter}');
       expect(window.location.search).toBe('?q=new');
+      expect(heading).not.toHaveFocus();
+      rerender(results('new'));
+      expect(heading).toHaveAccessibleName('「new」の検索結果');
       expect(heading).toHaveFocus();
       expect(scrollIntoView).toHaveBeenCalledTimes(1);
-      window.dispatchEvent(new PopStateEvent('popstate'));
+      rerender(results('old'));
       expect(scrollIntoView).toHaveBeenCalledTimes(1);
     } finally {
       window.history.replaceState(null, '', '/');
