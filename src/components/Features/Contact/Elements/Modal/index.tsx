@@ -13,7 +13,7 @@ import {
 
 type Props = {
   title: string;
-  description: string;
+  description?: string;
   confirmText: string;
   cancelText: string;
   show: boolean;
@@ -79,14 +79,16 @@ export default function Modal({
                     >
                       {title}
                     </Dialog.Title>
-                    <div className="mt-2">
-                      <Dialog.Description
-                        as="p"
-                        className={`${styles.DialogDescription} ${colorClassNames.mutedText}`}
-                      >
-                        {description}
-                      </Dialog.Description>
-                    </div>
+                    {description && (
+                      <div className="mt-2">
+                        <Dialog.Description
+                          as="p"
+                          className={`${styles.DialogDescription} ${colorClassNames.mutedText}`}
+                        >
+                          {description}
+                        </Dialog.Description>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="mt-3 grid grid-flow-row-dense grid-cols-2 gap-3">

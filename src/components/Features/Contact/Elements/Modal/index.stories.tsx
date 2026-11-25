@@ -7,7 +7,6 @@ const meta = {
   component: Modal,
   args: {
     title: 'お問い合わせを送信しますか？',
-    description: '送信完了まで数秒かかることがあります。',
     confirmText: '送信する',
     cancelText: '入力に戻る',
     show: true,

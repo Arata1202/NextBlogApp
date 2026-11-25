@@ -205,7 +205,6 @@ export default function ContactFeature() {
       <Modal
         show={confirmSendEmailModalOpen}
         title="お問い合わせを送信しますか？"
-        description="送信完了まで数秒かかることがあります。"
         cancelText="入力に戻る"
         confirmText={isSending ? '送信中...' : '送信する'}
         isLoading={isSending}

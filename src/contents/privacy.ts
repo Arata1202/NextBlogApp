@@ -39,7 +39,7 @@ Cookieは、ユーザーが本サービスあるいは他サイトを閲覧さ�
 
 Cookieによる情報収集を好まれない場合、ユーザーご自身でブラウザで受け入れを拒否するよう設定することも可能です。ただし、この設定により一部のコンテンツが正しく機能しない場合、またサービスが受けられない場合がございます。あらかじめご了承ください。
 
-なお、Googleによる情報の利用については、[Googleのパートナーサイトでの情報の取り扱い](https://policies.google.com/technologies/partner-sites?hl=ja)にてご確認いただけます。
+詳しくは、[サイトやアプリから収集した情報を Google がどのように利用するか](https://policies.google.com/technologies/partner-sites?hl=ja)をご確認ください。
 
 ### アクセス解析ツール
 
@@ -142,7 +142,7 @@ Webサイト「リアル大学生」では、第三者配信の広告サービ�
 
 また、Google AdSenseに関して、このプロセスの詳細や情報が広告配信事業者に使用されないよう、ユーザーご自身で設定することができます。ただし、この設定により一部のコンテンツが正しく機能しない場合、またサービスが受けられない場合がございます。あらかじめご了承ください。
 
-なお、Googleによる情報の利用については、[Googleのパートナーサイトでの情報の取り扱い](https://policies.google.com/technologies/partner-sites?hl=ja)にてご確認いただけます。
+詳しくは、[サイトやアプリから収集した情報を Google がどのように利用するか](https://policies.google.com/technologies/partner-sites?hl=ja)をご確認ください。
 
 ### Google Mobile Ads（AdMob）
 
