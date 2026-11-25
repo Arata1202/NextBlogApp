@@ -43,10 +43,14 @@ export default function PageTitle({ page, isLoading = false }: Props) {
   const Icon = PAGE_HEADING_ICONS[page.type];
   const isSearchLoading = page.type === 'search' && isLoading;
 
+  const isSearchResult = page.type === 'search' && Boolean(page.searchKeyword) && !isLoading;
+
   return (
     <>
       <h1
-        className={`${(page.type === 'home' && styles.home) || styles.withBreadCrumbs} flex items-center pb-2 pt-2`}
+        id={isSearchResult ? 'search-results-heading' : undefined}
+        tabIndex={isSearchResult ? -1 : undefined}
+        className={`${(page.type === 'home' && styles.home) || styles.withBreadCrumbs} flex items-center pb-2 pt-2 ${isSearchResult ? 'scroll-mt-20' : ''}`}
         aria-label={isLoading ? 'ページタイトルを読み込み中' : undefined}
       >
         <Icon className="h-8 w-8 mr-2" aria-hidden="true" />

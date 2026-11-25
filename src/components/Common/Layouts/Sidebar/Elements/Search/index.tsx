@@ -48,7 +48,20 @@ export default function Search() {
 
     setErrorMessage('');
     const href = `/search?q=${encodeURIComponent(trimmedQuery)}`;
-    router.push(isAppWebViewMode ? appendAppWebViewParam(href) : href);
+    const target = isAppWebViewMode ? appendAppWebViewParam(href) : href;
+    const heading = document.getElementById('search-results-heading');
+
+    if (heading) {
+      // A same-page query change updates useSearchParams without a route-level scroll.
+      if (window.location.href !== new URL(target, window.location.origin).href) {
+        window.history.pushState(null, '', target);
+      }
+      heading.focus({ preventScroll: true });
+      heading.scrollIntoView({ block: 'start' });
+      return;
+    }
+
+    router.push(target);
   };
 
   return (

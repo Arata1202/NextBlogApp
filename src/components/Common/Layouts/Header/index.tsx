@@ -17,6 +17,7 @@ import {
   BriefcaseIcon as BriefcaseSolidIcon,
   CommandLineIcon as CommandLineSolidIcon,
   FolderIcon,
+  MagnifyingGlassIcon,
   SparklesIcon as SparklesSolidIcon,
 } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
@@ -98,6 +99,8 @@ export default function Header() {
   const { theme } = useTheme();
   const categoryPopoverRef = useRef<HTMLDivElement>(null);
 
+  const focusSearchAfterClose = useRef(false);
+  const [hasSidebarSearch, setHasSidebarSearch] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [suppressCategoryFocusOutline, setSuppressCategoryFocusOutline] = useState(false);
   const themeClassName = getThemeClassName(theme);
@@ -171,7 +174,10 @@ export default function Header() {
                     type="button"
                     aria-label="メニューを開く"
                     className={`${compactIconControlClassName} cursor-pointer ${themeClassName}`}
-                    onClick={() => setMobileMenuOpen(true)}
+                    onClick={() => {
+                      setHasSidebarSearch(Boolean(document.getElementById('sidebar-search')));
+                      setMobileMenuOpen(true);
+                    }}
                   >
                     <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                   </button>
@@ -256,7 +262,16 @@ export default function Header() {
           </div>
         </nav>
 
-        <Transition.Root show={mobileMenuOpen} as={Fragment}>
+        <Transition.Root
+          show={mobileMenuOpen}
+          as={Fragment}
+          afterLeave={() => {
+            if (focusSearchAfterClose.current) {
+              focusSearchAfterClose.current = false;
+              requestAnimationFrame(() => document.getElementById('sidebar-search')?.focus());
+            }
+          }}
+        >
           <Dialog
             as="div"
             className="relative lg:hidden z-50"
@@ -304,6 +319,22 @@ export default function Header() {
                     Menu
                   </Dialog.Title>
                   <ul className="mt-5 space-y-6">
+                    {hasSidebarSearch && (
+                      <li>
+                        <button
+                          type="button"
+                          className={`${menuLinkClassName} w-full cursor-pointer`}
+                          onClick={() => {
+                            focusSearchAfterClose.current = true;
+                            setMobileMenuOpen(false);
+                          }}
+                        >
+                          <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                          <MagnifyingGlassIcon className="h-6 w-6 mx-2" aria-hidden="true" />
+                          記事を検索
+                        </button>
+                      </li>
+                    )}
                     {HEADER_NAVIGATION.map((item) => (
                       <li key={item.name}>
                         <Link

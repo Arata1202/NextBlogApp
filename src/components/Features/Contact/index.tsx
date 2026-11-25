@@ -3,7 +3,7 @@
 import * as Sentry from '@sentry/nextjs';
 import { useState, useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
-import { useForm } from 'react-hook-form';
+import { useForm, type SubmitErrorHandler } from 'react-hook-form';
 import ReCAPTCHA from 'react-google-recaptcha';
 import type { Form } from '@/types/form';
 import InputContainer from './Elements/InputContainer';
@@ -51,6 +51,13 @@ export default function ContactFeature() {
 
     setFormData(data);
     setConfirmSendEmailModalOpen(true);
+  };
+
+  const revealInvalidField: SubmitErrorHandler<Form> = (fieldErrors) => {
+    const field = fieldErrors.email?.ref ?? fieldErrors.title?.ref ?? fieldErrors.message?.ref;
+    if (field instanceof HTMLElement) {
+      field.scrollIntoView?.({ block: 'nearest' });
+    }
   };
 
   const handleChangeCaptchaValue = (value: string | null) => {
@@ -146,7 +153,11 @@ export default function ContactFeature() {
         <p>広告掲載やタイアップに関するご相談も受け付けています。</p>
         <p>アプリに関するお問い合わせは、件名にアプリ名をご記載ください。</p>
       </div>
-      <form onSubmit={onSubmit(handleSubmit)} method="POST" className="pt-5 mb-5">
+      <form
+        onSubmit={onSubmit(handleSubmit, revealInvalidField)}
+        method="POST"
+        className="pt-5 mb-5"
+      >
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <InputContainer
             label="メールアドレス"

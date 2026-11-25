@@ -126,6 +126,11 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
           </div>
         );
       })}
+      <p className="mt-5" data-web-share>
+        <a className="underline underline-offset-4" href="#article-share">
+          この記事をシェアする
+        </a>
+      </p>
       <RelatedArticle relatedArticles={relatedArticles} />
     </>
   );

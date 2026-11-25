@@ -32,6 +32,36 @@ describe('Search', () => {
     expect(routerMock.push).toHaveBeenCalledWith('/search?q=React%20Query');
   });
 
+  it('focuses results only when a re-search is submitted', async () => {
+    const user = userEvent.setup();
+    const scrollIntoView = vi.fn();
+    window.history.replaceState(null, '', '/search?q=old');
+
+    try {
+      render(
+        <>
+          <h1 id="search-results-heading" tabIndex={-1}>
+            検索結果
+          </h1>
+          <Search />
+        </>,
+      );
+      const heading = screen.getByRole('heading');
+      heading.scrollIntoView = scrollIntoView;
+
+      await user.type(screen.getByRole('searchbox'), 'new');
+      expect(scrollIntoView).not.toHaveBeenCalled();
+      await user.keyboard('{Enter}');
+      expect(window.location.search).toBe('?q=new');
+      expect(heading).toHaveFocus();
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      window.dispatchEvent(new PopStateEvent('popstate'));
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+    } finally {
+      window.history.replaceState(null, '', '/');
+    }
+  });
+
   it('shows a validation message and does not navigate when the query is empty', async () => {
     const user = userEvent.setup();
 

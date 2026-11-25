@@ -37,7 +37,7 @@ export default function InputContainer({
             autoComplete={name}
             aria-invalid={Boolean(errors)}
             aria-describedby={errors ? errorId : undefined}
-            className={`${fieldControlClassName} block h-10 w-full px-3 text-base sm:text-sm ${themeClassName}`}
+            className={`${fieldControlClassName} scroll-mt-32 block h-10 w-full px-3 text-base sm:text-sm ${themeClassName}`}
           />
         )}
         {textarea && (
@@ -48,7 +48,7 @@ export default function InputContainer({
             rows={4}
             aria-invalid={Boolean(errors)}
             aria-describedby={errors ? errorId : undefined}
-            className={`${fieldControlClassName} block w-full px-3 py-2 text-base sm:text-sm ${themeClassName}`}
+            className={`${fieldControlClassName} scroll-mt-32 block w-full px-3 py-2 text-base sm:text-sm ${themeClassName}`}
           />
         )}
         {errors && (
