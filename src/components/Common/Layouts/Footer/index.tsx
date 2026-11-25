@@ -92,7 +92,7 @@ export default function Footer() {
               <div className={`${styles.menu} md:grid md:grid-cols-2 md:gap-8`}>
                 <div>
                   <div className={`text-sm font-semibold leading-6 ${themeClassName}`}>
-                    利用規約
+                    サイトの方針
                   </div>
                   <ul className="mt-6 space-y-4">
                     {FOOTER_NAVIGATION.policy.map((item) => (

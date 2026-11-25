@@ -144,6 +144,7 @@ export default function ContactFeature() {
           本ブログおよび運営中のアプリに関するご質問、不具合のご報告、ご意見・ご要望は、以下のフォームよりお問い合わせください。
         </p>
         <p>広告掲載やタイアップに関するご相談も受け付けています。</p>
+        <p>すべての項目が必須です。</p>
         <p>アプリに関するお問い合わせは、件名にアプリ名をご記載ください。</p>
       </div>
       <form onSubmit={onSubmit(handleSubmit)} method="POST" className="pt-5 mb-5">
@@ -196,7 +197,7 @@ export default function ContactFeature() {
             disabled={isSending}
             className={`${outlinedControlClassName} block w-full cursor-pointer px-3.5 py-2.5 text-center text-sm font-semibold disabled:cursor-wait disabled:opacity-70 ${themeClassName}`}
           >
-            {isSending ? '送信中...' : '送信'}
+            {isSending ? '送信中...' : '送信の確認へ'}
           </button>
         </div>
       </form>
@@ -204,9 +205,8 @@ export default function ContactFeature() {
       <Modal
         show={confirmSendEmailModalOpen}
         title="お問い合わせを送信しますか？"
-        description="送信ボタンは一度だけ押してください。送信完了まで数秒かかることがあります。"
-        cancelText="キャンセル"
-        confirmText={isSending ? '送信中...' : '送信'}
+        cancelText="入力に戻る"
+        confirmText={isSending ? '送信中...' : '送信する'}
         isLoading={isSending}
         onConfirm={handleSendEmail}
         onClose={() => {
@@ -219,7 +219,7 @@ export default function ContactFeature() {
       <Alert
         show={successSendEmailAlertOpen}
         title="お問い合わせありがとうございます"
-        description="正常に処理が完了しました。"
+        description="お問い合わせを受け付けました。"
         onClose={() => setSuccessSendEmailAlertOpen(false)}
       />
       <Alert

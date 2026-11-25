@@ -7,9 +7,8 @@ const meta = {
   component: Modal,
   args: {
     title: 'お問い合わせを送信しますか？',
-    description: '送信ボタンは一度だけ押してください。送信完了まで数秒かかることがあります。',
-    confirmText: '送信',
-    cancelText: 'キャンセル',
+    confirmText: '送信する',
+    cancelText: '入力に戻る',
     show: true,
     onClose: fn(),
     onConfirm: fn(),
@@ -27,7 +26,7 @@ export const Loading: Story = { args: { isLoading: true, confirmText: '送信中
 export const ConfirmInteraction: Story = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement.ownerDocument.body);
-    await userEvent.click(canvas.getByRole('button', { name: '送信' }));
+    await userEvent.click(canvas.getByRole('button', { name: '送信する' }));
     await expect(args.onConfirm).toHaveBeenCalledOnce();
   },
 };

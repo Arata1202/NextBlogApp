@@ -21,6 +21,6 @@ test.describe('search', () => {
     await expect(
       page.getByRole('heading', { level: 1, name: '「no-match-keyword」の検索結果' }),
     ).toBeVisible();
-    await expect(page.getByText('記事はまだありません')).toBeVisible();
+    await expect(page.getByText('一致する記事が見つかりませんでした。')).toBeVisible();
   });
 });

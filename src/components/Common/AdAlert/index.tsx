@@ -18,7 +18,7 @@ export default function AdAlert() {
         className={`${styles.alert} flex justify-center text-center p-3 border ${borderedTextClassName}`}
       >
         <MegaphoneIcon className="h-7 w-7 mr-2" aria-hidden="true" />
-        この記事には広告が含まれています。
+        このページには広告が含まれています。
       </div>
     </>
   );

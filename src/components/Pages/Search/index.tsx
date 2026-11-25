@@ -294,9 +294,14 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
   const isLoading = Boolean(query) && (status === 'idle' || status === 'loading');
 
   const hasSearchError = status === 'error';
-  const emptyMessage = hasSearchError
-    ? '検索結果を取得できませんでした。もう一度お試しください。'
-    : '記事はまだありません';
+  let emptyMessage = 'このページに表示できる記事はありません。';
+  if (hasSearchError) {
+    emptyMessage = '検索結果を取得できませんでした。もう一度お試しください。';
+  } else if (!query) {
+    emptyMessage = 'キーワードを入力して検索してください。';
+  } else if (totalCount === 0) {
+    emptyMessage = '一致する記事が見つかりませんでした。';
+  }
 
   if (!query && hasAppWebViewParam) {
     return <AppSearchIndex tags={tags} archiveList={archiveList} />;
