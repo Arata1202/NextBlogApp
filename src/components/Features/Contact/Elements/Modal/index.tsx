@@ -66,7 +66,7 @@ export default function Modal({
               <Dialog.Panel
                 className={`m-auto relative transform overflow-hidden ${radiusClassNames.dialog} px-4 pb-4 pt-5 text-left ${shadowClassNames.dialog} transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 ${themeClassName}`}
               >
-                <div className="sm:flex sm:items-start">
+                <div className="sm:flex sm:items-center">
                   <div
                     className={`${styles.Icon} mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10`}
                   >
