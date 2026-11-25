@@ -132,12 +132,6 @@ layer(base);
     display: none !important;
   }
 
-  :root[data-app-webview='1'] [data-app-main] {
-    max-width: none;
-    margin-top: 10px;
-    padding: 0 16px 16px;
-  }
-
   :root[data-app-webview='1'] [data-app-main] > *:first-child {
     margin-top: 0 !important;
     padding-top: 0 !important;
@@ -157,7 +151,7 @@ layer(base);
   }
 
   :root[data-app-webview='1'] [data-app-content-grid] {
-    display: block;
+    display: block !important;
   }
 
   :where([data-app-root]) code {
@@ -207,7 +201,7 @@ layer(base);
   }
 
   :where([data-app-root]) p {
-    font-size: var(--font-size-content-body) !important;
+    font-size: var(--font-size-content-body);
   }
 
   :where([data-app-root]) ol,
@@ -216,11 +210,13 @@ layer(base);
   }
 
   :where([data-app-root]) li {
-    font-size: var(--font-size-content-body) !important;
+    font-size: var(--font-size-content-body);
   }
 
   @media (prefers-reduced-motion: reduce) {
     :where([data-app-root]),
+    :where([data-app-root])::before,
+    :where([data-app-root])::after,
     :where([data-app-root]) *,
     :where([data-app-root]) *::before,
     :where([data-app-root]) *::after {

@@ -1,3 +1,4 @@
+import { ZENN_ACCOUNT } from '../../src/constants/zenn.ts';
 import { categories, getArticles, getZennArticles, tags } from '../../e2e/fixtures/content.mjs';
 
 const originalFetch = globalThis.fetch.bind(globalThis);
@@ -6,8 +7,9 @@ const microCmsHost = `${process.env.MICROCMS_SERVICE_DOMAIN}.microcms.io`;
 
 const getArticleDate = (article) => article.publishedAt ?? article.createdAt;
 
-const jsonResponse = (body) =>
+const jsonResponse = (body, status = 200) =>
   new Response(JSON.stringify(body), {
+    status,
     headers: {
       'content-type': 'application/json; charset=utf-8',
     },
@@ -27,7 +29,7 @@ const createListResponse = (contents, searchParams) => {
 };
 
 const extractFilterValue = (filters, key) => {
-  const match = filters.match(new RegExp(`${key}([^,\\[]+)`));
+  const match = filters.match(new RegExp(`${key}(.+?)(?=,\\w+\\[|\\[and\\]|$)`));
   return match?.[1];
 };
 
@@ -45,6 +47,11 @@ const filterArticles = (searchParams) => {
   const tagId = extractFilterValue(filters, 'tags\\[contains\\]');
   if (tagId) {
     articles = articles.filter((article) => article.tags?.some((tag) => tag.id === tagId));
+  }
+
+  const excludedId = extractFilterValue(filters, 'id\\[not_equals\\]');
+  if (excludedId) {
+    articles = articles.filter((article) => article.id !== excludedId);
   }
 
   const excludedTitle = extractFilterValue(filters, 'title\\[not_equals\\]');
@@ -69,13 +76,7 @@ const filterArticles = (searchParams) => {
   );
 };
 
-const notFoundResponse = () =>
-  new Response(JSON.stringify({ message: 'Not found' }), {
-    status: 404,
-    headers: {
-      'content-type': 'application/json; charset=utf-8',
-    },
-  });
+const notFoundResponse = () => jsonResponse({ message: 'Not found' }, 404);
 
 const getCollection = (endpoint, searchParams) => {
   if (endpoint === 'blog') {
@@ -98,14 +99,15 @@ const getDetail = (endpoint, contentId) => {
   return collection?.find((item) => item.id === contentId);
 };
 
-const handleMicroCmsRequest = (url) => {
+const handleMicroCmsRequest = (url, method) => {
   if (url.hostname !== microCmsHost) {
     return undefined;
   }
 
-  const [, api, version, endpoint, contentId] = url.pathname.split('/');
-  if (api !== 'api' || version !== 'v1' || !endpoint) {
-    return undefined;
+  if (method !== 'GET') return jsonResponse({ message: 'Method not allowed' }, 405);
+  const [, api, version, endpoint, contentId, ...rest] = url.pathname.split('/');
+  if (api !== 'api' || version !== 'v1' || !endpoint || rest.length) {
+    return notFoundResponse();
   }
 
   if (contentId) {
@@ -115,7 +117,7 @@ const handleMicroCmsRequest = (url) => {
 
   const collection = getCollection(endpoint, url.searchParams);
   if (!collection) {
-    return undefined;
+    return notFoundResponse();
   }
 
   return jsonResponse(createListResponse(collection, url.searchParams));
@@ -150,14 +152,17 @@ globalThis.fetch = async (input, init) => {
   const requestUrl = input instanceof Request ? input.url : String(input);
   const url = new URL(requestUrl);
 
-  const microCmsResponse = handleMicroCmsRequest(url);
+  const microCmsResponse = handleMicroCmsRequest(
+    url,
+    init?.method?.toUpperCase() ?? (input instanceof Request ? input.method : 'GET'),
+  );
   if (microCmsResponse) {
     return microCmsResponse;
   }
 
   if (
     url.origin === 'https://zenn.dev' &&
-    url.pathname === '/realunivlog/feed' &&
+    url.pathname === `/${encodeURIComponent(ZENN_ACCOUNT)}/feed` &&
     (url.search === '' || url.searchParams.get('all') === '1')
   ) {
     return new Response(createZennFeedXml(), {
@@ -165,6 +170,10 @@ globalThis.fetch = async (input, init) => {
         'content-type': 'application/rss+xml; charset=utf-8',
       },
     });
+  }
+
+  if (url.origin === 'https://zenn.dev' && url.pathname.endsWith('/feed')) {
+    return notFoundResponse();
   }
 
   return originalFetch(input, init);

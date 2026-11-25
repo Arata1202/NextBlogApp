@@ -14,23 +14,25 @@ type Props = {
 export const dynamicParams = false;
 
 export const generateStaticParams = async () => {
-  const data = await getAllLists({
-    fields: 'id',
-  });
-
-  return data.map((slug) => ({ slug: slug.id }));
+  const articles = await getAllLists({ fields: 'id' });
+  return articles.map(({ id }) => ({ slug: id }));
 };
 
 export default async function Page(props: Props) {
   const params = await props.params;
-
-  const data = await getArticleDetailForPage(params.slug);
-  const [recentArticles, relatedArticles, sidebarData] = await Promise.all([
+  const article = getArticleDetailForPage(params.slug);
+  const [data, recentArticles, relatedArticles, sidebarData] = await Promise.all([
+    article,
     getMixedRecentArticles(RECENT_LIMIT + 1),
-    getList({
-      limit: RECENT_LIMIT,
-      fields: 'id,title,tags,description,thumbnail,publishedAt,updatedAt',
-      filters: `categories[contains]${data.categories[0].id},title[not_equals]${data.title}`,
+    article.then((data) => {
+      const categoryId = data.categories?.[0]?.id;
+      return categoryId
+        ? getList({
+            limit: RECENT_LIMIT,
+            fields: 'id,title,tags,description,thumbnail,publishedAt,updatedAt',
+            filters: `categories[contains]${categoryId}[and]id[not_equals]${data.id}`,
+          }).then((result) => result.contents)
+        : [];
     }),
     getSidebarNavigationData(),
   ]);
@@ -41,7 +43,7 @@ export default async function Page(props: Props) {
       <ArticlePage
         recentArticles={recentArticles}
         article={data}
-        relatedArticles={relatedArticles.contents}
+        relatedArticles={relatedArticles}
         tags={tags}
         archiveList={archiveList}
       />

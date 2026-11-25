@@ -1,7 +1,7 @@
 import { getAllCategoryLists, getList } from '@/libs/microcms';
 import { LIMIT } from '@/constants/limit';
 import CategoryPage from '@/components/Pages/Category';
-import { getCategoryForPage } from '@/libs/microcmsPage';
+import { getCategoryForPage, taxonomyFields } from '@/libs/microcmsPage';
 import { getSidebarData } from '@/libs/pageData';
 
 type Props = {
@@ -24,28 +24,18 @@ export const generateStaticParams = async () => {
     fields: 'id',
   });
 
-  const results = await Promise.all(
-    categories.map(async (category) => {
-      const categoryId = category.id;
-
-      const data = await getList({
-        limit: 0,
-        fields: '',
-        filters: `categories[contains]${categoryId}`,
-      });
-
-      const totalCount = data.totalCount;
-      const totalPages = Math.ceil(totalCount / LIMIT);
-      const currents = Array.from({ length: totalPages }, (_, i) => i + 1);
-
-      return currents.map((current) => ({
-        categoryId,
-        current: current.toString(),
-      }));
-    }),
-  );
-
-  return results.flat();
+  const results: { categoryId: string; current: string }[] = [];
+  for (const { id } of categories) {
+    const { totalCount } = await getList({
+      limit: 0,
+      fields: '',
+      filters: `categories[contains]${id}`,
+    });
+    for (let current = 1; current <= Math.ceil(totalCount / LIMIT); current++) {
+      results.push({ categoryId: id, current: String(current) });
+    }
+  }
+  return results;
 };
 
 export default async function Page(props: Props) {
@@ -61,7 +51,7 @@ export default async function Page(props: Props) {
       offset: LIMIT * (current - 1),
       filters: `categories[contains]${categoryId}`,
     }),
-    getCategoryForPage(params.categoryId, { fields: 'id,name' }),
+    getCategoryForPage(params.categoryId, taxonomyFields),
     getSidebarData(),
   ]);
   const { recentArticles, tags, archiveList } = sidebarData;

@@ -1,14 +1,14 @@
 'use client';
 
-import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { SiteLink as Link } from '@/components/Common/AppWebViewLinkHandler';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { FolderIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import { CATEGORY_ARR } from '@/constants/category';
 import { getThemeClassName, surfaceClassNames } from '@/styles/uiClassNames';
 
 export default function Category() {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
 
   return (

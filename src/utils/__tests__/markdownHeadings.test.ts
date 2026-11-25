@@ -2,6 +2,20 @@ import { describe, expect, it } from 'vitest';
 import { extractMarkdownHeadings } from '@/utils/markdownHeadings';
 
 describe('extractMarkdownHeadings', () => {
+  it('matches rendered headings and preserves literal inline punctuation', () => {
+    const markdown = [
+      '~~~',
+      '## code sample',
+      '~~~',
+      '  ## C#',
+      '### `user_id` and [Guide](docs/api(v2))',
+    ].join('\n');
+    expect(extractMarkdownHeadings(markdown, 'toc').map(({ title }) => title)).toEqual([
+      'C#',
+      'user_id and Guide',
+    ]);
+  });
+
   it('extracts markdown headings with stable generated ids', () => {
     expect(
       extractMarkdownHeadings(

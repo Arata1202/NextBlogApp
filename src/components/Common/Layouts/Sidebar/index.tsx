@@ -31,12 +31,13 @@ export default function Sidebar({
   tags,
   archiveList,
 }: Props) {
-  useMutationObserver();
+  const guardRef = useMutationObserver();
 
   return (
     <>
       <aside
-        className={`${styles.sidebar} ${article && styles.article} lg:col-span-1 lg:w-full lg:h-full mut-guard`}
+        ref={guardRef}
+        className={`${styles.sidebar} ${article ? styles.article : ''} lg:col-span-1 lg:w-full lg:h-full mut-guard`}
         aria-label="サイドバー"
         data-web-sidebar
       >

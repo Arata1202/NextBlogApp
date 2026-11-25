@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { HandThumbUpIcon } from '@heroicons/react/24/solid';
 import {
   TwitterShareButton,
@@ -11,8 +11,6 @@ import {
   LineIcon,
   HatenaShareButton,
   HatenaIcon,
-  PocketShareButton,
-  PocketIcon,
 } from 'react-share';
 import { Article } from '@/types/microcms';
 import { roundIconControlClassName } from '@/components/Common/controlClassNames';
@@ -23,12 +21,13 @@ type Props = {
 };
 
 export default function ShareSection({ data }: Props) {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/+$/, '');
+  if (!baseUrl) return null;
   const baseTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
-  const title = data ? `${data.title}｜${baseTitle}` : `${baseTitle}`;
+  const title = [data?.title, baseTitle].filter(Boolean).join('｜');
   const url = data ? `${baseUrl}/articles/${data.id}` : `${baseUrl}`;
 
   return (
@@ -63,15 +62,6 @@ export default function ShareSection({ data }: Props) {
         >
           <LineIcon size={40} round={true} aria-hidden="true" />
         </LineShareButton>
-
-        <PocketShareButton
-          url={url}
-          title={title}
-          className={`${roundIconControlClassName} m-1 hover:opacity-60`}
-          aria-label="Pocketに保存"
-        >
-          <PocketIcon size={40} round={true} aria-hidden="true" />
-        </PocketShareButton>
 
         <HatenaShareButton
           url={url}

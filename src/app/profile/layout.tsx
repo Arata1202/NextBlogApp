@@ -1,3 +1,5 @@
+import { serializeJsonLd } from '@/utils/jsonLd';
+import { DEFAULT_PREVIEW_IMAGE, getSiteUrl, getSiteTitle } from '@/config/site';
 import { Metadata } from 'next';
 import { PROFILE_IMAGE, PROFILE_NAME, SOCIAL_ICON } from '@/constants/data';
 
@@ -6,12 +8,12 @@ type Props = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const defaultUrl = getSiteUrl();
+  const defaultTitle = getSiteTitle();
 
   const title = `プロフィール｜${defaultTitle}`;
   const description = `筆者のプロフィールを紹介しています。`;
-  const images = `${defaultUrl}/images/thumbnail/7.webp`;
+  const images = `${defaultUrl}${DEFAULT_PREVIEW_IMAGE}`;
   const url = `${defaultUrl}/profile`;
 
   return {
@@ -31,8 +33,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ProfileLayout(props: Props) {
   const { children } = props;
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const defaultUrl = getSiteUrl();
+  const defaultTitle = getSiteTitle();
   const profileUrl = `${defaultUrl}/profile`;
   const description = '筆者のプロフィールを紹介しています。';
   const breadcrumbJsonLd = {
@@ -71,7 +73,7 @@ export default async function ProfileLayout(props: Props) {
       '@id': `${profileUrl}#person`,
       name: PROFILE_NAME,
       url: profileUrl,
-      image: `${defaultUrl}${PROFILE_IMAGE[0].path}`,
+      image: PROFILE_IMAGE[0] ? `${defaultUrl}${PROFILE_IMAGE[0].path}` : undefined,
       sameAs: SOCIAL_ICON.map((icon) => icon.path),
     },
   };
@@ -80,11 +82,11 @@ export default async function ProfileLayout(props: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(profilePageJsonLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }}
       />
       {children}
     </>

@@ -1,8 +1,8 @@
 'use client';
 
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { useMemo } from 'react';
 import { PROFILE_IMAGE } from '@/constants/data';
 import FixedContentContainer from '../Layouts/Container/FixedContentContainer';
@@ -26,7 +26,7 @@ type MarkdownAstNode = {
   children?: MarkdownAstNode[];
 };
 
-const MARKDOWN_LINK_BASE = 'https://example.invalid/';
+const MARKDOWN_LINK_BASE = process.env.NEXT_PUBLIC_BASE_URL || 'https://example.invalid/';
 const MARKDOWN_LINK_BASE_URL = new URL(MARKDOWN_LINK_BASE);
 
 const opensInNewTab = (href?: string) => {
@@ -73,17 +73,48 @@ const createHeadingIdPlugin = (headingIds: string[]) => () => (tree: MarkdownAst
   visit(tree);
 };
 
+function makeHeading(Tag: 'h2' | 'h3' | 'h4'): NonNullable<Components['h2']> {
+  return function Heading({ node, children, ...props }) {
+    void node;
+    const theme = useResolvedTheme();
+    const variant =
+      Tag === 'h2' ? themeVariantClassNames.selectedSurface : themeVariantClassNames.borderedText;
+    return (
+      <Tag className={getThemeVariantClassName(theme, variant)} {...props}>
+        {children}
+      </Tag>
+    );
+  };
+}
+
+const renderers: Components = {
+  h2: makeHeading('h2'),
+  h3: makeHeading('h3'),
+  h4: makeHeading('h4'),
+  a: function MarkdownLink({ href, children, node, ...props }) {
+    void node;
+    const theme = useResolvedTheme();
+    const external = opensInNewTab(href);
+    return (
+      <a
+        className={getTextLinkClassName(theme)}
+        href={href}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noopener noreferrer' : undefined}
+        {...props}
+      >
+        {children}
+        {external && <span className="sr-only">新しいタブで開きます</span>}
+      </a>
+    );
+  },
+  pre: ({ node, children, ...props }) => {
+    void node;
+    return <CodeBlock {...props}>{children}</CodeBlock>;
+  },
+};
+
 export default function Markdown({ content, headingIds, profile = false }: Props) {
-  const { theme } = useTheme();
-  const linkClassName = getTextLinkClassName(theme);
-  const selectedSurfaceClassName = getThemeVariantClassName(
-    theme,
-    themeVariantClassNames.selectedSurface,
-  );
-  const borderedTextClassName = getThemeVariantClassName(
-    theme,
-    themeVariantClassNames.borderedText,
-  );
   const remarkPlugins = useMemo(
     () => (headingIds ? [remarkGfm, createHeadingIdPlugin(headingIds)] : [remarkGfm]),
     [headingIds],
@@ -106,61 +137,7 @@ export default function Markdown({ content, headingIds, profile = false }: Props
         </div>
       )}
       <FixedContentContainer>
-        <ReactMarkdown
-          remarkPlugins={remarkPlugins}
-          components={{
-            h2: ({ children, node, ...props }) => {
-              void node;
-
-              return (
-                <h2 className={selectedSurfaceClassName} {...props}>
-                  {children}
-                </h2>
-              );
-            },
-            h3: ({ children, node, ...props }) => {
-              void node;
-
-              return (
-                <h3 className={borderedTextClassName} {...props}>
-                  {children}
-                </h3>
-              );
-            },
-            h4: ({ children, node, ...props }) => {
-              void node;
-
-              return (
-                <h4 className={borderedTextClassName} {...props}>
-                  {children}
-                </h4>
-              );
-            },
-            a: ({ href, children, node, ...props }) => {
-              void node;
-
-              const shouldOpenInNewTab = opensInNewTab(href);
-
-              return (
-                <a
-                  className={linkClassName}
-                  href={href}
-                  target={shouldOpenInNewTab ? '_blank' : undefined}
-                  rel={shouldOpenInNewTab ? 'noopener noreferrer' : undefined}
-                  {...props}
-                >
-                  {children}
-                  {shouldOpenInNewTab && <span className="sr-only">新しいタブで開きます</span>}
-                </a>
-              );
-            },
-            pre: ({ children, node, ...props }) => {
-              void node;
-
-              return <CodeBlock {...props}>{children}</CodeBlock>;
-            },
-          }}
-        >
+        <ReactMarkdown remarkPlugins={remarkPlugins} components={renderers}>
           {content}
         </ReactMarkdown>
       </FixedContentContainer>

@@ -1,3 +1,5 @@
+import { serializeJsonLd } from '@/utils/jsonLd';
+import { DEFAULT_PREVIEW_IMAGE, getSiteUrl, getSiteTitle } from '@/config/site';
 import { Metadata } from 'next';
 
 type Props = {
@@ -5,12 +7,12 @@ type Props = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const defaultUrl = getSiteUrl();
+  const defaultTitle = getSiteTitle();
 
   const title = `お問い合わせ｜${defaultTitle}`;
   const description = `お問い合わせのフォームを記載しています。`;
-  const images = `${defaultUrl}/images/thumbnail/7.webp`;
+  const images = `${defaultUrl}${DEFAULT_PREVIEW_IMAGE}`;
   const url = `${defaultUrl}/contact`;
 
   return {
@@ -30,8 +32,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ContactLayout(props: Props) {
   const { children } = props;
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const defaultUrl = getSiteUrl();
+  const defaultTitle = getSiteTitle();
   const contactUrl = `${defaultUrl}/contact`;
   const description = 'お問い合わせのフォームを記載しています。';
   const breadcrumbJsonLd = {
@@ -71,11 +73,11 @@ export default async function ContactLayout(props: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(contactPageJsonLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }}
       />
       {children}
     </>

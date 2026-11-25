@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import {
   fieldControlClassName,
@@ -12,7 +12,7 @@ import { getThemeClassName, surfaceClassNames } from '@/styles/uiClassNames';
 import { appendAppWebViewParam, useAppWebViewMode } from '@/hooks/useAppWebViewMode';
 
 export default function Search() {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
   const isAppWebViewMode = useAppWebViewMode();
   const router = useRouter();
@@ -22,8 +22,15 @@ export default function Search() {
   const errorMessageId = 'sidebar-search-error';
 
   useEffect(() => {
+    if (isAppWebViewMode) return;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (!event.metaKey || event.key.toLowerCase() !== 'k') {
+      if (
+        !event.metaKey ||
+        event.shiftKey ||
+        event.ctrlKey ||
+        event.altKey ||
+        event.key.toLowerCase() !== 'k'
+      ) {
         return;
       }
 
@@ -34,7 +41,7 @@ export default function Search() {
     window.addEventListener('keydown', handleKeyDown);
 
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isAppWebViewMode]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

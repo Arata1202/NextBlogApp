@@ -2,8 +2,8 @@ import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const port = process.env.PLAYWRIGHT_PORT ?? '3000';
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://127.0.0.1:${port}`;
+import { baseURL, searchURL, contactURL } from './config.ts';
+
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const mockFetchModuleUrl = pathToFileURL(path.join(scriptDirectory, 'mock-fetch.mjs')).href;
 
@@ -16,8 +16,8 @@ const env = {
     .join(' '),
   NEXT_PUBLIC_BASE_TITLE: process.env.NEXT_PUBLIC_BASE_TITLE ?? 'リアル大学生',
   NEXT_PUBLIC_BASE_URL: baseURL,
-  NEXT_PUBLIC_API_SEARCH_URL: process.env.NEXT_PUBLIC_API_SEARCH_URL ?? '/api/search',
-  NEXT_PUBLIC_API_SENDEMAIL_URL: process.env.NEXT_PUBLIC_API_SENDEMAIL_URL ?? '/api/sendemail',
+  NEXT_PUBLIC_API_SEARCH_URL: searchURL,
+  NEXT_PUBLIC_API_SENDEMAIL_URL: contactURL,
   NEXT_PUBLIC_RECAPTCHA_SITE_KEY:
     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? 'e2e-recaptcha-site-key',
   NEXT_PUBLIC_GOOGLE_ADSENSE_PUBLISHER_ID: '',
@@ -29,9 +29,18 @@ const env = {
   SENTRY_PROJECT: '',
 };
 
-const build = spawn('pnpm', ['build'], {
-  env,
-  stdio: 'inherit',
+const build = spawn(
+  process.execPath,
+  [fileURLToPath(import.meta.resolve('next/dist/bin/next')), 'build'],
+  {
+    env,
+    stdio: 'inherit',
+  },
+);
+
+build.on('error', (error) => {
+  console.error('Unable to start the E2E build:', error.message);
+  process.exitCode = 1;
 });
 
 build.on('exit', (code, signal) => {

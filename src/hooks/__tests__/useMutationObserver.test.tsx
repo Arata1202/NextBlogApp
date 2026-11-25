@@ -3,10 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { useMutationObserver } from '@/hooks/useMutationObserver';
 
 function MutationObserverHarness() {
-  useMutationObserver();
+  const guard = useMutationObserver();
 
   return (
     <div
+      ref={guard}
       className="mut-guard"
       data-testid="target"
       style={{ height: '100px', minHeight: '100px' }}

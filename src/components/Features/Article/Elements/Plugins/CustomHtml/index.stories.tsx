@@ -11,7 +11,7 @@ const googleMapHtml = `
     height="450"
     loading="lazy"
     referrerpolicy="no-referrer-when-downgrade"
-    style="border:0;"
+    class="border-0"
   ></iframe>
 `;
 
@@ -46,7 +46,6 @@ export const GoogleMap: Story = {
     const container = map.parentElement;
 
     await expect(map).toHaveAttribute('loading', 'lazy');
-    await expect(container).not.toBeNull();
 
     if (!container) {
       throw new Error('Google Map container was not rendered');

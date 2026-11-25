@@ -1,25 +1,19 @@
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import type { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import { fieldControlClassName } from '@/components/Common/controlClassNames';
 import { getThemeClassName } from '@/styles/uiClassNames';
 
 type Props = {
   label: string;
-  name: string;
   registerResult: UseFormRegisterReturn;
   errors?: FieldError;
   textarea?: boolean;
 };
 
-export default function InputContainer({
-  label,
-  name,
-  registerResult,
-  errors,
-  textarea = false,
-}: Props) {
-  const { theme } = useTheme();
+export default function InputContainer({ label, registerResult, errors, textarea = false }: Props) {
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
+  const { name } = registerResult;
   const errorId = `${name}-error`;
 
   return (
@@ -33,8 +27,8 @@ export default function InputContainer({
             {...registerResult}
             type="text"
             id={name}
-            name={name}
-            autoComplete={name}
+            inputMode={name === 'email' ? 'email' : undefined}
+            autoComplete={name === 'email' ? 'email' : undefined}
             aria-invalid={Boolean(errors)}
             aria-describedby={errors ? errorId : undefined}
             className={`${fieldControlClassName} block h-10 w-full px-3 text-base sm:text-sm ${themeClassName}`}
@@ -44,7 +38,6 @@ export default function InputContainer({
           <textarea
             {...registerResult}
             id={name}
-            name={name}
             rows={4}
             aria-invalid={Boolean(errors)}
             aria-describedby={errors ? errorId : undefined}

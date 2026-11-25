@@ -149,6 +149,7 @@ describe('ContactFeature', () => {
   it('confirms captcha, sends the email, resets the form, and shows success alert', async () => {
     const user = userEvent.setup();
     fetchMock.mockResolvedValueOnce({
+      ok: true,
       json: async () => ({ success: true }),
     });
 
@@ -193,6 +194,7 @@ describe('ContactFeature', () => {
   it('shows a failure alert when the API reports a send failure', async () => {
     const user = userEvent.setup();
     fetchMock.mockResolvedValueOnce({
+      ok: true,
       json: async () => ({ success: false, status: 'reCAPTCHA verification failed' }),
     });
 
@@ -224,7 +226,7 @@ describe('ContactFeature', () => {
     expect(await screen.findByText('送信に失敗しました')).toBeInTheDocument();
     expect(screen.getByText('時間をおいて再度お試しください。')).toBeInTheDocument();
     expect(screen.getByRole('alert')).toHaveTextContent('送信に失敗しました');
-    expect(recaptchaMock.reset).not.toHaveBeenCalled();
+    expect(recaptchaMock.reset).toHaveBeenCalledTimes(1);
     expect(sentryMock.captureException).toHaveBeenCalledTimes(1);
 
     await waitFor(() => {
@@ -236,9 +238,11 @@ describe('ContactFeature', () => {
     const user = userEvent.setup();
     fetchMock
       .mockResolvedValueOnce({
+        ok: true,
         json: async () => ({ success: false, status: 'temporary failure' }),
       })
       .mockResolvedValueOnce({
+        ok: true,
         json: async () => ({ success: true }),
       });
 
@@ -256,6 +260,7 @@ describe('ContactFeature', () => {
       expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
     });
 
+    await user.click(screen.getByRole('button', { name: 'reCAPTCHA' }));
     await user.click(screen.getByRole('button', { name: '送信' }));
     await user.click((await screen.findAllByRole('button', { name: '送信' })).at(-1)!);
     expect(await screen.findByText('お問い合わせありがとうございます')).toBeInTheDocument();
@@ -285,7 +290,7 @@ describe('ContactFeature', () => {
     expect(screen.getByText('時間をおいて再度お試しください。')).toBeInTheDocument();
     expect(screen.getByRole('alert')).toHaveTextContent('送信に失敗しました');
     expect(screen.queryByText('お問い合わせありがとうございます')).not.toBeInTheDocument();
-    expect(recaptchaMock.reset).not.toHaveBeenCalled();
+    expect(recaptchaMock.reset).toHaveBeenCalledTimes(1);
     expect(sentryMock.captureException).toHaveBeenCalledTimes(1);
 
     await waitFor(() => {

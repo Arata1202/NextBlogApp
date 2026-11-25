@@ -8,11 +8,7 @@ import styles from './page.module.css';
 
 export const revalidate = 60;
 
-type SearchPageShellProps = Awaited<ReturnType<typeof getSearchPageData>>;
-
-async function getSearchPageData() {
-  return getSidebarData();
-}
+type SearchPageShellProps = Awaited<ReturnType<typeof getSidebarData>>;
 
 function SearchPageShell({ recentArticles, tags, archiveList }: SearchPageShellProps) {
   return (
@@ -36,7 +32,7 @@ function SearchPageShell({ recentArticles, tags, archiveList }: SearchPageShellP
 }
 
 export default async function Page() {
-  const searchPageData = await getSearchPageData();
+  const searchPageData = await getSidebarData();
 
   return (
     <Suspense fallback={<SearchPageShell {...searchPageData} />}>

@@ -36,6 +36,10 @@ table tr th {
   white-space: normal;
 }
 
+table :is(img, video, iframe) {
+  max-width: 100%;
+}
+
 table tr td {
   border: 1px solid var(--color-theme-border);
   word-wrap: break-word;
@@ -68,6 +72,8 @@ table tr td {
 }
 
 .bubble-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
   max-width: 60%;
   padding: 10px;
   border-radius: 10px;
@@ -123,17 +129,11 @@ table tr td {
 @media (max-width: 768px) {
   .bubble-content {
     max-width: 80%;
-    padding: 10px;
-    border-radius: 10px;
-    position: relative;
-    background-color: var(--color-accent-soft-bg);
-    display: flex;
-    flex-direction: column;
   }
 }
 
 /* コードブロック */
-code {
+pre code {
   background-color: #2b2b2b !important;
 }
 
@@ -195,8 +195,7 @@ pre {
 }
 
 /* 引用 */
-blockquote,
-q {
+blockquote {
   quotes: none;
   color: var(--color-theme-light-text);
   background:
@@ -210,9 +209,7 @@ q {
 }
 
 blockquote:before,
-blockquote:after,
-q:before,
-q:after {
+blockquote:after {
   content: '';
   content: none;
 }

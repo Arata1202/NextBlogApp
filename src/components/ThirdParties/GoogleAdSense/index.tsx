@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { getGoogleAdSensePublisherId } from '@/config/publicEnv';
-import { useAppWebViewMode } from '@/hooks/useAppWebViewMode';
+import { hasAppWebViewParameter, useAppWebViewMode } from '@/hooks/useAppWebViewMode';
 
 const ADSENSE_SCRIPT_ID = 'google-adsense-script';
 
@@ -11,7 +11,12 @@ export default function GoogleAdSense() {
   const publisherId = getGoogleAdSensePublisherId();
 
   useEffect(() => {
-    if (isAppWebViewMode || !publisherId || document.getElementById(ADSENSE_SCRIPT_ID)) {
+    if (
+      isAppWebViewMode ||
+      hasAppWebViewParameter() ||
+      !publisherId ||
+      document.getElementById(ADSENSE_SCRIPT_ID)
+    ) {
       return;
     }
 
@@ -21,8 +26,6 @@ export default function GoogleAdSense() {
     script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${publisherId}`;
     script.crossOrigin = 'anonymous';
     document.head.appendChild(script);
-
-    return () => script.remove();
   }, [isAppWebViewMode, publisherId]);
 
   return null;

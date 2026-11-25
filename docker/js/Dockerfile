@@ -2,10 +2,12 @@ FROM node:26.13.1-alpine
 
 WORKDIR /var/www/html/js
 
-COPY package.json pnpm-lock.yaml ./
-RUN npm install --global corepack@0.34.6 && corepack enable && pnpm install --frozen-lockfile
+RUN npm install --global corepack@0.34.6 && corepack enable && chown node:node .
+USER node
+COPY --chown=node:node package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
-COPY . .
+COPY --chown=node:node . .
 
 EXPOSE 3000
 

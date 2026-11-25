@@ -1,5 +1,5 @@
 import type { Article } from '@/types/microcms';
-import type { UnifiedArticle } from '@/types/unified';
+import { mapBlogArticlesToUnified } from '@/libs/unified';
 
 const publishedAt = '2026-08-01T09:00:00.000Z';
 const updatedAt = '2026-08-05T09:00:00.000Z';
@@ -39,13 +39,4 @@ export const sponsoredArticleFixture: Article = {
   sponsorUrl: 'https://sponsor.example.com',
 };
 
-export const unifiedArticleFixture = {
-  id: 'storybook-unified-article',
-  title: articleFixture.title,
-  description: articleFixture.description,
-  publishedAt,
-  updatedAt,
-  thumbnail: articleFixture.thumbnail,
-  url: '/articles/storybook-unified-article',
-  source: 'blog',
-} satisfies UnifiedArticle;
+export const [unifiedArticleFixture] = mapBlogArticlesToUnified([articleFixture]);

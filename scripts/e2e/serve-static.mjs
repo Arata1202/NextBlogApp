@@ -1,4 +1,5 @@
-import { createReadStream, promises as fs } from 'node:fs';
+import { promises as fs } from 'node:fs';
+import { pipeline } from 'node:stream/promises';
 import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -22,70 +23,60 @@ const rootArg = args.find((arg) => !arg.startsWith('--')) ?? 'out';
 const portArg = args.find((arg) => arg.startsWith('--port='));
 const port = Number(portArg?.split('=')[1] ?? process.env.PORT ?? 3000);
 const hostname = process.env.HOST ?? '127.0.0.1';
-const root = path.resolve(process.cwd(), rootArg);
+const root = await fs.realpath(path.resolve(process.cwd(), rootArg));
 
-const fileExists = async (filePath) => {
+async function serve(request, response) {
+  if (!['GET', 'HEAD'].includes(request.method)) {
+    response.writeHead(405, { Allow: 'GET, HEAD' }).end();
+    return;
+  }
+
+  let pathname;
   try {
-    const stats = await fs.stat(filePath);
-    return stats.isFile();
+    pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
+    if (pathname.includes('\0')) throw new URIError();
   } catch {
-    return false;
-  }
-};
-
-const resolveFilePath = async (pathname) => {
-  const decodedPathname = decodeURIComponent(pathname);
-  const normalizedPathname = decodedPathname === '/' ? '/index.html' : decodedPathname;
-  const basePath = path.resolve(root, `.${normalizedPathname}`);
-
-  if (basePath !== root && !basePath.startsWith(`${root}${path.sep}`)) {
-    return null;
+    response.writeHead(400).end();
+    return;
   }
 
-  const candidates = path.extname(basePath)
-    ? [basePath]
-    : [path.join(basePath, 'index.html'), `${basePath}.html`];
-
-  for (const candidate of candidates) {
-    if (await fileExists(candidate)) {
-      return { filePath: candidate, statusCode: 200 };
+  const base = path.resolve(root, `.${pathname}`);
+  const notFound = path.join(root, '404.html');
+  const candidates = [
+    [base, 200],
+    [path.join(base, 'index.html'), 200],
+    [`${base}.html`, 200],
+    [notFound, 404],
+  ];
+  for (const [candidate, status] of candidates) {
+    let handle;
+    try {
+      const file = await fs.realpath(candidate);
+      if (!file.startsWith(root + path.sep)) continue;
+      if (!(await fs.stat(file)).isFile()) continue;
+      handle = await fs.open(file);
+      if (!(await handle.stat()).isFile()) continue;
+      response.writeHead(status, {
+        'Cache-Control': 'no-store',
+        'Content-Type': contentTypes.get(path.extname(file)) ?? 'application/octet-stream',
+      });
+      if (request.method === 'HEAD') response.end();
+      else await pipeline(handle.createReadStream(), response);
+      return;
+    } catch (error) {
+      if (error.code !== 'ENOENT' && error.code !== 'ENOTDIR') throw error;
+    } finally {
+      await handle?.close();
     }
   }
+  response.writeHead(404).end('Not found');
+}
 
-  const notFoundPath = path.join(root, '404.html');
-  if (await fileExists(notFoundPath)) {
-    return { filePath: notFoundPath, statusCode: 404 };
-  }
-
-  return null;
-};
-
-const server = http.createServer(async (request, response) => {
-  if (!request.url || !['GET', 'HEAD'].includes(request.method ?? '')) {
-    response.writeHead(405).end();
-    return;
-  }
-
-  const url = new URL(request.url, `http://${request.headers.host ?? `${hostname}:${port}`}`);
-  const resolved = await resolveFilePath(url.pathname);
-
-  if (!resolved) {
-    response.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('Not found');
-    return;
-  }
-
-  const extension = path.extname(resolved.filePath);
-  response.writeHead(resolved.statusCode, {
-    'Cache-Control': 'no-store',
-    'Content-Type': contentTypes.get(extension) ?? 'application/octet-stream',
+const server = http.createServer((request, response) => {
+  serve(request, response).catch(() => {
+    if (response.headersSent) response.destroy();
+    else response.writeHead(500).end();
   });
-
-  if (request.method === 'HEAD') {
-    response.end();
-    return;
-  }
-
-  createReadStream(resolved.filePath).pipe(response);
 });
 
 server.listen(port, hostname, () => {

@@ -22,6 +22,7 @@
 
 .content {
   align-self: center;
+  min-width: 0;
   margin-top: 4px;
 }
 
@@ -144,7 +145,7 @@
 
 @media (max-width: 720px) {
   .inner {
-    grid-template-columns: max-content 286px;
+    grid-template-columns: minmax(0, max-content) minmax(0, 286px);
     gap: 16px;
     width: min(100%, 650px);
     min-height: 238px;
@@ -184,14 +185,14 @@
   }
 
   .phonePrimary {
-    right: 74px;
+    right: min(74px, 27%);
     bottom: -166px;
-    width: 198px;
+    width: min(198px, 72%);
   }
 
   .phoneSecondary {
     bottom: -138px;
-    width: 162px;
+    width: min(162px, 58%);
   }
 }
 
@@ -230,7 +231,7 @@
   }
 
   .appName {
-    max-width: 82px;
+    max-width: 100%;
     overflow: hidden;
     font-size: 11px;
     line-height: 1.25;
@@ -252,15 +253,15 @@
   }
 
   .phonePrimary {
-    right: 80px;
+    right: min(80px, 34%);
     bottom: -121px;
-    width: 147px;
+    width: min(147px, 66%);
   }
 
   .phoneSecondary {
     right: 7px;
     bottom: -101px;
-    width: 121px;
+    width: min(121px, 55%);
   }
 }
 
@@ -270,7 +271,7 @@
     gap: 12px;
     width: min(100%, 360px);
     min-height: 132px;
-    padding-top: 0px;
+    padding-block: 0.25rem;
     padding-right: 12px;
     padding-left: 12px;
   }
@@ -297,7 +298,7 @@
   }
 
   .appName {
-    max-width: 68px;
+    max-width: 100%;
     font-size: 9px;
   }
 
@@ -315,14 +316,14 @@
   }
 
   .phonePrimary {
-    right: 62px;
+    right: min(62px, 34%);
     bottom: -94px;
-    width: 114px;
+    width: min(114px, 66%);
   }
 
   .phoneSecondary {
     right: 5px;
     bottom: -78px;
-    width: 94px;
+    width: min(94px, 55%);
   }
 }

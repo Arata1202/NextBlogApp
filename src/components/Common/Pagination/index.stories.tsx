@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import Pagination from '.';
+import { LIMIT } from '@/constants/limit';
 
 const meta = {
   title: 'Navigation/Pagination',
@@ -15,4 +16,4 @@ export const FirstPage: Story = { args: { current: 1 } };
 
 export const MiddlePage: Story = { args: { current: 6 } };
 
-export const LastPage: Story = { args: { current: 12 } };
+export const LastPage: Story = { args: { current: Math.ceil(meta.args.totalCount / LIMIT) } };

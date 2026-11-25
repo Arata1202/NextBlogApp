@@ -1,3 +1,6 @@
+import { ZENN_ACCOUNT } from '@/constants/zenn';
+import { serializeJsonLd } from '@/utils/jsonLd';
+import { getSiteUrl, getSiteTitle } from '@/config/site';
 import { getList } from '@/libs/microcms';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
 import HomePage from '@/components/Pages/Home';
@@ -13,15 +16,21 @@ export default async function Page() {
       fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
     }),
     getSidebarNavigationData(),
-    getZennFeed('realunivlog', LIMIT),
+    getZennFeed(ZENN_ACCOUNT, LIMIT),
   ]);
   const { tags, archiveList } = navigationData;
 
   const blogArticles = mapBlogArticlesToUnified(data.contents);
   const mixedArticles = mixUnifiedArticles(blogArticles, zennArticles, LIMIT);
+  // Page two starts at the next CMS offset; retain first-page posts displaced by external entries.
+  const featuredIds = new Set(mixedArticles.map((item) => item.id));
+  const homeArticles = [
+    ...mixedArticles,
+    ...blogArticles.filter((item) => !featuredIds.has(item.id)),
+  ];
   const recentArticles = mixedArticles.slice(0, RECENT_LIMIT);
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const defaultUrl = getSiteUrl();
+  const defaultTitle = getSiteTitle();
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -43,11 +52,11 @@ export default async function Page() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(websiteJsonLd) }}
       />
       <HomePage
         articles={data.contents}
-        mixedArticles={mixedArticles}
+        mixedArticles={homeArticles}
         totalCount={data.totalCount}
         recentArticles={recentArticles}
         tags={tags}

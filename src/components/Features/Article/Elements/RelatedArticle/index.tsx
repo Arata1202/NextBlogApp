@@ -7,13 +7,14 @@ type Props = {
 };
 
 export default function RelatedArticle({ relatedArticles }: Props) {
+  if (!relatedArticles.length) return null;
   return (
     <>
       <div className="mt-5">
-        <div className={`text-2xl font-semibold flex justify-center`}>
+        <h2 className={`text-2xl font-semibold flex justify-center`}>
           <LinkIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           関連記事
-        </div>
+        </h2>
         <ul className="mt-5">
           {relatedArticles.map((item) => (
             <ArticleCard key={item.id} article={item} />

@@ -36,11 +36,18 @@ describe('sanitizeCustomHtml', () => {
   });
 
   it('converts external scripts to inert placeholders', () => {
-    const html = sanitizeCustomHtml('<script src="https://example.com/widget.js"></script>');
+    const html = sanitizeCustomHtml('<script src="https://cdn.iframe.ly/embed.js"></script>');
 
     expect(html).toContain('type="application/json"');
-    expect(html).toContain('data-custom-html-script-src="https://example.com/widget.js"');
+    expect(html).toContain('data-custom-html-script-src="https://cdn.iframe.ly/embed.js"');
     expect(html).not.toContain('<script src=');
+  });
+
+  it('omits unrecognized scripts and embedded document markup', () => {
+    const html = sanitizeCustomHtml(
+      '<iframe srcdoc="content"></iframe><script src="https://example.org/widget.js"></script>',
+    );
+    expect(html).toBe('<iframe></iframe>');
   });
 
   it('removes scripts with unsafe src schemes', () => {

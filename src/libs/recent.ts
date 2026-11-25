@@ -1,3 +1,4 @@
+import { ZENN_ACCOUNT } from '@/constants/zenn';
 import { getList } from '@/libs/microcms';
 import { getZennFeed } from '@/libs/zenn';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
@@ -10,9 +11,13 @@ export const getMixedRecentArticles = async (
   const [blogList, zennArticles] = await Promise.all([
     getList({
       limit: sourceLimit,
+      orders: '-publishedAt',
       fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
+    }).catch((error: unknown) => {
+      console.warn('Recent blog articles unavailable', error);
+      return { contents: [] };
     }),
-    getZennFeed('realunivlog', sourceLimit),
+    getZennFeed(ZENN_ACCOUNT, sourceLimit),
   ]);
 
   const blogArticles = mapBlogArticlesToUnified(blogList.contents);

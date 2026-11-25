@@ -9,7 +9,7 @@
   font-size: 1.5rem;
   text-align: center;
   font-weight: bold;
-  font-family: 'system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 .text {

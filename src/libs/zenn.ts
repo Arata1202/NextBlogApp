@@ -8,8 +8,7 @@ type GetZennFeedOptions = {
 };
 
 const extractFirstImage = (html: string) => {
-  const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
-  return match?.[1];
+  return load(html, {}, false)('img[src]').first().attr('src');
 };
 
 const extractText = (html: string) => {
@@ -19,8 +18,9 @@ const extractText = (html: string) => {
 };
 
 const truncate = (text: string, max = 140) => {
-  if (text.length <= max) return text;
-  return `${text.slice(0, max - 1)}…`;
+  const characters = [...text];
+  if (characters.length <= max) return text;
+  return `${characters.slice(0, max - 1).join('')}…`;
 };
 
 const buildZennFeedUrl = (userId: string, includeAll = false) => {
@@ -32,20 +32,12 @@ const buildZennFeedUrl = (userId: string, includeAll = false) => {
   return url.toString();
 };
 
-const getZennArticleId = (link: string, index: number) => {
-  try {
-    const url = new URL(link);
-    const segments = url.pathname.split('/').filter(Boolean);
-    const slug = segments[1] === 'articles' ? segments[2] : undefined;
-
-    if (url.hostname === 'zenn.dev' && slug) {
-      return `zenn-${decodeURIComponent(slug)}`;
-    }
-  } catch {
-    // Fall back to an index only for malformed RSS links.
-  }
-
-  return `zenn-${index}`;
+const getZennArticleId = (link: string) => {
+  if (!URL.canParse(link)) return null;
+  const url = new URL(link);
+  if (url.origin !== 'https://zenn.dev' || url.username || url.password) return null;
+  const [, , kind, slug] = url.pathname.split('/');
+  return kind === 'articles' && slug ? `zenn-${slug}` : `zenn-${url.pathname}`;
 };
 
 export const getZennFeed = async (
@@ -59,19 +51,20 @@ export const getZennFeed = async (
       next: { revalidate: 3600 },
     });
 
-    if (!res.ok) return [];
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const xml = await res.text();
     const $ = load(xml, { xmlMode: true });
 
     return $('item')
       .toArray()
-      .slice(0, limit)
-      .map((item, index) => {
+      .flatMap((item): UnifiedArticle[] => {
         const el = $(item);
         const title = el.find('title').text().trim();
         const link = el.find('link').text().trim();
         const pubDate = el.find('pubDate').text().trim();
+        const id = getZennArticleId(link);
+        if (!id || !Number.isFinite(Date.parse(pubDate))) return [];
         const descriptionHtml = el.find('description').text().trim();
         const contentHtml = el.find('content\\:encoded').text().trim();
 
@@ -86,17 +79,21 @@ export const getZennFeed = async (
 
         const description = truncate(extractText(descriptionHtml || contentHtml));
 
-        return {
-          id: getZennArticleId(link, index),
-          title,
-          description,
-          publishedAt: pubDate,
-          url: link,
-          thumbnailUrl: image,
-          source: 'zenn',
-        };
-      });
-  } catch {
+        return [
+          {
+            id,
+            title,
+            description,
+            publishedAt: pubDate,
+            url: link,
+            thumbnailUrl: image,
+            source: 'zenn',
+          },
+        ];
+      })
+      .slice(0, limit);
+  } catch (error) {
+    console.warn('Zenn feed unavailable', error);
     return [];
   }
 };

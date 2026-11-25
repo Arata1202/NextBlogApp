@@ -16,10 +16,10 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-export const Merit: Story = { args: { merit: true } };
-export const Demerit: Story = { args: { demerit: true } };
-export const Point: Story = { args: { point: true } };
-export const Common: Story = { args: { common: true } };
+export const Merit: Story = { args: { variant: 'merit' } };
+export const Demerit: Story = { args: { variant: 'demerit' } };
+export const Point: Story = { args: { variant: 'point' } };
+export const Common: Story = { args: { variant: 'common' } };
 export const CommonList: Story = {
   args: {
     block: {
@@ -27,6 +27,6 @@ export const CommonList: Story = {
       box_common:
         '<ul><li>対象となる利用環境を確認する</li><li>必要な設定を済ませる</li><li>表示と動作を確認する</li></ul>',
     },
-    common: true,
+    variant: 'common',
   },
 };

@@ -14,6 +14,7 @@ const meta = {
     onClose: fn(),
     onConfirm: fn(),
   },
+  parameters: { docs: { story: { inline: false } } },
   tags: ['autodocs'],
 } satisfies Meta<typeof Modal>;
 
@@ -27,7 +28,8 @@ export const Loading: Story = { args: { isLoading: true, confirmText: '送信中
 export const ConfirmInteraction: Story = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement.ownerDocument.body);
-    await userEvent.click(canvas.getByRole('button', { name: '送信' }));
+    const dialog = await canvas.findByRole('dialog');
+    await userEvent.click(within(dialog).getByRole('button', { name: args.confirmText }));
     await expect(args.onConfirm).toHaveBeenCalledOnce();
   },
 };

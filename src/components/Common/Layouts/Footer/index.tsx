@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { SiteLink as Link } from '@/components/Common/AppWebViewLinkHandler';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import styles from './index.module.css';
 import { BLOG_IMAGE, COPYRIGHT, FOOTER_NAVIGATION, SOCIAL_ICON } from '@/constants/data';
 import { CATEGORY_ARR } from '@/constants/category';
@@ -15,7 +15,7 @@ import {
 } from '@/styles/uiClassNames';
 
 export default function Footer() {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
   const footerLinkClassName = `text-sm leading-6 ${colorClassNames.accentHoverText} ${themeClassName}`;
 

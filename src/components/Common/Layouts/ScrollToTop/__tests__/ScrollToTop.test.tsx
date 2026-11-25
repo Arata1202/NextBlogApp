@@ -1,33 +1,38 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import ScrollTopButton from '@/components/Common/Layouts/ScrollToTop';
 
 describe('ScrollTopButton', () => {
   const scrollToMock = vi.fn();
 
-  beforeEach(() => {
-    scrollToMock.mockReset();
-    Object.defineProperty(window, 'scrollTo', {
-      configurable: true,
-      value: scrollToMock,
-    });
-  });
+  afterEach(() => vi.unstubAllGlobals());
 
-  it('scrolls smoothly to the top from an accessible button', async () => {
-    const user = userEvent.setup();
+  it.each([
+    [false, 'smooth'],
+    [true, 'auto'],
+  ] as const)(
+    'respects reduced motion (%s) when scrolling to the top',
+    async (reducedMotion, behavior) => {
+      scrollToMock.mockClear();
+      vi.stubGlobal('scrollTo', scrollToMock);
+      vi.stubGlobal('matchMedia', (query: string) => ({
+        matches: query === '(prefers-reduced-motion: reduce)' && reducedMotion,
+      }));
+      const user = userEvent.setup();
 
-    render(<ScrollTopButton />);
+      render(<ScrollTopButton />);
 
-    const button = screen.getByRole('button', { name: 'ページ上部へ戻る' });
+      const button = screen.getByRole('button', { name: 'ページ上部へ戻る' });
 
-    expect(button).toHaveClass('cursor-pointer');
+      expect(button).toHaveClass('cursor-pointer');
 
-    await user.click(button);
+      await user.click(button);
 
-    expect(scrollToMock).toHaveBeenCalledWith({
-      top: 0,
-      behavior: 'smooth',
-    });
-  });
+      expect(scrollToMock).toHaveBeenCalledWith({
+        top: 0,
+        behavior,
+      });
+    },
+  );
 });

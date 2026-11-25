@@ -123,6 +123,8 @@ const documentedTokens = [
 function normalizeCssValue(value: string) {
   return value
     .trim()
+    .replace(/['"]/g, '')
+    .replace(/\s*,\s*/g, ',')
     .replace(/\s+/g, ' ')
     .replace(
       /(^|[\s,(])(-?)\.(\d+)/g,
@@ -185,8 +187,8 @@ function TypographyScale() {
 function Foundations() {
   const { resolvedTheme } = useTheme();
   const themedContentColors = contentColors.map((token) =>
-    token.variable === '--color-text-sub'
-      ? { ...token, value: resolvedTheme === 'dark' ? '#999' : '#767676' }
+    token.variable === '--color-text-sub' && resolvedTheme === 'dark'
+      ? { ...token, value: '#999' }
       : token,
   );
 
@@ -233,7 +235,9 @@ function Foundations() {
             borderRadius: 'var(--radius-small)',
           }}
         >
-          <code>const theme = &apos;NextBlogApp&apos;;</code>
+          <code style={{ fontFamily: 'var(--font-family-content-code)' }}>
+            const theme = &apos;NextBlogApp&apos;;
+          </code>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           {codeTokens.map((token) => (
@@ -245,9 +249,9 @@ function Foundations() {
       <section className="space-y-4">
         <h2 className="text-2xl font-bold">Focus</h2>
         <div className="text-base">Tabキーで、実際のフォーカスリングを確認できます。</div>
-        <a className="inline-flex rounded-md border px-4 py-2" href="#focus-example">
+        <button className="inline-flex rounded-md border px-4 py-2" type="button">
           フォーカス表示を確認
-        </a>
+        </button>
         <div className="grid gap-3 sm:grid-cols-3">
           {focusTokens.map((token) => (
             <TokenDetails key={token.variable} {...token} />
@@ -269,12 +273,17 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  play: async () => {
-    const rootStyles = getComputedStyle(document.documentElement);
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('main')!;
+    const rootStyles = getComputedStyle(root);
 
     for (const { variable, value } of documentedTokens) {
       const actualValue = normalizeCssValue(rootStyles.getPropertyValue(variable));
-      await expect(actualValue).toBe(normalizeCssValue(value));
+      await expect(actualValue).toBe(
+        normalizeCssValue(
+          variable === '--color-text-sub' && root.closest('.DarkTheme') ? '#999' : value,
+        ),
+      );
     }
   },
 };

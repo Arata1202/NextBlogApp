@@ -1,19 +1,22 @@
 import { expect, test as base } from '@playwright/test';
+import { searchURL, contactURL } from '../../scripts/e2e/config';
 import { getArticles } from '../fixtures/content.mjs';
 
 const e2eArticles = getArticles();
 const expectedNotFoundPaths = new Set(['/missing-e2e-page']);
 
 const searchArticles = (query: string, limit: number, offset: number) => {
-  const normalizedQuery = query.toLowerCase();
+  const normalizedQuery = query.trim().toLowerCase();
   const matches = e2eArticles.filter((article) => {
     const searchableText = `${article.title} ${article.description}`.toLowerCase();
-    return searchableText.includes(normalizedQuery);
+    return !!normalizedQuery && searchableText.includes(normalizedQuery);
   });
 
   return {
     contents: matches.slice(offset, offset + limit),
     totalCount: matches.length,
+    limit,
+    offset,
   };
 };
 
@@ -21,6 +24,7 @@ const recaptchaApiScript = `
 (() => {
   const params = new URL(document.currentScript.src).searchParams;
   const onload = params.get('onload');
+  let token = "";
   window.grecaptcha = {
     render(container, options = {}) {
       const element = typeof container === 'string' ? document.getElementById(container) : container;
@@ -29,16 +33,17 @@ const recaptchaApiScript = `
       button.textContent = 'reCAPTCHA E2E';
       button.setAttribute('aria-label', 'reCAPTCHAを完了');
       button.addEventListener('click', () => {
+        token = 'e2e-recaptcha-token';
         if (typeof options.callback === 'function') {
-          options.callback('e2e-recaptcha-token');
+          options.callback(token);
         }
       });
       element?.appendChild(button);
       return 1;
     },
-    reset() {},
+    reset() { token = ""; },
     getResponse() {
-      return 'e2e-recaptcha-token';
+      return token;
     }
   };
   if (onload && typeof window[onload] === 'function') {
@@ -62,6 +67,14 @@ export const test = base.extend({
       }
     });
 
+    page.on('requestfailed', (request) => {
+      const reason = request.failure()?.errorText;
+      const url = new URL(request.url());
+      if (url.origin === baseOrigin && reason !== 'net::ERR_ABORTED') {
+        unexpectedErrors.push(`${reason} ${url.pathname}`);
+      }
+    });
+
     page.on('response', (response) => {
       const status = response.status();
       if (status < 400) {
@@ -73,18 +86,26 @@ export const test = base.extend({
         return;
       }
 
-      if (expectedNotFoundPaths.has(url.pathname)) {
+      if (status === 404 && expectedNotFoundPaths.has(url.pathname)) {
         return;
       }
 
       unexpectedErrors.push(`${status} ${url.pathname}`);
     });
 
-    await page.route('**/api/search?**', async (route) => {
+    const endpoint = (configured: string) => {
+      const target = new URL(configured, baseURL);
+      return (url: URL) => url.origin === target.origin && url.pathname === target.pathname;
+    };
+    await page.route(endpoint(searchURL), async (route) => {
       const url = new URL(route.request().url());
       const query = url.searchParams.get('q') ?? '';
-      const limit = Number(url.searchParams.get('limit') ?? 10);
-      const offset = Number(url.searchParams.get('offset') ?? 0);
+      const integer = (name: string, fallback: number, min: number, max: number) => {
+        const raw = url.searchParams.get(name) ?? '';
+        return /^[+-]?\d+$/.test(raw) ? Math.min(max, Math.max(min, Number(raw))) : fallback;
+      };
+      const limit = integer('limit', 10, 1, 50);
+      const offset = integer('offset', 0, 0, 10000);
 
       await route.fulfill({
         contentType: 'application/json',
@@ -92,7 +113,18 @@ export const test = base.extend({
       });
     });
 
-    await page.route('**/api/sendemail', async (route) => {
+    await page.route(endpoint(contactURL), async (route) => {
+      const body = route.request().postDataJSON();
+      if (
+        route.request().method() !== 'POST' ||
+        !body?.message ||
+        !body?.email ||
+        !body?.title ||
+        !body?.['g-recaptcha-response']
+      ) {
+        await route.fulfill({ status: 400, json: { success: false } });
+        return;
+      }
       await route.fulfill({
         contentType: 'application/json',
         json: { success: true },

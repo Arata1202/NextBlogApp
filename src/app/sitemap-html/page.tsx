@@ -7,7 +7,7 @@ export const revalidate = 60;
 export default async function Page() {
   const [data, categories, sidebarData] = await Promise.all([
     getAllLists({
-      fields: 'id,title,thumbnail',
+      fields: 'id,title',
     }),
     getAllCategoryLists({
       fields: 'id,name',

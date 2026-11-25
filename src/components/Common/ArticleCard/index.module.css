@@ -50,16 +50,6 @@
   margin-top: 0.5rem;
 }
 
-@media (max-width: 1023px) and (min-width: 641px) {
-  .imageFrame {
-    width: 300px;
-  }
-
-  .content {
-    max-width: 100%;
-  }
-}
-
 @media (max-width: 1081px) and (min-width: 1023px) {
   .imageFrame {
     width: 250px;
@@ -70,7 +60,7 @@
   }
 }
 
-@media (max-width: 717px) and (min-width: 641px) {
+@media (max-width: 717px) {
   .imageFrame {
     width: 200px;
   }

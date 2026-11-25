@@ -26,6 +26,16 @@ describe('BreadCrumb', () => {
     expect(screen.queryByRole('link', { name: 'Article A' })).not.toBeInTheDocument();
   });
 
+  it('renders an uncategorized article with the home link and current title', () => {
+    render(
+      <BreadCrumb
+        page={{ type: 'article', article: createArticle({ title: 'No category', categories: [] }) }}
+      />,
+    );
+    expect(screen.getAllByRole('link')).toHaveLength(1);
+    expect(screen.getByText('No category')).toHaveAttribute('aria-current', 'page');
+  });
+
   it('renders archive, category, and tag breadcrumbs as the current page', () => {
     const { rerender } = render(
       <BreadCrumb page={{ type: 'archive', year: '2024', month: '01' }} />,

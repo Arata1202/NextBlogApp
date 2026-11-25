@@ -16,7 +16,7 @@ export const formatHeadings = (headings: Heading[]): Heading[] => {
       .join('.');
 
     for (let i = heading.level + 1; i <= 5; i++) {
-      headingNumbers[i] = 0;
+      delete headingNumbers[i];
     }
 
     return {

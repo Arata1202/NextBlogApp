@@ -17,7 +17,7 @@ const parseHttpUrl = (value: string) => {
 };
 
 export const isSponsorLink = (href: string, sponsorUrl: string) => {
-  const link = parseHttpUrl(href);
+  const link = parseHttpUrl(href.startsWith('//') ? `https:${href}` : href);
   const sponsor = parseHttpUrl(sponsorUrl);
 
   if (!link || !sponsor) {
@@ -32,7 +32,9 @@ export const isSponsorLink = (href: string, sponsorUrl: string) => {
 
 export const mergeSponsoredRel = (currentRel?: string | null) => {
   const values = new Set(currentRel?.split(/\s+/).filter(Boolean));
-  values.add(SPONSORED_REL_VALUE);
+  if (![...values].some((value) => value.toLowerCase() === SPONSORED_REL_VALUE)) {
+    values.add(SPONSORED_REL_VALUE);
+  }
 
   return Array.from(values).join(' ');
 };
@@ -52,18 +54,23 @@ export const applySponsoredRelToHtmlLinks = ($: CheerioAPI, sponsorUrl?: string)
   });
 };
 
-export const assertValidSponsoredArticle = (article: Blog) => {
+export const assertValidSponsoredArticle = (article: Blog & { id?: string }) => {
   if (!article.isSponsored) {
     return;
   }
 
   if (!article.sponsorUrl?.trim() || !parseHttpUrl(article.sponsorUrl)) {
-    throw new Error(`Sponsored article "${article.title}" requires a valid sponsorUrl`);
+    throw new Error(
+      `Sponsored article "${article.title || article.id}" requires a valid sponsorUrl`,
+    );
   }
 };
 
 export const includeSponsoredFields = (fields?: string | string[]) => {
-  if (fields === undefined || (typeof fields === 'string' && fields.trim() === '')) {
+  if (
+    fields === undefined ||
+    (typeof fields === 'string' ? fields.trim() === '' : fields.length === 0)
+  ) {
     return fields;
   }
 

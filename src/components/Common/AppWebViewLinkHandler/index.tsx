@@ -1,6 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+} from 'react';
+import NextLink from 'next/link';
 import {
   APP_WEBVIEW_QUERY_PARAMETER,
   APP_WEBVIEW_QUERY_VALUE,
@@ -12,7 +19,8 @@ const isModifiedClick = (event: MouseEvent) =>
 
 const NAVIGABLE_PROTOCOLS = new Set(['http:', 'https:']);
 
-const shouldForceCurrentFrame = (target: string) => Boolean(target && target !== '_self');
+const shouldForceCurrentFrame = (target: string) =>
+  Boolean(target && target.toLowerCase() !== '_self');
 
 export const resolveAppWebViewNavigationUrl = (
   href: string,
@@ -49,7 +57,26 @@ export const resolveAppWebViewNavigationUrl = (
   return url.toString();
 };
 
-export default function AppWebViewLinkHandler() {
+const AppWebViewContext = createContext(false);
+
+export function SiteLink({
+  href,
+  children,
+  ...props
+}: ComponentPropsWithoutRef<'a'> & { href: string }) {
+  const webView = useContext(AppWebViewContext);
+  return webView ? (
+    <a {...props} href={href}>
+      {children}
+    </a>
+  ) : (
+    <NextLink {...props} href={href}>
+      {children}
+    </NextLink>
+  );
+}
+
+export default function AppWebViewLinkHandler({ children }: { children?: ReactNode }) {
   const isAppWebViewMode = useAppWebViewMode();
 
   useEffect(() => {
@@ -70,22 +97,22 @@ export default function AppWebViewLinkHandler() {
 
       const anchor = target.closest<HTMLAnchorElement>('a[href]');
 
-      if (!anchor || anchor.hasAttribute('download')) {
+      if (!(anchor instanceof HTMLAnchorElement) || anchor.hasAttribute('download')) {
         return;
       }
 
       const navigationUrl = resolveAppWebViewNavigationUrl(
         anchor.href,
         window.location.origin,
-        anchor.target,
+        anchor.target || document.querySelector('base[target]')?.getAttribute('target') || '',
       );
 
       if (!navigationUrl) {
         return;
       }
 
-      event.preventDefault();
-      window.location.assign(navigationUrl);
+      anchor.href = navigationUrl;
+      anchor.target = '_self';
     };
 
     document.addEventListener('click', handleClick, true);
@@ -93,5 +120,7 @@ export default function AppWebViewLinkHandler() {
     return () => document.removeEventListener('click', handleClick, true);
   }, [isAppWebViewMode]);
 
-  return null;
+  return (
+    <AppWebViewContext.Provider value={isAppWebViewMode}>{children}</AppWebViewContext.Provider>
+  );
 }

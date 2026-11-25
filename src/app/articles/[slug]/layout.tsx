@@ -1,3 +1,5 @@
+import { serializeJsonLd } from '@/utils/jsonLd';
+import { getSiteUrl, getSiteTitle } from '@/config/site';
 import { Metadata } from 'next';
 import { PROFILE_NAME, SOCIAL_ICON } from '@/constants/data';
 import { getArticleDetailForPage } from '@/libs/microcmsPage';
@@ -13,8 +15,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
   const data = await getArticleDetailForPage(params.slug);
 
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const defaultUrl = getSiteUrl();
+  const defaultTitle = getSiteTitle();
 
   const title = `${data.title}｜${defaultTitle}`;
   const description = `${data.description}`;
@@ -44,8 +46,8 @@ export default async function ArticleLayout(props: Props) {
   const data = await getArticleDetailForPage(params.slug);
   const { children } = props;
 
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const defaultUrl = getSiteUrl();
+  const defaultTitle = getSiteTitle();
   const articleUrl = `${defaultUrl}/articles/${data.id}`;
   const keywords = data.tags
     ?.map((tag) => tag.name)
@@ -62,7 +64,7 @@ export default async function ArticleLayout(props: Props) {
     image: data.thumbnail.url,
     inLanguage: 'ja-JP',
     articleSection: data.categories
-      .map((category) => category.name)
+      ?.map((category) => category.name)
       .filter(Boolean)
       .join(', '),
     keywords: keywords || undefined,
@@ -89,6 +91,7 @@ export default async function ArticleLayout(props: Props) {
     },
   };
 
+  const category = data.categories?.[0];
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -99,15 +102,19 @@ export default async function ArticleLayout(props: Props) {
         name: 'ホーム',
         item: defaultUrl,
       },
+      ...(category
+        ? [
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: category.name,
+              item: `${defaultUrl}/category/${category.id}`,
+            },
+          ]
+        : []),
       {
         '@type': 'ListItem',
-        position: 2,
-        name: data.categories[0].name,
-        item: `${defaultUrl}/category/${data.categories[0].id}`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
+        position: category ? 3 : 2,
         name: data.title,
         item: articleUrl,
       },
@@ -118,11 +125,11 @@ export default async function ArticleLayout(props: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(blogPostingJsonLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }}
       />
       {children}
     </>

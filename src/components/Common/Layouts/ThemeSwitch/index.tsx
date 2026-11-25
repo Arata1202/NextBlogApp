@@ -1,6 +1,7 @@
 'use client';
 
 import { useTheme } from 'next-themes';
+import { useHasMounted } from '@/hooks/useHasMounted';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { compactIconControlClassName } from '@/components/Common/controlClassNames';
 import { colorClassNames } from '@/styles/uiClassNames';
@@ -8,33 +9,20 @@ import { colorClassNames } from '@/styles/uiClassNames';
 export default function ThemeSwitch() {
   const { setTheme, resolvedTheme } = useTheme();
 
-  if (resolvedTheme === 'dark') {
-    return (
-      <button
-        type="button"
-        aria-label="ライトテーマに切り替え"
-        className={`${compactIconControlClassName} ${colorClassNames.accentHoverText} cursor-pointer`}
-        onClick={() => {
-          setTheme('light');
-        }}
-      >
-        <SunIcon className="h-5 w-5" aria-hidden="true" />
-      </button>
-    );
+  const mounted = useHasMounted();
+  if (!mounted || !resolvedTheme) {
+    return <span className={compactIconControlClassName} aria-hidden="true" />;
   }
-
-  if (resolvedTheme === 'light') {
-    return (
-      <button
-        type="button"
-        aria-label="ダークテーマに切り替え"
-        className={`${compactIconControlClassName} ${colorClassNames.accentHoverText} cursor-pointer`}
-        onClick={() => {
-          setTheme('dark');
-        }}
-      >
-        <MoonIcon className="h-5 w-5" aria-hidden="true" />
-      </button>
-    );
-  }
+  const dark = resolvedTheme === 'dark';
+  const Icon = dark ? SunIcon : MoonIcon;
+  return (
+    <button
+      type="button"
+      aria-label={dark ? 'ライトテーマに切り替え' : 'ダークテーマに切り替え'}
+      className={`${compactIconControlClassName} ${colorClassNames.accentHoverText} cursor-pointer`}
+      onClick={() => setTheme(dark ? 'light' : 'dark')}
+    >
+      <Icon className="h-5 w-5" aria-hidden="true" />
+    </button>
+  );
 }

@@ -39,6 +39,7 @@ describe('getMixedRecentArticles', () => {
 
     expect(microcmsMock.getList).toHaveBeenCalledWith({
       limit: 20,
+      orders: '-publishedAt',
       fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
     });
     expect(zennMock.getZennFeed).toHaveBeenCalledWith('realunivlog', 20);

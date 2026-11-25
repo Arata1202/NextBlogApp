@@ -55,7 +55,7 @@ export default function AppsPromo() {
           >
             <img
               src={APP_STORE_BADGE}
-              alt="App Storeからダウンロード"
+              alt="App Storeで公開中のアプリを見る"
               width={109}
               height={40}
               className={styles.storeBadge}

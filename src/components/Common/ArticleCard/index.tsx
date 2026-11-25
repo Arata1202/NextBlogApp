@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { SiteLink as Link } from '@/components/Common/AppWebViewLinkHandler';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 import DoubleDate from '../DoubleDate';
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export default function ArticleCard({ article, priority = false }: Props) {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
 
   return (

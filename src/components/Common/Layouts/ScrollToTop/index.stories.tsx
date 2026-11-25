@@ -12,11 +12,19 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const ClickInteraction: Story = {
   beforeEach: () => {
-    Object.defineProperty(window, 'scrollTo', { configurable: true, value: fn() });
+    const originalScrollTo = window.scrollTo;
+    window.scrollTo = fn();
+    return () => {
+      window.scrollTo = originalScrollTo;
+    };
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole('button', { name: 'ページ上部へ戻る' }));
-    await expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    await expect(window.scrollTo).toHaveBeenCalledWith({
+      top: 0,
+      behavior: reduced ? 'auto' : 'smooth',
+    });
   },
 };

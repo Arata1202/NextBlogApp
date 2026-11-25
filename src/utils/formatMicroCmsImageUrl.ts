@@ -21,7 +21,7 @@ export const formatMicroCmsImageUrl = (
   try {
     const url = new URL(src);
 
-    if (!isMicroCmsImageUrl(src)) {
+    if (url.hostname !== MICROCMS_IMAGE_HOST) {
       return src;
     }
 

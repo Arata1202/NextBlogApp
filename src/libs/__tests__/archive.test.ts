@@ -20,6 +20,8 @@ describe('archive helpers', () => {
       createArticle({ publishedAt: '2024-03-10T00:00:00.000Z' }),
       createArticle({ publishedAt: '2023-12-10T00:00:00.000Z' }),
       createArticle({ publishedAt: '2024-03-20T00:00:00.000Z' }),
+      createArticle({ publishedAt: '2024-02-29T15:00:00.000Z' }),
+      createArticle({ publishedAt: 'invalid' }),
       createArticle({ publishedAt: undefined }),
     ]);
 

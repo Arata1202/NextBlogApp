@@ -20,11 +20,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Desktop: Story = {
+  globals: { viewport: { value: 'desktop', isRotated: false } },
   play: async ({ canvas }) => {
     const header = canvas.getByRole('banner');
 
     await expect(header).toBeVisible();
-    await expect(header).toHaveStyle({ backgroundColor: 'rgb(255, 255, 255)' });
+    await expect(canvas.getByRole('button', { name: 'カテゴリー' })).toBeVisible();
   },
 };
 

@@ -1,11 +1,10 @@
 'use client';
 
-import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { SiteLink as Link } from '@/components/Common/AppWebViewLinkHandler';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import styles from '@/components/Common/ArticleCard/index.module.css';
 import { UnifiedArticle } from '@/types/unified';
-import SingleDate from '@/components/Common/SingleDate';
-import doubleDateStyles from '@/components/Common/DoubleDate/index.module.css';
+import DoubleDate from '../DoubleDate';
 import WebpImage from '../Elements/WebpImage';
 import { getThemeClassName, surfaceClassNames } from '@/styles/uiClassNames';
 import SponsoredDisclosure from '../SponsoredDisclosure';
@@ -16,18 +15,9 @@ type Props = {
 };
 
 export default function UnifiedArticleCard({ article, priority = false }: Props) {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const isExternal = article.source === 'zenn';
   const themeClassName = getThemeClassName(theme);
-
-  const isNextDayOrLater = (date1: string, date2: string) => {
-    const d1 = new Date(date1);
-    const d2 = new Date(date2);
-    d1.setHours(0, 0, 0, 0);
-    d2.setHours(0, 0, 0, 0);
-    return d1 > d2;
-  };
-  const showUpdated = article.updatedAt && isNextDayOrLater(article.updatedAt, article.publishedAt);
 
   return (
     <li className={styles.list}>
@@ -58,10 +48,7 @@ export default function UnifiedArticleCard({ article, priority = false }: Props)
           {article.isSponsored && <SponsoredDisclosure compact />}
           <div className={styles.title}>{article.title}</div>
           <div className={styles.description}>{article.description}</div>
-          <div className={doubleDateStyles.date}>
-            <SingleDate date={article.publishedAt} />
-            {showUpdated && <SingleDate date={article.updatedAt!} updatedAt={true} />}
-          </div>
+          <DoubleDate article={article} />
         </div>
         {isExternal && <span className="sr-only">新しいタブで開く</span>}
       </Link>

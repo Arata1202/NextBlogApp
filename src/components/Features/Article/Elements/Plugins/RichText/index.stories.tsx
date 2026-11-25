@@ -32,7 +32,7 @@ const articleHtml = `
   <h4>見出し4</h4>
   <ol><li>番号付きの項目</li><li>次の手順</li></ol>
   <blockquote><p>引用として表示される文章です。</p></blockquote>
-  <figure><img src="/images/thumbnail/7.webp" alt="記事本文のサンプル画像"><figcaption>画像のキャプション</figcaption></figure>
+  <figure><img src="./images/thumbnail/7.webp" alt="記事本文のサンプル画像"><figcaption>画像のキャプション</figcaption></figure>
   <hr>
 `;
 

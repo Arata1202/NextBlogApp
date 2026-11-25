@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Transition } from '@headlessui/react';
 import { XMarkIcon, CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/24/outline';
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import styles from './index.module.css';
 import { compactIconControlClassName } from '@/components/Common/controlClassNames';
 import {
@@ -20,7 +20,7 @@ type Props = {
 };
 
 export default function Alert({ onClose, show, title, description, variant = 'success' }: Props) {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
   const Icon = variant === 'error' ? ExclamationCircleIcon : CheckCircleIcon;
   const iconClassName = `h-6 w-6 ${variant === 'error' ? 'text-red-600' : 'text-green-600'}`;
@@ -28,7 +28,11 @@ export default function Alert({ onClose, show, title, description, variant = 'su
   const ariaLive = variant === 'error' ? 'assertive' : 'polite';
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 flex items-start px-4 py-6 sm:items-start sm:p-6">
+    <div
+      role={role}
+      aria-live={ariaLive}
+      className="pointer-events-none fixed inset-0 mt-16 z-50 flex items-start px-4 py-6 sm:items-start sm:p-6"
+    >
       <div className="flex w-full flex-col items-center space-y-4 sm:items-end">
         <Transition
           show={show}
@@ -41,9 +45,7 @@ export default function Alert({ onClose, show, title, description, variant = 'su
           leaveTo="opacity-0"
         >
           <div
-            className={`pointer-events-auto mt-16 w-full max-w-sm overflow-hidden ${radiusClassNames.dialog} ${shadowClassNames.dialog} ring-1 ring-blue-500/5 ${themeClassName}`}
-            role={role}
-            aria-live={ariaLive}
+            className={`pointer-events-auto w-full max-w-sm overflow-hidden ${radiusClassNames.dialog} ${shadowClassNames.dialog} ring-1 ring-blue-500/5 ${themeClassName}`}
           >
             <div className="p-4">
               <div className="flex items-start">

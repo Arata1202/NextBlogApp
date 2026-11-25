@@ -47,8 +47,6 @@ vi.mock('react-share', async () => {
     LineIcon: ShareIcon,
     HatenaShareButton: createShareButton('hatena-share'),
     HatenaIcon: ShareIcon,
-    PocketShareButton: createShareButton('pocket-share'),
-    PocketIcon: ShareIcon,
   };
 });
 
@@ -80,7 +78,6 @@ describe('Share components', () => {
     expect(screen.getByRole('button', { name: 'Xでシェア' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Facebookでシェア' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'LINEでシェア' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Pocketに保存' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'はてなブックマークでシェア' })).toBeInTheDocument();
   });
 
@@ -133,7 +130,7 @@ describe('Share components', () => {
     expect(getMessage()?.textContent).toMatch(/^もし記事/);
     expect(getMessage()).toHaveAttribute('data-main-buy-me-a-coffee-end', '');
     const supportLink = screen.getByRole('link', {
-      name: 'BuyMeaCoffeeを新しいタブで開く',
+      name: 'Buy Me a Coffeeを新しいタブで開く',
     });
 
     expect(supportLink).toHaveAttribute('href', 'https://www.buymeacoffee.com/realunivlog');

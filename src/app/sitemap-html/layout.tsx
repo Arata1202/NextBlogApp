@@ -1,35 +1,13 @@
-import { Metadata } from 'next';
+import { staticPageMetadata } from '@/config/site';
 
-type Props = {
-  children: React.ReactNode;
-};
-
-export async function generateMetadata(): Promise<Metadata> {
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
-
-  const title = `サイトマップ｜${defaultTitle}`;
-  const description = `当ブログのサイトマップを記載しています。`;
-  const images = `${defaultUrl}/images/thumbnail/7.webp`;
-  const url = `${defaultUrl}/sitemap-html`;
-
-  return {
-    title: title,
-    description: description,
-    openGraph: {
-      title: title,
-      description: description,
-      images: images,
-      url: url,
-    },
-    alternates: {
-      canonical: url,
-    },
-  };
+export function generateMetadata() {
+  return staticPageMetadata(
+    '/sitemap-html',
+    'サイトマップ',
+    '当ブログのサイトマップを記載しています。',
+  );
 }
 
-export default async function SitemapLayout(props: Props) {
-  const { children } = props;
-
+export default function SitemapLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

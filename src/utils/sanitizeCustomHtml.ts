@@ -1,8 +1,9 @@
 import {
+  isTrustedEmbedScript,
   CUSTOM_HTML_MOSHIMO_SCRIPT_ATTRIBUTE,
   CUSTOM_HTML_SCRIPT_SRC_ATTRIBUTE,
 } from '@/constants/customHtml';
-import { isSafeResourceUrl, loadHtmlFragment, sanitizeHtmlAttributes } from '@/utils/htmlSanitizer';
+import { loadHtmlFragment, sanitizeHtmlAttributes } from '@/utils/htmlSanitizer';
 import { applySponsoredRelToHtmlLinks } from '@/utils/sponsored';
 
 const INERT_SCRIPT_TYPE = 'application/json';
@@ -13,7 +14,10 @@ const isMoshimoEasyLinkScript = (src: string | undefined, text: string) => {
   return (
     text.includes(MOSHIMO_SCRIPT_ID) ||
     text.includes(MOSHIMO_SCRIPT_KEYWORD) ||
-    src?.includes('dn.msmstatic.com/site/cardlink/bundle.js')
+    (src &&
+      URL.canParse(src, 'https://example.invalid') &&
+      new URL(src, 'https://example.invalid').hostname === 'dn.msmstatic.com' &&
+      new URL(src, 'https://example.invalid').pathname === '/site/cardlink/bundle.js')
   );
 };
 
@@ -26,6 +30,11 @@ export const sanitizeCustomHtml = (html: string, sponsorUrl?: string) => {
   $('script').each((_, element) => {
     const script = $(element);
     const src = script.attr('src')?.trim();
+    const type = script.attr('type')?.toLowerCase().trim();
+    if (type && !['text/javascript', 'application/javascript'].includes(type)) {
+      script.remove();
+      return;
+    }
 
     if (isMoshimoEasyLinkScript(src, script.text())) {
       Object.keys(script.attr() ?? {}).forEach((attributeName) => {
@@ -36,7 +45,7 @@ export const sanitizeCustomHtml = (html: string, sponsorUrl?: string) => {
       return;
     }
 
-    if (src && isSafeResourceUrl(src)) {
+    if (src && isTrustedEmbedScript(src)) {
       Object.keys(script.attr() ?? {}).forEach((attributeName) => {
         script.removeAttr(attributeName);
       });

@@ -18,6 +18,11 @@ describe('Pagination', () => {
     expect(screen.getAllByText('...')).toHaveLength(2);
   });
 
+  it('marks the last available page when the requested page exceeds the result set', () => {
+    render(<Pagination totalCount={50} current={10} />);
+    expect(screen.getByText('5')).toHaveAttribute('aria-current', 'page');
+  });
+
   it('renders no items when there are no pages', () => {
     render(<Pagination totalCount={0} />);
 

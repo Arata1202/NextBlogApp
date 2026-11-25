@@ -11,8 +11,8 @@ export default function FixedDateContainer({ date, updatedDate }: Props) {
     <>
       <DoubleDate
         article={{
-          publishedAt: date.toISOString(),
-          updatedAt: updatedDate?.toISOString(),
+          publishedAt: date.toJSON() ?? undefined,
+          updatedAt: updatedDate?.toJSON() ?? undefined,
         }}
         articleMode
       />

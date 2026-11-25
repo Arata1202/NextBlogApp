@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { SiteLink as Link } from '@/components/Common/AppWebViewLinkHandler';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { HashtagIcon } from '@heroicons/react/24/solid';
 import { Tag as TagType } from '@/types/microcms';
 import { pillControlClassName } from '@/components/Common/controlClassNames';
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function Tag({ tags }: Props) {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
 
   return (
@@ -27,7 +27,7 @@ export default function Tag({ tags }: Props) {
             <Link
               key={tag.id}
               href={`/tag/${tag.id}`}
-              className={`${pillControlClassName} mr-2 mb-2 inline-block px-3 py-1 text-sm font-semibold ${themeClassName}`}
+              className={`${pillControlClassName} inline-block px-3 py-1 text-sm font-semibold ${themeClassName}`}
             >
               {tag.name}
             </Link>

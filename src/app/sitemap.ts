@@ -1,3 +1,4 @@
+import { getSiteUrl } from '@/config/site';
 import type { MetadataRoute } from 'next';
 import { getAllLists } from '@/libs/microcms';
 import { CATEGORY_ARR } from '@/constants/category';
@@ -10,15 +11,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     fields: 'id,updatedAt',
   });
 
-  const url = process.env.NEXT_PUBLIC_BASE_URL;
-  const lastModified = new Date();
+  const url = getSiteUrl();
   const changeFrequency = 'daily';
   const priority = 0.7;
 
   const topPage: MetadataRoute.Sitemap = [
     {
       url: `${url}`,
-      lastModified: lastModified,
       changeFrequency: changeFrequency,
       priority: priority,
     },
@@ -27,7 +26,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const appPages: MetadataRoute.Sitemap = PAGE_ARR.map((page) => {
     return {
       url: `${url}/${page.path}`,
-      lastModified: lastModified,
       changeFrequency: changeFrequency,
       priority: priority,
     };
@@ -36,7 +34,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const categoryPages: MetadataRoute.Sitemap = CATEGORY_ARR.map((category) => {
     return {
       url: `${url}/category/${category.id}`,
-      lastModified: lastModified,
       changeFrequency: changeFrequency,
       priority: priority,
     };

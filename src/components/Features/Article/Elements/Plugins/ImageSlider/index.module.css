@@ -1,6 +1,5 @@
 .wrapper {
   margin: 40px 0;
-  padding-bottom: 34px;
   width: 100%;
   max-width: 100%;
   min-width: 0;
@@ -90,7 +89,8 @@
 }
 
 .wrapper :global(.slick-dots) {
-  bottom: -30px;
+  position: static;
+  margin-top: 10px;
 }
 
 .wrapper :global(.slick-dots li) {
@@ -109,7 +109,7 @@
 .wrapper :global(.slick-dots li button::before) {
   width: 18px;
   height: 18px;
-  color: rgb(156 163 175);
+  color: #747b86;
   font-size: 11px;
   line-height: 18px;
   opacity: 1 !important;
@@ -155,7 +155,6 @@
 @media (max-width: 640px) {
   .wrapper {
     margin: 32px 0;
-    padding-bottom: 36px;
   }
 
   .wrapper :global(.slick-list) {
@@ -181,13 +180,13 @@
   }
 
   .wrapper :global(.slick-dots) {
-    bottom: -28px;
+    margin-top: 8px;
   }
 
   .wrapper :global(.slick-dots li) {
     width: 16px;
     height: 16px;
-    margin: 0 2px;
+    margin: 0 4px;
   }
 
   .wrapper :global(.slick-dots li button) {

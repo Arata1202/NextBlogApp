@@ -14,7 +14,7 @@
   margin: 0 !important;
   background-color: var(--color-bg-code);
   color: var(--color-text-code);
-  white-space: normal !important;
+  white-space: pre;
   word-break: normal;
 }
 
@@ -30,6 +30,7 @@
   outline-offset: calc(-1 * var(--focus-ring-width));
 }
 
+.wrapped,
 .wrapped > code {
   white-space: pre-wrap !important;
   word-break: break-word;
@@ -175,20 +176,18 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .copyButton:hover {
+  .copyButton:hover:where(:not([data-state='failed'])) {
     background-color: #30363d;
     color: white;
   }
 
-  .copyButton:hover::after,
-  .copyButton:focus-visible::after {
+  .copyButton:hover::after {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@media (hover: none), (pointer: coarse) {
-  .copyButton::after {
-    content: none;
-  }
+.copyButton:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
 }

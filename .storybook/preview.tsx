@@ -18,29 +18,35 @@ type ThemeSyncProps = {
 function ThemeSync({ globalTheme, updateGlobals, children }: ThemeSyncProps) {
   const { resolvedTheme, setTheme } = useTheme();
   const previousGlobalTheme = useRef(globalTheme);
-  const initialized = useRef(false);
+  const pendingTheme = useRef<Theme | null>(globalTheme);
 
   useEffect(() => {
     if (resolvedTheme !== 'light' && resolvedTheme !== 'dark') {
       return;
     }
 
-    if (!initialized.current) {
-      initialized.current = true;
-      setTheme(globalTheme);
-      return;
-    }
-
     if (previousGlobalTheme.current !== globalTheme) {
       previousGlobalTheme.current = globalTheme;
-      setTheme(globalTheme);
-      return;
+      pendingTheme.current = globalTheme;
+    }
+    if (pendingTheme.current) {
+      if (resolvedTheme !== pendingTheme.current) {
+        setTheme(pendingTheme.current);
+        return;
+      }
+      pendingTheme.current = null;
     }
 
     if (resolvedTheme !== globalTheme) {
       updateGlobals({ theme: resolvedTheme });
     }
   }, [globalTheme, resolvedTheme, setTheme, updateGlobals]);
+
+  useEffect(() => {
+    const themeClass = globalTheme === 'dark' ? 'DarkTheme' : 'LightTheme';
+    document.body.classList.add(themeClass);
+    return () => document.body.classList.remove(themeClass);
+  }, [globalTheme]);
 
   return children;
 }
@@ -49,9 +55,6 @@ const WithTheme: Decorator = (Story, context) => {
   const [, updateGlobals] = useGlobals();
   const theme = context.globals.theme === 'dark' ? 'dark' : 'light';
   const themeClassName = theme === 'dark' ? 'DarkTheme' : 'LightTheme';
-
-  document.body.classList.toggle('DarkTheme', theme === 'dark');
-  document.body.classList.toggle('LightTheme', theme === 'light');
 
   return (
     <ThemeProvider

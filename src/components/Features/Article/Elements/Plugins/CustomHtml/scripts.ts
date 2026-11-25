@@ -1,9 +1,8 @@
-import { CUSTOM_HTML_SCRIPT_SRC_ATTRIBUTE } from '@/constants/customHtml';
+import { hasSafeUrlProtocol, SAFE_RESOURCE_PROTOCOLS } from '@/utils/urlSafety';
+import { CUSTOM_HTML_MOSHIMO_SCRIPT_ATTRIBUTE } from '@/constants/customHtml';
 
 const CUSTOM_HTML_SELECTOR = '[data-custom-html]';
-const EXECUTED_SCRIPT_ATTRIBUTE = 'data-custom-html-executed';
 const MOSHIMO_SCRIPT_ID = 'msmaflink';
-const MOSHIMO_SCRIPT_KEYWORD = 'MoshimoAffiliateEasyLink';
 const MOSHIMO_SCRIPT_SRC = 'https://dn.msmstatic.com/site/cardlink/bundle.js?20220329';
 const MOSHIMO_RENDER_DELAY_MS = 200;
 
@@ -23,20 +22,24 @@ declare global {
   }
 }
 
-const isMoshimoScript = (script: HTMLScriptElement) => {
-  return (
-    script.textContent?.includes(MOSHIMO_SCRIPT_ID) ||
-    script.textContent?.includes(MOSHIMO_SCRIPT_KEYWORD) ||
-    script.src.includes('dn.msmstatic.com/site/cardlink/bundle.js')
-  );
-};
+const isMoshimoScript = (script: HTMLScriptElement) =>
+  script.hasAttribute(CUSTOM_HTML_MOSHIMO_SCRIPT_ATTRIBUTE);
 
-const hasMoshimoEasyLink = (html: string) => {
-  return html.includes(MOSHIMO_SCRIPT_ID) || html.includes(MOSHIMO_SCRIPT_KEYWORD);
+// Without an affiliate ID the vendor copies u_url directly to anchor.href.
+const hasSafeButtonUrls = (buttons: unknown) => {
+  if (buttons === undefined) return true;
+  if (!buttons || typeof buttons !== 'object') return false;
+  return Object.values(buttons).every((button: unknown) => {
+    if (!button || typeof button !== 'object') return false;
+    if (!('u_url' in button)) return true;
+    return (
+      typeof button.u_url === 'string' && hasSafeUrlProtocol(button.u_url, SAFE_RESOURCE_PROTOCOLS)
+    );
+  });
 };
 
 const extractMoshimoPayload = (scriptContent: string) => {
-  const callStart = scriptContent.indexOf('msmaflink({');
+  const callStart = scriptContent.search(/\bmsmaflink\s*\(\s*\{/);
 
   if (callStart === -1) {
     return null;
@@ -74,7 +77,8 @@ const extractMoshimoPayload = (scriptContent: string) => {
 
       if (depth === 0) {
         try {
-          return JSON.parse(scriptContent.slice(objectStart, index + 1));
+          const payload = JSON.parse(scriptContent.slice(objectStart, index + 1));
+          return hasSafeButtonUrls(payload.b_l) ? payload : null;
         } catch (error) {
           console.error('Failed to parse Moshimo EasyLink payload.', error);
           return null;
@@ -86,73 +90,11 @@ const extractMoshimoPayload = (scriptContent: string) => {
   return null;
 };
 
-const replaceWithExecutableScript = (script: HTMLScriptElement, src?: string) => {
-  const parent = script.parentNode;
-
-  if (!parent) {
-    return null;
-  }
-
-  const executableScript = document.createElement('script');
-
-  Array.from(script.attributes).forEach((attribute) => {
-    if (
-      attribute.name === CUSTOM_HTML_SCRIPT_SRC_ATTRIBUTE ||
-      (src && attribute.name.toLowerCase() === 'type')
-    ) {
-      return;
-    }
-
-    executableScript.setAttribute(attribute.name, attribute.value);
-  });
-
-  if (src) {
-    executableScript.src = src;
-  }
-
-  if (src || executableScript.src) {
-    executableScript.async = false;
-  }
-
-  if (!src) {
-    executableScript.text = script.textContent ?? '';
-  }
-  const marker = document.createTextNode('');
-
-  parent.insertBefore(marker, script);
-  script.remove();
-  parent.insertBefore(executableScript, marker);
-  marker.remove();
-
-  return executableScript;
-};
-
-const runGenericScripts = (content: HTMLElement) => {
-  const scripts = content.querySelectorAll('script');
-
-  scripts.forEach((script) => {
-    const scriptSrc = script.getAttribute(CUSTOM_HTML_SCRIPT_SRC_ATTRIBUTE) ?? script.src;
-
-    if (isMoshimoScript(script) || script.dataset.customHtmlExecuted === 'true' || !scriptSrc) {
-      return;
-    }
-
-    const executableScript = replaceWithExecutableScript(script, scriptSrc);
-    executableScript?.setAttribute(EXECUTED_SCRIPT_ATTRIBUTE, 'true');
-  });
-};
-
-const resetMoshimoEasyLink = () => {
-  document.getElementById(MOSHIMO_SCRIPT_ID)?.remove();
-  window.MoshimoAffiliateObject = undefined;
-  window.msmaflink = undefined;
-  delete window.MoshimoAffiliateObject;
-  delete window.msmaflink;
-};
+const renderedMoshimoScripts = new WeakSet<HTMLScriptElement>();
 
 const collectMoshimoQueue = () => {
   return Array.from(document.querySelectorAll<HTMLScriptElement>(`${CUSTOM_HTML_SELECTOR} script`))
-    .filter(isMoshimoScript)
+    .filter((script) => isMoshimoScript(script) && !renderedMoshimoScripts.has(script))
     .map((script) => {
       const payload = extractMoshimoPayload(script.textContent ?? '');
 
@@ -183,30 +125,62 @@ const createMoshimoAffiliateQueue = (queue: MoshimoQueueItem[]): MoshimoAffiliat
   return moshimoAffiliate;
 };
 
-const loadMoshimoBundle = () => {
-  const bundleScript = document.createElement('script');
-
-  bundleScript.id = MOSHIMO_SCRIPT_ID;
-  bundleScript.src = MOSHIMO_SCRIPT_SRC;
-  bundleScript.async = true;
-  bundleScript.addEventListener('load', () => {
-    // Moshimo renders from its load handler, which has already passed after SPA navigation.
-    window.dispatchEvent(new Event('load'));
-  });
-  document.body.appendChild(bundleScript);
+const finishMoshimoRender = () => {
+  const queue = window.msmaflink?.q;
+  if (!queue) return;
+  for (const item of queue) {
+    if (item.currentScript) renderedMoshimoScripts.add(item.currentScript);
+  }
+  queue.length = 0;
 };
 
-const runMoshimoEasyLinks = () => {
-  const queue = collectMoshimoQueue();
+const renderMoshimoQueue = () => {
+  // The vendor only consumes its queue from DOMContentLoaded and window.load listeners.
+  if (document.readyState === 'complete') {
+    window.dispatchEvent(new Event('load'));
+    finishMoshimoRender();
+  } else {
+    window.addEventListener('load', finishMoshimoRender, { once: true });
+  }
+};
 
-  if (queue.length === 0) {
+const runMoshimoEasyLinks = (retryOnFailure = true) => {
+  const queue = collectMoshimoQueue();
+  if (!queue.length) return;
+  window.MoshimoAffiliateObject = MOSHIMO_SCRIPT_ID;
+  window.msmaflink = createMoshimoAffiliateQueue(queue);
+  const existing = document.getElementById(MOSHIMO_SCRIPT_ID);
+  if (existing) {
+    if (existing.dataset.loaded === 'true') renderMoshimoQueue();
     return;
   }
 
-  resetMoshimoEasyLink();
-  window.MoshimoAffiliateObject = MOSHIMO_SCRIPT_ID;
-  window.msmaflink = createMoshimoAffiliateQueue(queue);
-  loadMoshimoBundle();
+  const script = document.createElement('script');
+  script.id = MOSHIMO_SCRIPT_ID;
+  script.src = MOSHIMO_SCRIPT_SRC;
+  script.async = true;
+  script.addEventListener(
+    'load',
+    () => {
+      script.dataset.loaded = 'true';
+      // The page may have changed during the network request.
+      if (window.msmaflink) window.msmaflink.q = collectMoshimoQueue();
+      renderMoshimoQueue();
+    },
+    { once: true },
+  );
+  script.addEventListener(
+    'error',
+    () => {
+      script.remove();
+      if (retryOnFailure) {
+        window.clearTimeout(window.moshimoEasyLinkTimer);
+        window.moshimoEasyLinkTimer = window.setTimeout(() => runMoshimoEasyLinks(false), 1000);
+      }
+    },
+    { once: true },
+  );
+  document.body.appendChild(script);
 };
 
 const scheduleMoshimoEasyLinks = () => {
@@ -214,10 +188,9 @@ const scheduleMoshimoEasyLinks = () => {
   window.moshimoEasyLinkTimer = window.setTimeout(runMoshimoEasyLinks, MOSHIMO_RENDER_DELAY_MS);
 };
 
-export const runCustomHtmlScripts = (content: HTMLElement, html: string) => {
-  runGenericScripts(content);
-
-  if (hasMoshimoEasyLink(html)) {
+export const runCustomHtmlScripts = (content: HTMLElement) => {
+  // Instagram and Iframely have dedicated loaders that also process dynamically mounted embeds.
+  if (content.querySelector(`script[${CUSTOM_HTML_MOSHIMO_SCRIPT_ATTRIBUTE}]`)) {
     scheduleMoshimoEasyLinks();
   }
 };

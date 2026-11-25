@@ -3,7 +3,6 @@ import SitemapHtmlFeature from '.';
 import { articleFixture } from '@/stories/articleFixtures';
 import FixedContentContainer from '@/components/Common/Layouts/Container/FixedContentContainer';
 
-const category = articleFixture.categories[0];
 const meta = {
   title: 'Content/Sitemap',
   component: SitemapHtmlFeature,
@@ -16,7 +15,7 @@ const meta = {
         title: 'Storybookでデザインシステムを管理する方法',
       },
     ],
-    categories: [category],
+    categories: articleFixture.categories,
   },
   decorators: [
     (Story) => (

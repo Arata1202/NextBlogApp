@@ -9,7 +9,7 @@ export type ThemeVariantClassNames = {
 };
 
 export const getThemeClassName = (theme?: string) => {
-  return theme === 'dark' ? themeClassNames.dark : themeClassNames.light;
+  return getThemeVariantClassName(theme, themeClassNames);
 };
 
 export const getThemeVariantClassName = (

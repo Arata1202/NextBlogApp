@@ -17,7 +17,11 @@ const isMicroCmsNotFoundError = (error: unknown) => {
 
   const errorWithStatus = error as ErrorWithStatus;
 
-  return errorWithStatus.status === 404 || errorWithStatus.response?.status === 404;
+  return (
+    errorWithStatus.status === 404 ||
+    errorWithStatus.response?.status === 404 ||
+    (error instanceof Error && /^fetch API response status: 404(?:$|\n)/.test(error.message))
+  );
 };
 
 const resolveOrNotFound = async <T>(resolve: () => Promise<T>) => {
@@ -37,6 +41,8 @@ export const getArticleDetailForPage = cache((contentId: string, queries?: Micro
     queries === undefined ? getDetail(contentId) : getDetail(contentId, queries),
   );
 });
+
+export const taxonomyFields = { fields: 'id,name' };
 
 export const getCategoryForPage = cache((contentId: string, queries?: MicroCMSQueries) => {
   return resolveOrNotFound(() =>

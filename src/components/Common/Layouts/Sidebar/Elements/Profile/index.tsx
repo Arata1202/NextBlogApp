@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import { PROFILE_SENTENCE, PROFILE_NAME, PROFILE_IMAGE, SOCIAL_ICON } from '@/constants/data';
@@ -8,16 +8,16 @@ import { iconControlClassName } from '@/components/Common/controlClassNames';
 import { colorClassNames, getThemeClassName, surfaceClassNames } from '@/styles/uiClassNames';
 
 export default function Profile() {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
 
   return (
     <>
       <div className={`pt-8 px-4 ${surfaceClassNames.panel} ${themeClassName}`}>
-        <div className={`text-2xl text-center font-semibold pb-5 flex justify-center`}>
+        <h2 className={`text-2xl text-center font-semibold pb-5 flex justify-center`}>
           <UserCircleIcon className="h-8 w-8 mr-2" aria-hidden="true" />
           ブログ運営者
-        </div>
+        </h2>
         {PROFILE_IMAGE.map((item) => (
           <img
             className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
