@@ -2,17 +2,17 @@ import * as cheerio from 'cheerio';
 import { SAFE_RESOURCE_PROTOCOLS, hasSafeUrlProtocol } from '@/utils/urlSafety';
 import { applySponsoredRelToHtmlLinks } from '@/utils/sponsored';
 
-const URL_ATTRIBUTES = new Set(['href', 'src', 'xlink:href']);
+const URL_ATTRIBUTES = new Set([
+  'href',
+  'src',
+  'xlink:href',
+  'action',
+  'formaction',
+  'poster',
+  'data',
+]);
 
-export const loadHtmlFragment = (html: string) => {
-  const load = cheerio.load as unknown as (
-    content: string,
-    options: null,
-    isDocument: boolean,
-  ) => ReturnType<typeof cheerio.load>;
-
-  return load(html, null, false);
-};
+export const loadHtmlFragment = (html: string) => cheerio.load(html, {}, false);
 
 export const isSafeResourceUrl = (value: string) =>
   hasSafeUrlProtocol(value, SAFE_RESOURCE_PROTOCOLS);
@@ -25,12 +25,17 @@ export const sanitizeHtmlAttributes = ($: ReturnType<typeof cheerio.load>) => {
     Object.entries(attributes).forEach(([attributeName, attributeValue]) => {
       const normalizedAttributeName = attributeName.toLowerCase();
 
-      if (normalizedAttributeName.startsWith('on')) {
+      if (normalizedAttributeName === 'srcdoc' || normalizedAttributeName.startsWith('on')) {
         target.removeAttr(attributeName);
         return;
       }
 
-      if (URL_ATTRIBUTES.has(normalizedAttributeName) && !hasSafeUrlProtocol(attributeValue)) {
+      const isNavigation =
+        normalizedAttributeName === 'href' || normalizedAttributeName === 'xlink:href';
+      if (
+        URL_ATTRIBUTES.has(normalizedAttributeName) &&
+        !(isNavigation ? hasSafeUrlProtocol(attributeValue) : isSafeResourceUrl(attributeValue))
+      ) {
         target.removeAttr(attributeName);
       }
     });

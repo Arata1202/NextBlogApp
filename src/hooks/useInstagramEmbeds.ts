@@ -33,7 +33,7 @@ const loadInstagramScript = () => {
     return;
   }
 
-  if (document.querySelector('script[src*="instagram.com/embed.js"]')) {
+  if (document.querySelector('script[src="https://www.instagram.com/embed.js"]')) {
     return;
   }
 
@@ -44,26 +44,12 @@ const loadInstagramScript = () => {
   script.async = true;
   script.onload = () => {
     window.instagramScriptLoading = false;
-    window.instgrm?.Embeds?.process?.();
   };
   script.onerror = () => {
+    script.remove();
     window.instagramScriptLoading = false;
   };
   document.body.appendChild(script);
-};
-
-const runInstagramProcess = (retries = INSTAGRAM_LOAD_MAX_RETRIES) => {
-  if (window.instgrm?.Embeds?.process) {
-    window.instgrm.Embeds.process();
-    return;
-  }
-
-  if (retries <= 0) {
-    return;
-  }
-
-  loadInstagramScript();
-  window.setTimeout(() => runInstagramProcess(retries - 1), INSTAGRAM_LOAD_RETRY_MS);
 };
 
 export const useInstagramEmbeds = (ref: RefObject<HTMLElement | null>, html: string) => {
@@ -75,6 +61,19 @@ export const useInstagramEmbeds = (ref: RefObject<HTMLElement | null>, html: str
     }
 
     let timer: number | undefined;
+    const runInstagramProcess = (retries = INSTAGRAM_LOAD_MAX_RETRIES) => {
+      if (window.instgrm?.Embeds?.process) {
+        window.instgrm.Embeds.process();
+        return;
+      }
+
+      if (retries <= 0) {
+        return;
+      }
+
+      loadInstagramScript();
+      timer = window.setTimeout(() => runInstagramProcess(retries - 1), INSTAGRAM_LOAD_RETRY_MS);
+    };
 
     const scheduleLoad = () => {
       window.clearTimeout(timer);
@@ -85,7 +84,18 @@ export const useInstagramEmbeds = (ref: RefObject<HTMLElement | null>, html: str
       }, INSTAGRAM_RELOAD_DELAY_MS);
     };
 
-    const observer = new MutationObserver(scheduleLoad);
+    const observer = new MutationObserver((changes) => {
+      if (
+        changes.some(({ addedNodes }) =>
+          [...addedNodes].some(
+            (node) =>
+              node instanceof Element &&
+              (node.matches(INSTAGRAM_SELECTOR) || node.querySelector(INSTAGRAM_SELECTOR)),
+          ),
+        )
+      )
+        scheduleLoad();
+    });
     observer.observe(container, {
       childList: true,
       subtree: true,

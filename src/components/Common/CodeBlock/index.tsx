@@ -1,6 +1,6 @@
 'use client';
 
-import { isValidElement, useState, type ComponentPropsWithoutRef, type ReactNode } from 'react';
+import { useRef, useState, type ComponentPropsWithoutRef } from 'react';
 import CodeBlockToolbar from './Toolbar';
 import styles from './index.module.css';
 
@@ -10,23 +10,8 @@ type Props = ComponentPropsWithoutRef<'pre'> & {
   filename?: string;
 };
 
-export const getReactNodeText = (node: ReactNode): string => {
-  if (typeof node === 'string' || typeof node === 'number') {
-    return String(node);
-  }
-
-  if (Array.isArray(node)) {
-    return node.map(getReactNodeText).join('');
-  }
-
-  if (isValidElement<{ children?: ReactNode }>(node)) {
-    return getReactNodeText(node.props.children);
-  }
-
-  return '';
-};
-
 export default function CodeBlock({ children, className, filename, ...props }: Props) {
+  const codeRef = useRef<HTMLPreElement>(null);
   const [wrapped, setWrapped] = useState(false);
   const wrapClassName = wrapped ? styles.wrapped : styles.unwrapped;
 
@@ -34,11 +19,12 @@ export default function CodeBlock({ children, className, filename, ...props }: P
     <div className={styles.codeBlockFrame}>
       <CodeBlockToolbar
         filename={filename}
-        getCodeText={() => getReactNodeText(children)}
+        getCodeText={() => codeRef.current?.textContent ?? ''}
         wrapped={wrapped}
         onWrappedChange={setWrapped}
       />
       <pre
+        ref={codeRef}
         aria-label={filename ? `コードブロック: ${filename}` : 'コードブロック'}
         role="region"
         tabIndex={0}

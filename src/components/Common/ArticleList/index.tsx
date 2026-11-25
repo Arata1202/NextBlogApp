@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
 import { Article, Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
@@ -65,7 +65,7 @@ export default function ArticleList({
   isLoading = false,
   stackedPagination,
 }: Props) {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const isMixed = Boolean(mixedArticles);
 
   return (
@@ -97,7 +97,9 @@ export default function ArticleList({
               {articles.slice(0, 3).map((article, index) => (
                 <ArticleCard key={article.id} article={article} priority={index === 0} />
               ))}
-              <AdUnit slot="9947663897" style={{ marginBottom: '1.25rem' }} />
+              <li className="empty:hidden">
+                <AdUnit slot="9947663897" style={{ marginBottom: '1.25rem' }} />
+              </li>
               {articles.slice(3).map((article) => (
                 <ArticleCard key={article.id} article={article} />
               ))}
@@ -108,7 +110,9 @@ export default function ArticleList({
               {mixedArticles.slice(0, 3).map((article, index) => (
                 <UnifiedArticleCard key={article.id} article={article} priority={index === 0} />
               ))}
-              <AdUnit slot="9947663897" style={{ marginBottom: '1.25rem' }} />
+              <li className="empty:hidden">
+                <AdUnit slot="9947663897" style={{ marginBottom: '1.25rem' }} />
+              </li>
               {mixedArticles.slice(3).map((article) => (
                 <UnifiedArticleCard key={article.id} article={article} />
               ))}

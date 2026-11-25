@@ -1,7 +1,12 @@
 const DEFAULT_BASE_URL = 'https://example.invalid';
 
-export const SAFE_NAVIGATION_PROTOCOLS = new Set(['http:', 'https:', 'mailto:', 'tel:']);
-export const SAFE_RESOURCE_PROTOCOLS = new Set(['http:', 'https:']);
+export const SAFE_NAVIGATION_PROTOCOLS: ReadonlySet<string> = new Set([
+  'http:',
+  'https:',
+  'mailto:',
+  'tel:',
+]);
+export const SAFE_RESOURCE_PROTOCOLS: ReadonlySet<string> = new Set(['http:', 'https:']);
 
 const hasControlCharacters = (value: string) => {
   for (let index = 0; index < value.length; index += 1) {
@@ -18,7 +23,7 @@ const hasControlCharacters = (value: string) => {
 export const parseUrl = (value: string, baseUrl = DEFAULT_BASE_URL) => {
   const trimmedValue = value.trim();
 
-  if (!trimmedValue || hasControlCharacters(trimmedValue)) {
+  if (!trimmedValue || hasControlCharacters(value)) {
     return null;
   }
 

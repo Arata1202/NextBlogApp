@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, type CSSProperties } from 'react';
 import { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { useMutationObserver } from '@/hooks/useMutationObserver';
 import { useAppWebViewMode } from '@/hooks/useAppWebViewMode';
 import styles from './index.module.css';
@@ -20,7 +20,7 @@ type Props = {
   format?: string;
   responsive?: string;
   sidebarStickyStop?: boolean;
-  style?: object;
+  style?: CSSProperties;
 };
 
 export default function AdUnit({
@@ -33,12 +33,12 @@ export default function AdUnit({
   let pathname = usePathname();
   pathname = pathname ? pathname : '';
 
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const isAppWebViewMode = useAppWebViewMode();
   const themeClassName = getThemeClassName(theme);
   const publisherId = getGoogleAdSensePublisherId();
 
-  useMutationObserver();
+  const guardRef = useMutationObserver();
 
   useEffect(() => {
     if (isAppWebViewMode || !publisherId) {
@@ -54,7 +54,7 @@ export default function AdUnit({
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [isAppWebViewMode, pathname, publisherId]);
+  }, [isAppWebViewMode, pathname, publisherId, slot]);
 
   if (isAppWebViewMode || !publisherId) {
     return null;
@@ -63,7 +63,8 @@ export default function AdUnit({
   return (
     <>
       <div
-        key={pathname.replace(/\//g, '-') + '-' + slot}
+        ref={guardRef}
+        key={JSON.stringify([pathname, slot])}
         className={`${styles.container} mut-guard`}
         data-web-ad
         data-sidebar-sticky-stop={sidebarStickyStop ? '' : undefined}

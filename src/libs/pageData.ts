@@ -3,12 +3,19 @@ import { getAllTagLists } from '@/libs/microcms';
 import { getArchiveList } from '@/libs/archive';
 import { getMixedRecentArticles } from '@/libs/recent';
 
+async function sidebarItems<T>(label: string, items: Promise<T[]>): Promise<T[]> {
+  try {
+    return await items;
+  } catch (error) {
+    console.warn(`Sidebar ${label} unavailable`, error);
+    return [];
+  }
+}
+
 export const getSidebarNavigationData = cache(async () => {
   const [tags, archiveList] = await Promise.all([
-    getAllTagLists({
-      fields: 'id,name',
-    }),
-    getArchiveList(),
+    sidebarItems('tags', getAllTagLists({ fields: 'id,name' })),
+    sidebarItems('archives', getArchiveList()),
   ]);
 
   return { tags, archiveList };
@@ -16,7 +23,7 @@ export const getSidebarNavigationData = cache(async () => {
 
 export const getSidebarData = cache(async () => {
   const [recentArticles, navigationData] = await Promise.all([
-    getMixedRecentArticles(),
+    sidebarItems('recent articles', getMixedRecentArticles()),
     getSidebarNavigationData(),
   ]);
   const { tags, archiveList } = navigationData;

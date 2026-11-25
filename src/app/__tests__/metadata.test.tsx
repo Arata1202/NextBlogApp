@@ -227,8 +227,8 @@ describe('app metadata', () => {
       'プライバシーポリシーを記載しています。',
     ],
     ['disclaimer', '@/app/disclaimer/layout', '免責事項', '免責事項を記載しています。'],
-    ['copyright', '@/app/copyright/layout', '著作権', '著作権についてを記載しています。'],
-    ['link', '@/app/link/layout', 'リンク', 'リンクについてを記載しています。'],
+    ['copyright', '@/app/copyright/layout', '著作権', '著作権について記載しています。'],
+    ['link', '@/app/link/layout', 'リンク', 'リンクについて記載しています。'],
     [
       'sitemap-html',
       '@/app/sitemap-html/layout',
@@ -241,7 +241,7 @@ describe('app metadata', () => {
     async (route, importPath, titlePrefix, description) => {
       const { generateMetadata } = await import(importPath);
 
-      await expect(generateMetadata()).resolves.toMatchObject({
+      expect(await generateMetadata()).toMatchObject({
         title: `${titlePrefix}｜Example Blog`,
         description,
         openGraph: expect.objectContaining({

@@ -27,19 +27,13 @@ export default function CodeBlockToolbar({
   onWrappedChange,
   wrapped,
 }: Props) {
-  const [copyState, setCopyState] = useState<CopyState>('idle');
-  const Icon =
-    copyState === 'copied'
-      ? CheckIcon
-      : copyState === 'failed'
-        ? ExclamationCircleIcon
-        : DocumentDuplicateIcon;
-  const label =
-    copyState === 'copied'
-      ? 'コピー済み'
-      : copyState === 'failed'
-        ? 'コピーに失敗しました'
-        : 'コードをコピー';
+  const [result, setResult] = useState<{ state: CopyState }>({ state: 'idle' });
+  const copyState = result.state;
+  const { Icon, label } = {
+    idle: { Icon: DocumentDuplicateIcon, label: 'コードをコピー' },
+    copied: { Icon: CheckIcon, label: 'コピー済み' },
+    failed: { Icon: ExclamationCircleIcon, label: 'コピーに失敗しました' },
+  }[copyState];
   const wrapLabel = wrapped ? 'コードの折り返しを解除' : 'コードを折り返す';
 
   useEffect(() => {
@@ -48,23 +42,23 @@ export default function CodeBlockToolbar({
     }
 
     const timer = window.setTimeout(() => {
-      setCopyState('idle');
+      setResult({ state: 'idle' });
     }, COPIED_STATE_RESET_MS);
 
     return () => window.clearTimeout(timer);
-  }, [copyState]);
+  }, [result, copyState]);
 
   const handleClick = async () => {
     try {
       await copyCodeText(getCodeText());
-      setCopyState('copied');
+      setResult({ state: 'copied' });
     } catch {
-      setCopyState('failed');
+      setResult({ state: 'failed' });
     }
   };
 
   return (
-    <div className={styles.toolbar} role="toolbar" aria-label="コードブロック操作">
+    <div className={styles.toolbar} role="group" aria-label="コードブロック操作">
       <div className={styles.meta}>
         {filename && (
           <span className={styles.filename} title={filename}>
@@ -76,7 +70,7 @@ export default function CodeBlockToolbar({
         <button
           type="button"
           className={styles.copyButton}
-          aria-label={wrapLabel}
+          aria-label="コードを折り返す"
           aria-pressed={wrapped}
           data-active={String(wrapped)}
           data-tooltip={wrapLabel}

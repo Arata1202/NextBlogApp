@@ -21,14 +21,17 @@ export default function OneSignalClient({ appId }: Props) {
       <Script
         src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
         strategy="afterInteractive"
+        onError={() => console.warn('OneSignal SDK failed to load.')}
       />
       <Script id="onesignal-init" strategy="afterInteractive">
         {`
           window.OneSignalDeferred = window.OneSignalDeferred || [];
           OneSignalDeferred.push(async function(OneSignal) {
-            await OneSignal.init({
-              appId: ${JSON.stringify(appId)},
-            });
+            try {
+              await OneSignal.init({ appId: ${JSON.stringify(appId)} });
+            } catch {
+              console.warn('OneSignal initialization failed.');
+            }
           });
         `}
       </Script>

@@ -43,7 +43,7 @@
 @media (max-width: 1023px) and (min-width: 641px) {
   .link {
     display: grid;
-    grid-template-columns: minmax(240px, 42%) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
     gap: 20px;
     align-items: flex-start;
   }
@@ -71,4 +71,12 @@
     font-size: 1.25rem;
     line-height: 1.7;
   }
+}
+
+.media:empty {
+  display: none;
+}
+
+.media:empty + .content {
+  grid-column: 1 / -1;
 }

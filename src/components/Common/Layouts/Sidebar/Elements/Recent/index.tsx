@@ -1,9 +1,10 @@
 'use client';
 
-import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { SiteLink as Link } from '@/components/Common/AppWebViewLinkHandler';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { UnifiedArticle } from '@/types/unified';
+import { RECENT_LIMIT } from '@/constants/limit';
 import WebpImage from '@/components/Common/Elements/WebpImage';
 import styles from './index.module.css';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
@@ -20,20 +21,19 @@ const normalizePath = (path?: string) => {
 };
 
 export default function Recent({ recentArticles, currentArticleUrl }: Props) {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const normalizedCurrentArticleUrl = normalizePath(currentArticleUrl);
   const themeClassName = getThemeClassName(theme);
   const linkClassName = `${styles.link} block p-2 ${surfaceClassNames.card} ${interactiveFocusClassName} ${themeClassName}`;
 
   const sortedArticles = recentArticles
-    .slice()
     .filter((article) => normalizePath(article.url) !== normalizedCurrentArticleUrl)
     .sort((a, b) => {
       const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
       const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
       return dateB - dateA;
     })
-    .slice(0, 3);
+    .slice(0, RECENT_LIMIT);
 
   return (
     <>

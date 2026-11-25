@@ -5,18 +5,22 @@ on:
       - master
 permissions:
   contents: read
+concurrency:
+  group: vercel-production
+  cancel-in-progress: false
 jobs:
   Deploy-Production:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v7
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          version: 10.8.0
+          persist-credentials: false
+      - name: Setup pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6
       - name: Deploy Project Artifacts to Vercel
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: pnpm dlx vercel@latest deploy --prod --token="$VERCEL_TOKEN"
+        run: pnpm dlx vercel@66.6.0 deploy --prod --token="$VERCEL_TOKEN"

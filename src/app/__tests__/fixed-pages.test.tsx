@@ -105,7 +105,7 @@ describe('fixed app pages', () => {
     render(await Page());
 
     expect(screen.getByText('SitemapHtmlPage mock')).toBeInTheDocument();
-    expect(microcmsMock.getAllLists).toHaveBeenCalledWith({ fields: 'id,title,thumbnail' });
+    expect(microcmsMock.getAllLists).toHaveBeenCalledWith({ fields: 'id,title' });
     expect(microcmsMock.getAllCategoryLists).toHaveBeenCalledWith({ fields: 'id,name' });
     expect(pageMocks.sitemapHtml).toHaveBeenCalledWith({
       articles,

@@ -8,8 +8,8 @@ type Props = {
   sidebar?: boolean;
 };
 
-export default function BuyMeaCoffee({ data, sidebar = false }: Props) {
-  const buyMeaCoffeeMessage = (data?.id && data?.title) || sidebar ? 'この' : '';
+export default function BuyMeACoffee({ data, sidebar = false }: Props) {
+  const buyMeACoffeeMessage = (data?.id && data?.title) || sidebar ? 'この' : '';
 
   return (
     <>
@@ -17,13 +17,14 @@ export default function BuyMeaCoffee({ data, sidebar = false }: Props) {
         href="https://www.buymeacoffee.com/realunivlog"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="BuyMeaCoffeeを新しいタブで開く"
+        aria-label="Buy Me a Coffeeを新しいタブで開く"
         className={`mx-auto mt-5 flex w-fit ${radiusClassNames.control} hover:opacity-60 ${interactiveFocusClassName}`}
       >
         <img
           src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-          alt="BuyMeaCoffee"
+          alt="Buy Me a Coffee"
           loading="lazy"
+          height="45"
           width="160"
         />
       </a>
@@ -31,7 +32,7 @@ export default function BuyMeaCoffee({ data, sidebar = false }: Props) {
         className={`${styles.BuyMeaCoffeeMessage} text-center mt-4`}
         data-main-buy-me-a-coffee-end={sidebar ? undefined : ''}
       >
-        もし{buyMeaCoffeeMessage}記事が役に立ったなら、
+        もし{buyMeACoffeeMessage}記事が役に立ったなら、
         <br />
         こちらから ☕ を一杯支援いただけると喜びます
       </div>

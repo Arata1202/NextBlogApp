@@ -15,7 +15,6 @@ type Props = {
 
 function RichText({ html, adSlots = [] }: Props) {
   const contentRef = useRef<HTMLDivElement>(null);
-  const shouldInsertAdsBeforeH2 = adSlots.length > 0;
   const htmlParts = useMemo(() => html.split(ARTICLE_CONTENT_AD_MARKER), [html]);
   const dangerouslySetInnerHTML = useMemo(() => ({ __html: html }), [html]);
 
@@ -23,7 +22,7 @@ function RichText({ html, adSlots = [] }: Props) {
   useInstagramEmbeds(contentRef, html);
   useCodeBlockCopyButtons(contentRef, html);
 
-  if (shouldInsertAdsBeforeH2 && htmlParts.length > 1) {
+  if (htmlParts.length > 1) {
     return (
       <div ref={contentRef}>
         {htmlParts.map((htmlPart, index) => (
@@ -49,9 +48,4 @@ function RichText({ html, adSlots = [] }: Props) {
   );
 }
 
-export default memo(RichText, (prevProps, nextProps) => {
-  return (
-    prevProps.html === nextProps.html &&
-    (prevProps.adSlots ?? []).join(',') === (nextProps.adSlots ?? []).join(',')
-  );
-});
+export default memo(RichText);

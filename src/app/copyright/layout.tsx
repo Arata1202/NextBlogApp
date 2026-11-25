@@ -1,35 +1,9 @@
-import { Metadata } from 'next';
+import { staticPageMetadata } from '@/config/site';
 
-type Props = {
-  children: React.ReactNode;
-};
-
-export async function generateMetadata(): Promise<Metadata> {
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
-
-  const title = `著作権｜${defaultTitle}`;
-  const description = `著作権についてを記載しています。`;
-  const images = `${defaultUrl}/images/thumbnail/7.webp`;
-  const url = `${defaultUrl}/copyright`;
-
-  return {
-    title: title,
-    description: description,
-    openGraph: {
-      title: title,
-      description: description,
-      images: images,
-      url: url,
-    },
-    alternates: {
-      canonical: url,
-    },
-  };
+export function generateMetadata() {
+  return staticPageMetadata('/copyright', '著作権', '著作権について記載しています。');
 }
 
-export default async function CopyrightLayout(props: Props) {
-  const { children } = props;
-
+export default function CopyrightLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

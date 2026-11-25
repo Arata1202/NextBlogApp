@@ -82,6 +82,7 @@ const getSearchUrl = (endpoint: string, query: string, currentPage: number) => {
 const getPayloadString = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
 
 const normalizeSearchArticle = (article: SearchArticlePayload): UnifiedArticle | null => {
+  if (!article || typeof article !== 'object') return null;
   const rawId = getPayloadString(article.id);
   const title = getPayloadString(article.title);
 
@@ -92,10 +93,17 @@ const normalizeSearchArticle = (article: SearchArticlePayload): UnifiedArticle |
   const source = article.source === 'zenn' ? 'zenn' : 'blog';
   const contentId = source === 'blog' && rawId.startsWith('blog-') ? rawId.slice(5) : rawId;
   const normalizedId = source === 'blog' && !rawId.startsWith('blog-') ? `blog-${rawId}` : rawId;
-  const fallbackUrl = source === 'blog' ? `/articles/${contentId}` : '';
-  const url = getPayloadString(article.url) || fallbackUrl;
+  if (!contentId || contentId === '.' || contentId === '..') return null;
+  const external = URL.canParse(getPayloadString(article.url))
+    ? new URL(getPayloadString(article.url))
+    : null;
+  const url = source === 'blog' ? `/articles/${encodeURIComponent(contentId)}` : external?.href;
 
-  if (!url) {
+  if (
+    !url ||
+    (source === 'zenn' &&
+      (external?.origin !== 'https://zenn.dev' || external.username || external.password))
+  ) {
     return null;
   }
 
@@ -237,6 +245,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
         }
 
         const data = (await response.json()) as SearchResponse;
+        if (!isActive) return;
         const contents = normalizeSearchArticles(data.contents);
 
         setSearchState({
@@ -257,7 +266,6 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
           },
           extra: {
             currentPage,
-            query,
           },
         });
 
@@ -331,6 +339,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
             basePath="/search"
             q={query}
             useQueryPage
+            appWebView={hasAppWebViewParam}
           />
         }
       />
@@ -340,6 +349,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
         basePath="/search"
         q={query}
         useQueryPage
+        appWebView={hasAppWebViewParam}
         hideWhenStacked
       />
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />

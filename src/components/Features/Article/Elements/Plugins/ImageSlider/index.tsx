@@ -110,7 +110,6 @@ export default function ImageSlider({ block, imageAltFallback }: Props) {
         height={image.height}
         loading={index === 0 ? 'eager' : 'lazy'}
         className={styles.image}
-        tabIndex={-1}
         draggable={false}
       />
     );

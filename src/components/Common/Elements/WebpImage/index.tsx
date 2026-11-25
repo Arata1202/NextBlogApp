@@ -1,6 +1,6 @@
 import type { MicroCMSImage } from 'microcms-js-sdk';
 import styles from './index.module.css';
-import { formatMicroCmsImageUrl } from '@/utils/formatMicroCmsImageUrl';
+import { formatMicroCmsImageUrl, isMicroCmsImageUrl } from '@/utils/formatMicroCmsImageUrl';
 
 type Props = {
   article: {
@@ -25,26 +25,38 @@ export default function WebpImage({
   const alt = card || recent ? '' : article.title;
   const width = card ? 300 : 960;
   const height = card ? 158 : 504;
-  const imageUrl = formatMicroCmsImageUrl(article.thumbnail.url, {
-    width,
-    height,
-    quality: 60,
-    fit: 'crop',
-  });
-  const imageUrl2x = formatMicroCmsImageUrl(article.thumbnail.url, {
-    width,
-    height,
-    quality: 60,
-    fit: 'crop',
-    devicePixelRatio: 2,
-  });
+  const thumbnailUrl = article.thumbnail.url;
+  const imageOptions = { width, height, quality: 60, fit: 'crop' } as const;
+  const imageUrl = formatMicroCmsImageUrl(thumbnailUrl, imageOptions);
+  const imageUrl2x = formatMicroCmsImageUrl(thumbnailUrl, { ...imageOptions, devicePixelRatio: 2 });
+  const mobileCardSrcSet =
+    card && isMicroCmsImageUrl(thumbnailUrl)
+      ? [320, 480, 640, 800, 960, 1280]
+          .map((candidateWidth) => {
+            const url = formatMicroCmsImageUrl(thumbnailUrl, {
+              ...imageOptions,
+              width: candidateWidth,
+              height: Math.round((candidateWidth * height) / width),
+              devicePixelRatio: 1,
+            });
+            return `${url} ${candidateWidth}w`;
+          })
+          .join(', ')
+      : undefined;
   const srcSet = `${imageUrl} 1x, ${imageUrl2x} 2x`;
   const pictureClassName =
     (card && styles.cardPicture) || (recent && styles.recentPicture) || undefined;
 
   return (
     <picture className={pictureClassName}>
-      <source type="image/webp" media="(max-width: 640px)" srcSet={srcSet} />
+      {mobileCardSrcSet && (
+        <source
+          type="image/webp"
+          media="(max-width: 640px)"
+          sizes="100vw"
+          srcSet={mobileCardSrcSet}
+        />
+      )}
       <source type="image/webp" srcSet={srcSet} />
       <img
         src={imageUrl}

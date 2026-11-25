@@ -1,4 +1,4 @@
-import * as cheerio from 'cheerio';
+import { ARTICLE_CONTENT_AD_MARKER } from '@/constants/articleContent';
 import { Article } from '@/types/microcms';
 import styles from './index.module.css';
 import '../../../styles/plugin.css';
@@ -34,12 +34,6 @@ const ARTICLE_CONTENT_AD_SLOTS = [
   '8243839293',
 ];
 
-const countH2Elements = (richText: string) => {
-  const $ = cheerio.load(richText);
-
-  return $('h2').length;
-};
-
 export default function ArticleFeature({ data, relatedArticles }: Props) {
   const sponsorUrl = data.isSponsored ? data.sponsorUrl : undefined;
   const headings = useExtractHeadings(data.content_blocks);
@@ -53,32 +47,27 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
       : undefined,
     customHtml: block.custom_html ? sanitizeCustomHtml(block.custom_html, sponsorUrl) : undefined,
   }));
-  const contentBlockAdSlots = data.content_blocks.reduce(
-    (result, block) => {
-      const h2Count = block.rich_text ? countH2Elements(block.rich_text) : 0;
-      const adSlots = ARTICLE_CONTENT_AD_SLOTS.slice(
-        result.usedSlotCount,
-        result.usedSlotCount + h2Count,
-      );
-
-      return {
-        usedSlotCount: result.usedSlotCount + h2Count,
-        adSlotsByBlock: [...result.adSlotsByBlock, adSlots],
-      };
-    },
-    { usedSlotCount: 0, adSlotsByBlock: [] as string[][] },
-  ).adSlotsByBlock;
-  const contentBlocks = data.content_blocks.map((block, index) => ({
-    block,
-    richTextHtml: block.rich_text
+  const availableSlots = [...ARTICLE_CONTENT_AD_SLOTS];
+  const contentBlocks = data.content_blocks.map((block) => {
+    const remainingSlots = availableSlots.length;
+    const richTextHtml = block.rich_text
       ? formatRichText(block.rich_text, {
-          insertAdsBeforeH2: contentBlockAdSlots[index].length > 0,
+          insertAdsBeforeH2: remainingSlots > 0,
+          maxAdSlots: remainingSlots,
           imageAltFallback: data.title,
           sponsorUrl,
         })
-      : undefined,
-    customHtml: block.custom_html ? sanitizeCustomHtml(block.custom_html, sponsorUrl) : undefined,
-  }));
+      : undefined;
+    const count =
+      remainingSlots && richTextHtml ? richTextHtml.split(ARTICLE_CONTENT_AD_MARKER).length - 1 : 0;
+    const adSlots = availableSlots.splice(0, count);
+    return {
+      block,
+      richTextHtml,
+      adSlots,
+      customHtml: block.custom_html ? sanitizeCustomHtml(block.custom_html, sponsorUrl) : undefined,
+    };
+  });
 
   return (
     <>
@@ -100,18 +89,18 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
           {block.article_link && typeof block.article_link !== 'string' && (
             <WantToRead block={block} />
           )}
-          {block.box_merit && <TabBox block={block} merit={true} sponsorUrl={sponsorUrl} />}
-          {block.box_demerit && <TabBox block={block} demerit={true} sponsorUrl={sponsorUrl} />}
-          {block.box_point && <TabBox block={block} point={true} sponsorUrl={sponsorUrl} />}
-          {block.box_common && <TabBox block={block} common={true} sponsorUrl={sponsorUrl} />}
+          {block.box_merit && <TabBox block={block} variant="merit" sponsorUrl={sponsorUrl} />}
+          {block.box_demerit && <TabBox block={block} variant="demerit" sponsorUrl={sponsorUrl} />}
+          {block.box_point && <TabBox block={block} variant="point" sponsorUrl={sponsorUrl} />}
+          {block.box_common && <TabBox block={block} variant="common" sponsorUrl={sponsorUrl} />}
         </div>
       ))}
       {headings.length > 0 && <TableOfContents headings={headings} />}
-      {contentBlocks.map(({ block, richTextHtml, customHtml }, index) => {
+      {contentBlocks.map(({ block, richTextHtml, customHtml, adSlots }, index) => {
         return (
           <div key={index} className="mt-5">
             {block.bubble_text && block.bubble_image && <SpeechBubble block={block} />}
-            {richTextHtml && <RichText html={richTextHtml} adSlots={contentBlockAdSlots[index]} />}
+            {richTextHtml && <RichText html={richTextHtml} adSlots={adSlots} />}
             {customHtml && <CustomHtml html={customHtml} sponsorUrl={sponsorUrl} />}
             {block.image_slider && block.image_slider.length > 0 && (
               <ImageSlider block={block} imageAltFallback={data.title} />
@@ -119,10 +108,12 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
             {block.article_link && typeof block.article_link !== 'string' && (
               <WantToRead block={block} />
             )}
-            {block.box_merit && <TabBox block={block} merit={true} sponsorUrl={sponsorUrl} />}
-            {block.box_demerit && <TabBox block={block} demerit={true} sponsorUrl={sponsorUrl} />}
-            {block.box_point && <TabBox block={block} point={true} sponsorUrl={sponsorUrl} />}
-            {block.box_common && <TabBox block={block} common={true} sponsorUrl={sponsorUrl} />}
+            {block.box_merit && <TabBox block={block} variant="merit" sponsorUrl={sponsorUrl} />}
+            {block.box_demerit && (
+              <TabBox block={block} variant="demerit" sponsorUrl={sponsorUrl} />
+            )}
+            {block.box_point && <TabBox block={block} variant="point" sponsorUrl={sponsorUrl} />}
+            {block.box_common && <TabBox block={block} variant="common" sponsorUrl={sponsorUrl} />}
           </div>
         );
       })}

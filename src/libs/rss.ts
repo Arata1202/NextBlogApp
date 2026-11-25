@@ -1,13 +1,15 @@
+import { ZENN_ACCOUNT } from '@/constants/zenn';
+import { getSiteUrl, getSiteTitle } from '@/config/site';
 import { Feed } from 'feed';
 import fs from 'fs';
+import { mapBlogArticlesToUnified } from './unified';
 import { getAllLists } from './microcms';
 import { getZennFeed } from './zenn';
 import { COPYRIGHT, DESCRIPTION } from '@/constants/data';
-import { UnifiedArticle } from '@/types/unified';
 
 export const generateRssFeedXml = async () => {
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const defaultUrl = getSiteUrl();
+  const defaultTitle = getSiteTitle();
 
   const title = defaultTitle!;
   const description = DESCRIPTION;
@@ -31,25 +33,19 @@ export const generateRssFeedXml = async () => {
     ttl: 60,
   });
 
-  const data = await getAllLists({
-    fields: 'id,title,description,categories,thumbnail,publishedAt',
-  });
-
-  const blogItems: UnifiedArticle[] = data.map((item) => ({
-    id: `blog-${item.id}`,
-    title: item.title,
-    description: item.description,
-    publishedAt: item.publishedAt!,
-    thumbnailUrl: item.thumbnail?.url,
-    url: `${url}/articles/${item.id}`,
-    source: 'blog',
+  const [data, zennItems] = await Promise.all([
+    getAllLists({ fields: 'id,title,description,categories,thumbnail,publishedAt,updatedAt' }),
+    getZennFeed(ZENN_ACCOUNT, 50, { includeAll: true }),
+  ]);
+  const blogItems = mapBlogArticlesToUnified(data).map((item) => ({
+    ...item,
+    url: new URL(item.url, url).href,
   }));
+  const categories = new Map(data.map((article) => [`blog-${article.id}`, article.categories]));
 
-  const zennItems = await getZennFeed('realunivlog', 50, { includeAll: true });
-
-  const merged = [...blogItems, ...zennItems].sort(
-    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
-  );
+  const merged = [...blogItems, ...zennItems]
+    .filter((item) => Number.isFinite(Date.parse(item.publishedAt)))
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
   merged.forEach((item) => {
     feed.addItem({
@@ -61,12 +57,10 @@ export const generateRssFeedXml = async () => {
       author: [{ name: title }],
       ...(item.source === 'blog'
         ? {
-            category: data
-              .find((d) => `blog-${d.id}` === item.id)
-              ?.categories.map((category) => ({ name: category.name })),
+            category: categories.get(item.id)?.map((category) => ({ name: category.name })),
           }
         : {}),
-      image: item.thumbnailUrl,
+      image: item.thumbnailUrl ? new URL(item.thumbnailUrl, url).href : undefined,
     });
   });
 

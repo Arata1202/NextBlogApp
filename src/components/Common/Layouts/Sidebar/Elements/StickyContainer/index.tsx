@@ -72,21 +72,24 @@ export default function StickyContainer({ contentBlocks }: Props) {
 
       const frame = frameRef.current;
       const panel = panelRef.current;
+      if (!frame || !panel) {
+        resetPanel();
+        return;
+      }
       const stickyStopElement = document.querySelector<HTMLElement>(STICKY_STOP_SELECTOR);
       const mainBuyMeACoffeeEndElement = document.querySelector<HTMLElement>(
         MAIN_BUY_ME_A_COFFEE_END_SELECTOR,
       );
 
-      if (!frame || !panel || !stickyStopElement) {
+      if (!mainBuyMeACoffeeEndElement && !stickyStopElement) {
         resetPanel();
         return;
       }
 
       const frameRect = frame.getBoundingClientRect();
-      const stickyStopRect = stickyStopElement.getBoundingClientRect();
       const stopPanelBottom = mainBuyMeACoffeeEndElement
         ? mainBuyMeACoffeeEndElement.getBoundingClientRect().bottom
-        : stickyStopRect.top - STICKY_STOP_FALLBACK_GAP;
+        : stickyStopElement!.getBoundingClientRect().top - STICKY_STOP_FALLBACK_GAP;
       const scrollY = window.scrollY;
       const panelHeight = panel.offsetHeight;
       const frameDocumentTop = scrollY + frameRect.top;
@@ -114,18 +117,33 @@ export default function StickyContainer({ contentBlocks }: Props) {
       animationFrameId = window.requestAnimationFrame(updatePanel);
     };
 
-    scheduleUpdate();
-    window.addEventListener('scroll', scheduleUpdate, { passive: true });
-    window.addEventListener('resize', scheduleUpdate);
-
-    return () => {
-      if (animationFrameId !== 0) {
-        window.cancelAnimationFrame(animationFrameId);
-      }
-
-      resetPanel();
+    const resizeObserver =
+      typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(scheduleUpdate);
+    const desktop = window.matchMedia?.('(width > 1023px)');
+    const stop = () => {
       window.removeEventListener('scroll', scheduleUpdate);
       window.removeEventListener('resize', scheduleUpdate);
+      resizeObserver?.disconnect();
+      window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = 0;
+      resetPanel();
+    };
+    const syncViewport = () => {
+      if (desktop && !desktop.matches) {
+        stop();
+        return;
+      }
+      if (panelRef.current) resizeObserver?.observe(panelRef.current);
+      resizeObserver?.observe(document.body);
+      window.addEventListener('scroll', scheduleUpdate, { passive: true });
+      window.addEventListener('resize', scheduleUpdate);
+      scheduleUpdate();
+    };
+    syncViewport();
+    desktop?.addEventListener('change', syncViewport);
+    return () => {
+      desktop?.removeEventListener('change', syncViewport);
+      stop();
     };
   }, [headings.length]);
 

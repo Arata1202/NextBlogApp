@@ -85,7 +85,7 @@ describe('article app page', () => {
     expect(microcmsMock.getList).toHaveBeenCalledWith({
       limit: 3,
       fields: 'id,title,tags,description,thumbnail,publishedAt,updatedAt',
-      filters: 'categories[contains]category-a,title[not_equals]Article A',
+      filters: 'categories[contains]category-a[and]id[not_equals]article-a',
     });
     expect(articlePageMock).toHaveBeenCalledWith(
       expect.objectContaining({

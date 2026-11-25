@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
-import { Fragment, useEffect, useRef, useState, type ElementType, type RefObject } from 'react';
-import { useTheme } from 'next-themes';
+import { SiteLink as Link } from '@/components/Common/AppWebViewLinkHandler';
+import { Fragment, useEffect, useState, type ElementType } from 'react';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import { IoAirplane } from 'react-icons/io5';
 import {
@@ -51,38 +51,6 @@ const HEADER_CATEGORY_ICONS: Record<string, ElementType> = {
   blog: BookOpenSolidIcon,
 };
 
-type CloseOnOutsideClickProps = {
-  enabled: boolean;
-  rootRef: RefObject<HTMLElement | null>;
-  onClose: () => void;
-};
-
-function CloseOnOutsideClick({ enabled, rootRef, onClose }: CloseOnOutsideClickProps) {
-  useEffect(() => {
-    if (!enabled) {
-      return;
-    }
-
-    const handlePointerDown = (event: PointerEvent) => {
-      const target = event.target;
-
-      if (!(target instanceof Node) || rootRef.current?.contains(target)) {
-        return;
-      }
-
-      onClose();
-    };
-
-    document.addEventListener('pointerdown', handlePointerDown);
-
-    return () => {
-      document.removeEventListener('pointerdown', handlePointerDown);
-    };
-  }, [enabled, onClose, rootRef]);
-
-  return null;
-}
-
 type HeaderCategoryIconProps = {
   category: Category;
   className: string;
@@ -95,10 +63,20 @@ function HeaderCategoryIcon({ category, className }: HeaderCategoryIconProps) {
 }
 
 export default function Header() {
-  const { theme } = useTheme();
-  const categoryPopoverRef = useRef<HTMLDivElement>(null);
+  const theme = useResolvedTheme();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  useEffect(() => {
+    if (!mobileMenuOpen || !window.matchMedia) return;
+    const desktop = window.matchMedia('(min-width: 64rem)');
+    const closeOnDesktop = () => {
+      if (desktop.matches) setMobileMenuOpen(false);
+    };
+    closeOnDesktop();
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, [mobileMenuOpen]);
+
   const [suppressCategoryFocusOutline, setSuppressCategoryFocusOutline] = useState(false);
   const themeClassName = getThemeClassName(theme);
   const headerLinkClassName = `flex text-sm leading-6 ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`;
@@ -137,47 +115,36 @@ export default function Header() {
             ))}
           </Link>
           <div className="flex lg:hidden">
-            {mobileMenuOpen ? (
-              <button
-                type="button"
-                aria-label="メニューを閉じる"
-                className={`${compactIconControlClassName} cursor-pointer ${themeClassName}`}
-                onClick={() => setMobileMenuOpen(false)}
+            <div className="flex">
+              <div
+                className={`inline-flex items-center justify-center px-2 sm:px-3 ${themeClassName}`}
               >
-                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-              </button>
-            ) : (
-              <div className="flex">
-                <div
-                  className={`inline-flex items-center justify-center px-2 sm:px-3 ${themeClassName}`}
+                <a
+                  href="https://github.com/Arata1202/NextBlogApp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={mobileGithubLinkClassName}
+                  aria-label="GitHubリポジトリを新しいタブで開く"
                 >
-                  <a
-                    href="https://github.com/Arata1202/NextBlogApp"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={mobileGithubLinkClassName}
-                    aria-label="GitHubリポジトリを新しいタブで開く"
-                  >
-                    <GitHubIcon className="h-6 w-6" aria-hidden="true" />
-                  </a>
-                </div>
-                <div
-                  className={`inline-flex items-center justify-center ${radiusClassNames.control} px-2 sm:px-3 ${themeClassName}`}
-                >
-                  <ThemeSwitch />
-                </div>
-                <div className="-m-2 ml-0.5 flex items-center justify-center p-2 sm:-m-2.5 sm:ml-1 sm:p-2.5">
-                  <button
-                    type="button"
-                    aria-label="メニューを開く"
-                    className={`${compactIconControlClassName} cursor-pointer ${themeClassName}`}
-                    onClick={() => setMobileMenuOpen(true)}
-                  >
-                    <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
+                  <GitHubIcon className="h-6 w-6" aria-hidden="true" />
+                </a>
               </div>
-            )}
+              <div
+                className={`inline-flex items-center justify-center ${radiusClassNames.control} px-2 sm:px-3 ${themeClassName}`}
+              >
+                <ThemeSwitch />
+              </div>
+              <div className="-m-2 ml-0.5 flex items-center justify-center p-2 sm:-m-2.5 sm:ml-1 sm:p-2.5">
+                <button
+                  type="button"
+                  aria-label="メニューを開く"
+                  className={`${compactIconControlClassName} cursor-pointer ${themeClassName}`}
+                  onClick={() => setMobileMenuOpen(true)}
+                >
+                  <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
           </div>
 
           <div className="hidden lg:flex lg:gap-x-12 items-center">
@@ -187,14 +154,9 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
-            <Popover ref={categoryPopoverRef} className="relative">
-              {({ open, close }) => (
+            <Popover className="relative">
+              {({ close }) => (
                 <>
-                  <CloseOnOutsideClick
-                    enabled={open}
-                    rootRef={categoryPopoverRef}
-                    onClose={close}
-                  />
                   <Popover.Button
                     className={`flex cursor-pointer items-center text-sm font-medium ${suppressCategoryFocusOutline ? 'focus-visible:outline-none' : ''} ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`}
                     onPointerDown={() => {
@@ -285,7 +247,7 @@ export default function Header() {
               leaveTo="translate-x-full"
             >
               <Dialog.Panel
-                className={`fixed inset-y-0 right-0 flex max-w-xs w-full ${shadowClassNames.dialog} ${themeClassName}`}
+                className={`fixed inset-y-0 right-0 flex overflow-y-auto max-w-xs w-full ${shadowClassNames.dialog} ${themeClassName}`}
               >
                 <div className="flex w-full flex-col p-5">
                   <div className="-ml-2 flex justify-end p-2">

@@ -39,18 +39,6 @@ export type IntroductionBlock = {
   box_common?: string;
 };
 
-export type ContentBlock = {
+export type ContentBlock = IntroductionBlock & {
   google_adsense?: string;
-  rich_text?: string;
-  custom_html?: string;
-  image_slider?: MicroCMSImage[];
-  article_link?: string | Article;
-  bubble_image?: MicroCMSImage;
-  bubble_name?: string;
-  bubble_text?: string;
-  bubble_isRight?: boolean;
-  box_merit?: string;
-  box_demerit?: string;
-  box_point?: string;
-  box_common?: string;
 };

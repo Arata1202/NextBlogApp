@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import styles from './index.module.css';
 import {
   getThemeVariantClassName,
@@ -18,7 +18,7 @@ const SPONSORED_BADGE_THEME_CLASS_NAMES = {
 } as const;
 
 export default function SponsoredDisclosure({ compact = false }: Props) {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const badgeClassName = [
     'inline-flex w-fit shrink-0 items-center px-2 py-1 text-xs font-medium inset-ring',
     radiusClassNames.control,

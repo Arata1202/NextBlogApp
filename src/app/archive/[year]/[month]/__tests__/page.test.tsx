@@ -16,7 +16,10 @@ const recentMock = vi.hoisted(() => ({
 }));
 
 vi.mock('@/libs/microcms', () => microcmsMock);
-vi.mock('@/libs/archive', () => archiveMock);
+vi.mock('@/libs/archive', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/libs/archive')>()),
+  ...archiveMock,
+}));
 vi.mock('@/libs/recent', () => recentMock);
 vi.mock('@/components/Pages/Archive', async () => {
   const React = await import('react');
@@ -64,7 +67,7 @@ describe('archive app page', () => {
       limit: 10,
       fields: 'id,title,description,publishedAt,updatedAt,thumbnail',
       filters:
-        'publishedAt[greater_than]2024-01-01T00:00:00Z[and]publishedAt[less_than]2024-02-01T00:00:00.000Z',
+        'publishedAt[greater_than]2023-12-31T14:59:59.999Z[and]publishedAt[less_than]2024-01-31T15:00:00.000Z',
     });
     expect(archivePageMock).toHaveBeenCalledWith(
       expect.objectContaining({

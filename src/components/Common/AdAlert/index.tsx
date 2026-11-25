@@ -1,12 +1,12 @@
 'use client';
 
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { MegaphoneIcon } from '@heroicons/react/24/outline';
 import styles from './index.module.css';
 import { getThemeVariantClassName, themeVariantClassNames } from '@/styles/uiClassNames';
 
 export default function AdAlert() {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const borderedTextClassName = getThemeVariantClassName(
     theme,
     themeVariantClassNames.borderedText,

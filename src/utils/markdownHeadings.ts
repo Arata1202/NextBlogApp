@@ -1,23 +1,24 @@
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkGfm from 'remark-gfm';
+import { toString } from 'mdast-util-to-string';
 import type { Heading } from '@/types/heading';
 
-const headingPattern = /^(#{2,5})[ \t]+(.+?)[ \t]*#*[ \t]*$/gm;
+const parser = unified().use(remarkParse).use(remarkGfm);
 
-const stripInlineMarkdown = (value: string) =>
-  value
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-    .replace(/[`*_~]/g, '')
-    .trim();
-
-export const extractMarkdownHeadings = (content: string, idPrefix: string): Heading[] => {
-  let index = 0;
-
-  return Array.from(content.matchAll(headingPattern)).map((match) => {
-    index += 1;
-
-    return {
-      id: `${idPrefix}-${index}`,
-      title: stripInlineMarkdown(match[2]),
-      level: match[1].length,
-    };
-  });
-};
+export function extractMarkdownHeadings(content: string, idPrefix: string): Heading[] {
+  const root = parser.parse(content);
+  const headings: Heading[] = [];
+  function visit(node: typeof root | (typeof root.children)[number]) {
+    if (node.type === 'heading' && node.depth >= 2 && node.depth <= 5) {
+      headings.push({
+        id: `${idPrefix}-${headings.length + 1}`,
+        title: toString(node),
+        level: node.depth,
+      });
+    }
+    if ('children' in node) node.children.forEach(visit);
+  }
+  visit(root);
+  return headings;
+}

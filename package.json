@@ -6,6 +6,7 @@
   "pnpm": {
     "overrides": {
       "eslint-plugin-jsx-a11y>minimatch": "3.1.5",
+      "minimatch@3>brace-expansion": "^1.1.21",
       "flat-cache>flatted": "3.4.2",
       "postcss": "8.5.15"
     }
@@ -14,7 +15,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "build:e2e": "node scripts/e2e/build.mjs",
-    "start": "pnpm dlx serve@latest out",
+    "start": "serve out",
     "lint": "eslint src .storybook e2e scripts playwright.config.ts vitest.config.mts",
     "lint:fix": "eslint src .storybook e2e scripts playwright.config.ts vitest.config.mts --fix",
     "typecheck": "tsc --noEmit",
@@ -25,8 +26,8 @@
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report",
-    "prepare": "husky install",
-    "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,mts,json,css,mjs}'",
+    "prepare": "husky",
+    "format": "prettier --write --ignore-path .gitignore \"./**/*.{js,jsx,ts,tsx,mts,json,css,mjs}\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test:storybook": "vitest run --project=storybook"
@@ -50,8 +51,9 @@
     "date-fns-tz": "^3.2.0",
     "feed": "^6.0.0",
     "highlight.js": "^11.12.0",
+    "mdast-util-to-string": "4.0.0",
     "microcms-js-sdk": "^3.6.0",
-    "next": "^16.4.3",
+    "next": "^16.4.6",
     "next-themes": "^0.4.6",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
@@ -62,7 +64,10 @@
     "react-share": "^5.3.0",
     "react-slick": "^0.31.0",
     "remark-gfm": "^4.0.1",
-    "slick-carousel": "^2.0.0"
+    "remark-parse": "11.0.0",
+    "serve": "14.2.8",
+    "slick-carousel": "^2.0.0",
+    "unified": "11.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
@@ -76,6 +81,7 @@
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.8",
+    "@types/node": "26.6.7",
     "@types/react": "^19.3.0",
     "@types/react-google-recaptcha": "^2.1.9",
     "@types/react-slick": "^0.23.13",

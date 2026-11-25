@@ -6,7 +6,7 @@ export const mapBlogArticlesToUnified = (articles: Article[]): UnifiedArticle[] 
     id: `blog-${item.id}`,
     title: item.title,
     description: item.description ?? '',
-    publishedAt: item.publishedAt!,
+    publishedAt: item.publishedAt ?? item.updatedAt,
     updatedAt: item.updatedAt,
     thumbnail: item.thumbnail,
     thumbnailUrl: item.thumbnail?.url,

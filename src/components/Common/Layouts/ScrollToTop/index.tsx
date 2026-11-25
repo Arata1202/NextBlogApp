@@ -1,13 +1,13 @@
 'use client';
 
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { ChevronDoubleUpIcon } from '@heroicons/react/20/solid';
 import styles from './index.module.css';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
 import { colorClassNames, getThemeClassName, shadowClassNames } from '@/styles/uiClassNames';
 
 export default function ScrollTopButton() {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
 
   const scrollToTop = () => {

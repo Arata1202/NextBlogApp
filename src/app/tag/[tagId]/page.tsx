@@ -1,7 +1,7 @@
 import { getList, getAllTagLists } from '@/libs/microcms';
 import { LIMIT } from '@/constants/limit';
 import TagPage from '@/components/Pages/Tag';
-import { getTagForPage } from '@/libs/microcmsPage';
+import { getTagForPage, taxonomyFields } from '@/libs/microcmsPage';
 import { getSidebarData } from '@/libs/pageData';
 
 type Props = {
@@ -32,7 +32,7 @@ export default async function Page(props: Props) {
       fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
       filters: `tags[contains]${tagId}`,
     }),
-    getTagForPage(params.tagId, { fields: 'id,name' }),
+    getTagForPage(params.tagId, taxonomyFields),
     getSidebarData(),
   ]);
   const { recentArticles, tags, archiveList } = sidebarData;

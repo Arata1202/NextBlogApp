@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 
 export const APP_WEBVIEW_QUERY_PARAMETER = 'app';
 export const APP_WEBVIEW_QUERY_VALUE = '1';
 
 const canUseDom = () => typeof window !== 'undefined' && typeof document !== 'undefined';
 
-function hasAppWebViewParameter() {
+export function hasAppWebViewParameter() {
   if (!canUseDom()) {
     return false;
   }
@@ -26,7 +26,7 @@ export function appendAppWebViewParam(href: string) {
   }
 
   try {
-    const url = new URL(href, window.location.origin);
+    const url = new URL(href, document.baseURI);
 
     if (url.origin !== window.location.origin) {
       return href;
@@ -34,41 +34,27 @@ export function appendAppWebViewParam(href: string) {
 
     url.searchParams.set(APP_WEBVIEW_QUERY_PARAMETER, APP_WEBVIEW_QUERY_VALUE);
 
-    return `${url.pathname}${url.search}${url.hash}`;
+    return url.pathname.startsWith('//') ? url.href : `${url.pathname}${url.search}${url.hash}`;
   } catch {
     return href;
   }
 }
 
-function readAppWebViewMode() {
-  if (!canUseDom()) {
-    return false;
-  }
-
-  try {
-    if (hasAppWebViewParameter()) {
-      document.documentElement.dataset.appWebview = APP_WEBVIEW_QUERY_VALUE;
-      return true;
-    }
-
-    delete document.documentElement.dataset.appWebview;
-    return false;
-  } catch {
-    return false;
-  }
+function subscribe(update: () => void) {
+  window.addEventListener('popstate', update);
+  window.addEventListener('app-webview-navigation', update);
+  return () => {
+    window.removeEventListener('popstate', update);
+    window.removeEventListener('app-webview-navigation', update);
+  };
 }
 
 export function useAppWebViewMode() {
-  const [isAppWebViewMode, setIsAppWebViewMode] = useState(hasAppWebViewParameter);
-
+  const enabled = useSyncExternalStore(subscribe, hasAppWebViewParameter, () => false);
   useEffect(() => {
-    const update = () => setIsAppWebViewMode(readAppWebViewMode());
-
-    update();
-    window.addEventListener('popstate', update);
-
-    return () => window.removeEventListener('popstate', update);
-  }, []);
-
-  return isAppWebViewMode;
+    if (hasAppWebViewParameter())
+      document.documentElement.dataset.appWebview = APP_WEBVIEW_QUERY_VALUE;
+    else delete document.documentElement.dataset.appWebview;
+  }, [enabled]);
+  return enabled;
 }

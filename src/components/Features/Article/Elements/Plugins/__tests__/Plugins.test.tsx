@@ -87,7 +87,7 @@ describe('Article plugins', () => {
     render(<RichText html="<pre><code>const value = 1;</code></pre>" />);
 
     const wrapButton = await screen.findByRole('button', { name: 'コードを折り返す' });
-    const toolbar = screen.getByRole('toolbar', { name: 'コードブロック操作' });
+    const toolbar = screen.getByRole('group', { name: 'コードブロック操作' });
     const wrapper = document.querySelector('[data-code-copy-wrapper="true"]');
     const pre = wrapper?.querySelector('pre');
 
@@ -104,7 +104,7 @@ describe('Article plugins', () => {
 
     expect(
       screen.getByRole('button', {
-        name: 'コードの折り返しを解除',
+        name: 'コードを折り返す',
       }),
     ).toHaveAttribute('aria-pressed', 'true');
 
@@ -132,7 +132,7 @@ describe('Article plugins', () => {
     renderCustomHtml('<pre><code>custom code</code></pre>');
 
     expect(await screen.findByRole('button', { name: 'コードをコピー' })).toBeInTheDocument();
-    expect(screen.getByRole('toolbar', { name: 'コードブロック操作' }).closest('pre')).toBeNull();
+    expect(screen.getByRole('group', { name: 'コードブロック操作' }).closest('pre')).toBeNull();
     expect(document.querySelector('[data-code-copy-wrapper="true"]')).toBeInTheDocument();
     expect(
       screen.getByRole('button', {
@@ -376,16 +376,16 @@ describe('Article plugins', () => {
       box_common: '<strong>Common</strong>',
     };
 
-    const { rerender } = render(<TabBox block={block} merit />);
+    const { rerender } = render(<TabBox block={block} variant="merit" />);
     expect(screen.getByText('Merit')).toBeInTheDocument();
 
-    rerender(<TabBox block={block} demerit />);
+    rerender(<TabBox block={block} variant="demerit" />);
     expect(screen.getByText('Demerit')).toBeInTheDocument();
 
-    rerender(<TabBox block={block} point />);
+    rerender(<TabBox block={block} variant="point" />);
     expect(screen.getByText('Point')).toBeInTheDocument();
 
-    rerender(<TabBox block={block} common />);
+    rerender(<TabBox block={block} variant="common" />);
     expect(screen.getByText('Common')).toBeInTheDocument();
   });
 
@@ -396,7 +396,7 @@ describe('Article plugins', () => {
           box_merit:
             '<span onclick="alert(1)">Merit</span><a href="javascript:alert(1)">Unsafe</a><script>window.__unsafe = true;</script>',
         }}
-        merit
+        variant="merit"
       />,
     );
 
@@ -503,7 +503,7 @@ describe('Article plugins', () => {
     const image = screen.getByAltText('Article titleの画像 1');
     const slide = screen.getByRole('group', { name: '1枚目 / 全2枚' });
 
-    expect(image).toHaveAttribute('tabindex', '-1');
+    expect(image).not.toHaveAttribute('tabindex');
     expect(image).toHaveAttribute('draggable', 'false');
     expect(slide).toHaveClass('slick-slide');
     expect(slide).not.toHaveAttribute('tabindex');

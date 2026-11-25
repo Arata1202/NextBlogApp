@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const port = Number(process.env.PLAYWRIGHT_PORT ?? 3000);
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://127.0.0.1:${port}`;
+import { baseURL, localOrigin, port } from './scripts/e2e/config';
+
 const reuseExistingServer = process.env.PLAYWRIGHT_REUSE_SERVER === '1';
 const isCI = !!process.env.CI;
 
@@ -33,10 +33,13 @@ export default defineConfig({
       use: { ...devices['Pixel 5'] },
     },
   ],
-  webServer: {
-    command: `pnpm build:e2e && node scripts/e2e/serve-static.mjs out --port=${port}`,
-    url: baseURL,
-    reuseExistingServer,
-    timeout: 180_000,
-  },
+  webServer:
+    new URL(baseURL).origin === localOrigin
+      ? {
+          command: `pnpm build:e2e && node scripts/e2e/serve-static.mjs out --port=${port}`,
+          url: localOrigin,
+          reuseExistingServer,
+          timeout: 180_000,
+        }
+      : undefined,
 });

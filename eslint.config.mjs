@@ -28,7 +28,10 @@ export default [
     plugins: {
       react: reactPlugin,
     },
-    rules: reactPlugin.configs['jsx-runtime'].rules,
+    rules: {
+      ...reactPlugin.configs['jsx-runtime'].rules,
+      'react/jsx-key': 'error',
+    },
     settings: {
       react: {
         version: 'detect',
@@ -75,7 +78,6 @@ export default [
     rules: {
       '@next/next/no-html-link-for-pages': 'off',
       '@next/next/no-img-element': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
   ...storybook.configs['flat/recommended'],

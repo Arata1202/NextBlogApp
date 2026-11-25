@@ -1,13 +1,9 @@
-.CancelButton {
-  margin-top: 0px !important;
-}
-
 .DialogTitle {
-  font-size: 16px !important;
+  font-size: 1rem !important;
 }
 
 .DialogDescription {
-  font-size: 14px !important;
+  font-size: 0.875rem !important;
 }
 
 .Icon {

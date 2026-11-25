@@ -36,14 +36,6 @@ export const useCodeBlockCopyButtons = (
       pre.classList.toggle(codeBlockStyles.unwrapped, !wrapped);
     };
 
-    const getFilename = (pre: HTMLPreElement) => {
-      return (
-        pre.getAttribute('data-filename') ??
-        pre.parentElement?.getAttribute('data-filename') ??
-        undefined
-      );
-    };
-
     const getFilenameContainer = (pre: HTMLPreElement) => {
       if (pre.hasAttribute('data-filename')) {
         return pre;
@@ -72,8 +64,8 @@ export const useCodeBlockCopyButtons = (
 
       const root = createRoot(mount);
       let wrapped = false;
-      const filename = getFilename(pre);
       const filenameContainer = getFilenameContainer(pre);
+      const filename = filenameContainer?.dataset.filename;
       const wrapper = document.createElement('div');
       const addedAriaLabel = !pre.hasAttribute('aria-label');
       const addedRole = !pre.hasAttribute('role');
@@ -83,7 +75,7 @@ export const useCodeBlockCopyButtons = (
         root.render(
           <CodeBlockToolbar
             filename={filename}
-            getCodeText={() => code.textContent ?? ''}
+            getCodeText={() => pre.querySelector('code')?.textContent ?? ''}
             wrapped={wrapped}
             onWrappedChange={(nextWrapped) => {
               wrapped = nextWrapped;
@@ -126,58 +118,64 @@ export const useCodeBlockCopyButtons = (
       });
     };
 
-    const enhanceCodeBlocks = () => {
-      container.querySelectorAll<HTMLPreElement>('pre').forEach(enhanceCodeBlock);
+    const release = ({
+      addedAriaLabel,
+      addedRole,
+      addedTabIndex,
+      filenameContainer,
+      mount,
+      pre,
+      root,
+      wrapper,
+    }: EnhancedCodeBlock) => {
+      queueMicrotask(() => {
+        root.unmount();
+        mount.remove();
+      });
+      if (pre.parentElement === wrapper) wrapper.parentElement?.insertBefore(pre, wrapper);
+      wrapper.remove();
+      pre.removeAttribute(ENHANCED_ATTRIBUTE);
+      if (addedAriaLabel) {
+        pre.removeAttribute('aria-label');
+      }
+      if (addedRole) {
+        pre.removeAttribute('role');
+      }
+      if (addedTabIndex) {
+        pre.removeAttribute('tabindex');
+      }
+      filenameContainer?.removeAttribute(FILENAME_MOUNTED_ATTRIBUTE);
+      pre.classList.remove(
+        codeBlockStyles.codeBlock,
+        codeBlockStyles.wrapped,
+        codeBlockStyles.unwrapped,
+      );
     };
+    container.querySelectorAll<HTMLPreElement>('pre').forEach(enhanceCodeBlock);
 
-    enhanceCodeBlocks();
-
-    const observer = new MutationObserver(() => {
-      enhanceCodeBlocks();
+    const observer = new MutationObserver((changes) => {
+      if (changes.some((change) => change.removedNodes.length > 0)) {
+        for (let i = enhancedCodeBlocks.length - 1; i >= 0; i--) {
+          const block = enhancedCodeBlocks[i];
+          if (!container.contains(block.wrapper) || block.pre.parentElement !== block.wrapper) {
+            release(block);
+            enhancedCodeBlocks.splice(i, 1);
+          }
+        }
+      }
+      for (const { addedNodes } of changes) {
+        for (const node of addedNodes) {
+          if (!(node instanceof HTMLElement) || !container.contains(node)) continue;
+          const parentPre = node.closest('pre');
+          if (parentPre) enhanceCodeBlock(parentPre);
+          node.querySelectorAll('pre').forEach(enhanceCodeBlock);
+        }
+      }
     });
-
-    observer.observe(container, {
-      childList: true,
-      subtree: true,
-    });
-
+    observer.observe(container, { childList: true, subtree: true });
     return () => {
       observer.disconnect();
-      enhancedCodeBlocks.forEach(
-        ({
-          addedAriaLabel,
-          addedRole,
-          addedTabIndex,
-          filenameContainer,
-          mount,
-          pre,
-          root,
-          wrapper,
-        }) => {
-          queueMicrotask(() => {
-            root.unmount();
-            mount.remove();
-          });
-          wrapper.parentElement?.insertBefore(pre, wrapper);
-          wrapper.remove();
-          pre.removeAttribute(ENHANCED_ATTRIBUTE);
-          if (addedAriaLabel) {
-            pre.removeAttribute('aria-label');
-          }
-          if (addedRole) {
-            pre.removeAttribute('role');
-          }
-          if (addedTabIndex) {
-            pre.removeAttribute('tabindex');
-          }
-          filenameContainer?.removeAttribute(FILENAME_MOUNTED_ATTRIBUTE);
-          pre.classList.remove(
-            codeBlockStyles.codeBlock,
-            codeBlockStyles.wrapped,
-            codeBlockStyles.unwrapped,
-          );
-        },
-      );
+      enhancedCodeBlocks.forEach(release);
     };
   }, [containerRef, refreshKey]);
 };

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { SiteLink as Link } from '@/components/Common/AppWebViewLinkHandler';
 import { HomeIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import SearchResultLabelSkeleton from '../SearchResultLabelSkeleton';
 import { getPageHeadingLabel, type BreadCrumbPage } from '../pageHeadingModel';
@@ -35,6 +35,8 @@ const renderCurrentPage = (label: string, isLoading: boolean) => (
 export default function BreadCrumb({ page, isLoading = false }: Props) {
   const isSearchLoading = page.type === 'search' && isLoading;
 
+  const category = page.type === 'article' ? page.article.categories[0] : undefined;
+
   return (
     <nav aria-label="パンくず" data-web-breadcrumb>
       <ul className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
@@ -43,7 +45,7 @@ export default function BreadCrumb({ page, isLoading = false }: Props) {
             <HomeIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
           </Link>
         </li>
-        {page.type === 'article' && (
+        {category && (
           <li className={breadcrumbItemClassName}>
             <div className={breadcrumbSegmentClassName}>
               <ChevronRightIcon
@@ -51,10 +53,10 @@ export default function BreadCrumb({ page, isLoading = false }: Props) {
                 aria-hidden="true"
               />
               <Link
-                href={`/category/${page.article.categories[0].id}`}
-                className={`whitespace-nowrap ml-4 text-sm font-medium ${breadcrumbLinkClassName}`}
+                href={`/category/${category.id}`}
+                className={`[overflow-wrap:anywhere] ml-4 text-sm font-medium ${breadcrumbLinkClassName}`}
               >
-                {page.article.categories[0].name}
+                {category.name}
               </Link>
             </div>
           </li>

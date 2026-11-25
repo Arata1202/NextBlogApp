@@ -6,7 +6,7 @@ const meta = {
   component: SpeechBubble,
   args: {
     block: {
-      bubble_image: { url: '/images/thumbnail/7.webp', width: 150, height: 150 },
+      bubble_image: { url: './images/thumbnail/7.webp', width: 150, height: 150 },
       bubble_text: 'ここが記事の大切なポイントです。',
     },
   },

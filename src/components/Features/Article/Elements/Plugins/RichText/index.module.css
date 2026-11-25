@@ -6,17 +6,13 @@
   width: 100%;
 }
 
-.content *:first-child {
-  margin-top: 0;
-}
-
 .content > h2 {
   background-color: var(--color-theme-muted);
   color: var(--color-theme-light-text);
   font-size: var(--font-size-content-heading-2);
   font-weight: var(--font-weight-content-heading);
   margin: 2.8em 0 1rem;
-  margin-top: 50px !important;
+  margin-top: 50px;
 }
 
 .content > h3 {
@@ -25,7 +21,7 @@
   font-size: var(--font-size-content-heading-3);
   font-weight: var(--font-weight-content-heading);
   margin: 2.8rem 0 1rem;
-  margin-top: 50px !important;
+  margin-top: 50px;
 }
 
 .content > h4 {
@@ -34,14 +30,14 @@
   font-size: var(--font-size-content-heading-4);
   font-weight: var(--font-weight-content-heading);
   margin: 2.8rem 0 1rem;
-  margin-top: 50px !important;
+  margin-top: 50px;
 }
 
 .content > h5 {
   font-size: var(--font-size-content-heading-5);
   font-weight: var(--font-weight-content-heading);
   margin: 2.8rem 0 1rem;
-  margin-top: 50px !important;
+  margin-top: 50px;
 }
 
 .content > p {
@@ -49,7 +45,7 @@
   line-height: var(--line-height-content-body);
 }
 
-.content > pre {
+.content pre {
   overflow-x: auto;
   background-color: var(--color-bg-code);
   color: var(--color-text-code);
@@ -108,11 +104,11 @@
   color: var(--color-link-hover);
 }
 
-:global(body.DarkTheme) .content a {
+:global(.DarkTheme) .content a {
   color: var(--color-link-dark);
 }
 
-:global(body.DarkTheme) .content a:hover {
+:global(.DarkTheme) .content a:hover {
   color: var(--color-link-dark-hover);
 }
 
@@ -142,6 +138,8 @@
 }
 
 .content > table {
+  display: block;
+  overflow-x: auto;
   width: 100%;
   margin: 2rem 0;
 }
@@ -158,12 +156,12 @@
   padding: 1rem;
 }
 
-:global(body.DarkTheme) .content > h2 {
+:global(.DarkTheme) .content > h2 {
   color: var(--color-theme-dark-text);
 }
 
-:global(body.DarkTheme) .content > h3,
-:global(body.DarkTheme) .content > h4 {
+:global(.DarkTheme) .content > h3,
+:global(.DarkTheme) .content > h4 {
   color: var(--color-theme-dark-text);
 }
 
@@ -171,4 +169,8 @@
   .content {
     width: 100%;
   }
+}
+
+.content > :first-child {
+  margin-top: 0;
 }

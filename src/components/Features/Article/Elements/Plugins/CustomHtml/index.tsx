@@ -64,8 +64,18 @@ function CustomHtml({ html, sponsorUrl }: Props) {
     window.addEventListener('blur', syncIframeFocus);
     window.addEventListener('focus', clearIframeFocus);
 
-    const observer = new MutationObserver(() => {
-      syncCustomHtmlEnhancements();
+    const observer = new MutationObserver((records) => {
+      if (
+        records.some((record) => record.type === 'childList' || record.attributeName !== 'class')
+      ) {
+        applyTargetBlankToLinks(content);
+        applySponsoredRelToLinks(content, sponsorUrl);
+      }
+      if (
+        records.some((record) => record.type === 'childList' || record.attributeName === 'class')
+      ) {
+        syncMoshimoEasyLinkArrows(content);
+      }
     });
 
     observer.observe(content, {
@@ -76,7 +86,7 @@ function CustomHtml({ html, sponsorUrl }: Props) {
     });
 
     const timer = window.setTimeout(() => {
-      runCustomHtmlScripts(content, html);
+      runCustomHtmlScripts(content);
       syncCustomHtmlEnhancements();
     }, SCRIPT_REPLAY_DELAY_MS);
 
@@ -101,6 +111,4 @@ function CustomHtml({ html, sponsorUrl }: Props) {
   );
 }
 
-export default memo(CustomHtml, (prevProps, nextProps) => {
-  return prevProps.html === nextProps.html && prevProps.sponsorUrl === nextProps.sponsorUrl;
-});
+export default memo(CustomHtml);

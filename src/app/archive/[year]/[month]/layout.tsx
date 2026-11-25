@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation';
+import { DEFAULT_PREVIEW_IMAGE, getSiteUrl, getSiteTitle } from '@/config/site';
 import { Metadata } from 'next';
 
 type Props = {
@@ -11,13 +13,14 @@ type Props = {
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
   const { year, month } = params;
+  if (!/^\d{4}$/.test(year) || !/^(0[1-9]|1[0-2])$/.test(month)) notFound();
 
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const defaultUrl = getSiteUrl();
+  const defaultTitle = getSiteTitle();
 
   const title = `${year}年${parseInt(month)}月｜${defaultTitle}`;
   const description = `${year}年${parseInt(month)}月の記事一覧です。`;
-  const images = `${defaultUrl}/images/thumbnail/7.webp`;
+  const images = `${defaultUrl}${DEFAULT_PREVIEW_IMAGE}`;
   const url = `${defaultUrl}/archive/${year}/${month}`;
 
   return {
@@ -38,7 +41,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   };
 }
 
-export default async function ArchiveLayout(props: Props) {
+export default function ArchiveLayout(props: Props) {
   const { children } = props;
 
   return <>{children}</>;

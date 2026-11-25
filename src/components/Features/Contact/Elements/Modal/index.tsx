@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { EnvelopeIcon } from '@heroicons/react/24/solid';
 import { Dialog, Transition } from '@headlessui/react';
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import styles from './index.module.css';
 import { interactiveFocusClassName } from '@/components/Common/controlClassNames';
 import {
@@ -32,7 +32,7 @@ export default function Modal({
   confirmText,
   isLoading = false,
 }: Props) {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
   const controlHoverSurfaceClassName = theme === 'dark' ? 'hover:bg-gray-500' : 'hover:bg-gray-50';
   const primaryButtonClassName = `${interactiveFocusClassName} inline-flex w-full justify-center ${radiusClassNames.control} bg-blue-600 px-3 py-2 text-sm font-semibold text-white ${shadowClassNames.control} hover:bg-blue-700 disabled:cursor-wait disabled:opacity-70`;
@@ -93,7 +93,7 @@ export default function Modal({
                   <button
                     type="button"
                     disabled={isLoading}
-                    className={`${styles.CancelButton} mt-3 inline-flex w-full cursor-pointer justify-center ${radiusClassNames.control} px-3 py-2 text-sm font-semibold ${shadowClassNames.control} ring-1 ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:mt-0 sm:w-auto ${controlHoverSurfaceClassName} ${themeClassName}`}
+                    className={`mt-3 inline-flex w-full cursor-pointer justify-center ${radiusClassNames.control} px-3 py-2 text-sm font-semibold ${shadowClassNames.control} ring-1 ring-inset disabled:cursor-not-allowed disabled:opacity-50 sm:mt-0 sm:w-auto ${controlHoverSurfaceClassName} ${themeClassName}`}
                     onClick={onClose}
                   >
                     {cancelText}

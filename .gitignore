@@ -63,3 +63,5 @@ next-env.d.ts
 /chromatic-build-*.xml
 /chromatic-diagnostics.json
 /storybook-static/
+
+*.tfvars.json

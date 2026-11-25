@@ -8,7 +8,7 @@ type Props = {
 export default function MainContainer({ children, article = false }: Props) {
   return (
     <div
-      className={`${article && styles.container} max-w-340 sm:px-6 lg:px-8 mx-auto pb-2`}
+      className={`${article ? styles.container : ''} max-w-340 sm:px-6 lg:px-8 mx-auto pb-2`}
       data-article-main={article ? 'true' : undefined}
     >
       <div

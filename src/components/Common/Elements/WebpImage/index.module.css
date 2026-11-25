@@ -36,19 +36,10 @@
 
 .thumbnail {
   width: 960px;
+  max-width: 100%;
   height: auto;
   margin-bottom: 0px;
   margin-top: 10px;
-}
-
-@media (max-width: 1023px) and (min-width: 641px) {
-  .cardPicture {
-    width: 300px;
-  }
-
-  .image {
-    max-width: 300px;
-  }
 }
 
 @media (max-width: 1081px) and (min-width: 1023px) {
@@ -61,7 +52,7 @@
   }
 }
 
-@media (max-width: 717px) and (min-width: 641px) {
+@media (max-width: 717px) {
   .cardPicture {
     width: 200px;
   }

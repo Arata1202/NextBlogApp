@@ -1,8 +1,8 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useState, type KeyboardEvent } from 'react';
-import { useTheme } from 'next-themes';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { Listbox } from '@headlessui/react';
 import { CalendarDaysIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
@@ -20,29 +20,18 @@ type Props = {
 };
 
 export default function Archive({ archiveList }: Props) {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const router = useRouter();
   const themeClassName = getThemeClassName(theme);
   const activeAccentTextClassName = theme === 'dark' ? 'text-blue-400!' : 'text-blue-600!';
   const subtleIconClassName = theme === 'dark' ? 'text-gray-500' : 'text-gray-300';
 
-  const [selectedMonth, setSelectedMonth] = useState('');
+  const pathname = usePathname();
+  const selectedMonth = /^\/archive\/(\d{4}\/\d{2})(?:\/|$)/.exec(pathname ?? '')?.[1] ?? '';
   const [openedWithPointer, setOpenedWithPointer] = useState(false);
 
   const handleArchiveChange = (value: string) => {
-    setSelectedMonth(value);
     router.push(`/archive/${value}`);
-  };
-
-  const handleButtonKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    setOpenedWithPointer(false);
-
-    if (event.key !== 'Enter') {
-      return;
-    }
-
-    event.preventDefault();
-    event.currentTarget.click();
   };
 
   return (
@@ -58,7 +47,14 @@ export default function Archive({ archiveList }: Props) {
             <Listbox.Button
               type="button"
               onPointerDown={() => setOpenedWithPointer(true)}
-              onKeyDown={handleButtonKeyDown}
+              onKeyDown={(event) => {
+                setOpenedWithPointer(false);
+                if (event.key === 'Enter') {
+                  event.preventDefault();
+                  event.currentTarget.click();
+                }
+              }}
+              aria-label={selectedMonth ? `アーカイブを選択: ${selectedMonth}` : 'アーカイブを選択'}
               className={`${fieldControlClassName} ${styles.ListBox} relative w-full cursor-pointer pl-3 pr-10 text-left text-base sm:text-sm ${themeClassName}`}
             >
               <span
@@ -84,9 +80,9 @@ export default function Archive({ archiveList }: Props) {
               onKeyDown={() => setOpenedWithPointer(false)}
               className={`${styles.ListBoxOptions} absolute z-10 mt-1 max-h-60 w-full overflow-auto py-1 text-base sm:text-sm ${surfaceClassNames.popover} ${themeClassName}`}
             >
-              {archiveList.map((item, index) => (
+              {archiveList.map((item) => (
                 <Listbox.Option
-                  key={index}
+                  key={`${item.year}/${item.month}`}
                   value={`${item.year}/${item.month.padStart(2, '0')}`}
                   className={({ active }) =>
                     `relative cursor-pointer select-none py-2 pl-3 pr-9 ${transitionClassNames.color} ${colorClassNames.accentHoverText} ${active ? activeAccentTextClassName : ''} ${themeClassName}`

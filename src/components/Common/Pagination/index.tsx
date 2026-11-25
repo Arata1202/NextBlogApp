@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { SiteLink as Link } from '@/components/Common/AppWebViewLinkHandler';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
+import { APP_WEBVIEW_QUERY_PARAMETER, APP_WEBVIEW_QUERY_VALUE } from '@/hooks/useAppWebViewMode';
 import { LIMIT } from '@/constants/limit';
 import styles from './index.module.css';
 import {
@@ -18,6 +19,7 @@ type Props = {
   hideWhenStacked?: boolean;
   q?: string;
   useQueryPage?: boolean;
+  appWebView?: boolean;
 };
 
 type PageItem = number | 'ellipsis-left' | 'ellipsis-right';
@@ -32,7 +34,8 @@ function getPageItems(totalPages: number, current: number): PageItem[] {
   const pages: PageItem[] = [];
 
   if (start > 1) {
-    pages.push(1, 'ellipsis-left');
+    pages.push(1);
+    if (start > 2) pages.push('ellipsis-left');
   }
 
   for (let page = start; page <= end; page += 1) {
@@ -40,7 +43,8 @@ function getPageItems(totalPages: number, current: number): PageItem[] {
   }
 
   if (end < totalPages) {
-    pages.push('ellipsis-right', totalPages);
+    if (end < totalPages - 1) pages.push('ellipsis-right');
+    pages.push(totalPages);
   }
 
   return pages;
@@ -48,13 +52,14 @@ function getPageItems(totalPages: number, current: number): PageItem[] {
 
 export default function Pagination({
   totalCount,
-  current = 1,
+  current: requestedPage = 1,
   basePath = '',
   hideWhenStacked = false,
   q,
   useQueryPage = false,
+  appWebView = false,
 }: Props) {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
   const selectedSurfaceClassName = getThemeVariantClassName(
     theme,
@@ -62,10 +67,13 @@ export default function Pagination({
   );
 
   const totalPages = Math.ceil(totalCount / LIMIT);
+  const current = Number.isInteger(requestedPage)
+    ? Math.min(totalPages, Math.max(1, requestedPage))
+    : 1;
   const pages = getPageItems(totalPages, current);
   const getHref = (page: number) => {
     if (!useQueryPage) {
-      return `${basePath}/p/${page}` + (q ? `?q=${q}` : '');
+      return `${basePath}/p/${page}` + (q ? `?q=${encodeURIComponent(q)}` : '');
     }
 
     const params = new URLSearchParams();
@@ -73,6 +81,7 @@ export default function Pagination({
       params.set('q', q);
     }
     params.set('page', String(page));
+    if (appWebView) params.set(APP_WEBVIEW_QUERY_PARAMETER, APP_WEBVIEW_QUERY_VALUE);
 
     return `${basePath}?${params.toString()}`;
   };

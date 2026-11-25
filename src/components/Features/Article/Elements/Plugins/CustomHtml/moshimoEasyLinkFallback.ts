@@ -11,6 +11,7 @@ type MoshimoEasyLinkState = {
 export const syncMoshimoEasyLinkArrows = (content: HTMLElement) => {
   content.querySelectorAll<HTMLAnchorElement>(EASY_LINK_ARROW_SELECTOR).forEach((arrow) => {
     arrow.setAttribute('role', 'button');
+    if (!arrow.hasAttribute('href')) arrow.tabIndex = 0;
 
     if (!arrow.getAttribute('aria-label')) {
       arrow.setAttribute(
@@ -59,7 +60,8 @@ const isVisibleMoshimoImage = (image: HTMLImageElement) => {
 const getMoshimoEasyLinkImageContainer = (image: HTMLImageElement) => {
   if (
     image.parentElement instanceof HTMLElement &&
-    image.parentElement.tagName.toLowerCase() === 'span'
+    image.parentElement.tagName.toLowerCase() === 'span' &&
+    image.parentElement.querySelectorAll('img').length === 1
   ) {
     return image.parentElement;
   }
@@ -117,7 +119,7 @@ const showMoshimoEasyLinkImage = (images: HTMLImageElement[], activeIndex: numbe
 
       if (imageSrc) {
         try {
-          const parsedUrl = new URL(imageSrc, window.location.href);
+          const parsedUrl = new URL(imageSrc, image.baseURI);
 
           if (SAFE_RESOURCE_PROTOCOLS.has(parsedUrl.protocol)) {
             image.src = parsedUrl.href;
@@ -182,6 +184,8 @@ const getMoshimoEasyLinkArrow = (content: HTMLElement, target: EventTarget | nul
 };
 
 export const setupMoshimoEasyLinkFallback = (content: HTMLElement) => {
+  let finishPendingClick: (() => void) | undefined;
+  let timer: number | undefined;
   const handleContentClickCapture = (event: MouseEvent) => {
     const arrow = getMoshimoEasyLinkArrow(content, event.target);
 
@@ -189,11 +193,14 @@ export const setupMoshimoEasyLinkFallback = (content: HTMLElement) => {
       return;
     }
 
+    finishPendingClick?.();
     const startState = getMoshimoEasyLinkState(arrow);
 
     event.preventDefault();
 
-    window.setTimeout(() => {
+    finishPendingClick = () => {
+      window.clearTimeout(timer);
+      finishPendingClick = undefined;
       if (!content.contains(arrow)) {
         return;
       }
@@ -204,7 +211,8 @@ export const setupMoshimoEasyLinkFallback = (content: HTMLElement) => {
       }
 
       moveMoshimoEasyLinkImage(arrow);
-    }, 0);
+    };
+    timer = window.setTimeout(finishPendingClick, 0);
   };
 
   const handleContentKeyDown = (event: KeyboardEvent) => {
@@ -220,14 +228,17 @@ export const setupMoshimoEasyLinkFallback = (content: HTMLElement) => {
 
     event.preventDefault();
     event.stopPropagation();
+    finishPendingClick?.();
     moveMoshimoEasyLinkImage(arrow);
   };
 
   content.addEventListener('click', handleContentClickCapture, true);
-  content.addEventListener('keydown', handleContentKeyDown);
+  content.addEventListener('keydown', handleContentKeyDown, true);
 
   return () => {
     content.removeEventListener('click', handleContentClickCapture, true);
-    content.removeEventListener('keydown', handleContentKeyDown);
+    window.clearTimeout(timer);
+    finishPendingClick = undefined;
+    content.removeEventListener('keydown', handleContentKeyDown, true);
   };
 };

@@ -41,3 +41,21 @@ export const DeepHierarchy: Story = {
   },
   globals: { viewport: { value: 'iphone13promax', isRotated: false } },
 };
+
+export const Interactive: Story = {
+  args: { headings: headings.map((heading) => ({ ...heading, id: `interactive-${heading.id}` })) },
+  parameters: { docs: { story: { inline: false } } },
+  render: (args) => (
+    <>
+      <TableOfContents {...args} />
+      {args.headings.map(({ id, title, level }) => {
+        const Heading = level === 3 ? 'h3' : 'h2';
+        return (
+          <section key={id} className="min-h-screen">
+            <Heading id={id}>{title}</Heading>
+          </section>
+        );
+      })}
+    </>
+  ),
+};

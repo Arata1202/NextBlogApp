@@ -1,3 +1,6 @@
+import { Suspense } from 'react';
+import WebViewNavigation from '@/contexts/WebViewNavigation';
+import { DEFAULT_PREVIEW_IMAGE, getSiteUrl, getSiteTitle } from '@/config/site';
 import { Metadata } from 'next';
 import type { Viewport } from 'next';
 import 'slick-carousel/slick/slick.css';
@@ -18,8 +21,8 @@ import AppWebViewLinkHandler from '@/components/Common/AppWebViewLinkHandler';
 
 const appWebViewBootstrapScript = [
   '(function(){try{',
-  "var value='1';",
-  'var params=new URLSearchParams(window.location.search);',
+  "const value='1';",
+  'const params=new URLSearchParams(window.location.search);',
   "if(params.get('app')===value){",
   'document.documentElement.dataset.appWebview=value;',
   "if(window.location.pathname==='/search'&&!((params.get('q')||'').trim())){",
@@ -36,12 +39,12 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+  const defaultUrl = getSiteUrl();
+  const defaultTitle = getSiteTitle();
 
   const title = `${defaultTitle}`;
   const description = DESCRIPTION;
-  const images = `${defaultUrl}/images/thumbnail/7.webp`;
+  const images = `${defaultUrl}${DEFAULT_PREVIEW_IMAGE}`;
   const url = `${defaultUrl}`;
 
   return {
@@ -67,9 +70,9 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default async function RootLayout({ children }: Props) {
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
+export default function RootLayout({ children }: Props) {
+  const defaultUrl = getSiteUrl();
+  const defaultTitle = getSiteTitle();
 
   const title = `${defaultTitle}`;
   const url = `${defaultUrl}`;
@@ -99,22 +102,26 @@ export default async function RootLayout({ children }: Props) {
       <body data-app-root>
         <ThemeProvider defaultTheme="light">
           <ThemeWrapper />
-          <AppWebViewLinkHandler />
-          <div data-web-chrome>
-            <Header />
-          </div>
-          <main className={styles.main} data-app-main>
-            {children}
-          </main>
-          <div data-web-chrome>
-            <Footer />
-          </div>
-          <div data-web-chrome>
-            <ScrollTopButton />
-          </div>
-          <GoogleAdSense />
-          <GoogleAnalytics />
-          <OneSignal />
+          <Suspense>
+            <WebViewNavigation />
+          </Suspense>
+          <AppWebViewLinkHandler>
+            <div data-web-chrome>
+              <Header />
+            </div>
+            <main className={styles.main} data-app-main>
+              {children}
+            </main>
+            <div data-web-chrome>
+              <Footer />
+            </div>
+            <div data-web-chrome>
+              <ScrollTopButton />
+            </div>
+            <GoogleAdSense />
+            <GoogleAnalytics />
+            <OneSignal />
+          </AppWebViewLinkHandler>
         </ThemeProvider>
       </body>
     </html>

@@ -1,8 +1,10 @@
-import { format } from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
+import { formatInTimeZone } from 'date-fns-tz';
+
+export const DISPLAY_TIME_ZONE = 'Asia/Tokyo';
 
 export const formatDate = (date: string) => {
-  const utcDate = new Date(date);
-  const jstDate = toZonedTime(utcDate, 'Asia/Tokyo');
-  return format(jstDate, 'yyyy年M月d日');
+  const timestamp = Date.parse(/^\d{4}-\d{2}-\d{2}T[\d:.]+$/.test(date) ? date + 'Z' : date);
+  return Number.isFinite(timestamp)
+    ? formatInTimeZone(timestamp, DISPLAY_TIME_ZONE, 'yyyy年M月d日')
+    : '';
 };

@@ -1,38 +1,12 @@
-import { Metadata } from 'next';
+import { staticPageMetadata } from '@/config/site';
 
-type Props = {
-  children: React.ReactNode;
-};
-
-export async function generateMetadata(): Promise<Metadata> {
-  const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultTitle = process.env.NEXT_PUBLIC_BASE_TITLE;
-
-  const title = `検索結果｜${defaultTitle}`;
-  const description = '検索結果を表示するページです。';
-  const images = `${defaultUrl}/images/thumbnail/7.webp`;
-  const url = `${defaultUrl}/search`;
-
+export function generateMetadata() {
   return {
-    title,
-    description,
-    robots: {
-      index: false,
-    },
-    openGraph: {
-      title,
-      description,
-      images,
-      url,
-    },
-    alternates: {
-      canonical: url,
-    },
+    ...staticPageMetadata('/search', '検索結果', '検索結果を表示するページです。'),
+    robots: { index: false },
   };
 }
 
-export default async function SearchLayout(props: Props) {
-  const { children } = props;
-
+export default function SearchLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

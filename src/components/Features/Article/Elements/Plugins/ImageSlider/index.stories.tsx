@@ -34,7 +34,7 @@ export const NextImageInteraction: Story = {
     const canvas = within(canvasElement);
     await userEvent.click(await canvas.findByRole('button', { name: '次の画像を表示' }));
     await waitFor(() => {
-      expect(canvas.getByRole('button', { name: '2枚目の画像を表示中' })).toHaveAttribute(
+      return expect(canvas.getByRole('button', { name: '2枚目の画像を表示中' })).toHaveAttribute(
         'aria-current',
         'true',
       );

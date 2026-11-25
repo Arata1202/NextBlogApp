@@ -8,70 +8,26 @@ import { ContentBlock } from '@/types/microcms';
 import styles from './index.module.css';
 import { sanitizeCmsHtml } from '@/utils/htmlSanitizer';
 
+const icons = {
+  merit: HandThumbUpIcon,
+  demerit: HandThumbDownIcon,
+  point: LightBulbIcon,
+  common: InformationCircleIcon,
+};
+
 type Props = {
+  variant: keyof typeof icons;
   block: ContentBlock;
-  merit?: boolean;
-  demerit?: boolean;
-  common?: boolean;
-  point?: boolean;
   sponsorUrl?: string;
 };
 
-export default function TabBox({
-  block,
-  merit = false,
-  demerit = false,
-  point = false,
-  common = false,
-  sponsorUrl,
-}: Props) {
-  const renderHtml = (html: string | undefined) => {
-    if (!html) {
-      return null;
-    }
-
-    return <div dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(html, sponsorUrl) }} />;
-  };
-
+export default function TabBox({ variant, block, sponsorUrl }: Props) {
+  const Icon = icons[variant];
+  const html = block[`box_${variant}`];
   return (
-    <>
-      <div
-        className={`${merit && styles.tab_merit_box} ${demerit && styles.tab_demerit_box} ${point && styles.tab_point_box} ${common && styles.tab_common_box} flex items-center gap-4 text-gray-700`}
-      >
-        {merit && (
-          <>
-            <HandThumbUpIcon
-              className={`h-8 w-8 ${styles.tab_merit_box_icon}`}
-              aria-hidden="true"
-            />
-            {renderHtml(block.box_merit)}
-          </>
-        )}
-        {demerit && (
-          <>
-            <HandThumbDownIcon
-              className={`h-8 w-8 ${styles.tab_demerit_box_icon}`}
-              aria-hidden="true"
-            />
-            {renderHtml(block.box_demerit)}
-          </>
-        )}
-        {point && (
-          <>
-            <LightBulbIcon className={`h-8 w-8 ${styles.tab_point_box_icon}`} aria-hidden="true" />
-            {renderHtml(block.box_point)}
-          </>
-        )}
-        {common && (
-          <>
-            <InformationCircleIcon
-              className={`h-8 w-8 ${styles.tab_common_box_icon}`}
-              aria-hidden="true"
-            />
-            {renderHtml(block.box_common)}
-          </>
-        )}
-      </div>
-    </>
+    <div className={`${styles[`tab_${variant}_box`]} flex items-center gap-4 text-gray-700`}>
+      <Icon className={`h-8 w-8 ${styles[`tab_${variant}_box_icon`]}`} aria-hidden="true" />
+      {html && <div dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(html, sponsorUrl) }} />}
+    </div>
   );
 }

@@ -1,3 +1,4 @@
+import { formatDate } from '@/utils/formatDate';
 import styles from './index.module.css';
 import SingleDate from '../SingleDate';
 
@@ -14,20 +15,16 @@ export default function DoubleDate({ article, articleMode = false }: Props) {
     return null;
   }
 
-  const isNextDayOrLater = (date1: string, date2: string) => {
-    const d1 = new Date(date1);
-    const d2 = new Date(date2);
-    d1.setHours(0, 0, 0, 0);
-    d2.setHours(0, 0, 0, 0);
-    return d1 > d2;
-  };
+  const updated = article.updatedAt;
+  const showUpdated =
+    updated &&
+    Date.parse(updated) > Date.parse(article.publishedAt) &&
+    formatDate(updated) !== formatDate(article.publishedAt);
 
   return (
-    <div className={`${styles.date} ${articleMode && styles.articleMode}`}>
+    <div className={articleMode ? `${styles.date} ${styles.articleMode}` : styles.date}>
       <SingleDate date={article.publishedAt} />
-      {article.updatedAt && isNextDayOrLater(article.updatedAt, article.publishedAt) && (
-        <SingleDate date={article.updatedAt} updatedAt={true} />
-      )}
+      {showUpdated && <SingleDate date={updated} updatedAt={true} />}
     </div>
   );
 }

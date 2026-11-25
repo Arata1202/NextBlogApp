@@ -36,8 +36,8 @@ describe('formatRichText', () => {
       .toArray()
       .map((image) => $(image));
 
-    expect(images[0].attr('alt')).toBe('Main headingの画像');
-    expect(images[1].attr('alt')).toBe('Main headingの画像 2');
+    expect(images[0].attr('alt')).toBe('');
+    expect(images[1].attr('alt')).toBe('Main headingの画像');
     expect(images[2].attr('alt')).toBe('Sub headingの画像');
     expect(images[0].attr('src')).toContain('fm=webp');
     expect(images[0].attr('src')).toContain('w=960');

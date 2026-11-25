@@ -5,6 +5,7 @@ import { createArticle, createListResponse, createTag } from '@/test/factories';
 const archivePageMock = vi.hoisted(() => vi.fn());
 const microcmsMock = vi.hoisted(() => ({
   getList: vi.fn(),
+  getAllLists: vi.fn(),
   getAllTagLists: vi.fn(),
 }));
 const archiveMock = vi.hoisted(() => ({
@@ -16,7 +17,10 @@ const recentMock = vi.hoisted(() => ({
 }));
 
 vi.mock('@/libs/microcms', () => microcmsMock);
-vi.mock('@/libs/archive', () => archiveMock);
+vi.mock('@/libs/archive', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/libs/archive')>()),
+  ...archiveMock,
+}));
 vi.mock('@/libs/recent', () => recentMock);
 vi.mock('@/components/Pages/Archive', async () => {
   const React = await import('react');
@@ -42,20 +46,14 @@ describe('paginated archive app page', () => {
   it('generates static params for every archive page', async () => {
     const { generateStaticParams } = await import('@/app/archive/[year]/[month]/p/[current]/page');
 
-    archiveMock.getArchiveStaticParams.mockResolvedValue([{ year: '2024', month: '01' }]);
-    microcmsMock.getList.mockResolvedValue(createListResponse([], { totalCount: 21 }));
+    microcmsMock.getAllLists.mockResolvedValue(Array.from({ length: 21 }, () => createArticle()));
 
     await expect(generateStaticParams()).resolves.toEqual([
       { year: '2024', month: '01', current: '1' },
       { year: '2024', month: '01', current: '2' },
       { year: '2024', month: '01', current: '3' },
     ]);
-    expect(microcmsMock.getList).toHaveBeenCalledWith({
-      limit: 0,
-      fields: '',
-      filters:
-        'publishedAt[greater_than]2024-01-01T00:00:00Z[and]publishedAt[less_than]2024-02-01T00:00:00.000Z',
-    });
+    expect(microcmsMock.getAllLists).toHaveBeenCalledWith({ fields: 'publishedAt' });
   });
 
   it('loads archive articles using current page offset and date range', async () => {
@@ -75,7 +73,7 @@ describe('paginated archive app page', () => {
       fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
       offset: 10,
       filters:
-        'publishedAt[greater_than]2024-01-01T00:00:00Z[and]publishedAt[less_than]2024-02-01T00:00:00.000Z',
+        'publishedAt[greater_than]2023-12-31T14:59:59.999Z[and]publishedAt[less_than]2024-01-31T15:00:00.000Z',
     });
     expect(archivePageMock).toHaveBeenCalledWith(
       expect.objectContaining({

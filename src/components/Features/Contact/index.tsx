@@ -2,7 +2,7 @@
 
 import * as Sentry from '@sentry/nextjs';
 import { useState, useEffect, useRef } from 'react';
-import { useTheme } from 'next-themes';
+import { useResolvedTheme } from '@/components/Common/useResolvedTheme';
 import { useForm } from 'react-hook-form';
 import ReCAPTCHA from 'react-google-recaptcha';
 import type { Form } from '@/types/form';
@@ -14,7 +14,7 @@ import { getApiSendEmailUrl, getRecaptchaSiteKey } from '@/config/publicEnv';
 import { getThemeClassName } from '@/styles/uiClassNames';
 
 export default function ContactFeature() {
-  const { theme } = useTheme();
+  const theme = useResolvedTheme();
   const themeClassName = getThemeClassName(theme);
   const apiSendEmailUrl = getApiSendEmailUrl();
   const recaptchaSiteKey = getRecaptchaSiteKey();
@@ -74,12 +74,12 @@ export default function ContactFeature() {
 
     setIsSending(true);
 
-    const payload = JSON.stringify(formData);
-    if (!pendingSubmissionRef.current || pendingSubmissionRef.current.payload !== payload) {
-      pendingSubmissionRef.current = { payload, requestId: crypto.randomUUID() };
-    }
-
     try {
+      const payload = JSON.stringify(formData);
+      if (!pendingSubmissionRef.current || pendingSubmissionRef.current.payload !== payload) {
+        pendingSubmissionRef.current = { payload, requestId: crypto.randomUUID() };
+      }
+
       const response = await fetch(apiSendEmailUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -92,27 +92,15 @@ export default function ContactFeature() {
 
       const data = await response.json();
 
-      if (data.success) {
-        setSuccessSendEmailAlertOpen(true);
-        setFailureSendEmailAlertOpen(false);
-        reset();
-        recaptchaRef.current?.reset();
-        setCaptchaValue(null);
-        setCaptchaError('');
-        pendingSubmissionRef.current = null;
-        setConfirmSendEmailModalOpen(false);
-      } else {
-        const message = data.message ?? data.status ?? 'Contact request failed';
-
-        Sentry.captureException(new Error(String(message)), {
-          tags: {
-            feature: 'contact',
-          },
-        });
-        setSuccessSendEmailAlertOpen(false);
-        setFailureSendEmailAlertOpen(true);
-        setConfirmSendEmailModalOpen(false);
+      if (!response.ok || data?.success !== true) {
+        throw new Error(`Contact request failed (HTTP ${response.status})`);
       }
+
+      setSuccessSendEmailAlertOpen(true);
+      setFailureSendEmailAlertOpen(false);
+      reset();
+      setCaptchaError('');
+      pendingSubmissionRef.current = null;
     } catch (error) {
       Sentry.captureException(error, {
         tags: {
@@ -121,8 +109,10 @@ export default function ContactFeature() {
       });
       setSuccessSendEmailAlertOpen(false);
       setFailureSendEmailAlertOpen(true);
-      setConfirmSendEmailModalOpen(false);
     } finally {
+      recaptchaRef.current?.reset();
+      setCaptchaValue(null);
+      setConfirmSendEmailModalOpen(false);
       setIsSending(false);
     }
   };
@@ -150,7 +140,6 @@ export default function ContactFeature() {
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <InputContainer
             label="メールアドレス"
-            name="email"
             registerResult={register('email', {
               required: '※ メールアドレスを入力してください',
               pattern: {
@@ -162,15 +151,27 @@ export default function ContactFeature() {
           />
           <InputContainer
             label="件名"
-            name="title"
-            registerResult={register('title', { required: '※ 件名を入力してください' })}
+            registerResult={register('title', {
+              required: '※ 件名を入力してください',
+              validate: (value) => {
+                const length = Array.from(value).length;
+                if (!value.trim()) return '※ 件名を入力してください';
+                return length <= 200 || '※ 件名は200文字以内で入力してください';
+              },
+            })}
             errors={errors.title}
           />
           <InputContainer
             textarea={true}
             label="内容"
-            name="message"
-            registerResult={register('message', { required: '※ 内容を入力してください' })}
+            registerResult={register('message', {
+              required: '※ 内容を入力してください',
+              validate: (value) => {
+                const length = Array.from(value).length;
+                if (!value.trim()) return '※ 内容を入力してください';
+                return length <= 5000 || '※ 内容は5,000文字以内で入力してください';
+              },
+            })}
             errors={errors.message}
           />
         </div>

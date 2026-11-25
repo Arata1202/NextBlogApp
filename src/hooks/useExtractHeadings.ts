@@ -1,7 +1,8 @@
+import { useMemo } from 'react';
 import * as cheerio from 'cheerio';
 import { Heading } from '@/types/heading';
 
-export const useExtractHeadings = (contentBlocks: { rich_text?: string }[]): Heading[] => {
+export const extractHeadings = (contentBlocks: { rich_text?: string }[]): Heading[] => {
   const extractedHeadings: Heading[] = [];
 
   contentBlocks.forEach((block) => {
@@ -11,11 +12,7 @@ export const useExtractHeadings = (contentBlocks: { rich_text?: string }[]): Hea
 
       headingElements.each((_, element) => {
         const el = $(element);
-        const tagName = el.prop('tagName');
-
-        if (typeof tagName !== 'string') {
-          return;
-        }
+        const tagName = element.tagName;
 
         extractedHeadings.push({
           id: el.attr('id') || '',
@@ -28,3 +25,6 @@ export const useExtractHeadings = (contentBlocks: { rich_text?: string }[]): Hea
 
   return extractedHeadings;
 };
+
+export const useExtractHeadings = (blocks: { rich_text?: string }[]) =>
+  useMemo(() => extractHeadings(blocks), [blocks]);

@@ -51,9 +51,34 @@ describe('WebpImage', () => {
     const { container } = render(<WebpImage article={article} />);
     const sources = container.querySelectorAll('source[type="image/webp"]');
 
-    expect(sources).toHaveLength(2);
-    expect(sources[0]).toHaveAttribute('media', '(max-width: 640px)');
+    expect(sources).toHaveLength(1);
     expect(sources[0]).toHaveAttribute('srcset', expect.stringContaining('dpr=2 2x'));
+  });
+
+  it('offers width-based mobile card crops and keeps desktop density candidates', () => {
+    const { container } = render(<WebpImage article={article} card />);
+    const [mobile, desktop] = container.querySelectorAll('source');
+    expect(mobile).toHaveAttribute('media', '(max-width: 640px)');
+    expect(mobile).toHaveAttribute('sizes', '100vw');
+    const widths = mobile.srcset.split(', ').map((candidate) => {
+      const [src, descriptor] = candidate.split(' ');
+      const query = new URL(src).searchParams;
+      const width = Number(query.get('w'));
+      expect(descriptor).toBe(`${width}w`);
+      expect(query.get('dpr')).toBe('1');
+      expect(Number(query.get('h'))).toBe(Math.round((width * 158) / 300));
+      return width;
+    });
+    expect(widths).toContain(320);
+    expect(Math.max(...widths)).toBeGreaterThanOrEqual(640 * 2);
+    expect(desktop.srcset).toContain('dpr=2 2x');
+  });
+
+  it('does not advertise resized versions of an external card image', () => {
+    const url = 'https://example.com/photo.jpg';
+    const { container } = render(<WebpImage article={{ ...article, thumbnail: { url } }} card />);
+    expect(container.querySelector('source[media]')).toBeNull();
+    expect(container.querySelector('img')).toHaveAttribute('src', url);
   });
 
   it('does not render a broken image when thumbnail is missing', () => {

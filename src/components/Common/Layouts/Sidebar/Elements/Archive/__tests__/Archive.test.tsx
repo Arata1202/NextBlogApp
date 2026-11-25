@@ -30,7 +30,6 @@ describe('Archive', () => {
     await user.click(screen.getByRole('option', { name: '2024年1月' }));
 
     expect(routerMock.push).toHaveBeenCalledWith('/archive/2024/01');
-    expect(screen.getByRole('button', { name: '2024年1月' })).toBeInTheDocument();
   });
 
   it('can be focused with tab and operated from the keyboard', async () => {

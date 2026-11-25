@@ -1,9 +1,14 @@
 export const copyCodeText = async (text: string) => {
   if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(text);
-    return;
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch (error) {
+      if (!document.execCommand) throw error;
+    }
   }
 
+  const previousFocus = document.activeElement;
   const textArea = document.createElement('textarea');
   textArea.value = text;
   textArea.setAttribute('readonly', '');
@@ -12,13 +17,13 @@ export const copyCodeText = async (text: string) => {
   textArea.style.left = '-1000px';
 
   document.body.appendChild(textArea);
-  textArea.select();
-
   try {
+    textArea.select();
     if (!document.execCommand('copy')) {
       throw new Error('Failed to copy code.');
     }
   } finally {
-    document.body.removeChild(textArea);
+    textArea.remove();
+    if (previousFocus instanceof HTMLElement) previousFocus.focus({ preventScroll: true });
   }
 };

@@ -3,7 +3,8 @@ import { SiFeedly } from 'react-icons/si';
 import { roundIconControlClassName } from '@/components/Common/controlClassNames';
 
 export default function FollowSection() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/+$/, '');
+  if (!baseUrl) return null;
 
   const rssUrl = `${baseUrl}/rss.xml`;
   const feedlyUrl = `https://feedly.com/i/subscription/feed%2F${encodeURIComponent(rssUrl)}`;
