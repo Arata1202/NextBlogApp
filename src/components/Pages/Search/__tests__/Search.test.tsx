@@ -148,7 +148,7 @@ describe('SearchPage', () => {
       }),
     );
     expect(screen.getByText('「React」の検索結果')).toBeInTheDocument();
-    expect(screen.queryByText('記事はまだありません')).not.toBeInTheDocument();
+    expect(screen.queryByText('一致する記事が見つかりませんでした。')).not.toBeInTheDocument();
     expect(screen.queryByText('検索中...')).not.toBeInTheDocument();
   });
 
@@ -184,14 +184,14 @@ describe('SearchPage', () => {
   it('does not fetch until a query is provided', () => {
     render(<SearchPage tags={[]} archiveList={[]} />);
 
-    expect(screen.getByText('記事はまだありません')).toBeInTheDocument();
+    expect(screen.getByText('キーワードを入力して検索してください。')).toBeInTheDocument();
     expect(screen.getByText('「」の検索結果')).toBeInTheDocument();
     expect(fetchMock).not.toHaveBeenCalled();
     expect(articleListMock).toHaveBeenCalledWith(
       expect.objectContaining({
         articles: [],
         mixedArticles: [],
-        emptyMessage: '記事はまだありません',
+        emptyMessage: 'キーワードを入力して検索してください。',
         isLoading: false,
       }),
     );
@@ -216,7 +216,7 @@ describe('SearchPage', () => {
     expect(screen.getByLabelText('アーカイブ')).toBeInTheDocument();
     expect(screen.getByRole('option', { name: '2024年1月' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'React' })).toHaveAttribute('href', '/tag/react?app=1');
-    expect(screen.queryByText('記事はまだありません')).not.toBeInTheDocument();
+    expect(screen.queryByText('キーワードを入力して検索してください。')).not.toBeInTheDocument();
     expect(fetchMock).not.toHaveBeenCalled();
     expect(articleListMock).not.toHaveBeenCalled();
   });

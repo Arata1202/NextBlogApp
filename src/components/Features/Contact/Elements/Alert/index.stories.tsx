@@ -9,7 +9,7 @@ const meta = {
     onClose: fn(),
     show: true,
     title: 'お問い合わせありがとうございます',
-    description: '正常に処理が完了しました。',
+    description: 'お問い合わせを受け付けました。',
   },
   tags: ['autodocs'],
 } satisfies Meta<typeof Alert>;

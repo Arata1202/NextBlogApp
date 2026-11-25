@@ -89,7 +89,7 @@ describe('ContactFeature', () => {
 
     render(<ContactFeature />);
 
-    await user.click(screen.getByRole('button', { name: '送信' }));
+    await user.click(screen.getByRole('button', { name: '送信の確認へ' }));
 
     expect(await screen.findByText('※ メールアドレスを入力してください')).toBeInTheDocument();
     expect(screen.getByText('※ 件名を入力してください')).toBeInTheDocument();
@@ -105,7 +105,7 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('メールアドレス'), 'invalid-email');
     await user.type(screen.getByLabelText('件名'), 'Test subject');
     await user.type(screen.getByLabelText('内容'), 'Test message');
-    await user.click(screen.getByRole('button', { name: '送信' }));
+    await user.click(screen.getByRole('button', { name: '送信の確認へ' }));
 
     expect(await screen.findByText('※ 有効なメールアドレスを入力してください')).toBeInTheDocument();
     expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
@@ -120,7 +120,7 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('メールアドレス'), 'test@example.com');
     await user.type(screen.getByLabelText('件名'), 'Test subject');
     await user.type(screen.getByLabelText('内容'), 'Test message');
-    await user.click(screen.getByRole('button', { name: '送信' }));
+    await user.click(screen.getByRole('button', { name: '送信の確認へ' }));
 
     expect(await screen.findByText('※ reCAPTCHAを完了してください')).toBeInTheDocument();
     expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
@@ -137,7 +137,7 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('メールアドレス'), 'test@example.com');
     await user.type(screen.getByLabelText('件名'), 'Test subject');
     await user.type(screen.getByLabelText('内容'), 'Test message');
-    await user.click(screen.getByRole('button', { name: '送信' }));
+    await user.click(screen.getByRole('button', { name: '送信の確認へ' }));
 
     expect(
       await screen.findByText('※ お問い合わせフォームの設定が不足しています'),
@@ -158,12 +158,11 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('件名'), 'Test subject');
     await user.type(screen.getByLabelText('内容'), 'Test message');
     await user.click(screen.getByRole('button', { name: 'reCAPTCHA' }));
-    await user.click(screen.getByRole('button', { name: '送信' }));
+    await user.click(screen.getByRole('button', { name: '送信の確認へ' }));
 
     expect(await screen.findByText('お問い合わせを送信しますか？')).toBeInTheDocument();
 
-    const confirmButtons = screen.getAllByRole('button', { name: '送信' });
-    await user.click(confirmButtons[confirmButtons.length - 1]);
+    await user.click(screen.getByRole('button', { name: '送信する' }));
 
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -202,8 +201,8 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('件名'), 'Test subject');
     await user.type(screen.getByLabelText('内容'), 'Test message');
     await user.click(screen.getByRole('button', { name: 'reCAPTCHA' }));
-    await user.click(screen.getByRole('button', { name: '送信' }));
-    await user.click((await screen.findAllByRole('button', { name: '送信' })).at(-1)!);
+    await user.click(screen.getByRole('button', { name: '送信の確認へ' }));
+    await user.click(await screen.findByRole('button', { name: '送信する' }));
 
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -249,15 +248,15 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('内容'), 'Test message');
     await user.click(screen.getByRole('button', { name: 'reCAPTCHA' }));
 
-    await user.click(screen.getByRole('button', { name: '送信' }));
-    await user.click((await screen.findAllByRole('button', { name: '送信' })).at(-1)!);
+    await user.click(screen.getByRole('button', { name: '送信の確認へ' }));
+    await user.click(await screen.findByRole('button', { name: '送信する' }));
     expect(await screen.findByText('送信に失敗しました')).toBeInTheDocument();
     await waitFor(() => {
       expect(screen.queryByText('お問い合わせを送信しますか？')).not.toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: '送信' }));
-    await user.click((await screen.findAllByRole('button', { name: '送信' })).at(-1)!);
+    await user.click(screen.getByRole('button', { name: '送信の確認へ' }));
+    await user.click(await screen.findByRole('button', { name: '送信する' }));
     expect(await screen.findByText('お問い合わせありがとうございます')).toBeInTheDocument();
 
     expect(fetchMock).toHaveBeenCalledTimes(2);
@@ -278,8 +277,8 @@ describe('ContactFeature', () => {
     await user.type(screen.getByLabelText('件名'), 'Test subject');
     await user.type(screen.getByLabelText('内容'), 'Test message');
     await user.click(screen.getByRole('button', { name: 'reCAPTCHA' }));
-    await user.click(screen.getByRole('button', { name: '送信' }));
-    await user.click((await screen.findAllByRole('button', { name: '送信' })).at(-1)!);
+    await user.click(screen.getByRole('button', { name: '送信の確認へ' }));
+    await user.click(await screen.findByRole('button', { name: '送信する' }));
 
     expect(await screen.findByText('送信に失敗しました')).toBeInTheDocument();
     expect(screen.getByText('時間をおいて再度お試しください。')).toBeInTheDocument();

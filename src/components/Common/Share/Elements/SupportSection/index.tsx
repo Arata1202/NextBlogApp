@@ -26,7 +26,7 @@ export default function SupportSection({ data }: Props) {
           className="hover:opacity-60"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="にほんブログ村を新しいタブで開く"
+          aria-label="にほんブログ村でこのブログをフォローする（新しいタブで開く）"
         >
           <img
             src="https://b.blogmura.com/banner-blogmura-reader-white-small.svg"

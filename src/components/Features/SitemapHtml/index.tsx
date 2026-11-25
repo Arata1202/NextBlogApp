@@ -22,7 +22,7 @@ export default function SitemapHtmlFeature({ articles, categories }: Props) {
 
   return (
     <>
-      <h2 className={selectedSurfaceClassName}>固定ページ</h2>
+      <h2 className={selectedSurfaceClassName}>サイト案内</h2>
       <ul>
         {PAGE_ARR.map((page) => (
           <li key={page.name}>

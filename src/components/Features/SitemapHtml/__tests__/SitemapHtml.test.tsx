@@ -12,7 +12,7 @@ describe('SitemapHtmlFeature', () => {
       />,
     );
 
-    expect(screen.getByRole('heading', { name: '固定ページ' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'サイト案内' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'お問い合わせ' })).toHaveAttribute('href', 'contact');
     expect(screen.getByRole('heading', { name: 'カテゴリー' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'プログラミング' })).toHaveAttribute(
