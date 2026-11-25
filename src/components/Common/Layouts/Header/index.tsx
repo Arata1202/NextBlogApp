@@ -268,7 +268,17 @@ export default function Header() {
           afterLeave={() => {
             if (focusSearchAfterClose.current) {
               focusSearchAfterClose.current = false;
-              requestAnimationFrame(() => document.getElementById('sidebar-search')?.focus());
+              requestAnimationFrame(() => {
+                const input = document.getElementById('sidebar-search');
+                if (!input) return;
+
+                input.focus({ preventScroll: true });
+                const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                input.scrollIntoView({
+                  behavior: reduceMotion ? 'instant' : 'smooth',
+                  block: 'center',
+                });
+              });
             }
           }}
         >

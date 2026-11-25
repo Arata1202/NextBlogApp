@@ -12,6 +12,7 @@ import RichText from './Elements/Plugins/RichText';
 import WantToRead from './Elements/Plugins/WantToRead';
 import TabBox from './Elements/Plugins/TabBox';
 import ImageSlider from './Elements/Plugins/ImageSlider';
+import ArticleShareLink from './Elements/ArticleShareLink';
 import RelatedArticle from './Elements/RelatedArticle';
 import { useExtractHeadings } from '@/hooks/useExtractHeadings';
 import { formatRichText } from '@/utils/formatRichText';
@@ -127,9 +128,7 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
         );
       })}
       <p className="mt-5" data-web-share>
-        <a className="underline underline-offset-4" href="#article-share">
-          この記事をシェアする
-        </a>
+        <ArticleShareLink />
       </p>
       <RelatedArticle relatedArticles={relatedArticles} />
     </>
