@@ -12,6 +12,7 @@ import RichText from './Elements/Plugins/RichText';
 import WantToRead from './Elements/Plugins/WantToRead';
 import TabBox from './Elements/Plugins/TabBox';
 import ImageSlider from './Elements/Plugins/ImageSlider';
+import ArticleShareLink from './Elements/ArticleShareLink';
 import RelatedArticle from './Elements/RelatedArticle';
 import { useExtractHeadings } from '@/hooks/useExtractHeadings';
 import { formatRichText } from '@/utils/formatRichText';
@@ -126,6 +127,9 @@ export default function ArticleFeature({ data, relatedArticles }: Props) {
           </div>
         );
       })}
+      <p className="mt-5" data-web-share>
+        <ArticleShareLink />
+      </p>
       <RelatedArticle relatedArticles={relatedArticles} />
     </>
   );

@@ -8,6 +8,7 @@ import { Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
 import { UnifiedArticle } from '@/types/unified';
 import { LIMIT } from '@/constants/limit';
+import { SearchResultsNavigation } from '@/contexts/SearchResultsNavigation';
 import PageHeading from '@/components/Common/PageHeading';
 import Pagination from '@/components/Common/Pagination';
 import ArticleList from '@/components/Common/ArticleList';
@@ -308,7 +309,7 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
   }
 
   return (
-    <>
+    <SearchResultsNavigation query={query}>
       <PageHeading page={{ type: 'search', searchKeyword: query }} />
       <ArticleList
         mixedArticles={articles}
@@ -347,6 +348,6 @@ export default function SearchPage({ recentArticles, tags, archiveList }: Props)
         hideWhenStacked
       />
       <AdUnit slot="5969933704" style={{ marginTop: '1.25rem' }} />
-    </>
+    </SearchResultsNavigation>
   );
 }

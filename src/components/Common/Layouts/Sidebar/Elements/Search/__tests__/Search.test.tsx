@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { SearchResultsNavigation } from '@/contexts/SearchResultsNavigation';
+import PageTitle from '@/components/Common/PageTitle';
 import Search from '@/components/Common/Layouts/Sidebar/Elements/Search';
 
 const routerMock = vi.hoisted(() => ({
@@ -30,6 +32,38 @@ describe('Search', () => {
     await user.click(screen.getByRole('button', { name: '検索' }));
 
     expect(routerMock.push).toHaveBeenCalledWith('/search?q=React%20Query');
+  });
+
+  it('focuses results only when a re-search is submitted', async () => {
+    const user = userEvent.setup();
+    const scrollIntoView = vi.fn();
+    window.history.replaceState(null, '', '/search?q=old');
+
+    try {
+      const results = (query: string) => (
+        <SearchResultsNavigation query={query}>
+          <PageTitle page={{ type: 'search', searchKeyword: query }} />
+          <Search />
+        </SearchResultsNavigation>
+      );
+      const { rerender } = render(results('old'));
+      const heading = screen.getByRole('heading');
+      heading.scrollIntoView = scrollIntoView;
+
+      await user.type(screen.getByRole('searchbox'), 'new');
+      expect(scrollIntoView).not.toHaveBeenCalled();
+      await user.keyboard('{Enter}');
+      expect(window.location.search).toBe('?q=new');
+      expect(heading).not.toHaveFocus();
+      rerender(results('new'));
+      expect(heading).toHaveAccessibleName('「new」の検索結果');
+      expect(heading).toHaveFocus();
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      rerender(results('old'));
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+    } finally {
+      window.history.replaceState(null, '', '/');
+    }
   });
 
   it('shows a validation message and does not navigate when the query is empty', async () => {

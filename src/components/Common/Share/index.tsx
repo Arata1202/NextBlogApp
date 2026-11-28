@@ -1,3 +1,4 @@
+import { ARTICLE_SHARE_ID, WEB_HEADER_SCROLL_MARGIN } from '@/constants/navigation';
 import { Article } from '@/types/microcms';
 import ShareSection from './Elements/ShareSection';
 import FollowSection from './Elements/FollowSection';
@@ -10,7 +11,13 @@ type Props = {
 export default function Share({ data }: Props) {
   return (
     <>
-      <div className="mt-5" data-web-share>
+      <div
+        id={data ? ARTICLE_SHARE_ID : undefined}
+        tabIndex={data ? -1 : undefined}
+        className="mt-5"
+        style={{ scrollMarginTop: WEB_HEADER_SCROLL_MARGIN }}
+        data-web-share
+      >
         <ShareSection data={data} />
         <FollowSection />
         <SupportSection data={data} />

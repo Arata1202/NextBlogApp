@@ -1,5 +1,7 @@
 'use client';
 
+import { flushSync } from 'react-dom';
+import { focusAndScroll } from '@/utils/focusAndScroll';
 import Link from 'next/link';
 import { Fragment, useEffect, useRef, useState, type ElementType, type RefObject } from 'react';
 import { useTheme } from 'next-themes';
@@ -17,10 +19,12 @@ import {
   BriefcaseIcon as BriefcaseSolidIcon,
   CommandLineIcon as CommandLineSolidIcon,
   FolderIcon,
+  MagnifyingGlassIcon,
   SparklesIcon as SparklesSolidIcon,
 } from '@heroicons/react/24/solid';
 import styles from './index.module.css';
 import ThemeSwitch from '@/components/Common/Layouts/ThemeSwitch';
+import { SIDEBAR_SEARCH_ID } from '@/constants/navigation';
 import { BLOG_IMAGE } from '@/constants/data';
 import { HEADER_NAVIGATION } from '@/constants/data';
 import { CATEGORY_ARR } from '@/constants/category';
@@ -98,7 +102,9 @@ export default function Header() {
   const { theme } = useTheme();
   const categoryPopoverRef = useRef<HTMLDivElement>(null);
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hasSidebarSearch, setHasSidebarSearch] = useState(false);
+  const [menuState, setMenuState] = useState<'open' | 'closed' | 'search'>('closed');
+  const mobileMenuOpen = menuState === 'open';
   const [suppressCategoryFocusOutline, setSuppressCategoryFocusOutline] = useState(false);
   const themeClassName = getThemeClassName(theme);
   const headerLinkClassName = `flex text-sm leading-6 ${colorClassNames.accentHoverText} ${interactiveFocusClassName} ${themeClassName}`;
@@ -142,7 +148,7 @@ export default function Header() {
                 type="button"
                 aria-label="メニューを閉じる"
                 className={`${compactIconControlClassName} cursor-pointer ${themeClassName}`}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => setMenuState('closed')}
               >
                 <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               </button>
@@ -171,7 +177,10 @@ export default function Header() {
                     type="button"
                     aria-label="メニューを開く"
                     className={`${compactIconControlClassName} cursor-pointer ${themeClassName}`}
-                    onClick={() => setMobileMenuOpen(true)}
+                    onClick={() => {
+                      setHasSidebarSearch(Boolean(document.getElementById(SIDEBAR_SEARCH_ID)));
+                      setMenuState('open');
+                    }}
                   >
                     <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                   </button>
@@ -256,94 +265,120 @@ export default function Header() {
           </div>
         </nav>
 
-        <Transition.Root show={mobileMenuOpen} as={Fragment}>
-          <Dialog
-            as="div"
-            className="relative lg:hidden z-50"
-            data-app-root
-            onClose={setMobileMenuOpen}
-          >
-            <Transition.Child
-              as={Fragment}
-              enter="ease-in-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in-out duration-300"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
+        {menuState !== 'search' && (
+          <Transition.Root show={mobileMenuOpen} as={Fragment}>
+            <Dialog
+              as="div"
+              className="relative lg:hidden z-50"
+              data-app-root
+              onClose={() => setMenuState('closed')}
             >
-              <div className="fixed inset-0" aria-hidden="true" />
-            </Transition.Child>
-
-            <Transition.Child
-              as={Fragment}
-              enter="ease-in-out duration-500 transform"
-              enterFrom="translate-x-full"
-              enterTo="translate-x-0"
-              leave="ease-in-out duration-500 transform"
-              leaveFrom="translate-x-0"
-              leaveTo="translate-x-full"
-            >
-              <Dialog.Panel
-                className={`fixed inset-y-0 right-0 flex max-w-xs w-full ${shadowClassNames.dialog} ${themeClassName}`}
+              <Transition.Child
+                as={Fragment}
+                enter="ease-in-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in-out duration-300"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
               >
-                <div className="flex w-full flex-col p-5">
-                  <div className="-ml-2 flex justify-end p-2">
-                    <button
-                      type="button"
-                      aria-label="メニューを閉じる"
-                      className={`${compactIconControlClassName} cursor-pointer`}
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <XMarkIcon className={`h-6 w-6 ${themeClassName}`} aria-hidden="true" />
-                    </button>
-                  </div>
-                  <Dialog.Title
-                    className={`text-center py-2 text-xl font-bold ${selectedSurfaceClassName}`}
-                  >
-                    Menu
-                  </Dialog.Title>
-                  <ul className="mt-5 space-y-6">
-                    {HEADER_NAVIGATION.map((item) => (
-                      <li key={item.name}>
-                        <Link
-                          href={item.path}
-                          className={menuLinkClassName}
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                          <item.icon className="h-6 w-6 mx-2" aria-hidden="true" />
-                          {item.name}
-                        </Link>
-                      </li>
-                    ))}
-                    <li className="pt-2">
-                      <p
-                        className={`flex items-center gap-2 text-xs font-semibold ${mutedTextClassName}`}
+                <div className="fixed inset-0" aria-hidden="true" />
+              </Transition.Child>
+
+              <Transition.Child
+                as={Fragment}
+                enter="ease-in-out duration-500 transform"
+                enterFrom="translate-x-full"
+                enterTo="translate-x-0"
+                leave="ease-in-out duration-500 transform"
+                leaveFrom="translate-x-0"
+                leaveTo="translate-x-full"
+              >
+                <Dialog.Panel
+                  className={`fixed inset-y-0 right-0 flex max-w-xs w-full overflow-y-auto overscroll-contain ${shadowClassNames.dialog} ${themeClassName}`}
+                >
+                  <div className="flex w-full flex-col p-5">
+                    <div className="-ml-2 flex justify-end p-2">
+                      <button
+                        type="button"
+                        aria-label="メニューを閉じる"
+                        className={`${compactIconControlClassName} cursor-pointer`}
+                        onClick={() => setMenuState('closed')}
                       >
-                        <FolderIcon className="h-4 w-4" aria-hidden="true" />
-                        カテゴリー
-                      </p>
-                    </li>
-                    {CATEGORY_ARR.map((item) => (
-                      <li key={item.name}>
-                        <Link
-                          href={`/category/${item.id}`}
-                          className={categoryMenuLinkClassName}
-                          onClick={() => setMobileMenuOpen(false)}
+                        <XMarkIcon className={`h-6 w-6 ${themeClassName}`} aria-hidden="true" />
+                      </button>
+                    </div>
+                    <Dialog.Title
+                      className={`text-center py-2 text-xl font-bold ${selectedSurfaceClassName}`}
+                    >
+                      Menu
+                    </Dialog.Title>
+                    <ul className="mt-5 space-y-6">
+                      {hasSidebarSearch && (
+                        <li>
+                          <button
+                            type="button"
+                            className={`${menuLinkClassName} w-full cursor-pointer`}
+                            onClick={() => {
+                              // Release the dialog's focus trap while the tap can still open the iOS keyboard.
+                              flushSync(() => setMenuState('search'));
+                              // Let the dialog restore its previous focus before transferring it to search.
+                              queueMicrotask(() => {
+                                const input = document.getElementById(SIDEBAR_SEARCH_ID);
+                                if (input instanceof HTMLInputElement && input.form) {
+                                  focusAndScroll(input, input.form);
+                                }
+                                setMenuState('closed');
+                              });
+                            }}
+                          >
+                            <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                            <MagnifyingGlassIcon className="h-6 w-6 mx-2" aria-hidden="true" />
+                            記事を検索
+                          </button>
+                        </li>
+                      )}
+                      {HEADER_NAVIGATION.map((item) => (
+                        <li key={item.name}>
+                          <Link
+                            href={item.path}
+                            className={menuLinkClassName}
+                            onClick={() => setMenuState('closed')}
+                          >
+                            <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                            <item.icon className="h-6 w-6 mx-2" aria-hidden="true" />
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                      <li className="pt-2">
+                        <p
+                          className={`flex items-center gap-2 text-xs font-semibold ${mutedTextClassName}`}
                         >
-                          <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                          <HeaderCategoryIcon category={item} className="h-6 w-6 mx-2 shrink-0" />
-                          {item.name}
-                        </Link>
+                          <FolderIcon className="h-4 w-4" aria-hidden="true" />
+                          カテゴリー
+                        </p>
                       </li>
-                    ))}
-                  </ul>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </Dialog>
-        </Transition.Root>
+                      {CATEGORY_ARR.map((item) => (
+                        <li key={item.name}>
+                          <Link
+                            href={`/category/${item.id}`}
+                            className={categoryMenuLinkClassName}
+                            onClick={() => setMenuState('closed')}
+                          >
+                            <ChevronRightIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                            <HeaderCategoryIcon category={item} className="h-6 w-6 mx-2 shrink-0" />
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </Dialog>
+          </Transition.Root>
+        )}
       </header>
     </>
   );

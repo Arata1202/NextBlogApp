@@ -13,6 +13,7 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/solid';
 import type { ComponentType, SVGProps } from 'react';
+import { SEARCH_RESULTS_HEADING_ID } from '@/constants/navigation';
 import styles from './index.module.css';
 import SearchResultLabelSkeleton from '../SearchResultLabelSkeleton';
 import { getPageHeadingLabel, type PageHeadingPage } from '../pageHeadingModel';
@@ -43,10 +44,14 @@ export default function PageTitle({ page, isLoading = false }: Props) {
   const Icon = PAGE_HEADING_ICONS[page.type];
   const isSearchLoading = page.type === 'search' && isLoading;
 
+  const isSearchResult = page.type === 'search' && !isLoading;
+
   return (
     <>
       <h1
-        className={`${(page.type === 'home' && styles.home) || styles.withBreadCrumbs} flex items-center pb-2 pt-2`}
+        id={isSearchResult ? SEARCH_RESULTS_HEADING_ID : undefined}
+        tabIndex={isSearchResult ? -1 : undefined}
+        className={`${(page.type === 'home' && styles.home) || styles.withBreadCrumbs} flex items-center pb-2 pt-2 ${isSearchResult ? 'scroll-mt-20' : ''}`}
         aria-label={isLoading ? 'ページタイトルを読み込み中' : undefined}
       >
         <Icon className="h-8 w-8 mr-2" aria-hidden="true" />
