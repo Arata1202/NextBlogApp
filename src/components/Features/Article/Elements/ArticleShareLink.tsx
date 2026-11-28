@@ -21,7 +21,7 @@ export default function ArticleShareLink() {
 
         event.preventDefault();
         if (window.location.hash !== hash) window.history.pushState(null, '', hash);
-        focusAndScroll(target, 'start');
+        focusAndScroll(target);
       }}
     >
       この記事をシェアする

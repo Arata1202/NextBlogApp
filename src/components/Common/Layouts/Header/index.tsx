@@ -325,7 +325,9 @@ export default function Header() {
                               // Let the dialog restore its previous focus before transferring it to search.
                               queueMicrotask(() => {
                                 const input = document.getElementById(SIDEBAR_SEARCH_ID);
-                                if (input) focusAndScroll(input, 'center');
+                                if (input instanceof HTMLInputElement && input.form) {
+                                  focusAndScroll(input, input.form);
+                                }
                                 setMenuState('closed');
                               });
                             }}

@@ -1,6 +1,6 @@
 'use client';
 
-import { SIDEBAR_SEARCH_ID } from '@/constants/navigation';
+import { SIDEBAR_SEARCH_ID, WEB_HEADER_SCROLL_MARGIN } from '@/constants/navigation';
 import { SearchResultsFocusContext } from '@/contexts/SearchResultsNavigation';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useRef, useState, type FormEvent } from 'react';
@@ -66,13 +66,17 @@ export default function Search() {
   };
 
   return (
-    <div className={`px-4 mb-5 ${surfaceClassNames.panel} ${themeClassName}`}>
+    <form
+      onSubmit={handleSubmit}
+      className={`px-4 mb-5 ${surfaceClassNames.panel} ${themeClassName}`}
+      style={{ scrollMarginTop: WEB_HEADER_SCROLL_MARGIN }}
+    >
       <div className="text-2xl text-center font-semibold flex justify-center">
         <MagnifyingGlassIcon className="h-8 w-8 mr-2" aria-hidden="true" />
         検索
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-5">
+      <div className="mt-5">
         <label htmlFor={SIDEBAR_SEARCH_ID} className="sr-only">
           検索
         </label>
@@ -107,7 +111,7 @@ export default function Search() {
             {errorMessage}
           </p>
         )}
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }

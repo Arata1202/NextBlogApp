@@ -1,5 +1,6 @@
 'use client';
 
+import { WEB_HEADER_SCROLL_MARGIN } from '@/constants/navigation';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
@@ -14,7 +15,6 @@ type Props = {
   sidebar?: boolean;
 };
 
-const WEB_HEADER_SCROLL_OFFSET = -100;
 const APP_WEBVIEW_SCROLL_OFFSET = -16;
 
 export default function TableOfContents({ headings, sidebar = false }: Props) {
@@ -24,7 +24,7 @@ export default function TableOfContents({ headings, sidebar = false }: Props) {
   const [activeId, setActiveId] = useState('');
 
   const formattedHeadings = formatHeadings(headings);
-  const scrollOffset = isAppWebViewMode ? APP_WEBVIEW_SCROLL_OFFSET : WEB_HEADER_SCROLL_OFFSET;
+  const scrollOffset = isAppWebViewMode ? APP_WEBVIEW_SCROLL_OFFSET : -WEB_HEADER_SCROLL_MARGIN;
   const activeScrollPosition = Math.abs(scrollOffset) + 1;
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
