@@ -50,7 +50,7 @@ func containsDisallowedEmailContentCharacters(value string, allowLineBreaks bool
 	}
 
 	for _, r := range value {
-		if unicode.IsPrint(r) || r == '\t' || (allowLineBreaks && r == '\n') {
+		if unicode.IsPrint(r) || unicode.Is(unicode.Zs, r) || r == '\t' || (allowLineBreaks && r == '\n') {
 			continue
 		}
 
@@ -84,17 +84,14 @@ func validateEmailRequestInput(req *EmailRequestBody) error {
 	if containsDisallowedEmailContentCharacters(req.Email, false) {
 		return fmt.Errorf("email contains disallowed characters")
 	}
-	parsedAddress, err := mail.ParseAddress(req.Email)
-	if err != nil {
+	// The angle-address grammar accepts a bare addr-spec, including a quoted local part.
+	if _, err := mail.ParseAddress("<" + req.Email + ">"); err != nil {
 		return fmt.Errorf("invalid email address: %w", err)
 	}
-	if parsedAddress.Address != req.Email {
-		return fmt.Errorf("email must be an addr-spec")
-	}
-
 	if err := validateEmailTextField("title", req.Title, maxTitleLength, false); err != nil {
 		return err
 	}
+	req.Message = strings.ReplaceAll(req.Message, "\r\n", "\n")
 	if err := validateEmailTextField("message", req.Message, maxMessageLength, true); err != nil {
 		return err
 	}

@@ -12,8 +12,8 @@ import (
 
 type microCMSSearchListResponse = microcms.ListResponse
 
-func buildMicroCMSSearchRequest(serviceDomain, apiKey, query string, limit, offset int) (*http.Request, error) {
-	req, err := microcms.BuildListRequest(context.Background(), microCMSSearchAPIBaseURL, serviceDomain, apiKey, microCMSSearchFields, limit, offset)
+func buildMicroCMSSearchRequest(ctx context.Context, serviceDomain, apiKey, query string, limit, offset int) (*http.Request, error) {
+	req, err := microcms.BuildListRequest(ctx, microCMSSearchAPIBaseURL, serviceDomain, apiKey, microCMSSearchFields, limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -25,16 +25,16 @@ func buildMicroCMSSearchRequest(serviceDomain, apiKey, query string, limit, offs
 	return req, nil
 }
 
-func fetchMicroCMSSearchArticles(serviceDomain, apiKey, query string) ([]map[string]interface{}, error) {
+func fetchMicroCMSSearchArticles(ctx context.Context, serviceDomain, apiKey, query string) ([]map[string]interface{}, error) {
 	articles := []map[string]interface{}{}
 
 	for offset := 0; ; offset += microCMSListFetchLimit {
-		req, err := buildMicroCMSSearchRequest(serviceDomain, apiKey, query, microCMSListFetchLimit, offset)
+		req, err := buildMicroCMSSearchRequest(ctx, serviceDomain, apiKey, query, microCMSListFetchLimit, offset)
 		if err != nil {
 			return nil, err
 		}
 
-		resp, err := microCMSSearchHTTPClient.Do(req)
+		resp, err := microcms.DoListRequest(microCMSSearchHTTPClient, req)
 		if err != nil {
 			return nil, err
 		}

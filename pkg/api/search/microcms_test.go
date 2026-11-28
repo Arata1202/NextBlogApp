@@ -6,7 +6,7 @@ import (
 )
 
 func TestBuildMicroCMSSearchRequest(t *testing.T) {
-	req, err := buildMicroCMSSearchRequest("example", "api-key", "React hooks", 10, 20)
+	req, err := buildMicroCMSSearchRequest(t.Context(), "example", "api-key", "React hooks", 10, 20)
 	if err != nil {
 		t.Fatalf("buildMicroCMSSearchRequest() error = %v", err)
 	}

@@ -33,6 +33,16 @@ func TestOneSignalIdempotencyKey(t *testing.T) {
 }
 
 func TestNotifyMicroCMSFirstPublishWithOneSignalSkipsSponsoredArticle(t *testing.T) {
+	original := microCMSBackupHTTPClient
+	t.Cleanup(func() { microCMSBackupHTTPClient = original })
+	microCMSBackupHTTPClient = &http.Client{Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+		body, _ := io.ReadAll(r.Body)
+		if r.Method != "PUT" || r.URL.Path != "/onesignal/notifications/blog/article-a.json" || r.Header.Get("If-None-Match") != "*" || string(body) != `{"status":"skipped"}` {
+			t.Fatalf("unexpected marker operation: %s %s %s", r.Method, r.URL.Path, body)
+		}
+		return responseWithBody(http.StatusOK, ""), nil
+	})}
+
 	payload := microCMSWebhookPayload{
 		API:  "blog",
 		ID:   "article-a",
@@ -218,6 +228,11 @@ func TestNotifyExternalArticlesFirstPublishWithOneSignalFailsWhenOneSignalOmitsN
 				if r.URL.EscapedPath() != "/onesignal/notifications/zenn/zenn-a.json" {
 					t.Fatalf("S3 path = %q", r.URL.EscapedPath())
 				}
+				if r.Method == http.MethodGet {
+					resp := responseWithBody(http.StatusOK, `{"status":"pending","attempt":1}`)
+					resp.Header.Set("ETag", `"first"`)
+					return resp, nil
+				}
 				body, err := io.ReadAll(r.Body)
 				if err != nil {
 					t.Fatalf("read S3 body error = %v", err)
@@ -330,7 +345,7 @@ func TestNotifyExternalArticlesFirstPublishWithOneSignalRetriesPendingMarker(t *
 					return responseWithBody(http.StatusOK, ""), nil
 				case http.MethodGet:
 					markerGetCount++
-					return responseWithBody(http.StatusOK, `{"status":"pending","source":"zenn","contentId":"zenn-a"}`), nil
+					return responseWithBody(http.StatusOK, `{"createdAt":"2026-06-05T22:08:09Z","status":"pending","source":"zenn","contentId":"zenn-a"}`), nil
 				default:
 					t.Fatalf("S3 method = %s", r.Method)
 					return nil, nil
@@ -418,7 +433,7 @@ func TestNotifyExternalArticlesFirstPublishWithOneSignalUsesAdvancedAttemptForPe
 					}
 					return responseWithBody(http.StatusOK, ""), nil
 				case http.MethodGet:
-					return responseWithBody(http.StatusOK, `{"status":"pending","source":"zenn","contentId":"zenn-a","attempt":2}`), nil
+					return responseWithBody(http.StatusOK, `{"createdAt":"2026-06-05T22:08:09Z","status":"pending","source":"zenn","contentId":"zenn-a","attempt":2}`), nil
 				default:
 					t.Fatalf("S3 method = %s", r.Method)
 					return nil, nil

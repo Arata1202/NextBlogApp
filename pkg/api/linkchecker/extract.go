@@ -2,7 +2,7 @@ package linkchecker
 
 import (
 	"fmt"
-	"html"
+	"golang.org/x/net/html"
 	"net/url"
 	"os"
 	"strings"
@@ -32,8 +32,7 @@ func linkCheckerBaseURL() string {
 }
 
 func normalizeLinkURL(rawLink, baseURL string) (string, bool) {
-	rawLink = strings.TrimSpace(html.UnescapeString(rawLink))
-	rawLink = strings.Trim(rawLink, `"'`)
+	rawLink = strings.TrimSpace(rawLink)
 	if rawLink == "" || strings.HasPrefix(rawLink, "#") {
 		return "", false
 	}
@@ -45,7 +44,7 @@ func normalizeLinkURL(rawLink, baseURL string) (string, bool) {
 		}
 	}
 
-	if strings.HasPrefix(rawLink, "//") {
+	if strings.HasPrefix(rawLink, "//") && baseURL == "" {
 		rawLink = "https:" + rawLink
 	}
 
@@ -82,6 +81,10 @@ func appendLinkReference(refsByURL map[string][]linkReference, rawLink string, r
 		return
 	}
 
+	addNormalizedReference(refsByURL, normalizedURL, ref)
+}
+
+func addNormalizedReference(refsByURL map[string][]linkReference, normalizedURL string, ref linkReference) {
 	for _, existingRef := range refsByURL[normalizedURL] {
 		if existingRef == ref {
 			return
@@ -91,21 +94,37 @@ func appendLinkReference(refsByURL map[string][]linkReference, rawLink string, r
 	refsByURL[normalizedURL] = append(refsByURL[normalizedURL], ref)
 }
 
-func stripCodeBlocks(text string) string {
-	text = preBlockPattern.ReplaceAllString(text, "")
-	return codeBlockPattern.ReplaceAllString(text, "")
-}
-
 func extractTextLinks(refsByURL map[string][]linkReference, text string, ref linkReference, baseURL string) {
-	text = stripCodeBlocks(text)
-
-	for _, anchorTag := range anchorTagPattern.FindAllString(text, -1) {
-		match := hrefAttributePattern.FindStringSubmatch(anchorTag)
-		if match == nil {
-			continue
+	tokenizer := html.NewTokenizer(strings.NewReader(text))
+	codeDepth := 0
+	for {
+		kind := tokenizer.Next()
+		switch kind {
+		case html.ErrorToken:
+			return
+		case html.EndTagToken:
+			name, _ := tokenizer.TagName()
+			if string(name) == "pre" || string(name) == "code" {
+				codeDepth = max(0, codeDepth-1)
+			}
+		case html.StartTagToken, html.SelfClosingTagToken:
+			tag := tokenizer.Token()
+			if tag.Data == "pre" || tag.Data == "code" {
+				if kind == html.StartTagToken {
+					codeDepth++
+				}
+				continue
+			}
+			if codeDepth != 0 || tag.Data != "a" {
+				continue
+			}
+			for _, attr := range tag.Attr {
+				if attr.Key == "href" {
+					appendLinkReference(refsByURL, attr.Val, ref, baseURL)
+					break
+				}
+			}
 		}
-
-		appendLinkReference(refsByURL, firstString(match[1], match[2], match[3]), ref, baseURL)
 	}
 }
 
@@ -130,6 +149,9 @@ func collectArticleLinks(article map[string]interface{}, baseURL string) map[str
 	refsByURL := map[string][]linkReference{}
 	articleID := stringValue(article["id"])
 	articleTitle := stringValue(article["title"])
+	if baseURL != "" && articleID != "" {
+		baseURL = strings.TrimRight(baseURL, "/") + "/articles/" + url.PathEscape(articleID)
+	}
 
 	blockGroups := []string{"introduction_blocks", "content_blocks"}
 	textFields := []string{
@@ -181,7 +203,7 @@ func collectArticleLinks(article map[string]interface{}, baseURL string) map[str
 func mergeLinkReferences(target, source map[string][]linkReference) {
 	for linkURL, refs := range source {
 		for _, ref := range refs {
-			appendLinkReference(target, linkURL, ref, "")
+			addNormalizedReference(target, linkURL, ref)
 		}
 	}
 }

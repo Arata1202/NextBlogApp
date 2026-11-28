@@ -39,7 +39,7 @@ func fetchMicroCMSBackupArticles(ctx context.Context, serviceDomain, apiKey stri
 			return nil, err
 		}
 
-		resp, err := microCMSBackupHTTPClient.Do(req)
+		resp, err := microcms.DoListRequest(microCMSBackupHTTPClient, req)
 		if err != nil {
 			return nil, err
 		}
@@ -65,7 +65,10 @@ func fetchMicroCMSBackupArticles(ctx context.Context, serviceDomain, apiKey stri
 		closeMicroCMSBackupResponseBody(resp)
 
 		articles = append(articles, listResponse.Contents...)
-		if len(articles) >= listResponse.TotalCount || len(listResponse.Contents) == 0 {
+		if len(listResponse.Contents) == 0 && len(articles) < listResponse.TotalCount {
+			return nil, fmt.Errorf("incomplete backup at offset %d of %d", offset, listResponse.TotalCount)
+		}
+		if len(articles) >= listResponse.TotalCount {
 			return articles, nil
 		}
 		offset += len(listResponse.Contents)

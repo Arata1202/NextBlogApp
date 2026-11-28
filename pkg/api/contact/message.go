@@ -47,7 +47,7 @@ func buildContactMessages(config emailConfig, site siteConfig, request EmailRequ
 	userEmail := sanitizeEmailLineContent(request.Email)
 
 	ownerHTML, ownerText := buildMessageBodies(site, from.Address, userEmail, title, message, "お問い合わせを受信しました。")
-	confirmationHTML, confirmationText := buildMessageBodies(site, from.Address, userEmail, title, message, "以下の内容でお問い合わせを承りました。")
+	const confirmationText = "お問い合わせを承りました。ご連絡ありがとうございます。"
 
 	return []emailMessage{
 		{
@@ -63,7 +63,7 @@ func buildContactMessages(config emailConfig, site siteConfig, request EmailRequ
 			To:      []mail.Address{user},
 			ReplyTo: from,
 			Subject: "お問い合わせありがとうございます",
-			HTML:    confirmationHTML,
+			HTML:    "<p>" + confirmationText + "</p>",
 			Text:    confirmationText,
 		},
 	}, nil

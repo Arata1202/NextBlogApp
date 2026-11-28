@@ -15,6 +15,7 @@ import (
 
 func MicroCMSBackupHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
+		w.Header().Set("Allow", "POST")
 		writeMicroCMSBackupJSON(w, http.StatusMethodNotAllowed, map[string]string{"message": "Method Not Allowed"})
 		return
 	}
@@ -76,7 +77,10 @@ func MicroCMSBackupHandler(w http.ResponseWriter, r *http.Request) {
 
 	articles, err := fetchMicroCMSBackupArticles(runContext, serviceDomain, apiKey)
 	if err != nil {
-		if runContext.Err() != nil {
+		if errors.Is(runContext.Err(), context.Canceled) {
+			return
+		}
+		if errors.Is(runContext.Err(), context.DeadlineExceeded) {
 			log.Printf("microCMS backup timed out while fetching articles: %v", runContext.Err())
 			monitoring.CaptureError(runContext.Err(), monitoring.EventContext{
 				Feature:   "microcms_backup",
@@ -109,10 +113,13 @@ func MicroCMSBackupHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	now := microCMSBackupNow()
-	objectKey := microCMSBackupObjectKey(now)
 	csvBody := csvBuffer.Bytes()
-	if err := uploadMicroCMSBackupToS3(runContext, s3Config, credentials, objectKey, csvBody, now); err != nil {
-		if runContext.Err() != nil {
+	objectKey, err := uploadMicroCMSBackupToS3(runContext, s3Config, credentials, csvBody, now)
+	if err != nil {
+		if errors.Is(runContext.Err(), context.Canceled) {
+			return
+		}
+		if errors.Is(runContext.Err(), context.DeadlineExceeded) {
 			log.Printf("microCMS backup timed out while uploading to S3: %v", runContext.Err())
 			monitoring.CaptureError(runContext.Err(), monitoring.EventContext{
 				Feature:   "microcms_backup",
@@ -134,7 +141,10 @@ func MicroCMSBackupHandler(w http.ResponseWriter, r *http.Request) {
 
 	notificationResult, err := notifyMicroCMSFirstPublishWithOneSignal(runContext, s3Config, credentials, webhookPayload, now)
 	if err != nil {
-		if runContext.Err() != nil {
+		if errors.Is(runContext.Err(), context.Canceled) {
+			return
+		}
+		if errors.Is(runContext.Err(), context.DeadlineExceeded) {
 			log.Printf("microCMS backup timed out while sending OneSignal notification: %v", runContext.Err())
 			monitoring.CaptureError(runContext.Err(), monitoring.EventContext{
 				Feature:   "microcms_backup",

@@ -11,6 +11,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"syscall"
 )
 
 func isBlockedLinkCheckerHostname(host string) bool {
@@ -85,6 +86,24 @@ func validateLinkCheckerTarget(ctx context.Context, linkURL string) error {
 	return nil
 }
 
+// Check the concrete destination chosen by the dialer on each connection.
+var probeTransport = func() *http.Transport {
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	transport.Proxy = nil
+	dialer := net.Dialer{ControlContext: func(ctx context.Context, network, address string, conn syscall.RawConn) error {
+		host, _, err := net.SplitHostPort(address)
+		if err != nil {
+			return err
+		}
+		if isBlockedLinkCheckerIP(net.ParseIP(host)) {
+			return fmt.Errorf("blocked link connection to %s", host)
+		}
+		return nil
+	}}
+	transport.DialContext = dialer.DialContext
+	return transport
+}()
+
 func linkCheckerDoWithoutRedirects(req *http.Request) (*http.Response, error) {
 	baseClient := http.DefaultClient
 	if linkCheckerHTTPClient != nil {
@@ -92,6 +111,9 @@ func linkCheckerDoWithoutRedirects(req *http.Request) (*http.Response, error) {
 	}
 
 	copiedClient := *baseClient
+	if copiedClient.Transport == nil {
+		copiedClient.Transport = probeTransport
+	}
 	copiedClient.CheckRedirect = func(req *http.Request, via []*http.Request) error {
 		return http.ErrUseLastResponse
 	}
@@ -199,7 +221,9 @@ func checkSingleLink(ctx context.Context, linkURL string) (int, string, bool) {
 	requestContext, cancel := context.WithTimeout(ctx, linkCheckerRequestTimeout)
 	defer cancel()
 
-	statusCode, err := doLinkCheckerRequest(requestContext, http.MethodHead, linkURL)
+	headContext, finishHead := context.WithTimeout(requestContext, linkCheckerRequestTimeout/2)
+	statusCode, err := doLinkCheckerRequest(headContext, http.MethodHead, linkURL)
+	finishHead()
 	if err != nil ||
 		isInconclusiveLinkCheckerStatus(statusCode) ||
 		statusCode == http.StatusMethodNotAllowed ||
@@ -257,11 +281,7 @@ func checkLinks(ctx context.Context, refsByURL map[string][]linkReference) []lin
 						broken:     broken,
 					}
 
-					select {
-					case results <- result:
-					case <-ctx.Done():
-						return
-					}
+					results <- result
 				}
 			}
 		}()

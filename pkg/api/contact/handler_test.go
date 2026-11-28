@@ -2,6 +2,7 @@ package contact
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -162,7 +163,7 @@ func TestSendEmailHandlerRejectsInvalidRequestFields(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			originalVerify := verifyRecaptchaFunc
-			verifyRecaptchaFunc = func(response, secret string) (bool, error) {
+			verifyRecaptchaFunc = func(_ context.Context, response, secret string) (bool, error) {
 				t.Fatal("verifyRecaptchaFunc should not be called for invalid request fields")
 				return false, nil
 			}

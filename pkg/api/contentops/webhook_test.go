@@ -71,9 +71,9 @@ func TestIsMicroCMSFirstPublishWebhook(t *testing.T) {
 
 func TestIsMicroCMSSponsoredArticle(t *testing.T) {
 	for _, testCase := range []struct {
-		name    string
-		value   interface{}
-		want    bool
+		name  string
+		value interface{}
+		want  bool
 	}{
 		{name: "sponsored article", value: true, want: true},
 		{name: "regular article", value: false, want: false},

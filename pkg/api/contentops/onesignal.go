@@ -21,7 +21,6 @@ func loadOneSignalConfigFromEnv() (oneSignalConfig, error) {
 		AppID:      strings.TrimSpace(os.Getenv("ONESIGNAL_APP_ID")),
 		RESTAPIKey: strings.TrimSpace(os.Getenv("ONESIGNAL_REST_API_KEY")),
 		BaseURL:    strings.TrimRight(strings.TrimSpace(os.Getenv("BASE_URL")), "/"),
-		BaseTitle:  strings.TrimSpace(os.Getenv("BASE_TITLE")),
 	}
 
 	if config.AppID == "" {
@@ -32,9 +31,6 @@ func loadOneSignalConfigFromEnv() (oneSignalConfig, error) {
 	}
 	if config.BaseURL == "" {
 		return oneSignalConfig{}, errors.New("BASE_URL environment variable is required")
-	}
-	if config.BaseTitle == "" {
-		return oneSignalConfig{}, errors.New("BASE_TITLE environment variable is required")
 	}
 
 	return config, nil
@@ -49,8 +45,10 @@ func oneSignalNotificationMarkerKey(source, contentID string) string {
 }
 
 type oneSignalNotificationMarkerInfo struct {
-	Status  string
-	Attempt int
+	Status    string
+	ETag      string
+	Attempt   int
+	CreatedAt time.Time
 }
 
 type oneSignalNoNotificationIDError struct {
@@ -66,7 +64,7 @@ func (err *oneSignalNoNotificationIDError) Error() string {
 }
 
 func loadOneSignalNotificationMarkerInfo(ctx context.Context, config s3BackupConfig, credentials awsCredentials, markerKey string, now time.Time) (oneSignalNotificationMarkerInfo, error) {
-	body, exists, err := getS3Object(ctx, config, credentials, markerKey, now)
+	body, etag, exists, err := getS3Object(ctx, config, credentials, markerKey, now)
 	if err != nil {
 		return oneSignalNotificationMarkerInfo{}, err
 	}
@@ -75,8 +73,9 @@ func loadOneSignalNotificationMarkerInfo(ctx context.Context, config s3BackupCon
 	}
 
 	var marker struct {
-		Status  string `json:"status"`
-		Attempt int    `json:"attempt"`
+		CreatedAt time.Time `json:"createdAt"`
+		Status    string    `json:"status"`
+		Attempt   int       `json:"attempt"`
 	}
 	if err := json.Unmarshal(body, &marker); err != nil {
 		return oneSignalNotificationMarkerInfo{}, fmt.Errorf("failed to decode OneSignal notification marker %s: %w", markerKey, err)
@@ -90,8 +89,10 @@ func loadOneSignalNotificationMarkerInfo(ctx context.Context, config s3BackupCon
 		marker.Attempt = 1
 	}
 
-	return oneSignalNotificationMarkerInfo{Status: status, Attempt: marker.Attempt}, nil
+	return oneSignalNotificationMarkerInfo{Status: status, Attempt: marker.Attempt, ETag: etag, CreatedAt: marker.CreatedAt}, nil
 }
+
+var errOneSignalReconciliationNeeded = errors.New("pending notification requires reconciliation before replay")
 
 func reserveOneSignalNotificationMarker(ctx context.Context, config s3BackupConfig, credentials awsCredentials, markerKey, source, contentID string, pendingMarkerBody []byte, now time.Time) (bool, bool, int, error) {
 	if err := putS3ObjectIfAbsent(ctx, config, credentials, markerKey, pendingMarkerBody, s3JSONContentType, now); err != nil {
@@ -106,10 +107,13 @@ func reserveOneSignalNotificationMarker(ctx context.Context, config s3BackupConf
 
 		switch state.Status {
 		case oneSignalMarkerStatusPending:
+			if state.CreatedAt.IsZero() || !now.Before(state.CreatedAt.Add(30*24*time.Hour)) {
+				return false, false, 0, fmt.Errorf("%s: %w", markerKey, errOneSignalReconciliationNeeded)
+			}
 			log.Printf("OneSignal notification marker is pending for %s content %s; retrying notification", source, contentID)
 			return false, true, state.Attempt, nil
-		case oneSignalMarkerStatusSent:
-			log.Printf("OneSignal notification marker is already sent for %s content %s; skipping notification", source, contentID)
+		case oneSignalMarkerStatusSent, "skipped":
+			log.Printf("OneSignal notification marker is %s for %s content %s; skipping notification", state.Status, source, contentID)
 			return false, false, 0, nil
 		default:
 			return false, false, 0, fmt.Errorf("unexpected OneSignal notification marker status %q for %s", state.Status, markerKey)
@@ -289,7 +293,9 @@ func sendOneSignalNotification(ctx context.Context, config oneSignalConfig, sour
 	}
 
 	var response struct {
-		ID string `json:"id"`
+		ID         string          `json:"id"`
+		Recipients *int            `json:"recipients"`
+		Errors     json.RawMessage `json:"errors"`
 	}
 	if len(body) > 0 {
 		if err := json.Unmarshal(body, &response); err != nil {
@@ -300,7 +306,17 @@ func sendOneSignalNotification(ctx context.Context, config oneSignalConfig, sour
 	notificationID := strings.TrimSpace(response.ID)
 	if notificationID == "" {
 		bodySnippet := strings.TrimSpace(string(body))
-		return "", &oneSignalNoNotificationIDError{body: bodySnippet}
+		if response.Recipients != nil && *response.Recipients == 0 {
+			return "", &oneSignalNoNotificationIDError{body: bodySnippet}
+		}
+		var messages []string
+		_ = json.Unmarshal(response.Errors, &messages)
+		for _, message := range messages {
+			if strings.EqualFold(strings.TrimSpace(message), "All included players are not subscribed") {
+				return "", &oneSignalNoNotificationIDError{body: bodySnippet}
+			}
+		}
+		return "", errors.New("OneSignal response without notification id; outcome unknown")
 	}
 
 	return notificationID, nil
@@ -321,7 +337,21 @@ func recordOneSignalRetryAttempt(ctx context.Context, config s3BackupConfig, cre
 		return err
 	}
 
-	_, err = putS3Object(ctx, config, credentials, markerKey, retryMarkerBody, s3JSONContentType, nil, now)
+	state, err := loadOneSignalNotificationMarkerInfo(ctx, config, credentials, markerKey, now)
+	if err != nil {
+		return err
+	}
+	if state.Status != oneSignalMarkerStatusPending || state.Attempt != attempt {
+		return nil
+	}
+	if state.ETag == "" {
+		return errors.New("cannot advance OneSignal marker without its ETag")
+	}
+	headers := http.Header{"If-Match": []string{state.ETag}}
+	status, err := putS3Object(ctx, config, credentials, markerKey, retryMarkerBody, s3JSONContentType, headers, now)
+	if status == http.StatusPreconditionFailed {
+		return nil
+	}
 	return err
 }
 
@@ -386,6 +416,7 @@ func NotifyExternalArticlesFirstPublishWithOneSignal(ctx context.Context, articl
 		return nil, err
 	}
 
+	var pendingErr error
 	results := make([]OneSignalNotificationResult, 0, len(articles))
 	for _, article := range articles {
 		result, err := notifyExternalArticleFirstPublishWithOneSignal(ctx, s3Config, credentials, oneSignalConfig, article, now)
@@ -393,19 +424,31 @@ func NotifyExternalArticlesFirstPublishWithOneSignal(ctx context.Context, articl
 			if result.MarkerKey != "" {
 				results = append(results, result)
 			}
-			return results, err
+			if errors.Is(err, errOneSignalReconciliationNeeded) {
+				pendingErr = errors.Join(pendingErr, err)
+				continue
+			}
+			return results, errors.Join(pendingErr, err)
 		}
 		results = append(results, result)
 	}
 
-	return results, nil
+	return results, pendingErr
 }
 
 func notifyMicroCMSFirstPublishWithOneSignal(ctx context.Context, config s3BackupConfig, credentials awsCredentials, payload microCMSWebhookPayload, now time.Time) (oneSignalNotificationResult, error) {
-	if !isMicroCMSFirstPublishWebhook(payload) || isMicroCMSSponsoredArticle(payload) {
+	if !isMicroCMSFirstPublishWebhook(payload) {
 		return oneSignalNotificationResult{}, nil
 	}
 
+	markerKey := oneSignalNotificationMarkerKey(payload.API, payload.ID)
+	if isMicroCMSSponsoredArticle(payload) {
+		err := putS3ObjectIfAbsent(ctx, config, credentials, markerKey, []byte(`{"status":"skipped"}`), s3JSONContentType, now)
+		if errors.Is(err, errS3ObjectAlreadyExists) {
+			err = nil
+		}
+		return oneSignalNotificationResult{}, err
+	}
 	oneSignalConfig, err := loadOneSignalConfigFromEnv()
 	if err != nil {
 		return oneSignalNotificationResult{}, err
@@ -413,7 +456,6 @@ func notifyMicroCMSFirstPublishWithOneSignal(ctx context.Context, config s3Backu
 
 	articleTitle := microCMSWebhookArticleTitle(payload)
 	articleURL := microCMSArticleURL(oneSignalConfig.BaseURL, payload.ID)
-	markerKey := oneSignalNotificationMarkerKey(payload.API, payload.ID)
 
 	pendingMarkerBody, err := oneSignalNotificationMarkerBody(oneSignalMarkerStatusPending, payload, articleTitle, articleURL, "", 1, nil, now)
 	if err != nil {

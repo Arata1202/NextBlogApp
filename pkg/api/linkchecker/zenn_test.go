@@ -13,7 +13,11 @@ import (
 
 func setZennNotificationEnv(t *testing.T) {
 	t.Helper()
-
+	original := deployZennFeed
+	deployZennFeed = func(_ context.Context, _ string, _ time.Time, trigger func() error) error {
+		return trigger()
+	}
+	t.Cleanup(func() { deployZennFeed = original })
 	t.Setenv("ONESIGNAL_APP_ID", "onesignal-app-id")
 	t.Setenv("ONESIGNAL_REST_API_KEY", "onesignal-rest-api-key")
 	t.Setenv("BASE_URL", "https://example.com")

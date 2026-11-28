@@ -7,7 +7,8 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"html"
+	"golang.org/x/net/html"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -15,7 +16,8 @@ import (
 )
 
 type zennSearchRSSFeed struct {
-	Channel zennSearchRSSChannel `xml:"channel"`
+	XMLName xml.Name              `xml:"rss"`
+	Channel *zennSearchRSSChannel `xml:"channel"`
 }
 
 type zennSearchRSSChannel struct {
@@ -70,10 +72,21 @@ func fetchZennSearchArticles(ctx context.Context) ([]map[string]interface{}, err
 	}
 
 	var feed zennSearchRSSFeed
-	if err := xml.NewDecoder(resp.Body).Decode(&feed); err != nil {
+	const maxFeedBytes = 16 << 20
+	data, err := io.ReadAll(io.LimitReader(resp.Body, maxFeedBytes+1))
+	if err != nil {
+		return nil, err
+	}
+	if len(data) > maxFeedBytes {
+		return nil, errors.New("Zenn RSS exceeds size limit")
+	}
+	if err := xml.Unmarshal(data, &feed); err != nil {
 		return nil, err
 	}
 
+	if feed.Channel == nil {
+		return nil, errors.New("Zenn RSS channel missing")
+	}
 	return zennSearchItemsToArticles(feed.Channel.Items), nil
 }
 
@@ -124,27 +137,42 @@ func zennSearchArticleID(linkURL string) string {
 }
 
 func extractFirstSearchImage(htmlText string) string {
-	matches := htmlImageSourcePattern.FindStringSubmatch(htmlText)
-	if len(matches) < 2 {
-		return ""
+	tokenizer := html.NewTokenizer(strings.NewReader(htmlText))
+	for {
+		switch tokenizer.Next() {
+		case html.ErrorToken:
+			return ""
+		case html.StartTagToken, html.SelfClosingTagToken:
+			name, more := tokenizer.TagName()
+			if string(name) != "img" {
+				continue
+			}
+			for more {
+				var key, val []byte
+				key, val, more = tokenizer.TagAttr()
+				if string(key) == "src" && len(val) > 0 {
+					return strings.TrimSpace(string(val))
+				}
+			}
+		}
 	}
-
-	return strings.TrimSpace(html.UnescapeString(matches[1]))
 }
 
 func zennSearchThumbnailURL(item zennSearchRSSItem) string {
 	for _, imageURL := range []string{
 		strings.TrimSpace(item.Enclosure.URL),
 		strings.TrimSpace(item.MediaThumbnail.URL),
-		extractFirstSearchImage(item.ContentEncoded),
-		extractFirstSearchImage(item.Description),
-		zennSearchFallbackThumbnailURL,
 	} {
 		if imageURL != "" {
 			return imageURL
 		}
 	}
 
+	for _, content := range []string{item.ContentEncoded, item.Description} {
+		if src := extractFirstSearchImage(content); src != "" {
+			return src
+		}
+	}
 	return zennSearchFallbackThumbnailURL
 }
 

@@ -1,7 +1,6 @@
 package recaptcha
 
 import (
-	"encoding/json"
 	"errors"
 	"log"
 	"net/http"
@@ -22,6 +21,7 @@ func RecaptchaHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method != http.MethodPost {
+		w.Header().Set("Allow", "POST, OPTIONS")
 		httpx.WriteError(w, http.StatusMethodNotAllowed, "Method Not Allowed")
 		return
 	}
@@ -29,9 +29,9 @@ func RecaptchaHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
 	var req RecaptchaRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+	if status, err := httpx.ReadRequestJSON(w, r, &req); err != nil {
 		log.Printf("Failed to parse request: %v", err)
-		httpx.WriteError(w, http.StatusBadRequest, "Failed to parse request body")
+		httpx.WriteError(w, status, "Failed to parse request body")
 		return
 	}
 
@@ -51,7 +51,7 @@ func RecaptchaHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	success, err := verifyRecaptchaFunc(req.RecaptchaResponse, secret)
+	success, err := verifyRecaptchaFunc(r.Context(), req.RecaptchaResponse, secret)
 	if err != nil {
 		log.Printf("Failed to send reCAPTCHA verification request: %v", err)
 		monitoring.CaptureError(err, monitoring.EventContext{

@@ -1,6 +1,7 @@
 package linkchecker
 
 import (
+	"net/mail"
 	"strings"
 	"testing"
 )
@@ -81,7 +82,8 @@ func TestFormatLinkCheckerSender(t *testing.T) {
 			want:        "リアル大学生 <alerts@example.com>",
 		},
 		{
-			name:        "empty display name",
+			name: "comma in display name", displayName: "News, Inc.", address: "alerts@example.com", want: `"News, Inc." <alerts@example.com>`,
+		}, {name: "empty display name",
 			displayName: "  ",
 			address:     "alerts@example.com",
 			want:        "alerts@example.com",
@@ -96,7 +98,10 @@ func TestFormatLinkCheckerSender(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			if got := formatLinkCheckerSender(test.displayName, test.address); got != test.want {
+			got := formatLinkCheckerSender(test.displayName, test.address)
+			parsed, err := mail.ParseAddress(got)
+			expected, _ := mail.ParseAddress(test.want)
+			if err != nil || parsed.Address != expected.Address || parsed.Name != expected.Name {
 				t.Fatalf("formatLinkCheckerSender() = %q, want %q", got, test.want)
 			}
 		})

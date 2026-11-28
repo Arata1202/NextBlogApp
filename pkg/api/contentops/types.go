@@ -5,6 +5,7 @@ import "NextBlogApp/pkg/api/microcms"
 type microCMSBackupListResponse = microcms.ListResponse
 
 type awsCredentials struct {
+	SessionToken    string
 	AccessKeyID     string
 	SecretAccessKey string
 }
@@ -48,7 +49,6 @@ type oneSignalConfig struct {
 	AppID      string
 	RESTAPIKey string
 	BaseURL    string
-	BaseTitle  string
 }
 
 type ExternalArticleNotification struct {
