@@ -2,7 +2,7 @@ import { Feed } from 'feed';
 import fs from 'fs';
 import { getAllLists } from './microcms';
 import { getZennFeed } from './zenn';
-import { COPYRIGHT, DESCRIPTION } from '@/constants/data';
+import { COPYRIGHT, DESCRIPTION, ZENN_USER_ID } from '@/constants/data';
 import { UnifiedArticle } from '@/types/unified';
 
 export const generateRssFeedXml = async () => {
@@ -45,7 +45,7 @@ export const generateRssFeedXml = async () => {
     source: 'blog',
   }));
 
-  const zennItems = await getZennFeed('realunivlog', 50, { includeAll: true });
+  const zennItems = await getZennFeed(ZENN_USER_ID, 50, { includeAll: true });
 
   const merged = [...blogItems, ...zennItems].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),

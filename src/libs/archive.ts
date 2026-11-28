@@ -10,6 +10,10 @@ export async function getArchiveList(): Promise<ArchiveItem[]> {
     fields: 'publishedAt',
   });
 
+  return buildArchiveList(articles);
+}
+
+export function buildArchiveList(articles: { publishedAt?: string }[]): ArchiveItem[] {
   const dateSet = new Set<string>();
 
   articles.forEach((article) => {

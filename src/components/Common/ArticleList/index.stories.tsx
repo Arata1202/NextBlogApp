@@ -36,7 +36,6 @@ export const Articles: Story = {
 
 export const MixedSources: Story = {
   args: {
-    articles: [],
     mixedArticles: [
       unifiedArticleFixture,
       {

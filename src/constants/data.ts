@@ -1,6 +1,8 @@
 import { HomeIcon, UserCircleIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
 import { XIcon, GitHubIcon, ZennIcon } from '@/components/Common/Elements/SocialIcon';
 
+export const ZENN_USER_ID = 'realunivlog';
+
 export const DESCRIPTION =
   '大学生活やプログラミングに関する情報を、現役大学生の視点から解説しています。';
 
@@ -44,7 +46,7 @@ export const SOCIAL_ICON = [
   },
   {
     name: 'Zenn',
-    path: 'https://zenn.dev/realunivlog',
+    path: `https://zenn.dev/${ZENN_USER_ID}`,
     icon: ZennIcon,
   },
 ];

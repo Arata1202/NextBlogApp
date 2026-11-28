@@ -1,4 +1,4 @@
-import { Article, Tag } from '@/types/microcms';
+import { Tag } from '@/types/microcms';
 import { ArchiveItem } from '@/libs/archive';
 import PageHeading from '@/components/Common/PageHeading';
 import Pagination from '@/components/Common/Pagination';
@@ -7,17 +7,15 @@ import AdUnit from '@/components/ThirdParties/GoogleAdSense/Elements/AdUnit';
 import { UnifiedArticle } from '@/types/unified';
 
 type Props = {
-  articles: Article[];
   current?: number;
   totalCount: number;
   recentArticles?: UnifiedArticle[];
   tags: Tag[];
   archiveList: ArchiveItem[];
-  mixedArticles?: UnifiedArticle[];
+  mixedArticles: UnifiedArticle[];
 };
 
 export default function HomePage({
-  articles,
   totalCount,
   recentArticles,
   current,
@@ -29,7 +27,6 @@ export default function HomePage({
     <>
       <PageHeading page={{ type: 'home' }} />
       <ArticleList
-        articles={articles}
         mixedArticles={mixedArticles}
         recentArticles={recentArticles}
         tags={tags}

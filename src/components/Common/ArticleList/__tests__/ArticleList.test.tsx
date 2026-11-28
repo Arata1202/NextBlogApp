@@ -110,7 +110,6 @@ describe('ArticleList', () => {
   it('uses mixed unified articles when they are provided', () => {
     render(
       <ArticleList
-        articles={[createArticle({ id: 'blog-only', title: 'Blog only' })]}
         mixedArticles={[
           createUnifiedArticle({
             id: 'zenn-a',
@@ -127,7 +126,6 @@ describe('ArticleList', () => {
     );
 
     expect(screen.getByText('Zenn A')).toBeInTheDocument();
-    expect(screen.queryByText('Blog only')).not.toBeInTheDocument();
     expect(screen.getByRole('link')).toHaveAttribute('target', '_blank');
   });
 });

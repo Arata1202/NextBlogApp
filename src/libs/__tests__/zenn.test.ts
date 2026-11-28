@@ -72,6 +72,24 @@ describe('getZennFeed', () => {
     });
   });
 
+  it('keeps all available entries when no display limit is requested', async () => {
+    const ids = Array.from({ length: 11 }, (_, i) => String(i));
+    const items = ids
+      .map((id) => `<item><link>https://zenn.dev/user/articles/${id}</link></item>`)
+      .join('');
+    fetchMock.mockResolvedValue({
+      ok: true,
+      text: async () => `<rss><channel>${items}</channel></rss>`,
+    });
+    const feed = await getZennFeed('user', undefined, { includeAll: true, required: true });
+    expect(feed.map((item) => item.id)).toEqual(ids.map((id) => `zenn-${id}`));
+  });
+
+  it('propagates an unavailable required feed', async () => {
+    fetchMock.mockResolvedValue({ ok: false, status: 503 });
+    await expect(getZennFeed('user', undefined, { required: true })).rejects.toThrow('503');
+  });
+
   it('returns an empty list when the RSS request fails', async () => {
     fetchMock.mockResolvedValue({ ok: false });
 

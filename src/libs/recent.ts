@@ -1,3 +1,4 @@
+import { ZENN_USER_ID } from '@/constants/data';
 import { getList } from '@/libs/microcms';
 import { getZennFeed } from '@/libs/zenn';
 import { LIMIT, RECENT_LIMIT } from '@/constants/limit';
@@ -12,7 +13,7 @@ export const getMixedRecentArticles = async (
       limit: sourceLimit,
       fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
     }),
-    getZennFeed('realunivlog', sourceLimit),
+    getZennFeed(ZENN_USER_ID, sourceLimit),
   ]);
 
   const blogArticles = mapBlogArticlesToUnified(blogList.contents);

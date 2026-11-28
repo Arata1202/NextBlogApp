@@ -1,26 +1,17 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import {
-  createArticle,
-  createListResponse,
-  createTag,
-  createUnifiedArticle,
-} from '@/test/factories';
+import { createArticle, createTag, createUnifiedArticle } from '@/test/factories';
 
 const homePageMock = vi.hoisted(() => vi.fn());
 const microcmsMock = vi.hoisted(() => ({
-  getList: vi.fn(),
+  getAllLists: vi.fn(),
   getAllTagLists: vi.fn(),
 }));
-const archiveMock = vi.hoisted(() => ({
-  getArchiveList: vi.fn(),
-}));
-const recentMock = vi.hoisted(() => ({
-  getMixedRecentArticles: vi.fn(),
+const zennMock = vi.hoisted(() => ({
+  getZennFeed: vi.fn(),
 }));
 vi.mock('@/libs/microcms', () => microcmsMock);
-vi.mock('@/libs/archive', () => archiveMock);
-vi.mock('@/libs/recent', () => recentMock);
+vi.mock('@/libs/zenn', () => zennMock);
 vi.mock('@/components/Pages/Home', async () => {
   const React = await import('react');
 
@@ -35,58 +26,56 @@ vi.mock('@/components/Pages/Home', async () => {
 describe('paginated home app page', () => {
   beforeEach(() => {
     homePageMock.mockReset();
-    microcmsMock.getList.mockReset();
+    microcmsMock.getAllLists.mockReset();
     microcmsMock.getAllTagLists.mockReset();
-    archiveMock.getArchiveList.mockReset();
-    recentMock.getMixedRecentArticles.mockReset();
+    zennMock.getZennFeed.mockReset();
   });
 
   it('generates static params from total article count', async () => {
     const { generateStaticParams } = await import('@/app/p/[current]/page');
 
-    microcmsMock.getList.mockResolvedValue(createListResponse([], { totalCount: 21 }));
+    microcmsMock.getAllLists.mockResolvedValue(Array.from({ length: 20 }, () => createArticle()));
 
+    zennMock.getZennFeed.mockResolvedValue([createUnifiedArticle()]);
     await expect(generateStaticParams()).resolves.toEqual([
       { current: '1' },
       { current: '2' },
       { current: '3' },
     ]);
-    expect(microcmsMock.getList).toHaveBeenCalledWith({ limit: 0, fields: '' });
   });
 
   it('fails static param generation when article count loading fails', async () => {
     const { generateStaticParams } = await import('@/app/p/[current]/page');
 
-    microcmsMock.getList.mockRejectedValue(new Error('microCMS failed'));
+    microcmsMock.getAllLists.mockRejectedValue(new Error('microCMS failed'));
 
     await expect(generateStaticParams()).rejects.toThrow('microCMS failed');
   });
 
-  it('loads the requested page with the correct offset', async () => {
+  it('serves identical first pages and keeps the displaced blog article on page two', async () => {
+    const Home = (await import('@/app/page')).default;
     const Page = (await import('@/app/p/[current]/page')).default;
-    const article = createArticle({ id: 'article-a' });
-    const recentArticles = [createUnifiedArticle({ id: 'recent-a' })];
-
-    microcmsMock.getList.mockResolvedValue(createListResponse([article], { totalCount: 21 }));
-    microcmsMock.getAllTagLists.mockResolvedValue([createTag({ id: 'react', name: 'React' })]);
-    archiveMock.getArchiveList.mockResolvedValue([{ year: '2024', month: '1' }]);
-    recentMock.getMixedRecentArticles.mockResolvedValue(recentArticles);
-
-    render(await Page({ params: Promise.resolve({ current: '3' }) }));
-
-    expect(screen.getByText('HomePage page mock')).toBeInTheDocument();
-    expect(microcmsMock.getList).toHaveBeenCalledWith({
-      limit: 10,
-      fields: 'id,title,description,thumbnail,publishedAt,updatedAt',
-      offset: 20,
-    });
-    expect(homePageMock).toHaveBeenCalledWith(
-      expect.objectContaining({
-        articles: [article],
-        current: 3,
-        totalCount: 21,
-        recentArticles,
-      }),
+    const blogs = Array.from({ length: 10 }, (_, i) =>
+      createArticle({ id: String(i + 1), publishedAt: new Date(2024, 0, 10 - i).toISOString() }),
     );
+    microcmsMock.getAllLists.mockResolvedValue(blogs);
+    microcmsMock.getAllTagLists.mockResolvedValue([createTag()]);
+    zennMock.getZennFeed.mockResolvedValue([
+      createUnifiedArticle({ id: 'zenn-a', source: 'zenn', publishedAt: '2024-02-01' }),
+    ]);
+
+    render(await Home());
+    const home = homePageMock.mock.lastCall![0];
+    render(await Page({ params: Promise.resolve({ current: '1' }) }));
+    expect(homePageMock.mock.lastCall![0].mixedArticles).toEqual(home.mixedArticles);
+    render(await Page({ params: Promise.resolve({ current: '2' }) }));
+    const second = homePageMock.mock.lastCall![0];
+    expect(home.totalCount).toBe(11);
+    expect(home.mixedArticles.map(({ id }: { id: string }) => id)).toEqual([
+      'zenn-a',
+      ...blogs.slice(0, 9).map(({ id }) => `blog-${id}`),
+    ]);
+    expect(second.mixedArticles).toEqual([expect.objectContaining({ id: 'blog-10' })]);
+    expect(second.recentArticles).toEqual(home.recentArticles);
   });
 });
