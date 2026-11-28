@@ -26,14 +26,13 @@ vi.mock('@/components/Common/PageHeading', () => ({
 
 vi.mock('@/components/Common/ArticleList', () => ({
   default: (props: {
-    articles: { title: string }[];
-    mixedArticles?: { title: string }[];
+    mixedArticles: { title: string }[];
     emptyMessage: string;
     emptyAction?: ReactNode;
     isLoading?: boolean;
   }) => {
     articleListMock(props);
-    const visibleArticles = props.mixedArticles ?? props.articles;
+    const visibleArticles = props.mixedArticles;
 
     return (
       <div>
@@ -215,7 +214,6 @@ describe('SearchPage', () => {
     expect(fetchMock).not.toHaveBeenCalled();
     expect(articleListMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        articles: [],
         mixedArticles: [],
         emptyMessage: 'キーワードを入力して検索してください。',
         isLoading: false,
@@ -263,7 +261,6 @@ describe('SearchPage', () => {
     await waitFor(() =>
       expect(articleListMock).toHaveBeenLastCalledWith(
         expect.objectContaining({
-          articles: [],
           mixedArticles: [],
           emptyMessage: '検索結果を取得できませんでした。もう一度お試しください。',
           isLoading: false,

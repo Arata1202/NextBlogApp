@@ -19,7 +19,7 @@ export const mapBlogArticlesToUnified = (articles: Article[]): UnifiedArticle[] 
 export const mixUnifiedArticles = (
   blogArticles: UnifiedArticle[],
   externalArticles: UnifiedArticle[],
-  limit: number,
+  limit?: number,
 ) => {
   return [...blogArticles, ...externalArticles]
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())

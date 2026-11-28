@@ -5,6 +5,7 @@ const FALLBACK_IMAGE = '/images/blog/title.webp';
 
 type GetZennFeedOptions = {
   includeAll?: boolean;
+  required?: boolean;
 };
 
 const extractFirstImage = (html: string) => {
@@ -50,7 +51,7 @@ const getZennArticleId = (link: string, index: number) => {
 
 export const getZennFeed = async (
   userId: string,
-  limit = 10,
+  limit?: number,
   options: GetZennFeedOptions = {},
 ): Promise<UnifiedArticle[]> => {
   try {
@@ -59,10 +60,12 @@ export const getZennFeed = async (
       next: { revalidate: 3600 },
     });
 
-    if (!res.ok) return [];
+    if (!res.ok) throw new Error(`Zenn feed request failed (HTTP ${res.status})`);
 
     const xml = await res.text();
     const $ = load(xml, { xmlMode: true });
+
+    if (!$('rss > channel').length) throw new Error('Invalid Zenn RSS feed');
 
     return $('item')
       .toArray()
@@ -96,7 +99,8 @@ export const getZennFeed = async (
           source: 'zenn',
         };
       });
-  } catch {
+  } catch (error) {
+    if (options.required) throw error;
     return [];
   }
 };

@@ -17,12 +17,13 @@ import { UnifiedArticle } from '@/types/unified';
 import { getMutedTextClassName } from '@/components/Common/controlClassNames';
 import { colorClassNames } from '@/styles/uiClassNames';
 
-type Props = {
-  articles: Article[];
+type Props = (
+  | { articles: Article[]; mixedArticles?: never }
+  | { mixedArticles: UnifiedArticle[]; articles?: never }
+) & {
   recentArticles?: UnifiedArticle[];
   tags: Tag[];
   archiveList: ArchiveItem[];
-  mixedArticles?: UnifiedArticle[];
   emptyMessage?: string;
   emptyAction?: ReactNode;
   isLoading?: boolean;
@@ -66,7 +67,7 @@ export default function ArticleList({
   stackedPagination,
 }: Props) {
   const { theme } = useTheme();
-  const isMixed = Boolean(mixedArticles);
+  const isMixed = mixedArticles !== undefined;
 
   return (
     <>
